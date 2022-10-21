@@ -6,16 +6,16 @@ using JetBrains.Annotations;
 /// Defines the attributes used by Curses library.
 /// </summary>
 [PublicAPI]
-public enum VideoAttribute: ulong
+public enum VideoAttributea: uint
 {
-    A_NORMAL = 0UL,
+    A_NORMAL = 0U,
     WA_NORMAL = A_NORMAL,
-    A_ATTRIBUTES = ~0UL << 8,
+    A_ATTRIBUTES = ~0U << 8,
     WA_ATTRIBUTES = A_ATTRIBUTES,
-    A_CHARTEXT = (1UL << 8) - 1,
-    A_COLOR = ((1UL << 8) - 1) << 8,
-    A_STANDOUT = 1UL << (8 + 8),
+    A_CHARTEXT = (1U << 8) - 1,
+    A_COLOR = ((1U << 8) - 1) << 8,
 
+    A_STANDOUT = 1U << (8 + 8),
     WA_STANDOUT = A_STANDOUT,
     A_UNDERLINE = A_STANDOUT << 1,
     WA_UNDERLINE = A_UNDERLINE,
@@ -44,6 +44,8 @@ public enum VideoAttribute: ulong
     A_TOP = A_RIGHT << 1,
     WA_TOP = A_TOP,
     A_VERTICAL = A_TOP << 1,
-    WA_VERTICAL = A_VERTICAL
+    WA_VERTICAL = A_VERTICAL,
+    A_ITALIC = A_VERTICAL << 1,
+    WA_ITALIC = A_ITALIC
 }
 
