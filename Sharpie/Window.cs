@@ -9,11 +9,12 @@ using JetBrains.Annotations;
 [PublicAPI]
 public class Window
 {
-    private readonly ICursesProvider _cursesProvider;
+    protected ICursesProvider CursesProvider { get; }
     private bool _enableProcessingKeypadKeys;
     private bool _useHardwareLineInsertAndDelete;
     private bool _useHardwareCharacterInsertAndDelete;
     private bool _immediateRefresh;
+    private int _x, _y, _width, _height;
 
     /// <summary>
     /// The Curses handle for the window.
@@ -25,12 +26,21 @@ public class Window
     /// </summary>
     /// <param name="cursesProvider">The curses functionality provider.</param>
     /// <param name="windowHandle">The window handle.</param>
-    internal Window(ICursesProvider cursesProvider, IntPtr windowHandle)
+    /// <param name="x">The X coordinate of the window.</param>
+    /// <param name="y">The Y coordinate of the window.</param>
+    /// <param name="width">The width of the window.</param>
+    /// <param name="height">The height of the window.</param>
+    internal Window(ICursesProvider cursesProvider, IntPtr windowHandle, int x, int y, int width, int height)
     {
-        _cursesProvider = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
+        _x = x;
+        _y = y;
+        _width = width;
+        _height = height;
+
+        CursesProvider = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
         Handle = windowHandle;
 
-        _useHardwareCharacterInsertAndDelete = _cursesProvider.has_ic();
+        _useHardwareCharacterInsertAndDelete = CursesProvider.has_ic();
     }
 
     /// <summary>
@@ -42,15 +52,15 @@ public class Window
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
 
             return _enableProcessingKeypadKeys;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
 
-            _cursesProvider.keypad(Handle, value)
+            CursesProvider.keypad(Handle, value)
                            .TreatError();
 
             _enableProcessingKeypadKeys = value;
@@ -70,17 +80,17 @@ public class Window
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
 
             return _useHardwareLineInsertAndDelete;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
 
-            if (_cursesProvider.has_il())
+            if (CursesProvider.has_il())
             {
-                _cursesProvider.idlok(Handle, value).TreatError();
+                CursesProvider.idlok(Handle, value).TreatError();
                 _useHardwareLineInsertAndDelete = value;
             }
         }
@@ -98,17 +108,17 @@ public class Window
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
 
             return _useHardwareCharacterInsertAndDelete;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
 
-            if (_cursesProvider.has_ic())
+            if (CursesProvider.has_ic())
             {
-                _cursesProvider.idcok(Handle, value);
+                CursesProvider.idcok(Handle, value);
                 _useHardwareCharacterInsertAndDelete = value;
             }
         }
@@ -123,16 +133,16 @@ public class Window
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
 
-            _cursesProvider.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero).TreatError();
+            CursesProvider.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero).TreatError();
             return new() { Attributes = (VideoAttribute) attrs, ColorPair = new() { Handle = colorPair } };
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
 
-            _cursesProvider.wattr_set(Handle, (uint) value.Attributes, value.ColorPair.Handle, IntPtr.Zero).TreatError();
+            CursesProvider.wattr_set(Handle, (uint) value.Attributes, value.ColorPair.Handle, IntPtr.Zero).TreatError();
         }
     }
 
@@ -146,9 +156,9 @@ public class Window
         get => Style.ColorPair;
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
 
-            _cursesProvider.wcolor_set(Handle, value.Handle, IntPtr.Zero).TreatError();
+            CursesProvider.wcolor_set(Handle, value.Handle, IntPtr.Zero).TreatError();
         }
     }
 
@@ -160,9 +170,9 @@ public class Window
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
-        _cursesProvider.AssertNotDisposed();
+        CursesProvider.AssertNotDisposed();
 
-        _cursesProvider.wattr_off(Handle, (uint) attributes, IntPtr.Zero).TreatError();
+        CursesProvider.wattr_on(Handle, (uint) attributes, IntPtr.Zero).TreatError();
     }
 
     /// <summary>
@@ -173,9 +183,9 @@ public class Window
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
-        _cursesProvider.AssertNotDisposed();
+        CursesProvider.AssertNotDisposed();
 
-        _cursesProvider.wattr_off(Handle, (uint) attributes, IntPtr.Zero).TreatError();
+        CursesProvider.wattr_off(Handle, (uint) attributes, IntPtr.Zero).TreatError();
     }
 
     /// <summary>
@@ -197,8 +207,8 @@ public class Window
             throw new ArgumentOutOfRangeException(nameof(y));
         }
 
-        _cursesProvider.AssertNotDisposed();
-        return _cursesProvider.wmove(Handle, y, x) != Helpers.CursesErrorResult;
+        CursesProvider.AssertNotDisposed();
+        return CursesProvider.wmove(Handle, y, x) != Helpers.CursesErrorResult;
     }
 
     /// <summary>
@@ -232,10 +242,34 @@ public class Window
             throw new ArgumentOutOfRangeException(nameof(length), "The length should be greater than zero.");
         }
 
-        _cursesProvider.AssertNotDisposed();
+        CursesProvider.AssertNotDisposed();
 
-        _cursesProvider.wchgat(Handle, length, (uint) style.Attributes, style.ColorPair.Handle, IntPtr.Zero)
+        CursesProvider.wchgat(Handle, length, (uint) style.Attributes, style.ColorPair.Handle, IntPtr.Zero)
                        .TreatError();
+    }
+
+    /// <summary>
+    /// Gets or sets the location of the window.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public (int x, int y) Location
+    {
+        get
+        {
+            CursesProvider.AssertNotDisposed();
+
+            return (_x, _y);
+        }
+        set
+        {
+            CursesProvider.AssertNotDisposed();
+            CursesProvider.mvwin(Handle, value.y, value.x)
+                          .TreatError();
+
+            _x = value.x;
+            _y = value.y;
+        }
     }
 
     /// <summary>
@@ -251,18 +285,15 @@ public class Window
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            CursesProvider.AssertNotDisposed();
             return _immediateRefresh;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
-            _cursesProvider.immedok(Handle, value);
+            CursesProvider.AssertNotDisposed();
+            CursesProvider.immedok(Handle, value);
 
             _immediateRefresh = value;
         }
     }
-
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void Refresh(bool fullScreen) { _cursesProvider.clearok(Handle, fullScreen).TreatError(); }
 }

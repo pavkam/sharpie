@@ -17,6 +17,7 @@ public sealed class Terminal: IDisposable
     private bool _enableForceInterruptingFlush;
     private bool _enableProcessingKeypadKeys;
     private bool _enableColors;
+    private bool _useEnvironmentOverrides;
     private CaretMode _hardwareCursorMode;
     private ICursesProvider _cursesProvider;
     private Screen _screen;
@@ -24,7 +25,7 @@ public sealed class Terminal: IDisposable
 
     internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableReturnToNewLineTranslation,
         int readTimeoutMillis, bool enableInputEchoing, bool enableForceInterruptingFlush,
-        bool enableProcessingKeypadKeys, bool enableColors, CaretMode hardwareCursorMode)
+        bool enableProcessingKeypadKeys, bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides)
     {
         _cursesProvider = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
 
@@ -38,6 +39,12 @@ public sealed class Terminal: IDisposable
 
         /* Other configuration */
         _cursesProvider.meta(IntPtr.Zero, true);
+
+        _useEnvironmentOverrides = useEnvironmentOverrides;
+        if (_useEnvironmentOverrides)
+        {
+            _cursesProvider.use_env(true);
+        }
 
         /* Initialize the screen and other objects */
         _colorManager = new(_cursesProvider, enableColors);
@@ -339,6 +346,21 @@ public sealed class Terminal: IDisposable
             _cursesProvider.AssertNotDisposed();
 
             return _cursesProvider.has_ic();
+        }
+    }
+
+
+    /// <summary>
+    /// Specifies whether the environment variables are used to setup the terminal.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    public bool UsesEnvironmentOverrides
+    {
+        get
+        {
+            _cursesProvider.AssertNotDisposed();
+
+            return _useEnvironmentOverrides;
         }
     }
 

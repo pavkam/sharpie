@@ -17,6 +17,7 @@ public sealed class TerminalBuilder
     private bool _enableProcessingKeypadKeys = true;
     private bool _enableColors = true;
     private bool _enableReturnToNewLineTranslation;
+    private bool _useEnvironmentOverrides = true;
     private CaretMode _hardwareCursorMode = CaretMode.Visible;
 
     /// <summary>
@@ -120,6 +121,20 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
+    /// Toggle the use of environment overrides for lines and columns.
+    /// </summary>
+    /// <remarks>
+    /// Default is <c>true</c>
+    /// </remarks>
+    /// <param name="use"><c>true</c> if the environment overrides are to be used.</param>
+    /// <returns>The same builder instance.</returns>
+    public TerminalBuilder WithEnvironmentOverrides(bool use)
+    {
+        _useEnvironmentOverrides = use;
+        return this;
+    }
+
+    /// <summary>
     /// Toggle the use of the hardware caret.
     /// </summary>
     /// <remarks>
@@ -139,5 +154,6 @@ public sealed class TerminalBuilder
     /// <returns>A new terminal object.</returns>
     public Terminal Create() =>
         new(_cursesProvider, _enableLineBuffering, _enableReturnToNewLineTranslation, _readTimeoutMillis,
-            _enableInputEchoing, _enableForceInterruptingFlush, _enableProcessingKeypadKeys, _enableColors, _hardwareCursorMode);
+            _enableInputEchoing, _enableForceInterruptingFlush, _enableProcessingKeypadKeys, _enableColors,
+            _hardwareCursorMode, _useEnvironmentOverrides);
 }

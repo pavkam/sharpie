@@ -17,6 +17,16 @@ internal static class Helpers
         return code;
     }
 
+    public static IntPtr TreatNullAsError(this IntPtr ptr, [CallerMemberName] string caller = "")
+    {
+        if (ptr == IntPtr.Zero)
+        {
+            throw new CursesException(caller);
+        }
+
+        return ptr;
+    }
+
     public static void AssertNotDisposed(this ICursesProvider cursesProvider)
     {
         if (cursesProvider == null)

@@ -106,7 +106,7 @@ public interface ICursesProvider
 
     CursesWindow newpad(int lines, int cols);
 
-    CursesWindow newwin(int lines, int cols, int atLine, int atCol);
+    CursesWindow newwin(int lines, int cols, int atLine, int atCol); //DONE
 
     int nl(); //DONE
 
@@ -200,7 +200,7 @@ public interface ICursesProvider
 
     int ungetch(int @char);
 
-    void use_env(bool set);
+    void use_env(bool set); //DONE
 
     int waddch(CursesWindow window, char @char);
 
@@ -210,7 +210,7 @@ public interface ICursesProvider
 
     int wattr_set(CursesWindow window, uint attrs, ushort colorPair, IntPtr reserved); //DONE
 
-    int wattr_on(CursesWindow window, uint attrs, IntPtr reserved);
+    int wattr_on(CursesWindow window, uint attrs, IntPtr reserved); //DONE
 
     int wattr_off(CursesWindow window, uint attrs, IntPtr reserved); //DONE
 
