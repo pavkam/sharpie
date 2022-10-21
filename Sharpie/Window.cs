@@ -230,22 +230,47 @@ public class Window
     /// <summary>
     /// Changes the style of the text on the current line and starting from the caret position.
     /// </summary>
-    /// <param name="length">The number of characters to change.</param>
+    /// <param name="width">The number of characters to change.</param>
     /// <param name="style">The applied style.</param>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentException">The <paramref name="length"/> is less than one.</exception>
+    /// <exception cref="ArgumentException">The <paramref name="width"/> is less than one.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void ChangeTextStyle(int length, Style style)
+    public void ChangeTextStyle(int width, Style style)
     {
-        if (length < 1)
+        if (width < 1)
         {
-            throw new ArgumentOutOfRangeException(nameof(length), "The length should be greater than zero.");
+            throw new ArgumentOutOfRangeException(nameof(width), "The length should be greater than zero.");
         }
 
         CursesProvider.AssertNotDisposed();
 
-        CursesProvider.wchgat(Handle, length, (uint) style.Attributes, style.ColorPair.Handle, IntPtr.Zero)
+        CursesProvider.wchgat(Handle, width, (uint) style.Attributes, style.ColorPair.Handle, IntPtr.Zero)
                        .TreatError();
+    }
+
+    /// <summary>
+    /// Writes a character at the caret position at the current window and advance the caret.
+    /// </summary>
+    /// <param name="char">The character to write.</param>
+    /// <param name="style">The applied style.</param>
+    /// <param name="immediate">Immediately writes the character to the console.</param>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void Write(char @char, Style style, bool immediate = false)
+    {
+        CursesProvider.AssertNotDisposed();
+
+        var charAndAttrs = @char | (uint) style.Attributes | CursesProvider.COLOR_PAIR(style.ColorPair.Handle);
+
+        if (immediate)
+        {
+            CursesProvider.wechochar(Handle, charAndAttrs)
+                          .TreatError();
+        } else
+        {
+            CursesProvider.waddch(Handle, charAndAttrs)
+                          .TreatError();
+        }
     }
 
     /// <summary>
@@ -269,6 +294,51 @@ public class Window
 
             _x = value.x;
             _y = value.y;
+        }
+    }
+
+    /// <summary>
+    /// Gets the size of the window.
+    /// </summary>
+    public (int width, int height) Size
+    {
+        get
+        {
+            CursesProvider.AssertNotDisposed();
+
+            return (_width, _height);
+        }
+    }
+
+    /// <summary>
+    /// Checks if the line at <paramref name="y"/> is dirty.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y"/> is outside the bounds.</exception>
+    public bool IsLineDirty(int y)
+    {
+        if (y < 0 || y >= Size.height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(y));
+        }
+
+        CursesProvider.AssertNotDisposed();
+
+        return CursesProvider.is_linetouched(Handle, y);
+    }
+
+    /// <summary>
+    /// Specifies whether the window has some "dirty" parts that need to be synchronized
+    /// to the console.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    public bool IsDirty
+    {
+        get
+        {
+            CursesProvider.AssertNotDisposed();
+
+            return CursesProvider.is_wintouched(Handle);
         }
     }
 

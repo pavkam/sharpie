@@ -84,9 +84,9 @@ public interface ICursesProvider
 
     bool isendwin(); //DONE
 
-    bool is_linetouched(CursesWindow window, int line);
+    bool is_linetouched(CursesWindow window, int line); //DONE
 
-    bool is_wintouched(CursesWindow window);
+    bool is_wintouched(CursesWindow window); //DONE
 
     string keyname(int keyCode);
 
@@ -102,7 +102,7 @@ public interface ICursesProvider
 
     int mvderwin(CursesWindow window, int parentLine, int parentCol);
 
-    int mvwin(CursesWindow window, int toLine, int toCol);
+    int mvwin(CursesWindow window, int toLine, int toCol); //DONE
 
     CursesWindow newpad(int lines, int cols);
 
@@ -130,9 +130,9 @@ public interface ICursesProvider
 
     int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor);
 
-    int COLOR_PAIR(int colorPair);
+    uint COLOR_PAIR(uint colorPair);
 
-    int PAIR_NUMBER(int attrOrChar);
+    uint PAIR_NUMBER(uint attrOrChar);
 
     int pechochar(CursesWindow pad, char @char);
 
@@ -188,7 +188,7 @@ public interface ICursesProvider
 
     int start_color(); //DONE
 
-    CursesWindow subpad(CursesWindow pad, int lines, int cols, int atRow,
+    CursesWindow subpad(CursesWindow pad, int lines, int cols, int atLine,
         int atCol);
 
     CursesWindow subwin(CursesWindow window, int lines, int cols, int atLine,
@@ -202,7 +202,7 @@ public interface ICursesProvider
 
     void use_env(bool set); //DONE
 
-    int waddch(CursesWindow window, char @char);
+    int waddch(CursesWindow window, uint charAndAttrs); //DONE
 
     int waddchnstr(CursesWindow window, string text, int length);
 
@@ -237,7 +237,7 @@ public interface ICursesProvider
 
     int wdelch(CursesWindow window);
 
-    int wechochar(CursesWindow window, char @char);
+    int wechochar(CursesWindow window, uint charAndAttrs); //DONE
 
     int werase(CursesWindow window);
 
