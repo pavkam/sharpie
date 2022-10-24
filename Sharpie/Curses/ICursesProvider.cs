@@ -44,7 +44,7 @@ public interface ICursesProvider
     CursesWindow derwin(CursesWindow window, int lines, int cols, int beginLine,
         int beginCol);
 
-    int doupdate();
+    int doupdate(); //TODO
 
     CursesWindow dupwin(CursesWindow window); //DONE
 
@@ -112,7 +112,7 @@ public interface ICursesProvider
 
     int leaveok(CursesWindow window, bool set);
 
-    string longname();
+    string longname(); //DONE
 
     int meta(CursesWindow window, bool set); //DONE
 

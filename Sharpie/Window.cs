@@ -1,7 +1,6 @@
 namespace Sharpie;
 
 using System.Drawing;
-using Curses;
 using JetBrains.Annotations;
 
 /// <summary>
@@ -601,30 +600,24 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Queues the refresh of this window on the next update of the screen. See <see cref="Screen.ApplyPendingRefreshes"/> for how
-    /// to apply the pending refreshes.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void QueueRefresh()
-    {
-        AssertNotDisposed();
-
-        Terminal.Curses.wnoutrefresh(Handle)
-                .TreatError();
-    }
-
-    /// <summary>
     /// Refreshes the window by synchronizing it to the terminal.
     /// </summary>
+    /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void Refresh()
+    public void Refresh(bool batch)
     {
         AssertNotDisposed();
 
-        Terminal.Curses.wrefresh(Handle)
-                .TreatError();
+        if (batch)
+        {
+            Terminal.Curses.wnoutrefresh(Handle)
+                    .TreatError();
+        } else
+        {
+            Terminal.Curses.wrefresh(Handle)
+                    .TreatError();
+        }
     }
 
     /// <summary>

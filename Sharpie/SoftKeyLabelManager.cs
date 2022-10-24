@@ -1,8 +1,11 @@
 namespace Sharpie;
 
+using JetBrains.Annotations;
+
 /// <summary>
 /// Adds support for soft function keys.
 /// </summary>
+[PublicAPI]
 public sealed class SoftKeyLabelManager
 {
     private readonly Terminal _terminal;
@@ -173,7 +176,7 @@ public sealed class SoftKeyLabelManager
     }
 
     /// <summary>
-    /// Invalidates the soft key labels. They will be queued for refresh the next time <see cref="QueueRefresh"/> is called.
+    /// Invalidates the soft key labels. They will be queued for refresh the next time <see cref="Refresh"/> is called.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -186,28 +189,24 @@ public sealed class SoftKeyLabelManager
     }
 
     /// <summary>
-    /// Queues the soft label keys to be refreshed the next time the screen is updated.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
-    public void QueueRefresh()
-    {
-        AssertNotDisposedAndEnabled();
-        _terminal.Curses.slk_noutrefresh()
-                 .TreatError();
-    }
-
-    /// <summary>
     /// Refreshes the soft label keys immediately.
     /// </summary>
+    /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
-    public void Refresh()
+    public void Refresh(bool batch)
     {
         AssertNotDisposedAndEnabled();
-        _terminal.Curses.slk_refresh()
-                 .TreatError();
+
+        if (batch)
+        {
+            _terminal.Curses.slk_noutrefresh()
+                     .TreatError();
+        } else
+        {
+            _terminal.Curses.slk_refresh()
+                     .TreatError();
+        }
     }
 }

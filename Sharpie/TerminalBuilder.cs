@@ -20,6 +20,7 @@ public sealed class TerminalBuilder
     private bool _useEnvironmentOverrides = true;
     private CaretMode _hardwareCursorMode = CaretMode.Visible;
     private int _escapeDelayMillis = 1000;
+    private SoftKeyLabelMode _softKeyLabelMode = SoftKeyLabelMode.Disabled;
 
     /// <summary>
     /// Creates a new instance of the terminal builder using a given Curses provider.
@@ -170,11 +171,25 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
+    /// Sets the soft key labels functionality mode.
+    /// </summary>
+    /// <remarks>
+    /// Default is <see cref="SoftKeyLabelMode.Disabled"/>.
+    /// </remarks>
+    /// <param name="mode">The mode of the soft label keys used.</param>
+    /// <returns>The same builder instance.</returns>
+    public TerminalBuilder WithSoftKeyLabels(SoftKeyLabelMode mode)
+    {
+        _softKeyLabelMode = mode;
+        return this;
+    }
+
+    /// <summary>
     /// Creates a new instance of the <see cref="Terminal"/> class.
     /// </summary>
     /// <returns>A new terminal object.</returns>
     public Terminal Create() =>
         new(_cursesProvider, _enableLineBuffering, _enableReturnToNewLineTranslation, _readTimeoutMillis,
             _enableInputEchoing, _enableForceInterruptingFlush, _enableProcessingKeypadKeys, _enableColors,
-            _hardwareCursorMode, _useEnvironmentOverrides, _escapeDelayMillis);
+            _hardwareCursorMode, _useEnvironmentOverrides, _escapeDelayMillis, _softKeyLabelMode);
 }

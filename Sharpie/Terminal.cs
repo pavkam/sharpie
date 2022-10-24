@@ -24,11 +24,12 @@ public sealed class Terminal: IDisposable
     private Screen _screen;
     private ColorManager _colorManager;
     private IList<Window> _windows;
+    private SoftKeyLabelManager _softKeyLabelManager;
 
     internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableReturnToNewLineTranslation,
         int readTimeoutMillis, bool enableInputEchoing, bool enableForceInterruptingFlush,
         bool enableProcessingKeypadKeys, bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
-        int escapeDelayMillis)
+        int escapeDelayMillis, SoftKeyLabelMode softKeyLabelMode)
     {
         if (_terminalInstanceActive)
         {
@@ -58,6 +59,7 @@ public sealed class Terminal: IDisposable
 
         /* Initialize the screen and other objects */
         _colorManager = new(this, enableColors);
+        _softKeyLabelManager = new(this, softKeyLabelMode);
         _screen = new(this, Curses.initscr())
         {
             EnableProcessingKeypadKeys = enableProcessingKeypadKeys
@@ -114,6 +116,21 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
+    /// Provides access to the terminal's color management.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    public SoftKeyLabelManager SoftKeyLabels
+    {
+        get
+        {
+            AssertNotDisposed();
+
+            return _softKeyLabelManager;
+        }
+    }
+
+
+    /// <summary>
     /// Enables or disables the line buffering mode.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
@@ -154,6 +171,20 @@ public sealed class Terminal: IDisposable
             AssertNotDisposed();
 
             return Curses.termname();
+        }
+    }
+
+    /// <summary>
+    /// Returns the long description of the terminal.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    public string Description
+    {
+        get
+        {
+            AssertNotDisposed();
+
+            return Curses.longname();
         }
     }
 
