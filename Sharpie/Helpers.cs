@@ -27,19 +27,6 @@ internal static class Helpers
         return ptr;
     }
 
-    public static void AssertNotDisposed(this ICursesProvider cursesProvider)
-    {
-        if (cursesProvider == null)
-        {
-            throw new ArgumentNullException(nameof(cursesProvider));
-        }
-
-        if (cursesProvider.isendwin())
-        {
-            throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
-        }
-    }
-
     public static int ConvertMillisToTenths(int value) =>
         Math.Min(0, Math.Max(255, Convert.ToInt32(Math.Ceiling(value / 100.0))));
 }

@@ -1,6 +1,5 @@
 namespace Sharpie;
 
-using Curses;
 using JetBrains.Annotations;
 
 /// <summary>
@@ -9,27 +8,27 @@ using JetBrains.Annotations;
 [PublicAPI]
 public sealed class ColorManager
 {
+    private Terminal _terminal;
     private ushort _nextPairHandle;
     private readonly bool _enabled;
-    private readonly ICursesProvider _cursesProvider;
 
     /// <summary>
     /// Initializes color manager for a Curse provider.
     /// </summary>
-    /// <param name="cursesProvider">The curses functionality provider.</param>
+    /// <param name="terminal">The parent terminal.</param>
     /// <param name="enabled">Specifies whether colors are enabled.</param>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    internal ColorManager(ICursesProvider cursesProvider, bool enabled)
+    internal ColorManager(Terminal terminal, bool enabled)
     {
-        _cursesProvider = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
+        _terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
 
         if (enabled && ColorsAreSupported)
         {
-            _cursesProvider.start_color()
+            _terminal.Curses.start_color()
                            .TreatError();
 
-            _cursesProvider.use_default_colors()
+            _terminal.Curses.use_default_colors()
                            .TreatError();
         }
 
@@ -44,7 +43,7 @@ public sealed class ColorManager
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            _terminal.AssertNotDisposed();
 
             return _enabled;
         }
@@ -58,9 +57,9 @@ public sealed class ColorManager
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            _terminal.AssertNotDisposed();
 
-            return _cursesProvider.has_colors();
+            return _terminal.Curses.has_colors();
         }
     }
 
@@ -72,75 +71,76 @@ public sealed class ColorManager
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            _terminal.AssertNotDisposed();
 
-            return _cursesProvider.can_change_color();
+            return _terminal.Curses.can_change_color();
         }
     }
 
     /// <summary>
-    /// Creates a new color pair from the given colors.
+    /// Creates a new color mixture from the given colors.
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="InvalidOperationException">The maximum number of pairs has been exhausted.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public ColorPair CreateColorPair(ushort fgColor, ushort bgColor)
+    /// <returns>A new color mixture.</returns>
+    public ColorMixture MixColors(ushort fgColor, ushort bgColor)
     {
         if (_nextPairHandle == 0x100)
         {
             throw new InvalidOperationException("Exhausted the maximum number of color pairs.");
         }
 
-        _cursesProvider.AssertNotDisposed();
-        _cursesProvider.init_pair(_nextPairHandle, fgColor, bgColor)
+        _terminal.AssertNotDisposed();
+        _terminal.Curses.init_pair(_nextPairHandle, fgColor, bgColor)
                        .TreatError();
 
-        var colorPair = new ColorPair { Handle = _nextPairHandle };
+        var mixture = new ColorMixture { Handle = _nextPairHandle };
         _nextPairHandle++;
 
-        return colorPair;
+        return mixture;
     }
 
     /// <summary>
-    /// Creates a new color pair from the given standard colors.
+    /// Creates a new color mixture from the given standard colors.
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="InvalidOperationException">The maximum number of pairs has been exhausted.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public ColorPair CreateColorPair(StandardColor fgColor, StandardColor bgColor) => CreateColorPair((ushort) fgColor, (ushort) bgColor);
+    /// <returns>A new color mixture.</returns>
+    public ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor) => MixColors((ushort) fgColor, (ushort) bgColor);
 
     /// <summary>
     /// Redefines an existing color pair with the given colors.
     /// </summary>
-    /// <param name="colorPair">The color pair to redefine.</param>
+    /// <param name="mixture">The color mixture to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void RedefineColorPair(ColorPair colorPair, ushort fgColor, ushort bgColor)
+    public void RedefineColorMixture(ColorMixture mixture, ushort fgColor, ushort bgColor)
     {
-        _cursesProvider.AssertNotDisposed();
-        _cursesProvider.init_pair(colorPair.Handle, fgColor, bgColor)
+        _terminal.AssertNotDisposed();
+        _terminal.Curses.init_pair(mixture.Handle, fgColor, bgColor)
                        .TreatError();
     }
 
     /// <summary>
     /// Redefines an existing color pair with the given standard colors.
     /// </summary>
-    /// <param name="colorPair">The color pair to redefine.</param>
+    /// <param name="mixture">The color mixure to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void RedefineColorPair(ColorPair colorPair, StandardColor fgColor, StandardColor bgColor)
+    public void RedefineColorMixture(ColorMixture mixture, StandardColor fgColor, StandardColor bgColor)
     {
-        RedefineColorPair(colorPair, (ushort) fgColor, (ushort) bgColor);
+        RedefineColorMixture(mixture, (ushort) fgColor, (ushort) bgColor);
     }
-
 
     /// <summary>
     /// Redefines the default colors of the terminal.
@@ -149,10 +149,10 @@ public sealed class ColorManager
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void RedefineDefaultPair(ushort fgColor, ushort bgColor)
+    public void RedefineDefaultColorMixture(ushort fgColor, ushort bgColor)
     {
-        _cursesProvider.AssertNotDisposed();
-        _cursesProvider.assume_default_colors(fgColor, bgColor)
+        _terminal.AssertNotDisposed();
+        _terminal.Curses.assume_default_colors(fgColor, bgColor)
                        .TreatError();
     }
 
@@ -163,9 +163,9 @@ public sealed class ColorManager
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void RedefineDefaultPair(StandardColor fgColor, StandardColor bgColor)
+    public void RedefineDefaultColorMixture(StandardColor fgColor, StandardColor bgColor)
     {
-        RedefineDefaultPair((ushort) fgColor, (ushort) bgColor);
+        RedefineDefaultColorMixture((ushort) fgColor, (ushort) bgColor);
     }
 
     /// <summary>
@@ -197,13 +197,13 @@ public sealed class ColorManager
             throw new ArgumentOutOfRangeException(nameof(color));
         }
 
-        _cursesProvider.AssertNotDisposed();
+        _terminal.AssertNotDisposed();
         if (!CanRedefineColors)
         {
             throw new NotSupportedException("The terminal does not support error redefinition.");
         }
 
-        _cursesProvider.init_color(color, red, green, blue)
+        _terminal.Curses.init_color(color, red, green, blue)
                        .TreatError();
     }
 
@@ -236,14 +236,14 @@ public sealed class ColorManager
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public (ushort red, ushort green, ushort blue) BreakdownColor(ushort color)
     {
-        _cursesProvider.AssertNotDisposed();
+        _terminal.AssertNotDisposed();
 
         if (!CanRedefineColors)
         {
             throw new NotSupportedException("The terminal does not support error redefinition.");
         }
 
-        _cursesProvider.color_content(color, out var red, out var green, out var blue)
+        _terminal.Curses.color_content(color, out var red, out var green, out var blue)
                        .TreatError();
 
         return (red, green, blue);

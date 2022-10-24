@@ -19,6 +19,7 @@ public sealed class TerminalBuilder
     private bool _enableReturnToNewLineTranslation;
     private bool _useEnvironmentOverrides = true;
     private CaretMode _hardwareCursorMode = CaretMode.Visible;
+    private int _escapeDelayMillis = 1000;
 
     /// <summary>
     /// Creates a new instance of the terminal builder using a given Curses provider.
@@ -149,11 +150,31 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
+    /// Sets the escape sequence wait timeout.
+    /// </summary>
+    /// <remarks>
+    /// Default is 1 second.
+    /// </remarks>
+    /// <param name="delayMillis">The delay in milliseconds.</param>
+    /// <returns>The same builder instance.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="delayMillis"/> is negative.</exception>
+    public TerminalBuilder WithEscapeSequenceWaitDelay(int delayMillis)
+    {
+        if (delayMillis < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(delayMillis));
+        }
+
+        _escapeDelayMillis = delayMillis;
+        return this;
+    }
+
+    /// <summary>
     /// Creates a new instance of the <see cref="Terminal"/> class.
     /// </summary>
     /// <returns>A new terminal object.</returns>
     public Terminal Create() =>
         new(_cursesProvider, _enableLineBuffering, _enableReturnToNewLineTranslation, _readTimeoutMillis,
             _enableInputEchoing, _enableForceInterruptingFlush, _enableProcessingKeypadKeys, _enableColors,
-            _hardwareCursorMode, _useEnvironmentOverrides);
+            _hardwareCursorMode, _useEnvironmentOverrides, _escapeDelayMillis);
 }

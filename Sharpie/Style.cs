@@ -9,12 +9,17 @@ using JetBrains.Annotations;
 public struct Style
 {
     /// <summary>
+    /// The default terminal style.
+    /// </summary>
+    public static Style Default = new() { Attributes = VideoAttribute.None, ColorMixture = ColorMixture.Default, };
+
+    /// <summary>
     /// The attributes of the text.
     /// </summary>
     public VideoAttribute Attributes { get; init; }
 
     /// <summary>
-    /// The color pair of the attribute.
+    /// The color mixture.
     /// </summary>
-    public ColorPair ColorPair { get; init; }
+    public ColorMixture ColorMixture { get; init; }
 }

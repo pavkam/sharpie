@@ -11,9 +11,9 @@ public sealed class Screen: Window
     /// Initializes the screen using a window handle. The <paramref name="windowHandle"/> should be
     /// a screen and not a regular window.
     /// </summary>
-    /// <param name="cursesProvider">The curses functionality provider.</param>
+    /// <param name="terminal">The terminal instance.</param>
     /// <param name="windowHandle">The screen handle.</param>
-    internal Screen(ICursesProvider cursesProvider, IntPtr windowHandle): base(cursesProvider, windowHandle, 0, 0, 0, 0) { }
+    internal Screen(Terminal terminal, IntPtr windowHandle): base(terminal, windowHandle) { }
 
     /// <summary>
     /// Created a new window in the screen.
@@ -49,10 +49,42 @@ public sealed class Screen: Window
             throw new ArgumentOutOfRangeException(nameof(height));
         }
 
-        CursesProvider.AssertNotDisposed();
-        var handle = CursesProvider.newwin(height, width, y, x)
-                                   .TreatNullAsError();
+        Terminal.AssertNotDisposed();
+        var handle = Terminal.Curses.newwin(height, width, y, x)
+                             .TreatNullAsError();
 
-        return new(CursesProvider, handle, x, y, width, height);
+        return new(Terminal, handle);
+    }
+
+    /// <summary>
+    /// Duplicates and existing window, including its attributes.
+    /// </summary>
+    /// <param name="window">The window to duplicate.</param>
+    /// <returns>A new window object.</returns>
+    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public Window DuplicateWindow(Window window)
+    {
+        if (window == null)
+        {
+            throw new ArgumentNullException(nameof(window));
+        }
+
+        window.AssertNotDisposed();
+
+        return new(Terminal, Terminal.Curses.dupwin(window.Handle)
+                                     .TreatNullAsError());
+    }
+
+    /// <summary>
+    /// Applies all queued refreshes to the terminal.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void ApplyPendingRefreshes()
+    {
+        AssertNotDisposed();
+        Terminal.Curses.doupdate()
+                .TreatError();
     }
 }

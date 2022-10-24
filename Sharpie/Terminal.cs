@@ -1,5 +1,6 @@
 namespace Sharpie;
 
+using System.Diagnostics;
 using Curses;
 using JetBrains.Annotations;
 
@@ -10,6 +11,7 @@ using JetBrains.Annotations;
 [PublicAPI]
 public sealed class Terminal: IDisposable
 {
+    private static bool _terminalInstanceActive;
     private bool _enableLineBuffering;
     private int _readTimeoutMillis;
     private bool _enableInputEchoing;
@@ -19,15 +21,22 @@ public sealed class Terminal: IDisposable
     private bool _enableColors;
     private bool _useEnvironmentOverrides;
     private CaretMode _hardwareCursorMode;
-    private ICursesProvider _cursesProvider;
     private Screen _screen;
     private ColorManager _colorManager;
+    private IList<Window> _windows;
 
     internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableReturnToNewLineTranslation,
         int readTimeoutMillis, bool enableInputEchoing, bool enableForceInterruptingFlush,
-        bool enableProcessingKeypadKeys, bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides)
+        bool enableProcessingKeypadKeys, bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
+        int escapeDelayMillis)
     {
-        _cursesProvider = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
+        if (_terminalInstanceActive)
+        {
+            throw new InvalidOperationException(
+                "Another terminal instance is active. Only one instance can be active at one time.");
+        }
+
+        Curses = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
 
         /* Set configuration. */
         EnableLineBuffering = enableLineBuffering;
@@ -36,22 +45,26 @@ public sealed class Terminal: IDisposable
         EnableReturnToNewLineTranslation = enableReturnToNewLineTranslation;
         EnableForceInterruptingFlush = enableForceInterruptingFlush;
         CaretMode = hardwareCursorMode;
+        EscapeSequenceWaitDelay = escapeDelayMillis;
 
         /* Other configuration */
-        _cursesProvider.meta(IntPtr.Zero, true);
+        Curses.meta(IntPtr.Zero, true);
 
         _useEnvironmentOverrides = useEnvironmentOverrides;
         if (_useEnvironmentOverrides)
         {
-            _cursesProvider.use_env(true);
+            Curses.use_env(true);
         }
 
         /* Initialize the screen and other objects */
-        _colorManager = new(_cursesProvider, enableColors);
-        _screen = new(_cursesProvider, _cursesProvider.initscr())
+        _colorManager = new(this, enableColors);
+        _screen = new(this, Curses.initscr())
         {
             EnableProcessingKeypadKeys = enableProcessingKeypadKeys
         };
+
+        _windows = new List<Window> { _screen };
+        _terminalInstanceActive = true;
     }
 
     /// <summary>
@@ -79,9 +92,9 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            return _cursesProvider.baudrate()
+            return Curses.baudrate()
                                   .TreatError();
         }
     }
@@ -94,7 +107,7 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _colorManager;
         }
@@ -109,17 +122,17 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _enableLineBuffering;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             if (value)
             {
-                _cursesProvider.nocbreak()
+                Curses.nocbreak()
                                .TreatError();
             } else
             {
@@ -138,9 +151,9 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            return _cursesProvider.termname();
+            return Curses.termname();
         }
     }
 
@@ -152,9 +165,9 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            return _cursesProvider.curses_version();
+            return Curses.curses_version();
         }
     }
 
@@ -162,10 +175,10 @@ public sealed class Terminal: IDisposable
     {
         if (_readTimeoutMillis == Timeout.Infinite)
         {
-            _cursesProvider.cbreak().TreatError();
+            Curses.cbreak().TreatError();
         } else
         {
-            _cursesProvider.halfdelay(Helpers.ConvertMillisToTenths(_readTimeoutMillis)).TreatError();
+            Curses.halfdelay(Helpers.ConvertMillisToTenths(_readTimeoutMillis)).TreatError();
         }
     }
 
@@ -178,13 +191,13 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _readTimeoutMillis;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             if (!EnableLineBuffering)
             {
@@ -204,20 +217,20 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _enableInputEchoing;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             if (value)
             {
-                _cursesProvider.echo().TreatError();
+                Curses.echo().TreatError();
             } else
             {
-                _cursesProvider.noecho().TreatError();
+                Curses.noecho().TreatError();
             }
 
             _enableInputEchoing = value;
@@ -233,20 +246,20 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _enableReturnToNewLineTranslation;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             if (value)
             {
-                _cursesProvider.nl().TreatError();
+                Curses.nl().TreatError();
             } else
             {
-                _cursesProvider.nonl().TreatError();
+                Curses.nonl().TreatError();
             }
 
             _enableReturnToNewLineTranslation = value;
@@ -262,15 +275,15 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _enableForceInterruptingFlush;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            _cursesProvider.intrflush(IntPtr.Zero, value).TreatError();
+            Curses.intrflush(IntPtr.Zero, value).TreatError();
             _enableForceInterruptingFlush = value;
         }
     }
@@ -294,15 +307,15 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _hardwareCursorMode;
         }
         set
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            _cursesProvider.curs_set((int)value).TreatError();
+            Curses.curs_set((int)value).TreatError();
             _hardwareCursorMode = value;
         }
     }
@@ -315,7 +328,7 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _screen;
         }
@@ -329,9 +342,9 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            return _cursesProvider.has_il();
+            return Curses.has_il();
         }
     }
 
@@ -343,12 +356,11 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            return _cursesProvider.has_ic();
+            return Curses.has_ic();
         }
     }
-
 
     /// <summary>
     /// Specifies whether the environment variables are used to setup the terminal.
@@ -358,16 +370,70 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            _cursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _useEnvironmentOverrides;
         }
     }
 
     /// <summary>
-    /// Specifies whether the terminal has been disposed of and is no longer usable.
+    /// Gets the currently defined kill character. \0 is returned if none is defined.
     /// </summary>
-    public bool IsDisposed => _cursesProvider.isendwin();
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    public char CurrentKillChar
+    {
+        get
+        {
+            AssertNotDisposed();
+
+            return Curses.killwchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0';
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the escape sequence wait delay.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is negative.</exception>
+    public int EscapeSequenceWaitDelay
+    {
+        get
+        {
+            AssertNotDisposed();
+
+            return Curses.get_escdelay();
+        }
+        set
+        {
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+            AssertNotDisposed();
+            Curses.set_escdelay(value)
+                  .TreatError();
+        }
+    }
+
+
+    /// <summary>
+    /// Gets the currently defined erase character. \0 is returned if none is defined.
+    /// </summary>
+    public char CurrentEraseChar
+    {
+        get
+        {
+            AssertNotDisposed();
+
+            return Curses.erasewchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0';
+        }
+    }
+
+    /// <summary>
+    /// Creates a new formatted text builder. Use this method to create texts that are to be displayed onto the screen.
+    /// </summary>
+    /// <returns></returns>
+    public FormattedTextBuilder CreateText() => new(Curses);
 
     /// <summary>
     /// Attempts to notify the user with audio or flashing alert.
@@ -378,22 +444,89 @@ public sealed class Terminal: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void Alert(bool silent)
     {
-        _cursesProvider.AssertNotDisposed();
+        AssertNotDisposed();
 
         if (silent)
         {
-            _cursesProvider.flash().TreatError();
+            Curses.flash().TreatError();
         } else
         {
-            _cursesProvider.beep().TreatError();
+            Curses.beep().TreatError();
         }
     }
 
+    /// <summary>
+    /// Lists the active windows in this terminal.
+    /// </summary>
+    public IEnumerable<Window> Windows => _windows;
+
+    /// <summary>
+    /// Utility method that removes a window from the managed windows list. Only used internally.
+    /// </summary>
+    /// <param name="window">The window to remove.</param>
+    /// <exception cref="ArgumentNullException">The <paramref name="window"/> is <c>null</c>.</exception>
+    internal void RemoveWindow(Window window)
+    {
+        var removed = _windows.Remove(window);
+        Debug.Assert(removed);
+    }
+
+    /// <summary>
+    /// The Curses functionality provider.
+    /// </summary>
+    public ICursesProvider Curses { get; }
+
+    /// <summary>
+    /// Validates that the terminal is not disposed.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed of and is no longer usable.</exception>
+    public void AssertNotDisposed()
+    {
+        if (Curses.isendwin())
+        {
+            throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
+        }
+    }
+
+    /// <summary>
+    /// Specifies whether the terminal has been disposed of and is no longer usable.
+    /// </summary>
+    public bool IsDisposed => Curses.isendwin();
+
+    /// <summary>
+    /// Disposes of any unmanaged resources.
+    /// </summary>
+    private void ReleaseUnmanagedResources()
+    {
+        if (!IsDisposed)
+        {
+            Curses.endwin(); // Ignore potential error.
+        }
+
+        _terminalInstanceActive = false;
+    }
+
+    /// <summary>
+    /// Disposes the current terminal instance.
+    /// </summary>
     public void Dispose()
     {
-        if (!_cursesProvider.isendwin())
+        // Dispose of all the windows
+        var windows = _windows.ToArray();
+        foreach (var window in windows)
         {
-            _cursesProvider.endwin();
+            window.Dispose();
         }
+
+        // Kill off the terminal.
+        ReleaseUnmanagedResources();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// The destructor. Calls <see cref="ReleaseUnmanagedResources"/>
+    /// </summary>
+    ~Terminal() {
+        ReleaseUnmanagedResources();
     }
 }

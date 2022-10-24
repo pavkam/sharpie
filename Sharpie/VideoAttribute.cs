@@ -9,6 +9,11 @@ using JetBrains.Annotations;
 public enum VideoAttribute: uint
 {
     /// <summary>
+    /// No attributes, default text style.
+    /// </summary>
+    None = 0,
+
+    /// <summary>
     /// The best highlighting mode available.
     /// </summary>
     StandOut = 1U << 16,

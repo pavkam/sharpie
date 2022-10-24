@@ -1,5 +1,6 @@
 namespace Sharpie;
 
+using System.Drawing;
 using Curses;
 using JetBrains.Annotations;
 
@@ -7,61 +8,71 @@ using JetBrains.Annotations;
 /// Represents a window and contains all it's functionality.
 /// </summary>
 [PublicAPI]
-public class Window
+public class Window: IDisposable
 {
-    protected ICursesProvider CursesProvider { get; }
+    protected Terminal Terminal { get; }
+
     private bool _enableProcessingKeypadKeys;
     private bool _useHardwareLineInsertAndDelete;
     private bool _useHardwareCharacterInsertAndDelete;
     private bool _immediateRefresh;
-    private int _x, _y, _width, _height;
 
     /// <summary>
     /// The Curses handle for the window.
     /// </summary>
-    public IntPtr Handle { get; }
+    public IntPtr Handle { get; private set; }
 
     /// <summary>
     /// Initializes the window using a Curses handle.
     /// </summary>
-    /// <param name="cursesProvider">The curses functionality provider.</param>
+    /// <param name="terminal">The curses functionality provider.</param>
     /// <param name="windowHandle">The window handle.</param>
-    /// <param name="x">The X coordinate of the window.</param>
-    /// <param name="y">The Y coordinate of the window.</param>
-    /// <param name="width">The width of the window.</param>
-    /// <param name="height">The height of the window.</param>
-    internal Window(ICursesProvider cursesProvider, IntPtr windowHandle, int x, int y, int width, int height)
+    internal Window(Terminal terminal, IntPtr windowHandle)
     {
-        _x = x;
-        _y = y;
-        _width = width;
-        _height = height;
-
-        CursesProvider = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
+        Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
         Handle = windowHandle;
 
-        _useHardwareCharacterInsertAndDelete = CursesProvider.has_ic();
+        _useHardwareCharacterInsertAndDelete = Terminal.Curses.has_ic();
+    }
+
+    /// <summary>
+    /// Checks if the window is not disposed.
+    /// </summary>
+    public bool IsDisposed => Terminal.IsDisposed || Handle == IntPtr.Zero;
+
+    /// <summary>
+    /// Asserts that the window is not disposed.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The window has been disposed.</exception>
+    internal void AssertNotDisposed()
+    {
+        Terminal.AssertNotDisposed();
+
+        if (Handle == IntPtr.Zero)
+        {
+            throw new ObjectDisposedException("The window has been disposed and is no longer usable.");
+        }
     }
 
     /// <summary>
     /// Enables or disables the processing of keypad keys.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public bool EnableProcessingKeypadKeys
     {
         get
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _enableProcessingKeypadKeys;
         }
         set
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            CursesProvider.keypad(Handle, value)
-                           .TreatError();
+            Terminal.Curses.keypad(Handle, value)
+                    .TreatError();
 
             _enableProcessingKeypadKeys = value;
         }
@@ -71,26 +82,28 @@ public class Window
     /// Enables or disables the use of hardware line insert/delete handling fpr this window.
     /// </summary>
     /// <remarks>
-    /// This functionality only works if hardware has support for it. Consult <see cref="Terminal.SupportsHardwareLineInsertAndDelete" />
+    /// This functionality only works if hardware has support for it. Consult <see cref="Sharpie.Terminal.SupportsHardwareLineInsertAndDelete" />
     /// Default is <c>false</c>.
     /// </remarks>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public bool UseHardwareLineInsertAndDelete
     {
         get
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _useHardwareLineInsertAndDelete;
         }
         set
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            if (CursesProvider.has_il())
+            if (Terminal.Curses.has_il())
             {
-                CursesProvider.idlok(Handle, value).TreatError();
+                Terminal.Curses.idlok(Handle, value)
+                        .TreatError();
+
                 _useHardwareLineInsertAndDelete = value;
             }
         }
@@ -100,25 +113,25 @@ public class Window
     /// Enables or disables the use of hardware character insert/delete handling for this window.
     /// </summary>
     ///    <remarks>
-    /// This functionality only works if hardware has support for it. Consult <see cref="Terminal.SupportsHardwareCharacterInsertAndDelete" />
+    /// This functionality only works if hardware has support for it. Consult <see cref="Sharpie.Terminal.SupportsHardwareCharacterInsertAndDelete" />
     /// Default is <c>true</c>.
     /// </remarks>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     public bool UseHardwareCharacterInsertAndDelete
     {
         get
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
             return _useHardwareCharacterInsertAndDelete;
         }
         set
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            if (CursesProvider.has_ic())
+            if (Terminal.Curses.has_ic())
             {
-                CursesProvider.idcok(Handle, value);
+                Terminal.Curses.idcok(Handle, value);
                 _useHardwareCharacterInsertAndDelete = value;
             }
         }
@@ -127,38 +140,42 @@ public class Window
     /// <summary>
     /// Gets or sets the style of the window.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public Style Style
     {
         get
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            CursesProvider.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero).TreatError();
-            return new() { Attributes = (VideoAttribute) attrs, ColorPair = new() { Handle = colorPair } };
+            Terminal.Curses.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero)
+                    .TreatError();
+
+            return new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } };
         }
         set
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            CursesProvider.wattr_set(Handle, (uint) value.Attributes, value.ColorPair.Handle, IntPtr.Zero).TreatError();
+            Terminal.Curses.wattr_set(Handle, (uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
+                    .TreatError();
         }
     }
 
     /// <summary>
-    /// Gets or sets the color pair of the window.
+    /// Gets or sets the color mixture of the window.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public ColorPair ColorPair
+    public ColorMixture ColorMixture
     {
-        get => Style.ColorPair;
+        get => Style.ColorMixture;
         set
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            CursesProvider.wcolor_set(Handle, value.Handle, IntPtr.Zero).TreatError();
+            Terminal.Curses.wcolor_set(Handle, value.Handle, IntPtr.Zero)
+                    .TreatError();
         }
     }
 
@@ -166,26 +183,28 @@ public class Window
     /// Enables specified attributes and keep the others untouched.
     /// </summary>
     /// <param name="attributes">The attributes to enable.</param>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
-        CursesProvider.AssertNotDisposed();
+        AssertNotDisposed();
 
-        CursesProvider.wattr_on(Handle, (uint) attributes, IntPtr.Zero).TreatError();
+        Terminal.Curses.wattr_on(Handle, (uint) attributes, IntPtr.Zero)
+                .TreatError();
     }
 
     /// <summary>
     /// Disables specified attributes and keep the others untouched.
     /// </summary>
     /// <param name="attributes">The attributes to disable.</param>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
-        CursesProvider.AssertNotDisposed();
+        AssertNotDisposed();
 
-        CursesProvider.wattr_off(Handle, (uint) attributes, IntPtr.Zero).TreatError();
+        Terminal.Curses.wattr_off(Handle, (uint) attributes, IntPtr.Zero)
+                .TreatError();
     }
 
     /// <summary>
@@ -194,7 +213,7 @@ public class Window
     /// <param name="x">The new X.</param>
     /// <param name="y">The new Y.</param>
     /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Either <paramref name="x"/> or <paramref name="y"/> are negative.</exception>
     public bool TryMoveCaretTo(int x, int y)
     {
@@ -202,13 +221,14 @@ public class Window
         {
             throw new ArgumentOutOfRangeException(nameof(x));
         }
+
         if (y < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(y));
         }
 
-        CursesProvider.AssertNotDisposed();
-        return CursesProvider.wmove(Handle, y, x) != Helpers.CursesErrorResult;
+        AssertNotDisposed();
+        return Terminal.Curses.wmove(Handle, y, x) != Helpers.CursesErrorResult;
     }
 
     /// <summary>
@@ -217,7 +237,7 @@ public class Window
     /// <param name="x">The new X.</param>
     /// <param name="y">The new Y.</param>
     /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="ArgumentException">The given coordinates are outside the window.</exception>
     public void MoveCaretTo(int x, int y)
     {
@@ -232,7 +252,7 @@ public class Window
     /// </summary>
     /// <param name="width">The number of characters to change.</param>
     /// <param name="style">The applied style.</param>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="ArgumentException">The <paramref name="width"/> is less than one.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void ChangeTextStyle(int width, Style style)
@@ -242,103 +262,316 @@ public class Window
             throw new ArgumentOutOfRangeException(nameof(width), "The length should be greater than zero.");
         }
 
-        CursesProvider.AssertNotDisposed();
+        AssertNotDisposed();
 
-        CursesProvider.wchgat(Handle, width, (uint) style.Attributes, style.ColorPair.Handle, IntPtr.Zero)
-                       .TreatError();
+        Terminal.Curses.wchgat(Handle, width, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
+                .TreatError();
     }
 
     /// <summary>
-    /// Writes a character at the caret position at the current window and advance the caret.
+    /// Writes a character at the caret position at the current window and advances the caret.
     /// </summary>
     /// <param name="char">The character to write.</param>
     /// <param name="style">The applied style.</param>
-    /// <param name="immediate">Immediately writes the character to the console.</param>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <param name="insert">If <c>true</c>, the text is inserted before the caret and not at the caret position.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void Write(char @char, Style style, bool immediate = false)
+    public void WriteText(char @char, Style style, bool insert = false)
     {
-        CursesProvider.AssertNotDisposed();
+        AssertNotDisposed();
 
-        var charAndAttrs = @char | (uint) style.Attributes | CursesProvider.COLOR_PAIR(style.ColorPair.Handle);
+        Terminal.Curses.setcchar(out var cChar, @char.ToString(), (uint) style.Attributes, style.ColorMixture.Handle,
+            IntPtr.Zero);
 
-        if (immediate)
+        if (insert)
         {
-            CursesProvider.wechochar(Handle, charAndAttrs)
-                          .TreatError();
+            Terminal.Curses.wins_wch(Handle, cChar)
+                    .TreatError();
+        }
+        else
+        {
+            Terminal.Curses.wadd_wch(Handle, cChar)
+                    .TreatError();
+        }
+    }
+
+    /// <summary>
+    /// Writes a text at the caret position at the current window and advance the caret.
+    /// </summary>
+    /// <param name="str">The text to write.</param>
+    /// <param name="insert">If <c>true</c>, the text is inserted before the caret and not at the caret position.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="str"/> is <c>null</c>.</exception>
+    public void WriteText(FormattedText str, bool insert = false)
+    {
+        if (str == null)
+        {
+            throw new ArgumentNullException(nameof(str));
+        }
+
+        AssertNotDisposed();
+
+        if (insert)
+        {
+            Terminal.Curses.wadd_wchnstr(Handle, str.Characters, str.Characters.Length)
+                    .TreatError();
         } else
         {
-            CursesProvider.waddch(Handle, charAndAttrs)
-                          .TreatError();
+            foreach (var c in str.Characters)
+            {
+                Terminal.Curses.wins_wch(Handle, c)
+                        .TreatError();
+            }
         }
+    }
+
+    /// <summary>
+    /// Clears the contents of the current row.
+    /// </summary>
+    /// <param name="strategy">The strategy to use.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void Clear(ClearStrategy strategy)
+    {
+        AssertNotDisposed();
+
+        switch (strategy)
+        {
+            case ClearStrategy.Full:
+                Terminal.Curses.wclear(Handle)
+                        .TreatError();
+
+                break;
+            case ClearStrategy.LineFromCaret:
+                if (CaretPosition.X < Size.Width - 1)
+                {
+                    Terminal.Curses.wclrtoeol(Handle)
+                            .TreatError();
+                }
+
+                break;
+            case ClearStrategy.FullFromCaret:
+                Terminal.Curses.wclrtobot(Handle)
+                        .TreatError();
+
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Replaces the content of a given window with the contents of the current window.
+    /// </summary>
+    /// <param name="window">The window to copy contents to.</param>
+    /// <param name="strategy">The used strategy.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="window"/> is null.</exception>
+    public void Replace(Window window, ReplaceStrategy strategy)
+    {
+        if (window == null)
+        {
+            throw new ArgumentNullException(nameof(window));
+        }
+
+        AssertNotDisposed();
+        switch (strategy)
+        {
+            case ReplaceStrategy.Overlay:
+                Terminal.Curses.overlay(Handle, window.Handle)
+                        .TreatError();
+
+                break;
+            case ReplaceStrategy.Overwrite:
+                Terminal.Curses.overwrite(Handle, window.Handle)
+                        .TreatError();
+
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Replaces the content of a given window with the contents of the current window.
+    /// </summary>
+    /// <param name="window">The window to copy contents to.</param>
+    /// <param name="strategy">The used strategy.</param>
+    /// <param name="srcRect">The source rectangle to copy.</param>
+    /// <param name="destPos">The destination position.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="window"/> is null.</exception>
+    public void Replace(Window window, Rectangle srcRect, Point destPos, ReplaceStrategy strategy)
+    {
+        if (window == null)
+        {
+            throw new ArgumentNullException(nameof(window));
+        }
+
+        AssertNotDisposed();
+        window.AssertNotDisposed();
+
+        var destRect = new Rectangle(destPos, new(srcRect.Bottom - srcRect.Top, srcRect.Right - srcRect.Left));
+        if (!window.IsRectangleWithin(destRect))
+        {
+            throw new ArgumentOutOfRangeException(nameof(srcRect));
+        }
+
+        Terminal.Curses.copywin(Handle, window.Handle, srcRect.Top, srcRect.Left, destRect.Top,
+                    destRect.Left, destRect.Bottom, destRect.Right,
+                    Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Checks if a given point fits within the current window.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <returns>The result of the check.</returns>
+    public bool IsPointWithin(Point point)
+    {
+        var size = Size;
+        return point.X >= 0 && point.X < size.Width && point.Y >= 0 && point.Y < size.Height;
+    }
+
+    /// <summary>
+    /// Checks if a given rectangle fits within the current window.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <returns>The result of the check.</returns>
+    public bool IsRectangleWithin(Rectangle rect)
+    {
+        var size = Size;
+        return rect.Left >= 0 &&
+            rect.Left < size.Width &&
+            rect.Top >= 0 &&
+            rect.Top < size.Height &&
+            rect.Right >= rect.Left &&
+            rect.Right < size.Width &&
+            rect.Bottom >= rect.Top &&
+            rect.Bottom < size.Height;
     }
 
     /// <summary>
     /// Gets or sets the location of the window.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public (int x, int y) Location
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the bounds.</exception>
+    public Point Location
     {
         get
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            return (_x, _y);
+            return new(Terminal.Curses.getbegx(Handle)
+                               .TreatError(), Terminal.Curses.getbegy(Handle)
+                                                      .TreatError());
         }
         set
         {
-            CursesProvider.AssertNotDisposed();
-            CursesProvider.mvwin(Handle, value.y, value.x)
-                          .TreatError();
+            AssertNotDisposed();
 
-            _x = value.x;
-            _y = value.y;
+            if (value.X < 1 || value.Y < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
+            Terminal.Curses.mvwin(Handle, value.Y, value.X)
+                    .TreatError();
         }
     }
 
     /// <summary>
-    /// Gets the size of the window.
+    /// Gets or sets the size of the window.
     /// </summary>
-    public (int width, int height) Size
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the bounds.</exception>
+    public Size Size
     {
         get
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            return (_width, _height);
+            return new(Terminal.Curses.getmaxx(Handle)
+                               .TreatError(), Terminal.Curses.getmaxy(Handle)
+                                                      .TreatError());
+        }
+        set
+        {
+            AssertNotDisposed();
+
+            if (value.Width < 1 || value.Height < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
+            Terminal.Curses.wresize(Handle, value.Height, value.Width)
+                    .TreatError();
         }
     }
 
     /// <summary>
-    /// Checks if the line at <paramref name="y"/> is dirty.
+    /// Gets or sets the current position of the caret within the window.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y"/> is outside the bounds.</exception>
-    public bool IsLineDirty(int y)
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the window bounds.</exception>
+    public Point CaretPosition
     {
-        if (y < 0 || y >= Size.height)
+        get
+        {
+            AssertNotDisposed();
+
+            return new(Terminal.Curses.getcurx(Handle)
+                               .TreatError(), Terminal.Curses.getcury(Handle)
+                                                      .TreatError());
+        }
+        set
+        {
+            AssertNotDisposed();
+
+            if (value.X < 0 || value.Y < 1 || value.X >= Size.Width || value.Y >= Size.Height)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
+            Terminal.Curses.wmove(Handle, value.Y, value.X)
+                    .TreatError();
+        }
+    }
+
+    /// <summary>
+    /// Checks if the row at <paramref name="y"/> is dirty.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y"/> is outside the bounds.</exception>
+    public bool IsRowDirty(int y)
+    {
+        AssertNotDisposed();
+
+        if (y < 0 || y >= Size.Height)
         {
             throw new ArgumentOutOfRangeException(nameof(y));
         }
 
-        CursesProvider.AssertNotDisposed();
-
-        return CursesProvider.is_linetouched(Handle, y);
+        return Terminal.Curses.is_linetouched(Handle, y);
     }
 
     /// <summary>
     /// Specifies whether the window has some "dirty" parts that need to be synchronized
     /// to the console.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     public bool IsDirty
     {
         get
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
 
-            return CursesProvider.is_wintouched(Handle);
+            return Terminal.Curses.is_wintouched(Handle);
         }
     }
 
@@ -350,20 +583,81 @@ public class Window
     /// This might be very slow for most use cases.
     /// Default is <c>false</c>.
     /// </remarks>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     public bool ImmediateRefresh
     {
         get
         {
-            CursesProvider.AssertNotDisposed();
+            AssertNotDisposed();
             return _immediateRefresh;
         }
         set
         {
-            CursesProvider.AssertNotDisposed();
-            CursesProvider.immedok(Handle, value);
+            AssertNotDisposed();
+            Terminal.Curses.immedok(Handle, value);
 
             _immediateRefresh = value;
         }
     }
+
+    /// <summary>
+    /// Queues the refresh of this window on the next update of the screen. See <see cref="Screen.ApplyPendingRefreshes"/> for how
+    /// to apply the pending refreshes.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void QueueRefresh()
+    {
+        AssertNotDisposed();
+
+        Terminal.Curses.wnoutrefresh(Handle)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Refreshes the window by synchronizing it to the terminal.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void Refresh()
+    {
+        AssertNotDisposed();
+
+        Terminal.Curses.wrefresh(Handle)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Removes the window form the terminal.
+    /// </summary>
+    public void Remove()
+    {
+        Terminal.AssertNotDisposed();
+        Cleanup();
+    }
+
+    /// <summary>
+    /// Removes the window form the terminal.
+    /// </summary>
+    private void Cleanup()
+    {
+        Terminal.RemoveWindow(this);
+        Terminal.Curses.delwin(Handle); // Ignore potential error.
+
+        Handle = IntPtr.Zero;
+    }
+
+    /// <summary>
+    /// Disposes the current instance.
+    /// </summary>
+    public void Dispose()
+    {
+        Cleanup();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// The destructor. Calls <see cref="Cleanup"/>.
+    /// </summary>
+    ~Window() { Cleanup(); }
 }
