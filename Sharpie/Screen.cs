@@ -1,10 +1,11 @@
 namespace Sharpie;
 
-using Curses;
+using JetBrains.Annotations;
 
 /// <summary>
 ///     The core curses screen class. Implements screen-related functionality.
 /// </summary>
+[PublicAPI]
 public sealed class Screen: Window
 {
     /// <summary>

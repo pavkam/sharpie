@@ -150,13 +150,13 @@ public interface ICursesProvider
 
     uint PAIR_NUMBER(uint attrOrChar); //DONE
 
-    int pechochar(CursesWindow pad, char @char);
+    int pechochar(CursesWindow pad, char @char); //NO
 
     int pnoutrefresh(CursesWindow pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol);
+        int scrMinCol, int scrMaxLine, int scrMaxCol); //DONE
 
     int prefresh(CursesWindow pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol);
+        int scrMinCol, int scrMaxLine, int scrMaxCol); //DONE
 
     void qiflush();
 
@@ -224,7 +224,7 @@ public interface ICursesProvider
 
     int waddch(CursesWindow window, uint charAndAttrs); //NO
 
-    int waddchnstr(CursesWindow window, string text, int length);
+    int waddchnstr(CursesWindow window, string text, int length); //NO
 
     int wattr_get(CursesWindow window, out uint attrs, out ushort colorPair, IntPtr reserved); //DONE
 
@@ -245,7 +245,7 @@ public interface ICursesProvider
     int wchgat(CursesWindow window, int count, uint attrs, ushort colorPair,
         IntPtr reserved); //DONE
 
-    int wclear(CursesWindow window); //DONE
+    int wclear(CursesWindow window); //NO
 
     int wclrtobot(CursesWindow window); //DONE
 
@@ -255,11 +255,11 @@ public interface ICursesProvider
 
     void wcursyncup(CursesWindow window);
 
-    int wdelch(CursesWindow window);
+    int wdelch(CursesWindow window); //DONE
 
     int wechochar(CursesWindow window, uint charAndAttrs); //NO
 
-    int werase(CursesWindow window);
+    int werase(CursesWindow window); //DONE
 
     int wgetch(CursesWindow window);
 
@@ -293,7 +293,7 @@ public interface ICursesProvider
 
     void wtimeout(CursesWindow window, int delay);
 
-    int wtouchln(CursesWindow window, int line, int count, int changed);
+    int wtouchln(CursesWindow window, int line, int count, int changed); //DONE
 
     int wvline(CursesWindow window, char @char, int count);
 
@@ -334,7 +334,7 @@ public interface ICursesProvider
 
     int killwchar(out char @char); //DONE
 
-    int pecho_wchar(CursesWindow window, CChar @char);
+    int pecho_wchar(CursesWindow window, CChar @char); //NO
 
     int setcchar(out CChar @char, string text, uint attrs, ushort colorPair,
         IntPtr reserved); //DONE

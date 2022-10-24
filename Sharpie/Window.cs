@@ -326,7 +326,29 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Clears the contents of the current row.
+    /// Removes the text under the caret and moves the contents of the line to the left.
+    /// </summary>
+    /// <param name="count">The number of characters to remove.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count"/> less than one.</exception>
+    public void RemoveText(int count)
+    {
+        if (count <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count));
+        }
+
+        AssertNotDisposed();
+        while (count > 0)
+        {
+            Terminal.Curses.wdelch(Handle).TreatError();
+            count--;
+        }
+    }
+
+    /// <summary>
+    /// Clears the contents of the row/window.
     /// </summary>
     /// <param name="strategy">The strategy to use.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
@@ -338,7 +360,7 @@ public class Window: IDisposable
         switch (strategy)
         {
             case ClearStrategy.Full:
-                Terminal.Curses.wclear(Handle)
+                Terminal.Curses.werase(Handle)
                         .TreatError();
 
                 break;
@@ -419,6 +441,42 @@ public class Window: IDisposable
                     destRect.Left, destRect.Bottom, destRect.Right,
                     Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
                 .TreatError();
+    }
+
+    /// <summary>
+    /// Invalidates a number of lines within the window.
+    /// </summary>
+    /// <param name="line">The window to copy contents to.</param>
+    /// <param name="count">The used strategy.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="line"/> and <paramref name="count"/> combination is out of bounds.</exception>
+    public void Invalidate(int line, int count)
+    {
+        if (line < 0 || line >= Size.Height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(line));
+        }
+
+        if (count <= 0 || line + count >= Size.Height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count));
+        }
+
+        AssertNotDisposed();
+
+        Terminal.Curses.wtouchln(Handle, line, count, 1)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Invalidates the contents of the window thus forcing a redraw at the next <see cref="Refresh"/>.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void Invalidate()
+    {
+        Invalidate(0, Size.Height);
     }
 
     /// <summary>
@@ -583,7 +641,7 @@ public class Window: IDisposable
     /// Default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    public bool ImmediateRefresh
+    public virtual bool ImmediateRefresh
     {
         get
         {
@@ -605,7 +663,7 @@ public class Window: IDisposable
     /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void Refresh(bool batch)
+    public virtual void Refresh(bool batch)
     {
         AssertNotDisposed();
 
