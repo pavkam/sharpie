@@ -12,9 +12,8 @@ public sealed class TerminalBuilder
     private readonly ICursesProvider _cursesProvider;
     private bool _enableLineBuffering;
     private bool _enableInputEchoing;
-    private int _readTimeoutMillis;
+    private int _readTimeoutMillis = Timeout.Infinite;
     private bool _enableForceInterruptingFlush;
-    private bool _enableProcessingKeypadKeys = true;
     private bool _enableColors = true;
     private bool _enableReturnToNewLineTranslation;
     private bool _useEnvironmentOverrides = true;
@@ -90,21 +89,6 @@ public sealed class TerminalBuilder
     public TerminalBuilder WithForceInterruptingFlush(bool enabled)
     {
         _enableForceInterruptingFlush = enabled;
-        return this;
-    }
-
-    /// <summary>
-    /// Toggle the processing of keypad keys.
-    /// </summary>
-    /// <remarks>
-    /// If set, the keypad keys will be processed otherwise they will be reported in raw mode.
-    /// Default is <c>true</c>.
-    /// </remarks>
-    /// <param name="enabled">The value of the flag.</param>
-    /// <returns>The same builder instance.</returns>
-    public TerminalBuilder WithProcessingKeypadKeys(bool enabled)
-    {
-        _enableProcessingKeypadKeys = enabled;
         return this;
     }
 
@@ -190,6 +174,6 @@ public sealed class TerminalBuilder
     /// <returns>A new terminal object.</returns>
     public Terminal Create() =>
         new(_cursesProvider, _enableLineBuffering, _enableReturnToNewLineTranslation, _readTimeoutMillis,
-            _enableInputEchoing, _enableForceInterruptingFlush, _enableProcessingKeypadKeys, _enableColors,
+            _enableInputEchoing, _enableForceInterruptingFlush, _enableColors,
             _hardwareCursorMode, _useEnvironmentOverrides, _escapeDelayMillis, _softKeyLabelMode);
 }

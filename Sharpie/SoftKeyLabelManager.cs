@@ -89,7 +89,7 @@ public sealed class SoftKeyLabelManager
             var attrsAndColors = _terminal.Curses.slk_attr()
                                           .TreatError();
 
-            var colorPair = (ushort) _terminal.Curses.COLOR_PAIR(attrsAndColors);
+            var colorPair = (ushort) _terminal.Curses.COLOR_PAIR((uint)attrsAndColors);
             return new() { Attributes = (VideoAttribute) attrsAndColors, ColorMixture = new() { Handle = colorPair } };
         }
         set

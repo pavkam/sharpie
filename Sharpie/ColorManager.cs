@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 public sealed class ColorManager
 {
     private Terminal _terminal;
-    private ushort _nextPairHandle;
+    private ushort _nextPairHandle = 1;
     private readonly bool _enabled;
 
     /// <summary>
@@ -132,7 +132,7 @@ public sealed class ColorManager
     /// <summary>
     /// Redefines an existing color pair with the given standard colors.
     /// </summary>
-    /// <param name="mixture">The color mixure to redefine.</param>
+    /// <param name="mixture">The color mixture to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>

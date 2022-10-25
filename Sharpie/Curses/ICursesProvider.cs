@@ -10,9 +10,7 @@ using CursesWindow = IntPtr;
 /// Interface provides access to the Curses functionality. Use the <see cref="NativeCursesProvider"/> property to access the actual
 /// implementation.
 /// </summary>
-[PublicAPI, SuppressMessage("ReSharper", "InconsistentNaming")]
-
-// ReSharper disable IdentifierTypo
+[PublicAPI, SuppressMessage("ReSharper", "InconsistentNaming"), SuppressMessage("ReSharper", "IdentifierTypo")]
 public interface ICursesProvider
 {
     int baudrate(); //DONE
@@ -23,7 +21,7 @@ public interface ICursesProvider
 
     int cbreak(); //DONE
 
-    int clearok(CursesWindow window, bool set);
+    int clearok(CursesWindow window, bool set); //DONE
 
     int color_content(ushort color, out ushort red, out ushort green, out ushort blue); //DONE
 
@@ -31,7 +29,7 @@ public interface ICursesProvider
         int destStartLine, int destStartCol, int destEndLine, int destEndCol,
         int overlay); //DONE
 
-    int curs_set(int level); //TODO
+    int curs_set(int level); //DONE
 
     int def_prog_mode(); //NO
 
@@ -44,7 +42,7 @@ public interface ICursesProvider
     CursesWindow derwin(CursesWindow window, int lines, int cols, int beginLine,
         int beginCol);
 
-    int doupdate(); //TODO
+    int doupdate(); //DONE
 
     CursesWindow dupwin(CursesWindow window); //DONE
 
@@ -60,23 +58,23 @@ public interface ICursesProvider
 
     int flushinp();
 
-    uint getattrs (CursesWindow window); //NO
+    uint getattrs(CursesWindow window); //NO
 
-    int getcurx (CursesWindow window); //DONE
+    int getcurx(CursesWindow window); //DONE
 
-    int getcury (CursesWindow window); //DONE
+    int getcury(CursesWindow window); //DONE
 
-    int getbegx (CursesWindow window); //DONE
+    int getbegx(CursesWindow window); //DONE
 
-    int getbegy (CursesWindow window); //DONE
+    int getbegy(CursesWindow window); //DONE
 
-    int getmaxx (CursesWindow window); //DONE
+    int getmaxx(CursesWindow window); //DONE
 
-    int getmaxy (CursesWindow window); //DONE
+    int getmaxy(CursesWindow window); //DONE
 
-    int getparx (CursesWindow window); //NO
+    int getparx(CursesWindow window); //NO
 
-    int getpary (CursesWindow window); //NO
+    int getpary(CursesWindow window); //NO
 
     int halfdelay(int tenthsOfSec); //DONE
 
@@ -106,6 +104,36 @@ public interface ICursesProvider
 
     bool is_wintouched(CursesWindow window); //DONE
 
+    bool is_cleared(IntPtr window);
+
+    bool is_idcok(IntPtr window); //DONE
+
+    bool is_idlok(IntPtr window); //DONE
+
+    bool is_immedok(IntPtr window); //DONE
+
+    bool is_keypad(IntPtr window);
+
+    bool is_leaveok(IntPtr window);
+
+    bool is_nodelay(IntPtr window);
+
+    bool is_notimeout(IntPtr window);
+
+    bool is_pad(IntPtr window); //NO
+
+    bool is_scrollok(IntPtr window);
+
+    bool is_subwin(IntPtr window); //NO
+
+    bool is_syncok(IntPtr window);
+
+    IntPtr wgetparent(IntPtr window); //NO
+
+    int wgetdelay(IntPtr window);
+
+    int wgetscrreg(IntPtr window, out int top, out int bottom);
+
     string keyname(int keyCode);
 
     int keypad(CursesWindow window, bool set); //DONE
@@ -120,7 +148,7 @@ public interface ICursesProvider
 
     int mvwin(CursesWindow window, int toLine, int toCol); //DONE
 
-    CursesWindow newpad(int lines, int cols);
+    CursesWindow newpad(int lines, int cols); //DONE
 
     CursesWindow newwin(int lines, int cols, int atLine, int atCol); //DONE
 
@@ -146,9 +174,9 @@ public interface ICursesProvider
 
     int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor);
 
-    int COLOR_PAIR(int colorPair); //DONE
+    uint COLOR_PAIR(uint attrs); //DONE
 
-    uint PAIR_NUMBER(uint attrOrChar); //DONE
+    uint PAIR_NUMBER(uint colorPair); //DONE
 
     int pechochar(CursesWindow pad, char @char); //NO
 
@@ -327,7 +355,7 @@ public interface ICursesProvider
 
     void nofilter(); //NO
 
-    int getcchar(CChar @char, StringBuilder dest, ref uint attrs, ref ushort colorPair,
+    int getcchar(CChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
         IntPtr reserved);
 
     string key_name(char @char);
@@ -361,7 +389,7 @@ public interface ICursesProvider
 
     int wecho_wchar(CursesWindow window, CChar @char); //NO
 
-    int wget_wch(CursesWindow window, StringBuilder dest);
+    int wget_wch(CursesWindow window, out uint @char);
 
     int wgetbkgrnd(CursesWindow window, CChar @char);
 
@@ -369,9 +397,9 @@ public interface ICursesProvider
 
     int whline_set(CursesWindow window, CChar @char, int count);
 
-    int win_wch(CursesWindow window, CChar @char);
+    int win_wch(CursesWindow window, out CChar @char);
 
-    int win_wchnstr(CursesWindow window, CChar @char, int length);
+    int win_wchnstr(CursesWindow window, CChar[] @char, int length);
 
     int winnwstr(CursesWindow window, StringBuilder dest, int length);
 

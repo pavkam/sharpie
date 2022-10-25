@@ -78,6 +78,34 @@ public sealed class Screen: Window
     }
 
     /// <summary>
+    /// Created a new pad.
+    /// </summary>
+    /// <param name="width">The window width.</param>
+    /// <param name="height">The window height.</param>
+    /// <returns>A new window object.</returns>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">When <paramref name="width"/>, <paramref name="height"/> are less than one.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public Pad CreatePad(int width, int height)
+    {
+        if (width < 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(width));
+        }
+
+        if (height < 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(height));
+        }
+
+        Terminal.AssertNotDisposed();
+        var handle = Terminal.Curses.newpad(height, width)
+                             .TreatNullAsError();
+
+        return new(Terminal, handle);
+    }
+
+    /// <summary>
     /// Applies all queued refreshes to the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>

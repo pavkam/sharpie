@@ -28,7 +28,7 @@ public sealed class Terminal: IDisposable
 
     internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableReturnToNewLineTranslation,
         int readTimeoutMillis, bool enableInputEchoing, bool enableForceInterruptingFlush,
-        bool enableProcessingKeypadKeys, bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
+        bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
         int escapeDelayMillis, SoftKeyLabelMode softKeyLabelMode)
     {
         if (_terminalInstanceActive)
@@ -39,10 +39,23 @@ public sealed class Terminal: IDisposable
 
         Curses = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
 
-        /* Set configuration. */
-        EnableLineBuffering = enableLineBuffering;
+        // Pre-screen creation.
+        _useEnvironmentOverrides = useEnvironmentOverrides;
+        if (_useEnvironmentOverrides)
+        {
+            Curses.use_env(true);
+        }
+        _softKeyLabelManager = new(this, softKeyLabelMode);
+
+
+        // Screen setup.
+        _screen = new(this, Curses.initscr());
+        _colorManager = new(this, enableColors);
+
+        // After screen creation.
         EnableInputEchoing = enableInputEchoing;
-        ReadTimeoutMillis = readTimeoutMillis;
+        _readTimeoutMillis = readTimeoutMillis;
+        EnableLineBuffering = enableLineBuffering;
         EnableReturnToNewLineTranslation = enableReturnToNewLineTranslation;
         EnableForceInterruptingFlush = enableForceInterruptingFlush;
         CaretMode = hardwareCursorMode;
@@ -51,19 +64,6 @@ public sealed class Terminal: IDisposable
         /* Other configuration */
         Curses.meta(IntPtr.Zero, true);
 
-        _useEnvironmentOverrides = useEnvironmentOverrides;
-        if (_useEnvironmentOverrides)
-        {
-            Curses.use_env(true);
-        }
-
-        /* Initialize the screen and other objects */
-        _colorManager = new(this, enableColors);
-        _softKeyLabelManager = new(this, softKeyLabelMode);
-        _screen = new(this, Curses.initscr())
-        {
-            EnableProcessingKeypadKeys = enableProcessingKeypadKeys
-        };
 
         _windows = new List<Window> { _screen };
         _terminalInstanceActive = true;
@@ -218,6 +218,7 @@ public sealed class Terminal: IDisposable
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is less than one.</exception>
     public int ReadTimeoutMillis
     {
         get
@@ -229,6 +230,11 @@ public sealed class Terminal: IDisposable
         set
         {
             AssertNotDisposed();
+
+            if (value <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
 
             if (!EnableLineBuffering)
             {
@@ -317,16 +323,6 @@ public sealed class Terminal: IDisposable
             Curses.intrflush(IntPtr.Zero, value).TreatError();
             _enableForceInterruptingFlush = value;
         }
-    }
-
-    /// <summary>
-    /// Enables or disables the processing of keypad keys.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool EnableProcessingKeypadKeys
-    {
-        get => Screen.EnableProcessingKeypadKeys;
-        set => Screen.EnableProcessingKeypadKeys = value;
     }
 
     /// <summary>
@@ -459,12 +455,6 @@ public sealed class Terminal: IDisposable
             return Curses.erasewchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0';
         }
     }
-
-    /// <summary>
-    /// Creates a new formatted text builder. Use this method to create texts that are to be displayed onto the screen.
-    /// </summary>
-    /// <returns></returns>
-    public FormattedTextBuilder CreateText() => new(Curses);
 
     /// <summary>
     /// Attempts to notify the user with audio or flashing alert.

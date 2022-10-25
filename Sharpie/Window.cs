@@ -1,6 +1,9 @@
 namespace Sharpie;
 
 using System.Drawing;
+using System.Globalization;
+using System.Text;
+using Curses;
 using JetBrains.Annotations;
 
 /// <summary>
@@ -10,11 +13,6 @@ using JetBrains.Annotations;
 public class Window: IDisposable
 {
     protected Terminal Terminal { get; }
-
-    private bool _enableProcessingKeypadKeys;
-    private bool _useHardwareLineInsertAndDelete;
-    private bool _useHardwareCharacterInsertAndDelete;
-    private bool _immediateRefresh;
 
     /// <summary>
     /// The Curses handle for the window.
@@ -30,8 +28,6 @@ public class Window: IDisposable
     {
         Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
         Handle = windowHandle;
-
-        _useHardwareCharacterInsertAndDelete = Terminal.Curses.has_ic();
     }
 
     /// <summary>
@@ -54,30 +50,6 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Enables or disables the processing of keypad keys.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public bool EnableProcessingKeypadKeys
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _enableProcessingKeypadKeys;
-        }
-        set
-        {
-            AssertNotDisposed();
-
-            Terminal.Curses.keypad(Handle, value)
-                    .TreatError();
-
-            _enableProcessingKeypadKeys = value;
-        }
-    }
-
-    /// <summary>
     /// Enables or disables the use of hardware line insert/delete handling fpr this window.
     /// </summary>
     /// <remarks>
@@ -92,7 +64,7 @@ public class Window: IDisposable
         {
             AssertNotDisposed();
 
-            return _useHardwareLineInsertAndDelete;
+            return Terminal.Curses.is_idlok(Handle);
         }
         set
         {
@@ -102,8 +74,6 @@ public class Window: IDisposable
             {
                 Terminal.Curses.idlok(Handle, value)
                         .TreatError();
-
-                _useHardwareLineInsertAndDelete = value;
             }
         }
     }
@@ -122,7 +92,7 @@ public class Window: IDisposable
         {
             AssertNotDisposed();
 
-            return _useHardwareCharacterInsertAndDelete;
+            return Terminal.Curses.is_idcok(Handle);
         }
         set
         {
@@ -131,7 +101,6 @@ public class Window: IDisposable
             if (Terminal.Curses.has_ic())
             {
                 Terminal.Curses.idcok(Handle, value);
-                _useHardwareCharacterInsertAndDelete = value;
             }
         }
     }
@@ -280,7 +249,8 @@ public class Window: IDisposable
         AssertNotDisposed();
 
         Terminal.Curses.setcchar(out var cChar, @char.ToString(), (uint) style.Attributes, style.ColorMixture.Handle,
-            IntPtr.Zero);
+                    IntPtr.Zero)
+                .TreatError();
 
         if (insert)
         {
@@ -298,11 +268,12 @@ public class Window: IDisposable
     /// Writes a text at the caret position at the current window and advance the caret.
     /// </summary>
     /// <param name="str">The text to write.</param>
+    /// <param name="style">The style of the text.</param>
     /// <param name="insert">If <c>true</c>, the text is inserted before the caret and not at the caret position.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="str"/> is <c>null</c>.</exception>
-    public void WriteText(FormattedText str, bool insert = false)
+    public void WriteText(string str, Style style, bool insert = false)
     {
         if (str == null)
         {
@@ -311,13 +282,25 @@ public class Window: IDisposable
 
         AssertNotDisposed();
 
-        if (insert)
+        var characters = new List<CChar>();
+        var enumerator = StringInfo.GetTextElementEnumerator(str);
+        while (enumerator.MoveNext())
         {
-            Terminal.Curses.wadd_wchnstr(Handle, str.Characters, str.Characters.Length)
+            var el = enumerator.GetTextElement();
+            Terminal.Curses.setcchar(out var @char, el, (uint) style.Attributes,
+                       style.ColorMixture.Handle, IntPtr.Zero)
+                   .TreatError();
+
+            characters.Add(@char);
+        }
+
+        if (!insert)
+        {
+            Terminal.Curses.wadd_wchnstr(Handle, characters.ToArray(), characters.Count)
                     .TreatError();
         } else
         {
-            foreach (var c in str.Characters)
+            foreach (var c in characters)
             {
                 Terminal.Curses.wins_wch(Handle, c)
                         .TreatError();
@@ -378,6 +361,40 @@ public class Window: IDisposable
 
                 break;
         }
+    }
+
+    public bool TryReadKey(ReadBehavior behavior)
+    {
+        AssertNotDisposed();
+
+        var enableKeypad = !behavior.HasFlag(ReadBehavior.RawKeypadSequences);
+        var enableNoDelay = behavior.HasFlag(ReadBehavior.RawEscapeSequences);
+        var enableNoTimeout = behavior.HasFlag(ReadBehavior.NoWait);
+
+        if (Terminal.Curses.is_keypad(Handle) != enableKeypad)
+        {
+            Terminal.Curses.keypad(Handle, enableKeypad).TreatError();
+        }
+        if (Terminal.Curses.is_nodelay(Handle) != enableNoDelay)
+        {
+            Terminal.Curses.nodelay(Handle, enableNoDelay).TreatError();
+        }
+        if (Terminal.Curses.is_notimeout(Handle) != enableNoTimeout)
+        {
+            Terminal.Curses.notimeout(Handle, enableNoTimeout).TreatError();
+        }
+
+        var result = Terminal.Curses.wget_wch(Handle, out var @char);
+        if (result == (int) Key.KEY_CODE_YES)
+        {
+            //some
+        } else if (result != Helpers.CursesErrorResult)
+        {
+            // good as well.
+        }
+
+        Console.Write(" ---> " + result.ToString() + " <<<>>>> " + @char.ToString());
+        return result == 0;
     }
 
     /// <summary>
@@ -646,14 +663,12 @@ public class Window: IDisposable
         get
         {
             AssertNotDisposed();
-            return _immediateRefresh;
+            return Terminal.Curses.is_immedok(Handle);
         }
         set
         {
             AssertNotDisposed();
             Terminal.Curses.immedok(Handle, value);
-
-            _immediateRefresh = value;
         }
     }
 
@@ -661,11 +676,18 @@ public class Window: IDisposable
     /// Refreshes the window by synchronizing it to the terminal.
     /// </summary>
     /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
+    /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public virtual void Refresh(bool batch)
+    public virtual void Refresh(bool batch, bool entireScreen)
     {
         AssertNotDisposed();
+
+        if (entireScreen)
+        {
+            Terminal.Curses.clearok(Handle, true)
+                    .TreatError();
+        }
 
         if (batch)
         {

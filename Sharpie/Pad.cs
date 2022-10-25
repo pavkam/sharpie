@@ -33,7 +33,7 @@ public sealed class Pad: Window
     /// This functionality is disabled in the pads. Use the overloaded version of this method.
     /// </remarks>
     /// <exception cref="NotSupportedException">Always throws.</exception>
-    public override void Refresh(bool batch)
+    public override void Refresh(bool batch, bool entireScreen)
     {
         throw new NotSupportedException("Pads cannot be refreshed in this way.");
     }
@@ -42,11 +42,12 @@ public sealed class Pad: Window
     /// Refreshes the pad by synchronizing it to the terminal screen.
     /// </summary>
     /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
+    /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>
     /// <param name="rect">The rectangle of the pad to place onto the screen.</param>
     /// <param name="screenPos">The point on the screen to place that rectangle.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void Refresh(bool batch, Rectangle rect, Point screenPos)
+    public void Refresh(bool batch, bool entireScreen, Rectangle rect, Point screenPos)
     {
         AssertNotDisposed();
 
@@ -59,6 +60,12 @@ public sealed class Pad: Window
         if (!Terminal.Screen.IsRectangleWithin(destRect))
         {
             throw new ArgumentOutOfRangeException(nameof(screenPos));
+        }
+
+        if (entireScreen)
+        {
+            Terminal.Curses.clearok(Handle, true)
+                    .TreatError();
         }
 
         if (batch)
