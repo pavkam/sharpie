@@ -33,7 +33,7 @@ public interface ICursesProvider
 
     int def_shell_mode(); //NO
 
-    int delay_output(int delayMillis);
+    int delay_output(int delayMillis); //NO
 
     int delwin(IntPtr window); //DONE
 
@@ -154,7 +154,7 @@ public interface ICursesProvider
 
     int nocbreak(); //DONE
 
-    int nodelay(IntPtr window, bool set);
+    int nodelay(IntPtr window, bool set); //DONE
 
     int noecho(); //DONE
 
@@ -164,7 +164,7 @@ public interface ICursesProvider
 
     int noraw();
 
-    int notimeout(IntPtr window, bool set);
+    int notimeout(IntPtr window, bool set); //DONE
 
     int overlay(IntPtr srcWindow, IntPtr destWindow); //DONE
 
@@ -244,7 +244,7 @@ public interface ICursesProvider
 
     string? termname(); //DONE
 
-    int ungetch(uint @char);
+    int ungetch(uint @char); //NO
 
     void use_env(bool set); //DONE
 
@@ -287,15 +287,15 @@ public interface ICursesProvider
 
     int werase(IntPtr window); //DONE
 
-    int wgetch(IntPtr window);
+    int wgetch(IntPtr window); //NO
 
-    int wgetnstr(IntPtr window, StringBuilder dest, int length);
+    int wgetnstr(IntPtr window, StringBuilder dest, int length); //NO
 
     int whline(IntPtr window, uint @char, int count);
 
-    uint winch(IntPtr window);
+    uint winch(IntPtr window); //NO
 
-    int winchnstr(IntPtr window, StringBuilder dest, int length);
+    int winchnstr(IntPtr window, StringBuilder dest, int length); //NO
 
     int winsch(IntPtr window, uint @char); //NO
 
@@ -323,7 +323,7 @@ public interface ICursesProvider
 
     int wvline(IntPtr window, uint @char, int count);
 
-    bool is_term_resized(int lines, int cols);
+    bool is_term_resized(int lines, int cols); //NO
 
     int resize_term(int lines, int cols); //NO
 
@@ -365,7 +365,7 @@ public interface ICursesProvider
 
     uint term_attrs();
 
-    int unget_wch(uint @char);
+    int unget_wch(uint @char); //NO
 
     int wadd_wch(IntPtr window, CChar @char); //DONE
 
@@ -383,11 +383,11 @@ public interface ICursesProvider
 
     int wecho_wchar(IntPtr window, CChar @char); //NO
 
-    int wget_wch(IntPtr window, out uint @char);
+    int wget_wch(IntPtr window, out uint @char); //DONE
 
     int wgetbkgrnd(IntPtr window, CChar @char);
 
-    int wgetn_wstr(IntPtr window, StringBuilder dest, int length);
+    int wgetn_wstr(IntPtr window, StringBuilder dest, int length); //NO
 
     int whline_set(IntPtr window, CChar @char, int count);
 
@@ -395,7 +395,7 @@ public interface ICursesProvider
 
     int win_wchnstr(IntPtr window, CChar[] @char, int length);
 
-    int winnwstr(IntPtr window, StringBuilder dest, int length);
+    int winnwstr(IntPtr window, StringBuilder dest, int length); //NO
 
     int wins_nwstr(IntPtr window, string text, int length); //NO
 

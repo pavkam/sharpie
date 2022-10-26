@@ -243,7 +243,8 @@ public sealed class Screen: Window
         };
     }
 
-    private static (MouseButton button, MouseButtonState state, ModifierKey modifierKey) ConvertMouseEvent(RawMouseEvent.EventType type)
+    private static (MouseButton button, MouseButtonState state, ModifierKey modifierKey) ConvertMouseEvent(
+        RawMouseEvent.EventType type)
     {
         var modifierKey = ModifierKey.None;
         var button = MouseButton.Unknown;
@@ -253,145 +254,114 @@ public sealed class Screen: Window
         {
             modifierKey |= ModifierKey.Alt;
         }
+
         if (type.HasFlag(RawMouseEvent.EventType.Ctrl))
         {
             modifierKey |= ModifierKey.Ctrl;
         }
+
         if (type.HasFlag(RawMouseEvent.EventType.Shift))
         {
             modifierKey |= ModifierKey.Shift;
         }
 
-        // Button 1
         if (type.HasFlag(RawMouseEvent.EventType.Button1Released))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.Released;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button1Pressed))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button1Pressed))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.Pressed;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button1Clicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button1Clicked))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.Clicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button1DoubleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button1DoubleClicked))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.DoubleClicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button1TripleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button1TripleClicked))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.TripleClicked;
-        }
-
-        // Button 2
-        if (type.HasFlag(RawMouseEvent.EventType.Button2Released))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button2Released))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.Released;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button2Pressed))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button2Pressed))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.Pressed;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button2Clicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button2Clicked))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.Clicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button2DoubleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button2DoubleClicked))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.DoubleClicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button2TripleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button2TripleClicked))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.TripleClicked;
-        }
-
-        // Button 3
-        if (type.HasFlag(RawMouseEvent.EventType.Button3Released))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button3Released))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.Released;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button3Pressed))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button3Pressed))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.Pressed;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button3Clicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button3Clicked))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.Clicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button3DoubleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button3DoubleClicked))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.DoubleClicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button3TripleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button3TripleClicked))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.TripleClicked;
-        }
-
-        // Button 4
-        if (type.HasFlag(RawMouseEvent.EventType.Button4Released))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button4Released))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.Released;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button4Pressed))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button4Pressed))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.Pressed;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button4Clicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button4Clicked))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.Clicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button4DoubleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button4DoubleClicked))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.DoubleClicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button4TripleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button4TripleClicked))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.TripleClicked;
-        }
-
-        // Button 5
-        if (type.HasFlag(RawMouseEvent.EventType.Button5Released))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button5Released))
         {
             button = MouseButton.Button5;
             state = MouseButtonState.Released;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button5Pressed))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button5Pressed))
         {
             button = MouseButton.Button5;
             state = MouseButtonState.Pressed;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button5Clicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button5Clicked))
         {
             button = MouseButton.Button5;
             state = MouseButtonState.Clicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button5DoubleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button5DoubleClicked))
         {
             button = MouseButton.Button5;
             state = MouseButtonState.DoubleClicked;
-        }
-        else if (type.HasFlag(RawMouseEvent.EventType.Button5TripleClicked))
+        } else if (type.HasFlag(RawMouseEvent.EventType.Button5TripleClicked))
         {
             button = MouseButton.Button5;
             state = MouseButtonState.TripleClicked;
@@ -431,8 +401,10 @@ public sealed class Screen: Window
                     @event = new() { Type = EventType.ResizeTerminal };
                     break;
                 case (uint) RawKey.Mouse:
-                    Terminal.Curses.getmouse(out var mouseEvent)
-                            .TreatError();
+                    if (Terminal.Curses.getmouse(out var mouseEvent) == Helpers.CursesErrorResult)
+                    {
+                        return false;
+                    }
 
                     var (button, state, mouseMod) = ConvertMouseEvent((RawMouseEvent.EventType)mouseEvent.buttonState);
                     @event = new()

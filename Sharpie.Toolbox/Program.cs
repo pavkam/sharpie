@@ -1,10 +1,9 @@
-﻿using System.Text;
-using Sharpie;
+﻿using Sharpie;
 using Sharpie.Curses;
 
 var terminal = Terminal.UsingCurses(NativeCursesProvider.Instance)
                        .WithSoftKeyLabels(SoftKeyLabelMode.ThreeTwoThree)
-                       //.WithMouse()
+                       .WithMouse()
                        .Create();
 
 Console.Write(terminal.Name);

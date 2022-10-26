@@ -20,7 +20,7 @@ public struct RawMouseEvent
         Button3 = 3UL,
         Button4 = 4UL,
         Button5 = 5UL,
-        Modifiers = 6UL,
+        Modifiers = 5UL,
     }
 
     [PublicAPI, Flags]
