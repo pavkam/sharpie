@@ -19,6 +19,8 @@ public sealed class Terminal: IDisposable
     private bool _enableReturnToNewLineTranslation;
     private bool _enableForceInterruptingFlush;
     private bool _useEnvironmentOverrides;
+    private bool _enableMouse;
+    private ulong? _oldMouseMask;
     private CaretMode _hardwareCursorMode;
     private Screen _screen;
     private ColorManager _colorManager;
@@ -28,7 +30,7 @@ public sealed class Terminal: IDisposable
     internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableReturnToNewLineTranslation,
         int readTimeoutMillis, bool enableInputEchoing, bool enableForceInterruptingFlush,
         bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
-        SoftKeyLabelMode softKeyLabelMode)
+        SoftKeyLabelMode softKeyLabelMode, bool enableMouse)
     {
         if (_terminalInstanceActive)
         {
@@ -46,7 +48,6 @@ public sealed class Terminal: IDisposable
         }
         _softKeyLabelManager = new(this, softKeyLabelMode);
 
-
         // Screen setup.
         _screen = new(this, Curses.initscr());
         _colorManager = new(this, enableColors);
@@ -58,6 +59,7 @@ public sealed class Terminal: IDisposable
         EnableReturnToNewLineTranslation = enableReturnToNewLineTranslation;
         EnableForceInterruptingFlush = enableForceInterruptingFlush;
         CaretMode = hardwareCursorMode;
+        EnableMouse = enableMouse;
 
         /* Other configuration */
         Curses.meta(IntPtr.Zero, true);
@@ -127,6 +129,33 @@ public sealed class Terminal: IDisposable
         }
     }
 
+    /// <summary>
+    /// Enables or disables the line buffering mode.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public bool EnableMouse
+    {
+        get
+        {
+            AssertNotDisposed();
+
+            return _enableMouse;
+        }
+        set
+        {
+            AssertNotDisposed();
+
+            var newMask = value
+                ? (ulong) RawMouseEvent.EventType.ReportPosition | (ulong) RawMouseEvent.EventType.All
+                : 0;
+
+            Curses.mousemask(newMask, out var oldMask)
+                  .TreatError();
+
+            _oldMouseMask ??= oldMask;
+        }
+    }
 
     /// <summary>
     /// Enables or disables the line buffering mode.
@@ -496,7 +525,12 @@ public sealed class Terminal: IDisposable
     {
         if (!IsDisposed)
         {
-            Curses.endwin(); // Ignore potential error.
+            if (_oldMouseMask != null)
+            {
+                Curses.mousemask(_oldMouseMask.Value, out var _);
+            }
+
+            Curses.endwin();
         }
 
         _terminalInstanceActive = false;

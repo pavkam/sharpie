@@ -365,41 +365,6 @@ public class Window: IDisposable
         }
     }
 
-    public bool TryReadEvent(ReadBehavior behavior, out Rune @char)
-    {
-        AssertNotDisposed();
-
-        var enableKeypad = !behavior.HasFlag(ReadBehavior.RawKeypadSequences);
-        var enableNoDelay = behavior.HasFlag(ReadBehavior.RawEscapeSequences);
-        var enableNoTimeout = behavior.HasFlag(ReadBehavior.NoWait);
-
-        if (Terminal.Curses.is_keypad(Handle) != enableKeypad)
-        {
-            Terminal.Curses.keypad(Handle, enableKeypad).TreatError();
-        }
-        if (Terminal.Curses.is_nodelay(Handle) != enableNoDelay)
-        {
-            Terminal.Curses.nodelay(Handle, enableNoDelay).TreatError();
-        }
-        if (Terminal.Curses.is_notimeout(Handle) != enableNoTimeout)
-        {
-            Terminal.Curses.notimeout(Handle, enableNoTimeout).TreatError();
-        }
-
-        @char = new(0);
-        var result = Terminal.Curses.wget_wch(Handle, out var key);
-        if (result == (int) Key.KEY_CODE_YES)
-        {
-            //some
-        } else if (result != Helpers.CursesErrorResult)
-        {
-            @char = new(key);
-            return true;
-        }
-
-        return false;
-    }
-
     /// <summary>
     /// Replaces the content of a given window with the contents of the current window.
     /// </summary>

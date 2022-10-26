@@ -404,4 +404,11 @@ public interface ICursesProvider
     string? wunctrl(CChar @char);
 
     int wvline_set(IntPtr window, CChar @char, int count);
+
+    int getmouse(out RawMouseEvent @event);
+    int ungetmouse(RawMouseEvent @event);
+    int mousemask(ulong newMask, out ulong oldMask);
+    bool wenclose(IntPtr window, int line, int col);
+    int mouseinterval(int millis);
+    bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
 }

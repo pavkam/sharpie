@@ -1,9 +1,8 @@
-namespace Sharpie;
+namespace Sharpie.Curses;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
-using Curses;
 using JetBrains.Annotations;
 
 /// <summary>
@@ -452,8 +451,8 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int pecho_wchar(IntPtr window, ref CChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int setcchar(out CChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs, ushort colorPair,
-        IntPtr reserved);
+    public static extern int setcchar(out CChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs,
+        ushort colorPair, IntPtr reserved);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern int slk_set(int labelIndex, string title, int fmt);
@@ -567,65 +566,97 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern bool is_cleared(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern  bool is_idcok(IntPtr window);
+    public static extern bool is_idcok(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern bool is_idlok(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern  bool is_immedok(IntPtr window);
+    public static extern bool is_immedok(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern  bool is_keypad(IntPtr window);
+    public static extern bool is_keypad(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern  bool is_leaveok(IntPtr window);
+    public static extern bool is_leaveok(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern bool is_nodelay(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern  bool is_notimeout(IntPtr window);
+    public static extern bool is_notimeout(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern  bool is_pad(IntPtr window);
+    public static extern bool is_pad(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern  bool is_scrollok(IntPtr window);
+    public static extern bool is_scrollok(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern   bool is_subwin(IntPtr window);
+    public static extern bool is_subwin(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern   bool is_syncok(IntPtr window);
+    public static extern bool is_syncok(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr wgetparent(IntPtr window);
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int wgetdelay(IntPtr window);
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern  int wgetscrreg(IntPtr window, out int top, out int bottom);
 
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int wgetscrreg(IntPtr window, out int top, out int bottom);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int getmouse(out RawMouseEvent @event);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int ungetmouse(ref RawMouseEvent @event);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int mousemask(ulong newMask, out ulong oldMask);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern bool wenclose(IntPtr window, int line, int col);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int mouseinterval(int millis);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
 
     bool ICursesProvider.is_cleared(IntPtr window) => is_cleared(window);
 
-    bool ICursesProvider.is_idcok(IntPtr window)=> is_idcok(window);
+    bool ICursesProvider.is_idcok(IntPtr window) => is_idcok(window);
 
-    bool ICursesProvider.is_idlok(IntPtr window)=> is_idlok(window);
+    bool ICursesProvider.is_idlok(IntPtr window) => is_idlok(window);
 
-    bool ICursesProvider.is_immedok(IntPtr window)=> is_immedok(window);
+    bool ICursesProvider.is_immedok(IntPtr window) => is_immedok(window);
 
-    bool ICursesProvider.is_keypad(IntPtr window)=> is_keypad(window);
+    bool ICursesProvider.is_keypad(IntPtr window) => is_keypad(window);
 
-    bool ICursesProvider.is_leaveok(IntPtr window)=> is_leaveok(window);
+    bool ICursesProvider.is_leaveok(IntPtr window) => is_leaveok(window);
 
-    bool ICursesProvider.is_nodelay(IntPtr window)=> is_nodelay(window);
+    bool ICursesProvider.is_nodelay(IntPtr window) => is_nodelay(window);
 
-    bool ICursesProvider.is_notimeout(IntPtr window)=> is_notimeout(window);
+    bool ICursesProvider.is_notimeout(IntPtr window) => is_notimeout(window);
 
-    bool ICursesProvider.is_pad(IntPtr window)=> is_pad(window);
+    bool ICursesProvider.is_pad(IntPtr window) => is_pad(window);
 
-    bool ICursesProvider.is_scrollok(IntPtr window)=> is_scrollok(window);
+    bool ICursesProvider.is_scrollok(IntPtr window) => is_scrollok(window);
 
-    bool ICursesProvider.is_subwin(IntPtr window)=> is_subwin(window);
+    bool ICursesProvider.is_subwin(IntPtr window) => is_subwin(window);
 
-    bool ICursesProvider.is_syncok(IntPtr window)=> is_syncok(window);
+    bool ICursesProvider.is_syncok(IntPtr window) => is_syncok(window);
 
-    IntPtr ICursesProvider.wgetparent(IntPtr window)=> wgetparent(window);
+    IntPtr ICursesProvider.wgetparent(IntPtr window) => wgetparent(window);
 
-    int ICursesProvider.wgetdelay(IntPtr window)=> wgetdelay(window);
+    int ICursesProvider.wgetdelay(IntPtr window) => wgetdelay(window);
 
-    int ICursesProvider.wgetscrreg(IntPtr window, out int top, out int bottom)=> wgetscrreg(window, out top, out bottom);
+    int ICursesProvider.wgetscrreg(IntPtr window, out int top, out int bottom) =>
+        wgetscrreg(window, out top, out bottom);
 
     int ICursesProvider.baudrate() => baudrate();
 
@@ -1016,4 +1047,16 @@ public sealed class NativeCursesProvider: ICursesProvider
     string? ICursesProvider.wunctrl(CChar @char) => Marshal.PtrToStringUni(wunctrl(ref @char));
 
     int ICursesProvider.wvline_set(IntPtr window, CChar @char, int count) => wvline_set(window, ref @char, count);
+
+    int ICursesProvider.getmouse(out RawMouseEvent @event) => getmouse(out @event);
+
+    public int ungetmouse(RawMouseEvent @event) => ungetmouse(ref @event);
+
+    int ICursesProvider.mousemask(ulong newMask, out ulong oldMask) => mousemask(newMask, out oldMask);
+
+    bool ICursesProvider.wenclose(IntPtr window, int line, int col) => wenclose(window, line, col);
+
+    int ICursesProvider.mouseinterval(int millis) => mouseinterval(millis);
+
+    bool ICursesProvider.wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen) => wmouse_trafo(window, ref line, ref col, toScreen);
 }

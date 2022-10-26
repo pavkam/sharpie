@@ -17,6 +17,7 @@ public sealed class TerminalBuilder
     private bool _enableColors = true;
     private bool _enableReturnToNewLineTranslation;
     private bool _useEnvironmentOverrides = true;
+    private bool _enableMouse;
     private CaretMode _hardwareCursorMode = CaretMode.Visible;
     private SoftKeyLabelMode _softKeyLabelMode = SoftKeyLabelMode.Disabled;
 
@@ -133,7 +134,6 @@ public sealed class TerminalBuilder
         return this;
     }
 
-
     /// <summary>
     /// Sets the soft key labels functionality mode.
     /// </summary>
@@ -149,11 +149,25 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
+    /// Enables or disables the mouse support (if available).
+    /// </summary>
+    /// <remarks>
+    /// Default is <c>false</c>.
+    /// </remarks>
+    /// <param name="enabled">Specifies whether the mouse is enabled.</param>
+    /// <returns>The same builder instance.</returns>
+    public TerminalBuilder WithMouse(bool enabled = true)
+    {
+        _enableMouse = true;
+        return this;
+    }
+
+    /// <summary>
     /// Creates a new instance of the <see cref="Terminal"/> class.
     /// </summary>
     /// <returns>A new terminal object.</returns>
     public Terminal Create() =>
         new(_cursesProvider, _enableLineBuffering, _enableReturnToNewLineTranslation, _readTimeoutMillis,
             _enableInputEchoing, _enableForceInterruptingFlush, _enableColors,
-            _hardwareCursorMode, _useEnvironmentOverrides, _softKeyLabelMode);
+            _hardwareCursorMode, _useEnvironmentOverrides, _softKeyLabelMode, _enableMouse);
 }
