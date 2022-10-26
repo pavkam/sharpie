@@ -365,7 +365,7 @@ public class Window: IDisposable
         }
     }
 
-    public bool TryReadKey(ReadBehavior behavior)
+    public bool TryReadEvent(ReadBehavior behavior, out Rune @char)
     {
         AssertNotDisposed();
 
@@ -386,17 +386,18 @@ public class Window: IDisposable
             Terminal.Curses.notimeout(Handle, enableNoTimeout).TreatError();
         }
 
-        var result = Terminal.Curses.wget_wch(Handle, out var @char);
+        @char = new(0);
+        var result = Terminal.Curses.wget_wch(Handle, out var key);
         if (result == (int) Key.KEY_CODE_YES)
         {
             //some
         } else if (result != Helpers.CursesErrorResult)
         {
-            // good as well.
+            @char = new(key);
+            return true;
         }
 
-        Console.Write(" ---> " + result.ToString() + " <<<>>>> " + @char.ToString());
-        return result == 0;
+        return false;
     }
 
     /// <summary>

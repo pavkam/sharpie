@@ -1,8 +1,11 @@
-﻿using Sharpie;
+﻿using System.Text;
+using Sharpie;
 
 var terminal = Terminal.UsingCurses(NativeCursesProvider.Instance)
                        .WithSoftKeyLabels(SoftKeyLabelMode.ThreeTwoThree)
         .Create();
+
+Console.Write(terminal.Name);
 
 terminal.Screen.WriteText("Hello", Style.Default);
 terminal.Screen.MoveCaretTo(terminal.Screen.CaretPosition.X + 5, terminal.Screen.CaretPosition.Y);
@@ -14,6 +17,7 @@ terminal.Screen.WriteText("World", new()
 terminal.Screen.MoveCaretTo(terminal.Screen.CaretPosition.X + 5, terminal.Screen.CaretPosition.Y);
 terminal.SoftKeyLabels.SetLabel(0, "Hello", SoftKeyLabelAlignment.Center);
 terminal.Screen.ApplyPendingRefreshes();
-terminal.Screen.TryReadKey(ReadBehavior.Wait);
-terminal.Screen.TryReadKey(ReadBehavior.Wait);
-terminal.Screen.TryReadKey(ReadBehavior.Wait);
+Rune r;
+terminal.Screen.TryReadEvent(ReadBehavior.Wait, out r);
+terminal.Screen.TryReadEvent(ReadBehavior.Wait, out r);
+terminal.Screen.TryReadEvent(ReadBehavior.Wait, out r);

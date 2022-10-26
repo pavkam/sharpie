@@ -18,8 +18,6 @@ public sealed class Terminal: IDisposable
     private bool _enableInputEchoing;
     private bool _enableReturnToNewLineTranslation;
     private bool _enableForceInterruptingFlush;
-    private bool _enableProcessingKeypadKeys;
-    private bool _enableColors;
     private bool _useEnvironmentOverrides;
     private CaretMode _hardwareCursorMode;
     private Screen _screen;
@@ -30,7 +28,7 @@ public sealed class Terminal: IDisposable
     internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableReturnToNewLineTranslation,
         int readTimeoutMillis, bool enableInputEchoing, bool enableForceInterruptingFlush,
         bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
-        int escapeDelayMillis, SoftKeyLabelMode softKeyLabelMode)
+        SoftKeyLabelMode softKeyLabelMode)
     {
         if (_terminalInstanceActive)
         {
@@ -60,7 +58,6 @@ public sealed class Terminal: IDisposable
         EnableReturnToNewLineTranslation = enableReturnToNewLineTranslation;
         EnableForceInterruptingFlush = enableForceInterruptingFlush;
         CaretMode = hardwareCursorMode;
-        EscapeSequenceWaitDelay = escapeDelayMillis;
 
         /* Other configuration */
         Curses.meta(IntPtr.Zero, true);
@@ -165,7 +162,7 @@ public sealed class Terminal: IDisposable
     /// Returns the name of the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public string Name
+    public string? Name
     {
         get
         {
@@ -179,7 +176,7 @@ public sealed class Terminal: IDisposable
     /// Returns the long description of the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public string Description
+    public string? Description
     {
         get
         {
@@ -193,7 +190,7 @@ public sealed class Terminal: IDisposable
     /// Returns the version of the Curses library in use.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public string CursesVersion
+    public string? CursesVersion
     {
         get
         {
@@ -417,31 +414,6 @@ public sealed class Terminal: IDisposable
             return
                 new(
                     Curses.killwchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0');
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the escape sequence wait delay.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is negative.</exception>
-    public int EscapeSequenceWaitDelay
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return Curses.get_escdelay();
-        }
-        set
-        {
-            if (value < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
-            AssertNotDisposed();
-            Curses.set_escdelay(value)
-                  .TreatError();
         }
     }
 

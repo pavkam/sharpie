@@ -18,7 +18,6 @@ public sealed class TerminalBuilder
     private bool _enableReturnToNewLineTranslation;
     private bool _useEnvironmentOverrides = true;
     private CaretMode _hardwareCursorMode = CaretMode.Visible;
-    private int _escapeDelayMillis = 1000;
     private SoftKeyLabelMode _softKeyLabelMode = SoftKeyLabelMode.Disabled;
 
     /// <summary>
@@ -134,25 +133,6 @@ public sealed class TerminalBuilder
         return this;
     }
 
-    /// <summary>
-    /// Sets the escape sequence wait timeout.
-    /// </summary>
-    /// <remarks>
-    /// Default is 1 second.
-    /// </remarks>
-    /// <param name="delayMillis">The delay in milliseconds.</param>
-    /// <returns>The same builder instance.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="delayMillis"/> is negative.</exception>
-    public TerminalBuilder WithEscapeSequenceWaitDelay(int delayMillis)
-    {
-        if (delayMillis < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(delayMillis));
-        }
-
-        _escapeDelayMillis = delayMillis;
-        return this;
-    }
 
     /// <summary>
     /// Sets the soft key labels functionality mode.
@@ -175,5 +155,5 @@ public sealed class TerminalBuilder
     public Terminal Create() =>
         new(_cursesProvider, _enableLineBuffering, _enableReturnToNewLineTranslation, _readTimeoutMillis,
             _enableInputEchoing, _enableForceInterruptingFlush, _enableColors,
-            _hardwareCursorMode, _useEnvironmentOverrides, _escapeDelayMillis, _softKeyLabelMode);
+            _hardwareCursorMode, _useEnvironmentOverrides, _softKeyLabelMode);
 }

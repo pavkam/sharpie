@@ -126,7 +126,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern bool is_wintouched(IntPtr window);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern string keyname(int keyCode);
+    public static extern IntPtr keyname(uint keyCode);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int keypad(IntPtr window, bool set);
@@ -138,7 +138,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int leaveok(IntPtr window, bool set);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern string longname();
+    public static extern IntPtr longname();
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int meta(IntPtr window, bool set);
@@ -254,7 +254,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int slk_init(int format);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern string slk_label(int labelIndex);
+    public static extern IntPtr slk_label(int labelIndex);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int slk_noutrefresh();
@@ -283,10 +283,10 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int syncok(IntPtr window, bool set);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern char termattrs();
+    public static extern uint termattrs();
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern string termname();
+    public static extern IntPtr termname();
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int ungetch(uint @char);
@@ -409,10 +409,10 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int resizeterm(int lines, int cols);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern string keybound(int keyCode, int count);
+    public static extern IntPtr keybound(uint keyCode, int count);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern string curses_version();
+    public static extern IntPtr curses_version();
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int assume_default_colors(int fgColor, int bgColor);
@@ -420,17 +420,11 @@ public sealed class NativeCursesProvider: ICursesProvider
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int define_key(string keyName, int keyCode);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int get_escdelay();
-
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern int key_defined(string keyName);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int keyok(int keyCode, bool set);
-
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int set_escdelay(int tenths);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int set_tabsize(int size);
@@ -449,7 +443,7 @@ public sealed class NativeCursesProvider: ICursesProvider
         IntPtr reserved);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern string key_name(uint @char);
+    public static extern IntPtr key_name(uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int killwchar(out uint @char);
@@ -524,7 +518,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int winwstr(IntPtr window, string text);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern string wunctrl(ref CChar @char);
+    public static extern IntPtr wunctrl(ref CChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int wvline_set(IntPtr window, ref CChar @char, int count);
@@ -730,13 +724,13 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     bool ICursesProvider.is_wintouched(IntPtr window) => is_wintouched(window);
 
-    string ICursesProvider.keyname(int keyCode) => keyname(keyCode);
+    string? ICursesProvider.keyname(uint keyCode) => Marshal.PtrToStringAnsi(keyname(keyCode));
 
     int ICursesProvider.keypad(IntPtr window, bool set) => keypad(window, set);
 
     int ICursesProvider.leaveok(IntPtr window, bool set) => leaveok(window, set);
 
-    string ICursesProvider.longname() => longname();
+    string? ICursesProvider.longname() => Marshal.PtrToStringAnsi(longname());
 
     int ICursesProvider.meta(IntPtr window, bool set) => meta(window, set);
 
@@ -826,7 +820,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.slk_init(int format) => slk_init(format);
 
-    string ICursesProvider.slk_label(int labelIndex) => slk_label(labelIndex);
+    string? ICursesProvider.slk_label(int labelIndex) => Marshal.PtrToStringAnsi(slk_label(labelIndex));
 
     int ICursesProvider.slk_noutrefresh() => slk_noutrefresh();
 
@@ -848,7 +842,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.syncok(IntPtr window, bool set) => syncok(window, set);
 
-    string ICursesProvider.termname() => termname();
+    string? ICursesProvider.termname() => Marshal.PtrToStringAnsi(termname());
 
     int ICursesProvider.ungetch(uint @char) => ungetch(@char);
 
@@ -943,21 +937,17 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.resizeterm(int lines, int cols) => resizeterm(lines, cols);
 
-    string ICursesProvider.keybound(int keyCode, int count) => keybound(keyCode, count);
+    string? ICursesProvider.keybound(uint keyCode, int count) => Marshal.PtrToStringAnsi(keybound(keyCode, count));
 
-    string ICursesProvider.curses_version() => curses_version();
+    string? ICursesProvider.curses_version() => Marshal.PtrToStringAnsi(curses_version());
 
     int ICursesProvider.assume_default_colors(int fgColor, int bgColor) => assume_default_colors(fgColor, bgColor);
 
     int ICursesProvider.define_key(string keyName, int keyCode) => define_key(keyName, keyCode);
 
-    int ICursesProvider.get_escdelay() => get_escdelay();
-
     int ICursesProvider.key_defined(string keyName) => key_defined(keyName);
 
     int ICursesProvider.keyok(int keyCode, bool set) => keyok(keyCode, set);
-
-    int ICursesProvider.set_escdelay(int millis) => set_escdelay(millis);
 
     int ICursesProvider.set_tabsize(int size) => set_tabsize(size);
 
@@ -971,7 +961,7 @@ public sealed class NativeCursesProvider: ICursesProvider
         IntPtr reserved) =>
         getcchar(ref @char, dest, out attrs, out colorPair, reserved);
 
-    string ICursesProvider.key_name(uint @char) => key_name(@char);
+    string? ICursesProvider.key_name(uint @char) => Marshal.PtrToStringAnsi(key_name(@char));
 
     int ICursesProvider.killwchar(out uint @char) => killwchar(out @char);
 
@@ -1023,7 +1013,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.wins_wch(IntPtr window, CChar @char) => wins_wch(window, ref @char);
 
-    string ICursesProvider.wunctrl(CChar @char) => wunctrl(ref @char);
+    string? ICursesProvider.wunctrl(CChar @char) => Marshal.PtrToStringUni(wunctrl(ref @char));
 
     int ICursesProvider.wvline_set(IntPtr window, CChar @char, int count) => wvline_set(window, ref @char, count);
 }

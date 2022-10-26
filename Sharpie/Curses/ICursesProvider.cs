@@ -132,13 +132,13 @@ public interface ICursesProvider
 
     int wgetscrreg(IntPtr window, out int top, out int bottom);
 
-    string keyname(int keyCode);
+    string? keyname(uint keyCode);
 
     int keypad(IntPtr window, bool set); //DONE
 
     int leaveok(IntPtr window, bool set);
 
-    string longname(); //DONE
+    string? longname(); //DONE
 
     int meta(IntPtr window, bool set); //DONE
 
@@ -222,7 +222,7 @@ public interface ICursesProvider
 
     int slk_init(int format); //DONE
 
-    string slk_label(int labelIndex); //NO
+    string? slk_label(int labelIndex); //NO
 
     int slk_noutrefresh(); //DONE
 
@@ -242,7 +242,7 @@ public interface ICursesProvider
 
     int syncok(IntPtr window, bool set);
 
-    string termname(); //DONE
+    string? termname(); //DONE
 
     int ungetch(uint @char);
 
@@ -329,21 +329,17 @@ public interface ICursesProvider
 
     int resizeterm(int lines, int cols); //NO
 
-    string keybound(int keyCode, int count);
+    string? keybound(uint keyCode, int count);
 
-    string curses_version(); //DONE
+    string? curses_version(); //DONE
 
     int assume_default_colors(int fgColor, int bgColor); //DONE
 
     int define_key(string keyName, int keyCode);
 
-    int get_escdelay(); //DONE
-
     int key_defined(string keyName);
 
     int keyok(int keyCode, bool set);
-
-    int set_escdelay(int millis); //DONE
 
     int set_tabsize(int size);
 
@@ -356,7 +352,7 @@ public interface ICursesProvider
     int getcchar(CChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
         IntPtr reserved);
 
-    string key_name(uint @char);
+    string? key_name(uint @char);
 
     int killwchar(out uint @char); //DONE
 
@@ -405,7 +401,7 @@ public interface ICursesProvider
 
     int wins_wch(IntPtr window, CChar @char); //DONE
 
-    string wunctrl(CChar @char); //FISHY
+    string? wunctrl(CChar @char);
 
     int wvline_set(IntPtr window, CChar @char, int count);
 }
