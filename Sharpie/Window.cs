@@ -2,8 +2,6 @@ namespace Sharpie;
 
 using System.Drawing;
 using System.Globalization;
-using System.Text;
-using Curses;
 using JetBrains.Annotations;
 
 /// <summary>
@@ -28,6 +26,29 @@ public class Window: IDisposable
     {
         Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
         Handle = windowHandle;
+
+        AutoScroll = true;
+    }
+
+    /// <summary>
+    /// Gets or sets the ability of the window to auto-scroll its contents when writing
+    /// needs a new line.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public bool AutoScroll
+    {
+        get
+        {
+            Terminal.AssertNotDisposed();
+            return Terminal.Curses.is_scrollok(Handle);
+        }
+        set
+        {
+            Terminal.AssertNotDisposed();
+            Terminal.Curses.scrollok(Handle, value)
+                    .TreatError();
+        }
     }
 
     /// <summary>
@@ -237,45 +258,14 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Writes a character at the caret position at the current window and optionally, advances the caret.
-    /// </summary>
-    /// <param name="char">The character to write.</param>
-    /// <param name="style">The applied style.</param>
-    /// <param name="advance">If <c>true</c>, advances the caret.</param>
-    /// <param name="insert">If <c>true</c>, the text is inserted before the caret and not at the caret position.</param>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void WriteText(char @char, Style style, bool advance, bool insert = false)
-    {
-        AssertNotDisposed();
-
-        Terminal.Curses.setcchar(out var cChar, @char.ToString(), (uint) style.Attributes, style.ColorMixture.Handle,
-                    IntPtr.Zero)
-                .TreatError();
-
-        if (insert)
-        {
-            Terminal.Curses.wins_wch(Handle, cChar)
-                    .TreatError();
-        }
-        else
-        {
-            Terminal.Curses.wadd_wch(Handle, cChar)
-                    .TreatError();
-        }
-    }
-
-    /// <summary>
     /// Writes a text at the caret position at the current window and optionally, advance the caret.
     /// </summary>
     /// <param name="str">The text to write.</param>
     /// <param name="style">The style of the text.</param>
-    /// <param name="advance">If <c>true</c>, advances the caret.</param>
-    /// <param name="insert">If <c>true</c>, the text is inserted before the caret and not at the caret position.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="str"/> is <c>null</c>.</exception>
-    public void WriteText(string str, Style style, bool insert = false)
+    public void WriteText(string str, Style style)
     {
         if (str == null)
         {
@@ -284,28 +274,21 @@ public class Window: IDisposable
 
         AssertNotDisposed();
 
-        var characters = new List<CChar>();
         var enumerator = StringInfo.GetTextElementEnumerator(str);
+        var size = Size;
+
         while (enumerator.MoveNext())
         {
+            var position = CaretPosition;
             var el = enumerator.GetTextElement();
-            Terminal.Curses.setcchar(out var @char, el, (uint) style.Attributes,
-                       style.ColorMixture.Handle, IntPtr.Zero)
-                   .TreatError();
 
-            characters.Add(@char);
-        }
-
-        if (!insert)
-        {
-            Terminal.Curses.wadd_wchnstr(Handle, characters.ToArray(), characters.Count)
+            Terminal.Curses.setcchar(out var @char, el, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
                     .TreatError();
-        } else
-        {
-            foreach (var c in characters)
+
+            var result = Terminal.Curses.wadd_wch(Handle, @char);
+            if (result == Helpers.CursesErrorResult)
             {
-                Terminal.Curses.wins_wch(Handle, c)
-                        .TreatError();
+                break;
             }
         }
     }

@@ -469,6 +469,8 @@ public sealed class Screen: Window
                 Char = new(keyCode),
                 Modifier =  ModifierKey.None,
             };
+
+            return true;
         }
 
         return false;

@@ -120,7 +120,7 @@ public interface ICursesProvider
 
     bool is_pad(IntPtr window); //NO
 
-    bool is_scrollok(IntPtr window);
+    bool is_scrollok(IntPtr window); //DONE
 
     bool is_subwin(IntPtr window); //NO
 
@@ -200,7 +200,7 @@ public interface ICursesProvider
 
     int savetty(); //NO
 
-    int scrollok(IntPtr window, bool set);
+    int scrollok(IntPtr window, bool set); //DONE
 
     int slk_attroff(uint attrs); //NO
 
@@ -399,16 +399,21 @@ public interface ICursesProvider
 
     int wins_nwstr(IntPtr window, string text, int length); //NO
 
-    int wins_wch(IntPtr window, CChar @char); //DONE
+    int wins_wch(IntPtr window, CChar @char); //NO
 
     string? wunctrl(CChar @char);
 
     int wvline_set(IntPtr window, CChar @char, int count);
 
-    int getmouse(out RawMouseEvent @event);
-    int ungetmouse(RawMouseEvent @event);
-    int mousemask(ulong newMask, out ulong oldMask);
+    int getmouse(out RawMouseEvent @event); //DONE
+
+    int ungetmouse(RawMouseEvent @event); //NO
+
+    int mousemask(ulong newMask, out ulong oldMask); //DONE
+
     bool wenclose(IntPtr window, int line, int col);
+
     int mouseinterval(int millis);
+
     bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
 }
