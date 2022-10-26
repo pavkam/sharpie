@@ -195,7 +195,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern uint PAIR_NUMBER(uint colorPair);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int pechochar(IntPtr pad, char @char);
+    public static extern int pechochar(IntPtr pad, uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
@@ -230,13 +230,13 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int scrollok(IntPtr window, bool set);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int slk_attroff(char attrs);
+    public static extern int slk_attroff(uint attrs);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int slk_attron(char attrs);
+    public static extern int slk_attron(uint attrs);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int slk_attrset(char attrs);
+    public static extern int slk_attrset(uint attrs);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern char slk_attr();
@@ -289,7 +289,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern string termname();
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int ungetch(int @char);
+    public static extern int ungetch(uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern void use_env(bool set);
@@ -352,16 +352,16 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int wgetnstr(IntPtr window, StringBuilder dest, int length);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int whline(IntPtr window, char @char, int count);
+    public static extern int whline(IntPtr window, uint @char, int count);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern char winch(IntPtr window);
+    public static extern uint winch(IntPtr window);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int winchnstr(IntPtr window, StringBuilder dest, int length);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int winsch(IntPtr window, char @char);
+    public static extern int winsch(IntPtr window, uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int winsdelln(IntPtr window, int count);
@@ -397,7 +397,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int wtouchln(IntPtr window, int line, int count, int changed);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wvline(IntPtr window, char @char, int count);
+    public static extern int wvline(IntPtr window, uint @char, int count);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern bool is_term_resized(int lines, int cols);
@@ -449,10 +449,10 @@ public sealed class NativeCursesProvider: ICursesProvider
         IntPtr reserved);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern string key_name([MarshalAs(UnmanagedType.U2)] char @char);
+    public static extern string key_name(uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int killwchar(out char @char);
+    public static extern int killwchar(out uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int pecho_wchar(IntPtr window, ref CChar @char);
@@ -461,14 +461,14 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int setcchar(out CChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs, ushort colorPair,
         IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int slk_wset(int labelIndex, string title, int just);
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    public static extern int slk_set(int labelIndex, string title, int fmt);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern uint term_attrs();
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int unget_wch(char @char);
+    public static extern int unget_wch(uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int wadd_wch(IntPtr window, ref CChar @char);
@@ -530,7 +530,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int wvline_set(IntPtr window, ref CChar @char, int count);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int erasewchar(out char @char);
+    public static extern int erasewchar(out uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern uint getattrs(IntPtr window);
@@ -674,7 +674,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.endwin() => endwin();
 
-    int ICursesProvider.erasewchar(out char @char) => erasewchar(out @char);
+    int ICursesProvider.erasewchar(out uint @char) => erasewchar(out @char);
 
     void ICursesProvider.filter() { filter(); }
 
@@ -776,7 +776,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     uint ICursesProvider.PAIR_NUMBER(uint colorPair) => PAIR_NUMBER(colorPair);
 
-    int ICursesProvider.pechochar(IntPtr pad, char @char) => pechochar(pad, @char);
+    int ICursesProvider.pechochar(IntPtr pad, uint @char) => pechochar(pad, @char);
 
     int ICursesProvider.pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol) =>
@@ -805,15 +805,15 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.scrollok(IntPtr window, bool set) => scrollok(window, set);
 
-    int ICursesProvider.slk_attroff(char attrs) => slk_attroff(attrs);
+    int ICursesProvider.slk_attroff(uint attrs) => slk_attroff(attrs);
 
     int ICursesProvider.slk_attr_off(uint attrs, IntPtr reserved) => slk_attr_off(attrs, reserved);
 
-    int ICursesProvider.slk_attron(char attrs) => slk_attron(attrs);
+    int ICursesProvider.slk_attron(uint attrs) => slk_attron(attrs);
 
     int ICursesProvider.slk_attr_on(uint attrs, IntPtr reserved) => slk_attr_on(attrs, reserved);
 
-    int ICursesProvider.slk_attrset(char attrs) => slk_attrset(attrs);
+    int ICursesProvider.slk_attrset(uint attrs) => slk_attrset(attrs);
 
     int ICursesProvider.slk_attr() => slk_attr();
 
@@ -850,7 +850,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     string ICursesProvider.termname() => termname();
 
-    int ICursesProvider.ungetch(int @char) => ungetch(@char);
+    int ICursesProvider.ungetch(uint @char) => ungetch(@char);
 
     void ICursesProvider.use_env(bool set) { use_env(set); }
 
@@ -903,13 +903,13 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.wgetnstr(IntPtr window, StringBuilder dest, int length) => wgetnstr(window, dest, length);
 
-    int ICursesProvider.whline(IntPtr window, char @char, int count) => whline(window, @char, count);
+    int ICursesProvider.whline(IntPtr window, uint @char, int count) => whline(window, @char, count);
 
-    char ICursesProvider.winch(IntPtr window) => winch(window);
+    uint ICursesProvider.winch(IntPtr window) => winch(window);
 
     int ICursesProvider.winchnstr(IntPtr window, StringBuilder dest, int length) => winchnstr(window, dest, length);
 
-    int ICursesProvider.winsch(IntPtr window, char @char) => winsch(window, @char);
+    int ICursesProvider.winsch(IntPtr window, uint @char) => winsch(window, @char);
 
     int ICursesProvider.winsdelln(IntPtr window, int count) => winsdelln(window, count);
 
@@ -935,7 +935,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     int ICursesProvider.wtouchln(IntPtr window, int line, int count, int changed) =>
         wtouchln(window, line, count, changed);
 
-    int ICursesProvider.wvline(IntPtr window, char @char, int count) => wvline(window, @char, count);
+    int ICursesProvider.wvline(IntPtr window, uint @char, int count) => wvline(window, @char, count);
 
     bool ICursesProvider.is_term_resized(int lines, int cols) => is_term_resized(lines, cols);
 
@@ -971,9 +971,9 @@ public sealed class NativeCursesProvider: ICursesProvider
         IntPtr reserved) =>
         getcchar(ref @char, dest, out attrs, out colorPair, reserved);
 
-    string ICursesProvider.key_name(char @char) => key_name(@char);
+    string ICursesProvider.key_name(uint @char) => key_name(@char);
 
-    int ICursesProvider.killwchar(out char @char) => killwchar(out @char);
+    int ICursesProvider.killwchar(out uint @char) => killwchar(out @char);
 
     int ICursesProvider.pecho_wchar(IntPtr window, CChar @char) => pecho_wchar(window, ref @char);
 
@@ -981,11 +981,11 @@ public sealed class NativeCursesProvider: ICursesProvider
         IntPtr reserved) =>
         setcchar(out @char, text, attrs, colorPair, reserved);
 
-    int ICursesProvider.slk_wset(int labelIndex, string title, int align) => slk_wset(labelIndex, title, align);
+    int ICursesProvider.slk_set(int labelIndex, string title, int align) => slk_set(labelIndex, title, align);
 
     uint ICursesProvider.term_attrs() => term_attrs();
 
-    int ICursesProvider.unget_wch(char @char) => unget_wch(@char);
+    int ICursesProvider.unget_wch(uint @char) => unget_wch(@char);
 
     int ICursesProvider.wadd_wch(IntPtr window, CChar @char) => wadd_wch(window, ref @char);
 

@@ -237,14 +237,15 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Writes a character at the caret position at the current window and advances the caret.
+    /// Writes a character at the caret position at the current window and optionally, advances the caret.
     /// </summary>
     /// <param name="char">The character to write.</param>
     /// <param name="style">The applied style.</param>
+    /// <param name="advance">If <c>true</c>, advances the caret.</param>
     /// <param name="insert">If <c>true</c>, the text is inserted before the caret and not at the caret position.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void WriteText(char @char, Style style, bool insert = false)
+    public void WriteText(char @char, Style style, bool advance, bool insert = false)
     {
         AssertNotDisposed();
 
@@ -265,10 +266,11 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Writes a text at the caret position at the current window and advance the caret.
+    /// Writes a text at the caret position at the current window and optionally, advance the caret.
     /// </summary>
     /// <param name="str">The text to write.</param>
     /// <param name="style">The style of the text.</param>
+    /// <param name="advance">If <c>true</c>, advances the caret.</param>
     /// <param name="insert">If <c>true</c>, the text is inserted before the caret and not at the caret position.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>

@@ -1,6 +1,7 @@
 namespace Sharpie;
 
 using System.Diagnostics;
+using System.Text;
 using Curses;
 using JetBrains.Annotations;
 
@@ -407,13 +408,15 @@ public sealed class Terminal: IDisposable
     /// Gets the currently defined kill character. \0 is returned if none is defined.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public char CurrentKillChar
+    public Rune CurrentKillChar
     {
         get
         {
             AssertNotDisposed();
 
-            return Curses.killwchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0';
+            return
+                new(
+                    Curses.killwchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0');
         }
     }
 
@@ -442,17 +445,17 @@ public sealed class Terminal: IDisposable
         }
     }
 
-
     /// <summary>
     /// Gets the currently defined erase character. \0 is returned if none is defined.
     /// </summary>
-    public char CurrentEraseChar
+    public Rune CurrentEraseChar
     {
         get
         {
             AssertNotDisposed();
 
-            return Curses.erasewchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0';
+            return new(
+                Curses.erasewchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0');
         }
     }
 

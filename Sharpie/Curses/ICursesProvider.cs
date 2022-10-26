@@ -4,8 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using JetBrains.Annotations;
 
-using CursesWindow = IntPtr;
-
 /// <summary>
 /// Interface provides access to the Curses functionality. Use the <see cref="NativeCursesProvider"/> property to access the actual
 /// implementation.
@@ -21,11 +19,11 @@ public interface ICursesProvider
 
     int cbreak(); //DONE
 
-    int clearok(CursesWindow window, bool set); //DONE
+    int clearok(IntPtr window, bool set); //DONE
 
     int color_content(ushort color, out ushort red, out ushort green, out ushort blue); //DONE
 
-    int copywin(CursesWindow fromWindow, CursesWindow toWindow, int srcStartLine, int srcStartCol,
+    int copywin(IntPtr fromWindow, IntPtr toWindow, int srcStartLine, int srcStartCol,
         int destStartLine, int destStartCol, int destEndLine, int destEndCol,
         int overlay); //DONE
 
@@ -37,20 +35,20 @@ public interface ICursesProvider
 
     int delay_output(int delayMillis);
 
-    int delwin(CursesWindow window); //DONE
+    int delwin(IntPtr window); //DONE
 
-    CursesWindow derwin(CursesWindow window, int lines, int cols, int beginLine,
+    IntPtr derwin(IntPtr window, int lines, int cols, int beginLine,
         int beginCol);
 
     int doupdate(); //DONE
 
-    CursesWindow dupwin(CursesWindow window); //DONE
+    IntPtr dupwin(IntPtr window); //DONE
 
     int echo(); //DONE
 
     int endwin(); //DONE
 
-    int erasewchar(out char @char); //DONE
+    int erasewchar(out uint @char); //DONE
 
     void filter(); //NO
 
@@ -58,23 +56,23 @@ public interface ICursesProvider
 
     int flushinp();
 
-    uint getattrs(CursesWindow window); //NO
+    uint getattrs(IntPtr window); //NO
 
-    int getcurx(CursesWindow window); //DONE
+    int getcurx(IntPtr window); //DONE
 
-    int getcury(CursesWindow window); //DONE
+    int getcury(IntPtr window); //DONE
 
-    int getbegx(CursesWindow window); //DONE
+    int getbegx(IntPtr window); //DONE
 
-    int getbegy(CursesWindow window); //DONE
+    int getbegy(IntPtr window); //DONE
 
-    int getmaxx(CursesWindow window); //DONE
+    int getmaxx(IntPtr window); //DONE
 
-    int getmaxy(CursesWindow window); //DONE
+    int getmaxy(IntPtr window); //DONE
 
-    int getparx(CursesWindow window); //NO
+    int getparx(IntPtr window); //NO
 
-    int getpary(CursesWindow window); //NO
+    int getpary(IntPtr window); //NO
 
     int halfdelay(int tenthsOfSec); //DONE
 
@@ -84,25 +82,25 @@ public interface ICursesProvider
 
     bool has_il(); //DONE
 
-    void idcok(CursesWindow window, bool set); //DONE
+    void idcok(IntPtr window, bool set); //DONE
 
-    int idlok(CursesWindow window, bool set); //DONE
+    int idlok(IntPtr window, bool set); //DONE
 
-    void immedok(CursesWindow window, bool set); //DONE
+    void immedok(IntPtr window, bool set); //DONE
 
-    CursesWindow initscr(); //DONE
+    IntPtr initscr(); //DONE
 
     int init_color(ushort color, ushort red, ushort green, ushort blue); //DONE
 
     int init_pair(ushort colorPair, ushort fgColor, ushort bgColor); //DONE
 
-    int intrflush(CursesWindow window, bool set); //DONE
+    int intrflush(IntPtr window, bool set); //DONE
 
     bool isendwin(); //DONE
 
-    bool is_linetouched(CursesWindow window, int line); //DONE
+    bool is_linetouched(IntPtr window, int line); //DONE
 
-    bool is_wintouched(CursesWindow window); //DONE
+    bool is_wintouched(IntPtr window); //DONE
 
     bool is_cleared(IntPtr window);
 
@@ -136,27 +134,27 @@ public interface ICursesProvider
 
     string keyname(int keyCode);
 
-    int keypad(CursesWindow window, bool set); //DONE
+    int keypad(IntPtr window, bool set); //DONE
 
-    int leaveok(CursesWindow window, bool set);
+    int leaveok(IntPtr window, bool set);
 
     string longname(); //DONE
 
-    int meta(CursesWindow window, bool set); //DONE
+    int meta(IntPtr window, bool set); //DONE
 
-    int mvderwin(CursesWindow window, int parentLine, int parentCol);
+    int mvderwin(IntPtr window, int parentLine, int parentCol);
 
-    int mvwin(CursesWindow window, int toLine, int toCol); //DONE
+    int mvwin(IntPtr window, int toLine, int toCol); //DONE
 
-    CursesWindow newpad(int lines, int cols); //DONE
+    IntPtr newpad(int lines, int cols); //DONE
 
-    CursesWindow newwin(int lines, int cols, int atLine, int atCol); //DONE
+    IntPtr newwin(int lines, int cols, int atLine, int atCol); //DONE
 
     int nl(); //DONE
 
     int nocbreak(); //DONE
 
-    int nodelay(CursesWindow window, bool set);
+    int nodelay(IntPtr window, bool set);
 
     int noecho(); //DONE
 
@@ -166,11 +164,11 @@ public interface ICursesProvider
 
     int noraw();
 
-    int notimeout(CursesWindow window, bool set);
+    int notimeout(IntPtr window, bool set);
 
-    int overlay(CursesWindow srcWindow, CursesWindow destWindow); //DONE
+    int overlay(IntPtr srcWindow, IntPtr destWindow); //DONE
 
-    int overwrite(CursesWindow srcWindow, CursesWindow destWindow); //DONE
+    int overwrite(IntPtr srcWindow, IntPtr destWindow); //DONE
 
     int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor);
 
@@ -178,12 +176,12 @@ public interface ICursesProvider
 
     uint PAIR_NUMBER(uint colorPair); //DONE
 
-    int pechochar(CursesWindow pad, char @char); //NO
+    int pechochar(IntPtr pad, uint charAndAttrs); //NO
 
-    int pnoutrefresh(CursesWindow pad, int padMinLine, int padMinCol, int scrMinLine,
+    int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol); //DONE
 
-    int prefresh(CursesWindow pad, int padMinLine, int padMinCol, int scrMinLine,
+    int prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol); //DONE
 
     void qiflush();
@@ -196,23 +194,23 @@ public interface ICursesProvider
 
     int reset_shell_mode(); //NO
 
-    public delegate bool ripoffline_callback(CursesWindow window, int columns);
+    public delegate bool ripoffline_callback(IntPtr window, int columns);
 
     int ripoffline(int lines, ripoffline_callback callback);
 
     int savetty(); //NO
 
-    int scrollok(CursesWindow window, bool set);
+    int scrollok(IntPtr window, bool set);
 
-    int slk_attroff(char attrs); //NO
+    int slk_attroff(uint attrs); //NO
 
     int slk_attr_off(uint attrs, IntPtr reserved); //DONE
 
-    int slk_attron(char attrs); //NO
+    int slk_attron(uint attrs); //NO
 
     int slk_attr_on(uint attrs, IntPtr reserved); //DONE
 
-    int slk_attrset(char attrs); //NO
+    int slk_attrset(uint attrs); //NO
 
     int slk_attr(); //DONE
 
@@ -236,94 +234,94 @@ public interface ICursesProvider
 
     int start_color(); //DONE
 
-    CursesWindow subpad(CursesWindow pad, int lines, int cols, int atLine,
+    IntPtr subpad(IntPtr pad, int lines, int cols, int atLine,
         int atCol);
 
-    CursesWindow subwin(CursesWindow window, int lines, int cols, int atLine,
+    IntPtr subwin(IntPtr window, int lines, int cols, int atLine,
         int atCol);
 
-    int syncok(CursesWindow window, bool set);
+    int syncok(IntPtr window, bool set);
 
     string termname(); //DONE
 
-    int ungetch(int @char);
+    int ungetch(uint @char);
 
     void use_env(bool set); //DONE
 
-    int waddch(CursesWindow window, uint charAndAttrs); //NO
+    int waddch(IntPtr window, uint charAndAttrs); //NO
 
-    int waddchnstr(CursesWindow window, string text, int length); //NO
+    int waddchnstr(IntPtr window, string text, int length); //NO
 
-    int wattr_get(CursesWindow window, out uint attrs, out ushort colorPair, IntPtr reserved); //DONE
+    int wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved); //DONE
 
-    int wattr_set(CursesWindow window, uint attrs, ushort colorPair, IntPtr reserved); //DONE
+    int wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved); //DONE
 
-    int wattr_on(CursesWindow window, uint attrs, IntPtr reserved); //DONE
+    int wattr_on(IntPtr window, uint attrs, IntPtr reserved); //DONE
 
-    int wattr_off(CursesWindow window, uint attrs, IntPtr reserved); //DONE
+    int wattr_off(IntPtr window, uint attrs, IntPtr reserved); //DONE
 
-    int wbkgd(CursesWindow window, uint charAndAttrs);
+    int wbkgd(IntPtr window, uint charAndAttrs);
 
-    void wbkgdset(CursesWindow window, uint charAndAttrs);
+    void wbkgdset(IntPtr window, uint charAndAttrs);
 
-    int wborder(CursesWindow window, CChar leftSide, CChar rightSide, CChar topSide,
+    int wborder(IntPtr window, CChar leftSide, CChar rightSide, CChar topSide,
         CChar bottomSide, CChar topLeftCorner, CChar topRightCorner, CChar bottomLeftCorner,
         CChar bottomRightCorner);
 
-    int wchgat(CursesWindow window, int count, uint attrs, ushort colorPair,
+    int wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
         IntPtr reserved); //DONE
 
-    int wclear(CursesWindow window); //NO
+    int wclear(IntPtr window); //NO
 
-    int wclrtobot(CursesWindow window); //DONE
+    int wclrtobot(IntPtr window); //DONE
 
-    int wclrtoeol(CursesWindow window); //DONE
+    int wclrtoeol(IntPtr window); //DONE
 
-    int wcolor_set(CursesWindow window, ushort pair, IntPtr reserved); //DONE
+    int wcolor_set(IntPtr window, ushort pair, IntPtr reserved); //DONE
 
-    void wcursyncup(CursesWindow window);
+    void wcursyncup(IntPtr window);
 
-    int wdelch(CursesWindow window); //DONE
+    int wdelch(IntPtr window); //DONE
 
-    int wechochar(CursesWindow window, uint charAndAttrs); //NO
+    int wechochar(IntPtr window, uint charAndAttrs); //NO
 
-    int werase(CursesWindow window); //DONE
+    int werase(IntPtr window); //DONE
 
-    int wgetch(CursesWindow window);
+    int wgetch(IntPtr window);
 
-    int wgetnstr(CursesWindow window, StringBuilder dest, int length);
+    int wgetnstr(IntPtr window, StringBuilder dest, int length);
 
-    int whline(CursesWindow window, char @char, int count);
+    int whline(IntPtr window, uint @char, int count);
 
-    char winch(CursesWindow window);
+    uint winch(IntPtr window);
 
-    int winchnstr(CursesWindow window, StringBuilder dest, int length);
+    int winchnstr(IntPtr window, StringBuilder dest, int length);
 
-    int winsch(CursesWindow window, char @char); //NO
+    int winsch(IntPtr window, uint @char); //NO
 
-    int winsdelln(CursesWindow window, int count);
+    int winsdelln(IntPtr window, int count);
 
-    int wmove(CursesWindow window, int newLine, int newCol); //DONE
+    int wmove(IntPtr window, int newLine, int newCol); //DONE
 
-    int wnoutrefresh(CursesWindow window); //DONE
+    int wnoutrefresh(IntPtr window); //DONE
 
-    int wredrawln(CursesWindow window, int startLine, int lineCount);
+    int wredrawln(IntPtr window, int startLine, int lineCount);
 
-    int wrefresh(CursesWindow window); //DONE
+    int wrefresh(IntPtr window); //DONE
 
-    int wscrl(CursesWindow window, int count);
+    int wscrl(IntPtr window, int count);
 
-    int wsetscrreg(CursesWindow window, int top, int bottom);
+    int wsetscrreg(IntPtr window, int top, int bottom);
 
-    void wsyncdown(CursesWindow window); //NO
+    void wsyncdown(IntPtr window); //NO
 
-    void wsyncup(CursesWindow window);
+    void wsyncup(IntPtr window);
 
-    void wtimeout(CursesWindow window, int delay);
+    void wtimeout(IntPtr window, int delay);
 
-    int wtouchln(CursesWindow window, int line, int count, int changed); //DONE
+    int wtouchln(IntPtr window, int line, int count, int changed); //DONE
 
-    int wvline(CursesWindow window, char @char, int count);
+    int wvline(IntPtr window, uint @char, int count);
 
     bool is_term_resized(int lines, int cols);
 
@@ -351,63 +349,63 @@ public interface ICursesProvider
 
     int use_default_colors(); //DONE
 
-    int wresize(CursesWindow window, int lines, int columns); //DONE
+    int wresize(IntPtr window, int lines, int columns); //DONE
 
     void nofilter(); //NO
 
     int getcchar(CChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
         IntPtr reserved);
 
-    string key_name(char @char);
+    string key_name(uint @char);
 
-    int killwchar(out char @char); //DONE
+    int killwchar(out uint @char); //DONE
 
-    int pecho_wchar(CursesWindow window, CChar @char); //NO
+    int pecho_wchar(IntPtr window, CChar @char); //NO
 
     int setcchar(out CChar @char, string text, uint attrs, ushort colorPair,
         IntPtr reserved); //DONE
 
-    int slk_wset(int labelIndex, string title, int align); //DONE
+    int slk_set(int labelIndex, string title, int align); //DONE
 
     uint term_attrs();
 
-    int unget_wch(char @char);
+    int unget_wch(uint @char);
 
-    int wadd_wch(CursesWindow window, CChar @char); //DONE
+    int wadd_wch(IntPtr window, CChar @char); //DONE
 
-    int wadd_wchnstr(CursesWindow window, CChar[] str, int count); //DONE
+    int wadd_wchnstr(IntPtr window, CChar[] str, int count); //DONE
 
-    int waddnwstr(CursesWindow window, string text, int length); //NO
+    int waddnwstr(IntPtr window, string text, int length); //NO
 
-    int wbkgrnd(CursesWindow window, CChar @char);
+    int wbkgrnd(IntPtr window, CChar @char);
 
-    void wbkgrndset(CursesWindow window, CChar @char);
+    void wbkgrndset(IntPtr window, CChar @char);
 
-    int wborder_set(CursesWindow window, CChar leftSide, CChar rightSide, CChar topSide,
+    int wborder_set(IntPtr window, CChar leftSide, CChar rightSide, CChar topSide,
         CChar bottomSide, CChar topLeftCorner, CChar topRightCorner, CChar bottomLeftCorner,
         CChar bottomRightCorner);
 
-    int wecho_wchar(CursesWindow window, CChar @char); //NO
+    int wecho_wchar(IntPtr window, CChar @char); //NO
 
-    int wget_wch(CursesWindow window, out uint @char);
+    int wget_wch(IntPtr window, out uint @char);
 
-    int wgetbkgrnd(CursesWindow window, CChar @char);
+    int wgetbkgrnd(IntPtr window, CChar @char);
 
-    int wgetn_wstr(CursesWindow window, StringBuilder dest, int length);
+    int wgetn_wstr(IntPtr window, StringBuilder dest, int length);
 
-    int whline_set(CursesWindow window, CChar @char, int count);
+    int whline_set(IntPtr window, CChar @char, int count);
 
-    int win_wch(CursesWindow window, out CChar @char);
+    int win_wch(IntPtr window, out CChar @char);
 
-    int win_wchnstr(CursesWindow window, CChar[] @char, int length);
+    int win_wchnstr(IntPtr window, CChar[] @char, int length);
 
-    int winnwstr(CursesWindow window, StringBuilder dest, int length);
+    int winnwstr(IntPtr window, StringBuilder dest, int length);
 
-    int wins_nwstr(CursesWindow window, string text, int length); //NO
+    int wins_nwstr(IntPtr window, string text, int length); //NO
 
-    int wins_wch(CursesWindow window, CChar @char); //DONE
+    int wins_wch(IntPtr window, CChar @char); //DONE
 
     string wunctrl(CChar @char); //FISHY
 
-    int wvline_set(CursesWindow window, CChar @char, int count);
+    int wvline_set(IntPtr window, CChar @char, int count);
 }

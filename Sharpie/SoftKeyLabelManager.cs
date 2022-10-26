@@ -16,6 +16,7 @@ public sealed class SoftKeyLabelManager
     /// </summary>
     /// <param name="terminal">The terminal instance.</param>
     /// <param name="mode">The mode of the manager.</param>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
     public SoftKeyLabelManager(Terminal terminal, SoftKeyLabelMode mode)
     {
         _terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
@@ -23,7 +24,8 @@ public sealed class SoftKeyLabelManager
 
         if (mode != SoftKeyLabelMode.Disabled)
         {
-            terminal.Curses.slk_init((int) mode);
+            terminal.Curses.slk_init((int) mode)
+                    .TreatError();
         }
     }
 
@@ -56,6 +58,7 @@ public sealed class SoftKeyLabelManager
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="index"/> negative or greater than <see cref="LabelCount"/>.</exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
     public void SetLabel(int index, string title, SoftKeyLabelAlignment align)
     {
         if (title == null)
@@ -70,7 +73,7 @@ public sealed class SoftKeyLabelManager
 
         AssertNotDisposedAndEnabled();
 
-        _terminal.Curses.slk_wset(index, title, (int) align)
+        _terminal.Curses.slk_set(index + 1, title, (int) align)
                  .TreatError();
     }
 
