@@ -9,10 +9,14 @@ using JetBrains.Annotations;
 /// </summary>
 internal static class Helpers
 {
+    private const int CursesErrorResult = -1;
+
     /// <summary>
-    /// Curses ERR constant.
+    /// Checks if a given code shows a failure.
     /// </summary>
-    public const int CursesErrorResult = -1;
+    /// <param name="code">The code.</param>
+    /// <returns>The result of the failure check.</returns>
+    public static bool Failed(this int code) => code == CursesErrorResult;
 
     /// <summary>
     /// Checks if a Curses operation succeeded.

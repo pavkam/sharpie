@@ -459,7 +459,7 @@ public sealed class Screen: Window
                     @event = new TerminalResizeEvent(Size);
                     break;
                 case (uint) RawKey.Mouse:
-                    if (Terminal.Curses.getmouse(out var mouseEvent) == Helpers.CursesErrorResult)
+                    if (Terminal.Curses.getmouse(out var mouseEvent).Failed())
                     {
                         return false;
                     }
@@ -483,7 +483,7 @@ public sealed class Screen: Window
             return true;
         }
 
-        if (result != Helpers.CursesErrorResult)
+        if (result.Failed())
         {
             if (keyCode == 27 && TryReadEvent(10, out var other) && other?.Type == EventType.KeyPress)
             {

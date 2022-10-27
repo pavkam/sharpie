@@ -29,8 +29,7 @@ public sealed class Terminal: IDisposable
     private SoftKeyLabelManager _softKeyLabelManager;
 
     internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableRawMode,
-        bool enableReturnToNewLineTranslation,
-        int readTimeoutMillis, bool enableInputEchoing, bool manualFlush,
+        bool enableReturnToNewLineTranslation, int readTimeoutMillis, bool enableInputEchoing, bool manualFlush,
         bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
         SoftKeyLabelMode softKeyLabelMode, bool enableMouse)
     {
@@ -48,6 +47,7 @@ public sealed class Terminal: IDisposable
         {
             Curses.use_env(true);
         }
+
         _softKeyLabelManager = new(this, softKeyLabelMode);
 
         // Screen setup.
@@ -72,10 +72,12 @@ public sealed class Terminal: IDisposable
 
         if (_inputEchoing)
         {
-            Curses.echo().Check(nameof(Curses.echo));
+            Curses.echo()
+                  .Check(nameof(Curses.echo));
         } else
         {
-            Curses.noecho().Check(nameof(Curses.noecho));
+            Curses.noecho()
+                  .Check(nameof(Curses.noecho));
         }
 
         if (!_lineBuffering)
@@ -348,10 +350,12 @@ public sealed class Terminal: IDisposable
 
             if (value)
             {
-                Curses.nl().Check(nameof(Curses.nl));
+                Curses.nl()
+                      .Check(nameof(Curses.nl));
             } else
             {
-                Curses.nonl().Check(nameof(Curses.nonl));
+                Curses.nonl()
+                      .Check(nameof(Curses.nonl));
             }
 
             _newLineTranslation = value;
@@ -408,7 +412,7 @@ public sealed class Terminal: IDisposable
         {
             AssertNotDisposed();
 
-            return (VideoAttribute)Curses.term_attrs();
+            return (VideoAttribute) Curses.term_attrs();
         }
     }
 
@@ -478,9 +482,10 @@ public sealed class Terminal: IDisposable
         {
             AssertNotDisposed();
 
-            return
-                new(
-                    Curses.killwchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0');
+            return new(Curses.killwchar(out var @char)
+                             .Failed()
+                ? '\0'
+                : @char);
         }
     }
 
@@ -493,8 +498,10 @@ public sealed class Terminal: IDisposable
         {
             AssertNotDisposed();
 
-            return new(
-                Curses.erasewchar(out var @char) != Helpers.CursesErrorResult ? @char : '\0');
+            return new(Curses.erasewchar(out var @char)
+                             .Failed()
+                ? '\0'
+                : @char);
         }
     }
 
@@ -511,10 +518,12 @@ public sealed class Terminal: IDisposable
 
         if (silent)
         {
-            Curses.flash().Check(nameof(Curses.flash));
+            Curses.flash()
+                  .Check(nameof(Curses.flash));
         } else
         {
-            Curses.beep().Check(nameof(Curses.beep));
+            Curses.beep()
+                  .Check(nameof(Curses.beep));
         }
     }
 
@@ -578,7 +587,5 @@ public sealed class Terminal: IDisposable
     /// <summary>
     /// The destructor. Calls <see cref="ReleaseUnmanagedResources"/>
     /// </summary>
-    ~Terminal() {
-        ReleaseUnmanagedResources();
-    }
+    ~Terminal() { ReleaseUnmanagedResources(); }
 }

@@ -216,7 +216,8 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(y));
         }
 
-        return Terminal.Curses.wmove(Handle, y, x) != Helpers.CursesErrorResult;
+        return !Terminal.Curses.wmove(Handle, y, x)
+                        .Failed();
     }
 
     /// <summary>
@@ -361,8 +362,7 @@ public class Window: IDisposable
             Terminal.Curses.setcchar(out var @char, el, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
                     .Check(nameof(Terminal.Curses.setcchar));
 
-            var result = Terminal.Curses.wadd_wch(Handle, @char);
-            if (result == Helpers.CursesErrorResult)
+            if  (Terminal.Curses.wadd_wch(Handle, @char).Failed())
             {
                 break;
             }
@@ -529,7 +529,7 @@ public class Window: IDisposable
 
         while (count > 0)
         {
-            if (Terminal.Curses.wdelch(Handle) == Helpers.CursesErrorResult)
+            if (Terminal.Curses.wdelch(Handle).Failed())
             {
                 break;
             }
