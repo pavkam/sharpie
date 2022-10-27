@@ -22,6 +22,7 @@ public sealed class Terminal: IDisposable
     private bool _enableMouse;
     private ulong? _oldMouseMask;
     private CaretMode _hardwareCursorMode;
+    private int? _initialHardwareCursorMode;
     private Screen _screen;
     private ColorManager _colorManager;
     private IList<Window> _windows;
@@ -64,9 +65,9 @@ public sealed class Terminal: IDisposable
         /* Other configuration */
         Curses.meta(IntPtr.Zero, true);
 
-
         _windows = new List<Window> { _screen };
         _terminalInstanceActive = true;
+
     }
 
     /// <summary>
@@ -97,7 +98,7 @@ public sealed class Terminal: IDisposable
             AssertNotDisposed();
 
             return Curses.baudrate()
-                                  .TreatError();
+                         .TreatError();
         }
     }
 
@@ -398,8 +399,13 @@ public sealed class Terminal: IDisposable
         {
             AssertNotDisposed();
 
-            Curses.curs_set((int)value).TreatError();
+            var prevMode = Curses.curs_set((int) value)
+                                 .TreatError();
+
+            _initialHardwareCursorMode ??= prevMode;
             _hardwareCursorMode = value;
+
+            _screen.IgnoreHardwareCaret = value != CaretMode.Invisible;
         }
     }
 
@@ -570,6 +576,11 @@ public sealed class Terminal: IDisposable
             if (_oldMouseMask != null)
             {
                 Curses.mousemask(_oldMouseMask.Value, out var _);
+            }
+
+            if (_initialHardwareCursorMode != null)
+            {
+                Curses.curs_set(_initialHardwareCursorMode.Value);
             }
 
             Curses.endwin();

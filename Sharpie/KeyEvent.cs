@@ -14,12 +14,14 @@ public sealed class KeyEvent: Event
     /// </summary>
     /// <param name="key">The key that was pressed.</param>
     /// <param name="char">The char that was pressed if it was not a key.</param>
+    /// <param name="keyName">The name of the key.</param>
     /// <param name="modifiers">The modifiers at the time of the press.</param>
-    internal KeyEvent(Key key, Rune @char, ModifierKey modifiers): base(EventType.KeyPress)
+    internal KeyEvent(Key key, Rune @char, string? keyName, ModifierKey modifiers): base(EventType.KeyPress)
     {
         Key = key;
         Char = @char;
         Modifiers = modifiers;
+        Name = keyName;
     }
 
     /// <summary>
@@ -32,6 +34,11 @@ public sealed class KeyEvent: Event
     /// The character that was pressed. Only valid if <see cref="Key"/> is <see cref="Sharpie.Key.Character"/>.
     /// </summary>
     public Rune Char { get; internal init; }
+
+    /// <summary>
+    /// The printable name of the key.
+    /// </summary>
+    public string? Name { get; internal init; }
 
     /// <summary>
     /// The modifier keys that were present at the time.
@@ -58,6 +65,6 @@ public sealed class KeyEvent: Event
             modifiers.Append("ALT-");
         }
 
-        return Key == Key.Character ? $"Key [{modifiers}'{Char}']" : $"Key [{modifiers}{Key}]";
+        return Key == Key.Character ? $"Key [{modifiers}'{Name ?? Char.ToString()}']" : $"Key [{modifiers}{Name ?? Key.ToString()}]";
     }
 }

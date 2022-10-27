@@ -110,13 +110,13 @@ public interface ICursesProvider
 
     bool is_immedok(IntPtr window); //DONE
 
-    bool is_keypad(IntPtr window);
+    bool is_keypad(IntPtr window); //NO
 
-    bool is_leaveok(IntPtr window);
+    bool is_leaveok(IntPtr window); //DONE
 
-    bool is_nodelay(IntPtr window);
+    bool is_nodelay(IntPtr window); //NO
 
-    bool is_notimeout(IntPtr window);
+    bool is_notimeout(IntPtr window); //NO
 
     bool is_pad(IntPtr window); //NO
 
@@ -124,19 +124,19 @@ public interface ICursesProvider
 
     bool is_subwin(IntPtr window); //NO
 
-    bool is_syncok(IntPtr window);
+    bool is_syncok(IntPtr window); //NO
 
     IntPtr wgetparent(IntPtr window); //NO
 
-    int wgetdelay(IntPtr window);
+    int wgetdelay(IntPtr window); //NO
 
     int wgetscrreg(IntPtr window, out int top, out int bottom);
 
-    string? keyname(uint keyCode);
+    string? keyname(uint keyCode); //NO
 
     int keypad(IntPtr window, bool set); //DONE
 
-    int leaveok(IntPtr window, bool set);
+    int leaveok(IntPtr window, bool set); //DONE
 
     string? longname(); //DONE
 
@@ -240,7 +240,7 @@ public interface ICursesProvider
     IntPtr subwin(IntPtr window, int lines, int cols, int atLine,
         int atCol);
 
-    int syncok(IntPtr window, bool set);
+    int syncok(IntPtr window, bool set); //DONE
 
     string? termname(); //DONE
 
@@ -260,13 +260,13 @@ public interface ICursesProvider
 
     int wattr_off(IntPtr window, uint attrs, IntPtr reserved); //DONE
 
-    int wbkgd(IntPtr window, uint charAndAttrs);
+    int wbkgd(IntPtr window, uint charAndAttrs); //NO
 
-    void wbkgdset(IntPtr window, uint charAndAttrs);
+    void wbkgdset(IntPtr window, uint charAndAttrs); //NO
 
     int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
         uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
-        uint bottomRightCorner);
+        uint bottomRightCorner); //DONE
 
     int wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
         IntPtr reserved); //DONE
@@ -299,17 +299,17 @@ public interface ICursesProvider
 
     int winsch(IntPtr window, uint @char); //NO
 
-    int winsdelln(IntPtr window, int count);
+    int winsdelln(IntPtr window, int count); //DONE
 
     int wmove(IntPtr window, int newLine, int newCol); //DONE
 
     int wnoutrefresh(IntPtr window); //DONE
 
-    int wredrawln(IntPtr window, int startLine, int lineCount);
+    int wredrawln(IntPtr window, int startLine, int lineCount); //DONE
 
     int wrefresh(IntPtr window); //DONE
 
-    int wscrl(IntPtr window, int count);
+    int wscrl(IntPtr window, int count); //DONE
 
     int wsetscrreg(IntPtr window, int top, int bottom);
 
@@ -317,7 +317,7 @@ public interface ICursesProvider
 
     void wsyncup(IntPtr window);
 
-    void wtimeout(IntPtr window, int delay);
+    void wtimeout(IntPtr window, int delay); //DONE
 
     int wtouchln(IntPtr window, int line, int count, int changed); //DONE
 
@@ -352,7 +352,7 @@ public interface ICursesProvider
     int getcchar(CChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
         IntPtr reserved); //DONE
 
-    string? key_name(uint @char);
+    string? key_name(uint @char); //DONE
 
     int killwchar(out uint @char); //DONE
 
@@ -411,7 +411,7 @@ public interface ICursesProvider
 
     int mousemask(ulong newMask, out ulong oldMask); //DONE
 
-    bool wenclose(IntPtr window, int line, int col);
+    bool wenclose(IntPtr window, int line, int col); //DONE
 
     int mouseinterval(int millis); //DONE
 

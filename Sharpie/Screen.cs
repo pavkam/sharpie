@@ -370,26 +370,33 @@ public sealed class Screen: Window
         return (button, state, modifierKey);
     }
 
-    public bool TryReadEvent(ReadBehavior behavior, out Event? @event)
+    public bool TryReadEvent(int timeoutMillis, out Event? @event)
     {
+        /*
+
+        Curses.define_key("\x001bO2C", 1024); //shift right
+        Curses.define_key("\x001bO2B", 1024); //shift down
+        Curses.define_key("\x001bO2A", 1024); //shift up
+        Curses.define_key("\x001bO2D", 1024); //shift left
+        Curses.define_key("\x001bO2H", 1024); //shift home
+        Curses.define_key("\x001bO2F", 1024); //shift end of line
+
+        Curses.define_key("\x001b06C", 1024); //shift ctrl right
+        Curses.define_key("\x001b06B", 1024); //shift ctrl down
+        Curses.define_key("\x001b06A", 1024); //shift ctrl up
+        Curses.define_key("\x001b06D", 1024); //shift ctrl left
+        Curses.define_key("\x001b06H", 1024); //shift ctrl home
+        Curses.define_key("\x001b06F", 1024); //shift ctrl end of line
+
+        Curses.define_key("\x001bb", 1024); //alt right
+        Curses.define_key("\x001bf", 1024); //alt left
+
+        Curses.define_key("\x001b" + (char)258, 1024); //alt up
+
+         */
         AssertNotDisposed();
 
-        var enableKeypad = !behavior.HasFlag(ReadBehavior.RawKeypadSequences);
-        var enableNoDelay = behavior.HasFlag(ReadBehavior.RawEscapeSequences);
-        var enableNoTimeout = behavior.HasFlag(ReadBehavior.NoWait);
-
-        if (Terminal.Curses.is_keypad(Handle) != enableKeypad)
-        {
-            Terminal.Curses.keypad(Handle, enableKeypad).TreatError();
-        }
-        if (Terminal.Curses.is_nodelay(Handle) != enableNoDelay)
-        {
-            Terminal.Curses.nodelay(Handle, enableNoDelay).TreatError();
-        }
-        if (Terminal.Curses.is_notimeout(Handle) != enableNoTimeout)
-        {
-            Terminal.Curses.notimeout(Handle, enableNoTimeout).TreatError();
-        }
+        Terminal.Curses.wtimeout(Handle, timeoutMillis);
 
         @event = null;
         var result = Terminal.Curses.wget_wch(Handle, out var keyCode);
@@ -418,7 +425,7 @@ public sealed class Screen: Window
                     break;
                 default:
                     var (key, keyMod) = ConvertKey(keyCode);
-                    @event = new KeyEvent(key, new('\0'), keyMod);
+                    @event = new KeyEvent(key, new('\0'), Terminal.Curses.key_name(keyCode), keyMod);
                     break;
             }
 
@@ -427,7 +434,13 @@ public sealed class Screen: Window
 
         if (result != Helpers.CursesErrorResult)
         {
-            @event = new KeyEvent(Key.Character, new(keyCode), ModifierKey.None);
+            if (keyCode == 27 && TryReadEvent(10, out var other) && other?.Type == EventType.KeyPress)
+            {
+                // Special escape sequence handling.
+            }
+
+            var keyName = Terminal.Curses.key_name(keyCode);
+            @event = new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
             return true;
         }
 

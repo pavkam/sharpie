@@ -32,7 +32,7 @@ terminal.Screen.ApplyPendingRefreshes();
 terminal.Screen.DrawBorder();
 
 while (true) {
-    if (!terminal.Screen.TryReadEvent(ReadBehavior.Wait, out var e) || e == null)
+    if (!terminal.Screen.TryReadEvent(Timeout.Infinite, out var e) || e == null)
     {
         continue;
     }

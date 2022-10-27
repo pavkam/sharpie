@@ -28,16 +28,25 @@ public class Window: IDisposable
         Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
         Handle = windowHandle;
 
-        AutoScroll = true;
+        EnableScrolling = true;
+
+        Terminal.Curses.keypad(Handle, true)
+                .TreatError();
+        Terminal.Curses.notimeout(Handle, false)
+                .TreatError();
+        Terminal.Curses.nodelay(Handle, false)
+                .TreatError();
+        Terminal.Curses.syncok(Handle, true)
+                .TreatError();
     }
 
     /// <summary>
-    /// Gets or sets the ability of the window to auto-scroll its contents when writing
+    /// Gets or sets the ability of the window to scroll its contents when writing
     /// needs a new line.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public bool AutoScroll
+    public bool EnableScrolling
     {
         get
         {
@@ -238,6 +247,94 @@ public class Window: IDisposable
     }
 
     /// <summary>
+    /// Scrolls the contents of the window <paramref name="lines"/> up. Only works for scrollable windows.
+    /// </summary>
+    /// <param name="lines">Number of lines to scroll.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="lines"/> is less than one or greater than the size of the window.</exception>
+    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling"/> is <c>false</c>.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void ScrollUp(int lines)
+    {
+        if (lines <= 0 || lines > Size.Height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(lines));
+        }
+
+        AssertNotDisposed();
+        if (!EnableScrolling)
+        {
+            throw new NotSupportedException("The window is not scroll-enabled.");
+        }
+
+        Terminal.Curses.wscrl(Handle, lines)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Scrolls the contents of the window <paramref name="lines"/> down. Only works for scrollable windows.
+    /// </summary>
+    /// <param name="lines">Number of lines to scroll.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="lines"/> is less than one or greater than the size of the window.</exception>
+    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling"/> is <c>false</c>.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void ScrollDown(int lines)
+    {
+        if (lines <= 0 || lines > Size.Height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(lines));
+        }
+
+        AssertNotDisposed();
+        if (!EnableScrolling)
+        {
+            throw new NotSupportedException("The window is not scroll-enabled.");
+        }
+
+        Terminal.Curses.wscrl(Handle, -lines)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Inserts <paramref name="lines"/> empty lines at the current caret position.
+    /// </summary>
+    /// <param name="lines">Number of lines to inserts.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="lines"/> is less than one or greater than the size of the window.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void InsertEmptyLines(int lines)
+    {
+        if (lines <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(lines));
+        }
+
+        AssertNotDisposed();
+        Terminal.Curses.winsdelln(Handle, lines)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Deletes <paramref name="lines"/> lines starting with the current caret position. All lines below move up.
+    /// </summary>
+    /// <param name="lines">Number of lines to inserts.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="lines"/> is less than one or greater than the size of the window.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void DeleteLines(int lines)
+    {
+        if (lines <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(lines));
+        }
+
+        AssertNotDisposed();
+        Terminal.Curses.winsdelln(Handle, -lines)
+                .TreatError();
+    }
+
+    /// <summary>
     /// Changes the style of the text on the current line and starting from the caret position.
     /// </summary>
     /// <param name="width">The number of characters to change.</param>
@@ -278,7 +375,6 @@ public class Window: IDisposable
         var enumerator = StringInfo.GetTextElementEnumerator(str);
         while (enumerator.MoveNext())
         {
-            var position = CaretPosition;
             var el = enumerator.GetTextElement();
 
             Terminal.Curses.setcchar(out var @char, el, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
@@ -640,8 +736,8 @@ public class Window: IDisposable
     /// <returns>The result of the check.</returns>
     public bool IsPointWithin(Point point)
     {
-        var size = Size;
-        return point.X >= 0 && point.X < size.Width && point.Y >= 0 && point.Y < size.Height;
+        AssertNotDisposed();
+        return Terminal.Curses.wenclose(Handle, point.Y, point.X);
     }
 
     /// <summary>
@@ -650,18 +746,9 @@ public class Window: IDisposable
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <returns>The result of the check.</returns>
-    public bool IsRectangleWithin(Rectangle rect)
-    {
-        var size = Size;
-        return rect.Left >= 0 &&
-            rect.Left < size.Width &&
-            rect.Top >= 0 &&
-            rect.Top < size.Height &&
-            rect.Right >= rect.Left &&
-            rect.Right < size.Width &&
-            rect.Bottom >= rect.Top &&
-            rect.Bottom < size.Height;
-    }
+    public bool IsRectangleWithin(Rectangle rect) =>
+        IsPointWithin(new(rect.X, rect.Y)) &&
+        IsPointWithin(new(rect.X + rect.Width - 1, rect.Y + rect.Bottom - 1));
 
     /// <summary>
     /// Gets or sets the location of the window.
@@ -833,6 +920,48 @@ public class Window: IDisposable
         {
             Terminal.Curses.wrefresh(Handle)
                     .TreatError();
+        }
+    }
+
+    /// <summary>
+    /// Refreshes a number of lines within the window.
+    /// </summary>
+    /// <param name="line">The starting line to refresh.</param>
+    /// <param name="count">The number of lines to refresh.</param>
+    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The combination of lines and count exceed the window boundary.</exception>
+    public virtual void RefreshLines(int line, int count)
+    {
+        AssertNotDisposed();
+        if (line < 0 || line >= Size.Height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(line));
+        }
+        if (count < 1 || line + count - 1 >= Size.Height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count));
+        }
+
+        Terminal.Curses.wredrawln(Handle, line, count)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Gets or sets the window's management of the hardware cursor. This is an internal property and should not
+    /// be called by developers.
+    /// </summary>
+    internal bool IgnoreHardwareCaret
+    {
+        get
+        {
+            AssertNotDisposed();
+            return Terminal.Curses.is_leaveok(Handle);
+        }
+        set
+        {
+            AssertNotDisposed();
+            Terminal.Curses.leaveok(Handle, value);
         }
     }
 
