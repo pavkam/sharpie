@@ -17,4 +17,16 @@ public class Event
     /// </summary>
     /// <param name="type">The type of the event.</param>
     protected Event(EventType type) => Type = type;
+
+    /// <inheritdoc cref="object.ToString"/>
+    public override string ToString() => $"{Type}";
+
+    /// <inheritdoc cref="object.Equals(object)"/>
+    public override bool Equals(object? obj) =>
+        obj is KeyEvent ke &&
+        ke.Type == Type &&
+        obj.GetType() == GetType();
+
+    /// <inheritdoc cref="object.GetHashCode"/>
+    public override int GetHashCode() => Type.GetHashCode();
 }

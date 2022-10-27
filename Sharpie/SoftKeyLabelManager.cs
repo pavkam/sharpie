@@ -25,7 +25,7 @@ public sealed class SoftKeyLabelManager
         if (mode != SoftKeyLabelMode.Disabled)
         {
             terminal.Curses.slk_init((int) mode)
-                    .TreatError();
+                    .Check(nameof(_terminal.Curses.slk_init));
         }
     }
 
@@ -74,7 +74,7 @@ public sealed class SoftKeyLabelManager
         AssertNotDisposedAndEnabled();
 
         _terminal.Curses.slk_set(index + 1, title, (int) align)
-                 .TreatError();
+                 .Check(nameof(_terminal.Curses.slk_set));
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public sealed class SoftKeyLabelManager
             AssertNotDisposedAndEnabled();
 
             var attrsAndColors = _terminal.Curses.slk_attr()
-                                          .TreatError();
+                                          .Check(nameof(_terminal.Curses.slk_attr));
 
             var colorPair = (ushort) _terminal.Curses.COLOR_PAIR((uint)attrsAndColors);
             return new() { Attributes = (VideoAttribute) attrsAndColors, ColorMixture = new() { Handle = colorPair } };
@@ -100,7 +100,7 @@ public sealed class SoftKeyLabelManager
             AssertNotDisposedAndEnabled();
 
             _terminal.Curses.slk_attr_set((uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
-                     .TreatError();
+                     .Check(nameof(_terminal.Curses.slk_attr_set));
         }
     }
 
@@ -118,7 +118,7 @@ public sealed class SoftKeyLabelManager
             AssertNotDisposedAndEnabled();
 
             _terminal.Curses.slk_color(value.Handle)
-                    .TreatError();
+                     .Check(nameof(_terminal.Curses.slk_color));
         }
     }
 
@@ -134,7 +134,7 @@ public sealed class SoftKeyLabelManager
         AssertNotDisposedAndEnabled();
 
         _terminal.Curses.slk_attr_on((uint) attributes, IntPtr.Zero)
-                 .TreatError();
+                 .Check(nameof(_terminal.Curses.slk_attr_on));
     }
 
     /// <summary>
@@ -149,7 +149,7 @@ public sealed class SoftKeyLabelManager
         AssertNotDisposedAndEnabled();
 
         _terminal.Curses.slk_attr_off((uint) attributes, IntPtr.Zero)
-                .TreatError();
+                 .Check(nameof(_terminal.Curses.slk_attr_off));
     }
 
     /// <summary>
@@ -162,7 +162,7 @@ public sealed class SoftKeyLabelManager
     {
         AssertNotDisposedAndEnabled();
         _terminal.Curses.slk_clear()
-                 .TreatError();
+                 .Check(nameof(_terminal.Curses.slk_clear));
     }
 
     /// <summary>
@@ -175,7 +175,7 @@ public sealed class SoftKeyLabelManager
     {
         AssertNotDisposedAndEnabled();
         _terminal.Curses.slk_restore()
-                 .TreatError();
+                 .Check(nameof(_terminal.Curses.slk_restore));
     }
 
     /// <summary>
@@ -188,7 +188,7 @@ public sealed class SoftKeyLabelManager
     {
         AssertNotDisposedAndEnabled();
         _terminal.Curses.slk_touch()
-                 .TreatError();
+                 .Check(nameof(_terminal.Curses.slk_touch));
     }
 
     /// <summary>
@@ -205,11 +205,11 @@ public sealed class SoftKeyLabelManager
         if (batch)
         {
             _terminal.Curses.slk_noutrefresh()
-                     .TreatError();
+                     .Check(nameof(_terminal.Curses.slk_noutrefresh));
         } else
         {
             _terminal.Curses.slk_refresh()
-                     .TreatError();
+                     .Check(nameof(_terminal.Curses.slk_refresh));
         }
     }
 }

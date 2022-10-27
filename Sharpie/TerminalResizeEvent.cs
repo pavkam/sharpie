@@ -20,9 +20,15 @@ public sealed class TerminalResizeEvent: Event
     /// </summary>
     public Size Size { get; }
 
-    /// <summary>
-    /// Returns the string representation of the event.
-    /// </summary>
-    /// <returns>The string.</returns>
+    /// <inheritdoc cref="object.ToString"/>
     public override string ToString() => $"Resize [{Size.Width} x {Size.Height}]";
+
+    /// <inheritdoc cref="object.Equals(object)"/>
+    public override bool Equals(object? obj) =>
+        obj is TerminalResizeEvent re &&
+        re.Size == Size &&
+        obj.GetType() == GetType();
+
+    /// <inheritdoc cref="object.GetHashCode"/>
+    public override int GetHashCode() => Size.GetHashCode();
 }

@@ -45,10 +45,7 @@ public sealed class KeyEvent: Event
     /// </summary>
     public ModifierKey Modifiers { get; internal init; }
 
-    /// <summary>
-    /// Returns the string representation of the event.
-    /// </summary>
-    /// <returns>The string.</returns>
+    /// <inheritdoc cref="object.ToString"/>
     public override string ToString()
     {
         var modifiers = new StringBuilder();
@@ -67,4 +64,17 @@ public sealed class KeyEvent: Event
 
         return Key == Key.Character ? $"Key [{modifiers}'{Name ?? Char.ToString()}']" : $"Key [{modifiers}{Name ?? Key.ToString()}]";
     }
+
+    /// <inheritdoc cref="object.Equals(object)"/>
+    public override bool Equals(object? obj) =>
+        obj is KeyEvent ke &&
+        ke.Char == Char &&
+        ke.Key == Key &&
+        ke.Modifiers == Modifiers &&
+        ke.Name == Name &&
+        ke.Type == Type &&
+        obj.GetType() == GetType();
+
+    /// <inheritdoc cref="object.GetHashCode"/>
+    public override int GetHashCode() => HashCode.Combine(Char, Key, Modifiers, Name, Type);
 }

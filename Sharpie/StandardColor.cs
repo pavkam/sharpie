@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 /// <summary>
 /// Defines the well-known standard video colors.
 /// </summary>
-[PublicAPI, Flags]
+[PublicAPI]
 public enum StandardColor: short
 {
     /// <summary>

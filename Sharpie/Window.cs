@@ -58,13 +58,13 @@ public class Window: IDisposable
         EnableScrolling = true;
 
         Terminal.Curses.keypad(Handle, true)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.keypad));
         Terminal.Curses.notimeout(Handle, false)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.notimeout));
         Terminal.Curses.nodelay(Handle, false)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.nodelay));
         Terminal.Curses.syncok(Handle, true)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.syncok));
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class Window: IDisposable
         {
             Terminal.AssertNotDisposed();
             Terminal.Curses.scrollok(Handle, value)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.scrollok));
         }
     }
 
@@ -115,7 +115,7 @@ public class Window: IDisposable
             if (Terminal.Curses.has_il())
             {
                 Terminal.Curses.idlok(Handle, value)
-                        .TreatError();
+                        .Check(nameof(Terminal.Curses.idlok));
             }
         }
     }
@@ -150,13 +150,13 @@ public class Window: IDisposable
         get
         {
             Terminal.Curses.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.wattr_get));
 
             return new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } };
         }
         set =>
             Terminal.Curses.wattr_set(Handle, (uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.wattr_set));
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ public class Window: IDisposable
         get => Style.ColorMixture;
         set =>
             Terminal.Curses.wcolor_set(Handle, value.Handle, IntPtr.Zero)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.wcolor_set));
     }
 
     /// <summary>
@@ -181,7 +181,7 @@ public class Window: IDisposable
     public void EnableAttributes(VideoAttribute attributes)
     {
         Terminal.Curses.wattr_on(Handle, (uint) attributes, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wattr_on));
     }
 
     /// <summary>
@@ -193,7 +193,7 @@ public class Window: IDisposable
     public void DisableAttributes(VideoAttribute attributes)
     {
         Terminal.Curses.wattr_off(Handle, (uint) attributes, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wattr_off));
     }
 
     /// <summary>
@@ -256,7 +256,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wscrl(Handle, lines)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wscrl));
     }
 
     /// <summary>
@@ -280,7 +280,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wscrl(Handle, -lines)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wscrl));
     }
 
     /// <summary>
@@ -298,7 +298,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.winsdelln(Handle, lines)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.winsdelln));
     }
 
     /// <summary>
@@ -316,7 +316,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.winsdelln(Handle, -lines)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.winsdelln));
     }
 
     /// <summary>
@@ -335,7 +335,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wchgat(Handle, width, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wchgat));
     }
 
     /// <summary>
@@ -359,7 +359,7 @@ public class Window: IDisposable
             var el = enumerator.GetTextElement();
 
             Terminal.Curses.setcchar(out var @char, el, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.setcchar));
 
             var result = Terminal.Curses.wadd_wch(Handle, @char);
             if (result == Helpers.CursesErrorResult)
@@ -387,10 +387,10 @@ public class Window: IDisposable
 
         Terminal.Curses.setcchar(out var c, @char.ToString(), (uint)style.Attributes, style.ColorMixture.Handle,
                     IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.wvline_set(Handle, c, length)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wvline_set));
     }
 
     /// <summary>
@@ -403,7 +403,7 @@ public class Window: IDisposable
     public void DrawVerticalLine(int length)
     {
         Terminal.Curses.wvline(Handle, 0, length)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wvline));
     }
 
     /// <summary>
@@ -426,39 +426,39 @@ public class Window: IDisposable
     {
         Terminal.Curses.setcchar(out var leftSide, @leftSideChar.ToString(), (uint) style.Attributes,
                     style.ColorMixture.Handle, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.setcchar(out var rightSide, @rightSideChar.ToString(), (uint) style.Attributes,
                     style.ColorMixture.Handle, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.setcchar(out var topSide, @topSideChar.ToString(), (uint) style.Attributes,
                     style.ColorMixture.Handle, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.setcchar(out var bottomSide, @bottomSideChar.ToString(), (uint) style.Attributes,
                     style.ColorMixture.Handle, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.setcchar(out var topLeftCorner, @topLeftCornerChar.ToString(), (uint) style.Attributes,
                     style.ColorMixture.Handle, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.setcchar(out var topRightCorner, @topRightCornerChar.ToString(), (uint) style.Attributes,
                     style.ColorMixture.Handle, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.setcchar(out var bottomLeftCorner, @bottomLeftCornerChar.ToString(), (uint) style.Attributes,
                     style.ColorMixture.Handle, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.setcchar(out var bottomRightCorner, @bottomRightCornerChar.ToString(), (uint) style.Attributes,
                     style.ColorMixture.Handle, IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.wborder_set(Handle, leftSide, rightSide, topSide, bottomSide,
                     topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wborder_set));
     }
 
     /// <summary>
@@ -469,7 +469,7 @@ public class Window: IDisposable
     public void DrawBorder()
     {
         Terminal.Curses.wborder(Handle, 0, 0, 0, 0, 0, 0, 0, 0)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wborder));
     }
 
     /// <summary>
@@ -490,10 +490,10 @@ public class Window: IDisposable
 
         Terminal.Curses.setcchar(out var c, @char.ToString(), (uint)style.Attributes, style.ColorMixture.Handle,
                     IntPtr.Zero)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.setcchar));
 
         Terminal.Curses.whline_set(Handle, c, length)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.whline_set));
     }
 
     /// <summary>
@@ -511,7 +511,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.whline(Handle, 0, length)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.whline));
     }
 
     /// <summary>
@@ -556,14 +556,14 @@ public class Window: IDisposable
         var arr = new CChar[count];
 
         Terminal.Curses.win_wchnstr(Handle, arr, count)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.win_wchnstr));
 
         var sb = new StringBuilder(10);
         return arr.Select(@char =>
                   {
                       sb.Clear();
                       Terminal.Curses.getcchar(@char, sb, out var attrs, out var colorPair, IntPtr.Zero)
-                              .TreatError();
+                              .Check(nameof(Terminal.Curses.getcchar));
 
                       return (Rune.GetRuneAt(sb.ToString(), 0),
                           new Style
@@ -584,11 +584,11 @@ public class Window: IDisposable
         get
         {
             Terminal.Curses.wgetbkgrnd(Handle, out var @char)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.wgetbkgrnd));
 
             var sb = new StringBuilder(10);
             Terminal.Curses.getcchar(@char, sb, out var attrs, out var colorPair, IntPtr.Zero)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.getcchar));
 
             return (Rune.GetRuneAt(sb.ToString(), 0),
                 new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
@@ -597,10 +597,10 @@ public class Window: IDisposable
         {
             Terminal.Curses.setcchar(out var @char, value.@char.ToString(), (uint) value.style.Attributes,
                         value.style.ColorMixture.Handle, IntPtr.Zero)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.setcchar));
 
             Terminal.Curses.wbkgrnd(Handle, @char)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.wbkgrnd));
         }
     }
 
@@ -616,20 +616,20 @@ public class Window: IDisposable
         {
             case ClearStrategy.Full:
                 Terminal.Curses.werase(Handle)
-                        .TreatError();
+                        .Check(nameof(Terminal.Curses.werase));
 
                 break;
             case ClearStrategy.LineFromCaret:
                 if (CaretPosition.X < Size.Width - 1)
                 {
                     Terminal.Curses.wclrtoeol(Handle)
-                            .TreatError();
+                            .Check(nameof(Terminal.Curses.wclrtoeol));
                 }
 
                 break;
             case ClearStrategy.FullFromCaret:
                 Terminal.Curses.wclrtobot(Handle)
-                        .TreatError();
+                        .Check(nameof(Terminal.Curses.wclrtobot));
 
                 break;
         }
@@ -654,12 +654,12 @@ public class Window: IDisposable
         {
             case ReplaceStrategy.Overlay:
                 Terminal.Curses.overlay(Handle, window.Handle)
-                        .TreatError();
+                        .Check(nameof(Terminal.Curses.overlay));
 
                 break;
             case ReplaceStrategy.Overwrite:
                 Terminal.Curses.overwrite(Handle, window.Handle)
-                        .TreatError();
+                        .Check(nameof(Terminal.Curses.overwrite));
 
                 break;
         }
@@ -691,7 +691,7 @@ public class Window: IDisposable
         Terminal.Curses.copywin(Handle, window.Handle, srcRect.Top, srcRect.Left, destRect.Top,
                     destRect.Left, destRect.Bottom, destRect.Right,
                     Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
-                .TreatError();
+                .Check(nameof(Terminal.Curses.copywin));
     }
 
     /// <summary>
@@ -715,7 +715,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wtouchln(Handle, line, count, 1)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wtouchln));
     }
 
     /// <summary>
@@ -759,13 +759,13 @@ public class Window: IDisposable
             if (Terminal.Curses.is_subwin(Handle))
             {
                 return new(Terminal.Curses.getparx(Handle)
-                            .TreatError(), Terminal.Curses.getpary(Handle)
-                                                   .TreatError());
+                            .Check(nameof(Terminal.Curses.getparx)), Terminal.Curses.getpary(Handle)
+                                                                             .Check(nameof(Terminal.Curses.getpary)));
             } else
             {
                 return new(Terminal.Curses.getbegx(Handle)
-                            .TreatError(), Terminal.Curses.getbegy(Handle)
-                                                   .TreatError());
+                            .Check(nameof(Terminal.Curses.getbegx)), Terminal.Curses.getbegy(Handle)
+                                                                             .Check(nameof(Terminal.Curses.getbegy)));
             }
         }
         set
@@ -783,11 +783,11 @@ public class Window: IDisposable
             if (Terminal.Curses.is_subwin(Handle))
             {
                 Terminal.Curses.mvderwin(Handle, value.Y, value.X)
-                        .TreatError();
+                        .Check(nameof(Terminal.Curses.mvderwin));
             } else
             {
                 Terminal.Curses.mvwin(Handle, value.Y, value.X)
-                        .TreatError();
+                        .Check(nameof(Terminal.Curses.mvwin));
             }
         }
     }
@@ -802,8 +802,8 @@ public class Window: IDisposable
     {
         get =>
             new(Terminal.Curses.getmaxx(Handle)
-                        .TreatError(), Terminal.Curses.getmaxy(Handle)
-                                               .TreatError());
+                        .Check(nameof(Terminal.Curses.getmaxx)), Terminal.Curses.getmaxy(Handle)
+                                                                         .Check(nameof(Terminal.Curses.getmaxy)));
         set
         {
             if (Parent != null)
@@ -817,7 +817,7 @@ public class Window: IDisposable
             }
 
             Terminal.Curses.wresize(Handle, value.Height, value.Width)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.wresize));
         }
     }
 
@@ -831,17 +831,17 @@ public class Window: IDisposable
     {
         get =>
             new(Terminal.Curses.getcurx(Handle)
-                        .TreatError(), Terminal.Curses.getcury(Handle)
-                                               .TreatError());
+                        .Check(nameof(Terminal.Curses.getcurx)), Terminal.Curses.getcury(Handle)
+                                                                         .Check(nameof(Terminal.Curses.getcury)));
         set
         {
-            if (value.X < 0 || value.Y < 1 || value.X >= Size.Width || value.Y >= Size.Height)
+            if (!IsPointWithin(value))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
             Terminal.Curses.wmove(Handle, value.Y, value.X)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.wmove));
         }
     }
 
@@ -894,17 +894,17 @@ public class Window: IDisposable
         if (entireScreen)
         {
             Terminal.Curses.clearok(Handle, true)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.clearok));
         }
 
         if (batch)
         {
             Terminal.Curses.wnoutrefresh(Handle)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.wnoutrefresh));
         } else
         {
             Terminal.Curses.wrefresh(Handle)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.wrefresh));
         }
     }
 
@@ -928,7 +928,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wredrawln(Handle, line, count)
-                .TreatError();
+                .Check(nameof(Terminal.Curses.wredrawln));
     }
 
     /// <summary>

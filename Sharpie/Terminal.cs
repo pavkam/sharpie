@@ -72,10 +72,10 @@ public sealed class Terminal: IDisposable
 
         if (_inputEchoing)
         {
-            Curses.echo().TreatError();
+            Curses.echo().Check(nameof(Curses.echo));
         } else
         {
-            Curses.noecho().TreatError();
+            Curses.noecho().Check(nameof(Curses.noecho));
         }
 
         if (!_lineBuffering)
@@ -83,26 +83,26 @@ public sealed class Terminal: IDisposable
             if (_rawMode)
             {
                 Curses.raw()
-                      .TreatError();
+                      .Check(nameof(Curses.raw));
             } else
             {
                 Curses.noraw()
-                      .TreatError();
+                      .Check(nameof(Curses.noraw));
             }
 
             if (_readTimeoutMillis != Timeout.Infinite)
             {
                 Curses.halfdelay(Helpers.ConvertMillisToTenths(_readTimeoutMillis))
-                      .TreatError();
+                      .Check(nameof(Curses.halfdelay));
             } else
             {
                 Curses.cbreak()
-                      .TreatError();
+                      .Check(nameof(Curses.cbreak));
             }
         } else
         {
             Curses.nocbreak()
-                  .TreatError();
+                  .Check(nameof(Curses.nocbreak));
         }
 
         EnableReturnToNewLineTranslation = enableReturnToNewLineTranslation;
@@ -143,7 +143,7 @@ public sealed class Terminal: IDisposable
             AssertNotDisposed();
 
             return Curses.baudrate()
-                         .TreatError();
+                         .Check(nameof(Curses.baudrate));
         }
     }
 
@@ -197,7 +197,7 @@ public sealed class Terminal: IDisposable
                 : 0;
 
             Curses.mousemask(newMask, out var oldMask)
-                  .TreatError();
+                  .Check(nameof(Curses.mousemask));
 
             _oldMouseMask ??= oldMask;
         }
@@ -216,7 +216,7 @@ public sealed class Terminal: IDisposable
             AssertNotDisposed();
 
             return Curses.mouseinterval(-1)
-                         .TreatError();
+                         .Check(nameof(Curses.mouseinterval));
         }
         set
         {
@@ -228,7 +228,7 @@ public sealed class Terminal: IDisposable
             }
 
             Curses.mouseinterval(value)
-                  .TreatError();
+                  .Check(nameof(Curses.mouseinterval));
         }
     }
 
@@ -348,10 +348,10 @@ public sealed class Terminal: IDisposable
 
             if (value)
             {
-                Curses.nl().TreatError();
+                Curses.nl().Check(nameof(Curses.nl));
             } else
             {
-                Curses.nonl().TreatError();
+                Curses.nonl().Check(nameof(Curses.nonl));
             }
 
             _newLineTranslation = value;
@@ -390,12 +390,12 @@ public sealed class Terminal: IDisposable
             AssertNotDisposed();
 
             var prevMode = Curses.curs_set((int) value)
-                                 .TreatError();
+                                 .Check(nameof(Curses.curs_set));
 
             _initialHardwareCursorMode ??= prevMode;
             _hardwareCursorMode = value;
 
-            _screen.IgnoreHardwareCaret = value != CaretMode.Invisible;
+            _screen.IgnoreHardwareCaret = value == CaretMode.Invisible;
         }
     }
 
@@ -511,10 +511,10 @@ public sealed class Terminal: IDisposable
 
         if (silent)
         {
-            Curses.flash().TreatError();
+            Curses.flash().Check(nameof(Curses.flash));
         } else
         {
-            Curses.beep().TreatError();
+            Curses.beep().Check(nameof(Curses.beep));
         }
     }
 

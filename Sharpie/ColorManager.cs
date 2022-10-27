@@ -26,10 +26,10 @@ public sealed class ColorManager
         if (enabled && ColorsAreSupported)
         {
             _terminal.Curses.start_color()
-                           .TreatError();
+                     .Check(nameof(_terminal.Curses.start_color));
 
             _terminal.Curses.use_default_colors()
-                           .TreatError();
+                     .Check(nameof(_terminal.Curses.use_default_colors));
         }
 
         _enabled = true;
@@ -95,7 +95,7 @@ public sealed class ColorManager
 
         _terminal.AssertNotDisposed();
         _terminal.Curses.init_pair(_nextPairHandle, fgColor, bgColor)
-                       .TreatError();
+                 .Check(nameof(_terminal.Curses.init_pair));
 
         var mixture = new ColorMixture { Handle = _nextPairHandle };
         _nextPairHandle++;
@@ -126,7 +126,7 @@ public sealed class ColorManager
     {
         _terminal.AssertNotDisposed();
         _terminal.Curses.init_pair(mixture.Handle, fgColor, bgColor)
-                       .TreatError();
+                 .Check(nameof(_terminal.Curses.init_pair));
     }
 
     /// <summary>
@@ -153,7 +153,7 @@ public sealed class ColorManager
     {
         _terminal.AssertNotDisposed();
         _terminal.Curses.assume_default_colors(fgColor, bgColor)
-                       .TreatError();
+                 .Check(nameof(_terminal.Curses.assume_default_colors));
     }
 
     /// <summary>
@@ -204,7 +204,7 @@ public sealed class ColorManager
         }
 
         _terminal.Curses.init_color(color, red, green, blue)
-                       .TreatError();
+                 .Check(nameof(_terminal.Curses.init_color));
     }
 
     /// <summary>
@@ -244,7 +244,7 @@ public sealed class ColorManager
         }
 
         _terminal.Curses.color_content(color, out var red, out var green, out var blue)
-                       .TreatError();
+                       .Check(nameof(_terminal.Curses.color_content));
 
         return (red, green, blue);
     }
@@ -260,4 +260,20 @@ public sealed class ColorManager
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public (ushort red, ushort green, ushort blue) BreakdownColor(StandardColor color) => BreakdownColor((ushort) color);
+
+    /// <summary>
+    /// Extracts the colors of a color mixture.
+    /// </summary>
+    /// <param name="mixture">The color mixture to get the colors from.</param>
+    /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public (ushort fgColor, ushort bgColor) BreakdownMixture(ColorMixture mixture)
+    {
+        _terminal.AssertNotDisposed();
+        _terminal.Curses.pair_content(mixture.Handle, out var fgColor, out var bgColor)
+                 .Check(nameof(_terminal.Curses.pair_content));
+
+        return (fgColor, bgColor);
+    }
 }

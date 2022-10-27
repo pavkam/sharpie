@@ -1,8 +1,11 @@
 namespace Sharpie;
 
+using JetBrains.Annotations;
+
 /// <summary>
 /// Defines the possible event types.
 /// </summary>
+[PublicAPI]
 public enum EventType
 {
     /// <summary>

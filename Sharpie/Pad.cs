@@ -64,19 +64,19 @@ public sealed class Pad: Window
         if (entireScreen)
         {
             Terminal.Curses.clearok(Handle, true)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.clearok));
         }
 
         if (batch)
         {
             Terminal.Curses.pnoutrefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
                         destRect.Bottom, destRect.Right)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.pnoutrefresh));
         } else
         {
             Terminal.Curses.prefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
                         destRect.Bottom, destRect.Right)
-                    .TreatError();
+                    .Check(nameof(Terminal.Curses.prefresh));
         }
     }
 }

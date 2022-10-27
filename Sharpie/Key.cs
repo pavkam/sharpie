@@ -1,5 +1,11 @@
 namespace Sharpie;
 
+using JetBrains.Annotations;
+
+/// <summary>
+/// Defines the possible key types.
+/// </summary>
+[PublicAPI]
 public enum Key: uint
 {
     /// <summary>

@@ -130,7 +130,7 @@ public interface ICursesProvider
 
     int wgetdelay(IntPtr window); //NO
 
-    int wgetscrreg(IntPtr window, out int top, out int bottom); //TODO
+    int wgetscrreg(IntPtr window, out int top, out int bottom); //NO
 
     string? keyname(uint keyCode); //NO
 
@@ -170,7 +170,7 @@ public interface ICursesProvider
 
     int overwrite(IntPtr srcWindow, IntPtr destWindow); //DONE
 
-    int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor); //TODO
+    int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor); //DONE
 
     uint COLOR_PAIR(uint attrs); //DONE
 

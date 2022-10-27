@@ -45,10 +45,7 @@ public sealed class MouseActionEvent: Event
     /// </summary>
     public Point Position { get; }
 
-    /// <summary>
-    /// Returns the string representation of the event.
-    /// </summary>
-    /// <returns>The string.</returns>
+    /// <inheritdoc cref="object.ToString"/>
     public override string ToString()
     {
         var modifiers = new StringBuilder();
@@ -67,4 +64,17 @@ public sealed class MouseActionEvent: Event
 
         return $"Mouse [{modifiers}{Button}-{State} at {Position.X}, {Position.Y}]";
     }
+
+    /// <inheritdoc cref="object.Equals(object)"/>
+    public override bool Equals(object? obj) =>
+        obj is MouseActionEvent mae &&
+        mae.Button == Button &&
+        mae.State == State &&
+        mae.Modifiers == Modifiers &&
+        mae.Position == Position &&
+        mae.Type == Type &&
+        obj.GetType() == GetType();
+
+    /// <inheritdoc cref="object.GetHashCode"/>
+    public override int GetHashCode() => HashCode.Combine(Button, State, Modifiers, Position, Type);
 }

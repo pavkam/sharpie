@@ -1,9 +1,12 @@
 namespace Sharpie;
 
+using JetBrains.Annotations;
+
 /// <summary>
 /// Defines the possible strategies or replacing the contents of a window with the contents
 /// of another window.
 /// </summary>
+[PublicAPI]
 public enum ReplaceStrategy
 {
     /// <summary>

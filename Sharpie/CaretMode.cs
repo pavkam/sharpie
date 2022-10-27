@@ -1,8 +1,11 @@
 namespace Sharpie;
 
+using JetBrains.Annotations;
+
 /// <summary>
 /// Defines the caret mode.
 /// </summary>
+[PublicAPI]
 public enum CaretMode
 {
     /// <summary>

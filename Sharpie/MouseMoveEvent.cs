@@ -20,9 +20,16 @@ public sealed class MouseMoveEvent: Event
     /// </summary>
     public Point Position { get; }
 
-    /// <summary>
-    /// Returns the string representation of the event.
-    /// </summary>
-    /// <returns>The string.</returns>
+    /// <inheritdoc cref="object.ToString"/>
     public override string ToString() => $"Mouse [{Position.X}, {Position.Y}]";
+
+    /// <inheritdoc cref="object.Equals(object)"/>
+    public override bool Equals(object? obj) =>
+        obj is MouseMoveEvent mae &&
+        mae.Position == Position &&
+        mae.Type == Type &&
+        obj.GetType() == GetType();
+
+    /// <inheritdoc cref="object.GetHashCode"/>
+    public override int GetHashCode() => HashCode.Combine(Position, Type);
 }

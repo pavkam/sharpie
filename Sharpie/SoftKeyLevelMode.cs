@@ -1,8 +1,11 @@
 namespace Sharpie;
 
+using JetBrains.Annotations;
+
 /// <summary>
 /// Defines the possible strategies of clearing contents of a window.
 /// </summary>
+[PublicAPI]
 public enum SoftKeyLabelMode
 {
     /// <summary>

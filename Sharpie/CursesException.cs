@@ -1,11 +1,23 @@
 namespace Sharpie;
 
+using JetBrains.Annotations;
+
 /// <summary>
-/// Describes a Curses exception
+/// A Curses exception.
 /// </summary>
-public class CursesException: Exception
+[PublicAPI]
+public sealed class CursesException: Exception
 {
-    public CursesException(string caller): base($"The call to {caller} failed.")
-    {
-    }
+    /// <summary>
+    /// The operation that failed.
+    /// </summary>
+    public string Operation { get; }
+
+    /// <summary>
+    /// Creates a new instance of this exception.
+    /// </summary>
+    /// <param name="operation">The failed operation.</param>
+    /// <param name="message">The message.</param>
+    internal CursesException(string operation, string message): base($"The call to {operation} failed: {message}") =>
+        Operation = operation;
 }

@@ -61,7 +61,7 @@ public sealed class Screen: Window
 
         Terminal.AssertNotDisposed();
         var handle = Terminal.Curses.newwin(area.Height, area.Width, area.Y, area.X)
-                             .TreatNullAsError();
+                             .Check(nameof(Terminal.Curses.newwin));
 
         return new(Terminal, this, handle);
     }
@@ -86,7 +86,7 @@ public sealed class Screen: Window
 
         Terminal.AssertNotDisposed();
         var handle = Terminal.Curses.derwin(window.Handle, area.Height, area.Width, area.Y, area.X)
-                             .TreatNullAsError();
+                             .Check(nameof(Terminal.Curses.derwin));
 
         return new(Terminal, this, handle);
     }
@@ -106,7 +106,7 @@ public sealed class Screen: Window
         }
 
         return new(Terminal, this, Terminal.Curses.dupwin(window.Handle)
-                                           .TreatNullAsError());
+                                           .Check(nameof(Terminal.Curses.dupwin)));
     }
 
     /// <summary>
@@ -126,7 +126,7 @@ public sealed class Screen: Window
 
         Terminal.AssertNotDisposed();
         var handle = Terminal.Curses.newpad(size.Height, size.Width)
-                             .TreatNullAsError();
+                             .Check(nameof(Terminal.Curses.newpad));
 
         return new(Terminal, this, handle);
     }
@@ -154,7 +154,7 @@ public sealed class Screen: Window
         }
 
         var handle = Terminal.Curses.subpad(pad.Handle, area.Height, area.Width, area.Top, area.Right)
-                             .TreatNullAsError();
+                             .Check(nameof(Terminal.Curses.subpad));
 
         return new(Terminal, pad, handle);
     }
@@ -168,7 +168,7 @@ public sealed class Screen: Window
     {
         Terminal.AssertNotDisposed();
         Terminal.Curses.doupdate()
-                .TreatError();
+                .Check(nameof(Terminal.Curses.doupdate));
     }
 
     private static (Key key, ModifierKey modifierKey) ConvertKey(uint keyCode)

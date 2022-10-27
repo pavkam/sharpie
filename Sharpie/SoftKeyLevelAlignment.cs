@@ -1,8 +1,11 @@
 namespace Sharpie;
 
+using JetBrains.Annotations;
+
 /// <summary>
 /// Defines the alignment of labels in a <see cref="SoftKeyLabelManager"/>.
 /// </summary>
+[PublicAPI]
 public enum SoftKeyLabelAlignment
 {
     /// <summary>

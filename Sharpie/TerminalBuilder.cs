@@ -48,7 +48,6 @@ public sealed class TerminalBuilder
         return this;
     }
 
-
     /// <summary>
     /// Toggles the silencing of control keys such as CTRL+C.
     /// </summary>
