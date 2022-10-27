@@ -2,6 +2,7 @@ namespace Sharpie;
 
 using System.Drawing;
 using System.Globalization;
+using System.Text;
 using JetBrains.Annotations;
 
 /// <summary>
@@ -275,8 +276,6 @@ public class Window: IDisposable
         AssertNotDisposed();
 
         var enumerator = StringInfo.GetTextElementEnumerator(str);
-        var size = Size;
-
         while (enumerator.MoveNext())
         {
             var position = CaretPosition;
@@ -291,6 +290,159 @@ public class Window: IDisposable
                 break;
             }
         }
+    }
+
+    /// <summary>
+    /// Draws a vertical line from the current caret position downwards.
+    /// </summary>
+    /// <param name="char">The character to use for the line.</param>
+    /// <param name="length">The length of the line.</param>
+    /// <param name="style">The style to use.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
+    public void DrawVerticalLine(Rune @char, Style style, int length)
+    {
+        if (length <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length));
+        }
+
+        AssertNotDisposed();
+        Terminal.Curses.setcchar(out var c, @char.ToString(), (uint)style.Attributes, style.ColorMixture.Handle,
+                    IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.wvline_set(Handle, c, length)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Draws a vertical line using the standard line character from the current caret position downwards.
+    /// </summary>
+    /// <param name="length">The length of the line.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
+    public void DrawVerticalLine(int length)
+    {
+        AssertNotDisposed();
+        Terminal.Curses.wvline(Handle, 0, length)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Draws a vertical line from the current caret position downwards.
+    /// </summary>
+    /// <param name="bottomRightCornerChar">The bottom-right corner character.</param>
+    /// <param name="leftSideChar">The left-side character.</param>
+    /// <param name="rightSideChar">The right-side character.</param>
+    /// <param name="topLeftCornerChar">The top-left corner character.</param>
+    /// <param name="topRightCornerChar">The top-right corner character.</param>
+    /// <param name="topSideChar">The top-side character.</param>
+    /// <param name="bottomLeftCornerChar">The bottom-left corner character.</param>
+    /// <param name="bottomSideChar">The bottom-side character.</param>
+    /// <param name="style">The style to use.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void DrawBorder(Rune leftSideChar, Rune rightSideChar, Rune topSideChar, Rune bottomSideChar,
+        Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar,
+        Style style)
+    {
+        AssertNotDisposed();
+
+        Terminal.Curses.setcchar(out var leftSide, @leftSideChar.ToString(), (uint) style.Attributes,
+                    style.ColorMixture.Handle, IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.setcchar(out var rightSide, @rightSideChar.ToString(), (uint) style.Attributes,
+                    style.ColorMixture.Handle, IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.setcchar(out var topSide, @topSideChar.ToString(), (uint) style.Attributes,
+                    style.ColorMixture.Handle, IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.setcchar(out var bottomSide, @bottomSideChar.ToString(), (uint) style.Attributes,
+                    style.ColorMixture.Handle, IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.setcchar(out var topLeftCorner, @topLeftCornerChar.ToString(), (uint) style.Attributes,
+                    style.ColorMixture.Handle, IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.setcchar(out var topRightCorner, @topRightCornerChar.ToString(), (uint) style.Attributes,
+                    style.ColorMixture.Handle, IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.setcchar(out var bottomLeftCorner, @bottomLeftCornerChar.ToString(), (uint) style.Attributes,
+                    style.ColorMixture.Handle, IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.setcchar(out var bottomRightCorner, @bottomRightCornerChar.ToString(), (uint) style.Attributes,
+                    style.ColorMixture.Handle, IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.wborder_set(Handle, leftSide, rightSide, topSide, bottomSide,
+                    topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Draws a border around the window's edges using standard characters.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void DrawBorder()
+    {
+        AssertNotDisposed();
+        Terminal.Curses.wborder(Handle, 0, 0, 0, 0, 0, 0, 0, 0)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Draws a horizontal line from the current caret position downwards.
+    /// </summary>
+    /// <param name="char">The character to use for the line.</param>
+    /// <param name="style">The style to use.</param>
+    /// <param name="length">The length of the line.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
+    public void DrawHorizontalLine(Rune @char, Style style, int length)
+    {
+        if (length <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length));
+        }
+
+        AssertNotDisposed();
+        Terminal.Curses.setcchar(out var c, @char.ToString(), (uint)style.Attributes, style.ColorMixture.Handle,
+                    IntPtr.Zero)
+                .TreatError();
+
+        Terminal.Curses.whline_set(Handle, c, length)
+                .TreatError();
+    }
+
+    /// <summary>
+    /// Draws a horizontal line using the standard line character from the current caret position downwards.
+    /// </summary>
+    /// <param name="length">The length of the line.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
+    public void DrawHorizontalLine(int length)
+    {
+        AssertNotDisposed();
+
+        if (length <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length));
+        }
+
+        Terminal.Curses.whline(Handle, 0, length)
+                .TreatError();
     }
 
     /// <summary>
@@ -312,6 +464,39 @@ public class Window: IDisposable
         {
             Terminal.Curses.wdelch(Handle).TreatError();
             count--;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the window background.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public (Rune @char, Style style) Background
+    {
+        get
+        {
+            AssertNotDisposed();
+
+            Terminal.Curses.wgetbkgrnd(Handle, out var @char)
+                    .TreatError();
+
+            var sb = new StringBuilder(10);
+            Terminal.Curses.getcchar(@char, sb, out var attrs, out var colorPair, IntPtr.Zero)
+                    .TreatError();
+
+            return (Rune.GetRuneAt(sb.ToString(), 0),
+                new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
+        }
+        set
+        {
+            AssertNotDisposed();
+            Terminal.Curses.setcchar(out var @char, value.@char.ToString(), (uint) value.style.Attributes,
+                        value.style.ColorMixture.Handle, IntPtr.Zero)
+                    .TreatError();
+
+            Terminal.Curses.wbkgrnd(Handle, @char)
+                    .TreatError();
         }
     }
 

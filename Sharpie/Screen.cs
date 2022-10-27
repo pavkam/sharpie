@@ -398,7 +398,7 @@ public sealed class Screen: Window
             switch (keyCode)
             {
                 case (uint) RawKey.Resize:
-                    @event = new() { Type = EventType.ResizeTerminal };
+                    @event = new TerminalResizeEvent(Size);
                     break;
                 case (uint) RawKey.Mouse:
                     if (Terminal.Curses.getmouse(out var mouseEvent) == Helpers.CursesErrorResult)
@@ -407,25 +407,18 @@ public sealed class Screen: Window
                     }
 
                     var (button, state, mouseMod) = ConvertMouseEvent((RawMouseEvent.EventType)mouseEvent.buttonState);
-                    @event = new()
+                    if (button == 0)
                     {
-                        Type = button == 0 ? EventType.MouseMove : EventType.MouseClick,
-                        MousePosition = new(mouseEvent.x, mouseEvent.y),
-                        MouseButton = button,
-                        MouseButtonState = state,
-                        Modifier = mouseMod,
-                    };
+                        @event = new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
+                    } else
+                    {
+                        @event = new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
+                    }
 
                     break;
                 default:
                     var (key, keyMod) = ConvertKey(keyCode);
-                    @event = new()
-                    {
-                        Type = EventType.KeyPress,
-                        Key = key,
-                        Modifier = keyMod,
-                    };
-
+                    @event = new KeyEvent(key, new('\0'), keyMod);
                     break;
             }
 
@@ -434,14 +427,7 @@ public sealed class Screen: Window
 
         if (result != Helpers.CursesErrorResult)
         {
-            @event = new()
-            {
-                Type = EventType.KeyPress,
-                Key = Key.Character,
-                Char = new(keyCode),
-                Modifier =  ModifierKey.None,
-            };
-
+            @event = new KeyEvent(Key.Character, new(keyCode), ModifierKey.None);
             return true;
         }
 

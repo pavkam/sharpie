@@ -264,9 +264,9 @@ public interface ICursesProvider
 
     void wbkgdset(IntPtr window, uint charAndAttrs);
 
-    int wborder(IntPtr window, CChar leftSide, CChar rightSide, CChar topSide,
-        CChar bottomSide, CChar topLeftCorner, CChar topRightCorner, CChar bottomLeftCorner,
-        CChar bottomRightCorner);
+    int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
+        uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
+        uint bottomRightCorner);
 
     int wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
         IntPtr reserved); //DONE
@@ -291,7 +291,7 @@ public interface ICursesProvider
 
     int wgetnstr(IntPtr window, StringBuilder dest, int length); //NO
 
-    int whline(IntPtr window, uint @char, int count);
+    int whline(IntPtr window, uint @char, int count); //DONE
 
     uint winch(IntPtr window); //NO
 
@@ -321,7 +321,7 @@ public interface ICursesProvider
 
     int wtouchln(IntPtr window, int line, int count, int changed); //DONE
 
-    int wvline(IntPtr window, uint @char, int count);
+    int wvline(IntPtr window, uint @char, int count); //DONE
 
     bool is_term_resized(int lines, int cols); //NO
 
@@ -350,7 +350,7 @@ public interface ICursesProvider
     void nofilter(); //NO
 
     int getcchar(CChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
-        IntPtr reserved);
+        IntPtr reserved); //DONE
 
     string? key_name(uint @char);
 
@@ -363,7 +363,7 @@ public interface ICursesProvider
 
     int slk_set(int labelIndex, string title, int align); //DONE
 
-    uint term_attrs();
+    uint term_attrs(); //DONE
 
     int unget_wch(uint @char); //NO
 
@@ -373,23 +373,23 @@ public interface ICursesProvider
 
     int waddnwstr(IntPtr window, string text, int length); //NO
 
-    int wbkgrnd(IntPtr window, CChar @char);
+    int wbkgrnd(IntPtr window, CChar @char); //DONE
 
-    void wbkgrndset(IntPtr window, CChar @char);
+    void wbkgrndset(IntPtr window, CChar @char); //NO
 
     int wborder_set(IntPtr window, CChar leftSide, CChar rightSide, CChar topSide,
         CChar bottomSide, CChar topLeftCorner, CChar topRightCorner, CChar bottomLeftCorner,
-        CChar bottomRightCorner);
+        CChar bottomRightCorner); //DONE
 
     int wecho_wchar(IntPtr window, CChar @char); //NO
 
     int wget_wch(IntPtr window, out uint @char); //DONE
 
-    int wgetbkgrnd(IntPtr window, CChar @char);
+    int wgetbkgrnd(IntPtr window, out CChar @char); //DONE
 
     int wgetn_wstr(IntPtr window, StringBuilder dest, int length); //NO
 
-    int whline_set(IntPtr window, CChar @char, int count);
+    int whline_set(IntPtr window, CChar @char, int count); //DONE
 
     int win_wch(IntPtr window, out CChar @char);
 
@@ -403,7 +403,7 @@ public interface ICursesProvider
 
     string? wunctrl(CChar @char);
 
-    int wvline_set(IntPtr window, CChar @char, int count);
+    int wvline_set(IntPtr window, CChar @char, int count); //DONE
 
     int getmouse(out RawMouseEvent @event); //DONE
 
@@ -413,7 +413,7 @@ public interface ICursesProvider
 
     bool wenclose(IntPtr window, int line, int col);
 
-    int mouseinterval(int millis);
+    int mouseinterval(int millis); //DONE
 
     bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
 }

@@ -11,7 +11,7 @@ public enum VideoAttribute: uint
     /// <summary>
     /// No attributes, default text style.
     /// </summary>
-    None = 0,
+    None = 0U,
 
     /// <summary>
     /// The best highlighting mode available.

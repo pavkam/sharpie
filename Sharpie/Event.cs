@@ -1,25 +1,20 @@
 namespace Sharpie;
-
-using System.Drawing;
-using System.Text;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Contains the details of a Curses event.
+/// An event from the terminal.
 /// </summary>
 [PublicAPI]
-public sealed class Event
+public class Event
 {
     /// <summary>
     /// The type of the event.
     /// </summary>
-    public EventType Type { get; init; }
+    public EventType Type { get; }
 
-    public MouseButton MouseButton { get; init; }
-    public MouseButtonState MouseButtonState { get; init; }
-    public Point MousePosition { get; init; }
-
-    public ModifierKey Modifier { get; init; }
-    public Key Key { get; init; }
-    public Rune Char { get; init; }
+    /// <summary>
+    /// Creates a new instance of the class.
+    /// </summary>
+    /// <param name="type">The type of the event.</param>
+    protected Event(EventType type) => Type = type;
 }

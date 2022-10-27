@@ -1,4 +1,5 @@
-﻿using Sharpie;
+﻿using System.Text;
+using Sharpie;
 using Sharpie.Curses;
 
 var terminal = Terminal.UsingCurses(NativeCursesProvider.Instance)
@@ -7,6 +8,18 @@ var terminal = Terminal.UsingCurses(NativeCursesProvider.Instance)
                        .Create();
 
 Console.Write(terminal.Name);
+/*
+terminal.Screen.Background = (new('.'), new()
+{
+    Attributes = VideoAttribute.Dim,
+    ColorMixture = terminal.Colors.MixColors(StandardColor.Cyan, StandardColor.Green)
+});
+*/
+var lineStyle = new Style
+{
+    Attributes = VideoAttribute.Bold,
+    ColorMixture = terminal.Colors.MixColors(StandardColor.Cyan, StandardColor.Green)
+};
 
 terminal.Screen.WriteText("Testing\n", new()
 {
@@ -16,6 +29,7 @@ terminal.Screen.WriteText("Testing\n", new()
 
 terminal.SoftKeyLabels.SetLabel(0, "Hello", SoftKeyLabelAlignment.Center);
 terminal.Screen.ApplyPendingRefreshes();
+terminal.Screen.DrawBorder();
 
 while (true) {
     if (!terminal.Screen.TryReadEvent(ReadBehavior.Wait, out var e) || e == null)
@@ -23,12 +37,12 @@ while (true) {
         continue;
     }
 
-    if (e.Char.Value == 'q')
+    if (e is KeyEvent { Char.Value: 'q' })
     {
         break;
     }
 
-    terminal.Screen.WriteText($"{e.Type} -- {e.Key} -- {e.Char.Value} -- {e.Modifier} -- {e.MouseButton} -- {e.MouseButtonState}\n", Style.Default);
+    terminal.Screen.WriteText($"{e}\n", Style.Default);
 }
 
 

@@ -13,7 +13,7 @@ public enum EventType
     /// <summary>
     /// The terminal has been resized.
     /// </summary>
-    ResizeTerminal,
+    TerminalResize,
 
     /// <summary>
     /// A key has been pressed.
@@ -28,5 +28,5 @@ public enum EventType
     /// <summary>
     /// The mouse buttons have been used.
     /// </summary>
-    MouseClick,
+    MouseAction,
 }

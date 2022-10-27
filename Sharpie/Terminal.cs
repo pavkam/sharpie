@@ -158,6 +158,35 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
+    /// Gets or sets the interval used to treat pressed/released as clicks.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is negative.</exception>
+    public int MouseClickInterval
+    {
+        get
+        {
+            AssertNotDisposed();
+
+            return Curses.mouseinterval(-1)
+                         .TreatError();
+        }
+        set
+        {
+            AssertNotDisposed();
+
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
+            Curses.mouseinterval(value)
+                  .TreatError();
+        }
+    }
+
+    /// <summary>
     /// Enables or disables the line buffering mode.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
@@ -371,6 +400,19 @@ public sealed class Terminal: IDisposable
 
             Curses.curs_set((int)value).TreatError();
             _hardwareCursorMode = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets the combination of supported terminal attributes.
+    /// </summary>
+    public VideoAttribute SupportedAttributes
+    {
+        get
+        {
+            AssertNotDisposed();
+
+            return (VideoAttribute)Curses.term_attrs();
         }
     }
 
