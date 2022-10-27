@@ -2,12 +2,12 @@
 using Sharpie;
 using Sharpie.Curses;
 
+Console.TreatControlCAsInput = true;
 var terminal = Terminal.UsingCurses(NativeCursesProvider.Instance)
                        .WithSoftKeyLabels(SoftKeyLabelMode.ThreeTwoThree)
                        .WithMouse()
                        .Create();
 
-Console.Write(terminal.Name);
 /*
 terminal.Screen.Background = (new('.'), new()
 {
@@ -21,7 +21,7 @@ var lineStyle = new Style
     ColorMixture = terminal.Colors.MixColors(StandardColor.Cyan, StandardColor.Green)
 };
 
-terminal.Screen.WriteText("Testing\n", new()
+terminal.Screen.WriteText("Testing\tAlex\n", new()
 {
     Attributes = VideoAttribute.Bold,
     ColorMixture = terminal.Colors.MixColors(StandardColor.Blue, StandardColor.Green)

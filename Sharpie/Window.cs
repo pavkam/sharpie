@@ -3,6 +3,7 @@ namespace Sharpie;
 using System.Drawing;
 using System.Globalization;
 using System.Text;
+using Curses;
 using JetBrains.Annotations;
 
 /// <summary>
@@ -11,22 +12,48 @@ using JetBrains.Annotations;
 [PublicAPI]
 public class Window: IDisposable
 {
+    /// <summary>
+    /// The terminal to which this window belongs.
+    /// </summary>
     protected Terminal Terminal { get; }
+
+    /// <summary>
+    /// The parent of this window.
+    /// </summary>
+    protected Window? Parent { get; }
+
+    private IntPtr _handle;
+    private IList<Window> _windows = new List<Window>();
 
     /// <summary>
     /// The Curses handle for the window.
     /// </summary>
-    public IntPtr Handle { get; private set; }
+    public IntPtr Handle
+    {
+        get
+        {
+            if (_handle == IntPtr.Zero)
+            {
+                throw new ObjectDisposedException("The window has been disposed and is no longer usable.");
+            }
+
+            return _handle;
+        }
+    }
 
     /// <summary>
     /// Initializes the window using a Curses handle.
     /// </summary>
     /// <param name="terminal">The curses functionality provider.</param>
+    /// <param name="parent">The parent window (if any).</param>
     /// <param name="windowHandle">The window handle.</param>
-    internal Window(Terminal terminal, IntPtr windowHandle)
+    internal Window(Terminal terminal, Window? parent, IntPtr windowHandle)
     {
         Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
-        Handle = windowHandle;
+        _handle = windowHandle;
+        Parent = parent;
+
+        parent?._windows.Add(this);
 
         EnableScrolling = true;
 
@@ -39,6 +66,11 @@ public class Window: IDisposable
         Terminal.Curses.syncok(Handle, true)
                 .TreatError();
     }
+
+    /// <summary>
+    /// Lists the active windows in this terminal.
+    /// </summary>
+    public IEnumerable<Window> Children => _windows;
 
     /// <summary>
     /// Gets or sets the ability of the window to scroll its contents when writing
@@ -67,20 +99,6 @@ public class Window: IDisposable
     public bool IsDisposed => Terminal.IsDisposed || Handle == IntPtr.Zero;
 
     /// <summary>
-    /// Asserts that the window is not disposed.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The window has been disposed.</exception>
-    internal void AssertNotDisposed()
-    {
-        Terminal.AssertNotDisposed();
-
-        if (Handle == IntPtr.Zero)
-        {
-            throw new ObjectDisposedException("The window has been disposed and is no longer usable.");
-        }
-    }
-
-    /// <summary>
     /// Enables or disables the use of hardware line insert/delete handling fpr this window.
     /// </summary>
     /// <remarks>
@@ -91,16 +109,9 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public bool UseHardwareLineInsertAndDelete
     {
-        get
-        {
-            AssertNotDisposed();
-
-            return Terminal.Curses.is_idlok(Handle);
-        }
+        get => Terminal.Curses.is_idlok(Handle);
         set
         {
-            AssertNotDisposed();
-
             if (Terminal.Curses.has_il())
             {
                 Terminal.Curses.idlok(Handle, value)
@@ -119,16 +130,9 @@ public class Window: IDisposable
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     public bool UseHardwareCharacterInsertAndDelete
     {
-        get
-        {
-            AssertNotDisposed();
-
-            return Terminal.Curses.is_idcok(Handle);
-        }
+        get => Terminal.Curses.is_idcok(Handle);
         set
         {
-            AssertNotDisposed();
-
             if (Terminal.Curses.has_ic())
             {
                 Terminal.Curses.idcok(Handle, value);
@@ -145,20 +149,14 @@ public class Window: IDisposable
     {
         get
         {
-            AssertNotDisposed();
-
             Terminal.Curses.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero)
                     .TreatError();
 
             return new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } };
         }
-        set
-        {
-            AssertNotDisposed();
-
+        set =>
             Terminal.Curses.wattr_set(Handle, (uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
                     .TreatError();
-        }
     }
 
     /// <summary>
@@ -169,13 +167,9 @@ public class Window: IDisposable
     public ColorMixture ColorMixture
     {
         get => Style.ColorMixture;
-        set
-        {
-            AssertNotDisposed();
-
+        set =>
             Terminal.Curses.wcolor_set(Handle, value.Handle, IntPtr.Zero)
                     .TreatError();
-        }
     }
 
     /// <summary>
@@ -186,8 +180,6 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
-        AssertNotDisposed();
-
         Terminal.Curses.wattr_on(Handle, (uint) attributes, IntPtr.Zero)
                 .TreatError();
     }
@@ -200,8 +192,6 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
-        AssertNotDisposed();
-
         Terminal.Curses.wattr_off(Handle, (uint) attributes, IntPtr.Zero)
                 .TreatError();
     }
@@ -226,7 +216,6 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(y));
         }
 
-        AssertNotDisposed();
         return Terminal.Curses.wmove(Handle, y, x) != Helpers.CursesErrorResult;
     }
 
@@ -261,7 +250,6 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(lines));
         }
 
-        AssertNotDisposed();
         if (!EnableScrolling)
         {
             throw new NotSupportedException("The window is not scroll-enabled.");
@@ -286,7 +274,6 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(lines));
         }
 
-        AssertNotDisposed();
         if (!EnableScrolling)
         {
             throw new NotSupportedException("The window is not scroll-enabled.");
@@ -310,7 +297,6 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(lines));
         }
 
-        AssertNotDisposed();
         Terminal.Curses.winsdelln(Handle, lines)
                 .TreatError();
     }
@@ -329,7 +315,6 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(lines));
         }
 
-        AssertNotDisposed();
         Terminal.Curses.winsdelln(Handle, -lines)
                 .TreatError();
     }
@@ -349,8 +334,6 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(width), "The length should be greater than zero.");
         }
 
-        AssertNotDisposed();
-
         Terminal.Curses.wchgat(Handle, width, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
                 .TreatError();
     }
@@ -369,8 +352,6 @@ public class Window: IDisposable
         {
             throw new ArgumentNullException(nameof(str));
         }
-
-        AssertNotDisposed();
 
         var enumerator = StringInfo.GetTextElementEnumerator(str);
         while (enumerator.MoveNext())
@@ -404,7 +385,6 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(length));
         }
 
-        AssertNotDisposed();
         Terminal.Curses.setcchar(out var c, @char.ToString(), (uint)style.Attributes, style.ColorMixture.Handle,
                     IntPtr.Zero)
                 .TreatError();
@@ -422,7 +402,6 @@ public class Window: IDisposable
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
     public void DrawVerticalLine(int length)
     {
-        AssertNotDisposed();
         Terminal.Curses.wvline(Handle, 0, length)
                 .TreatError();
     }
@@ -445,8 +424,6 @@ public class Window: IDisposable
         Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar,
         Style style)
     {
-        AssertNotDisposed();
-
         Terminal.Curses.setcchar(out var leftSide, @leftSideChar.ToString(), (uint) style.Attributes,
                     style.ColorMixture.Handle, IntPtr.Zero)
                 .TreatError();
@@ -491,7 +468,6 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void DrawBorder()
     {
-        AssertNotDisposed();
         Terminal.Curses.wborder(Handle, 0, 0, 0, 0, 0, 0, 0, 0)
                 .TreatError();
     }
@@ -512,7 +488,6 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(length));
         }
 
-        AssertNotDisposed();
         Terminal.Curses.setcchar(out var c, @char.ToString(), (uint)style.Attributes, style.ColorMixture.Handle,
                     IntPtr.Zero)
                 .TreatError();
@@ -530,8 +505,6 @@ public class Window: IDisposable
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
     public void DrawHorizontalLine(int length)
     {
-        AssertNotDisposed();
-
         if (length <= 0)
         {
             throw new ArgumentOutOfRangeException(nameof(length));
@@ -546,7 +519,6 @@ public class Window: IDisposable
     /// </summary>
     /// <param name="count">The number of characters to remove.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count"/> less than one.</exception>
     public void RemoveText(int count)
     {
@@ -555,12 +527,51 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
-        AssertNotDisposed();
         while (count > 0)
         {
-            Terminal.Curses.wdelch(Handle).TreatError();
+            if (Terminal.Curses.wdelch(Handle) == Helpers.CursesErrorResult)
+            {
+                break;
+            }
+
             count--;
         }
+    }
+
+    /// <summary>
+    /// Gets the text from the window at the caret position to the right.
+    /// </summary>
+    /// <param name="count">The number of characters to get.</param>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count"/> less than one.</exception>
+    public (Rune @char, Style style)[] GetText(int count)
+    {
+        if (count <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count));
+        }
+
+        count = Math.Min(count, Size.Width - CaretPosition.X);
+        var arr = new CChar[count];
+
+        Terminal.Curses.win_wchnstr(Handle, arr, count)
+                .TreatError();
+
+        var sb = new StringBuilder(10);
+        return arr.Select(@char =>
+                  {
+                      sb.Clear();
+                      Terminal.Curses.getcchar(@char, sb, out var attrs, out var colorPair, IntPtr.Zero)
+                              .TreatError();
+
+                      return (Rune.GetRuneAt(sb.ToString(), 0),
+                          new Style
+                          {
+                              Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair }
+                          });
+                  })
+                  .ToArray();
     }
 
     /// <summary>
@@ -572,8 +583,6 @@ public class Window: IDisposable
     {
         get
         {
-            AssertNotDisposed();
-
             Terminal.Curses.wgetbkgrnd(Handle, out var @char)
                     .TreatError();
 
@@ -586,7 +595,6 @@ public class Window: IDisposable
         }
         set
         {
-            AssertNotDisposed();
             Terminal.Curses.setcchar(out var @char, value.@char.ToString(), (uint) value.style.Attributes,
                         value.style.ColorMixture.Handle, IntPtr.Zero)
                     .TreatError();
@@ -604,8 +612,6 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void Clear(ClearStrategy strategy)
     {
-        AssertNotDisposed();
-
         switch (strategy)
         {
             case ClearStrategy.Full:
@@ -644,7 +650,6 @@ public class Window: IDisposable
             throw new ArgumentNullException(nameof(window));
         }
 
-        AssertNotDisposed();
         switch (strategy)
         {
             case ReplaceStrategy.Overlay:
@@ -676,9 +681,6 @@ public class Window: IDisposable
         {
             throw new ArgumentNullException(nameof(window));
         }
-
-        AssertNotDisposed();
-        window.AssertNotDisposed();
 
         var destRect = new Rectangle(destPos, new(srcRect.Bottom - srcRect.Top, srcRect.Right - srcRect.Left));
         if (!window.IsRectangleWithin(destRect))
@@ -712,8 +714,6 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
-        AssertNotDisposed();
-
         Terminal.Curses.wtouchln(Handle, line, count, 1)
                 .TreatError();
     }
@@ -734,11 +734,7 @@ public class Window: IDisposable
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <returns>The result of the check.</returns>
-    public bool IsPointWithin(Point point)
-    {
-        AssertNotDisposed();
-        return Terminal.Curses.wenclose(Handle, point.Y, point.X);
-    }
+    public bool IsPointWithin(Point point) => Terminal.Curses.wenclose(Handle, point.Y, point.X);
 
     /// <summary>
     /// Checks if a given rectangle fits within the current window.
@@ -751,32 +747,48 @@ public class Window: IDisposable
         IsPointWithin(new(rect.X + rect.Width - 1, rect.Y + rect.Bottom - 1));
 
     /// <summary>
-    /// Gets or sets the location of the window.
+    /// Gets or sets the location of the window within its parent.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the bounds.</exception>
-    public Point Location
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the parent's bounds.</exception>
+    public virtual Point Location
     {
         get
         {
-            AssertNotDisposed();
-
-            return new(Terminal.Curses.getbegx(Handle)
-                               .TreatError(), Terminal.Curses.getbegy(Handle)
-                                                      .TreatError());
+            if (Terminal.Curses.is_subwin(Handle))
+            {
+                return new(Terminal.Curses.getparx(Handle)
+                            .TreatError(), Terminal.Curses.getpary(Handle)
+                                                   .TreatError());
+            } else
+            {
+                return new(Terminal.Curses.getbegx(Handle)
+                            .TreatError(), Terminal.Curses.getbegy(Handle)
+                                                   .TreatError());
+            }
         }
         set
         {
-            AssertNotDisposed();
-
-            if (value.X < 1 || value.Y < 1)
+            if (Parent != null)
             {
-                throw new ArgumentOutOfRangeException(nameof(value));
+                var size = Size;
+                var newRect = new Rectangle(value.X, value.Y, value.X + size.Width - 1, value.Y + size.Height - 1);
+                if (!Parent.IsRectangleWithin(newRect))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
             }
 
-            Terminal.Curses.mvwin(Handle, value.Y, value.X)
-                    .TreatError();
+            if (Terminal.Curses.is_subwin(Handle))
+            {
+                Terminal.Curses.mvderwin(Handle, value.Y, value.X)
+                        .TreatError();
+            } else
+            {
+                Terminal.Curses.mvwin(Handle, value.Y, value.X)
+                        .TreatError();
+            }
         }
     }
 
@@ -786,23 +798,22 @@ public class Window: IDisposable
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the bounds.</exception>
-    public Size Size
+    public virtual Size Size
     {
-        get
-        {
-            AssertNotDisposed();
-
-            return new(Terminal.Curses.getmaxx(Handle)
-                               .TreatError(), Terminal.Curses.getmaxy(Handle)
-                                                      .TreatError());
-        }
+        get =>
+            new(Terminal.Curses.getmaxx(Handle)
+                        .TreatError(), Terminal.Curses.getmaxy(Handle)
+                                               .TreatError());
         set
         {
-            AssertNotDisposed();
-
-            if (value.Width < 1 || value.Height < 1)
+            if (Parent != null)
             {
-                throw new ArgumentOutOfRangeException(nameof(value));
+                var loc = Location;
+                var newRect = new Rectangle(loc.X, loc.Y, loc.X + value.Width - 1, loc.Y + value.Height - 1);
+                if (!Parent.IsRectangleWithin(newRect))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
             }
 
             Terminal.Curses.wresize(Handle, value.Height, value.Width)
@@ -818,18 +829,12 @@ public class Window: IDisposable
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the window bounds.</exception>
     public Point CaretPosition
     {
-        get
-        {
-            AssertNotDisposed();
-
-            return new(Terminal.Curses.getcurx(Handle)
-                               .TreatError(), Terminal.Curses.getcury(Handle)
-                                                      .TreatError());
-        }
+        get =>
+            new(Terminal.Curses.getcurx(Handle)
+                        .TreatError(), Terminal.Curses.getcury(Handle)
+                                               .TreatError());
         set
         {
-            AssertNotDisposed();
-
             if (value.X < 0 || value.Y < 1 || value.X >= Size.Width || value.Y >= Size.Height)
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
@@ -847,8 +852,6 @@ public class Window: IDisposable
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y"/> is outside the bounds.</exception>
     public bool IsRowDirty(int y)
     {
-        AssertNotDisposed();
-
         if (y < 0 || y >= Size.Height)
         {
             throw new ArgumentOutOfRangeException(nameof(y));
@@ -862,15 +865,7 @@ public class Window: IDisposable
     /// to the console.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    public bool IsDirty
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return Terminal.Curses.is_wintouched(Handle);
-        }
-    }
+    public bool IsDirty => Terminal.Curses.is_wintouched(Handle);
 
     /// <summary>
     /// Set or get the immediate refresh capability of the window.
@@ -883,16 +878,8 @@ public class Window: IDisposable
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     public virtual bool ImmediateRefresh
     {
-        get
-        {
-            AssertNotDisposed();
-            return Terminal.Curses.is_immedok(Handle);
-        }
-        set
-        {
-            AssertNotDisposed();
-            Terminal.Curses.immedok(Handle, value);
-        }
+        get => Terminal.Curses.is_immedok(Handle);
+        set => Terminal.Curses.immedok(Handle, value);
     }
 
     /// <summary>
@@ -904,8 +891,6 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public virtual void Refresh(bool batch, bool entireScreen)
     {
-        AssertNotDisposed();
-
         if (entireScreen)
         {
             Terminal.Curses.clearok(Handle, true)
@@ -933,7 +918,6 @@ public class Window: IDisposable
     /// <exception cref="ArgumentOutOfRangeException">The combination of lines and count exceed the window boundary.</exception>
     public virtual void RefreshLines(int line, int count)
     {
-        AssertNotDisposed();
         if (line < 0 || line >= Size.Height)
         {
             throw new ArgumentOutOfRangeException(nameof(line));
@@ -953,14 +937,14 @@ public class Window: IDisposable
     /// </summary>
     internal bool IgnoreHardwareCaret
     {
-        get
-        {
-            AssertNotDisposed();
-            return Terminal.Curses.is_leaveok(Handle);
-        }
+        get => Terminal.Curses.is_leaveok(Handle);
         set
         {
-            AssertNotDisposed();
+            foreach (var window in _windows)
+            {
+                window.IgnoreHardwareCaret = value;
+            }
+
             Terminal.Curses.leaveok(Handle, value);
         }
     }
@@ -979,10 +963,20 @@ public class Window: IDisposable
     /// </summary>
     private void Cleanup()
     {
-        Terminal.RemoveWindow(this);
-        Terminal.Curses.delwin(Handle); // Ignore potential error.
+        if (_handle != IntPtr.Zero)
+        {
+            // Dispose of all the windows
+            var windows = _windows.ToArray();
+            foreach (var window in windows)
+            {
+                window.Dispose();
+            }
 
-        Handle = IntPtr.Zero;
+            Parent?._windows.Remove(this);
+            Terminal.Curses.delwin(Handle); // Ignore potential error.
+
+            _handle = IntPtr.Zero;
+        }
     }
 
     /// <summary>

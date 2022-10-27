@@ -1,5 +1,6 @@
 namespace Sharpie;
 
+using System.Drawing;
 using Curses;
 using JetBrains.Annotations;
 
@@ -15,47 +16,79 @@ public sealed class Screen: Window
     /// </summary>
     /// <param name="terminal">The terminal instance.</param>
     /// <param name="windowHandle">The screen handle.</param>
-    internal Screen(Terminal terminal, IntPtr windowHandle): base(terminal, windowHandle) { }
+    internal Screen(Terminal terminal, IntPtr windowHandle): base(terminal, null, windowHandle) { }
+
+    ///<inheritdoc cref="Window.Location"/>
+    /// <remarks>
+    /// The setter will always throw in this implementation as moving the main window is not allowed.
+    /// </remarks>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="NotSupportedException">Always throws on the setter.</exception>
+    public override Point Location
+    {
+        get => base.Location;
+        set => throw new NotSupportedException("Cannot move the screen window.");
+    }
+
+    ///<inheritdoc cref="Window.Location"/>
+    /// <remarks>
+    /// The setter will always throw in this implementation changing the size of the main window is not allowed.
+    /// </remarks>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="NotSupportedException">Always throws on the setter.</exception>
+    public override Size Size
+    {
+        get => base.Size;
+        set => throw new NotSupportedException("Cannot resize the screen window.");
+    }
 
     /// <summary>
     /// Created a new window in the screen.
     /// </summary>
-    /// <param name="x">The X coordinate of the window location.</param>
-    /// <param name="y">The Y coordinate of the window location.</param>
-    /// <param name="width">The window width.</param>
-    /// <param name="height">The window height.</param>
+    /// <param name="area">The area for the new window.</param>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Either <paramref name="x"/> or <paramref name="y"/> are negative;
-    /// or <paramref name="width"/>, <paramref name="height"/> are less than one.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area"/> is outside the screen bounds.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public Window CreateWindow(int x, int y, int width, int height)
+    public Window CreateWindow(Rectangle area)
     {
-        if (x < 0)
+        if (!IsRectangleWithin(area))
         {
-            throw new ArgumentOutOfRangeException(nameof(x));
-        }
-
-        if (y < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(y));
-        }
-
-        if (width < 1)
-        {
-            throw new ArgumentOutOfRangeException(nameof(width));
-        }
-
-        if (height < 1)
-        {
-            throw new ArgumentOutOfRangeException(nameof(height));
+            throw new ArgumentOutOfRangeException(nameof(area));
         }
 
         Terminal.AssertNotDisposed();
-        var handle = Terminal.Curses.newwin(height, width, y, x)
+        var handle = Terminal.Curses.newwin(area.Height, area.Width, area.Y, area.X)
                              .TreatNullAsError();
 
-        return new(Terminal, handle);
+        return new(Terminal, this, handle);
+    }
+
+    /// <summary>
+    /// Created a new sub-window in the parent window.
+    /// </summary>
+    /// <param name="window">The parent window.</param>
+    /// <param name="area">The area of the window to put the sub-window in.</param>
+    /// <remarks>
+    /// </remarks>
+    /// <returns>A new window object.</returns>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area"/> is outside the bounds of the parent.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public Window CreateSubWindow(Window window, Rectangle area)
+    {
+        if (!window.IsRectangleWithin(area))
+        {
+            throw new ArgumentOutOfRangeException(nameof(area));
+        }
+
+        Terminal.AssertNotDisposed();
+        var handle = Terminal.Curses.derwin(window.Handle, area.Height, area.Width, area.Y, area.X)
+                             .TreatNullAsError();
+
+        return new(Terminal, this, handle);
     }
 
     /// <summary>
@@ -72,38 +105,58 @@ public sealed class Screen: Window
             throw new ArgumentNullException(nameof(window));
         }
 
-        window.AssertNotDisposed();
-
-        return new(Terminal, Terminal.Curses.dupwin(window.Handle)
-                                     .TreatNullAsError());
+        return new(Terminal, this, Terminal.Curses.dupwin(window.Handle)
+                                           .TreatNullAsError());
     }
 
     /// <summary>
     /// Created a new pad.
     /// </summary>
-    /// <param name="width">The window width.</param>
-    /// <param name="height">The window height.</param>
+    /// <param name="size">The pad size.</param>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">When <paramref name="width"/>, <paramref name="height"/> are less than one.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size"/> is invalid.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public Pad CreatePad(int width, int height)
+    public Pad CreatePad(Size size)
     {
-        if (width < 1)
+        if (size.Width < 1 || size.Height < 1)
         {
-            throw new ArgumentOutOfRangeException(nameof(width));
-        }
-
-        if (height < 1)
-        {
-            throw new ArgumentOutOfRangeException(nameof(height));
+            throw new ArgumentOutOfRangeException(nameof(size));
         }
 
         Terminal.AssertNotDisposed();
-        var handle = Terminal.Curses.newpad(height, width)
+        var handle = Terminal.Curses.newpad(size.Height, size.Width)
                              .TreatNullAsError();
 
-        return new(Terminal, handle);
+        return new(Terminal, this, handle);
+    }
+
+    /// <summary>
+    /// Created a new sub-pad.
+    /// </summary>
+    /// <param name="pad">The parent pad.</param>
+    /// <param name="area">The are of the pad to use.</param>
+    /// <returns>A new window object.</returns>
+    /// <exception cref="ObjectDisposedException">The terminal or the pad have been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">When <paramref name="area"/> is outside the pad's bounds.</exception>
+    /// <exception cref="ArgumentNullException">When <paramref name="pad"/> is <c>null</c>.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public Pad CreateSubPad(Pad pad, Rectangle area)
+    {
+        if (pad == null)
+        {
+            throw new ArgumentNullException(nameof(pad));
+        }
+
+        if (!pad.IsRectangleWithin(area))
+        {
+            throw new ArgumentOutOfRangeException(nameof(area));
+        }
+
+        var handle = Terminal.Curses.subpad(pad.Handle, area.Height, area.Width, area.Top, area.Right)
+                             .TreatNullAsError();
+
+        return new(Terminal, pad, handle);
     }
 
     /// <summary>
@@ -113,7 +166,7 @@ public sealed class Screen: Window
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void ApplyPendingRefreshes()
     {
-        AssertNotDisposed();
+        Terminal.AssertNotDisposed();
         Terminal.Curses.doupdate()
                 .TreatError();
     }
@@ -394,8 +447,6 @@ public sealed class Screen: Window
         Curses.define_key("\x001b" + (char)258, 1024); //alt up
 
          */
-        AssertNotDisposed();
-
         Terminal.Curses.wtimeout(Handle, timeoutMillis);
 
         @event = null;

@@ -13,8 +13,9 @@ public sealed class Pad: Window
     /// Initializes the window using a Curses handle.
     /// </summary>
     /// <param name="terminal">The curses functionality provider.</param>
+    /// <param name="parent">The parent window or pad.</param>
     /// <param name="windowHandle">The window handle.</param>
-    internal Pad(Terminal terminal, IntPtr windowHandle): base(terminal, windowHandle) { }
+    internal Pad(Terminal terminal, Window parent, IntPtr windowHandle): base(terminal, parent, windowHandle) { }
 
     /// <inheritdoc cref="Window.ImmediateRefresh"/>
     /// <remarks>
@@ -49,8 +50,6 @@ public sealed class Pad: Window
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void Refresh(bool batch, bool entireScreen, Rectangle rect, Point screenPos)
     {
-        AssertNotDisposed();
-
         if (!IsRectangleWithin(rect))
         {
             throw new ArgumentOutOfRangeException(nameof(rect));

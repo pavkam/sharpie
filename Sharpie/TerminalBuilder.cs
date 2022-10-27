@@ -13,11 +13,12 @@ public sealed class TerminalBuilder
     private bool _enableLineBuffering;
     private bool _enableInputEchoing;
     private int _readTimeoutMillis = Timeout.Infinite;
-    private bool _enableForceInterruptingFlush;
+    private bool _manualFlush;
     private bool _enableColors = true;
     private bool _enableReturnToNewLineTranslation;
     private bool _useEnvironmentOverrides = true;
     private bool _enableMouse;
+    private bool _enableRawMode;
     private CaretMode _hardwareCursorMode = CaretMode.Visible;
     private SoftKeyLabelMode _softKeyLabelMode = SoftKeyLabelMode.Disabled;
 
@@ -44,6 +45,21 @@ public sealed class TerminalBuilder
     {
         _enableLineBuffering = enabled;
         _readTimeoutMillis = readTimeoutMillis;
+        return this;
+    }
+
+
+    /// <summary>
+    /// Toggles the silencing of control keys such as CTRL+C.
+    /// </summary>
+    /// <remarks>
+    /// The default is <c>false</c>. Setting this to <c>true</c> would mean that application will not reply to standard
+    /// control key combinations and it would be the developer's responsibility to do so.
+    /// </remarks>
+    /// <param name="enabled">The value of the flag.</param>
+    public TerminalBuilder WithSilencedControlKeys(bool enabled)
+    {
+        _enableRawMode = enabled;
         return this;
     }
 
@@ -78,17 +94,16 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Toggle flush interrupting on or off.
+    /// Toggles manual terminal flush on or off.
     /// </summary>
     /// <remarks>
-    /// If set, the console flush is discarded mid-way when an application interrupt occurs.
-    /// Default is <c>false</c>
+    /// Default is <c>false</c> as most developers don't want to be bothered to control this.
     /// </remarks>
     /// <param name="enabled">The value of the flag.</param>
     /// <returns>The same builder instance.</returns>
-    public TerminalBuilder WithForceInterruptingFlush(bool enabled)
+    public TerminalBuilder WithManualFlush(bool enabled)
     {
-        _enableForceInterruptingFlush = enabled;
+        _manualFlush = enabled;
         return this;
     }
 
@@ -167,7 +182,7 @@ public sealed class TerminalBuilder
     /// </summary>
     /// <returns>A new terminal object.</returns>
     public Terminal Create() =>
-        new(_cursesProvider, _enableLineBuffering, _enableReturnToNewLineTranslation, _readTimeoutMillis,
-            _enableInputEchoing, _enableForceInterruptingFlush, _enableColors,
+        new(_cursesProvider, _enableLineBuffering, _enableRawMode, _enableReturnToNewLineTranslation, _readTimeoutMillis,
+            _enableInputEchoing, _manualFlush, _enableColors,
             _hardwareCursorMode, _useEnvironmentOverrides, _softKeyLabelMode, _enableMouse);
 }

@@ -38,7 +38,7 @@ public interface ICursesProvider
     int delwin(IntPtr window); //DONE
 
     IntPtr derwin(IntPtr window, int lines, int cols, int beginLine,
-        int beginCol);
+        int beginCol); //DONE
 
     int doupdate(); //DONE
 
@@ -54,7 +54,7 @@ public interface ICursesProvider
 
     int flash(); //DONE
 
-    int flushinp();
+    int flushinp(); //NO
 
     uint getattrs(IntPtr window); //NO
 
@@ -70,9 +70,9 @@ public interface ICursesProvider
 
     int getmaxy(IntPtr window); //DONE
 
-    int getparx(IntPtr window); //NO
+    int getparx(IntPtr window); //DONE
 
-    int getpary(IntPtr window); //NO
+    int getpary(IntPtr window); //DONE
 
     int halfdelay(int tenthsOfSec); //DONE
 
@@ -122,7 +122,7 @@ public interface ICursesProvider
 
     bool is_scrollok(IntPtr window); //DONE
 
-    bool is_subwin(IntPtr window); //NO
+    bool is_subwin(IntPtr window); //DONE
 
     bool is_syncok(IntPtr window); //NO
 
@@ -130,7 +130,7 @@ public interface ICursesProvider
 
     int wgetdelay(IntPtr window); //NO
 
-    int wgetscrreg(IntPtr window, out int top, out int bottom);
+    int wgetscrreg(IntPtr window, out int top, out int bottom); //TODO
 
     string? keyname(uint keyCode); //NO
 
@@ -142,7 +142,7 @@ public interface ICursesProvider
 
     int meta(IntPtr window, bool set); //DONE
 
-    int mvderwin(IntPtr window, int parentLine, int parentCol);
+    int mvderwin(IntPtr window, int parentLine, int parentCol); //DONE
 
     int mvwin(IntPtr window, int toLine, int toCol); //DONE
 
@@ -160,9 +160,9 @@ public interface ICursesProvider
 
     int nonl(); //DONE
 
-    void noqiflush();
+    void noqiflush(); //DONE
 
-    int noraw();
+    int noraw(); //DONE
 
     int notimeout(IntPtr window, bool set); //DONE
 
@@ -170,7 +170,7 @@ public interface ICursesProvider
 
     int overwrite(IntPtr srcWindow, IntPtr destWindow); //DONE
 
-    int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor);
+    int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor); //TODO
 
     uint COLOR_PAIR(uint attrs); //DONE
 
@@ -184,9 +184,9 @@ public interface ICursesProvider
     int prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol); //DONE
 
-    void qiflush();
+    void qiflush(); //DONE
 
-    int raw();
+    int raw(); //DONE
 
     int resetty(); //NO
 
@@ -194,9 +194,9 @@ public interface ICursesProvider
 
     int reset_shell_mode(); //NO
 
-    public delegate bool ripoffline_callback(IntPtr window, int columns);
+    public delegate bool ripoffline_callback(IntPtr window, int columns); //TODO
 
-    int ripoffline(int lines, ripoffline_callback callback);
+    int ripoffline(int lines, ripoffline_callback callback); //TODO
 
     int savetty(); //NO
 
@@ -235,10 +235,10 @@ public interface ICursesProvider
     int start_color(); //DONE
 
     IntPtr subpad(IntPtr pad, int lines, int cols, int atLine,
-        int atCol);
+        int atCol); //DONE
 
     IntPtr subwin(IntPtr window, int lines, int cols, int atLine,
-        int atCol);
+        int atCol); //NO
 
     int syncok(IntPtr window, bool set); //DONE
 
@@ -279,7 +279,7 @@ public interface ICursesProvider
 
     int wcolor_set(IntPtr window, ushort pair, IntPtr reserved); //DONE
 
-    void wcursyncup(IntPtr window);
+    void wcursyncup(IntPtr window); //NO
 
     int wdelch(IntPtr window); //DONE
 
@@ -311,11 +311,11 @@ public interface ICursesProvider
 
     int wscrl(IntPtr window, int count); //DONE
 
-    int wsetscrreg(IntPtr window, int top, int bottom);
+    int wsetscrreg(IntPtr window, int top, int bottom); //NO
 
     void wsyncdown(IntPtr window); //NO
 
-    void wsyncup(IntPtr window);
+    void wsyncup(IntPtr window); // NO
 
     void wtimeout(IntPtr window, int delay); //DONE
 
@@ -329,19 +329,19 @@ public interface ICursesProvider
 
     int resizeterm(int lines, int cols); //NO
 
-    string? keybound(uint keyCode, int count);
+    string? keybound(uint keyCode, int count); //TODO
 
     string? curses_version(); //DONE
 
     int assume_default_colors(int fgColor, int bgColor); //DONE
 
-    int define_key(string keyName, int keyCode);
+    int define_key(string keyName, int keyCode); //TODO
 
-    int key_defined(string keyName);
+    int key_defined(string keyName); //TODO
 
-    int keyok(int keyCode, bool set);
+    int keyok(int keyCode, bool set); //TODO
 
-    int set_tabsize(int size);
+    int set_tabsize(int size); //NO
 
     int use_default_colors(); //DONE
 
@@ -391,9 +391,9 @@ public interface ICursesProvider
 
     int whline_set(IntPtr window, CChar @char, int count); //DONE
 
-    int win_wch(IntPtr window, out CChar @char);
+    int win_wch(IntPtr window, out CChar @char); //NO
 
-    int win_wchnstr(IntPtr window, CChar[] @char, int length);
+    int win_wchnstr(IntPtr window, CChar[] @char, int length); //DONE
 
     int winnwstr(IntPtr window, StringBuilder dest, int length); //NO
 
@@ -401,7 +401,7 @@ public interface ICursesProvider
 
     int wins_wch(IntPtr window, CChar @char); //NO
 
-    string? wunctrl(CChar @char);
+    string? wunctrl(CChar @char); //NO
 
     int wvline_set(IntPtr window, CChar @char, int count); //DONE
 
@@ -415,5 +415,5 @@ public interface ICursesProvider
 
     int mouseinterval(int millis); //DONE
 
-    bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
+    bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen); //TODO
 }

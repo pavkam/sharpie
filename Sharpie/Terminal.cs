@@ -1,6 +1,5 @@
 namespace Sharpie;
 
-using System.Diagnostics;
 using System.Text;
 using Curses;
 using JetBrains.Annotations;
@@ -13,11 +12,12 @@ using JetBrains.Annotations;
 public sealed class Terminal: IDisposable
 {
     private static bool _terminalInstanceActive;
-    private bool _enableLineBuffering;
+    private bool _lineBuffering;
+    private bool _rawMode;
     private int _readTimeoutMillis;
-    private bool _enableInputEchoing;
-    private bool _enableReturnToNewLineTranslation;
-    private bool _enableForceInterruptingFlush;
+    private bool _inputEchoing;
+    private bool _newLineTranslation;
+    private bool _manualFlush;
     private bool _useEnvironmentOverrides;
     private bool _enableMouse;
     private ulong? _oldMouseMask;
@@ -25,11 +25,12 @@ public sealed class Terminal: IDisposable
     private int? _initialHardwareCursorMode;
     private Screen _screen;
     private ColorManager _colorManager;
-    private IList<Window> _windows;
+
     private SoftKeyLabelManager _softKeyLabelManager;
 
-    internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableReturnToNewLineTranslation,
-        int readTimeoutMillis, bool enableInputEchoing, bool enableForceInterruptingFlush,
+    internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableRawMode,
+        bool enableReturnToNewLineTranslation,
+        int readTimeoutMillis, bool enableInputEchoing, bool manualFlush,
         bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
         SoftKeyLabelMode softKeyLabelMode, bool enableMouse)
     {
@@ -54,20 +55,64 @@ public sealed class Terminal: IDisposable
         _colorManager = new(this, enableColors);
 
         // After screen creation.
-        EnableInputEchoing = enableInputEchoing;
+        _inputEchoing = enableInputEchoing;
         _readTimeoutMillis = readTimeoutMillis;
-        EnableLineBuffering = enableLineBuffering;
+        _rawMode = enableRawMode;
+        _lineBuffering = enableLineBuffering;
+        _manualFlush = manualFlush;
+
+        Curses.intrflush(IntPtr.Zero, _manualFlush);
+        if (_manualFlush)
+        {
+            Curses.noqiflush();
+        } else
+        {
+            Curses.qiflush();
+        }
+
+        if (_inputEchoing)
+        {
+            Curses.echo().TreatError();
+        } else
+        {
+            Curses.noecho().TreatError();
+        }
+
+        if (!_lineBuffering)
+        {
+            if (_rawMode)
+            {
+                Curses.raw()
+                      .TreatError();
+            } else
+            {
+                Curses.noraw()
+                      .TreatError();
+            }
+
+            if (_readTimeoutMillis != Timeout.Infinite)
+            {
+                Curses.halfdelay(Helpers.ConvertMillisToTenths(_readTimeoutMillis))
+                      .TreatError();
+            } else
+            {
+                Curses.cbreak()
+                      .TreatError();
+            }
+        } else
+        {
+            Curses.nocbreak()
+                  .TreatError();
+        }
+
         EnableReturnToNewLineTranslation = enableReturnToNewLineTranslation;
-        EnableForceInterruptingFlush = enableForceInterruptingFlush;
         CaretMode = hardwareCursorMode;
         EnableMouse = enableMouse;
 
         /* Other configuration */
         Curses.meta(IntPtr.Zero, true);
 
-        _windows = new List<Window> { _screen };
         _terminalInstanceActive = true;
-
     }
 
     /// <summary>
@@ -188,32 +233,43 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Enables or disables the line buffering mode.
+    /// Checks if the terminal is in line buffering mode.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public bool EnableLineBuffering
+    public bool LineBuffering
+    {
+        get
+        {
+            AssertNotDisposed();
+            return _lineBuffering;
+        }
+    }
+
+    /// <summary>
+    /// Check if the control keys are silenced (e.g. CTRL+C).
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    public bool ControlKeysSilenced
     {
         get
         {
             AssertNotDisposed();
 
-            return _enableLineBuffering;
+            return _rawMode;
         }
-        set
+    }
+
+    /// <summary>
+    /// Gets timeout used when reading characters in non-buffered mode.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    public int ReadTimeout
+    {
+        get
         {
             AssertNotDisposed();
 
-            if (value)
-            {
-                Curses.nocbreak()
-                               .TreatError();
-            } else
-            {
-                UpdateNonLineBufferedMode();
-            }
-
-            _enableLineBuffering = value;
+            return _readTimeoutMillis;
         }
     }
 
@@ -259,75 +315,17 @@ public sealed class Terminal: IDisposable
         }
     }
 
-    private void UpdateNonLineBufferedMode()
-    {
-        if (_readTimeoutMillis == Timeout.Infinite)
-        {
-            Curses.cbreak().TreatError();
-        } else
-        {
-            Curses.halfdelay(Helpers.ConvertMillisToTenths(_readTimeoutMillis)).TreatError();
-        }
-    }
-
     /// <summary>
-    /// Gets or sets the timeout used when reading characters in non-buffered mode.
+    /// Checks if the input echoing is enabled in this terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is less than one.</exception>
-    public int ReadTimeoutMillis
+    public bool InputEchoing
     {
         get
         {
             AssertNotDisposed();
 
-            return _readTimeoutMillis;
-        }
-        set
-        {
-            AssertNotDisposed();
-
-            if (value <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
-
-            if (!EnableLineBuffering)
-            {
-                UpdateNonLineBufferedMode();
-            }
-
-            _readTimeoutMillis = value;
-        }
-    }
-
-    /// <summary>
-    /// Enables or disables the character echo mode.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public bool EnableInputEchoing
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _enableInputEchoing;
-        }
-        set
-        {
-            AssertNotDisposed();
-
-            if (value)
-            {
-                Curses.echo().TreatError();
-            } else
-            {
-                Curses.noecho().TreatError();
-            }
-
-            _enableInputEchoing = value;
+            return _inputEchoing;
         }
     }
 
@@ -342,7 +340,7 @@ public sealed class Terminal: IDisposable
         {
             AssertNotDisposed();
 
-            return _enableReturnToNewLineTranslation;
+            return _newLineTranslation;
         }
         set
         {
@@ -356,29 +354,21 @@ public sealed class Terminal: IDisposable
                 Curses.nonl().TreatError();
             }
 
-            _enableReturnToNewLineTranslation = value;
+            _newLineTranslation = value;
         }
     }
 
     /// <summary>
-    /// Enables or disables flush interruption during application breaks.
+    /// Checks if the application flushes the terminal buffers when control keys are read by the application.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public bool EnableForceInterruptingFlush
+    public bool ManualFlush
     {
         get
         {
             AssertNotDisposed();
 
-            return _enableForceInterruptingFlush;
-        }
-        set
-        {
-            AssertNotDisposed();
-
-            Curses.intrflush(IntPtr.Zero, value).TreatError();
-            _enableForceInterruptingFlush = value;
+            return _manualFlush;
         }
     }
 
@@ -529,22 +519,6 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Lists the active windows in this terminal.
-    /// </summary>
-    public IEnumerable<Window> Windows => _windows;
-
-    /// <summary>
-    /// Utility method that removes a window from the managed windows list. Only used internally.
-    /// </summary>
-    /// <param name="window">The window to remove.</param>
-    /// <exception cref="ArgumentNullException">The <paramref name="window"/> is <c>null</c>.</exception>
-    internal void RemoveWindow(Window window)
-    {
-        var removed = _windows.Remove(window);
-        Debug.Assert(removed);
-    }
-
-    /// <summary>
     /// The Curses functionality provider.
     /// </summary>
     public ICursesProvider Curses { get; }
@@ -594,12 +568,7 @@ public sealed class Terminal: IDisposable
     /// </summary>
     public void Dispose()
     {
-        // Dispose of all the windows
-        var windows = _windows.ToArray();
-        foreach (var window in windows)
-        {
-            window.Dispose();
-        }
+        _screen.Dispose();
 
         // Kill off the terminal.
         ReleaseUnmanagedResources();
