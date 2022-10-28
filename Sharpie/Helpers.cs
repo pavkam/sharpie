@@ -30,10 +30,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
+using Curses;
+
 /// <summary>
 ///     Internal helper routines.
 /// </summary>
-internal static class Helpers
+public static class Helpers
 {
     private const int CursesErrorResult = -1;
 
@@ -52,7 +54,7 @@ internal static class Helpers
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="code" /> value.</returns>
     /// <exception cref="CursesException">Thrown if <paramref name="code" /> indicates an error.</exception>
-    public static int Check(this int code, string operation, string message)
+    internal static int Check(this int code, string operation, string message)
     {
         if (code == CursesErrorResult)
         {
@@ -70,7 +72,7 @@ internal static class Helpers
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="ptr" /> value.</returns>
     /// <exception cref="CursesException">Thrown if <paramref name="ptr" /> is zero.</exception>
-    public static IntPtr Check(this IntPtr ptr, string operation, string message)
+    internal static IntPtr Check(this IntPtr ptr, string operation, string message)
     {
         if (ptr == IntPtr.Zero)
         {
@@ -86,7 +88,7 @@ internal static class Helpers
     /// <param name="value">The millis.</param>
     /// <returns>The value in 100s of millis.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Argument <paramref name="value"/> is less than zero.</exception>
-    public static int ConvertMillisToTenths(int value)
+    internal static int ConvertMillisToTenths(int value)
     {
         switch (value)
         {
@@ -100,5 +102,46 @@ internal static class Helpers
                 return Math.Min(255, hundreds);
             }
         }
+    }
+
+    /// <summary>
+    /// Converts a given rune to a complex character.
+    /// </summary>
+    /// <param name="curses">The curses backend.</param>
+    /// <param name="rune">The rune to convert.</param>
+    /// <param name="style">The style to apply.</param>
+    /// <returns>The complex character.</returns>
+    /// <exception cref="CursesException">Thrown if <paramref name="rune" /> failed to convert to a complex char.</exception>
+    public static ComplexChar ToComplexChar(this ICursesProvider curses, Rune rune, Style style)
+    {
+        // Convert the special characters into Unicode.
+        if (rune.IsAscii && rune.Value <= 0x1F || rune.Value is >= 0X7F and <= 0x9F)
+        {
+            rune = new(rune.Value + 0x2400);
+        }
+
+        // Use Curses to encode the characters.
+        curses.setcchar(out var @char, rune.ToString(), (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
+              .Check(nameof(curses.setcchar), "Failed to convert string to complex character.");
+
+        return @char;
+    }
+
+    /// <summary>
+    /// Converts a complex char into a rune and its style.
+    /// </summary>
+    /// <param name="curses">The curses backend.</param>
+    /// <param name="char">The char to breakdown.</param>
+    /// <returns>The rune and the style.</returns>
+    public static (Rune rune, Style style) FromComplexChar(this ICursesProvider curses, ComplexChar @char)
+    {
+        // Use Curses to decode the characters. Assume 10 characters is enough in the string.
+
+        var builder = new StringBuilder(10);
+        curses.getcchar(@char, builder, out var attrs, out var colorPair, IntPtr.Zero)
+              .Check(nameof(curses.getcchar), "Failed to deconstruct the complex character.");
+
+        return (Rune.GetRuneAt(builder.ToString(), 0),
+            new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
     }
 }

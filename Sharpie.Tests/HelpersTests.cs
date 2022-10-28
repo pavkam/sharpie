@@ -30,9 +30,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
+using System.Text;
+using Curses;
+
 [TestClass]
 public class HelpersTests
 {
+    private Mock<ICursesProvider> _cursesMock = null!;
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _cursesMock = new();
+    }
+
+    
     [TestMethod]
     public void Failed_ReturnsTrue_IfCodeIsMinus1()
     {
@@ -105,5 +117,69 @@ public class HelpersTests
     public void ConvertMillisToTenths_AppliesMaximum()
     {
         Helpers.ConvertMillisToTenths(256000).ShouldBe(255);
+    }
+
+    [TestMethod, DataRow(0x1F, "\x241F"), DataRow(0x7F, "\x247F"), DataRow(0x9F, "\x249F")]
+    public void ToComplexChar_ConvertsSpecialAsciiToUnicode(int ch, string expected)
+    {
+        _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+                       It.IsAny<ushort>(), It.IsAny<IntPtr>()))
+                   .Returns(0);
+
+        _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
+        _cursesMock.Verify(v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<ushort>(),
+            It.IsAny<IntPtr>()), Times.Once);
+    }
+    
+    [TestMethod, DataRow(0x20, "\x0020"), DataRow(0x7E, "\x007E"), DataRow(0xA0, "\x00A0")]
+    public void ToComplexChar_DoesNotConvertOtherAsciiToUnicode(int ch, string expected)
+    {
+        _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+                       It.IsAny<ushort>(), It.IsAny<IntPtr>()))
+                   .Returns(0);
+
+        _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
+        _cursesMock.Verify(v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<ushort>(),
+            It.IsAny<IntPtr>()), Times.Once);
+    }
+    
+    [TestMethod]
+    public void ToComplexChar_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+                       It.IsAny<ushort>(), It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesException>(() => _cursesMock.Object.ToComplexChar(new('a'), Style.Default));
+    }
+    
+    [TestMethod]
+    public void FromComplexChar_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
+                       out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        var c = new ComplexChar();
+        Should.Throw<CursesException>(() => _cursesMock.Object.FromComplexChar(c));
+    }
+    
+    [TestMethod]
+    public void FromComplexChar_ReturnsCursesChar()
+    {
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
+                       out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
+                   .Returns((ComplexChar _, StringBuilder sb, out uint attrs, out ushort colorPair, IntPtr _) =>
+                   {
+                       sb.Append('H');
+                       attrs = (uint)VideoAttribute.Dim;
+                       colorPair = 10;
+                       return 0;
+                   });
+
+        var (rune, style) = _cursesMock.Object.FromComplexChar(new());
+        rune.ShouldBe(new('H'));
+        style.Attributes.ShouldBe(VideoAttribute.Dim);
+        style.ColorMixture.ShouldBe(new() { Handle = 10 });
     }
 }

@@ -221,10 +221,10 @@ public class Window: IDisposable
             Curses.wgetbkgrnd(Handle, out var @char)
                     .Check(nameof(Curses.wgetbkgrnd), "Failed to get the window background.");
 
-            return BreakComplexChar(@char);
+            return Curses.FromComplexChar(@char);
         }
         set =>
-            Curses.wbkgrnd(Handle, MakeComplexChar(value.@char, value.style))
+            Curses.wbkgrnd(Handle, Curses.ToComplexChar(value.@char, value.style))
                     .Check(nameof(Curses.wbkgrnd), "Failed to set the window background.");
     }
 
@@ -377,25 +377,6 @@ public class Window: IDisposable
     {
         Destroy();
         GC.SuppressFinalize(this);
-    }
-
-    private ComplexChar MakeComplexChar(Rune rune, Style style)
-    {
-        Curses.setcchar(out var @char, rune.ToString(), (uint) style.Attributes, style.ColorMixture.Handle,
-                  IntPtr.Zero)
-              .Check(nameof(Curses.setcchar), "Failed to convert string to complex character.");
-
-        return @char;
-    }
-
-    private (Rune rune, Style style) BreakComplexChar(ComplexChar @char)
-    {
-        var builder = new StringBuilder(10);
-        Curses.getcchar(@char, builder, out var attrs, out var colorPair, IntPtr.Zero)
-                .Check(nameof(Curses.getcchar), "Failed to deconstruct the complex character.");
-
-        return (Rune.GetRuneAt(builder.ToString(), 0),
-            new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
     }
 
     /// <summary>
@@ -594,14 +575,7 @@ public class Window: IDisposable
 
         foreach (var rune in str.EnumerateRunes())
         {
-            var @char = MakeComplexChar(rune, style);
-            Curses.wadd_wch(Handle, @char);
-            /*
-        if (Curses.wadd_wch(Handle, @char)
-                  .Failed())
-        {
-            break;
-        }*/
+            Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, style));
         }
     }
 
@@ -621,7 +595,7 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(length));
         }
 
-        Curses.wvline_set(Handle, MakeComplexChar(@char, style), length)
+        Curses.wvline_set(Handle, Curses.ToComplexChar(@char, style), length)
                 .Check(nameof(Curses.wvline_set), "Failed to draw a vertical line.");
     }
 
@@ -656,14 +630,14 @@ public class Window: IDisposable
         Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar,
         Style style)
     {
-        var leftSide = MakeComplexChar(leftSideChar, style);
-        var rightSide = MakeComplexChar(rightSideChar, style);
-        var topSide = MakeComplexChar(topSideChar, style);
-        var bottomSide = MakeComplexChar(bottomSideChar, style);
-        var topLeftCorner = MakeComplexChar(topLeftCornerChar, style);
-        var topRightCorner = MakeComplexChar(topRightCornerChar, style);
-        var bottomLeftCorner = MakeComplexChar(bottomLeftCornerChar, style);
-        var bottomRightCorner = MakeComplexChar(bottomRightCornerChar, style);
+        var leftSide = Curses.ToComplexChar(leftSideChar, style);
+        var rightSide = Curses.ToComplexChar(rightSideChar, style);
+        var topSide = Curses.ToComplexChar(topSideChar, style);
+        var bottomSide = Curses.ToComplexChar(bottomSideChar, style);
+        var topLeftCorner = Curses.ToComplexChar(topLeftCornerChar, style);
+        var topRightCorner = Curses.ToComplexChar(topRightCornerChar, style);
+        var bottomLeftCorner = Curses.ToComplexChar(bottomLeftCornerChar, style);
+        var bottomRightCorner = Curses.ToComplexChar(bottomRightCornerChar, style);
 
         Curses.wborder_set(Handle, leftSide, rightSide, topSide, bottomSide,
                     topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner)
@@ -698,7 +672,7 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(length));
         }
 
-        Curses.whline_set(Handle, MakeComplexChar(@char, style), length)
+        Curses.whline_set(Handle, Curses.ToComplexChar(@char, style), length)
                 .Check(nameof(Curses.whline_set), "Failed to draw a horizontal line.");
     }
 
@@ -765,7 +739,7 @@ public class Window: IDisposable
         Curses.win_wchnstr(Handle, arr, count)
                 .Check(nameof(Curses.win_wchnstr), "Failed to get the text from the window.");
 
-        return arr.Select(BreakComplexChar)
+        return arr.Select(ch => Curses.FromComplexChar(ch))
                   .ToArray();
     }
 
