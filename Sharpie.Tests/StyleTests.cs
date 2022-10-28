@@ -33,5 +33,99 @@ namespace Sharpie.Tests;
 [TestClass]
 public class StyleTests
 {
-    [TestMethod] public void TestMethod1() { }
+    private readonly Style _style = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 1 } };
+
+    [TestMethod]
+    public void Default_HasValues()
+    {
+        Style.Default.Attributes.ShouldBe(VideoAttribute.None);
+        Style.Default.ColorMixture.ShouldBe(ColorMixture.Default);
+    }
+
+    [TestMethod]
+    public void Ctor_StoresTheProperties()
+    {
+        _style.Attributes.ShouldBe(VideoAttribute.Bold);
+        _style.ColorMixture.ShouldBe(new() { Handle = 1 });
+    }
+
+    [TestMethod]
+    public void ToString_ProperlyFormats()
+    {
+        _style.ToString()
+              .ShouldBe("Style [Bold; Mixture [1]]");
+    }
+
+    [TestMethod, DataRow(null), DataRow("")]
+    public void Equals_ReturnsFalse_IfNotStyle(object? b)
+    {
+        ColorMixture.Default.Equals(b)
+                    .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsFalse_IfDifferentVideoAttributes()
+    {
+        _style.Equals(_style with { Attributes = VideoAttribute.Dim })
+              .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsFalse_IfDifferentColorMixtures()
+    {
+        _style.Equals(_style with { ColorMixture = new() { Handle = 10 } })
+              .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsTrue_IfAllPropertiesAreSame()
+    {
+        _style.Equals(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture })
+              .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void GetHashCode_IsDifferent_ForDifferentAttributes()
+    {
+        _style.GetHashCode()
+              .ShouldNotBe((_style with { Attributes = VideoAttribute.Dim }).GetHashCode());
+    }
+
+    [TestMethod]
+    public void GetHashCode_IsDifferent_ForDifferentColorMixtures()
+    {
+        _style.GetHashCode()
+              .ShouldNotBe((_style with { ColorMixture = new() { Handle = 10 } }).GetHashCode());
+    }
+
+    [TestMethod]
+    public void GetHashCode_IsTheSame_IfAllPropertiesAreSame()
+    {
+        _style.GetHashCode()
+              .ShouldBe(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture }.GetHashCode());
+    }
+
+    [TestMethod]
+    public void EqualOperator_ReturnsFalse_IfNotEqual()
+    {
+        Assert.IsFalse(_style == _style with { Attributes = VideoAttribute.Underline });
+    }
+
+    [TestMethod]
+    public void EqualOperator_ReturnsTrue_IfEqual()
+    {
+        Assert.IsTrue(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture } == _style);
+    }
+
+    [TestMethod]
+    public void NotEqualOperator_ReturnsTrue_IfDifferent()
+    {
+        Assert.IsTrue(_style != Style.Default with { Attributes = VideoAttribute.Underline });
+    }
+
+    [TestMethod]
+    public void NotEqualOperator_ReturnsFalse_IfEqual()
+    {
+        Assert.IsFalse(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture } != _style);
+    }
 }
