@@ -31,7 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Curses;
 
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 
 /// <summary>
 ///     Internal Curses mouse event.

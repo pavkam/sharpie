@@ -30,10 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Curses;
 
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Text;
-using JetBrains.Annotations;
 
 /// <summary>
 ///     Interface provides access to the Curses functionality. Use the <see cref="System" /> property to access the actual
