@@ -3,16 +3,16 @@ namespace Sharpie;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Adds support for soft function keys.
+///     Adds support for soft function keys.
 /// </summary>
 [PublicAPI]
 public sealed class SoftKeyLabelManager
 {
-    private readonly Terminal _terminal;
     private readonly SoftKeyLabelMode _mode;
+    private readonly Terminal _terminal;
 
     /// <summary>
-    /// Creates a new instance of this class.
+    ///     Creates a new instance of this class.
     /// </summary>
     /// <param name="terminal">The terminal instance.</param>
     /// <param name="mode">The mode of the manager.</param>
@@ -30,55 +30,17 @@ public sealed class SoftKeyLabelManager
     }
 
     /// <summary>
-    /// Specifies if the manager is enabled.
+    ///     Specifies if the manager is enabled.
     /// </summary>
     public bool IsEnabled => _mode != SoftKeyLabelMode.Disabled;
 
-    private void AssertNotDisposedAndEnabled()
-    {
-        _terminal.AssertNotDisposed();
-        if (_mode == SoftKeyLabelMode.Disabled)
-        {
-            throw new NotSupportedException("The soft key labels were not configured during terminal initialization.");
-        }
-    }
-
     /// <summary>
-    /// Gets the number of labels within the soft key label panel.
+    ///     Gets the number of labels within the soft key label panel.
     /// </summary>
     public int LabelCount => _mode is SoftKeyLabelMode.FourFourFour or SoftKeyLabelMode.FourFourFourWithIndex ? 12 : 8;
 
     /// <summary>
-    /// Sets a given label within the soft key label panel.
-    /// </summary>
-    /// <param name="index">The index of the label.</param>
-    /// <param name="title">The title of the label.</param>
-    /// <param name="align">Alignment of the label title.</param>
-    /// <exception cref="ArgumentNullException">The <paramref name="title"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="index"/> negative or greater than <see cref="LabelCount"/>.</exception>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void SetLabel(int index, string title, SoftKeyLabelAlignment align)
-    {
-        if (title == null)
-        {
-            throw new ArgumentNullException(nameof(title));
-        }
-
-        if (index < 0 || index >= LabelCount)
-        {
-            throw new ArgumentOutOfRangeException(nameof(index));
-        }
-
-        AssertNotDisposedAndEnabled();
-
-        _terminal.Curses.slk_set(index + 1, title, (int) align)
-                 .Check(nameof(_terminal.Curses.slk_set), "Failed to set the soft label.");
-    }
-
-    /// <summary>
-    /// Gets or sets the style of the window.
+    ///     Gets or sets the style of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -107,7 +69,7 @@ public sealed class SoftKeyLabelManager
     }
 
     /// <summary>
-    /// Gets or sets the color mixture of the window.
+    ///     Gets or sets the color mixture of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -124,8 +86,49 @@ public sealed class SoftKeyLabelManager
         }
     }
 
+    private void AssertNotDisposedAndEnabled()
+    {
+        _terminal.AssertNotDisposed();
+        if (_mode == SoftKeyLabelMode.Disabled)
+        {
+            throw new NotSupportedException("The soft key labels were not configured during terminal initialization.");
+        }
+    }
+
     /// <summary>
-    /// Enables specified attributes and keep the others untouched.
+    ///     Sets a given label within the soft key label panel.
+    /// </summary>
+    /// <param name="index">The index of the label.</param>
+    /// <param name="title">The title of the label.</param>
+    /// <param name="align">Alignment of the label title.</param>
+    /// <exception cref="ArgumentNullException">The <paramref name="title" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     The <paramref name="index" /> negative or greater than
+    ///     <see cref="LabelCount" />.
+    /// </exception>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void SetLabel(int index, string title, SoftKeyLabelAlignment align)
+    {
+        if (title == null)
+        {
+            throw new ArgumentNullException(nameof(title));
+        }
+
+        if (index < 0 || index >= LabelCount)
+        {
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
+        AssertNotDisposedAndEnabled();
+
+        _terminal.Curses.slk_set(index + 1, title, (int) align)
+                 .Check(nameof(_terminal.Curses.slk_set), "Failed to set the soft label.");
+    }
+
+    /// <summary>
+    ///     Enables specified attributes and keep the others untouched.
     /// </summary>
     /// <param name="attributes">The attributes to enable.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
@@ -140,7 +143,7 @@ public sealed class SoftKeyLabelManager
     }
 
     /// <summary>
-    /// Disables specified attributes and keep the others untouched.
+    ///     Disables specified attributes and keep the others untouched.
     /// </summary>
     /// <param name="attributes">The attributes to disable.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
@@ -155,7 +158,7 @@ public sealed class SoftKeyLabelManager
     }
 
     /// <summary>
-    /// Clears the soft key labels from the screen. They can be restored by calling <see cref="Restore"/> method.
+    ///     Clears the soft key labels from the screen. They can be restored by calling <see cref="Restore" /> method.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -168,7 +171,7 @@ public sealed class SoftKeyLabelManager
     }
 
     /// <summary>
-    /// Restores the soft key labels to the screen. They can be cleared by calling <see cref="Clear"/> method.
+    ///     Restores the soft key labels to the screen. They can be cleared by calling <see cref="Clear" /> method.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -181,7 +184,7 @@ public sealed class SoftKeyLabelManager
     }
 
     /// <summary>
-    /// Invalidates the soft key labels. They will be queued for refresh the next time <see cref="Refresh"/> is called.
+    ///     Invalidates the soft key labels. They will be queued for refresh the next time <see cref="Refresh" /> is called.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -194,7 +197,7 @@ public sealed class SoftKeyLabelManager
     }
 
     /// <summary>
-    /// Refreshes the soft label keys immediately.
+    ///     Refreshes the soft label keys immediately.
     /// </summary>
     /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>

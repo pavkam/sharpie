@@ -3,21 +3,23 @@ namespace Sharpie;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Defines the possible strategies of clearing contents of a window.
+///     Defines the possible strategies of clearing contents of a window.
 /// </summary>
 [PublicAPI]
 public enum ClearStrategy
 {
     /// <summary>
-    /// Clears the entire window.
+    ///     Clears the entire window.
     /// </summary>
     Full,
+
     /// <summary>
-    /// Clears the contents of the line from the position of the caret down to the end of the window.
+    ///     Clears the contents of the line from the position of the caret down to the end of the window.
     /// </summary>
     FullFromCaret,
+
     /// <summary>
-    /// Clears the contents of the line from the position of the caret.
+    ///     Clears the contents of the line from the position of the caret.
     /// </summary>
-    LineFromCaret,
+    LineFromCaret
 }

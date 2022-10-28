@@ -5,28 +5,28 @@ using Curses;
 using JetBrains.Annotations;
 
 /// <summary>
-/// This class allows the developer to interact with the terminal and its settings. This is the main
-/// class that is used
+///     This class allows the developer to interact with the terminal and its settings. This is the main
+///     class that is used
 /// </summary>
 [PublicAPI]
 public sealed class Terminal: IDisposable
 {
     private static bool _terminalInstanceActive;
-    private bool _lineBuffering;
-    private bool _rawMode;
-    private int _readTimeoutMillis;
-    private bool _inputEchoing;
-    private bool _newLineTranslation;
-    private bool _manualFlush;
-    private bool _useEnvironmentOverrides;
+    private ColorManager _colorManager;
     private bool _enableMouse;
-    private ulong? _oldMouseMask;
     private CaretMode _hardwareCursorMode;
     private int? _initialHardwareCursorMode;
+    private bool _inputEchoing;
+    private bool _lineBuffering;
+    private bool _manualFlush;
+    private bool _newLineTranslation;
+    private ulong? _oldMouseMask;
+    private bool _rawMode;
+    private int _readTimeoutMillis;
     private Screen _screen;
-    private ColorManager _colorManager;
 
     private SoftKeyLabelManager _softKeyLabelManager;
+    private bool _useEnvironmentOverrides;
 
     internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableRawMode,
         bool enableReturnToNewLineTranslation, int readTimeoutMillis, bool enableInputEchoing, bool manualFlush,
@@ -128,23 +128,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Starts the building process of the terminal.
-    /// </summary>
-    /// <param name="cursesProvider">The curses functionality provider.</param>
-    /// <returns>A new terminal builder.</returns>
-    /// <exception cref="ArgumentNullException">The <paramref name="cursesProvider"/> is <c>null</c>.</exception>
-    public static TerminalBuilder UsingCurses(ICursesProvider cursesProvider)
-    {
-        if (cursesProvider == null)
-        {
-            throw new ArgumentNullException(nameof(cursesProvider));
-        }
-
-        return new(cursesProvider);
-    }
-
-    /// <summary>
-    /// Gets the terminal's baud rate.
+    ///     Gets the terminal's baud rate.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -160,7 +144,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Provides access to the terminal's color management.
+    ///     Provides access to the terminal's color management.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public ColorManager Colors
@@ -174,7 +158,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Provides access to the terminal's color management.
+    ///     Provides access to the terminal's color management.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public SoftKeyLabelManager SoftKeyLabels
@@ -188,7 +172,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Enables or disables the line buffering mode.
+    ///     Enables or disables the line buffering mode.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -216,11 +200,11 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Gets or sets the interval used to treat pressed/released as clicks.
+    ///     Gets or sets the interval used to treat pressed/released as clicks.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is negative.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is negative.</exception>
     public int MouseClickInterval
     {
         get
@@ -245,7 +229,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Checks if the terminal is in line buffering mode.
+    ///     Checks if the terminal is in line buffering mode.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool LineBuffering
@@ -258,7 +242,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Check if the control keys are silenced (e.g. CTRL+C).
+    ///     Check if the control keys are silenced (e.g. CTRL+C).
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool ControlKeysSilenced
@@ -272,7 +256,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Gets timeout used when reading characters in non-buffered mode.
+    ///     Gets timeout used when reading characters in non-buffered mode.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public int ReadTimeout
@@ -286,7 +270,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Returns the name of the terminal.
+    ///     Returns the name of the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public string? Name
@@ -300,7 +284,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Returns the long description of the terminal.
+    ///     Returns the long description of the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public string? Description
@@ -314,7 +298,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Returns the version of the Curses library in use.
+    ///     Returns the version of the Curses library in use.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public string? CursesVersion
@@ -328,7 +312,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Checks if the input echoing is enabled in this terminal.
+    ///     Checks if the input echoing is enabled in this terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool InputEchoing
@@ -342,7 +326,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Enables or disables return to new line character translation.
+    ///     Enables or disables return to new line character translation.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -357,7 +341,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Checks if the application flushes the terminal buffers when control keys are read by the application.
+    ///     Checks if the application flushes the terminal buffers when control keys are read by the application.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool ManualFlush
@@ -371,7 +355,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Gets or sets the current caret mode of the terminal.
+    ///     Gets or sets the current caret mode of the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -398,7 +382,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Gets the combination of supported terminal attributes.
+    ///     Gets the combination of supported terminal attributes.
     /// </summary>
     public VideoAttribute SupportedAttributes
     {
@@ -411,7 +395,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// The screen instance. Use this property to access the entire screen functionality.
+    ///     The screen instance. Use this property to access the entire screen functionality.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public Screen Screen
@@ -425,7 +409,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Specifies whether the terminal supports hardware line insert and delete.
+    ///     Specifies whether the terminal supports hardware line insert and delete.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool SupportsHardwareLineInsertAndDelete
@@ -439,7 +423,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Specifies whether the terminal supports hardware character insert and delete.
+    ///     Specifies whether the terminal supports hardware character insert and delete.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool SupportsHardwareCharacterInsertAndDelete
@@ -453,7 +437,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Specifies whether the environment variables are used to setup the terminal.
+    ///     Specifies whether the environment variables are used to setup the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool UsesEnvironmentOverrides
@@ -467,7 +451,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Gets the currently defined kill character. \0 is returned if none is defined.
+    ///     Gets the currently defined kill character. \0 is returned if none is defined.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public Rune CurrentKillChar
@@ -484,7 +468,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Gets the currently defined erase character. \0 is returned if none is defined.
+    ///     Gets the currently defined erase character. \0 is returned if none is defined.
     /// </summary>
     public Rune CurrentEraseChar
     {
@@ -500,7 +484,45 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Attempts to notify the user with audio or flashing alert.
+    ///     The Curses functionality provider.
+    /// </summary>
+    public ICursesProvider Curses { get; }
+
+    /// <summary>
+    ///     Specifies whether the terminal has been disposed of and is no longer usable.
+    /// </summary>
+    public bool IsDisposed => Curses.isendwin();
+
+    /// <summary>
+    ///     Disposes the current terminal instance.
+    /// </summary>
+    public void Dispose()
+    {
+        _screen.Dispose();
+
+        // Kill off the terminal.
+        ReleaseUnmanagedResources();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    ///     Starts the building process of the terminal.
+    /// </summary>
+    /// <param name="cursesProvider">The curses functionality provider.</param>
+    /// <returns>A new terminal builder.</returns>
+    /// <exception cref="ArgumentNullException">The <paramref name="cursesProvider" /> is <c>null</c>.</exception>
+    public static TerminalBuilder UsingCurses(ICursesProvider cursesProvider)
+    {
+        if (cursesProvider == null)
+        {
+            throw new ArgumentNullException(nameof(cursesProvider));
+        }
+
+        return new(cursesProvider);
+    }
+
+    /// <summary>
+    ///     Attempts to notify the user with audio or flashing alert.
     /// </summary>
     /// <remarks>The actual notification depends on terminal support.</remarks>
     /// <param name="silent">The alert mode.</param>
@@ -522,12 +544,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// The Curses functionality provider.
-    /// </summary>
-    public ICursesProvider Curses { get; }
-
-    /// <summary>
-    /// Validates that the terminal is not disposed.
+    ///     Validates that the terminal is not disposed.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed of and is no longer usable.</exception>
     public void AssertNotDisposed()
@@ -539,12 +556,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Specifies whether the terminal has been disposed of and is no longer usable.
-    /// </summary>
-    public bool IsDisposed => Curses.isendwin();
-
-    /// <summary>
-    /// Disposes of any unmanaged resources.
+    ///     Disposes of any unmanaged resources.
     /// </summary>
     private void ReleaseUnmanagedResources()
     {
@@ -567,19 +579,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Disposes the current terminal instance.
-    /// </summary>
-    public void Dispose()
-    {
-        _screen.Dispose();
-
-        // Kill off the terminal.
-        ReleaseUnmanagedResources();
-        GC.SuppressFinalize(this);
-    }
-
-    /// <summary>
-    /// The destructor. Calls <see cref="ReleaseUnmanagedResources"/>
+    ///     The destructor. Calls <see cref="ReleaseUnmanagedResources" />
     /// </summary>
     ~Terminal() { ReleaseUnmanagedResources(); }
 }

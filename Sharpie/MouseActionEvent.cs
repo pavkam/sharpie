@@ -5,19 +5,20 @@ using System.Text;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Contains the details of a Curses event.
+///     Contains the details of a Curses event.
 /// </summary>
 [PublicAPI]
 public sealed class MouseActionEvent: Event
 {
     /// <summary>
-    /// Creates a new instance of the class.
+    ///     Creates a new instance of the class.
     /// </summary>
     /// <param name="point">The location of the mouse.</param>
     /// <param name="button">The actioned button.</param>
     /// <param name="state">The button state.</param>
     /// <param name="modifiers">The key modifiers.</param>
-    internal MouseActionEvent(Point point, MouseButton button, MouseButtonState state, ModifierKey modifiers): base(EventType.MouseAction)
+    internal MouseActionEvent(Point point, MouseButton button, MouseButtonState state, ModifierKey modifiers): base(
+        EventType.MouseAction)
     {
         Position = point;
         Button = button;
@@ -26,26 +27,26 @@ public sealed class MouseActionEvent: Event
     }
 
     /// <summary>
-    /// The button that was actioned.
+    ///     The button that was actioned.
     /// </summary>
     public MouseButton Button { get; init; }
 
     /// <summary>
-    /// The state of the action.
+    ///     The state of the action.
     /// </summary>
     public MouseButtonState State { get; init; }
 
     /// <summary>
-    /// Modifier keys that were present at the time of the action.
+    ///     Modifier keys that were present at the time of the action.
     /// </summary>
     public ModifierKey Modifiers { get; init; }
 
     /// <summary>
-    /// The mouse position at the time of the action.
+    ///     The mouse position at the time of the action.
     /// </summary>
     public Point Position { get; }
 
-    /// <inheritdoc cref="object.ToString"/>
+    /// <inheritdoc cref="object.ToString" />
     public override string ToString()
     {
         var modifiers = new StringBuilder();
@@ -53,10 +54,12 @@ public sealed class MouseActionEvent: Event
         {
             modifiers.Append("CTRL-");
         }
+
         if (Modifiers.HasFlag(ModifierKey.Shift))
         {
             modifiers.Append("SHIFT-");
         }
+
         if (Modifiers.HasFlag(ModifierKey.Alt))
         {
             modifiers.Append("ALT-");
@@ -65,7 +68,7 @@ public sealed class MouseActionEvent: Event
         return $"Mouse [{modifiers}{Button}-{State} at {Position.X}, {Position.Y}]";
     }
 
-    /// <inheritdoc cref="object.Equals(object)"/>
+    /// <inheritdoc cref="object.Equals(object)" />
     public override bool Equals(object? obj) =>
         obj is MouseActionEvent mae &&
         mae.Button == Button &&
@@ -75,6 +78,6 @@ public sealed class MouseActionEvent: Event
         mae.Type == Type &&
         obj.GetType() == GetType();
 
-    /// <inheritdoc cref="object.GetHashCode"/>
+    /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => HashCode.Combine(Button, State, Modifiers, Position, Type);
 }

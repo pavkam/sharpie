@@ -4,42 +4,43 @@ using Curses;
 using JetBrains.Annotations;
 
 /// <summary>
-/// This class allows building instances of the <see cref="Terminal"/> class.
+///     This class allows building instances of the <see cref="Terminal" /> class.
 /// </summary>
 [PublicAPI]
 public sealed class TerminalBuilder
 {
     private readonly ICursesProvider _cursesProvider;
-    private bool _enableLineBuffering;
-    private bool _enableInputEchoing;
-    private int _readTimeoutMillis = Timeout.Infinite;
-    private bool _manualFlush;
     private bool _enableColors = true;
-    private bool _enableReturnToNewLineTranslation;
-    private bool _useEnvironmentOverrides = true;
+    private bool _enableInputEchoing;
+    private bool _enableLineBuffering;
     private bool _enableMouse;
     private bool _enableRawMode;
+    private bool _enableReturnToNewLineTranslation;
     private CaretMode _hardwareCursorMode = CaretMode.Visible;
+    private bool _manualFlush;
+    private int _readTimeoutMillis = Timeout.Infinite;
     private SoftKeyLabelMode _softKeyLabelMode = SoftKeyLabelMode.Disabled;
+    private bool _useEnvironmentOverrides = true;
 
     /// <summary>
-    /// Creates a new instance of the terminal builder using a given Curses provider.
+    ///     Creates a new instance of the terminal builder using a given Curses provider.
     /// </summary>
     /// <param name="cursesProvider">The curses functionality provider.</param>
-    /// <exception cref="ArgumentNullException">The <paramref name="cursesProvider"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="cursesProvider" /> is <c>null</c>.</exception>
     internal TerminalBuilder(ICursesProvider cursesProvider) =>
         _cursesProvider = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
 
     /// <summary>
-    /// Toggles line buffering on or off.
+    ///     Toggles line buffering on or off.
     /// </summary>
     /// <remarks>
-    /// The default is <c>false</c> as that is used in most applications. The <paramref name="readTimeoutMillis"/> is used in
-    /// non-buffered mode, and represents the time to wait until any read operation is interrupted if not input has been
-    /// supplied by the user.
+    ///     The default is <c>false</c> as that is used in most applications. The <paramref name="readTimeoutMillis" /> is used
+    ///     in
+    ///     non-buffered mode, and represents the time to wait until any read operation is interrupted if not input has been
+    ///     supplied by the user.
     /// </remarks>
     /// <param name="enabled">The value of the flag.</param>
-    /// <param name="readTimeoutMillis">If the <paramref name="enabled"/> is <c>false</c>, the read timeout.</param>
+    /// <param name="readTimeoutMillis">If the <paramref name="enabled" /> is <c>false</c>, the read timeout.</param>
     /// <returns>The same builder instance.</returns>
     public TerminalBuilder WithLineBuffering(bool enabled, int readTimeoutMillis = Timeout.Infinite)
     {
@@ -49,11 +50,11 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Toggles the silencing of control keys such as CTRL+C.
+    ///     Toggles the silencing of control keys such as CTRL+C.
     /// </summary>
     /// <remarks>
-    /// The default is <c>false</c>. Setting this to <c>true</c> would mean that application will not reply to standard
-    /// control key combinations and it would be the developer's responsibility to do so.
+    ///     The default is <c>false</c>. Setting this to <c>true</c> would mean that application will not reply to standard
+    ///     control key combinations and it would be the developer's responsibility to do so.
     /// </remarks>
     /// <param name="enabled">The value of the flag.</param>
     public TerminalBuilder WithSilencedControlKeys(bool enabled)
@@ -63,11 +64,11 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Toggles new line translation on or off.
+    ///     Toggles new line translation on or off.
     /// </summary>
     /// <remarks>
-    /// If enabled, the return keys are translated into new line characters.
-    /// The default is <c>false</c>.
+    ///     If enabled, the return keys are translated into new line characters.
+    ///     The default is <c>false</c>.
     /// </remarks>
     /// <param name="enabled">The value of the flag.</param>
     /// <returns>The same builder instance.</returns>
@@ -78,11 +79,11 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Toggles input echoing on or off.
+    ///     Toggles input echoing on or off.
     /// </summary>
     /// <remarks>
-    /// The default is <c>false</c> as that is used in most applications TUI applications that
-    /// want to deal with input display by themselves.
+    ///     The default is <c>false</c> as that is used in most applications TUI applications that
+    ///     want to deal with input display by themselves.
     /// </remarks>
     /// <param name="enabled">The value of the flag.</param>
     /// <returns>The same builder instance.</returns>
@@ -93,10 +94,10 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Toggles manual terminal flush on or off.
+    ///     Toggles manual terminal flush on or off.
     /// </summary>
     /// <remarks>
-    /// Default is <c>false</c> as most developers don't want to be bothered to control this.
+    ///     Default is <c>false</c> as most developers don't want to be bothered to control this.
     /// </remarks>
     /// <param name="enabled">The value of the flag.</param>
     /// <returns>The same builder instance.</returns>
@@ -107,10 +108,10 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Toggle the use of colors in the terminal (if supported).
+    ///     Toggle the use of colors in the terminal (if supported).
     /// </summary>
     /// <remarks>
-    /// Default is <c>true</c>.
+    ///     Default is <c>true</c>.
     /// </remarks>
     /// <param name="enabled">The value of the flag.</param>
     /// <returns>The same builder instance.</returns>
@@ -121,10 +122,10 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Toggle the use of environment overrides for lines and columns.
+    ///     Toggle the use of environment overrides for lines and columns.
     /// </summary>
     /// <remarks>
-    /// Default is <c>true</c>
+    ///     Default is <c>true</c>
     /// </remarks>
     /// <param name="use"><c>true</c> if the environment overrides are to be used.</param>
     /// <returns>The same builder instance.</returns>
@@ -135,10 +136,10 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Toggle the use of the hardware caret.
+    ///     Toggle the use of the hardware caret.
     /// </summary>
     /// <remarks>
-    /// Default is <see cref="CaretMode.Visible"/>
+    ///     Default is <see cref="CaretMode.Visible" />
     /// </remarks>
     /// <param name="mode">The caret mode.</param>
     /// <returns>The same builder instance.</returns>
@@ -149,10 +150,10 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Sets the soft key labels functionality mode.
+    ///     Sets the soft key labels functionality mode.
     /// </summary>
     /// <remarks>
-    /// Default is <see cref="SoftKeyLabelMode.Disabled"/>.
+    ///     Default is <see cref="SoftKeyLabelMode.Disabled" />.
     /// </remarks>
     /// <param name="mode">The mode of the soft label keys used.</param>
     /// <returns>The same builder instance.</returns>
@@ -163,10 +164,10 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Enables or disables the mouse support (if available).
+    ///     Enables or disables the mouse support (if available).
     /// </summary>
     /// <remarks>
-    /// Default is <c>false</c>.
+    ///     Default is <c>false</c>.
     /// </remarks>
     /// <param name="enabled">Specifies whether the mouse is enabled.</param>
     /// <returns>The same builder instance.</returns>
@@ -177,7 +178,7 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
-    /// Creates a new instance of the <see cref="Terminal"/> class.
+    ///     Creates a new instance of the <see cref="Terminal" /> class.
     /// </summary>
     /// <returns>A new terminal object.</returns>
     public Terminal Create() =>

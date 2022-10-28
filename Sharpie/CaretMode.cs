@@ -3,23 +3,23 @@ namespace Sharpie;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Defines the caret mode.
+///     Defines the caret mode.
 /// </summary>
 [PublicAPI]
 public enum CaretMode
 {
     /// <summary>
-    /// The caret is invisible.
+    ///     The caret is invisible.
     /// </summary>
     Invisible = 0,
 
     /// <summary>
-    /// The caret is visible.
+    ///     The caret is visible.
     /// </summary>
     Visible = 1,
 
     /// <summary>
-    /// The caret is very visible.
+    ///     The caret is very visible.
     /// </summary>
     VeryVisible = 2
 }

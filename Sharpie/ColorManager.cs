@@ -3,17 +3,17 @@ namespace Sharpie;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Exposes functionality to manage colors.
+///     Exposes functionality to manage colors.
 /// </summary>
 [PublicAPI]
 public sealed class ColorManager
 {
-    private Terminal _terminal;
-    private ushort _nextPairHandle = 1;
     private readonly bool _enabled;
+    private ushort _nextPairHandle = 1;
+    private Terminal _terminal;
 
     /// <summary>
-    /// Initializes color manager for a Curse provider.
+    ///     Initializes color manager for a Curse provider.
     /// </summary>
     /// <param name="terminal">The parent terminal.</param>
     /// <param name="enabled">Specifies whether colors are enabled.</param>
@@ -29,14 +29,15 @@ public sealed class ColorManager
                      .Check(nameof(_terminal.Curses.start_color), "Failed to initialize terminal color mode.");
 
             _terminal.Curses.use_default_colors()
-                     .Check(nameof(_terminal.Curses.use_default_colors), "Failed to defined the default colors of the terminal.");
+                     .Check(nameof(_terminal.Curses.use_default_colors),
+                         "Failed to defined the default colors of the terminal.");
         }
 
         _enabled = true;
     }
 
     /// <summary>
-    /// Specifies whether the colors are enabled.
+    ///     Specifies whether the colors are enabled.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool Enabled
@@ -50,7 +51,7 @@ public sealed class ColorManager
     }
 
     /// <summary>
-    /// Specifies whether the terminal supports colors.
+    ///     Specifies whether the terminal supports colors.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool ColorsAreSupported
@@ -64,7 +65,7 @@ public sealed class ColorManager
     }
 
     /// <summary>
-    /// Specifies whether the terminal supports redefining colors.
+    ///     Specifies whether the terminal supports redefining colors.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public bool CanRedefineColors
@@ -78,7 +79,7 @@ public sealed class ColorManager
     }
 
     /// <summary>
-    /// Creates a new color mixture from the given colors.
+    ///     Creates a new color mixture from the given colors.
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
@@ -104,7 +105,7 @@ public sealed class ColorManager
     }
 
     /// <summary>
-    /// Creates a new color mixture from the given standard colors.
+    ///     Creates a new color mixture from the given standard colors.
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
@@ -112,10 +113,11 @@ public sealed class ColorManager
     /// <exception cref="InvalidOperationException">The maximum number of pairs has been exhausted.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <returns>A new color mixture.</returns>
-    public ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor) => MixColors((ushort) fgColor, (ushort) bgColor);
+    public ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor) =>
+        MixColors((ushort) fgColor, (ushort) bgColor);
 
     /// <summary>
-    /// Redefines an existing color pair with the given colors.
+    ///     Redefines an existing color pair with the given colors.
     /// </summary>
     /// <param name="mixture">The color mixture to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
@@ -130,7 +132,7 @@ public sealed class ColorManager
     }
 
     /// <summary>
-    /// Redefines an existing color pair with the given standard colors.
+    ///     Redefines an existing color pair with the given standard colors.
     /// </summary>
     /// <param name="mixture">The color mixture to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
@@ -143,7 +145,7 @@ public sealed class ColorManager
     }
 
     /// <summary>
-    /// Redefines the default colors of the terminal.
+    ///     Redefines the default colors of the terminal.
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
@@ -153,11 +155,12 @@ public sealed class ColorManager
     {
         _terminal.AssertNotDisposed();
         _terminal.Curses.assume_default_colors(fgColor, bgColor)
-                 .Check(nameof(_terminal.Curses.assume_default_colors), "Failed to redefine the default color mixture.");
+                 .Check(nameof(_terminal.Curses.assume_default_colors),
+                     "Failed to redefine the default color mixture.");
     }
 
     /// <summary>
-    /// Redefines the default colors of the terminal.
+    ///     Redefines the default colors of the terminal.
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
@@ -169,14 +172,15 @@ public sealed class ColorManager
     }
 
     /// <summary>
-    /// Redefines the color's RGB attributes (if supported).
+    ///     Redefines the color's RGB attributes (if supported).
     /// </summary>
     /// <param name="color">The color to redefine.</param>
     /// <param name="red">The value of red (0-1000).</param>
     /// <param name="green">The value of green (0-1000).</param>
     /// <param name="blue">The value of blue (0-1000).</param>
     /// <remarks>
-    /// Before calling this function make sure that terminal supports this functionality by checking <see cref="CanRedefineColors"/>
+    ///     Before calling this function make sure that terminal supports this functionality by checking
+    ///     <see cref="CanRedefineColors" />
     /// </remarks>
     /// <exception cref="ArgumentOutOfRangeException">If any of the three components is greater than 1000.</exception>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
@@ -188,10 +192,12 @@ public sealed class ColorManager
         {
             throw new ArgumentOutOfRangeException(nameof(color));
         }
+
         if (green > 1000)
         {
             throw new ArgumentOutOfRangeException(nameof(color));
         }
+
         if (blue > 1000)
         {
             throw new ArgumentOutOfRangeException(nameof(color));
@@ -208,28 +214,30 @@ public sealed class ColorManager
     }
 
     /// <summary>
-    /// Redefines the standard color's RGB attributes (if supported).
+    ///     Redefines the standard color's RGB attributes (if supported).
     /// </summary>
     /// <param name="color">The color to redefine.</param>
     /// <param name="red">The value of red (0-1000).</param>
     /// <param name="green">The value of green (0-1000).</param>
     /// <param name="blue">The value of blue (0-1000).</param>
     /// <remarks>
-    /// Before calling this function make sure that terminal supports this functionality by checking <see cref="CanRedefineColors"/>
+    ///     Before calling this function make sure that terminal supports this functionality by checking
+    ///     <see cref="CanRedefineColors" />
     /// </remarks>
     /// <exception cref="ArgumentOutOfRangeException">If any of the three components is greater than 1000.</exception>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void RedefineColor(StandardColor color, ushort red, ushort green, ushort blue) =>
-        RedefineColor((ushort)color, red, green, blue);
+        RedefineColor((ushort) color, red, green, blue);
 
     /// <summary>
-    /// Extracts the RBG attributes from a color.
+    ///     Extracts the RBG attributes from a color.
     /// </summary>
     /// <param name="color">The color to get the RGB from.</param>
     /// <remarks>
-    /// Before calling this function make sure that terminal supports this functionality by checking <see cref="CanRedefineColors"/>
+    ///     Before calling this function make sure that terminal supports this functionality by checking
+    ///     <see cref="CanRedefineColors" />
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
@@ -244,25 +252,28 @@ public sealed class ColorManager
         }
 
         _terminal.Curses.color_content(color, out var red, out var green, out var blue)
-                       .Check(nameof(_terminal.Curses.color_content), "Failed to extract RGB information from a terminal color.");
+                 .Check(nameof(_terminal.Curses.color_content),
+                     "Failed to extract RGB information from a terminal color.");
 
         return (red, green, blue);
     }
 
     /// <summary>
-    /// Extracts the RBG attributes from a standard color.
+    ///     Extracts the RBG attributes from a standard color.
     /// </summary>
     /// <param name="color">The color to get the RGB from.</param>
     /// <remarks>
-    /// Before calling this function make sure that terminal supports this functionality by checking <see cref="CanRedefineColors"/>
+    ///     Before calling this function make sure that terminal supports this functionality by checking
+    ///     <see cref="CanRedefineColors" />
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public (ushort red, ushort green, ushort blue) BreakdownColor(StandardColor color) => BreakdownColor((ushort) color);
+    public (ushort red, ushort green, ushort blue) BreakdownColor(StandardColor color) =>
+        BreakdownColor((ushort) color);
 
     /// <summary>
-    /// Extracts the colors of a color mixture.
+    ///     Extracts the colors of a color mixture.
     /// </summary>
     /// <param name="mixture">The color mixture to get the colors from.</param>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>

@@ -5,12 +5,15 @@ using System.Text;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Interface provides access to the Curses functionality. Use the <see cref="NativeCursesProvider"/> property to access the actual
-/// implementation.
+///     Interface provides access to the Curses functionality. Use the <see cref="NativeCursesProvider" /> property to
+///     access the actual
+///     implementation.
 /// </summary>
 [PublicAPI, SuppressMessage("ReSharper", "InconsistentNaming"), SuppressMessage("ReSharper", "IdentifierTypo")]
 public interface ICursesProvider
 {
+    public delegate bool ripoffline_callback(IntPtr window, int columns); //TODO
+
     int baudrate(); //DONE
 
     int beep(); //DONE
@@ -193,8 +196,6 @@ public interface ICursesProvider
     int reset_prog_mode(); //NO
 
     int reset_shell_mode(); //NO
-
-    public delegate bool ripoffline_callback(IntPtr window, int columns); //TODO
 
     int ripoffline(int lines, ripoffline_callback callback); //TODO
 

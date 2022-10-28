@@ -8,66 +8,16 @@ using Curses;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Represents a window and contains all it's functionality.
+///     Represents a window and contains all it's functionality.
 /// </summary>
 [PublicAPI]
 public class Window: IDisposable
 {
-    /// <summary>
-    /// The terminal to which this window belongs.
-    /// </summary>
-    protected Terminal Terminal { get; }
-
-    /// <summary>
-    /// The parent of this window.
-    /// </summary>
-    protected Window? Parent { get; }
-
     private IntPtr _handle;
     private IList<Window> _windows = new List<Window>();
 
-    private ComplexChar MakeComplexChar(string element, Style style)
-    {
-        Debug.Assert(element != null);
-        Debug.Assert(element.Length > 0);
-
-        Terminal.Curses.setcchar(out var @char, element, (uint) style.Attributes, style.ColorMixture.Handle,
-                    IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar), "Failed to convert string to complex character.");
-
-        return @char;
-    }
-
-    private ComplexChar MakeComplexChar(Rune rune, Style style) => MakeComplexChar(rune.ToString(), style);
-
-    private (Rune rune, Style style) BreakComplexChar(ComplexChar @char)
-    {
-        var builder = new StringBuilder(10);
-        Terminal.Curses.getcchar(@char, builder, out var attrs, out var colorPair, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.getcchar), "Failed to deconstruct the complex character.");
-
-        return (Rune.GetRuneAt(builder.ToString(), 0),
-            new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
-    }
-
     /// <summary>
-    /// The Curses handle for the window.
-    /// </summary>
-    public IntPtr Handle
-    {
-        get
-        {
-            if (_handle == IntPtr.Zero)
-            {
-                throw new ObjectDisposedException("The window has been disposed and is no longer usable.");
-            }
-
-            return _handle;
-        }
-    }
-
-    /// <summary>
-    /// Initializes the window using a Curses handle.
+    ///     Initializes the window using a Curses handle.
     /// </summary>
     /// <param name="terminal">The curses functionality provider.</param>
     /// <param name="parent">The parent window (if any).</param>
@@ -96,13 +46,39 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Lists the active windows in this terminal.
+    ///     The terminal to which this window belongs.
+    /// </summary>
+    protected Terminal Terminal { get; }
+
+    /// <summary>
+    ///     The parent of this window.
+    /// </summary>
+    protected Window? Parent { get; }
+
+    /// <summary>
+    ///     The Curses handle for the window.
+    /// </summary>
+    public IntPtr Handle
+    {
+        get
+        {
+            if (_handle == IntPtr.Zero)
+            {
+                throw new ObjectDisposedException("The window has been disposed and is no longer usable.");
+            }
+
+            return _handle;
+        }
+    }
+
+    /// <summary>
+    ///     Lists the active windows in this terminal.
     /// </summary>
     public IEnumerable<Window> Children => _windows;
 
     /// <summary>
-    /// Gets or sets the ability of the window to scroll its contents when writing
-    /// needs a new line.
+    ///     Gets or sets the ability of the window to scroll its contents when writing
+    ///     needs a new line.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -122,16 +98,17 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Checks if the window is not disposed.
+    ///     Checks if the window is not disposed.
     /// </summary>
     public bool IsDisposed => Terminal.IsDisposed || Handle == IntPtr.Zero;
 
     /// <summary>
-    /// Enables or disables the use of hardware line insert/delete handling fpr this window.
+    ///     Enables or disables the use of hardware line insert/delete handling fpr this window.
     /// </summary>
     /// <remarks>
-    /// This functionality only works if hardware has support for it. Consult <see cref="Sharpie.Terminal.SupportsHardwareLineInsertAndDelete" />
-    /// Default is <c>false</c>.
+    ///     This functionality only works if hardware has support for it. Consult
+    ///     <see cref="Sharpie.Terminal.SupportsHardwareLineInsertAndDelete" />
+    ///     Default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     public bool UseHardwareLineInsertAndDelete
@@ -148,11 +125,12 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Enables or disables the use of hardware character insert/delete handling for this window.
+    ///     Enables or disables the use of hardware character insert/delete handling for this window.
     /// </summary>
-    ///    <remarks>
-    /// This functionality only works if hardware has support for it. Consult <see cref="Sharpie.Terminal.SupportsHardwareCharacterInsertAndDelete" />
-    /// Default is <c>true</c>.
+    /// <remarks>
+    ///     This functionality only works if hardware has support for it. Consult
+    ///     <see cref="Sharpie.Terminal.SupportsHardwareCharacterInsertAndDelete" />
+    ///     Default is <c>true</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     public bool UseHardwareCharacterInsertAndDelete
@@ -168,7 +146,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Gets or sets the style of the window.
+    ///     Gets or sets the style of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -187,7 +165,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Gets or sets the color mixture of the window.
+    ///     Gets or sets the color mixture of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -200,7 +178,201 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Enables specified attributes and keep the others untouched.
+    ///     Gets or sets the window background.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public (Rune @char, Style style) Background
+    {
+        get
+        {
+            Terminal.Curses.wgetbkgrnd(Handle, out var @char)
+                    .Check(nameof(Terminal.Curses.wgetbkgrnd), "Failed to get the window background.");
+
+            return BreakComplexChar(@char);
+        }
+        set =>
+            Terminal.Curses.wbkgrnd(Handle, MakeComplexChar(value.@char, value.style))
+                    .Check(nameof(Terminal.Curses.wbkgrnd), "Failed to set the window background.");
+    }
+
+    /// <summary>
+    ///     Gets or sets the location of the window within its parent.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the parent's bounds.</exception>
+    public virtual Point Location
+    {
+        get
+        {
+            if (Terminal.Curses.is_subwin(Handle))
+            {
+                return new(Terminal.Curses.getparx(Handle)
+                                   .Check(nameof(Terminal.Curses.getparx), "Failed to get window X coordinate."),
+                    Terminal.Curses.getpary(Handle)
+                            .Check(nameof(Terminal.Curses.getpary), "Failed to get window Y coordinate."));
+            }
+
+            return new(Terminal.Curses.getbegx(Handle)
+                               .Check(nameof(Terminal.Curses.getbegx), "Failed to get window X coordinate."), Terminal
+                .Curses.getbegy(Handle)
+                .Check(nameof(Terminal.Curses.getbegy), "Failed to get window Y coordinate."));
+        }
+        set
+        {
+            if (Parent != null)
+            {
+                var size = Size;
+                var newRect = new Rectangle(value.X, value.Y, value.X + size.Width - 1, value.Y + size.Height - 1);
+                if (!Parent.IsRectangleWithin(newRect))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+            }
+
+            if (Terminal.Curses.is_subwin(Handle))
+            {
+                Terminal.Curses.mvderwin(Handle, value.Y, value.X)
+                        .Check(nameof(Terminal.Curses.mvderwin), "Failed to move window to new coordinates.");
+            } else
+            {
+                Terminal.Curses.mvwin(Handle, value.Y, value.X)
+                        .Check(nameof(Terminal.Curses.mvwin), "Failed to move window to new coordinates.");
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Gets or sets the size of the window.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the bounds.</exception>
+    public virtual Size Size
+    {
+        get =>
+            new(Terminal.Curses.getmaxx(Handle)
+                        .Check(nameof(Terminal.Curses.getmaxx), "Failed to get window width."), Terminal.Curses
+                .getmaxy(Handle)
+                .Check(nameof(Terminal.Curses.getmaxy), "Failed to get window height."));
+        set
+        {
+            if (Parent != null)
+            {
+                var loc = Location;
+                var newRect = new Rectangle(loc.X, loc.Y, loc.X + value.Width - 1, loc.Y + value.Height - 1);
+                if (!Parent.IsRectangleWithin(newRect))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+            }
+
+            Terminal.Curses.wresize(Handle, value.Height, value.Width)
+                    .Check(nameof(Terminal.Curses.wresize), "Failed to resize the window.");
+        }
+    }
+
+    /// <summary>
+    ///     Gets or sets the current position of the caret within the window.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the window bounds.</exception>
+    public Point CaretPosition
+    {
+        get =>
+            new(Terminal.Curses.getcurx(Handle)
+                        .Check(nameof(Terminal.Curses.getcurx), "Failed to get caret X position."), Terminal.Curses
+                .getcury(Handle)
+                .Check(nameof(Terminal.Curses.getcury), "Failed to get caret Y position."));
+        set
+        {
+            if (!IsPointWithin(value))
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
+            Terminal.Curses.wmove(Handle, value.Y, value.X)
+                    .Check(nameof(Terminal.Curses.wmove), "Failed to move the caret.");
+        }
+    }
+
+    /// <summary>
+    ///     Specifies whether the window has some "dirty" parts that need to be synchronized
+    ///     to the console.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    public bool IsDirty => Terminal.Curses.is_wintouched(Handle);
+
+    /// <summary>
+    ///     Set or get the immediate refresh capability of the window.
+    /// </summary>
+    /// <remarks>
+    ///     Immediate refresh will redraw the window on each change.
+    ///     This might be very slow for most use cases.
+    ///     Default is <c>false</c>.
+    /// </remarks>
+    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    public virtual bool ImmediateRefresh
+    {
+        get => Terminal.Curses.is_immedok(Handle);
+        set => Terminal.Curses.immedok(Handle, value);
+    }
+
+    /// <summary>
+    ///     Gets or sets the window's management of the hardware cursor. This is an internal property and should not
+    ///     be called by developers.
+    /// </summary>
+    internal bool IgnoreHardwareCaret
+    {
+        get => Terminal.Curses.is_leaveok(Handle);
+        set
+        {
+            foreach (var window in _windows)
+            {
+                window.IgnoreHardwareCaret = value;
+            }
+
+            Terminal.Curses.leaveok(Handle, value);
+        }
+    }
+
+    /// <summary>
+    ///     Disposes the current instance.
+    /// </summary>
+    public void Dispose()
+    {
+        Cleanup();
+        GC.SuppressFinalize(this);
+    }
+
+    private ComplexChar MakeComplexChar(string element, Style style)
+    {
+        Debug.Assert(element != null);
+        Debug.Assert(element.Length > 0);
+
+        Terminal.Curses.setcchar(out var @char, element, (uint) style.Attributes, style.ColorMixture.Handle,
+                    IntPtr.Zero)
+                .Check(nameof(Terminal.Curses.setcchar), "Failed to convert string to complex character.");
+
+        return @char;
+    }
+
+    private ComplexChar MakeComplexChar(Rune rune, Style style) => MakeComplexChar(rune.ToString(), style);
+
+    private (Rune rune, Style style) BreakComplexChar(ComplexChar @char)
+    {
+        var builder = new StringBuilder(10);
+        Terminal.Curses.getcchar(@char, builder, out var attrs, out var colorPair, IntPtr.Zero)
+                .Check(nameof(Terminal.Curses.getcchar), "Failed to deconstruct the complex character.");
+
+        return (Rune.GetRuneAt(builder.ToString(), 0),
+            new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
+    }
+
+    /// <summary>
+    ///     Enables specified attributes and keep the others untouched.
     /// </summary>
     /// <param name="attributes">The attributes to enable.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
@@ -212,7 +384,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Disables specified attributes and keep the others untouched.
+    ///     Disables specified attributes and keep the others untouched.
     /// </summary>
     /// <param name="attributes">The attributes to disable.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
@@ -224,13 +396,13 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Tries to move the caret to a given position within the window.
+    ///     Tries to move the caret to a given position within the window.
     /// </summary>
     /// <param name="x">The new X.</param>
     /// <param name="y">The new Y.</param>
     /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Either <paramref name="x"/> or <paramref name="y"/> are negative.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Either <paramref name="x" /> or <paramref name="y" /> are negative.</exception>
     public bool TryMoveCaretTo(int x, int y)
     {
         if (x < 0)
@@ -248,7 +420,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Moves the caret to a given position within the window.
+    ///     Moves the caret to a given position within the window.
     /// </summary>
     /// <param name="x">The new X.</param>
     /// <param name="y">The new Y.</param>
@@ -264,11 +436,14 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Scrolls the contents of the window <paramref name="lines"/> up. Only works for scrollable windows.
+    ///     Scrolls the contents of the window <paramref name="lines" /> up. Only works for scrollable windows.
     /// </summary>
     /// <param name="lines">Number of lines to scroll.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="lines"/> is less than one or greater than the size of the window.</exception>
-    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling"/> is <c>false</c>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     The <paramref name="lines" /> is less than one or greater than the size
+    ///     of the window.
+    /// </exception>
+    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling" /> is <c>false</c>.</exception>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void ScrollUp(int lines)
@@ -288,11 +463,14 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Scrolls the contents of the window <paramref name="lines"/> down. Only works for scrollable windows.
+    ///     Scrolls the contents of the window <paramref name="lines" /> down. Only works for scrollable windows.
     /// </summary>
     /// <param name="lines">Number of lines to scroll.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="lines"/> is less than one or greater than the size of the window.</exception>
-    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling"/> is <c>false</c>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     The <paramref name="lines" /> is less than one or greater than the size
+    ///     of the window.
+    /// </exception>
+    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling" /> is <c>false</c>.</exception>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void ScrollDown(int lines)
@@ -312,10 +490,13 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Inserts <paramref name="lines"/> empty lines at the current caret position.
+    ///     Inserts <paramref name="lines" /> empty lines at the current caret position.
     /// </summary>
     /// <param name="lines">Number of lines to inserts.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="lines"/> is less than one or greater than the size of the window.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     The <paramref name="lines" /> is less than one or greater than the size
+    ///     of the window.
+    /// </exception>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void InsertEmptyLines(int lines)
@@ -330,10 +511,13 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Deletes <paramref name="lines"/> lines starting with the current caret position. All lines below move up.
+    ///     Deletes <paramref name="lines" /> lines starting with the current caret position. All lines below move up.
     /// </summary>
     /// <param name="lines">Number of lines to inserts.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="lines"/> is less than one or greater than the size of the window.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     The <paramref name="lines" /> is less than one or greater than the size
+    ///     of the window.
+    /// </exception>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void DeleteLines(int lines)
@@ -348,12 +532,12 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Changes the style of the text on the current line and starting from the caret position.
+    ///     Changes the style of the text on the current line and starting from the caret position.
     /// </summary>
     /// <param name="width">The number of characters to change.</param>
     /// <param name="style">The applied style.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="ArgumentException">The <paramref name="width"/> is less than one.</exception>
+    /// <exception cref="ArgumentException">The <paramref name="width" /> is less than one.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void ChangeTextStyle(int width, Style style)
     {
@@ -367,13 +551,13 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Writes a text at the caret position at the current window and optionally, advance the caret.
+    ///     Writes a text at the caret position at the current window and optionally, advance the caret.
     /// </summary>
     /// <param name="str">The text to write.</param>
     /// <param name="style">The style of the text.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="str"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     public void WriteText(string str, Style style)
     {
         if (str == null)
@@ -394,14 +578,14 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Draws a vertical line from the current caret position downwards.
+    ///     Draws a vertical line from the current caret position downwards.
     /// </summary>
     /// <param name="char">The character to use for the line.</param>
     /// <param name="length">The length of the line.</param>
     /// <param name="style">The style to use.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawVerticalLine(Rune @char, Style style, int length)
     {
         if (length <= 0)
@@ -414,12 +598,12 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Draws a vertical line using the standard line character from the current caret position downwards.
+    ///     Draws a vertical line using the standard line character from the current caret position downwards.
     /// </summary>
     /// <param name="length">The length of the line.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawVerticalLine(int length)
     {
         Terminal.Curses.wvline(Handle, 0, length)
@@ -427,7 +611,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Draws a vertical line from the current caret position downwards.
+    ///     Draws a vertical line from the current caret position downwards.
     /// </summary>
     /// <param name="bottomRightCornerChar">The bottom-right corner character.</param>
     /// <param name="leftSideChar">The left-side character.</param>
@@ -459,7 +643,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Draws a border around the window's edges using standard characters.
+    ///     Draws a border around the window's edges using standard characters.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -471,14 +655,14 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Draws a horizontal line from the current caret position downwards.
+    ///     Draws a horizontal line from the current caret position downwards.
     /// </summary>
     /// <param name="char">The character to use for the line.</param>
     /// <param name="style">The style to use.</param>
     /// <param name="length">The length of the line.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawHorizontalLine(Rune @char, Style style, int length)
     {
         if (length <= 0)
@@ -491,12 +675,12 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Draws a horizontal line using the standard line character from the current caret position downwards.
+    ///     Draws a horizontal line using the standard line character from the current caret position downwards.
     /// </summary>
     /// <param name="length">The length of the line.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length"/> is less than one.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawHorizontalLine(int length)
     {
         if (length <= 0)
@@ -509,11 +693,11 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Removes the text under the caret and moves the contents of the line to the left.
+    ///     Removes the text under the caret and moves the contents of the line to the left.
     /// </summary>
     /// <param name="count">The number of characters to remove.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count"/> less than one.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     public void RemoveText(int count)
     {
         if (count <= 0)
@@ -534,12 +718,12 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Gets the text from the window at the caret position to the right.
+    ///     Gets the text from the window at the caret position to the right.
     /// </summary>
     /// <param name="count">The number of characters to get.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count"/> less than one.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     public (Rune @char, Style style)[] GetText(int count)
     {
         if (count <= 0)
@@ -558,26 +742,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Gets or sets the window background.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public (Rune @char, Style style) Background
-    {
-        get
-        {
-            Terminal.Curses.wgetbkgrnd(Handle, out var @char)
-                    .Check(nameof(Terminal.Curses.wgetbkgrnd), "Failed to get the window background.");
-
-            return BreakComplexChar(@char);
-        }
-        set =>
-            Terminal.Curses.wbkgrnd(Handle, MakeComplexChar(value.@char, value.style))
-                    .Check(nameof(Terminal.Curses.wbkgrnd), "Failed to set the window background.");
-    }
-
-    /// <summary>
-    /// Clears the contents of the row/window.
+    ///     Clears the contents of the row/window.
     /// </summary>
     /// <param name="strategy">The strategy to use.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
@@ -608,13 +773,13 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Replaces the content of a given window with the contents of the current window.
+    ///     Replaces the content of a given window with the contents of the current window.
     /// </summary>
     /// <param name="window">The window to copy contents to.</param>
     /// <param name="strategy">The used strategy.</param>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="window"/> is null.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="window" /> is null.</exception>
     public void Replace(Window window, ReplaceStrategy strategy)
     {
         if (window == null)
@@ -638,7 +803,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Replaces the content of a given window with the contents of the current window.
+    ///     Replaces the content of a given window with the contents of the current window.
     /// </summary>
     /// <param name="window">The window to copy contents to.</param>
     /// <param name="strategy">The used strategy.</param>
@@ -646,7 +811,7 @@ public class Window: IDisposable
     /// <param name="destPos">The destination position.</param>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="window"/> is null.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="window" /> is null.</exception>
     public void Replace(Window window, Rectangle srcRect, Point destPos, ReplaceStrategy strategy)
     {
         if (window == null)
@@ -667,13 +832,16 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Invalidates a number of lines within the window.
+    ///     Invalidates a number of lines within the window.
     /// </summary>
     /// <param name="line">The window to copy contents to.</param>
     /// <param name="count">The used strategy.</param>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="line"/> and <paramref name="count"/> combination is out of bounds.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     The <paramref name="line" /> and <paramref name="count" /> combination is
+    ///     out of bounds.
+    /// </exception>
     public void Invalidate(int line, int count)
     {
         if (line < 0 || line >= Size.Height)
@@ -691,14 +859,14 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Invalidates the contents of the window thus forcing a redraw at the next <see cref="Refresh"/>.
+    ///     Invalidates the contents of the window thus forcing a redraw at the next <see cref="Refresh" />.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void Invalidate() { Invalidate(0, Size.Height); }
 
     /// <summary>
-    /// Checks if a given point fits within the current window.
+    ///     Checks if a given point fits within the current window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -706,7 +874,7 @@ public class Window: IDisposable
     public bool IsPointWithin(Point point) => Terminal.Curses.wenclose(Handle, point.Y, point.X);
 
     /// <summary>
-    /// Checks if a given rectangle fits within the current window.
+    ///     Checks if a given rectangle fits within the current window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -715,113 +883,10 @@ public class Window: IDisposable
         IsPointWithin(new(rect.X, rect.Y)) && IsPointWithin(new(rect.X + rect.Width - 1, rect.Y + rect.Bottom - 1));
 
     /// <summary>
-    /// Gets or sets the location of the window within its parent.
+    ///     Checks if the row at <paramref name="y" /> is dirty.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the parent's bounds.</exception>
-    public virtual Point Location
-    {
-        get
-        {
-            if (Terminal.Curses.is_subwin(Handle))
-            {
-                return new(Terminal.Curses.getparx(Handle)
-                                   .Check(nameof(Terminal.Curses.getparx), "Failed to get window X coordinate."),
-                    Terminal.Curses.getpary(Handle)
-                            .Check(nameof(Terminal.Curses.getpary), "Failed to get window Y coordinate."));
-            } else
-            {
-                return new(Terminal.Curses.getbegx(Handle)
-                                   .Check(nameof(Terminal.Curses.getbegx), "Failed to get window X coordinate."),
-                    Terminal.Curses.getbegy(Handle)
-                            .Check(nameof(Terminal.Curses.getbegy), "Failed to get window Y coordinate."));
-            }
-        }
-        set
-        {
-            if (Parent != null)
-            {
-                var size = Size;
-                var newRect = new Rectangle(value.X, value.Y, value.X + size.Width - 1, value.Y + size.Height - 1);
-                if (!Parent.IsRectangleWithin(newRect))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
-            }
-
-            if (Terminal.Curses.is_subwin(Handle))
-            {
-                Terminal.Curses.mvderwin(Handle, value.Y, value.X)
-                        .Check(nameof(Terminal.Curses.mvderwin), "Failed to move window to new coordinates.");
-            } else
-            {
-                Terminal.Curses.mvwin(Handle, value.Y, value.X)
-                        .Check(nameof(Terminal.Curses.mvwin), "Failed to move window to new coordinates.");
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the size of the window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the bounds.</exception>
-    public virtual Size Size
-    {
-        get =>
-            new(Terminal.Curses.getmaxx(Handle)
-                        .Check(nameof(Terminal.Curses.getmaxx), "Failed to get window width."), Terminal.Curses
-                .getmaxy(Handle)
-                .Check(nameof(Terminal.Curses.getmaxy), "Failed to get window height."));
-        set
-        {
-            if (Parent != null)
-            {
-                var loc = Location;
-                var newRect = new Rectangle(loc.X, loc.Y, loc.X + value.Width - 1, loc.Y + value.Height - 1);
-                if (!Parent.IsRectangleWithin(newRect))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
-            }
-
-            Terminal.Curses.wresize(Handle, value.Height, value.Width)
-                    .Check(nameof(Terminal.Curses.wresize), "Failed to resize the window.");
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the current position of the caret within the window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value"/> is outside the window bounds.</exception>
-    public Point CaretPosition
-    {
-        get =>
-            new(Terminal.Curses.getcurx(Handle)
-                        .Check(nameof(Terminal.Curses.getcurx), "Failed to get caret X position."), Terminal.Curses
-                .getcury(Handle)
-                .Check(nameof(Terminal.Curses.getcury), "Failed to get caret Y position."));
-        set
-        {
-            if (!IsPointWithin(value))
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
-
-            Terminal.Curses.wmove(Handle, value.Y, value.X)
-                    .Check(nameof(Terminal.Curses.wmove), "Failed to move the caret.");
-        }
-    }
-
-    /// <summary>
-    /// Checks if the row at <paramref name="y"/> is dirty.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y"/> is outside the bounds.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y" /> is outside the bounds.</exception>
     public bool IsRowDirty(int y)
     {
         if (y < 0 || y >= Size.Height)
@@ -833,29 +898,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Specifies whether the window has some "dirty" parts that need to be synchronized
-    /// to the console.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    public bool IsDirty => Terminal.Curses.is_wintouched(Handle);
-
-    /// <summary>
-    /// Set or get the immediate refresh capability of the window.
-    /// </summary>
-    /// <remarks>
-    /// Immediate refresh will redraw the window on each change.
-    /// This might be very slow for most use cases.
-    /// Default is <c>false</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    public virtual bool ImmediateRefresh
-    {
-        get => Terminal.Curses.is_immedok(Handle);
-        set => Terminal.Curses.immedok(Handle, value);
-    }
-
-    /// <summary>
-    /// Refreshes the window by synchronizing it to the terminal.
+    ///     Refreshes the window by synchronizing it to the terminal.
     /// </summary>
     /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>
@@ -878,7 +921,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Refreshes a number of lines within the window.
+    ///     Refreshes a number of lines within the window.
     /// </summary>
     /// <param name="line">The starting line to refresh.</param>
     /// <param name="count">The number of lines to refresh.</param>
@@ -902,25 +945,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Gets or sets the window's management of the hardware cursor. This is an internal property and should not
-    /// be called by developers.
-    /// </summary>
-    internal bool IgnoreHardwareCaret
-    {
-        get => Terminal.Curses.is_leaveok(Handle);
-        set
-        {
-            foreach (var window in _windows)
-            {
-                window.IgnoreHardwareCaret = value;
-            }
-
-            Terminal.Curses.leaveok(Handle, value);
-        }
-    }
-
-    /// <summary>
-    /// Removes the window form the terminal.
+    ///     Removes the window form the terminal.
     /// </summary>
     public void Remove()
     {
@@ -929,7 +954,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Removes the window form the terminal.
+    ///     Removes the window form the terminal.
     /// </summary>
     private void Cleanup()
     {
@@ -950,16 +975,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    /// Disposes the current instance.
-    /// </summary>
-    public void Dispose()
-    {
-        Cleanup();
-        GC.SuppressFinalize(this);
-    }
-
-    /// <summary>
-    /// The destructor. Calls <see cref="Cleanup"/>.
+    ///     The destructor. Calls <see cref="Cleanup" />.
     /// </summary>
     ~Window() { Cleanup(); }
 }

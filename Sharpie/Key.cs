@@ -3,144 +3,143 @@ namespace Sharpie;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Defines the possible key types.
+///     Defines the possible key types.
 /// </summary>
 [PublicAPI]
 public enum Key: uint
 {
     /// <summary>
-    /// A simple character key.
+    ///     A simple character key.
     /// </summary>
     Character,
 
     /// <summary>
-    /// Unknown key.
+    ///     Unknown key.
     /// </summary>
     Unknown,
 
     /// <summary>
-    /// The delete key.
+    ///     The delete key.
     /// </summary>
     Delete,
 
     /// <summary>
-    /// Backspace key.
+    ///     Backspace key.
     /// </summary>
     Backspace,
 
     /// <summary>
-    /// Arrow up key.
+    ///     Arrow up key.
     /// </summary>
     KeypadUp,
 
     /// <summary>
-    /// Arrow down key.
+    ///     Arrow down key.
     /// </summary>
     KeypadDown,
 
     /// <summary>
-    /// Arrow left key.
+    ///     Arrow left key.
     /// </summary>
     KeypadLeft,
 
     /// <summary>
-    /// Arrow right key.
+    ///     Arrow right key.
     /// </summary>
     KeypadRight,
 
     /// <summary>
-    /// Page up key.
+    ///     Page up key.
     /// </summary>
     KeypadPageUp,
 
     /// <summary>
-    /// Page down key.
+    ///     Page down key.
     /// </summary>
     KeypadPageDown,
 
     /// <summary>
-    /// Home key.
+    ///     Home key.
     /// </summary>
     KeypadHome,
 
     /// <summary>
-    /// End key.
+    ///     End key.
     /// </summary>
     KeypadEnd,
 
     /// <summary>
-    /// Delete character key.
+    ///     Delete character key.
     /// </summary>
     DeleteChar,
 
     /// <summary>
-    /// Insert character key.
+    ///     Insert character key.
     /// </summary>
     InsertChar,
 
     /// <summary>
-    /// Tab key.
+    ///     Tab key.
     /// </summary>
     Tab,
 
     /// <summary>
-    /// F1 key.
+    ///     F1 key.
     /// </summary>
     F1,
 
     /// <summary>
-    /// F2 key.
+    ///     F2 key.
     /// </summary>
     F2,
 
     /// <summary>
-    /// F3 key.
+    ///     F3 key.
     /// </summary>
     F3,
 
     /// <summary>
-    /// F4 key.
+    ///     F4 key.
     /// </summary>
     F4,
 
     /// <summary>
-    /// F5 key.
+    ///     F5 key.
     /// </summary>
-    ///
     F5,
 
     /// <summary>
-    /// F6 key.
+    ///     F6 key.
     /// </summary>
     F6,
 
     /// <summary>
-    /// F7 key.
+    ///     F7 key.
     /// </summary>
     F7,
 
     /// <summary>
-    /// F8 key.
+    ///     F8 key.
     /// </summary>
     F8,
 
     /// <summary>
-    /// F9 key.
+    ///     F9 key.
     /// </summary>
     F9,
 
     /// <summary>
-    /// F10 key.
+    ///     F10 key.
     /// </summary>
     F10,
 
     /// <summary>
-    /// F11 key.
+    ///     F11 key.
     /// </summary>
     F11,
 
     /// <summary>
-    /// F12 key.
+    ///     F12 key.
     /// </summary>
-    F12,
+    F12
 }

@@ -1,7 +1,7 @@
 namespace Sharpie.Curses;
 
 /// <summary>
-/// Internal Curses  identifier.
+///     Internal Curses  identifier.
 /// </summary>
 internal enum RawKey: uint
 {
@@ -127,5 +127,5 @@ internal enum RawKey: uint
     AltCtrlPageDown = 0x228,
     AltCtrlPageUp = 0x22d,
     AltCtrlHome = 0x219,
-    AltCtrlEnd = 0x214,
+    AltCtrlEnd = 0x214
 }

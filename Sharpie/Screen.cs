@@ -12,16 +12,16 @@ using JetBrains.Annotations;
 public sealed class Screen: Window
 {
     /// <summary>
-    /// Initializes the screen using a window handle. The <paramref name="windowHandle"/> should be
-    /// a screen and not a regular window.
+    ///     Initializes the screen using a window handle. The <paramref name="windowHandle" /> should be
+    ///     a screen and not a regular window.
     /// </summary>
     /// <param name="terminal">The terminal instance.</param>
     /// <param name="windowHandle">The screen handle.</param>
     internal Screen(Terminal terminal, IntPtr windowHandle): base(terminal, null, windowHandle) { }
 
-    ///<inheritdoc cref="Window.Location"/>
+    /// <inheritdoc cref="Window.Location" />
     /// <remarks>
-    /// The setter will always throw in this implementation as moving the main window is not allowed.
+    ///     The setter will always throw in this implementation as moving the main window is not allowed.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -32,9 +32,9 @@ public sealed class Screen: Window
         set => throw new NotSupportedException("Cannot move the screen window.");
     }
 
-    ///<inheritdoc cref="Window.Location"/>
+    /// <inheritdoc cref="Window.Location" />
     /// <remarks>
-    /// The setter will always throw in this implementation changing the size of the main window is not allowed.
+    ///     The setter will always throw in this implementation changing the size of the main window is not allowed.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -46,12 +46,12 @@ public sealed class Screen: Window
     }
 
     /// <summary>
-    /// Created a new window in the screen.
+    ///     Created a new window in the screen.
     /// </summary>
     /// <param name="area">The area for the new window.</param>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area"/> is outside the screen bounds.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the screen bounds.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public Window CreateWindow(Rectangle area)
     {
@@ -68,7 +68,7 @@ public sealed class Screen: Window
     }
 
     /// <summary>
-    /// Created a new sub-window in the parent window.
+    ///     Created a new sub-window in the parent window.
     /// </summary>
     /// <param name="window">The parent window.</param>
     /// <param name="area">The area of the window to put the sub-window in.</param>
@@ -76,7 +76,7 @@ public sealed class Screen: Window
     /// </remarks>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area"/> is outside the bounds of the parent.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public Window CreateSubWindow(Window window, Rectangle area)
     {
@@ -93,7 +93,7 @@ public sealed class Screen: Window
     }
 
     /// <summary>
-    /// Duplicates and existing window, including its attributes.
+    ///     Duplicates and existing window, including its attributes.
     /// </summary>
     /// <param name="window">The window to duplicate.</param>
     /// <returns>A new window object.</returns>
@@ -106,22 +106,24 @@ public sealed class Screen: Window
         {
             throw new ArgumentNullException(nameof(window));
         }
+
         if (window == this)
         {
             throw new InvalidOperationException("Cannot duplicate the screen window.");
         }
 
         return new(Terminal, this, Terminal.Curses.dupwin(window.Handle)
-                                           .Check(nameof(Terminal.Curses.dupwin), "Failed to duplicate an existing window."));
+                                           .Check(nameof(Terminal.Curses.dupwin),
+                                               "Failed to duplicate an existing window."));
     }
 
     /// <summary>
-    /// Created a new pad.
+    ///     Created a new pad.
     /// </summary>
     /// <param name="size">The pad size.</param>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size"/> is invalid.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size" /> is invalid.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public Pad CreatePad(Size size)
     {
@@ -138,14 +140,14 @@ public sealed class Screen: Window
     }
 
     /// <summary>
-    /// Created a new sub-pad.
+    ///     Created a new sub-pad.
     /// </summary>
     /// <param name="pad">The parent pad.</param>
     /// <param name="area">The are of the pad to use.</param>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal or the pad have been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">When <paramref name="area"/> is outside the pad's bounds.</exception>
-    /// <exception cref="ArgumentNullException">When <paramref name="pad"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">When <paramref name="area" /> is outside the pad's bounds.</exception>
+    /// <exception cref="ArgumentNullException">When <paramref name="pad" /> is <c>null</c>.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public Pad CreateSubPad(Pad pad, Rectangle area)
     {
@@ -166,7 +168,7 @@ public sealed class Screen: Window
     }
 
     /// <summary>
-    /// Applies all queued refreshes to the terminal.
+    ///     Applies all queued refreshes to the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -430,7 +432,7 @@ public sealed class Screen: Window
     }
 
     /// <summary>
-    /// Tries to read an event from the terminal.
+    ///     Tries to read an event from the terminal.
     /// </summary>
     /// <param name="timeoutMillis">The timeout to wait for the event.</param>
     /// <param name="event">The event that was read.</param>
@@ -471,12 +473,13 @@ public sealed class Screen: Window
                     @event = new TerminalResizeEvent(Size);
                     break;
                 case (uint) RawKey.Mouse:
-                    if (Terminal.Curses.getmouse(out var mouseEvent).Failed())
+                    if (Terminal.Curses.getmouse(out var mouseEvent)
+                                .Failed())
                     {
                         return false;
                     }
 
-                    var (button, state, mouseMod) = ConvertMouseEvent((RawMouseEvent.EventType)mouseEvent.buttonState);
+                    var (button, state, mouseMod) = ConvertMouseEvent((RawMouseEvent.EventType) mouseEvent.buttonState);
                     if (button == 0)
                     {
                         @event = new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));

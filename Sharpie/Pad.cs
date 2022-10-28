@@ -4,23 +4,23 @@ using System.Drawing;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Represents pad which is a special type of window.
+///     Represents pad which is a special type of window.
 /// </summary>
 [PublicAPI]
 public sealed class Pad: Window
 {
     /// <summary>
-    /// Initializes the window using a Curses handle.
+    ///     Initializes the window using a Curses handle.
     /// </summary>
     /// <param name="terminal">The curses functionality provider.</param>
     /// <param name="parent">The parent window or pad.</param>
     /// <param name="windowHandle">The window handle.</param>
     internal Pad(Terminal terminal, Window parent, IntPtr windowHandle): base(terminal, parent, windowHandle) { }
 
-    /// <inheritdoc cref="Window.ImmediateRefresh"/>
+    /// <inheritdoc cref="Window.ImmediateRefresh" />
     /// <remarks>
-    /// This functionality is disabled in the pads. Any call to set the value to <c>true</c> will
-    /// fail with error.
+    ///     This functionality is disabled in the pads. Any call to set the value to <c>true</c> will
+    ///     fail with error.
     /// </remarks>
     /// <exception cref="NotSupportedException">Always throws on write.</exception>
     public override bool ImmediateRefresh
@@ -29,9 +29,9 @@ public sealed class Pad: Window
         set => throw new NotSupportedException("Pads cannot have immediate refresh enabled.");
     }
 
-    /// <inheritdoc cref="Window.Refresh"/>
+    /// <inheritdoc cref="Window.Refresh" />
     /// <remarks>
-    /// This functionality is disabled in the pads. Use the overloaded version of this method.
+    ///     This functionality is disabled in the pads. Use the overloaded version of this method.
     /// </remarks>
     /// <exception cref="NotSupportedException">Always throws.</exception>
     public override void Refresh(bool batch, bool entireScreen)
@@ -40,7 +40,7 @@ public sealed class Pad: Window
     }
 
     /// <summary>
-    /// Refreshes the pad by synchronizing it to the terminal screen.
+    ///     Refreshes the pad by synchronizing it to the terminal screen.
     /// </summary>
     /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>

@@ -6,15 +6,450 @@ using System.Text;
 using JetBrains.Annotations;
 
 /// <summary>
-/// Interface provides access to the Curses functionality. Use the <see cref="System"/> property to access the actual
-/// implementation.
+///     Interface provides access to the Curses functionality. Use the <see cref="System" /> property to access the actual
+///     implementation.
 /// </summary>
 [PublicAPI, SuppressMessage("ReSharper", "IdentifierTypo")]
 public sealed class NativeCursesProvider: ICursesProvider
 {
+    private const string LibraryName = "ncurses";
     public static ICursesProvider Instance { get; } = new NativeCursesProvider();
 
-    private const string LibraryName = "ncurses";
+    bool ICursesProvider.is_cleared(IntPtr window) => is_cleared(window);
+
+    bool ICursesProvider.is_idcok(IntPtr window) => is_idcok(window);
+
+    bool ICursesProvider.is_idlok(IntPtr window) => is_idlok(window);
+
+    bool ICursesProvider.is_immedok(IntPtr window) => is_immedok(window);
+
+    bool ICursesProvider.is_keypad(IntPtr window) => is_keypad(window);
+
+    bool ICursesProvider.is_leaveok(IntPtr window) => is_leaveok(window);
+
+    bool ICursesProvider.is_nodelay(IntPtr window) => is_nodelay(window);
+
+    bool ICursesProvider.is_notimeout(IntPtr window) => is_notimeout(window);
+
+    bool ICursesProvider.is_pad(IntPtr window) => is_pad(window);
+
+    bool ICursesProvider.is_scrollok(IntPtr window) => is_scrollok(window);
+
+    bool ICursesProvider.is_subwin(IntPtr window) => is_subwin(window);
+
+    bool ICursesProvider.is_syncok(IntPtr window) => is_syncok(window);
+
+    IntPtr ICursesProvider.wgetparent(IntPtr window) => wgetparent(window);
+
+    int ICursesProvider.wgetdelay(IntPtr window) => wgetdelay(window);
+
+    int ICursesProvider.wgetscrreg(IntPtr window, out int top, out int bottom) =>
+        wgetscrreg(window, out top, out bottom);
+
+    int ICursesProvider.baudrate() => baudrate();
+
+    int ICursesProvider.beep() => beep();
+
+    bool ICursesProvider.can_change_color() => can_change_color();
+
+    int ICursesProvider.cbreak() => cbreak();
+
+    int ICursesProvider.clearok(IntPtr window, bool set) => clearok(window, set);
+
+    int ICursesProvider.color_content(ushort color, out ushort red, out ushort green, out ushort blue) =>
+        color_content(color, out red, out green, out blue);
+
+    int ICursesProvider.copywin(IntPtr fromWindow, IntPtr toWindow, int srcStartLine, int srcStartCol,
+        int destStartLine, int destStartCol, int destEndLine, int destEndCol,
+        int overlay) =>
+        copywin(fromWindow, toWindow, srcStartLine, srcStartCol, destStartLine,
+            destStartCol, destEndLine, destEndCol, overlay);
+
+    int ICursesProvider.curs_set(int level) => curs_set(level);
+
+    int ICursesProvider.def_prog_mode() => def_prog_mode();
+
+    int ICursesProvider.def_shell_mode() => def_shell_mode();
+
+    int ICursesProvider.delay_output(int delayMillis) => delay_output(delayMillis);
+
+    int ICursesProvider.delwin(IntPtr window) => delwin(window);
+
+    IntPtr ICursesProvider.derwin(IntPtr window, int lines, int cols, int beginLine,
+        int beginCol) =>
+        derwin(window, lines, cols, beginLine, beginCol);
+
+    int ICursesProvider.doupdate() => doupdate();
+
+    IntPtr ICursesProvider.dupwin(IntPtr window) => dupwin(window);
+
+    int ICursesProvider.echo() => echo();
+
+    int ICursesProvider.endwin() => endwin();
+
+    int ICursesProvider.erasewchar(out uint @char) => erasewchar(out @char);
+
+    void ICursesProvider.filter() { filter(); }
+
+    int ICursesProvider.flash() => flash();
+
+    int ICursesProvider.flushinp() => flushinp();
+
+    uint ICursesProvider.getattrs(IntPtr window) => getattrs(window);
+
+    int ICursesProvider.getcurx(IntPtr window) => getcurx(window);
+
+    int ICursesProvider.getcury(IntPtr window) => getcury(window);
+
+    int ICursesProvider.getbegx(IntPtr window) => getbegx(window);
+
+    int ICursesProvider.getbegy(IntPtr window) => getbegy(window);
+
+    int ICursesProvider.getmaxx(IntPtr window) => getmaxx(window);
+
+    int ICursesProvider.getmaxy(IntPtr window) => getmaxy(window);
+
+    int ICursesProvider.getparx(IntPtr window) => getparx(window);
+
+    int ICursesProvider.getpary(IntPtr window) => getpary(window);
+
+    int ICursesProvider.halfdelay(int tenthsOfSec) => halfdelay(tenthsOfSec);
+
+    bool ICursesProvider.has_colors() => has_colors();
+
+    bool ICursesProvider.has_ic() => has_ic();
+
+    bool ICursesProvider.has_il() => has_il();
+
+    void ICursesProvider.idcok(IntPtr window, bool set) => idcok(window, set);
+
+    int ICursesProvider.idlok(IntPtr window, bool set) => idlok(window, set);
+
+    void ICursesProvider.immedok(IntPtr window, bool set) => immedok(window, set);
+
+    IntPtr ICursesProvider.initscr() => initscr();
+
+    int ICursesProvider.init_color(ushort color, ushort red, ushort green, ushort blue) =>
+        init_color(color, red, green, blue);
+
+    int ICursesProvider.init_pair(ushort colorPair, ushort fgColor, ushort bgColor) =>
+        init_pair(colorPair, fgColor, bgColor);
+
+    int ICursesProvider.intrflush(IntPtr window, bool set) => intrflush(window, set);
+
+    bool ICursesProvider.isendwin() => isendwin();
+
+    bool ICursesProvider.is_linetouched(IntPtr window, int line) => is_linetouched(window, line);
+
+    bool ICursesProvider.is_wintouched(IntPtr window) => is_wintouched(window);
+
+    string? ICursesProvider.keyname(uint keyCode) => Marshal.PtrToStringAnsi(keyname(keyCode));
+
+    int ICursesProvider.keypad(IntPtr window, bool set) => keypad(window, set);
+
+    int ICursesProvider.leaveok(IntPtr window, bool set) => leaveok(window, set);
+
+    string? ICursesProvider.longname() => Marshal.PtrToStringAnsi(longname());
+
+    int ICursesProvider.meta(IntPtr window, bool set) => meta(window, set);
+
+    int ICursesProvider.mvderwin(IntPtr window, int parentLine, int parentCol) =>
+        mvderwin(window, parentLine, parentCol);
+
+    int ICursesProvider.mvwin(IntPtr window, int toLine, int toCol) => mvwin(window, toLine, toCol);
+
+    IntPtr ICursesProvider.newpad(int lines, int cols) => newpad(lines, cols);
+
+    IntPtr ICursesProvider.newwin(int lines, int cols, int atLine, int atCol) => newwin(lines, cols, atLine, atCol);
+
+    int ICursesProvider.nl() => nl();
+
+    int ICursesProvider.nocbreak() => nocbreak();
+
+    int ICursesProvider.nodelay(IntPtr window, bool set) => nodelay(window, set);
+
+    int ICursesProvider.noecho() => noecho();
+
+    int ICursesProvider.nonl() => nonl();
+
+    void ICursesProvider.noqiflush() { noqiflush(); }
+
+    int ICursesProvider.noraw() => noraw();
+
+    int ICursesProvider.notimeout(IntPtr window, bool set) => notimeout(window, set);
+
+    int ICursesProvider.overlay(IntPtr srcWindow, IntPtr destWindow) => overlay(srcWindow, destWindow);
+
+    int ICursesProvider.overwrite(IntPtr srcWindow, IntPtr destWindow) => overwrite(srcWindow, destWindow);
+
+    int ICursesProvider.pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor) =>
+        pair_content(colorPair, out fgColor, out bgColor);
+
+    uint ICursesProvider.COLOR_PAIR(uint attrs) => COLOR_PAIR(attrs);
+
+    uint ICursesProvider.PAIR_NUMBER(uint colorPair) => PAIR_NUMBER(colorPair);
+
+    int ICursesProvider.pechochar(IntPtr pad, uint @char) => pechochar(pad, @char);
+
+    int ICursesProvider.pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
+        int scrMinCol, int scrMaxLine, int scrMaxCol) =>
+        pnoutrefresh(pad, padMinLine, padMinCol, scrMinLine, scrMinCol,
+            scrMaxLine, scrMaxCol);
+
+    int ICursesProvider.prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
+        int scrMinCol, int scrMaxLine, int scrMaxCol) =>
+        prefresh(pad, padMinLine, padMinCol, scrMinLine, scrMinCol,
+            scrMaxLine, scrMaxCol);
+
+    void ICursesProvider.qiflush() { qiflush(); }
+
+    int ICursesProvider.raw() => raw();
+
+    int ICursesProvider.resetty() => resetty();
+
+    int ICursesProvider.reset_prog_mode() => reset_prog_mode();
+
+    int ICursesProvider.reset_shell_mode() => reset_shell_mode();
+
+    int ICursesProvider.ripoffline(int lines, ICursesProvider.ripoffline_callback callback) =>
+        ripoffline(lines, callback);
+
+    int ICursesProvider.savetty() => savetty();
+
+    int ICursesProvider.scrollok(IntPtr window, bool set) => scrollok(window, set);
+
+    int ICursesProvider.slk_attroff(uint attrs) => slk_attroff(attrs);
+
+    int ICursesProvider.slk_attr_off(uint attrs, IntPtr reserved) => slk_attr_off(attrs, reserved);
+
+    int ICursesProvider.slk_attron(uint attrs) => slk_attron(attrs);
+
+    int ICursesProvider.slk_attr_on(uint attrs, IntPtr reserved) => slk_attr_on(attrs, reserved);
+
+    int ICursesProvider.slk_attrset(uint attrs) => slk_attrset(attrs);
+
+    int ICursesProvider.slk_attr() => slk_attr();
+
+    int ICursesProvider.slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved) =>
+        slk_attr_set(attrs, colorPair, reserved);
+
+    int ICursesProvider.slk_clear() => slk_clear();
+
+    int ICursesProvider.slk_color(ushort colorPair) => slk_color(colorPair);
+
+    int ICursesProvider.slk_init(int format) => slk_init(format);
+
+    string? ICursesProvider.slk_label(int labelIndex) => Marshal.PtrToStringAnsi(slk_label(labelIndex));
+
+    int ICursesProvider.slk_noutrefresh() => slk_noutrefresh();
+
+    int ICursesProvider.slk_refresh() => slk_refresh();
+
+    int ICursesProvider.slk_restore() => slk_restore();
+
+    int ICursesProvider.slk_touch() => slk_touch();
+
+    int ICursesProvider.start_color() => start_color();
+
+    IntPtr ICursesProvider.subpad(IntPtr pad, int lines, int cols, int atLine,
+        int atCol) =>
+        subpad(pad, lines, cols, atLine, atCol);
+
+    IntPtr ICursesProvider.subwin(IntPtr window, int lines, int cols, int atLine,
+        int atCol) =>
+        subwin(window, lines, cols, atLine, atCol);
+
+    int ICursesProvider.syncok(IntPtr window, bool set) => syncok(window, set);
+
+    string? ICursesProvider.termname() => Marshal.PtrToStringAnsi(termname());
+
+    int ICursesProvider.ungetch(uint @char) => ungetch(@char);
+
+    void ICursesProvider.use_env(bool set) { use_env(set); }
+
+    int ICursesProvider.waddch(IntPtr window, uint charAndAttrs) => waddch(window, charAndAttrs);
+
+    int ICursesProvider.waddchnstr(IntPtr window, string text, int length) => waddchnstr(window, text, length);
+
+    int ICursesProvider.wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved) =>
+        wattr_get(window, out attrs, out colorPair, reserved);
+
+    int ICursesProvider.wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved) =>
+        wattr_set(window, attrs, colorPair, reserved);
+
+    int ICursesProvider.wattr_on(IntPtr window, uint attrs, IntPtr reserved) => wattr_on(window, attrs, reserved);
+
+    int ICursesProvider.wattr_off(IntPtr window, uint attrs, IntPtr reserved) => wattr_off(window, attrs, reserved);
+
+    int ICursesProvider.wbkgd(IntPtr window, uint charAndAttrs) => wbkgd(window, charAndAttrs);
+
+    void ICursesProvider.wbkgdset(IntPtr window, uint charAndAttrs) => wbkgdset(window, charAndAttrs);
+
+    int ICursesProvider.wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
+        uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
+        uint bottomRightCorner) =>
+        wborder(window, leftSide, rightSide, topSide, bottomSide,
+            topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner);
+
+    int ICursesProvider.wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
+        IntPtr reserved) =>
+        wchgat(window, count, attrs, colorPair, reserved);
+
+    int ICursesProvider.wclear(IntPtr window) => wclear(window);
+
+    int ICursesProvider.wclrtobot(IntPtr window) => wclrtobot(window);
+
+    int ICursesProvider.wclrtoeol(IntPtr window) => wclrtoeol(window);
+
+    int ICursesProvider.wcolor_set(IntPtr window, ushort colorPair, IntPtr reserved) =>
+        wcolor_set(window, colorPair, reserved);
+
+    void ICursesProvider.wcursyncup(IntPtr window) => wcursyncup(window);
+
+    int ICursesProvider.wdelch(IntPtr window) => wdelch(window);
+
+    int ICursesProvider.wechochar(IntPtr window, uint charAndAttrs) => wechochar(window, charAndAttrs);
+
+    int ICursesProvider.werase(IntPtr window) => werase(window);
+
+    int ICursesProvider.wgetch(IntPtr window) => wgetch(window);
+
+    int ICursesProvider.wgetnstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, int length) =>
+        wgetnstr(window, dest, length);
+
+    int ICursesProvider.whline(IntPtr window, uint @char, int count) => whline(window, @char, count);
+
+    uint ICursesProvider.winch(IntPtr window) => winch(window);
+
+    int ICursesProvider.winchnstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, int length) =>
+        winchnstr(window, dest, length);
+
+    int ICursesProvider.winsch(IntPtr window, uint @char) => winsch(window, @char);
+
+    int ICursesProvider.winsdelln(IntPtr window, int count) => winsdelln(window, count);
+
+    int ICursesProvider.wmove(IntPtr window, int newLine, int newCol) => wmove(window, newLine, newCol);
+
+    int ICursesProvider.wnoutrefresh(IntPtr window) => wnoutrefresh(window);
+
+    int ICursesProvider.wredrawln(IntPtr window, int startLine, int lineCount) =>
+        wredrawln(window, startLine, lineCount);
+
+    int ICursesProvider.wrefresh(IntPtr window) => wrefresh(window);
+
+    int ICursesProvider.wscrl(IntPtr window, int lines) => wscrl(window, lines);
+
+    int ICursesProvider.wsetscrreg(IntPtr window, int top, int bottom) => wsetscrreg(window, top, bottom);
+
+    void ICursesProvider.wsyncdown(IntPtr window) => wsyncdown(window);
+
+    void ICursesProvider.wsyncup(IntPtr window) => wsyncup(window);
+
+    void ICursesProvider.wtimeout(IntPtr window, int delay) => wtimeout(window, delay);
+
+    int ICursesProvider.wtouchln(IntPtr window, int line, int count, int changed) =>
+        wtouchln(window, line, count, changed);
+
+    int ICursesProvider.wvline(IntPtr window, uint @char, int count) => wvline(window, @char, count);
+
+    bool ICursesProvider.is_term_resized(int lines, int cols) => is_term_resized(lines, cols);
+
+    int ICursesProvider.resize_term(int lines, int cols) => resize_term(lines, cols);
+
+    int ICursesProvider.resizeterm(int lines, int cols) => resizeterm(lines, cols);
+
+    string? ICursesProvider.keybound(uint keyCode, int count) => Marshal.PtrToStringAnsi(keybound(keyCode, count));
+
+    string? ICursesProvider.curses_version() => Marshal.PtrToStringAnsi(curses_version());
+
+    int ICursesProvider.assume_default_colors(int fgColor, int bgColor) => assume_default_colors(fgColor, bgColor);
+
+    int ICursesProvider.define_key(string keyName, int keyCode) => define_key(keyName, keyCode);
+
+    int ICursesProvider.key_defined(string keyName) => key_defined(keyName);
+
+    int ICursesProvider.keyok(int keyCode, bool set) => keyok(keyCode, set);
+
+    int ICursesProvider.set_tabsize(int size) => set_tabsize(size);
+
+    int ICursesProvider.use_default_colors() => use_default_colors();
+
+    int ICursesProvider.wresize(IntPtr window, int lines, int columns) => wresize(window, lines, columns);
+
+    void ICursesProvider.nofilter() => nofilter();
+
+    int ICursesProvider.getcchar(ComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
+        IntPtr reserved) =>
+        getcchar(ref @char, dest, out attrs, out colorPair, reserved);
+
+    string? ICursesProvider.key_name(uint @char) => Marshal.PtrToStringAnsi(key_name(@char));
+
+    int ICursesProvider.killwchar(out uint @char) => killwchar(out @char);
+
+    int ICursesProvider.pecho_wchar(IntPtr window, ComplexChar @char) => pecho_wchar(window, ref @char);
+
+    int ICursesProvider.setcchar(out ComplexChar @char, string text, uint attrs, ushort colorPair,
+        IntPtr reserved) =>
+        setcchar(out @char, text, attrs, colorPair, reserved);
+
+    int ICursesProvider.slk_set(int labelIndex, string title, int align) => slk_set(labelIndex, title, align);
+
+    uint ICursesProvider.term_attrs() => term_attrs();
+
+    int ICursesProvider.unget_wch(uint @char) => unget_wch(@char);
+
+    int ICursesProvider.wadd_wch(IntPtr window, ComplexChar @char) => wadd_wch(window, ref @char);
+
+    int ICursesProvider.wadd_wchnstr(IntPtr window, ComplexChar[] str, int count) => wadd_wchnstr(window, str, count);
+
+    int ICursesProvider.waddnwstr(IntPtr window, string text, int length) => waddnwstr(window, text, length);
+
+    int ICursesProvider.wbkgrnd(IntPtr window, ComplexChar @char) => wbkgrnd(window, ref @char);
+
+    void ICursesProvider.wbkgrndset(IntPtr window, ComplexChar @char) => wbkgrndset(window, ref @char);
+
+    int ICursesProvider.wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
+        ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner,
+        ComplexChar bottomRightCorner) =>
+        wborder_set(window, ref leftSide, ref rightSide, ref topSide, ref bottomSide,
+            ref topLeftCorner, ref topRightCorner, ref bottomLeftCorner, ref bottomRightCorner);
+
+    int ICursesProvider.wecho_wchar(IntPtr window, ComplexChar @char) => wecho_wchar(window, ref @char);
+
+    int ICursesProvider.wget_wch(IntPtr window, out uint @char) => wget_wch(window, out @char);
+
+    int ICursesProvider.wgetbkgrnd(IntPtr window, out ComplexChar @char) => wgetbkgrnd(window, out @char);
+
+    int ICursesProvider.wgetn_wstr(IntPtr window, StringBuilder dest, int length) => wgetn_wstr(window, dest, length);
+
+    int ICursesProvider.whline_set(IntPtr window, ComplexChar @char, int count) => whline_set(window, ref @char, count);
+
+    int ICursesProvider.win_wch(IntPtr window, out ComplexChar @char) => win_wch(window, out @char);
+
+    int ICursesProvider.win_wchnstr(IntPtr window, ComplexChar[] dest, int length) => win_wchnstr(window, dest, length);
+
+    int ICursesProvider.winnwstr(IntPtr window, StringBuilder dest, int length) => winnwstr(window, dest, length);
+
+    int ICursesProvider.wins_nwstr(IntPtr window, string text, int length) => wins_nwstr(window, text, length);
+
+    int ICursesProvider.wins_wch(IntPtr window, ComplexChar @char) => wins_wch(window, ref @char);
+
+    string? ICursesProvider.wunctrl(ComplexChar @char) => Marshal.PtrToStringUni(wunctrl(ref @char));
+
+    int ICursesProvider.wvline_set(IntPtr window, ComplexChar @char, int count) => wvline_set(window, ref @char, count);
+
+    int ICursesProvider.getmouse(out RawMouseEvent @event) => getmouse(out @event);
+
+    public int ungetmouse(RawMouseEvent @event) => ungetmouse(ref @event);
+
+    int ICursesProvider.mousemask(ulong newMask, out ulong oldMask) => mousemask(newMask, out oldMask);
+
+    bool ICursesProvider.wenclose(IntPtr window, int line, int col) => wenclose(window, line, col);
+
+    int ICursesProvider.mouseinterval(int millis) => mouseinterval(millis);
+
+    bool ICursesProvider.wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen) =>
+        wmouse_trafo(window, ref line, ref col, toScreen);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int baudrate();
@@ -312,8 +747,9 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern void wbkgdset(IntPtr window, uint charAndAttrs);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide, uint bottomSide, uint topLeftCorner,
-        uint topRightCorner, uint bottomLeftCorner, uint bottomRightCorner);
+    public static extern int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
+        uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
+        uint bottomRightCorner);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
@@ -478,9 +914,9 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern void wbkgrndset(IntPtr window, ref ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wborder_set(IntPtr window, ref ComplexChar leftSide, ref ComplexChar rightSide, ref ComplexChar topSide,
-        ref ComplexChar bottomSide, ref ComplexChar topLeftCorner, ref ComplexChar topRightCorner, ref ComplexChar bottomLeftCorner,
-        ref ComplexChar bottomRightCorner);
+    public static extern int wborder_set(IntPtr window, ref ComplexChar leftSide, ref ComplexChar rightSide,
+        ref ComplexChar topSide, ref ComplexChar bottomSide, ref ComplexChar topLeftCorner,
+        ref ComplexChar topRightCorner, ref ComplexChar bottomLeftCorner, ref ComplexChar bottomRightCorner);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int wecho_wchar(IntPtr window, ref ComplexChar @char);
@@ -626,439 +1062,4 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
-
-    bool ICursesProvider.is_cleared(IntPtr window) => is_cleared(window);
-
-    bool ICursesProvider.is_idcok(IntPtr window) => is_idcok(window);
-
-    bool ICursesProvider.is_idlok(IntPtr window) => is_idlok(window);
-
-    bool ICursesProvider.is_immedok(IntPtr window) => is_immedok(window);
-
-    bool ICursesProvider.is_keypad(IntPtr window) => is_keypad(window);
-
-    bool ICursesProvider.is_leaveok(IntPtr window) => is_leaveok(window);
-
-    bool ICursesProvider.is_nodelay(IntPtr window) => is_nodelay(window);
-
-    bool ICursesProvider.is_notimeout(IntPtr window) => is_notimeout(window);
-
-    bool ICursesProvider.is_pad(IntPtr window) => is_pad(window);
-
-    bool ICursesProvider.is_scrollok(IntPtr window) => is_scrollok(window);
-
-    bool ICursesProvider.is_subwin(IntPtr window) => is_subwin(window);
-
-    bool ICursesProvider.is_syncok(IntPtr window) => is_syncok(window);
-
-    IntPtr ICursesProvider.wgetparent(IntPtr window) => wgetparent(window);
-
-    int ICursesProvider.wgetdelay(IntPtr window) => wgetdelay(window);
-
-    int ICursesProvider.wgetscrreg(IntPtr window, out int top, out int bottom) =>
-        wgetscrreg(window, out top, out bottom);
-
-    int ICursesProvider.baudrate() => baudrate();
-
-    int ICursesProvider.beep() => beep();
-
-    bool ICursesProvider.can_change_color() => can_change_color();
-
-    int ICursesProvider.cbreak() => cbreak();
-
-    int ICursesProvider.clearok(IntPtr window, bool set) => clearok(window, set);
-
-    int ICursesProvider.color_content(ushort color, out ushort red, out ushort green, out ushort blue) =>
-        color_content(color, out red, out green, out blue);
-
-    int ICursesProvider.copywin(IntPtr fromWindow, IntPtr toWindow, int srcStartLine, int srcStartCol,
-        int destStartLine, int destStartCol, int destEndLine, int destEndCol,
-        int overlay) =>
-        copywin(fromWindow, toWindow, srcStartLine, srcStartCol, destStartLine,
-            destStartCol, destEndLine, destEndCol, overlay);
-
-    int ICursesProvider.curs_set(int level) => curs_set(level);
-
-    int ICursesProvider.def_prog_mode() => def_prog_mode();
-
-    int ICursesProvider.def_shell_mode() => def_shell_mode();
-
-    int ICursesProvider.delay_output(int delayMillis) => delay_output(delayMillis);
-
-    int ICursesProvider.delwin(IntPtr window) => delwin(window);
-
-    IntPtr ICursesProvider.derwin(IntPtr window, int lines, int cols, int beginLine,
-        int beginCol) =>
-        derwin(window, lines, cols, beginLine, beginCol);
-
-    int ICursesProvider.doupdate() => doupdate();
-
-    IntPtr ICursesProvider.dupwin(IntPtr window) => dupwin(window);
-
-    int ICursesProvider.echo() => echo();
-
-    int ICursesProvider.endwin() => endwin();
-
-    int ICursesProvider.erasewchar(out uint @char) => erasewchar(out @char);
-
-    void ICursesProvider.filter() { filter(); }
-
-    int ICursesProvider.flash() => flash();
-
-    int ICursesProvider.flushinp() => flushinp();
-
-    uint ICursesProvider.getattrs(IntPtr window) => getattrs(window);
-
-    int ICursesProvider.getcurx(IntPtr window) => getcurx(window);
-
-    int ICursesProvider.getcury(IntPtr window) => getcury(window);
-
-    int ICursesProvider.getbegx(IntPtr window) => getbegx(window);
-
-    int ICursesProvider.getbegy(IntPtr window) => getbegy(window);
-
-    int ICursesProvider.getmaxx(IntPtr window) => getmaxx(window);
-
-    int ICursesProvider.getmaxy(IntPtr window) => getmaxy(window);
-
-    int ICursesProvider.getparx(IntPtr window) => getparx(window);
-
-    int ICursesProvider.getpary(IntPtr window) => getpary(window);
-
-    int ICursesProvider.halfdelay(int tenthsOfSec) => halfdelay(tenthsOfSec);
-
-    bool ICursesProvider.has_colors() => has_colors();
-
-    bool ICursesProvider.has_ic() => has_ic();
-
-    bool ICursesProvider.has_il() => has_il();
-
-    void ICursesProvider.idcok(IntPtr window, bool set) => idcok(window, set);
-
-    int ICursesProvider.idlok(IntPtr window, bool set) => idlok(window, set);
-
-    void ICursesProvider.immedok(IntPtr window, bool set) => immedok(window, set);
-
-    IntPtr ICursesProvider.initscr() => initscr();
-
-    int ICursesProvider.init_color(ushort color, ushort red, ushort green, ushort blue) =>
-        init_color(color, red, green, blue);
-
-    int ICursesProvider.init_pair(ushort colorPair, ushort fgColor, ushort bgColor) =>
-        init_pair(colorPair, fgColor, bgColor);
-
-    int ICursesProvider.intrflush(IntPtr window, bool set) => intrflush(window, set);
-
-    bool ICursesProvider.isendwin() => isendwin();
-
-    bool ICursesProvider.is_linetouched(IntPtr window, int line) => is_linetouched(window, line);
-
-    bool ICursesProvider.is_wintouched(IntPtr window) => is_wintouched(window);
-
-    string? ICursesProvider.keyname(uint keyCode) => Marshal.PtrToStringAnsi(keyname(keyCode));
-
-    int ICursesProvider.keypad(IntPtr window, bool set) => keypad(window, set);
-
-    int ICursesProvider.leaveok(IntPtr window, bool set) => leaveok(window, set);
-
-    string? ICursesProvider.longname() => Marshal.PtrToStringAnsi(longname());
-
-    int ICursesProvider.meta(IntPtr window, bool set) => meta(window, set);
-
-    int ICursesProvider.mvderwin(IntPtr window, int parentLine, int parentCol) =>
-        mvderwin(window, parentLine, parentCol);
-
-    int ICursesProvider.mvwin(IntPtr window, int toLine, int toCol) => mvwin(window, toLine, toCol);
-
-    IntPtr ICursesProvider.newpad(int lines, int cols) => newpad(lines, cols);
-
-    IntPtr ICursesProvider.newwin(int lines, int cols, int atLine, int atCol) => newwin(lines, cols, atLine, atCol);
-
-    int ICursesProvider.nl() => nl();
-
-    int ICursesProvider.nocbreak() => nocbreak();
-
-    int ICursesProvider.nodelay(IntPtr window, bool set) => nodelay(window, set);
-
-    int ICursesProvider.noecho() => noecho();
-
-    int ICursesProvider.nonl() => nonl();
-
-    void ICursesProvider.noqiflush() { noqiflush(); }
-
-    int ICursesProvider.noraw() => noraw();
-
-    int ICursesProvider.notimeout(IntPtr window, bool set) => notimeout(window, set);
-
-    int ICursesProvider.overlay(IntPtr srcWindow, IntPtr destWindow) => overlay(srcWindow, destWindow);
-
-    int ICursesProvider.overwrite(IntPtr srcWindow, IntPtr destWindow) => overwrite(srcWindow, destWindow);
-
-    int ICursesProvider.pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor) =>
-        pair_content(colorPair, out fgColor, out bgColor);
-
-    uint ICursesProvider.COLOR_PAIR(uint attrs) => COLOR_PAIR(attrs);
-
-    uint ICursesProvider.PAIR_NUMBER(uint colorPair) => PAIR_NUMBER(colorPair);
-
-    int ICursesProvider.pechochar(IntPtr pad, uint @char) => pechochar(pad, @char);
-
-    int ICursesProvider.pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol) =>
-        pnoutrefresh(pad, padMinLine, padMinCol, scrMinLine, scrMinCol,
-            scrMaxLine, scrMaxCol);
-
-    int ICursesProvider.prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol) =>
-        prefresh(pad, padMinLine, padMinCol, scrMinLine, scrMinCol,
-            scrMaxLine, scrMaxCol);
-
-    void ICursesProvider.qiflush() { qiflush(); }
-
-    int ICursesProvider.raw() => raw();
-
-    int ICursesProvider.resetty() => resetty();
-
-    int ICursesProvider.reset_prog_mode() => reset_prog_mode();
-
-    int ICursesProvider.reset_shell_mode() => reset_shell_mode();
-
-    int ICursesProvider.ripoffline(int lines, ICursesProvider.ripoffline_callback callback) =>
-        ripoffline(lines, callback);
-
-    int ICursesProvider.savetty() => savetty();
-
-    int ICursesProvider.scrollok(IntPtr window, bool set) => scrollok(window, set);
-
-    int ICursesProvider.slk_attroff(uint attrs) => slk_attroff(attrs);
-
-    int ICursesProvider.slk_attr_off(uint attrs, IntPtr reserved) => slk_attr_off(attrs, reserved);
-
-    int ICursesProvider.slk_attron(uint attrs) => slk_attron(attrs);
-
-    int ICursesProvider.slk_attr_on(uint attrs, IntPtr reserved) => slk_attr_on(attrs, reserved);
-
-    int ICursesProvider.slk_attrset(uint attrs) => slk_attrset(attrs);
-
-    int ICursesProvider.slk_attr() => slk_attr();
-
-    int ICursesProvider.slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved) =>
-        slk_attr_set(attrs, colorPair, reserved);
-
-    int ICursesProvider.slk_clear() => slk_clear();
-
-    int ICursesProvider.slk_color(ushort colorPair) => slk_color(colorPair);
-
-    int ICursesProvider.slk_init(int format) => slk_init(format);
-
-    string? ICursesProvider.slk_label(int labelIndex) => Marshal.PtrToStringAnsi(slk_label(labelIndex));
-
-    int ICursesProvider.slk_noutrefresh() => slk_noutrefresh();
-
-    int ICursesProvider.slk_refresh() => slk_refresh();
-
-    int ICursesProvider.slk_restore() => slk_restore();
-
-    int ICursesProvider.slk_touch() => slk_touch();
-
-    int ICursesProvider.start_color() => start_color();
-
-    IntPtr ICursesProvider.subpad(IntPtr pad, int lines, int cols, int atLine,
-        int atCol) =>
-        subpad(pad, lines, cols, atLine, atCol);
-
-    IntPtr ICursesProvider.subwin(IntPtr window, int lines, int cols, int atLine,
-        int atCol) =>
-        subwin(window, lines, cols, atLine, atCol);
-
-    int ICursesProvider.syncok(IntPtr window, bool set) => syncok(window, set);
-
-    string? ICursesProvider.termname() => Marshal.PtrToStringAnsi(termname());
-
-    int ICursesProvider.ungetch(uint @char) => ungetch(@char);
-
-    void ICursesProvider.use_env(bool set) { use_env(set); }
-
-    int ICursesProvider.waddch(IntPtr window, uint charAndAttrs) => waddch(window, charAndAttrs);
-
-    int ICursesProvider.waddchnstr(IntPtr window, string text, int length) => waddchnstr(window, text, length);
-
-    int ICursesProvider.wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved) =>
-        wattr_get(window, out attrs, out colorPair, reserved);
-
-    int ICursesProvider.wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved) =>
-        wattr_set(window, attrs, colorPair, reserved);
-
-    int ICursesProvider.wattr_on(IntPtr window, uint attrs, IntPtr reserved) => wattr_on(window, attrs, reserved);
-
-    int ICursesProvider.wattr_off(IntPtr window, uint attrs, IntPtr reserved) => wattr_off(window, attrs, reserved);
-
-    int ICursesProvider.wbkgd(IntPtr window, uint charAndAttrs) => wbkgd(window, charAndAttrs);
-
-    void ICursesProvider.wbkgdset(IntPtr window, uint charAndAttrs) => wbkgdset(window, charAndAttrs);
-
-    int ICursesProvider.wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
-        uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
-        uint bottomRightCorner) =>
-        wborder(window, leftSide, rightSide, topSide, bottomSide, topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner);
-
-    int ICursesProvider.wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
-        IntPtr reserved) =>
-        wchgat(window, count, attrs, colorPair, reserved);
-
-    int ICursesProvider.wclear(IntPtr window) => wclear(window);
-
-    int ICursesProvider.wclrtobot(IntPtr window) => wclrtobot(window);
-
-    int ICursesProvider.wclrtoeol(IntPtr window) => wclrtoeol(window);
-
-    int ICursesProvider.wcolor_set(IntPtr window, ushort colorPair, IntPtr reserved) =>
-        wcolor_set(window, colorPair, reserved);
-
-    void ICursesProvider.wcursyncup(IntPtr window) => wcursyncup(window);
-
-    int ICursesProvider.wdelch(IntPtr window) => wdelch(window);
-
-    int ICursesProvider.wechochar(IntPtr window, uint charAndAttrs) => wechochar(window, charAndAttrs);
-
-    int ICursesProvider.werase(IntPtr window) => werase(window);
-
-    int ICursesProvider.wgetch(IntPtr window) => wgetch(window);
-
-    int ICursesProvider.wgetnstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, int length) =>
-        wgetnstr(window, dest, length);
-
-    int ICursesProvider.whline(IntPtr window, uint @char, int count) => whline(window, @char, count);
-
-    uint ICursesProvider.winch(IntPtr window) => winch(window);
-
-    int ICursesProvider.winchnstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, int length) =>
-        winchnstr(window, dest, length);
-
-    int ICursesProvider.winsch(IntPtr window, uint @char) => winsch(window, @char);
-
-    int ICursesProvider.winsdelln(IntPtr window, int count) => winsdelln(window, count);
-
-    int ICursesProvider.wmove(IntPtr window, int newLine, int newCol) => wmove(window, newLine, newCol);
-
-    int ICursesProvider.wnoutrefresh(IntPtr window) => wnoutrefresh(window);
-
-    int ICursesProvider.wredrawln(IntPtr window, int startLine, int lineCount) =>
-        wredrawln(window, startLine, lineCount);
-
-    int ICursesProvider.wrefresh(IntPtr window) => wrefresh(window);
-
-    int ICursesProvider.wscrl(IntPtr window, int lines) => wscrl(window, lines);
-
-    int ICursesProvider.wsetscrreg(IntPtr window, int top, int bottom) => wsetscrreg(window, top, bottom);
-
-    void ICursesProvider.wsyncdown(IntPtr window) => wsyncdown(window);
-
-    void ICursesProvider.wsyncup(IntPtr window) => wsyncup(window);
-
-    void ICursesProvider.wtimeout(IntPtr window, int delay) => wtimeout(window, delay);
-
-    int ICursesProvider.wtouchln(IntPtr window, int line, int count, int changed) =>
-        wtouchln(window, line, count, changed);
-
-    int ICursesProvider.wvline(IntPtr window, uint @char, int count) => wvline(window, @char, count);
-
-    bool ICursesProvider.is_term_resized(int lines, int cols) => is_term_resized(lines, cols);
-
-    int ICursesProvider.resize_term(int lines, int cols) => resize_term(lines, cols);
-
-    int ICursesProvider.resizeterm(int lines, int cols) => resizeterm(lines, cols);
-
-    string? ICursesProvider.keybound(uint keyCode, int count) => Marshal.PtrToStringAnsi(keybound(keyCode, count));
-
-    string? ICursesProvider.curses_version() => Marshal.PtrToStringAnsi(curses_version());
-
-    int ICursesProvider.assume_default_colors(int fgColor, int bgColor) => assume_default_colors(fgColor, bgColor);
-
-    int ICursesProvider.define_key(string keyName, int keyCode) => define_key(keyName, keyCode);
-
-    int ICursesProvider.key_defined(string keyName) => key_defined(keyName);
-
-    int ICursesProvider.keyok(int keyCode, bool set) => keyok(keyCode, set);
-
-    int ICursesProvider.set_tabsize(int size) => set_tabsize(size);
-
-    int ICursesProvider.use_default_colors() => use_default_colors();
-
-    int ICursesProvider.wresize(IntPtr window, int lines, int columns) => wresize(window, lines, columns);
-
-    void ICursesProvider.nofilter() => nofilter();
-
-    int ICursesProvider.getcchar(ComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
-        IntPtr reserved) =>
-        getcchar(ref @char, dest, out attrs, out colorPair, reserved);
-
-    string? ICursesProvider.key_name(uint @char) => Marshal.PtrToStringAnsi(key_name(@char));
-
-    int ICursesProvider.killwchar(out uint @char) => killwchar(out @char);
-
-    int ICursesProvider.pecho_wchar(IntPtr window, ComplexChar @char) => pecho_wchar(window, ref @char);
-
-    int ICursesProvider.setcchar(out ComplexChar @char, string text, uint attrs, ushort colorPair,
-        IntPtr reserved) =>
-        setcchar(out @char, text, attrs, colorPair, reserved);
-
-    int ICursesProvider.slk_set(int labelIndex, string title, int align) => slk_set(labelIndex, title, align);
-
-    uint ICursesProvider.term_attrs() => term_attrs();
-
-    int ICursesProvider.unget_wch(uint @char) => unget_wch(@char);
-
-    int ICursesProvider.wadd_wch(IntPtr window, ComplexChar @char) => wadd_wch(window, ref @char);
-
-    int ICursesProvider.wadd_wchnstr(IntPtr window, ComplexChar[] str, int count) => wadd_wchnstr(window, str, count);
-
-    int ICursesProvider.waddnwstr(IntPtr window, string text, int length) => waddnwstr(window, text, length);
-
-    int ICursesProvider.wbkgrnd(IntPtr window, ComplexChar @char) => wbkgrnd(window, ref @char);
-
-    void ICursesProvider.wbkgrndset(IntPtr window, ComplexChar @char) => wbkgrndset(window, ref @char);
-
-    int ICursesProvider.wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
-        ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner,
-        ComplexChar bottomRightCorner) =>
-        wborder_set(window, ref leftSide, ref rightSide, ref topSide, ref bottomSide,
-            ref topLeftCorner, ref topRightCorner, ref bottomLeftCorner, ref bottomRightCorner);
-
-    int ICursesProvider.wecho_wchar(IntPtr window, ComplexChar @char) => wecho_wchar(window, ref @char);
-
-    int ICursesProvider.wget_wch(IntPtr window, out uint @char) => wget_wch(window, out @char);
-
-    int ICursesProvider.wgetbkgrnd(IntPtr window, out ComplexChar @char) => wgetbkgrnd(window, out @char);
-
-    int ICursesProvider.wgetn_wstr(IntPtr window, StringBuilder dest, int length) => wgetn_wstr(window, dest, length);
-
-    int ICursesProvider.whline_set(IntPtr window, ComplexChar @char, int count) => whline_set(window, ref @char, count);
-
-    int ICursesProvider.win_wch(IntPtr window, out ComplexChar @char) => win_wch(window, out @char);
-
-    int ICursesProvider.win_wchnstr(IntPtr window, ComplexChar[] dest, int length) => win_wchnstr(window, dest, length);
-
-    int ICursesProvider.winnwstr(IntPtr window, StringBuilder dest, int length) => winnwstr(window, dest, length);
-
-    int ICursesProvider.wins_nwstr(IntPtr window, string text, int length) => wins_nwstr(window, text, length);
-
-    int ICursesProvider.wins_wch(IntPtr window, ComplexChar @char) => wins_wch(window, ref @char);
-
-    string? ICursesProvider.wunctrl(ComplexChar @char) => Marshal.PtrToStringUni(wunctrl(ref @char));
-
-    int ICursesProvider.wvline_set(IntPtr window, ComplexChar @char, int count) => wvline_set(window, ref @char, count);
-
-    int ICursesProvider.getmouse(out RawMouseEvent @event) => getmouse(out @event);
-
-    public int ungetmouse(RawMouseEvent @event) => ungetmouse(ref @event);
-
-    int ICursesProvider.mousemask(ulong newMask, out ulong oldMask) => mousemask(newMask, out oldMask);
-
-    bool ICursesProvider.wenclose(IntPtr window, int line, int col) => wenclose(window, line, col);
-
-    int ICursesProvider.mouseinterval(int millis) => mouseinterval(millis);
-
-    bool ICursesProvider.wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen) =>
-        wmouse_trafo(window, ref line, ref col, toScreen);
 }

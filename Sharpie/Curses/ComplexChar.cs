@@ -1,8 +1,9 @@
 namespace Sharpie.Curses;
+
 using System.Runtime.InteropServices;
 
 /// <summary>
-/// Opaque Curses character with attributes and color.
+///     Opaque Curses character with attributes and color.
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct ComplexChar
