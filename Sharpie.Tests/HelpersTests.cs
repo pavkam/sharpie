@@ -131,7 +131,8 @@ public class HelpersTests
                 It.IsAny<IntPtr>()), Times.Once);
     }
 
-    [TestMethod, DataRow(0x20, "\x0020"), DataRow(0x7E, "\x007E"), DataRow(0xA0, "\x00A0")]
+    [TestMethod, DataRow(0x20, "\x0020"), DataRow(0x7E, "\x007E"), DataRow(0xA0, "\x00A0"), DataRow((int) '\n', "\n"),
+     DataRow((int) '\b', "\b"), DataRow((int) '\t', "\t")]
     public void ToComplexChar_DoesNotConvertOtherAsciiToUnicode(int ch, string expected)
     {
         _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
