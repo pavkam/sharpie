@@ -73,13 +73,13 @@ public sealed class Terminal: IDisposable
         _useEnvironmentOverrides = useEnvironmentOverrides;
         if (_useEnvironmentOverrides)
         {
-            Curses.use_env(true);
+            curses.use_env(true);
         }
 
-        _softLabelKeyManager = new(this, softLabelKeyMode);
+        _softLabelKeyManager = new(curses, softLabelKeyMode);
 
         // Screen setup.
-        _screen = new(curses, Curses.initscr());
+        _screen = new(curses, curses.initscr());
         _colorManager = new(curses, enableColors);
 
         // After screen creation.
@@ -90,67 +90,67 @@ public sealed class Terminal: IDisposable
         _manualFlush = manualFlush;
         _newLineTranslation = enableReturnToNewLineTranslation;
 
-        Curses.intrflush(IntPtr.Zero, _manualFlush);
+        curses.intrflush(IntPtr.Zero, _manualFlush);
         if (_manualFlush)
         {
-            Curses.noqiflush();
+            curses.noqiflush();
         } else
         {
-            Curses.qiflush();
+            curses.qiflush();
         }
 
         if (_inputEchoing)
         {
-            Curses.echo()
-                  .Check(nameof(Curses.echo), "Failed to setup terminal's echo mode.");
+            curses.echo()
+                  .Check(nameof(curses.echo), "Failed to setup terminal's echo mode.");
         } else
         {
-            Curses.noecho()
-                  .Check(nameof(Curses.noecho), "Failed to setup terminal's no-echo mode.");
+            curses.noecho()
+                  .Check(nameof(curses.noecho), "Failed to setup terminal's no-echo mode.");
         }
 
         if (!_lineBuffering)
         {
             if (_rawMode)
             {
-                Curses.raw()
-                      .Check(nameof(Curses.raw), "Failed to setup terminal's raw mode.");
+                curses.raw()
+                      .Check(nameof(curses.raw), "Failed to setup terminal's raw mode.");
             } else
             {
-                Curses.noraw()
-                      .Check(nameof(Curses.noraw), "Failed to setup terminal's no-raw mode.");
+                curses.noraw()
+                      .Check(nameof(curses.noraw), "Failed to setup terminal's no-raw mode.");
             }
 
             if (_readTimeoutMillis != Timeout.Infinite)
             {
-                Curses.halfdelay(Helpers.ConvertMillisToTenths(_readTimeoutMillis))
-                      .Check(nameof(Curses.halfdelay), "Failed to setup terminal's half-delay non-buffered mode.");
-            } else
+                curses.halfdelay(Helpers.ConvertMillisToTenths(_readTimeoutMillis))
+                      .Check(nameof(curses.halfdelay), "Failed to setup terminal's half-delay non-buffered mode.");
+            } else if (!_rawMode)
             {
-                Curses.cbreak()
-                      .Check(nameof(Curses.cbreak), "Failed to setup terminal's non-buffered mode.");
+                curses.cbreak()
+                      .Check(nameof(curses.cbreak), "Failed to setup terminal's non-buffered mode.");
             }
         } else
         {
-            Curses.nocbreak()
-                  .Check(nameof(Curses.nocbreak), "Failed to setup terminal buffered mode.");
+            curses.nocbreak()
+                  .Check(nameof(curses.nocbreak), "Failed to setup terminal buffered mode.");
         }
 
         if (_newLineTranslation)
         {
-            Curses.nl()
-                  .Check(nameof(Curses.nl), "Failed to enable new line translation.");
+            curses.nl()
+                  .Check(nameof(curses.nl), "Failed to enable new line translation.");
         } else
         {
-            Curses.nonl()
-                  .Check(nameof(Curses.nonl), "Failed to disable new line translation.");
+            curses.nonl()
+                  .Check(nameof(curses.nonl), "Failed to disable new line translation.");
         }
 
         CaretMode = hardwareCursorMode;
         EnableMouse = enableMouse;
 
         /* Other configuration */
-        Curses.meta(IntPtr.Zero, true);
+        curses.meta(IntPtr.Zero, true);
 
         _terminalInstanceActive = true;
     }

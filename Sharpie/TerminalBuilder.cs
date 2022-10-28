@@ -43,7 +43,7 @@ public sealed class TerminalBuilder
     private bool _enableInputEchoing;
     private bool _enableLineBuffering;
     private bool _enableMouse;
-    private bool _enableRawMode;
+    private bool _enableRawMode = true;
     private bool _enableReturnToNewLineTranslation;
     private CaretMode _hardwareCursorMode = CaretMode.Visible;
     private bool _manualFlush;

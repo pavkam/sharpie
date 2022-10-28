@@ -148,7 +148,7 @@ public class PadTests
     }
 
 
-    [TestMethod]
+    [TestMethod,SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh2_Throws_IfCursesFailsAtSettingEntireScreenRefresh()
     {
         _cursesMock.Setup(s => s.clearok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
@@ -158,7 +158,7 @@ public class PadTests
               .Operation.ShouldBe("clearok");
     }
 
-    [TestMethod]
+    [TestMethod,SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh2_Throws_IfCursesFailsAtQueueingRefresh()
     {
         _cursesMock.Setup(s => s.pnoutrefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
