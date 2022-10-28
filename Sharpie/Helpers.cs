@@ -114,11 +114,7 @@ public static class Helpers
     /// <exception cref="CursesException">Thrown if <paramref name="rune" /> failed to convert to a complex char.</exception>
     public static ComplexChar ToComplexChar(this ICursesProvider curses, Rune rune, Style style)
     {
-        // Convert the special characters into Unicode.
-        if (rune.IsAscii && rune.Value <= 0x1F || rune.Value is >= 0X7F and <= 0x9F)
-        {
-            rune = new(rune.Value + 0x2400);
-        }
+       
 
         // Use Curses to encode the characters.
         curses.setcchar(out var @char, rune.ToString(), (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)

@@ -8,19 +8,18 @@ var terminal = Terminal.UsingCurses(NativeCursesProvider.Instance)
 
 terminal.Screen.ApplyPendingRefreshes();
 
-
 while (true) {
     if (!terminal.Screen.TryReadEvent(Timeout.Infinite, out var e))
     {
         continue;
     }
 
-    if (e is KeyEvent { Char.Value: 'q' })
+    if (e is KeyEvent { Key: Key.Interrupt })
     {
         break;
     }
 
-    terminal.Screen.WriteText($"❤ {e}\n", Style.Default);
+    terminal.Screen.WriteText($"{e}\n", Style.Default);
 }
 
 

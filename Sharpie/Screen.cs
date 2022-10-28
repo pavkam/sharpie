@@ -527,8 +527,15 @@ public sealed class Screen: Window
 
         if (!result.Failed())
         {
-            var keyName = Curses.key_name(keyCode);
-            @event = new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
+            if (keyCode == 3)
+            {
+                @event = new KeyEvent(Key.Interrupt, new('\0'), null, ModifierKey.None);
+            } else
+            {
+                var keyName = Curses.key_name(keyCode);
+                @event = new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
+            }
+
             return true;
         }
 
