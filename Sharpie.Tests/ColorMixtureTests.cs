@@ -33,5 +33,79 @@ namespace Sharpie.Tests;
 [TestClass]
 public class ColorMixtureTests
 {
-    [TestMethod] public void TestMethod1() { }
+    [TestMethod] public void Default_HasCorrectHandle() { ColorMixture.Default.Handle.ShouldBe((ushort) 0); }
+
+    [TestMethod] public void Ctor_StoresTheHandle() { new ColorMixture { Handle = 100 }.Handle.ShouldBe((ushort) 100); }
+
+    [TestMethod]
+    public void ToString_ProperlyFormats()
+    {
+        new ColorMixture { Handle = 999 }.ToString()
+                                         .ShouldBe("Mixture [999]");
+    }
+
+    [TestMethod, DataRow(null), DataRow("")]
+    public void Equals_ReturnsFalse_IfNotColorMixture(object? b)
+    {
+        ColorMixture.Default.Equals(b)
+                    .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsFalse_IfDifferentHandle()
+    {
+        ColorMixture.Default.Equals(new ColorMixture { Handle = 1 })
+                    .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsTrue_IfSameHandle()
+    {
+        ColorMixture.Default.Equals(new ColorMixture { Handle = 0 })
+                    .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void HashCode_IsTheSame_ForSameHandles()
+    {
+        var cm1 = new ColorMixture { Handle = 1 };
+        var cm2 = new ColorMixture { Handle = 1 };
+
+        cm1.GetHashCode()
+           .ShouldBe(cm2.GetHashCode());
+    }
+    
+    [TestMethod]
+    public void HashCode_IsTDifferent_ForDifferentHandles()
+    {
+        var cm1 = new ColorMixture { Handle = 1 };
+        var cm2 = new ColorMixture { Handle = 2 };
+
+        cm1.GetHashCode()
+           .ShouldNotBe(cm2.GetHashCode());
+    }
+  
+    [TestMethod]
+    public void EqualOperator_ReturnsFalse_IfDifferentHandle()
+    {
+        Assert.IsFalse(new ColorMixture { Handle = 1 } == ColorMixture.Default);
+    }
+
+    [TestMethod]
+    public void EqualOperator_ReturnsTrue_IfSameHandle()
+    {
+        Assert.IsTrue(new ColorMixture { Handle = 0 } == ColorMixture.Default);
+    }
+    
+    [TestMethod]
+    public void NotEqualOperator_ReturnsTrue_IfDifferentHandle()
+    {
+        Assert.IsTrue(new ColorMixture { Handle = 1 } != ColorMixture.Default);
+    }
+
+    [TestMethod]
+    public void NotEqualOperator_ReturnsFalse_IfSameHandle()
+    {
+        Assert.IsFalse(new ColorMixture { Handle = 0 } != ColorMixture.Default);
+    }
 }

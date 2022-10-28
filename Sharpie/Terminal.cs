@@ -224,6 +224,7 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
             _oldMouseMask ??= oldMask;
+            _enableMouse = value;
         }
     }
 
