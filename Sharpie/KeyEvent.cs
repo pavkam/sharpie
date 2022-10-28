@@ -55,22 +55,22 @@ public sealed class KeyEvent: Event
     ///     The key that was pressed. If the value is <see cref="Sharpie.Key.Character" /> then <see cref="Char" /> contains
     ///     the actual code of the key.
     /// </summary>
-    public Key Key { get; internal init; }
+    public Key Key { get; }
 
     /// <summary>
     ///     The character that was pressed. Only valid if <see cref="Key" /> is <see cref="Sharpie.Key.Character" />.
     /// </summary>
-    public Rune Char { get; internal init; }
+    public Rune Char { get; }
 
     /// <summary>
     ///     The printable name of the key.
     /// </summary>
-    public string? Name { get; internal init; }
+    public string? Name { get; }
 
     /// <summary>
     ///     The modifier keys that were present at the time.
     /// </summary>
-    public ModifierKey Modifiers { get; internal init; }
+    public ModifierKey Modifiers { get; }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString()

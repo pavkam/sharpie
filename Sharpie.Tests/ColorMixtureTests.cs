@@ -66,7 +66,7 @@ public class ColorMixtureTests
     }
 
     [TestMethod]
-    public void HashCode_IsTheSame_ForSameHandles()
+    public void GetHashCode_IsTheSame_ForSameHandles()
     {
         var cm1 = new ColorMixture { Handle = 1 };
         var cm2 = new ColorMixture { Handle = 1 };
@@ -76,7 +76,7 @@ public class ColorMixtureTests
     }
     
     [TestMethod]
-    public void HashCode_IsTDifferent_ForDifferentHandles()
+    public void GetHashCode_IsTDifferent_ForDifferentHandles()
     {
         var cm1 = new ColorMixture { Handle = 1 };
         var cm2 = new ColorMixture { Handle = 2 };

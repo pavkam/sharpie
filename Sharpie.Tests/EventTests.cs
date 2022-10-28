@@ -68,14 +68,14 @@ public class EventTests
     }
 
     [TestMethod]
-    public void HashCode_IsTheSame_ForSameTypes()
+    public void GetHashCode_IsTheSame_ForSameTypes()
     {
         _event1.GetHashCode()
               .ShouldBe(_event3.GetHashCode());
     }
 
     [TestMethod]
-    public void HashCode_IsTDifferent_ForDifferentTypes()
+    public void GetHashCode_IsTDifferent_ForDifferentTypes()
     {
         _event1.GetHashCode()
               .ShouldNotBe(_event2.GetHashCode());

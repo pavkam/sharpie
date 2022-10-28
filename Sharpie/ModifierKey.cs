@@ -55,19 +55,4 @@ public enum ModifierKey
     ///     Ctrl key.
     /// </summary>
     Ctrl = Alt << 1,
-
-    /// <summary>
-    ///     Caps-lock is on.
-    /// </summary>
-    CapsLock = Ctrl << 1,
-
-    /// <summary>
-    ///     Num-lock is on.
-    /// </summary>
-    NumLock = CapsLock << 1,
-
-    /// <summary>
-    ///     Scroll-lock is on.
-    /// </summary>
-    ScrollLock = NumLock << 1
 }
