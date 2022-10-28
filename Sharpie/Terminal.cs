@@ -80,7 +80,7 @@ public sealed class Terminal: IDisposable
 
         // Screen setup.
         _screen = new(this, Curses.initscr());
-        _colorManager = new(this, enableColors);
+        _colorManager = new(cursesProvider, enableColors);
 
         // After screen creation.
         _inputEchoing = enableInputEchoing;
