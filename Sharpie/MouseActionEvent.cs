@@ -55,17 +55,17 @@ public sealed class MouseActionEvent: Event
     /// <summary>
     ///     The button that was actioned.
     /// </summary>
-    public MouseButton Button { get; init; }
+    public MouseButton Button { get; }
 
     /// <summary>
     ///     The state of the action.
     /// </summary>
-    public MouseButtonState State { get; init; }
+    public MouseButtonState State { get; }
 
     /// <summary>
     ///     Modifier keys that were present at the time of the action.
     /// </summary>
-    public ModifierKey Modifiers { get; init; }
+    public ModifierKey Modifiers { get; }
 
     /// <summary>
     ///     The mouse position at the time of the action.
