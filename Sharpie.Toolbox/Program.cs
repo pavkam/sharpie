@@ -1,38 +1,16 @@
-﻿using System.Text;
+﻿
 using Sharpie;
 using Sharpie.Curses;
 
-Console.TreatControlCAsInput = true;
 var terminal = Terminal.UsingCurses(NativeCursesProvider.Instance)
-                       .WithSoftKeyLabels(SoftLabelKeyMode.ThreeTwoThree)
                        .WithMouse()
-                       .Create();
+                       .Build();
 
-/*
-terminal.Screen.Background = (new('.'), new()
-{
-    Attributes = VideoAttribute.Dim,
-    ColorMixture = terminal.Colors.MixColors(StandardColor.Cyan, StandardColor.Green)
-});
-*/
-var lineStyle = new Style
-{
-    Attributes = VideoAttribute.Bold,
-    ColorMixture = terminal.Colors.MixColors(StandardColor.Cyan, StandardColor.Green)
-};
-
-terminal.Screen.WriteText("Testing\tAlex\n", new()
-{
-    Attributes = VideoAttribute.Bold,
-    ColorMixture = terminal.Colors.MixColors(StandardColor.Blue, StandardColor.Green)
-});
-
-terminal.SoftLabelKey.SetLabel(0, "Hello", SoftLabelKeyAlignment.Center);
 terminal.Screen.ApplyPendingRefreshes();
-terminal.Screen.DrawBorder();
+
 
 while (true) {
-    if (!terminal.Screen.TryReadEvent(Timeout.Infinite, out var e) || e == null)
+    if (!terminal.Screen.TryReadEvent(Timeout.Infinite, out var e))
     {
         continue;
     }
@@ -42,7 +20,7 @@ while (true) {
         break;
     }
 
-    terminal.Screen.WriteText($"{e}\n", Style.Default);
+    terminal.Screen.WriteText($"❤ {e}\n", Style.Default);
 }
 
 

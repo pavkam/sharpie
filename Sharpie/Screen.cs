@@ -525,13 +525,8 @@ public sealed class Screen: Window
             return true;
         }
 
-        if (result.Failed())
+        if (!result.Failed())
         {
-            if (keyCode == 27 && TryReadEvent(10, out var other) && other.Type == EventType.KeyPress)
-            {
-                // Special escape sequence handling.
-            }
-
             var keyName = Curses.key_name(keyCode);
             @event = new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
             return true;

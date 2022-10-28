@@ -30,7 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
-using System.Globalization;
 using Curses;
 
 /// <summary>
@@ -380,19 +379,14 @@ public class Window: IDisposable
         GC.SuppressFinalize(this);
     }
 
-    private ComplexChar MakeComplexChar(string element, Style style)
+    private ComplexChar MakeComplexChar(Rune rune, Style style)
     {
-        Debug.Assert(element != null);
-        Debug.Assert(element.Length > 0);
-
-        Curses.setcchar(out var @char, element, (uint) style.Attributes, style.ColorMixture.Handle,
-                    IntPtr.Zero)
-                .Check(nameof(Curses.setcchar), "Failed to convert string to complex character.");
+        Curses.setcchar(out var @char, rune.ToString(), (uint) style.Attributes, style.ColorMixture.Handle,
+                  IntPtr.Zero)
+              .Check(nameof(Curses.setcchar), "Failed to convert string to complex character.");
 
         return @char;
     }
-
-    private ComplexChar MakeComplexChar(Rune rune, Style style) => MakeComplexChar(rune.ToString(), style);
 
     private (Rune rune, Style style) BreakComplexChar(ComplexChar @char)
     {
@@ -598,15 +592,16 @@ public class Window: IDisposable
             throw new ArgumentNullException(nameof(str));
         }
 
-        var enumerator = StringInfo.GetTextElementEnumerator(str);
-        while (enumerator.MoveNext())
+        foreach (var rune in str.EnumerateRunes())
         {
-            var @char = MakeComplexChar(enumerator.GetTextElement(), style);
-            if (Curses.wadd_wch(Handle, @char)
-                        .Failed())
-            {
-                break;
-            }
+            var @char = MakeComplexChar(rune, style);
+            Curses.wadd_wch(Handle, @char);
+            /*
+        if (Curses.wadd_wch(Handle, @char)
+                  .Failed())
+        {
+            break;
+        }*/
         }
     }
 

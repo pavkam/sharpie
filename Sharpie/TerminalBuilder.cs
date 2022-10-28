@@ -210,7 +210,7 @@ public sealed class TerminalBuilder
     ///     Creates a new instance of the <see cref="Terminal" /> class.
     /// </summary>
     /// <returns>A new terminal object.</returns>
-    public Terminal Create() =>
+    public Terminal Build() =>
         new(_cursesProvider, _enableLineBuffering, _enableRawMode, _enableReturnToNewLineTranslation,
             _readTimeoutMillis, _enableInputEchoing, _manualFlush, _enableColors, _hardwareCursorMode,
             _useEnvironmentOverrides, _softLabelKeyMode, _enableMouse);
