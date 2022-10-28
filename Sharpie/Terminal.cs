@@ -56,7 +56,7 @@ public sealed class Terminal: IDisposable
     private SoftLabelKeyManager _softLabelKeyManager;
     private bool _useEnvironmentOverrides;
 
-    internal Terminal(ICursesProvider cursesProvider, bool enableLineBuffering, bool enableRawMode,
+    internal Terminal(ICursesProvider curses, bool enableLineBuffering, bool enableRawMode,
         bool enableReturnToNewLineTranslation, int readTimeoutMillis, bool enableInputEchoing, bool manualFlush,
         bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
         SoftLabelKeyMode softLabelKeyMode, bool enableMouse)
@@ -67,7 +67,7 @@ public sealed class Terminal: IDisposable
                 "Another terminal instance is active. Only one instance can be active at one time.");
         }
 
-        Curses = cursesProvider ?? throw new ArgumentNullException(nameof(cursesProvider));
+        Curses = curses ?? throw new ArgumentNullException(nameof(curses));
 
         // Pre-screen creation.
         _useEnvironmentOverrides = useEnvironmentOverrides;
@@ -79,8 +79,8 @@ public sealed class Terminal: IDisposable
         _softLabelKeyManager = new(this, softLabelKeyMode);
 
         // Screen setup.
-        _screen = new(this, Curses.initscr());
-        _colorManager = new(cursesProvider, enableColors);
+        _screen = new(curses, Curses.initscr());
+        _colorManager = new(curses, enableColors);
 
         // After screen creation.
         _inputEchoing = enableInputEchoing;

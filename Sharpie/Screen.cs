@@ -42,9 +42,9 @@ public sealed class Screen: Window
     ///     Initializes the screen using a window handle. The <paramref name="windowHandle" /> should be
     ///     a screen and not a regular window.
     /// </summary>
-    /// <param name="terminal">The terminal instance.</param>
+    /// <param name="curses">The curses backend.</param>
     /// <param name="windowHandle">The screen handle.</param>
-    internal Screen(Terminal terminal, IntPtr windowHandle): base(terminal, null, windowHandle) { }
+    internal Screen(ICursesProvider curses, IntPtr windowHandle): base(curses, null, windowHandle) { }
 
     /// <inheritdoc cref="Window.Location" />
     /// <remarks>
@@ -87,11 +87,11 @@ public sealed class Screen: Window
             throw new ArgumentOutOfRangeException(nameof(area));
         }
 
-        Terminal.AssertNotDisposed();
-        var handle = Terminal.Curses.newwin(area.Height, area.Width, area.Y, area.X)
+        AssertAlive();
+        var handle = Curses.newwin(area.Height, area.Width, area.Y, area.X)
                              .Check(nameof(Terminal.Curses.newwin), "Failed to create a new window.");
 
-        return new(Terminal, this, handle);
+        return new(Curses, this, handle);
     }
 
     /// <summary>
@@ -112,11 +112,11 @@ public sealed class Screen: Window
             throw new ArgumentOutOfRangeException(nameof(area));
         }
 
-        Terminal.AssertNotDisposed();
-        var handle = Terminal.Curses.derwin(window.Handle, area.Height, area.Width, area.Y, area.X)
+        AssertAlive();
+        var handle = Curses.derwin(window.Handle, area.Height, area.Width, area.Y, area.X)
                              .Check(nameof(Terminal.Curses.derwin), "Failed to create a new sub-window.");
 
-        return new(Terminal, this, handle);
+        return new(Curses, this, handle);
     }
 
     /// <summary>
@@ -139,9 +139,9 @@ public sealed class Screen: Window
             throw new InvalidOperationException("Cannot duplicate the screen window.");
         }
 
-        return new(Terminal, this, Terminal.Curses.dupwin(window.Handle)
-                                           .Check(nameof(Terminal.Curses.dupwin),
-                                               "Failed to duplicate an existing window."));
+        return new(Curses, this, Curses.dupwin(window.Handle)
+                                         .Check(nameof(Terminal.Curses.dupwin),
+                                             "Failed to duplicate an existing window."));
     }
 
     /// <summary>
@@ -159,11 +159,11 @@ public sealed class Screen: Window
             throw new ArgumentOutOfRangeException(nameof(size));
         }
 
-        Terminal.AssertNotDisposed();
-        var handle = Terminal.Curses.newpad(size.Height, size.Width)
+        AssertAlive();
+        var handle = Curses.newpad(size.Height, size.Width)
                              .Check(nameof(Terminal.Curses.newpad), "Failed to create a new pad.");
 
-        return new(Terminal, this, handle);
+        return new(Curses, this, handle);
     }
 
     /// <summary>
@@ -188,10 +188,10 @@ public sealed class Screen: Window
             throw new ArgumentOutOfRangeException(nameof(area));
         }
 
-        var handle = Terminal.Curses.subpad(pad.Handle, area.Height, area.Width, area.Top, area.Right)
+        var handle = Curses.subpad(pad.Handle, area.Height, area.Width, area.Top, area.Right)
                              .Check(nameof(Terminal.Curses.subpad), "Failed to create a new sub-pad.");
 
-        return new(Terminal, pad, handle);
+        return new(Curses, pad, handle);
     }
 
     /// <summary>
@@ -201,8 +201,8 @@ public sealed class Screen: Window
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void ApplyPendingRefreshes()
     {
-        Terminal.AssertNotDisposed();
-        Terminal.Curses.doupdate()
+        AssertAlive();
+        Curses.doupdate()
                 .Check(nameof(Terminal.Curses.doupdate), "Failed to update the main screen.");
     }
 
@@ -488,10 +488,10 @@ public sealed class Screen: Window
         Curses.define_key("\x001b" + (char)258, 1024); //alt up
 
          */
-        Terminal.Curses.wtimeout(Handle, timeoutMillis);
+        Curses.wtimeout(Handle, timeoutMillis);
 
         @event = null;
-        var result = Terminal.Curses.wget_wch(Handle, out var keyCode);
+        var result = Curses.wget_wch(Handle, out var keyCode);
         if (result == (uint) RawKey.Yes)
         {
             switch (keyCode)
@@ -500,7 +500,7 @@ public sealed class Screen: Window
                     @event = new TerminalResizeEvent(Size);
                     break;
                 case (uint) RawKey.Mouse:
-                    if (Terminal.Curses.getmouse(out var mouseEvent)
+                    if (Curses.getmouse(out var mouseEvent)
                                 .Failed())
                     {
                         return false;
@@ -518,7 +518,7 @@ public sealed class Screen: Window
                     break;
                 default:
                     var (key, keyMod) = ConvertKey(keyCode);
-                    @event = new KeyEvent(key, new('\0'), Terminal.Curses.key_name(keyCode), keyMod);
+                    @event = new KeyEvent(key, new('\0'), Curses.key_name(keyCode), keyMod);
                     break;
             }
 
@@ -527,16 +527,24 @@ public sealed class Screen: Window
 
         if (result.Failed())
         {
-            if (keyCode == 27 && TryReadEvent(10, out var other) && other?.Type == EventType.KeyPress)
+            if (keyCode == 27 && TryReadEvent(10, out var other) && other.Type == EventType.KeyPress)
             {
                 // Special escape sequence handling.
             }
 
-            var keyName = Terminal.Curses.key_name(keyCode);
+            var keyName = Curses.key_name(keyCode);
             @event = new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
             return true;
         }
 
         return false;
+    }
+    
+    /// <summary>
+    ///     Deletes the screen window and ends the terminal session.
+    /// </summary>
+    protected override void Delete()
+    {
+        Curses.endwin();
     }
 }

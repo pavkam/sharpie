@@ -30,6 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
+using Curses;
+
 /// <summary>
 ///     Represents pad which is a special type of window.
 /// </summary>
@@ -37,12 +39,18 @@ namespace Sharpie;
 public sealed class Pad: Window
 {
     /// <summary>
-    ///     Initializes the window using a Curses handle.
+    ///     The parent screen of this pad.
     /// </summary>
-    /// <param name="terminal">The curses functionality provider.</param>
-    /// <param name="parent">The parent window or pad.</param>
-    /// <param name="windowHandle">The window handle.</param>
-    internal Pad(Terminal terminal, Window parent, IntPtr windowHandle): base(terminal, parent, windowHandle) { }
+    internal new Screen Parent => (Screen) base.Parent!;
+
+    /// <inheritdoc cref="Window(ICursesProvider, Window, IntPtr)"/>
+    internal Pad(ICursesProvider curses, Window parent, IntPtr windowHandle): base(curses, parent, windowHandle)
+    {
+        if (parent is not Screen)
+        {
+            throw new InvalidOperationException("Cannot create a pad within non-screen windows.");
+        }
+    }
 
     /// <inheritdoc cref="Window.ImmediateRefresh" />
     /// <remarks>
@@ -83,22 +91,22 @@ public sealed class Pad: Window
         }
 
         var destRect = new Rectangle(screenPos, new(rect.Bottom - rect.Top, rect.Right - rect.Left));
-        if (!Terminal.Screen.IsRectangleWithin(destRect))
+        if (!Parent.IsRectangleWithin(destRect))
         {
             throw new ArgumentOutOfRangeException(nameof(screenPos));
         }
 
-        Terminal.Curses.clearok(Handle, entireScreen)
+        Curses.clearok(Handle, entireScreen)
                 .Check(nameof(Terminal.Curses.clearok), "Failed to configure pad refresh.");
 
         if (batch)
         {
-            Terminal.Curses.pnoutrefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
+            Curses.pnoutrefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
                         destRect.Bottom, destRect.Right)
                     .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
         } else
         {
-            Terminal.Curses.prefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
+            Curses.prefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
                         destRect.Bottom, destRect.Right)
                     .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
         }
