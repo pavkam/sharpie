@@ -1,14 +1,42 @@
-namespace Sharpie;
+/*
+Copyright (c) 2022, Alexandru Ciobanu
+All rights reserved.
 
-using JetBrains.Annotations;
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+namespace Sharpie;
 
 /// <summary>
 ///     Adds support for soft function keys.
 /// </summary>
 [PublicAPI]
-public sealed class SoftKeyLabelManager
+public sealed class SoftLabelKeyManager
 {
-    private readonly SoftKeyLabelMode _mode;
+    private readonly SoftLabelKeyMode _mode;
     private readonly Terminal _terminal;
 
     /// <summary>
@@ -17,12 +45,12 @@ public sealed class SoftKeyLabelManager
     /// <param name="terminal">The terminal instance.</param>
     /// <param name="mode">The mode of the manager.</param>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public SoftKeyLabelManager(Terminal terminal, SoftKeyLabelMode mode)
+    public SoftLabelKeyManager(Terminal terminal, SoftLabelKeyMode mode)
     {
         _terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
         _mode = mode;
 
-        if (mode != SoftKeyLabelMode.Disabled)
+        if (mode != SoftLabelKeyMode.Disabled)
         {
             terminal.Curses.slk_init((int) mode)
                     .Check(nameof(_terminal.Curses.slk_init), "Failed to initialize soft label keys.");
@@ -32,12 +60,12 @@ public sealed class SoftKeyLabelManager
     /// <summary>
     ///     Specifies if the manager is enabled.
     /// </summary>
-    public bool IsEnabled => _mode != SoftKeyLabelMode.Disabled;
+    public bool IsEnabled => _mode != SoftLabelKeyMode.Disabled;
 
     /// <summary>
     ///     Gets the number of labels within the soft key label panel.
     /// </summary>
-    public int LabelCount => _mode is SoftKeyLabelMode.FourFourFour or SoftKeyLabelMode.FourFourFourWithIndex ? 12 : 8;
+    public int LabelCount => _mode is SoftLabelKeyMode.FourFourFour or SoftLabelKeyMode.FourFourFourWithIndex ? 12 : 8;
 
     /// <summary>
     ///     Gets or sets the style of the window.
@@ -89,7 +117,7 @@ public sealed class SoftKeyLabelManager
     private void AssertNotDisposedAndEnabled()
     {
         _terminal.AssertNotDisposed();
-        if (_mode == SoftKeyLabelMode.Disabled)
+        if (_mode == SoftLabelKeyMode.Disabled)
         {
             throw new NotSupportedException("The soft key labels were not configured during terminal initialization.");
         }
@@ -109,7 +137,7 @@ public sealed class SoftKeyLabelManager
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void SetLabel(int index, string title, SoftKeyLabelAlignment align)
+    public void SetLabel(int index, string title, SoftLabelKeyAlignment align)
     {
         if (title == null)
         {

@@ -28,23 +28,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Sharpie;
+namespace Sharpie.Tests;
 
-/// <summary>
-///     Defines the possible strategies or replacing the contents of a window with the contents
-///     of another window.
-/// </summary>
-[PublicAPI]
-public enum ReplaceStrategy
+[TestClass]
+public class ColorManagerTests
 {
-    /// <summary>
-    ///     Overwrites the contents of the the window including blank space.
-    /// </summary>
-    Overwrite,
-
-    /// <summary>
-    ///     Overwrites the contents of the the window excluding blank space (the contents of the destination are preserved in
-    ///     that case).
-    /// </summary>
-    Overlay
+    [TestMethod] public void TestMethod1() { }
 }

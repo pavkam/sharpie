@@ -4,7 +4,7 @@ using Sharpie.Curses;
 
 Console.TreatControlCAsInput = true;
 var terminal = Terminal.UsingCurses(NativeCursesProvider.Instance)
-                       .WithSoftKeyLabels(SoftKeyLabelMode.ThreeTwoThree)
+                       .WithSoftKeyLabels(SoftLabelKeyMode.ThreeTwoThree)
                        .WithMouse()
                        .Create();
 
@@ -27,7 +27,7 @@ terminal.Screen.WriteText("Testing\tAlex\n", new()
     ColorMixture = terminal.Colors.MixColors(StandardColor.Blue, StandardColor.Green)
 });
 
-terminal.SoftKeyLabels.SetLabel(0, "Hello", SoftKeyLabelAlignment.Center);
+terminal.SoftLabelKey.SetLabel(0, "Hello", SoftLabelKeyAlignment.Center);
 terminal.Screen.ApplyPendingRefreshes();
 terminal.Screen.DrawBorder();
 

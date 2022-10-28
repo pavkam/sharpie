@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+
+        <AssemblyName>sharpie-tests</AssemblyName>
+
+        <Title>Sharpie testing framework</Title>
+
+        <Description>Unit test framework to test Sharpie.</Description>
+
+        <Copyright>Alexandru Ciobanu</Copyright>
+
+        <PackageProjectUrl>https://github.com/pavkam/sharpie/</PackageProjectUrl>
+
+        <PackageLicenseUrl>https://github.com/pavkam/sharpie/blob/main/LICENSE</PackageLicenseUrl>
+
+        <RepositoryUrl>https://github.com/pavkam/sharpie.git</RepositoryUrl>
+
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+        <PackageReference Include="Moq" Version="4.18.2" />
+        <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
+        <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
+        <PackageReference Include="coverlet.collector" Version="3.1.2" />
+        <PackageReference Include="Shouldly" Version="4.1.0" />
+    </ItemGroup>
+
+</Project>

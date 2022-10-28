@@ -1,7 +1,36 @@
+/*
+Copyright (c) 2022, Alexandru Ciobanu
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 namespace Sharpie;
 
 using Curses;
-using JetBrains.Annotations;
 
 /// <summary>
 ///     This class allows building instances of the <see cref="Terminal" /> class.
@@ -19,7 +48,7 @@ public sealed class TerminalBuilder
     private CaretMode _hardwareCursorMode = CaretMode.Visible;
     private bool _manualFlush;
     private int _readTimeoutMillis = Timeout.Infinite;
-    private SoftKeyLabelMode _softKeyLabelMode = SoftKeyLabelMode.Disabled;
+    private SoftLabelKeyMode _softLabelKeyMode = SoftLabelKeyMode.Disabled;
     private bool _useEnvironmentOverrides = true;
 
     /// <summary>
@@ -153,13 +182,13 @@ public sealed class TerminalBuilder
     ///     Sets the soft key labels functionality mode.
     /// </summary>
     /// <remarks>
-    ///     Default is <see cref="SoftKeyLabelMode.Disabled" />.
+    ///     Default is <see cref="SoftLabelKeyMode.Disabled" />.
     /// </remarks>
     /// <param name="mode">The mode of the soft label keys used.</param>
     /// <returns>The same builder instance.</returns>
-    public TerminalBuilder WithSoftKeyLabels(SoftKeyLabelMode mode)
+    public TerminalBuilder WithSoftKeyLabels(SoftLabelKeyMode mode)
     {
-        _softKeyLabelMode = mode;
+        _softLabelKeyMode = mode;
         return this;
     }
 
@@ -184,5 +213,5 @@ public sealed class TerminalBuilder
     public Terminal Create() =>
         new(_cursesProvider, _enableLineBuffering, _enableRawMode, _enableReturnToNewLineTranslation,
             _readTimeoutMillis, _enableInputEchoing, _manualFlush, _enableColors, _hardwareCursorMode,
-            _useEnvironmentOverrides, _softKeyLabelMode, _enableMouse);
+            _useEnvironmentOverrides, _softLabelKeyMode, _enableMouse);
 }

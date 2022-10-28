@@ -31,50 +31,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     Represents the style of the text (attributes and colors).
+///     Defines the alignment of labels in a <see cref="SoftLabelKeyManager" />.
 /// </summary>
 [PublicAPI]
-public struct Style
+public enum SoftLabelKeyAlignment
 {
     /// <summary>
-    ///     The default terminal style.
+    ///     The label is left-aligned.
     /// </summary>
-    public static Style Default { get; } =
-        new() { Attributes = VideoAttribute.None, ColorMixture = ColorMixture.Default };
+    Left = 0,
 
     /// <summary>
-    ///     The attributes of the text.
+    ///     The label is center-aligned.
     /// </summary>
-    public VideoAttribute Attributes { get; init; }
+    Center = 1,
 
     /// <summary>
-    ///     The color mixture.
+    ///     The label is right-aligned.
     /// </summary>
-    public ColorMixture ColorMixture { get; init; }
-
-    /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"Style [{Attributes}; {ColorMixture}]";
-
-    /// <summary>
-    ///     The equality operator.
-    /// </summary>
-    /// <param name="left">LHS argument.</param>
-    /// <param name="right">RHS argument.</param>
-    /// <returns>The result of the check.</returns>
-    public static bool operator ==(Style left, Style right) => left.Equals(right);
-
-    /// <summary>
-    ///     The inequality operator.
-    /// </summary>
-    /// <param name="left">LHS argument.</param>
-    /// <param name="right">RHS argument.</param>
-    /// <returns>The result of the check.</returns>
-    public static bool operator !=(Style left, Style right) => !(left == right);
-
-    /// <inheritdoc cref="object.Equals(object)" />
-    public override bool Equals(object? obj) =>
-        obj is Style s && s.Attributes == Attributes && s.ColorMixture == ColorMixture;
-
-    /// <inheritdoc cref="object.GetHashCode" />
-    public override int GetHashCode() => HashCode.Combine(Attributes, ColorMixture);
+    Right = 2
 }
