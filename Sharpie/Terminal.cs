@@ -57,8 +57,8 @@ public sealed class Terminal: IDisposable
     private bool _useEnvironmentOverrides;
 
     internal Terminal(ICursesProvider curses, bool enableLineBuffering, bool enableRawMode,
-        bool enableReturnToNewLineTranslation, int readTimeoutMillis, bool enableInputEchoing, bool manualFlush,
-        bool enableColors, CaretMode hardwareCursorMode, bool useEnvironmentOverrides,
+        bool enableReturnToNewLineTranslation, int readTimeoutMillis, bool enableInputEchoing, bool enableManualFlush,
+        bool enableColors, CaretMode hardwareCursorMode, bool enableEnvironmentOverrides,
         SoftLabelKeyMode softLabelKeyMode, bool enableMouse)
     {
         if (_terminalInstanceActive)
@@ -70,7 +70,7 @@ public sealed class Terminal: IDisposable
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
 
         // Pre-screen creation.
-        _useEnvironmentOverrides = useEnvironmentOverrides;
+        _useEnvironmentOverrides = enableEnvironmentOverrides;
         if (_useEnvironmentOverrides)
         {
             curses.use_env(true);
@@ -87,7 +87,7 @@ public sealed class Terminal: IDisposable
         _readTimeoutMillis = readTimeoutMillis;
         _rawMode = enableRawMode;
         _lineBuffering = enableLineBuffering;
-        _manualFlush = manualFlush;
+        _manualFlush = enableManualFlush;
         _newLineTranslation = enableReturnToNewLineTranslation;
 
         curses.intrflush(IntPtr.Zero, _manualFlush);

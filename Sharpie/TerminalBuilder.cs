@@ -207,11 +207,17 @@ public sealed class TerminalBuilder
     }
 
     /// <summary>
+    ///     Creates a new instance of the <see cref="Terminal" /> class. Used internally only.
+    /// </summary>
+    /// <returns>A new terminal object.</returns>
+    internal Terminal Build(TerminalFactory factory) =>
+        factory.Build(_cursesProvider, _enableLineBuffering, _enableRawMode, _enableReturnToNewLineTranslation,
+            _readTimeoutMillis, _enableInputEchoing, _manualFlush, _enableColors, _hardwareCursorMode,
+            _useEnvironmentOverrides, _softLabelKeyMode, _enableMouse);
+
+    /// <summary>
     ///     Creates a new instance of the <see cref="Terminal" /> class.
     /// </summary>
     /// <returns>A new terminal object.</returns>
-    public Terminal Build() =>
-        new(_cursesProvider, _enableLineBuffering, _enableRawMode, _enableReturnToNewLineTranslation,
-            _readTimeoutMillis, _enableInputEchoing, _manualFlush, _enableColors, _hardwareCursorMode,
-            _useEnvironmentOverrides, _softLabelKeyMode, _enableMouse);
+    public Terminal Build() => Build(new());
 }
