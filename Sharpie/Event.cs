@@ -40,7 +40,7 @@ public class Event
     ///     Creates a new instance of the class.
     /// </summary>
     /// <param name="type">The type of the event.</param>
-    protected Event(EventType type) => Type = type;
+    protected internal Event(EventType type) => Type = type;
 
     /// <summary>
     ///     The type of the event.
@@ -51,7 +51,7 @@ public class Event
     public override string ToString() => $"{Type}";
 
     /// <inheritdoc cref="object.Equals(object)" />
-    public override bool Equals(object? obj) => obj is KeyEvent ke && ke.Type == Type && obj.GetType() == GetType();
+    public override bool Equals(object? obj) => obj is Event e && e.Type == Type && obj.GetType() == GetType();
 
     /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => Type.GetHashCode();

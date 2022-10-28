@@ -33,5 +33,51 @@ namespace Sharpie.Tests;
 [TestClass]
 public class EventTests
 {
-    [TestMethod] public void TestMethod1() { }
+    private readonly Event _event1 = new(EventType.MouseAction);
+    private readonly Event _event2 = new(EventType.KeyPress);
+    private readonly Event _event3 = new(EventType.MouseAction);
+
+    [TestMethod] public void Ctor_StoresTheType() { _event1.Type.ShouldBe(EventType.MouseAction); }
+
+    [TestMethod]
+    public void ToString_ProperlyFormats()
+    {
+        _event1.ToString()
+              .ShouldBe("MouseAction");
+    }
+
+    [TestMethod, DataRow(null), DataRow("")]
+    public void Equals_ReturnsFalse_IfNotEvent(object? b)
+    {
+        _event1.Equals(b)
+              .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsFalse_IfDifferentTypes()
+    {
+        _event1.Equals(_event2)
+              .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsTrue_IfSameType()
+    {
+        _event1.Equals(_event3)
+              .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void HashCode_IsTheSame_ForSameTypes()
+    {
+        _event1.GetHashCode()
+              .ShouldBe(_event3.GetHashCode());
+    }
+
+    [TestMethod]
+    public void HashCode_IsTDifferent_ForDifferentTypes()
+    {
+        _event1.GetHashCode()
+              .ShouldNotBe(_event2.GetHashCode());
+    }
 }
