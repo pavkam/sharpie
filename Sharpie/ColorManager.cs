@@ -26,10 +26,10 @@ public sealed class ColorManager
         if (enabled && ColorsAreSupported)
         {
             _terminal.Curses.start_color()
-                     .Check(nameof(_terminal.Curses.start_color));
+                     .Check(nameof(_terminal.Curses.start_color), "Failed to initialize terminal color mode.");
 
             _terminal.Curses.use_default_colors()
-                     .Check(nameof(_terminal.Curses.use_default_colors));
+                     .Check(nameof(_terminal.Curses.use_default_colors), "Failed to defined the default colors of the terminal.");
         }
 
         _enabled = true;
@@ -95,7 +95,7 @@ public sealed class ColorManager
 
         _terminal.AssertNotDisposed();
         _terminal.Curses.init_pair(_nextPairHandle, fgColor, bgColor)
-                 .Check(nameof(_terminal.Curses.init_pair));
+                 .Check(nameof(_terminal.Curses.init_pair), "Failed to create a new color mixture.");
 
         var mixture = new ColorMixture { Handle = _nextPairHandle };
         _nextPairHandle++;
@@ -126,7 +126,7 @@ public sealed class ColorManager
     {
         _terminal.AssertNotDisposed();
         _terminal.Curses.init_pair(mixture.Handle, fgColor, bgColor)
-                 .Check(nameof(_terminal.Curses.init_pair));
+                 .Check(nameof(_terminal.Curses.init_pair), "Failed to redefine an existing color mixture.");
     }
 
     /// <summary>
@@ -153,7 +153,7 @@ public sealed class ColorManager
     {
         _terminal.AssertNotDisposed();
         _terminal.Curses.assume_default_colors(fgColor, bgColor)
-                 .Check(nameof(_terminal.Curses.assume_default_colors));
+                 .Check(nameof(_terminal.Curses.assume_default_colors), "Failed to redefine the default color mixture.");
     }
 
     /// <summary>
@@ -204,7 +204,7 @@ public sealed class ColorManager
         }
 
         _terminal.Curses.init_color(color, red, green, blue)
-                 .Check(nameof(_terminal.Curses.init_color));
+                 .Check(nameof(_terminal.Curses.init_color), "Failed to redefine a terminal color.");
     }
 
     /// <summary>
@@ -244,7 +244,7 @@ public sealed class ColorManager
         }
 
         _terminal.Curses.color_content(color, out var red, out var green, out var blue)
-                       .Check(nameof(_terminal.Curses.color_content));
+                       .Check(nameof(_terminal.Curses.color_content), "Failed to extract RGB information from a terminal color.");
 
         return (red, green, blue);
     }
@@ -272,7 +272,7 @@ public sealed class ColorManager
     {
         _terminal.AssertNotDisposed();
         _terminal.Curses.pair_content(mixture.Handle, out var fgColor, out var bgColor)
-                 .Check(nameof(_terminal.Curses.pair_content));
+                 .Check(nameof(_terminal.Curses.pair_content), "Failed to extract colors from the color mixture.");
 
         return (fgColor, bgColor);
     }

@@ -1,5 +1,6 @@
 namespace Sharpie;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using Curses;
 using JetBrains.Annotations;
@@ -173,7 +174,7 @@ public sealed class Screen: Window
     {
         Terminal.AssertNotDisposed();
         Terminal.Curses.doupdate()
-                .Check(nameof(Terminal.Curses.doupdate));
+                .Check(nameof(Terminal.Curses.doupdate), "Failed to update the main screen.");
     }
 
     private static (Key key, ModifierKey modifierKey) ConvertKey(uint keyCode)
@@ -428,7 +429,13 @@ public sealed class Screen: Window
         return (button, state, modifierKey);
     }
 
-    public bool TryReadEvent(int timeoutMillis, out Event? @event)
+    /// <summary>
+    /// Tries to read an event from the terminal.
+    /// </summary>
+    /// <param name="timeoutMillis">The timeout to wait for the event.</param>
+    /// <param name="event">The event that was read.</param>
+    /// <returns><c>true</c> if there was an event; <c>false</c> if the timeout expired.</returns>
+    public bool TryReadEvent(int timeoutMillis, [NotNullWhen(true)] out Event? @event)
     {
         /*
 
@@ -502,5 +509,4 @@ public sealed class Screen: Window
 
         return false;
     }
-
 }

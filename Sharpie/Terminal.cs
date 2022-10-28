@@ -60,6 +60,7 @@ public sealed class Terminal: IDisposable
         _rawMode = enableRawMode;
         _lineBuffering = enableLineBuffering;
         _manualFlush = manualFlush;
+        _newLineTranslation = enableReturnToNewLineTranslation;
 
         Curses.intrflush(IntPtr.Zero, _manualFlush);
         if (_manualFlush)
@@ -73,11 +74,11 @@ public sealed class Terminal: IDisposable
         if (_inputEchoing)
         {
             Curses.echo()
-                  .Check(nameof(Curses.echo));
+                  .Check(nameof(Curses.echo), "Failed to setup terminal's echo mode.");
         } else
         {
             Curses.noecho()
-                  .Check(nameof(Curses.noecho));
+                  .Check(nameof(Curses.noecho), "Failed to setup terminal's no-echo mode.");
         }
 
         if (!_lineBuffering)
@@ -85,29 +86,38 @@ public sealed class Terminal: IDisposable
             if (_rawMode)
             {
                 Curses.raw()
-                      .Check(nameof(Curses.raw));
+                      .Check(nameof(Curses.raw), "Failed to setup terminal's raw mode.");
             } else
             {
                 Curses.noraw()
-                      .Check(nameof(Curses.noraw));
+                      .Check(nameof(Curses.noraw), "Failed to setup terminal's no-raw mode.");
             }
 
             if (_readTimeoutMillis != Timeout.Infinite)
             {
                 Curses.halfdelay(Helpers.ConvertMillisToTenths(_readTimeoutMillis))
-                      .Check(nameof(Curses.halfdelay));
+                      .Check(nameof(Curses.halfdelay), "Failed to setup terminal's half-delay non-buffered mode.");
             } else
             {
                 Curses.cbreak()
-                      .Check(nameof(Curses.cbreak));
+                      .Check(nameof(Curses.cbreak), "Failed to setup terminal's non-buffered mode.");
             }
         } else
         {
             Curses.nocbreak()
-                  .Check(nameof(Curses.nocbreak));
+                  .Check(nameof(Curses.nocbreak), "Failed to setup terminal buffered mode.");
         }
 
-        EnableReturnToNewLineTranslation = enableReturnToNewLineTranslation;
+        if (_newLineTranslation)
+        {
+            Curses.nl()
+                  .Check(nameof(Curses.nl), "Failed to enable new line translation.");
+        } else
+        {
+            Curses.nonl()
+                  .Check(nameof(Curses.nonl), "Failed to disable new line translation.");
+        }
+
         CaretMode = hardwareCursorMode;
         EnableMouse = enableMouse;
 
@@ -145,7 +155,7 @@ public sealed class Terminal: IDisposable
             AssertNotDisposed();
 
             return Curses.baudrate()
-                         .Check(nameof(Curses.baudrate));
+                         .Check(nameof(Curses.baudrate), "Failed to obtain the baud rate of the terminal.");
         }
     }
 
@@ -199,7 +209,7 @@ public sealed class Terminal: IDisposable
                 : 0;
 
             Curses.mousemask(newMask, out var oldMask)
-                  .Check(nameof(Curses.mousemask));
+                  .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
             _oldMouseMask ??= oldMask;
         }
@@ -218,7 +228,7 @@ public sealed class Terminal: IDisposable
             AssertNotDisposed();
 
             return Curses.mouseinterval(-1)
-                         .Check(nameof(Curses.mouseinterval));
+                         .Check(nameof(Curses.mouseinterval), "Failed to get the mouse click interval.");
         }
         set
         {
@@ -230,7 +240,7 @@ public sealed class Terminal: IDisposable
             }
 
             Curses.mouseinterval(value)
-                  .Check(nameof(Curses.mouseinterval));
+                  .Check(nameof(Curses.mouseinterval), "Failed to set the mouse click interval.");
         }
     }
 
@@ -336,29 +346,13 @@ public sealed class Terminal: IDisposable
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public bool EnableReturnToNewLineTranslation
+    public bool ReturnKeyTranslatesToNewLine
     {
         get
         {
             AssertNotDisposed();
 
             return _newLineTranslation;
-        }
-        set
-        {
-            AssertNotDisposed();
-
-            if (value)
-            {
-                Curses.nl()
-                      .Check(nameof(Curses.nl));
-            } else
-            {
-                Curses.nonl()
-                      .Check(nameof(Curses.nonl));
-            }
-
-            _newLineTranslation = value;
         }
     }
 
@@ -394,7 +388,7 @@ public sealed class Terminal: IDisposable
             AssertNotDisposed();
 
             var prevMode = Curses.curs_set((int) value)
-                                 .Check(nameof(Curses.curs_set));
+                                 .Check(nameof(Curses.curs_set), "Failed to change the caret mode.");
 
             _initialHardwareCursorMode ??= prevMode;
             _hardwareCursorMode = value;
@@ -519,11 +513,11 @@ public sealed class Terminal: IDisposable
         if (silent)
         {
             Curses.flash()
-                  .Check(nameof(Curses.flash));
+                  .Check(nameof(Curses.flash), "Failed to flash the terminal.");
         } else
         {
             Curses.beep()
-                  .Check(nameof(Curses.beep));
+                  .Check(nameof(Curses.beep), "Failed to beep the terminal.");
         }
     }
 

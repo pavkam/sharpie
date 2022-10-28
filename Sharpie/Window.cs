@@ -31,8 +31,9 @@ public class Window: IDisposable
         Debug.Assert(element != null);
         Debug.Assert(element.Length > 0);
 
-        Terminal.Curses.setcchar(out var @char, element, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
+        Terminal.Curses.setcchar(out var @char, element, (uint) style.Attributes, style.ColorMixture.Handle,
+                    IntPtr.Zero)
+                .Check(nameof(Terminal.Curses.setcchar), "Failed to convert string to complex character.");
 
         return @char;
     }
@@ -43,7 +44,7 @@ public class Window: IDisposable
     {
         var builder = new StringBuilder(10);
         Terminal.Curses.getcchar(@char, builder, out var attrs, out var colorPair, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.getcchar));
+                .Check(nameof(Terminal.Curses.getcchar), "Failed to deconstruct the complex character.");
 
         return (Rune.GetRuneAt(builder.ToString(), 0),
             new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
@@ -82,13 +83,16 @@ public class Window: IDisposable
         EnableScrolling = true;
 
         Terminal.Curses.keypad(Handle, true)
-                .Check(nameof(Terminal.Curses.keypad));
+                .Check(nameof(Terminal.Curses.keypad), "Failed to enable the keypad resolution mode.");
+
         Terminal.Curses.notimeout(Handle, false)
-                .Check(nameof(Terminal.Curses.notimeout));
+                .Check(nameof(Terminal.Curses.notimeout), "Failed to enable no-read-timeout mode.");
+
         Terminal.Curses.nodelay(Handle, false)
-                .Check(nameof(Terminal.Curses.nodelay));
+                .Check(nameof(Terminal.Curses.nodelay), "Failed to enable read-delay mode.");
+
         Terminal.Curses.syncok(Handle, true)
-                .Check(nameof(Terminal.Curses.syncok));
+                .Check(nameof(Terminal.Curses.syncok), "Failed to enable auto-sync mode.");
     }
 
     /// <summary>
@@ -113,7 +117,7 @@ public class Window: IDisposable
         {
             Terminal.AssertNotDisposed();
             Terminal.Curses.scrollok(Handle, value)
-                    .Check(nameof(Terminal.Curses.scrollok));
+                    .Check(nameof(Terminal.Curses.scrollok), "Failed to change the scrolling mode.");
         }
     }
 
@@ -130,7 +134,6 @@ public class Window: IDisposable
     /// Default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
     public bool UseHardwareLineInsertAndDelete
     {
         get => Terminal.Curses.is_idlok(Handle);
@@ -139,7 +142,7 @@ public class Window: IDisposable
             if (Terminal.Curses.has_il())
             {
                 Terminal.Curses.idlok(Handle, value)
-                        .Check(nameof(Terminal.Curses.idlok));
+                        .Check(nameof(Terminal.Curses.idlok), "Failed to change the hardware line mode.");
             }
         }
     }
@@ -174,13 +177,13 @@ public class Window: IDisposable
         get
         {
             Terminal.Curses.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero)
-                    .Check(nameof(Terminal.Curses.wattr_get));
+                    .Check(nameof(Terminal.Curses.wattr_get), "Failed to get the window style.");
 
             return new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } };
         }
         set =>
             Terminal.Curses.wattr_set(Handle, (uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
-                    .Check(nameof(Terminal.Curses.wattr_set));
+                    .Check(nameof(Terminal.Curses.wattr_set), "Failed to set the window style.");
     }
 
     /// <summary>
@@ -193,7 +196,7 @@ public class Window: IDisposable
         get => Style.ColorMixture;
         set =>
             Terminal.Curses.wcolor_set(Handle, value.Handle, IntPtr.Zero)
-                    .Check(nameof(Terminal.Curses.wcolor_set));
+                    .Check(nameof(Terminal.Curses.wcolor_set), "Failed to set the window color mixture.");
     }
 
     /// <summary>
@@ -205,7 +208,7 @@ public class Window: IDisposable
     public void EnableAttributes(VideoAttribute attributes)
     {
         Terminal.Curses.wattr_on(Handle, (uint) attributes, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.wattr_on));
+                .Check(nameof(Terminal.Curses.wattr_on), "Failed to enable window attributes.");
     }
 
     /// <summary>
@@ -217,7 +220,7 @@ public class Window: IDisposable
     public void DisableAttributes(VideoAttribute attributes)
     {
         Terminal.Curses.wattr_off(Handle, (uint) attributes, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.wattr_off));
+                .Check(nameof(Terminal.Curses.wattr_off), "Failed to disable window attributes.");
     }
 
     /// <summary>
@@ -281,7 +284,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wscrl(Handle, lines)
-                .Check(nameof(Terminal.Curses.wscrl));
+                .Check(nameof(Terminal.Curses.wscrl), "Failed to scroll the contents of the window up.");
     }
 
     /// <summary>
@@ -305,7 +308,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wscrl(Handle, -lines)
-                .Check(nameof(Terminal.Curses.wscrl));
+                .Check(nameof(Terminal.Curses.wscrl), "Failed to scroll the contents of the window down.");
     }
 
     /// <summary>
@@ -323,7 +326,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.winsdelln(Handle, lines)
-                .Check(nameof(Terminal.Curses.winsdelln));
+                .Check(nameof(Terminal.Curses.winsdelln), "Failed to insert blank lines into the window.");
     }
 
     /// <summary>
@@ -341,7 +344,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.winsdelln(Handle, -lines)
-                .Check(nameof(Terminal.Curses.winsdelln));
+                .Check(nameof(Terminal.Curses.winsdelln), "Failed to delete lines from the window.");
     }
 
     /// <summary>
@@ -360,7 +363,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wchgat(Handle, width, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.wchgat));
+                .Check(nameof(Terminal.Curses.wchgat), "Failed to change style of characters in the window.");
     }
 
     /// <summary>
@@ -382,7 +385,8 @@ public class Window: IDisposable
         while (enumerator.MoveNext())
         {
             var @char = MakeComplexChar(enumerator.GetTextElement(), style);
-            if  (Terminal.Curses.wadd_wch(Handle, @char).Failed())
+            if (Terminal.Curses.wadd_wch(Handle, @char)
+                        .Failed())
             {
                 break;
             }
@@ -406,7 +410,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wvline_set(Handle, MakeComplexChar(@char, style), length)
-                .Check(nameof(Terminal.Curses.wvline_set));
+                .Check(nameof(Terminal.Curses.wvline_set), "Failed to draw a vertical line.");
     }
 
     /// <summary>
@@ -419,7 +423,7 @@ public class Window: IDisposable
     public void DrawVerticalLine(int length)
     {
         Terminal.Curses.wvline(Handle, 0, length)
-                .Check(nameof(Terminal.Curses.wvline));
+                .Check(nameof(Terminal.Curses.wvline), "Failed to draw a vertical line.");
     }
 
     /// <summary>
@@ -451,7 +455,7 @@ public class Window: IDisposable
 
         Terminal.Curses.wborder_set(Handle, leftSide, rightSide, topSide, bottomSide,
                     topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner)
-                .Check(nameof(Terminal.Curses.wborder_set));
+                .Check(nameof(Terminal.Curses.wborder_set), "Failed to draw a window border.");
     }
 
     /// <summary>
@@ -461,8 +465,9 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void DrawBorder()
     {
-        Terminal.Curses.wborder(Handle, 0, 0, 0, 0, 0, 0, 0, 0)
-                .Check(nameof(Terminal.Curses.wborder));
+        Terminal.Curses.wborder(Handle, 0, 0, 0, 0,
+                    0, 0, 0, 0)
+                .Check(nameof(Terminal.Curses.wborder), "Failed to draw a window border.");
     }
 
     /// <summary>
@@ -482,7 +487,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.whline_set(Handle, MakeComplexChar(@char, style), length)
-                .Check(nameof(Terminal.Curses.whline_set));
+                .Check(nameof(Terminal.Curses.whline_set), "Failed to draw a horizontal line.");
     }
 
     /// <summary>
@@ -500,7 +505,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.whline(Handle, 0, length)
-                .Check(nameof(Terminal.Curses.whline));
+                .Check(nameof(Terminal.Curses.whline), "Failed to draw a horizontal line.");
     }
 
     /// <summary>
@@ -518,7 +523,8 @@ public class Window: IDisposable
 
         while (count > 0)
         {
-            if (Terminal.Curses.wdelch(Handle).Failed())
+            if (Terminal.Curses.wdelch(Handle)
+                        .Failed())
             {
                 break;
             }
@@ -545,7 +551,7 @@ public class Window: IDisposable
         var arr = new ComplexChar[count];
 
         Terminal.Curses.win_wchnstr(Handle, arr, count)
-                .Check(nameof(Terminal.Curses.win_wchnstr));
+                .Check(nameof(Terminal.Curses.win_wchnstr), "Failed to get the text from the window.");
 
         return arr.Select(BreakComplexChar)
                   .ToArray();
@@ -561,13 +567,13 @@ public class Window: IDisposable
         get
         {
             Terminal.Curses.wgetbkgrnd(Handle, out var @char)
-                    .Check(nameof(Terminal.Curses.wgetbkgrnd));
+                    .Check(nameof(Terminal.Curses.wgetbkgrnd), "Failed to get the window background.");
 
             return BreakComplexChar(@char);
         }
         set =>
             Terminal.Curses.wbkgrnd(Handle, MakeComplexChar(value.@char, value.style))
-                    .Check(nameof(Terminal.Curses.wbkgrnd));
+                    .Check(nameof(Terminal.Curses.wbkgrnd), "Failed to set the window background.");
     }
 
     /// <summary>
@@ -582,20 +588,20 @@ public class Window: IDisposable
         {
             case ClearStrategy.Full:
                 Terminal.Curses.werase(Handle)
-                        .Check(nameof(Terminal.Curses.werase));
+                        .Check(nameof(Terminal.Curses.werase), "Failed to queue a window erase.");
 
                 break;
             case ClearStrategy.LineFromCaret:
                 if (CaretPosition.X < Size.Width - 1)
                 {
                     Terminal.Curses.wclrtoeol(Handle)
-                            .Check(nameof(Terminal.Curses.wclrtoeol));
+                            .Check(nameof(Terminal.Curses.wclrtoeol), "Failed to clear the line from the caret.");
                 }
 
                 break;
             case ClearStrategy.FullFromCaret:
                 Terminal.Curses.wclrtobot(Handle)
-                        .Check(nameof(Terminal.Curses.wclrtobot));
+                        .Check(nameof(Terminal.Curses.wclrtobot), "Failed to clear the window from the caret.");
 
                 break;
         }
@@ -620,12 +626,12 @@ public class Window: IDisposable
         {
             case ReplaceStrategy.Overlay:
                 Terminal.Curses.overlay(Handle, window.Handle)
-                        .Check(nameof(Terminal.Curses.overlay));
+                        .Check(nameof(Terminal.Curses.overlay), "Failed to overlay window.");
 
                 break;
             case ReplaceStrategy.Overwrite:
                 Terminal.Curses.overwrite(Handle, window.Handle)
-                        .Check(nameof(Terminal.Curses.overwrite));
+                        .Check(nameof(Terminal.Curses.overwrite), "Failed to overwrite window.");
 
                 break;
         }
@@ -657,7 +663,7 @@ public class Window: IDisposable
         Terminal.Curses.copywin(Handle, window.Handle, srcRect.Top, srcRect.Left, destRect.Top,
                     destRect.Left, destRect.Bottom, destRect.Right,
                     Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
-                .Check(nameof(Terminal.Curses.copywin));
+                .Check(nameof(Terminal.Curses.copywin), "Failed to copy the window contents.");
     }
 
     /// <summary>
@@ -681,7 +687,7 @@ public class Window: IDisposable
         }
 
         Terminal.Curses.wtouchln(Handle, line, count, 1)
-                .Check(nameof(Terminal.Curses.wtouchln));
+                .Check(nameof(Terminal.Curses.wtouchln), "Failed to mark lines as dirty.");
     }
 
     /// <summary>
@@ -689,10 +695,7 @@ public class Window: IDisposable
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void Invalidate()
-    {
-        Invalidate(0, Size.Height);
-    }
+    public void Invalidate() { Invalidate(0, Size.Height); }
 
     /// <summary>
     /// Checks if a given point fits within the current window.
@@ -709,8 +712,7 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <returns>The result of the check.</returns>
     public bool IsRectangleWithin(Rectangle rect) =>
-        IsPointWithin(new(rect.X, rect.Y)) &&
-        IsPointWithin(new(rect.X + rect.Width - 1, rect.Y + rect.Bottom - 1));
+        IsPointWithin(new(rect.X, rect.Y)) && IsPointWithin(new(rect.X + rect.Width - 1, rect.Y + rect.Bottom - 1));
 
     /// <summary>
     /// Gets or sets the location of the window within its parent.
@@ -725,13 +727,15 @@ public class Window: IDisposable
             if (Terminal.Curses.is_subwin(Handle))
             {
                 return new(Terminal.Curses.getparx(Handle)
-                            .Check(nameof(Terminal.Curses.getparx)), Terminal.Curses.getpary(Handle)
-                                                                             .Check(nameof(Terminal.Curses.getpary)));
+                                   .Check(nameof(Terminal.Curses.getparx), "Failed to get window X coordinate."),
+                    Terminal.Curses.getpary(Handle)
+                            .Check(nameof(Terminal.Curses.getpary), "Failed to get window Y coordinate."));
             } else
             {
                 return new(Terminal.Curses.getbegx(Handle)
-                            .Check(nameof(Terminal.Curses.getbegx)), Terminal.Curses.getbegy(Handle)
-                                                                             .Check(nameof(Terminal.Curses.getbegy)));
+                                   .Check(nameof(Terminal.Curses.getbegx), "Failed to get window X coordinate."),
+                    Terminal.Curses.getbegy(Handle)
+                            .Check(nameof(Terminal.Curses.getbegy), "Failed to get window Y coordinate."));
             }
         }
         set
@@ -749,11 +753,11 @@ public class Window: IDisposable
             if (Terminal.Curses.is_subwin(Handle))
             {
                 Terminal.Curses.mvderwin(Handle, value.Y, value.X)
-                        .Check(nameof(Terminal.Curses.mvderwin));
+                        .Check(nameof(Terminal.Curses.mvderwin), "Failed to move window to new coordinates.");
             } else
             {
                 Terminal.Curses.mvwin(Handle, value.Y, value.X)
-                        .Check(nameof(Terminal.Curses.mvwin));
+                        .Check(nameof(Terminal.Curses.mvwin), "Failed to move window to new coordinates.");
             }
         }
     }
@@ -768,8 +772,9 @@ public class Window: IDisposable
     {
         get =>
             new(Terminal.Curses.getmaxx(Handle)
-                        .Check(nameof(Terminal.Curses.getmaxx)), Terminal.Curses.getmaxy(Handle)
-                                                                         .Check(nameof(Terminal.Curses.getmaxy)));
+                        .Check(nameof(Terminal.Curses.getmaxx), "Failed to get window width."), Terminal.Curses
+                .getmaxy(Handle)
+                .Check(nameof(Terminal.Curses.getmaxy), "Failed to get window height."));
         set
         {
             if (Parent != null)
@@ -783,7 +788,7 @@ public class Window: IDisposable
             }
 
             Terminal.Curses.wresize(Handle, value.Height, value.Width)
-                    .Check(nameof(Terminal.Curses.wresize));
+                    .Check(nameof(Terminal.Curses.wresize), "Failed to resize the window.");
         }
     }
 
@@ -797,8 +802,9 @@ public class Window: IDisposable
     {
         get =>
             new(Terminal.Curses.getcurx(Handle)
-                        .Check(nameof(Terminal.Curses.getcurx)), Terminal.Curses.getcury(Handle)
-                                                                         .Check(nameof(Terminal.Curses.getcury)));
+                        .Check(nameof(Terminal.Curses.getcurx), "Failed to get caret X position."), Terminal.Curses
+                .getcury(Handle)
+                .Check(nameof(Terminal.Curses.getcury), "Failed to get caret Y position."));
         set
         {
             if (!IsPointWithin(value))
@@ -807,7 +813,7 @@ public class Window: IDisposable
             }
 
             Terminal.Curses.wmove(Handle, value.Y, value.X)
-                    .Check(nameof(Terminal.Curses.wmove));
+                    .Check(nameof(Terminal.Curses.wmove), "Failed to move the caret.");
         }
     }
 
@@ -857,20 +863,17 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public virtual void Refresh(bool batch, bool entireScreen)
     {
-        if (entireScreen)
-        {
-            Terminal.Curses.clearok(Handle, true)
-                    .Check(nameof(Terminal.Curses.clearok));
-        }
+        Terminal.Curses.clearok(Handle, entireScreen)
+                .Check(nameof(Terminal.Curses.clearok), "Failed to configure the refresh mode.");
 
         if (batch)
         {
             Terminal.Curses.wnoutrefresh(Handle)
-                    .Check(nameof(Terminal.Curses.wnoutrefresh));
+                    .Check(nameof(Terminal.Curses.wnoutrefresh), "Failed to queue window refresh.");
         } else
         {
             Terminal.Curses.wrefresh(Handle)
-                    .Check(nameof(Terminal.Curses.wrefresh));
+                    .Check(nameof(Terminal.Curses.wrefresh), "Failed to perform window refresh.");
         }
     }
 
@@ -888,13 +891,14 @@ public class Window: IDisposable
         {
             throw new ArgumentOutOfRangeException(nameof(line));
         }
+
         if (count < 1 || line + count - 1 >= Size.Height)
         {
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
         Terminal.Curses.wredrawln(Handle, line, count)
-                .Check(nameof(Terminal.Curses.wredrawln));
+                .Check(nameof(Terminal.Curses.wredrawln), "Failed to perform line refresh.");
     }
 
     /// <summary>

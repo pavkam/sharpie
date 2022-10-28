@@ -26,7 +26,7 @@ internal static class Helpers
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="code"/> value.</returns>
     /// <exception cref="CursesException">Thrown if <paramref name="code"/> indicates an error.</exception>
-    public static int Check(this int code, string operation, string message = "")
+    public static int Check(this int code, string operation, string message)
     {
         if (code == CursesErrorResult)
         {

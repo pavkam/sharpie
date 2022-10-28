@@ -25,7 +25,7 @@ public sealed class SoftKeyLabelManager
         if (mode != SoftKeyLabelMode.Disabled)
         {
             terminal.Curses.slk_init((int) mode)
-                    .Check(nameof(_terminal.Curses.slk_init));
+                    .Check(nameof(_terminal.Curses.slk_init), "Failed to initialize soft label keys.");
         }
     }
 
@@ -74,7 +74,7 @@ public sealed class SoftKeyLabelManager
         AssertNotDisposedAndEnabled();
 
         _terminal.Curses.slk_set(index + 1, title, (int) align)
-                 .Check(nameof(_terminal.Curses.slk_set));
+                 .Check(nameof(_terminal.Curses.slk_set), "Failed to set the soft label.");
     }
 
     /// <summary>
@@ -90,9 +90,10 @@ public sealed class SoftKeyLabelManager
             AssertNotDisposedAndEnabled();
 
             var attrsAndColors = _terminal.Curses.slk_attr()
-                                          .Check(nameof(_terminal.Curses.slk_attr));
+                                          .Check(nameof(_terminal.Curses.slk_attr),
+                                              "Failed to get the soft label key attributes.");
 
-            var colorPair = (ushort) _terminal.Curses.COLOR_PAIR((uint)attrsAndColors);
+            var colorPair = (ushort) _terminal.Curses.COLOR_PAIR((uint) attrsAndColors);
             return new() { Attributes = (VideoAttribute) attrsAndColors, ColorMixture = new() { Handle = colorPair } };
         }
         set
@@ -100,7 +101,8 @@ public sealed class SoftKeyLabelManager
             AssertNotDisposedAndEnabled();
 
             _terminal.Curses.slk_attr_set((uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
-                     .Check(nameof(_terminal.Curses.slk_attr_set));
+                     .Check(nameof(_terminal.Curses.slk_attr_set),
+                         "Failed to configure the soft label key attributes.");
         }
     }
 
@@ -118,7 +120,7 @@ public sealed class SoftKeyLabelManager
             AssertNotDisposedAndEnabled();
 
             _terminal.Curses.slk_color(value.Handle)
-                     .Check(nameof(_terminal.Curses.slk_color));
+                     .Check(nameof(_terminal.Curses.slk_color), "Failed to configure the soft label key colors.");
         }
     }
 
@@ -134,7 +136,7 @@ public sealed class SoftKeyLabelManager
         AssertNotDisposedAndEnabled();
 
         _terminal.Curses.slk_attr_on((uint) attributes, IntPtr.Zero)
-                 .Check(nameof(_terminal.Curses.slk_attr_on));
+                 .Check(nameof(_terminal.Curses.slk_attr_on), "Failed to configure the soft label key attributes.");
     }
 
     /// <summary>
@@ -149,7 +151,7 @@ public sealed class SoftKeyLabelManager
         AssertNotDisposedAndEnabled();
 
         _terminal.Curses.slk_attr_off((uint) attributes, IntPtr.Zero)
-                 .Check(nameof(_terminal.Curses.slk_attr_off));
+                 .Check(nameof(_terminal.Curses.slk_attr_off), "Failed to configure the soft label key attributes.");
     }
 
     /// <summary>
@@ -162,7 +164,7 @@ public sealed class SoftKeyLabelManager
     {
         AssertNotDisposedAndEnabled();
         _terminal.Curses.slk_clear()
-                 .Check(nameof(_terminal.Curses.slk_clear));
+                 .Check(nameof(_terminal.Curses.slk_clear), "Failed to clear the soft label keys.");
     }
 
     /// <summary>
@@ -175,7 +177,7 @@ public sealed class SoftKeyLabelManager
     {
         AssertNotDisposedAndEnabled();
         _terminal.Curses.slk_restore()
-                 .Check(nameof(_terminal.Curses.slk_restore));
+                 .Check(nameof(_terminal.Curses.slk_restore), "Failed to restore the soft label keys.");
     }
 
     /// <summary>
@@ -188,7 +190,7 @@ public sealed class SoftKeyLabelManager
     {
         AssertNotDisposedAndEnabled();
         _terminal.Curses.slk_touch()
-                 .Check(nameof(_terminal.Curses.slk_touch));
+                 .Check(nameof(_terminal.Curses.slk_touch), "Failed to mark soft label keys as dirty.");
     }
 
     /// <summary>
@@ -205,11 +207,11 @@ public sealed class SoftKeyLabelManager
         if (batch)
         {
             _terminal.Curses.slk_noutrefresh()
-                     .Check(nameof(_terminal.Curses.slk_noutrefresh));
+                     .Check(nameof(_terminal.Curses.slk_noutrefresh), "Failed to queue soft label key refresh.");
         } else
         {
             _terminal.Curses.slk_refresh()
-                     .Check(nameof(_terminal.Curses.slk_refresh));
+                     .Check(nameof(_terminal.Curses.slk_refresh), "Failed to perform soft label key refresh.");
         }
     }
 }

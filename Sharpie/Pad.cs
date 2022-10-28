@@ -61,22 +61,19 @@ public sealed class Pad: Window
             throw new ArgumentOutOfRangeException(nameof(screenPos));
         }
 
-        if (entireScreen)
-        {
-            Terminal.Curses.clearok(Handle, true)
-                    .Check(nameof(Terminal.Curses.clearok));
-        }
+        Terminal.Curses.clearok(Handle, entireScreen)
+                .Check(nameof(Terminal.Curses.clearok), "Failed to configure pad refresh.");
 
         if (batch)
         {
             Terminal.Curses.pnoutrefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
                         destRect.Bottom, destRect.Right)
-                    .Check(nameof(Terminal.Curses.pnoutrefresh));
+                    .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
         } else
         {
             Terminal.Curses.prefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
                         destRect.Bottom, destRect.Right)
-                    .Check(nameof(Terminal.Curses.prefresh));
+                    .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
         }
     }
 }
