@@ -30,8 +30,35 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
+
 [TestClass]
 public class CursesExceptionTests
 {
-    [TestMethod] public void TestMethod1() { }
+    [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
+     SuppressMessage("Performance", "CA1806:Do not ignore method results")]
+    public void Ctor_ThrowsException_IfMessageIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => { new CursesException("dummy", null!); });
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
+     SuppressMessage("Performance", "CA1806:Do not ignore method results")]
+    public void Ctor_ThrowsException_IfOperationIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => { new CursesException(null!, "text"); });
+    }
+    
+    [TestMethod]
+    public void Ctor_StoresTheOperation()
+    {
+        var ex = new CursesException("operation", "text");
+        ex.Operation.ShouldBe("operation");
+    }
+    
+    [TestMethod]
+    public void Ctor_StoresTheMessage()
+    {
+        var ex = new CursesException("operation", "text");
+        ex.Message.ShouldBe("The call to operation failed: text");
+    }
 }

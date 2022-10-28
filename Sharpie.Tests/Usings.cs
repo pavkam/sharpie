@@ -31,3 +31,4 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using Moq;
 global using Shouldly;
+global using System.Diagnostics.CodeAnalysis;

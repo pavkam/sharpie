@@ -41,8 +41,15 @@ public sealed class CursesException: Exception
     /// </summary>
     /// <param name="operation">The failed operation.</param>
     /// <param name="message">The message.</param>
-    internal CursesException(string operation, string message): base($"The call to {operation} failed: {message}") =>
-        Operation = operation;
+    internal CursesException(string operation, string message): base($"The call to {operation} failed: {message}")
+    {
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
+        }
+
+        Operation = operation ?? throw new ArgumentNullException(nameof(operation));
+    }
 
     /// <summary>
     ///     The operation that failed.
