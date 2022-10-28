@@ -46,7 +46,7 @@ public class TerminalResizeEventTests
     public void ToString_ProperlyFormats()
     {
         _event1.ToString()
-               .ShouldBe($"Resize [1 x 2]");
+               .ShouldBe("Resize [1 x 2]");
     }
 
     [TestMethod, DataRow(null), DataRow("")]

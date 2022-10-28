@@ -38,13 +38,8 @@ public class HelpersTests
 {
     private Mock<ICursesProvider> _cursesMock = null!;
 
-    [TestInitialize]
-    public void TestInitialize()
-    {
-        _cursesMock = new();
-    }
+    [TestInitialize] public void TestInitialize() { _cursesMock = new(); }
 
-    
     [TestMethod]
     public void Failed_ReturnsTrue_IfCodeIsMinus1()
     {
@@ -94,29 +89,33 @@ public class HelpersTests
     {
         Should.Throw<ArgumentOutOfRangeException>(() => { Helpers.ConvertMillisToTenths(-1); });
     }
-    
+
     [TestMethod]
     public void ConvertMillisToTenths_ReturnsZero_IfValueIsZero()
     {
-        Helpers.ConvertMillisToTenths(0).ShouldBe(0);
+        Helpers.ConvertMillisToTenths(0)
+               .ShouldBe(0);
     }
-    
+
     [TestMethod]
     public void ConvertMillisToTenths_RoundsUp_IfValueBelow100()
     {
-        Helpers.ConvertMillisToTenths(1).ShouldBe(1);
+        Helpers.ConvertMillisToTenths(1)
+               .ShouldBe(1);
     }
-    
+
     [TestMethod]
     public void ConvertMillisToTenths_RoundsUp_IfValueBelowMid100s()
     {
-        Helpers.ConvertMillisToTenths(450).ShouldBe(5);
+        Helpers.ConvertMillisToTenths(450)
+               .ShouldBe(5);
     }
-    
+
     [TestMethod]
     public void ConvertMillisToTenths_AppliesMaximum()
     {
-        Helpers.ConvertMillisToTenths(256000).ShouldBe(255);
+        Helpers.ConvertMillisToTenths(256000)
+               .ShouldBe(255);
     }
 
     [TestMethod, DataRow(0x1F, "\x241F"), DataRow(0x7F, "\x247F"), DataRow(0x9F, "\x249F")]
@@ -127,10 +126,11 @@ public class HelpersTests
                    .Returns(0);
 
         _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
-        _cursesMock.Verify(v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<ushort>(),
-            It.IsAny<IntPtr>()), Times.Once);
+        _cursesMock.Verify(
+            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<ushort>(),
+                It.IsAny<IntPtr>()), Times.Once);
     }
-    
+
     [TestMethod, DataRow(0x20, "\x0020"), DataRow(0x7E, "\x007E"), DataRow(0xA0, "\x00A0")]
     public void ToComplexChar_DoesNotConvertOtherAsciiToUnicode(int ch, string expected)
     {
@@ -139,10 +139,11 @@ public class HelpersTests
                    .Returns(0);
 
         _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
-        _cursesMock.Verify(v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<ushort>(),
-            It.IsAny<IntPtr>()), Times.Once);
+        _cursesMock.Verify(
+            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<ushort>(),
+                It.IsAny<IntPtr>()), Times.Once);
     }
-    
+
     [TestMethod]
     public void ToComplexChar_Throws_IfCursesFails()
     {
@@ -152,7 +153,7 @@ public class HelpersTests
 
         Should.Throw<CursesException>(() => _cursesMock.Object.ToComplexChar(new('a'), Style.Default));
     }
-    
+
     [TestMethod]
     public void FromComplexChar_Throws_IfCursesFails()
     {
@@ -163,16 +164,17 @@ public class HelpersTests
         var c = new ComplexChar();
         Should.Throw<CursesException>(() => _cursesMock.Object.FromComplexChar(c));
     }
-    
+
     [TestMethod]
     public void FromComplexChar_ReturnsCursesChar()
     {
         _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
                        out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
-                   .Returns((ComplexChar _, StringBuilder sb, out uint attrs, out ushort colorPair, IntPtr _) =>
+                   .Returns((ComplexChar _, StringBuilder sb, out uint attrs, out ushort colorPair,
+                       IntPtr _) =>
                    {
                        sb.Append('H');
-                       attrs = (uint)VideoAttribute.Dim;
+                       attrs = (uint) VideoAttribute.Dim;
                        colorPair = 10;
                        return 0;
                    });

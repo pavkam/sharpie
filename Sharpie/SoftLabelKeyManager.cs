@@ -68,7 +68,14 @@ public sealed class SoftLabelKeyManager
     /// <summary>
     ///     Gets the number of labels within the soft key label panel.
     /// </summary>
-    public int LabelCount => _mode is SoftLabelKeyMode.FourFourFour or SoftLabelKeyMode.FourFourFourWithIndex ? 12 : 8;
+    public int LabelCount
+    {
+        get
+        {
+            AssertEnabled();
+            return _mode is SoftLabelKeyMode.FourFourFour or SoftLabelKeyMode.FourFourFourWithIndex ? 12 : 8;
+        }
+    }
 
     /// <summary>
     ///     Gets or sets the style of the window.

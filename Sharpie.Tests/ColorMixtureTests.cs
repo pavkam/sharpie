@@ -74,7 +74,7 @@ public class ColorMixtureTests
         cm1.GetHashCode()
            .ShouldBe(cm2.GetHashCode());
     }
-    
+
     [TestMethod]
     public void GetHashCode_IsTDifferent_ForDifferentHandles()
     {
@@ -84,7 +84,7 @@ public class ColorMixtureTests
         cm1.GetHashCode()
            .ShouldNotBe(cm2.GetHashCode());
     }
-  
+
     [TestMethod]
     public void EqualOperator_ReturnsFalse_IfDifferentHandle()
     {
@@ -96,7 +96,7 @@ public class ColorMixtureTests
     {
         Assert.IsTrue(new ColorMixture { Handle = 0 } == ColorMixture.Default);
     }
-    
+
     [TestMethod]
     public void NotEqualOperator_ReturnsTrue_IfDifferentHandle()
     {

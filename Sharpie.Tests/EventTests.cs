@@ -43,41 +43,41 @@ public class EventTests
     public void ToString_ProperlyFormats()
     {
         _event1.ToString()
-              .ShouldBe("MouseAction");
+               .ShouldBe("MouseAction");
     }
 
     [TestMethod, DataRow(null), DataRow("")]
     public void Equals_ReturnsFalse_IfNotEvent(object? b)
     {
         _event1.Equals(b)
-              .ShouldBeFalse();
+               .ShouldBeFalse();
     }
 
     [TestMethod]
     public void Equals_ReturnsFalse_IfDifferentTypes()
     {
         _event1.Equals(_event2)
-              .ShouldBeFalse();
+               .ShouldBeFalse();
     }
 
     [TestMethod]
     public void Equals_ReturnsTrue_IfSameType()
     {
         _event1.Equals(_event3)
-              .ShouldBeTrue();
+               .ShouldBeTrue();
     }
 
     [TestMethod]
     public void GetHashCode_IsTheSame_ForSameTypes()
     {
         _event1.GetHashCode()
-              .ShouldBe(_event3.GetHashCode());
+               .ShouldBe(_event3.GetHashCode());
     }
 
     [TestMethod]
     public void GetHashCode_IsTDifferent_ForDifferentTypes()
     {
         _event1.GetHashCode()
-              .ShouldNotBe(_event2.GetHashCode());
+               .ShouldNotBe(_event2.GetHashCode());
     }
 }
