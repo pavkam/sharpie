@@ -41,15 +41,18 @@ public sealed class Pad: Window
     /// <summary>
     ///     The parent screen of this pad.
     /// </summary>
-    internal new Screen Parent => (Screen) base.Parent!;
+    internal Screen Screen { get; }
 
     /// <inheritdoc cref="Window(ICursesProvider, Window, IntPtr)"/>
+    /// <exception cref="ArgumentException">The <paramref name="parent"/> is not a valid ancestor.</exception>
     internal Pad(ICursesProvider curses, Window parent, IntPtr windowHandle): base(curses, parent, windowHandle)
     {
-        if (parent is not Screen)
+        Screen = parent switch
         {
-            throw new InvalidOperationException("Cannot create a pad within non-screen windows.");
-        }
+            Screen screen => screen,
+            Pad pad => pad.Screen,
+            var _ => throw new ArgumentException("The parent can only be the screen or another pad.", nameof(parent))
+        };
     }
 
     /// <inheritdoc cref="Window.ImmediateRefresh" />
@@ -60,7 +63,7 @@ public sealed class Pad: Window
     /// <exception cref="NotSupportedException">Always throws on write.</exception>
     public override bool ImmediateRefresh
     {
-        get => base.ImmediateRefresh;
+        get => false;
         set => throw new NotSupportedException("Pads cannot have immediate refresh enabled.");
     }
 
@@ -90,8 +93,8 @@ public sealed class Pad: Window
             throw new ArgumentOutOfRangeException(nameof(rect));
         }
 
-        var destRect = new Rectangle(screenPos, new(rect.Bottom - rect.Top, rect.Right - rect.Left));
-        if (!Parent.IsRectangleWithin(destRect))
+        var destRect = new Rectangle(screenPos.X, screenPos.Y, rect.Right - rect.Left, rect.Bottom - rect.Top);
+        if (!Screen.IsRectangleWithin(destRect))
         {
             throw new ArgumentOutOfRangeException(nameof(screenPos));
         }

@@ -30,8 +30,153 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
+using Curses;
+
 [TestClass]
 public class PadTests
 {
-    [TestMethod] public void TestMethod1() { }
+    private Mock<ICursesProvider> _cursesMock = null!;
+    private Screen _screen = null!;
+    private Pad _pad1 = null!;
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _cursesMock = new();
+
+        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns((IntPtr _, int y, int x) => y is >= 0 and < 5 && x is >= 0 and < 5);
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns((IntPtr _, int y, int x) => y is >= 0 and < 10 && x is >= 0 and < 10);
+        
+        _screen = new(_cursesMock.Object, new(1));
+        _pad1 = new(_cursesMock.Object, _screen, new(2));
+    }
+
+    [TestMethod]
+    public void Ctor_Throws_IfCursesIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => new Pad(null!, _screen, IntPtr.MaxValue));
+    }
+    
+    [TestMethod]
+    public void Ctor_Throws_IfWindowIsNull()
+    {
+        Should.Throw<ArgumentException>(() => new Pad(_cursesMock.Object, null!, IntPtr.MaxValue));
+    }
+    
+    [TestMethod]
+    public void Ctor_Throws_IfHandleIsZero()
+    {
+        Should.Throw<ArgumentException>(() => new Pad(_cursesMock.Object, _screen, IntPtr.Zero));
+    }
+
+    [TestMethod]
+    public void Ctor_Throws_IfParentNotPadOrScreen()
+    {
+        Should.Throw<ArgumentException>(() =>
+            new Pad(_cursesMock.Object, new(_cursesMock.Object, null, IntPtr.MaxValue), IntPtr.Zero));
+    }
+    
+    [TestMethod]
+    public void Screen_ProperlyContainsTheScreen()
+    {
+        _pad1.Screen.ShouldBe(_screen);
+        
+        var pad2 = new Pad(_cursesMock.Object, _pad1, IntPtr.MaxValue);
+        pad2.Screen.ShouldBe(_screen);
+    }
+    
+    [TestMethod]
+    public void ImmediateRefresh_AlwaysReturnsFalse()
+    {
+        _pad1.ImmediateRefresh.ShouldBe(false);
+    }
+    
+    [TestMethod]
+    public void ImmediateRefresh_Throws_WhenSet()
+    {
+        Should.Throw<NotSupportedException>(() =>_pad1.ImmediateRefresh = true);
+    }
+    
+    [TestMethod]
+    public void Refresh_Throws_Always()
+    {
+        Should.Throw<NotSupportedException>(() =>_pad1.Refresh(false, true));
+    }
+    
+    [TestMethod]
+    public void Refresh2_Throws_IfTheRectIsOutsideTheBounds()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _pad1.Refresh(false, false, new(1, 1, 5, 5), new(0, 0));
+        });
+    }
+    
+    [TestMethod]
+    public void Refresh2_Throws_IfThePositionIsOutsideTheBounds()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _pad1.Refresh(false, false, new(0, 0, 5, 5), new(6, 6));
+        });
+    }
+    
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void Refresh2_SetsEntireScreenRefresh(bool entireScreen)
+    {
+        _pad1.Refresh(false, entireScreen, new(0, 0, 1, 1), new(0, 0));
+        
+        _cursesMock.Verify(v => v.clearok(_pad1.Handle, entireScreen), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Refresh2_QueuesRefresh()
+    {
+        _pad1.Refresh(true, false, new(0, 1, 2, 3), new(2, 3));
+        
+        _cursesMock.Verify(v => v.pnoutrefresh(_pad1.Handle, 1, 0, 3, 2, 6, 4), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Refresh2_RefreshesDirectly()
+    {
+        _pad1.Refresh(false, false, new(0, 1, 2, 3), new(2, 3));
+        
+        _cursesMock.Verify(v => v.prefresh(_pad1.Handle, 1, 0, 3, 2, 6, 4), Times.Once);
+    }
+
+
+    [TestMethod]
+    public void Refresh2_Throws_IfCursesFailsAtSettingEntireScreenRefresh()
+    {
+        _cursesMock.Setup(s => s.clearok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesException>(() => { _pad1.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
+              .Operation.ShouldBe("clearok");
+    }
+
+    [TestMethod]
+    public void Refresh2_Throws_IfCursesFailsAtQueueingRefresh()
+    {
+        _cursesMock.Setup(s => s.pnoutrefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesException>(() => { _pad1.Refresh(true, false, new(0, 0, 1, 1), new(0, 0)); })
+              .Operation.ShouldBe("pnoutrefresh");
+    }
+
+    [TestMethod]
+    public void Refresh2_Throws_IfCursesFailsAtRefreshingDirectly()
+    {
+        _cursesMock.Setup(s => s.prefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesException>(() => { _pad1.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
+              .Operation.ShouldBe("prefresh");
+    }
 }

@@ -50,6 +50,11 @@ public class Window: IDisposable
     /// <param name="windowHandle">The window handle.</param>
     internal Window(ICursesProvider curses, Window? parent, IntPtr windowHandle)
     {
+        if (windowHandle == IntPtr.Zero)
+        {
+            throw new ArgumentException("The window handle has an invalid value.");
+        }
+        
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
         _handle = windowHandle;
         Parent = parent;
@@ -79,7 +84,7 @@ public class Window: IDisposable
     /// <summary>
     ///     The parent of this window.
     /// </summary>
-    protected Window? Parent { get; }
+    protected internal Window? Parent { get; }
 
     /// <summary>
     ///     The Curses handle for the window.
@@ -128,7 +133,7 @@ public class Window: IDisposable
     /// <summary>
     ///     Checks if the window is not disposed.
     /// </summary>
-    public bool IsDisposed => Handle == IntPtr.Zero;
+    public bool IsDisposed => _handle == IntPtr.Zero;
 
     /// <summary>
     ///     Enables or disables the use of hardware line insert/delete handling fpr this window.
@@ -908,7 +913,7 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <returns>The result of the check.</returns>
     public bool IsRectangleWithin(Rectangle rect) =>
-        IsPointWithin(new(rect.X, rect.Y)) && IsPointWithin(new(rect.X + rect.Width - 1, rect.Y + rect.Bottom - 1));
+        IsPointWithin(new(rect.Left, rect.Top)) && IsPointWithin(new(rect.Right - 1, rect.Bottom - 1));
 
     /// <summary>
     ///     Checks if the row at <paramref name="y" /> is dirty.
