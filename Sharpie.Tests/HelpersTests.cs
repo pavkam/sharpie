@@ -33,5 +33,77 @@ namespace Sharpie.Tests;
 [TestClass]
 public class HelpersTests
 {
-    [TestMethod] public void TestMethod1() { }
+    [TestMethod]
+    public void Failed_ReturnsTrue_IfCodeIsMinus1()
+    {
+        (-1).Failed()
+            .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void Failed_ReturnsFalse_IfCodeIsNotMinus1()
+    {
+        1.Failed()
+         .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Check_ReturnsCode_IfCodeIsNotMinus1()
+    {
+        1.Check("operation", "message")
+         .ShouldBe(1);
+    }
+
+    [TestMethod]
+    public void Check_Throws_IfCodeIsMinus1()
+    {
+        var exception = Should.Throw<CursesException>(() => { (-1).Check("operation", "message"); });
+        exception.Operation.ShouldBe("operation");
+        exception.Message.ShouldBe("The call to operation failed: message");
+    }
+
+    [TestMethod]
+    public void Check_ReturnsPointer_IfNotZeroPointer()
+    {
+        new IntPtr(1).Check("operation", "message")
+                     .ShouldBe(new(1));
+    }
+
+    [TestMethod]
+    public void Check_Throws_IfZeroPointer()
+    {
+        var exception = Should.Throw<CursesException>(() => { IntPtr.Zero.Check("operation", "message"); });
+        exception.Operation.ShouldBe("operation");
+        exception.Message.ShouldBe("The call to operation failed: message");
+    }
+
+    [TestMethod]
+    public void ConvertMillisToTenths_Throws_IfValueIsNegative()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() => { Helpers.ConvertMillisToTenths(-1); });
+    }
+    
+    [TestMethod]
+    public void ConvertMillisToTenths_ReturnsZero_IfValueIsZero()
+    {
+        Helpers.ConvertMillisToTenths(0).ShouldBe(0);
+    }
+    
+    [TestMethod]
+    public void ConvertMillisToTenths_RoundsUp_IfValueBelow100()
+    {
+        Helpers.ConvertMillisToTenths(1).ShouldBe(1);
+    }
+    
+    [TestMethod]
+    public void ConvertMillisToTenths_RoundsUp_IfValueBelowMid100s()
+    {
+        Helpers.ConvertMillisToTenths(450).ShouldBe(5);
+    }
+    
+    [TestMethod]
+    public void ConvertMillisToTenths_AppliesMaximum()
+    {
+        Helpers.ConvertMillisToTenths(256000).ShouldBe(255);
+    }
 }

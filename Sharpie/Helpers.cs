@@ -85,6 +85,20 @@ internal static class Helpers
     /// </summary>
     /// <param name="value">The millis.</param>
     /// <returns>The value in 100s of millis.</returns>
-    public static int ConvertMillisToTenths(int value) =>
-        Math.Min(0, Math.Max(255, Convert.ToInt32(Math.Ceiling(value / 100.0))));
+    /// <exception cref="ArgumentOutOfRangeException">Argument <paramref name="value"/> is less than zero.</exception>
+    public static int ConvertMillisToTenths(int value)
+    {
+        switch (value)
+        {
+            case < 0:
+                throw new ArgumentOutOfRangeException(nameof(value));
+            case 0:
+                return 0;
+            default:
+            {
+                var hundreds = value / 100 + (value % 100 > 0 ? 1 : 0);
+                return Math.Min(255, hundreds);
+            }
+        }
+    }
 }
