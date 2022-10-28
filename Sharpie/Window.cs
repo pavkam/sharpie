@@ -1,5 +1,6 @@
 namespace Sharpie;
 
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Text;
@@ -24,6 +25,29 @@ public class Window: IDisposable
 
     private IntPtr _handle;
     private IList<Window> _windows = new List<Window>();
+
+    private ComplexChar MakeComplexChar(string element, Style style)
+    {
+        Debug.Assert(element != null);
+        Debug.Assert(element.Length > 0);
+
+        Terminal.Curses.setcchar(out var @char, element, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
+                .Check(nameof(Terminal.Curses.setcchar));
+
+        return @char;
+    }
+
+    private ComplexChar MakeComplexChar(Rune rune, Style style) => MakeComplexChar(rune.ToString(), style);
+
+    private (Rune rune, Style style) BreakComplexChar(ComplexChar @char)
+    {
+        var builder = new StringBuilder(10);
+        Terminal.Curses.getcchar(@char, builder, out var attrs, out var colorPair, IntPtr.Zero)
+                .Check(nameof(Terminal.Curses.getcchar));
+
+        return (Rune.GetRuneAt(builder.ToString(), 0),
+            new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
+    }
 
     /// <summary>
     /// The Curses handle for the window.
@@ -357,11 +381,7 @@ public class Window: IDisposable
         var enumerator = StringInfo.GetTextElementEnumerator(str);
         while (enumerator.MoveNext())
         {
-            var el = enumerator.GetTextElement();
-
-            Terminal.Curses.setcchar(out var @char, el, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
-                    .Check(nameof(Terminal.Curses.setcchar));
-
+            var @char = MakeComplexChar(enumerator.GetTextElement(), style);
             if  (Terminal.Curses.wadd_wch(Handle, @char).Failed())
             {
                 break;
@@ -385,11 +405,7 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(length));
         }
 
-        Terminal.Curses.setcchar(out var c, @char.ToString(), (uint)style.Attributes, style.ColorMixture.Handle,
-                    IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
-
-        Terminal.Curses.wvline_set(Handle, c, length)
+        Terminal.Curses.wvline_set(Handle, MakeComplexChar(@char, style), length)
                 .Check(nameof(Terminal.Curses.wvline_set));
     }
 
@@ -424,37 +440,14 @@ public class Window: IDisposable
         Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar,
         Style style)
     {
-        Terminal.Curses.setcchar(out var leftSide, @leftSideChar.ToString(), (uint) style.Attributes,
-                    style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
-
-        Terminal.Curses.setcchar(out var rightSide, @rightSideChar.ToString(), (uint) style.Attributes,
-                    style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
-
-        Terminal.Curses.setcchar(out var topSide, @topSideChar.ToString(), (uint) style.Attributes,
-                    style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
-
-        Terminal.Curses.setcchar(out var bottomSide, @bottomSideChar.ToString(), (uint) style.Attributes,
-                    style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
-
-        Terminal.Curses.setcchar(out var topLeftCorner, @topLeftCornerChar.ToString(), (uint) style.Attributes,
-                    style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
-
-        Terminal.Curses.setcchar(out var topRightCorner, @topRightCornerChar.ToString(), (uint) style.Attributes,
-                    style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
-
-        Terminal.Curses.setcchar(out var bottomLeftCorner, @bottomLeftCornerChar.ToString(), (uint) style.Attributes,
-                    style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
-
-        Terminal.Curses.setcchar(out var bottomRightCorner, @bottomRightCornerChar.ToString(), (uint) style.Attributes,
-                    style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
+        var leftSide = MakeComplexChar(leftSideChar, style);
+        var rightSide = MakeComplexChar(rightSideChar, style);
+        var topSide = MakeComplexChar(topSideChar, style);
+        var bottomSide = MakeComplexChar(bottomSideChar, style);
+        var topLeftCorner = MakeComplexChar(topLeftCornerChar, style);
+        var topRightCorner = MakeComplexChar(topRightCornerChar, style);
+        var bottomLeftCorner = MakeComplexChar(bottomLeftCornerChar, style);
+        var bottomRightCorner = MakeComplexChar(bottomRightCornerChar, style);
 
         Terminal.Curses.wborder_set(Handle, leftSide, rightSide, topSide, bottomSide,
                     topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner)
@@ -488,11 +481,7 @@ public class Window: IDisposable
             throw new ArgumentOutOfRangeException(nameof(length));
         }
 
-        Terminal.Curses.setcchar(out var c, @char.ToString(), (uint)style.Attributes, style.ColorMixture.Handle,
-                    IntPtr.Zero)
-                .Check(nameof(Terminal.Curses.setcchar));
-
-        Terminal.Curses.whline_set(Handle, c, length)
+        Terminal.Curses.whline_set(Handle, MakeComplexChar(@char, style), length)
                 .Check(nameof(Terminal.Curses.whline_set));
     }
 
@@ -553,24 +542,12 @@ public class Window: IDisposable
         }
 
         count = Math.Min(count, Size.Width - CaretPosition.X);
-        var arr = new CChar[count];
+        var arr = new ComplexChar[count];
 
         Terminal.Curses.win_wchnstr(Handle, arr, count)
                 .Check(nameof(Terminal.Curses.win_wchnstr));
 
-        var sb = new StringBuilder(10);
-        return arr.Select(@char =>
-                  {
-                      sb.Clear();
-                      Terminal.Curses.getcchar(@char, sb, out var attrs, out var colorPair, IntPtr.Zero)
-                              .Check(nameof(Terminal.Curses.getcchar));
-
-                      return (Rune.GetRuneAt(sb.ToString(), 0),
-                          new Style
-                          {
-                              Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair }
-                          });
-                  })
+        return arr.Select(BreakComplexChar)
                   .ToArray();
     }
 
@@ -586,22 +563,11 @@ public class Window: IDisposable
             Terminal.Curses.wgetbkgrnd(Handle, out var @char)
                     .Check(nameof(Terminal.Curses.wgetbkgrnd));
 
-            var sb = new StringBuilder(10);
-            Terminal.Curses.getcchar(@char, sb, out var attrs, out var colorPair, IntPtr.Zero)
-                    .Check(nameof(Terminal.Curses.getcchar));
-
-            return (Rune.GetRuneAt(sb.ToString(), 0),
-                new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
+            return BreakComplexChar(@char);
         }
-        set
-        {
-            Terminal.Curses.setcchar(out var @char, value.@char.ToString(), (uint) value.style.Attributes,
-                        value.style.ColorMixture.Handle, IntPtr.Zero)
-                    .Check(nameof(Terminal.Curses.setcchar));
-
-            Terminal.Curses.wbkgrnd(Handle, @char)
+        set =>
+            Terminal.Curses.wbkgrnd(Handle, MakeComplexChar(value.@char, value.style))
                     .Check(nameof(Terminal.Curses.wbkgrnd));
-        }
     }
 
     /// <summary>

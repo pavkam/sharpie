@@ -437,7 +437,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern void nofilter();
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int getcchar(ref CChar @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest,
+    public static extern int getcchar(ref ComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest,
         out uint attrs, out ushort colorPair, IntPtr reserved);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -447,10 +447,10 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int killwchar(out uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int pecho_wchar(IntPtr window, ref CChar @char);
+    public static extern int pecho_wchar(IntPtr window, ref ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int setcchar(out CChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs,
+    public static extern int setcchar(out ComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs,
         ushort colorPair, IntPtr reserved);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -463,46 +463,46 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int unget_wch(uint @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wadd_wch(IntPtr window, ref CChar @char);
+    public static extern int wadd_wch(IntPtr window, ref ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wadd_wchnstr(IntPtr window, CChar[] @char, int count);
+    public static extern int wadd_wchnstr(IntPtr window, ComplexChar[] @char, int count);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int waddnwstr(IntPtr window, string text, int length);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wbkgrnd(IntPtr window, ref CChar @char);
+    public static extern int wbkgrnd(IntPtr window, ref ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern void wbkgrndset(IntPtr window, ref CChar @char);
+    public static extern void wbkgrndset(IntPtr window, ref ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wborder_set(IntPtr window, ref CChar leftSide, ref CChar rightSide, ref CChar topSide,
-        ref CChar bottomSide, ref CChar topLeftCorner, ref CChar topRightCorner, ref CChar bottomLeftCorner,
-        ref CChar bottomRightCorner);
+    public static extern int wborder_set(IntPtr window, ref ComplexChar leftSide, ref ComplexChar rightSide, ref ComplexChar topSide,
+        ref ComplexChar bottomSide, ref ComplexChar topLeftCorner, ref ComplexChar topRightCorner, ref ComplexChar bottomLeftCorner,
+        ref ComplexChar bottomRightCorner);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wecho_wchar(IntPtr window, ref CChar @char);
+    public static extern int wecho_wchar(IntPtr window, ref ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int wget_wch(IntPtr window, out uint dest);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wgetbkgrnd(IntPtr window, out CChar @char);
+    public static extern int wgetbkgrnd(IntPtr window, out ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int wgetn_wstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest,
         int length);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int whline_set(IntPtr window, ref CChar @char, int count);
+    public static extern int whline_set(IntPtr window, ref ComplexChar @char, int count);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int win_wch(IntPtr window, out CChar @char);
+    public static extern int win_wch(IntPtr window, out ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int win_wchnstr(IntPtr window, CChar[] @char, int length);
+    public static extern int win_wchnstr(IntPtr window, ComplexChar[] @char, int length);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int winnwstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder text, int length);
@@ -511,16 +511,16 @@ public sealed class NativeCursesProvider: ICursesProvider
     public static extern int wins_nwstr(IntPtr window, string text, int length);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wins_wch(IntPtr window, ref CChar @char);
+    public static extern int wins_wch(IntPtr window, ref ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int winwstr(IntPtr window, string text);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr wunctrl(ref CChar @char);
+    public static extern IntPtr wunctrl(ref ComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int wvline_set(IntPtr window, ref CChar @char, int count);
+    public static extern int wvline_set(IntPtr window, ref ComplexChar @char, int count);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int erasewchar(out uint @char);
@@ -989,7 +989,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     void ICursesProvider.nofilter() => nofilter();
 
-    int ICursesProvider.getcchar(CChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
+    int ICursesProvider.getcchar(ComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
         IntPtr reserved) =>
         getcchar(ref @char, dest, out attrs, out colorPair, reserved);
 
@@ -997,9 +997,9 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.killwchar(out uint @char) => killwchar(out @char);
 
-    int ICursesProvider.pecho_wchar(IntPtr window, CChar @char) => pecho_wchar(window, ref @char);
+    int ICursesProvider.pecho_wchar(IntPtr window, ComplexChar @char) => pecho_wchar(window, ref @char);
 
-    int ICursesProvider.setcchar(out CChar @char, string text, uint attrs, ushort colorPair,
+    int ICursesProvider.setcchar(out ComplexChar @char, string text, uint attrs, ushort colorPair,
         IntPtr reserved) =>
         setcchar(out @char, text, attrs, colorPair, reserved);
 
@@ -1009,45 +1009,45 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.unget_wch(uint @char) => unget_wch(@char);
 
-    int ICursesProvider.wadd_wch(IntPtr window, CChar @char) => wadd_wch(window, ref @char);
+    int ICursesProvider.wadd_wch(IntPtr window, ComplexChar @char) => wadd_wch(window, ref @char);
 
-    int ICursesProvider.wadd_wchnstr(IntPtr window, CChar[] str, int count) => wadd_wchnstr(window, str, count);
+    int ICursesProvider.wadd_wchnstr(IntPtr window, ComplexChar[] str, int count) => wadd_wchnstr(window, str, count);
 
     int ICursesProvider.waddnwstr(IntPtr window, string text, int length) => waddnwstr(window, text, length);
 
-    int ICursesProvider.wbkgrnd(IntPtr window, CChar @char) => wbkgrnd(window, ref @char);
+    int ICursesProvider.wbkgrnd(IntPtr window, ComplexChar @char) => wbkgrnd(window, ref @char);
 
-    void ICursesProvider.wbkgrndset(IntPtr window, CChar @char) => wbkgrndset(window, ref @char);
+    void ICursesProvider.wbkgrndset(IntPtr window, ComplexChar @char) => wbkgrndset(window, ref @char);
 
-    int ICursesProvider.wborder_set(IntPtr window, CChar leftSide, CChar rightSide, CChar topSide,
-        CChar bottomSide, CChar topLeftCorner, CChar topRightCorner, CChar bottomLeftCorner,
-        CChar bottomRightCorner) =>
+    int ICursesProvider.wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
+        ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner,
+        ComplexChar bottomRightCorner) =>
         wborder_set(window, ref leftSide, ref rightSide, ref topSide, ref bottomSide,
             ref topLeftCorner, ref topRightCorner, ref bottomLeftCorner, ref bottomRightCorner);
 
-    int ICursesProvider.wecho_wchar(IntPtr window, CChar @char) => wecho_wchar(window, ref @char);
+    int ICursesProvider.wecho_wchar(IntPtr window, ComplexChar @char) => wecho_wchar(window, ref @char);
 
     int ICursesProvider.wget_wch(IntPtr window, out uint @char) => wget_wch(window, out @char);
 
-    int ICursesProvider.wgetbkgrnd(IntPtr window, out CChar @char) => wgetbkgrnd(window, out @char);
+    int ICursesProvider.wgetbkgrnd(IntPtr window, out ComplexChar @char) => wgetbkgrnd(window, out @char);
 
     int ICursesProvider.wgetn_wstr(IntPtr window, StringBuilder dest, int length) => wgetn_wstr(window, dest, length);
 
-    int ICursesProvider.whline_set(IntPtr window, CChar @char, int count) => whline_set(window, ref @char, count);
+    int ICursesProvider.whline_set(IntPtr window, ComplexChar @char, int count) => whline_set(window, ref @char, count);
 
-    int ICursesProvider.win_wch(IntPtr window, out CChar @char) => win_wch(window, out @char);
+    int ICursesProvider.win_wch(IntPtr window, out ComplexChar @char) => win_wch(window, out @char);
 
-    int ICursesProvider.win_wchnstr(IntPtr window, CChar[] dest, int length) => win_wchnstr(window, dest, length);
+    int ICursesProvider.win_wchnstr(IntPtr window, ComplexChar[] dest, int length) => win_wchnstr(window, dest, length);
 
     int ICursesProvider.winnwstr(IntPtr window, StringBuilder dest, int length) => winnwstr(window, dest, length);
 
     int ICursesProvider.wins_nwstr(IntPtr window, string text, int length) => wins_nwstr(window, text, length);
 
-    int ICursesProvider.wins_wch(IntPtr window, CChar @char) => wins_wch(window, ref @char);
+    int ICursesProvider.wins_wch(IntPtr window, ComplexChar @char) => wins_wch(window, ref @char);
 
-    string? ICursesProvider.wunctrl(CChar @char) => Marshal.PtrToStringUni(wunctrl(ref @char));
+    string? ICursesProvider.wunctrl(ComplexChar @char) => Marshal.PtrToStringUni(wunctrl(ref @char));
 
-    int ICursesProvider.wvline_set(IntPtr window, CChar @char, int count) => wvline_set(window, ref @char, count);
+    int ICursesProvider.wvline_set(IntPtr window, ComplexChar @char, int count) => wvline_set(window, ref @char, count);
 
     int ICursesProvider.getmouse(out RawMouseEvent @event) => getmouse(out @event);
 

@@ -181,7 +181,7 @@ public sealed class TerminalBuilder
     /// </summary>
     /// <returns>A new terminal object.</returns>
     public Terminal Create() =>
-        new(_cursesProvider, _enableLineBuffering, _enableRawMode, _enableReturnToNewLineTranslation, _readTimeoutMillis,
-            _enableInputEchoing, _manualFlush, _enableColors,
-            _hardwareCursorMode, _useEnvironmentOverrides, _softKeyLabelMode, _enableMouse);
+        new(_cursesProvider, _enableLineBuffering, _enableRawMode, _enableReturnToNewLineTranslation,
+            _readTimeoutMillis, _enableInputEchoing, _manualFlush, _enableColors, _hardwareCursorMode,
+            _useEnvironmentOverrides, _softKeyLabelMode, _enableMouse);
 }

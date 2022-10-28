@@ -61,7 +61,7 @@ public sealed class Screen: Window
 
         Terminal.AssertNotDisposed();
         var handle = Terminal.Curses.newwin(area.Height, area.Width, area.Y, area.X)
-                             .Check(nameof(Terminal.Curses.newwin));
+                             .Check(nameof(Terminal.Curses.newwin), "Failed to create a new window.");
 
         return new(Terminal, this, handle);
     }
@@ -86,7 +86,7 @@ public sealed class Screen: Window
 
         Terminal.AssertNotDisposed();
         var handle = Terminal.Curses.derwin(window.Handle, area.Height, area.Width, area.Y, area.X)
-                             .Check(nameof(Terminal.Curses.derwin));
+                             .Check(nameof(Terminal.Curses.derwin), "Failed to create a new sub-window.");
 
         return new(Terminal, this, handle);
     }
@@ -97,6 +97,7 @@ public sealed class Screen: Window
     /// <param name="window">The window to duplicate.</param>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="InvalidOperationException">Trying to duplicate the screen window.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public Window DuplicateWindow(Window window)
     {
@@ -104,9 +105,13 @@ public sealed class Screen: Window
         {
             throw new ArgumentNullException(nameof(window));
         }
+        if (window == this)
+        {
+            throw new InvalidOperationException("Cannot duplicate the screen window.");
+        }
 
         return new(Terminal, this, Terminal.Curses.dupwin(window.Handle)
-                                           .Check(nameof(Terminal.Curses.dupwin)));
+                                           .Check(nameof(Terminal.Curses.dupwin), "Failed to duplicate an existing window."));
     }
 
     /// <summary>
@@ -126,7 +131,7 @@ public sealed class Screen: Window
 
         Terminal.AssertNotDisposed();
         var handle = Terminal.Curses.newpad(size.Height, size.Width)
-                             .Check(nameof(Terminal.Curses.newpad));
+                             .Check(nameof(Terminal.Curses.newpad), "Failed to create a new pad.");
 
         return new(Terminal, this, handle);
     }
@@ -154,7 +159,7 @@ public sealed class Screen: Window
         }
 
         var handle = Terminal.Curses.subpad(pad.Handle, area.Height, area.Width, area.Top, area.Right)
-                             .Check(nameof(Terminal.Curses.subpad));
+                             .Check(nameof(Terminal.Curses.subpad), "Failed to create a new sub-pad.");
 
         return new(Terminal, pad, handle);
     }

@@ -349,16 +349,16 @@ public interface ICursesProvider
 
     void nofilter(); //NO
 
-    int getcchar(CChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
+    int getcchar(ComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
         IntPtr reserved); //DONE
 
     string? key_name(uint @char); //DONE
 
     int killwchar(out uint @char); //DONE
 
-    int pecho_wchar(IntPtr window, CChar @char); //NO
+    int pecho_wchar(IntPtr window, ComplexChar @char); //NO
 
-    int setcchar(out CChar @char, string text, uint attrs, ushort colorPair,
+    int setcchar(out ComplexChar @char, string text, uint attrs, ushort colorPair,
         IntPtr reserved); //DONE
 
     int slk_set(int labelIndex, string title, int align); //DONE
@@ -367,43 +367,43 @@ public interface ICursesProvider
 
     int unget_wch(uint @char); //NO
 
-    int wadd_wch(IntPtr window, CChar @char); //DONE
+    int wadd_wch(IntPtr window, ComplexChar @char); //DONE
 
-    int wadd_wchnstr(IntPtr window, CChar[] str, int count); //DONE
+    int wadd_wchnstr(IntPtr window, ComplexChar[] str, int count); //DONE
 
     int waddnwstr(IntPtr window, string text, int length); //NO
 
-    int wbkgrnd(IntPtr window, CChar @char); //DONE
+    int wbkgrnd(IntPtr window, ComplexChar @char); //DONE
 
-    void wbkgrndset(IntPtr window, CChar @char); //NO
+    void wbkgrndset(IntPtr window, ComplexChar @char); //NO
 
-    int wborder_set(IntPtr window, CChar leftSide, CChar rightSide, CChar topSide,
-        CChar bottomSide, CChar topLeftCorner, CChar topRightCorner, CChar bottomLeftCorner,
-        CChar bottomRightCorner); //DONE
+    int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
+        ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner,
+        ComplexChar bottomRightCorner); //DONE
 
-    int wecho_wchar(IntPtr window, CChar @char); //NO
+    int wecho_wchar(IntPtr window, ComplexChar @char); //NO
 
     int wget_wch(IntPtr window, out uint @char); //DONE
 
-    int wgetbkgrnd(IntPtr window, out CChar @char); //DONE
+    int wgetbkgrnd(IntPtr window, out ComplexChar @char); //DONE
 
     int wgetn_wstr(IntPtr window, StringBuilder dest, int length); //NO
 
-    int whline_set(IntPtr window, CChar @char, int count); //DONE
+    int whline_set(IntPtr window, ComplexChar @char, int count); //DONE
 
-    int win_wch(IntPtr window, out CChar @char); //NO
+    int win_wch(IntPtr window, out ComplexChar @char); //NO
 
-    int win_wchnstr(IntPtr window, CChar[] @char, int length); //DONE
+    int win_wchnstr(IntPtr window, ComplexChar[] @char, int length); //DONE
 
     int winnwstr(IntPtr window, StringBuilder dest, int length); //NO
 
     int wins_nwstr(IntPtr window, string text, int length); //NO
 
-    int wins_wch(IntPtr window, CChar @char); //NO
+    int wins_wch(IntPtr window, ComplexChar @char); //NO
 
-    string? wunctrl(CChar @char); //NO
+    string? wunctrl(ComplexChar @char); //NO
 
-    int wvline_set(IntPtr window, CChar @char, int count); //DONE
+    int wvline_set(IntPtr window, ComplexChar @char, int count); //DONE
 
     int getmouse(out RawMouseEvent @event); //DONE
 

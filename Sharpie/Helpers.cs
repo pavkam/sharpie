@@ -44,7 +44,7 @@ internal static class Helpers
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="ptr"/> value.</returns>
     /// <exception cref="CursesException">Thrown if <paramref name="ptr"/> is zero.</exception>
-    public static IntPtr Check(this IntPtr ptr, string operation, string message ="")
+    public static IntPtr Check(this IntPtr ptr, string operation, string message)
     {
         if (ptr == IntPtr.Zero)
         {
