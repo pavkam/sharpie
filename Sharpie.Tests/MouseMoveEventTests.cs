@@ -33,5 +33,54 @@ namespace Sharpie.Tests;
 [TestClass]
 public class MouseMoveEventTests
 {
-    [TestMethod] public void TestMethod1() { }
+    private readonly MouseMoveEvent _event1 = new(new(1, 2));
+
+    [TestMethod]
+    public void Ctr_InitializesPropertiesCorrectly()
+    {
+        _event1.Type.ShouldBe(EventType.MouseMove);
+        _event1.Position.ShouldBe(new(1, 2));
+    }
+
+    [TestMethod]
+    public void ToString_ProperlyFormats()
+    {
+        _event1.ToString()
+               .ShouldBe($"Mouse [1, 2]");
+    }
+
+    [TestMethod, DataRow(null), DataRow("")]
+    public void Equals_ReturnsFalse_IfNotMouseMoveEvent(object? b)
+    {
+        _event1.Equals(b)
+               .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsFalse_IfPosition()
+    {
+        _event1.Equals(new MouseMoveEvent(new(2, 1)))
+               .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsTrue_IfSamePosition()
+    {
+        _event1.Equals(new MouseMoveEvent(new(1, 2)))
+               .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void GetHashCode_IsDifferent_IfPositionDifferent()
+    {
+        _event1.GetHashCode()
+               .ShouldNotBe(new MouseMoveEvent(new(2, 1)).GetHashCode());
+    }
+
+    [TestMethod]
+    public void GetHashCode_IsEqual_IfAllPropertiesAreSame()
+    {
+        _event1.GetHashCode()
+               .ShouldBe(new MouseMoveEvent(new(1, 2)).GetHashCode());
+    }
 }
