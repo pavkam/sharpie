@@ -408,22 +408,9 @@ public class Window: IDisposable
     /// <param name="y">The new Y.</param>
     /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Either <paramref name="x" /> or <paramref name="y" /> are negative.</exception>
-    public bool TryMoveCaretTo(int x, int y)
-    {
-        if (x < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(x));
-        }
-
-        if (y < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(y));
-        }
-
-        return !Curses.wmove(Handle, y, x)
-                      .Failed();
-    }
+    public bool TryMoveCaretTo(int x, int y) =>
+        IsPointWithin(new(x, y)) && !Curses.wmove(Handle, y, x)
+                                           .Failed();
 
     /// <summary>
     ///     Moves the caret to a given position within the window.
