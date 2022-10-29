@@ -637,4 +637,175 @@ public class WindowTests
 
         _cursesMock.Verify(v => v.mvwin(new(2), 5, 5), Times.Once);
     }
+    
+    [TestMethod]
+    public void Size_Get_Returns_IfCursesSucceeded()
+    {
+        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
+                   .Returns(11);
+
+        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
+                   .Returns(22);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Size.ShouldBe(new(11, 22));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Size_Get_Throws_IfCursesFails_1()
+    {
+        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+
+        Should.Throw<CursesException>(() => w.Size)
+              .Operation.ShouldBe("getmaxx");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Size_Get_Throws_IfCursesFails_2()
+    {
+        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+
+        Should.Throw<CursesException>(() => w.Size)
+              .Operation.ShouldBe("getmaxy");
+    }
+
+    [TestMethod]
+    public void Size_Set_SetsValue_IfCursesSucceeded()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Size = new(11, 22);
+
+        _cursesMock.Verify(v => v.wresize(new(1), 22, 11), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Size_Set_Throws_IfCursesFails()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+
+        _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesException>(() => w.Size = new(1, 1))
+              .Operation.ShouldBe("wresize");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Size_Set_Throws_IfOutsideParent()
+    {
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(false);
+
+        var p = new Window(_cursesMock.Object, null, new(1));
+        var w = new Window(_cursesMock.Object, p, new(2));
+
+        Should.Throw<ArgumentOutOfRangeException>(() => w.Size = new(6, 6));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Size_Set_UpdatesLocation_IfInsideParent()
+    {
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+
+        var p = new Window(_cursesMock.Object, null, new(1));
+        var w = new Window(_cursesMock.Object, p, new(2));
+
+        w.Size = new(5, 5);
+
+        _cursesMock.Verify(v => v.mvwin(new(2), 5, 5), Times.Once);
+    }
+    
+    
+    [TestMethod]
+    public void CaretPosition_Get_Returns_IfCursesSucceeded()
+    {
+        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
+                   .Returns(11);
+
+        _cursesMock.Setup(s => s.getcury(It.IsAny<IntPtr>()))
+                   .Returns(22);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.CaretPosition.ShouldBe(new(11, 22));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void CaretPosition_Get_Throws_IfCursesFails_1()
+    {
+        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+
+        Should.Throw<CursesException>(() => w.CaretPosition)
+              .Operation.ShouldBe("getcurx");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void CaretPosition_Get_Throws_IfCursesFails_2()
+    {
+        _cursesMock.Setup(s => s.getcury(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+
+        Should.Throw<CursesException>(() => w.CaretPosition)
+              .Operation.ShouldBe("getcury");
+    }
+    
+    [TestMethod]
+    public void CaretPosition_Set_SetsValue_IfCursesSucceeded()
+    {
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.CaretPosition = new(11, 22);
+
+        _cursesMock.Verify(v => v.wmove(new(1), 22, 11), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void CaretPosition_Set_Throws_IfCursesFails()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+        _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesException>(() => w.CaretPosition = new(1, 1))
+              .Operation.ShouldBe("wmove");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void CaretPosition_Set_Throws_IfOutsideArea()
+    {
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(false);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+
+        Should.Throw<ArgumentOutOfRangeException>(() => w.CaretPosition = new(6, 6));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void CaretPosition_Set_UpdatesLocation_IfInsideArea()
+    {
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+
+        w.CaretPosition = new(5, 5);
+        _cursesMock.Verify(v => v.wmove(new(1), 5, 5), Times.Once);
+    }
 }
