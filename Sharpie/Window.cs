@@ -78,7 +78,7 @@ public class Window: IDisposable
     /// <summary>
     ///     The curses backend.
     /// </summary>
-    protected ICursesProvider Curses { get; }
+    protected internal ICursesProvider Curses { get; }
 
     /// <summary>
     ///     The parent of this window.
@@ -102,9 +102,9 @@ public class Window: IDisposable
     /// Asserts that the window is not disposed.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    protected void AssertAlive()
+    protected internal void AssertAlive()
     {
-        if (IsDisposed)
+        if (Disposed)
         {
             throw new ObjectDisposedException("The window has been disposed and is no longer usable.");
         }
@@ -132,7 +132,7 @@ public class Window: IDisposable
     /// <summary>
     ///     Checks if the window is not disposed.
     /// </summary>
-    public bool IsDisposed => _handle == IntPtr.Zero;
+    public bool Disposed => _handle == IntPtr.Zero;
 
     /// <summary>
     ///     Enables or disables the use of hardware line insert/delete handling fpr this window.
@@ -143,7 +143,7 @@ public class Window: IDisposable
     ///     Default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    public bool UseHardwareLineInsertAndDelete
+    public bool UseHardwareLineEdit
     {
         get => Curses.is_idlok(Handle);
         set
@@ -165,7 +165,7 @@ public class Window: IDisposable
     ///     Default is <c>true</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    public bool UseHardwareCharacterInsertAndDelete
+    public bool UseHardwareCharEdit
     {
         get => Curses.is_idcok(Handle);
         set
@@ -951,7 +951,7 @@ public class Window: IDisposable
     /// </summary>
     public void Destroy()
     {
-        if (!IsDisposed)
+        if (!Disposed)
         {
             // Dispose of all the windows
             var windows = _windows.ToArray();

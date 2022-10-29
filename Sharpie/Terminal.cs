@@ -293,7 +293,7 @@ public sealed class Terminal: IDisposable
     /// <summary>
     ///     Checks whether the terminal has been disposed of and is no longer usable.
     /// </summary>
-    public bool IsDisposed => _screen.IsDisposed;
+    public bool IsDisposed => _screen.Disposed;
 
     /// <summary>
     ///     Disposes the current terminal instance.

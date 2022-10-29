@@ -583,7 +583,7 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.IsDisposed.ShouldBeFalse();
-        _terminal.IsDisposed.ShouldBe(_terminal.Screen.IsDisposed);
+        _terminal.IsDisposed.ShouldBe(_terminal.Screen.Disposed);
     }
 
     [TestMethod]
@@ -601,7 +601,7 @@ public class TerminalTests
         var screen = _terminal.Screen;
 
         _terminal.Dispose();
-        screen.IsDisposed.ShouldBeTrue();
+        screen.Disposed.ShouldBeTrue();
     }
 
     [TestMethod]
