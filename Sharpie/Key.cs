@@ -45,7 +45,7 @@ public enum Key: uint
     ///     Unknown key.
     /// </summary>
     Unknown,
-    
+
     /// <summary>
     ///     Interrupt key.
     /// </summary>

@@ -89,7 +89,7 @@ public sealed class Screen: Window
 
         AssertAlive();
         var handle = Curses.newwin(area.Height, area.Width, area.Y, area.X)
-                             .Check(nameof(Terminal.Curses.newwin), "Failed to create a new window.");
+                           .Check(nameof(Terminal.Curses.newwin), "Failed to create a new window.");
 
         return new(Curses, this, handle);
     }
@@ -114,7 +114,7 @@ public sealed class Screen: Window
 
         AssertAlive();
         var handle = Curses.derwin(window.Handle, area.Height, area.Width, area.Y, area.X)
-                             .Check(nameof(Terminal.Curses.derwin), "Failed to create a new sub-window.");
+                           .Check(nameof(Terminal.Curses.derwin), "Failed to create a new sub-window.");
 
         return new(Curses, this, handle);
     }
@@ -140,8 +140,8 @@ public sealed class Screen: Window
         }
 
         return new(Curses, this, Curses.dupwin(window.Handle)
-                                         .Check(nameof(Terminal.Curses.dupwin),
-                                             "Failed to duplicate an existing window."));
+                                       .Check(nameof(Terminal.Curses.dupwin),
+                                           "Failed to duplicate an existing window."));
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ public sealed class Screen: Window
 
         AssertAlive();
         var handle = Curses.newpad(size.Height, size.Width)
-                             .Check(nameof(Terminal.Curses.newpad), "Failed to create a new pad.");
+                           .Check(nameof(Terminal.Curses.newpad), "Failed to create a new pad.");
 
         return new(Curses, this, handle);
     }
@@ -189,7 +189,7 @@ public sealed class Screen: Window
         }
 
         var handle = Curses.subpad(pad.Handle, area.Height, area.Width, area.Top, area.Right)
-                             .Check(nameof(Terminal.Curses.subpad), "Failed to create a new sub-pad.");
+                           .Check(nameof(Terminal.Curses.subpad), "Failed to create a new sub-pad.");
 
         return new(Curses, pad, handle);
     }
@@ -203,7 +203,7 @@ public sealed class Screen: Window
     {
         AssertAlive();
         Curses.doupdate()
-                .Check(nameof(Terminal.Curses.doupdate), "Failed to update the main screen.");
+              .Check(nameof(Terminal.Curses.doupdate), "Failed to update the main screen.");
     }
 
     private static (Key key, ModifierKey modifierKey) ConvertKey(uint keyCode)
@@ -501,7 +501,7 @@ public sealed class Screen: Window
                     break;
                 case (uint) RawKey.Mouse:
                     if (Curses.getmouse(out var mouseEvent)
-                                .Failed())
+                              .Failed())
                     {
                         return false;
                     }
@@ -541,12 +541,9 @@ public sealed class Screen: Window
 
         return false;
     }
-    
+
     /// <summary>
     ///     Deletes the screen window and ends the terminal session.
     /// </summary>
-    protected override void Delete()
-    {
-        Curses.endwin();
-    }
+    protected override void Delete() { Curses.endwin(); }
 }

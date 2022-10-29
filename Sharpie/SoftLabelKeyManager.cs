@@ -38,8 +38,8 @@ using Curses;
 [PublicAPI]
 public sealed class SoftLabelKeyManager
 {
-    private readonly SoftLabelKeyMode _mode;
     private readonly ICursesProvider _curses;
+    private readonly SoftLabelKeyMode _mode;
 
     /// <summary>
     ///     Creates a new instance of this class.
@@ -47,7 +47,7 @@ public sealed class SoftLabelKeyManager
     /// <param name="curses">The curses backend.</param>
     /// <param name="mode">The mode of the manager.</param>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="curses"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="curses" /> is <c>null</c>.</exception>
     internal SoftLabelKeyManager(ICursesProvider curses, SoftLabelKeyMode mode)
     {
         _curses = curses ?? throw new ArgumentNullException(nameof(curses));
@@ -90,8 +90,8 @@ public sealed class SoftLabelKeyManager
             AssertEnabled();
 
             var attrsAndColors = _curses.slk_attr()
-                                          .Check(nameof(_curses.slk_attr),
-                                              "Failed to get the soft label key attributes.");
+                                        .Check(nameof(_curses.slk_attr),
+                                            "Failed to get the soft label key attributes.");
 
             var colorPair = (ushort) _curses.COLOR_PAIR((uint) attrsAndColors);
             return new() { Attributes = (VideoAttribute) attrsAndColors, ColorMixture = new() { Handle = colorPair } };
@@ -101,8 +101,7 @@ public sealed class SoftLabelKeyManager
             AssertEnabled();
 
             _curses.slk_attr_set((uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
-                     .Check(nameof(_curses.slk_attr_set),
-                         "Failed to configure the soft label key attributes.");
+                   .Check(nameof(_curses.slk_attr_set), "Failed to configure the soft label key attributes.");
         }
     }
 
@@ -120,7 +119,7 @@ public sealed class SoftLabelKeyManager
             AssertEnabled();
 
             _curses.slk_color(value.Handle)
-                     .Check(nameof(_curses.slk_color), "Failed to configure the soft label key colors.");
+                   .Check(nameof(_curses.slk_color), "Failed to configure the soft label key colors.");
         }
     }
 
@@ -161,7 +160,7 @@ public sealed class SoftLabelKeyManager
         AssertEnabled();
 
         _curses.slk_set(index + 1, title, (int) align)
-                 .Check(nameof(_curses.slk_set), "Failed to set the soft label.");
+               .Check(nameof(_curses.slk_set), "Failed to set the soft label.");
     }
 
     /// <summary>
@@ -176,7 +175,7 @@ public sealed class SoftLabelKeyManager
         AssertEnabled();
 
         _curses.slk_attr_on((uint) attributes, IntPtr.Zero)
-                 .Check(nameof(_curses.slk_attr_on), "Failed to configure the soft label key attributes.");
+               .Check(nameof(_curses.slk_attr_on), "Failed to configure the soft label key attributes.");
     }
 
     /// <summary>
@@ -191,7 +190,7 @@ public sealed class SoftLabelKeyManager
         AssertEnabled();
 
         _curses.slk_attr_off((uint) attributes, IntPtr.Zero)
-                 .Check(nameof(_curses.slk_attr_off), "Failed to configure the soft label key attributes.");
+               .Check(nameof(_curses.slk_attr_off), "Failed to configure the soft label key attributes.");
     }
 
     /// <summary>
@@ -204,7 +203,7 @@ public sealed class SoftLabelKeyManager
     {
         AssertEnabled();
         _curses.slk_clear()
-                 .Check(nameof(_curses.slk_clear), "Failed to clear the soft label keys.");
+               .Check(nameof(_curses.slk_clear), "Failed to clear the soft label keys.");
     }
 
     /// <summary>
@@ -217,7 +216,7 @@ public sealed class SoftLabelKeyManager
     {
         AssertEnabled();
         _curses.slk_restore()
-                 .Check(nameof(_curses.slk_restore), "Failed to restore the soft label keys.");
+               .Check(nameof(_curses.slk_restore), "Failed to restore the soft label keys.");
     }
 
     /// <summary>
@@ -230,7 +229,7 @@ public sealed class SoftLabelKeyManager
     {
         AssertEnabled();
         _curses.slk_touch()
-                 .Check(nameof(_curses.slk_touch), "Failed to mark soft label keys as dirty.");
+               .Check(nameof(_curses.slk_touch), "Failed to mark soft label keys as dirty.");
     }
 
     /// <summary>
@@ -247,11 +246,11 @@ public sealed class SoftLabelKeyManager
         if (batch)
         {
             _curses.slk_noutrefresh()
-                     .Check(nameof(_curses.slk_noutrefresh), "Failed to queue soft label key refresh.");
+                   .Check(nameof(_curses.slk_noutrefresh), "Failed to queue soft label key refresh.");
         } else
         {
             _curses.slk_refresh()
-                     .Check(nameof(_curses.slk_refresh), "Failed to perform soft label key refresh.");
+                   .Check(nameof(_curses.slk_refresh), "Failed to perform soft label key refresh.");
         }
     }
 }

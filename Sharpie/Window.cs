@@ -53,7 +53,7 @@ public class Window: IDisposable
         {
             throw new ArgumentException("The window handle has an invalid value.");
         }
-        
+
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
         _handle = windowHandle;
         Parent = parent;
@@ -63,16 +63,16 @@ public class Window: IDisposable
         EnableScrolling = true;
 
         Curses.keypad(Handle, true)
-                .Check(nameof(Curses.keypad), "Failed to enable the keypad resolution mode.");
+              .Check(nameof(Curses.keypad), "Failed to enable the keypad resolution mode.");
 
         Curses.notimeout(Handle, false)
-                .Check(nameof(Curses.notimeout), "Failed to enable no-read-timeout mode.");
+              .Check(nameof(Curses.notimeout), "Failed to enable no-read-timeout mode.");
 
         Curses.nodelay(Handle, false)
-                .Check(nameof(Curses.nodelay), "Failed to enable read-delay mode.");
+              .Check(nameof(Curses.nodelay), "Failed to enable read-delay mode.");
 
         Curses.syncok(Handle, true)
-                .Check(nameof(Curses.syncok), "Failed to enable auto-sync mode.");
+              .Check(nameof(Curses.syncok), "Failed to enable auto-sync mode.");
     }
 
     /// <summary>
@@ -95,18 +95,6 @@ public class Window: IDisposable
         {
             AssertAlive();
             return _handle;
-        }
-    }
-
-    /// <summary>
-    /// Asserts that the window is not disposed.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    protected internal void AssertAlive()
-    {
-        if (Disposed)
-        {
-            throw new ObjectDisposedException("The window has been disposed and is no longer usable.");
         }
     }
 
@@ -151,7 +139,7 @@ public class Window: IDisposable
             if (Curses.has_il())
             {
                 Curses.idlok(Handle, value)
-                        .Check(nameof(Curses.idlok), "Failed to change the hardware line mode.");
+                      .Check(nameof(Curses.idlok), "Failed to change the hardware line mode.");
             }
         }
     }
@@ -187,13 +175,13 @@ public class Window: IDisposable
         get
         {
             Curses.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero)
-                    .Check(nameof(Curses.wattr_get), "Failed to get the window style.");
+                  .Check(nameof(Curses.wattr_get), "Failed to get the window style.");
 
             return new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } };
         }
         set =>
             Curses.wattr_set(Handle, (uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
-                    .Check(nameof(Curses.wattr_set), "Failed to set the window style.");
+                  .Check(nameof(Curses.wattr_set), "Failed to set the window style.");
     }
 
     /// <summary>
@@ -206,7 +194,7 @@ public class Window: IDisposable
         get => Style.ColorMixture;
         set =>
             Curses.wcolor_set(Handle, value.Handle, IntPtr.Zero)
-                    .Check(nameof(Curses.wcolor_set), "Failed to set the window color mixture.");
+                  .Check(nameof(Curses.wcolor_set), "Failed to set the window color mixture.");
     }
 
     /// <summary>
@@ -219,13 +207,13 @@ public class Window: IDisposable
         get
         {
             Curses.wgetbkgrnd(Handle, out var @char)
-                    .Check(nameof(Curses.wgetbkgrnd), "Failed to get the window background.");
+                  .Check(nameof(Curses.wgetbkgrnd), "Failed to get the window background.");
 
             return Curses.FromComplexChar(@char);
         }
         set =>
             Curses.wbkgrnd(Handle, Curses.ToComplexChar(value.@char, value.style))
-                    .Check(nameof(Curses.wbkgrnd), "Failed to set the window background.");
+                  .Check(nameof(Curses.wbkgrnd), "Failed to set the window background.");
     }
 
     /// <summary>
@@ -241,14 +229,14 @@ public class Window: IDisposable
             if (Curses.is_subwin(Handle))
             {
                 return new(Curses.getparx(Handle)
-                                   .Check(nameof(Curses.getparx), "Failed to get window X coordinate."),
-                    Curses.getpary(Handle)
-                            .Check(nameof(Curses.getpary), "Failed to get window Y coordinate."));
+                                 .Check(nameof(Curses.getparx), "Failed to get window X coordinate."), Curses
+                    .getpary(Handle)
+                    .Check(nameof(Curses.getpary), "Failed to get window Y coordinate."));
             }
 
             return new(Curses.getbegx(Handle)
-                               .Check(nameof(Curses.getbegx), "Failed to get window X coordinate."), 
-                Curses.getbegy(Handle)
+                             .Check(nameof(Curses.getbegx), "Failed to get window X coordinate."), Curses
+                .getbegy(Handle)
                 .Check(nameof(Curses.getbegy), "Failed to get window Y coordinate."));
         }
         set
@@ -266,11 +254,11 @@ public class Window: IDisposable
             if (Curses.is_subwin(Handle))
             {
                 Curses.mvderwin(Handle, value.Y, value.X)
-                        .Check(nameof(Curses.mvderwin), "Failed to move window to new coordinates.");
+                      .Check(nameof(Curses.mvderwin), "Failed to move window to new coordinates.");
             } else
             {
                 Curses.mvwin(Handle, value.Y, value.X)
-                        .Check(nameof(Curses.mvwin), "Failed to move window to new coordinates.");
+                      .Check(nameof(Curses.mvwin), "Failed to move window to new coordinates.");
             }
         }
     }
@@ -285,8 +273,7 @@ public class Window: IDisposable
     {
         get =>
             new(Curses.getmaxx(Handle)
-                        .Check(nameof(Curses.getmaxx), "Failed to get window width."), Curses
-                .getmaxy(Handle)
+                      .Check(nameof(Curses.getmaxx), "Failed to get window width."), Curses.getmaxy(Handle)
                 .Check(nameof(Curses.getmaxy), "Failed to get window height."));
         set
         {
@@ -301,7 +288,7 @@ public class Window: IDisposable
             }
 
             Curses.wresize(Handle, value.Height, value.Width)
-                    .Check(nameof(Curses.wresize), "Failed to resize the window.");
+                  .Check(nameof(Curses.wresize), "Failed to resize the window.");
         }
     }
 
@@ -315,8 +302,7 @@ public class Window: IDisposable
     {
         get =>
             new(Curses.getcurx(Handle)
-                        .Check(nameof(Curses.getcurx), "Failed to get caret X position."), Curses
-                .getcury(Handle)
+                      .Check(nameof(Curses.getcurx), "Failed to get caret X position."), Curses.getcury(Handle)
                 .Check(nameof(Curses.getcury), "Failed to get caret Y position."));
         set
         {
@@ -326,7 +312,7 @@ public class Window: IDisposable
             }
 
             Curses.wmove(Handle, value.Y, value.X)
-                    .Check(nameof(Curses.wmove), "Failed to move the caret.");
+                  .Check(nameof(Curses.wmove), "Failed to move the caret.");
         }
     }
 
@@ -380,6 +366,18 @@ public class Window: IDisposable
     }
 
     /// <summary>
+    ///     Asserts that the window is not disposed.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    protected internal void AssertAlive()
+    {
+        if (Disposed)
+        {
+            throw new ObjectDisposedException("The window has been disposed and is no longer usable.");
+        }
+    }
+
+    /// <summary>
     ///     Enables specified attributes and keep the others untouched.
     /// </summary>
     /// <param name="attributes">The attributes to enable.</param>
@@ -388,7 +386,7 @@ public class Window: IDisposable
     public void EnableAttributes(VideoAttribute attributes)
     {
         Curses.wattr_on(Handle, (uint) attributes, IntPtr.Zero)
-                .Check(nameof(Curses.wattr_on), "Failed to enable window attributes.");
+              .Check(nameof(Curses.wattr_on), "Failed to enable window attributes.");
     }
 
     /// <summary>
@@ -400,7 +398,7 @@ public class Window: IDisposable
     public void DisableAttributes(VideoAttribute attributes)
     {
         Curses.wattr_off(Handle, (uint) attributes, IntPtr.Zero)
-                .Check(nameof(Curses.wattr_off), "Failed to disable window attributes.");
+              .Check(nameof(Curses.wattr_off), "Failed to disable window attributes.");
     }
 
     /// <summary>
@@ -424,7 +422,7 @@ public class Window: IDisposable
         }
 
         return !Curses.wmove(Handle, y, x)
-                        .Failed();
+                      .Failed();
     }
 
     /// <summary>
@@ -467,7 +465,7 @@ public class Window: IDisposable
         }
 
         Curses.wscrl(Handle, lines)
-                .Check(nameof(Curses.wscrl), "Failed to scroll the contents of the window up.");
+              .Check(nameof(Curses.wscrl), "Failed to scroll the contents of the window up.");
     }
 
     /// <summary>
@@ -494,7 +492,7 @@ public class Window: IDisposable
         }
 
         Curses.wscrl(Handle, -lines)
-                .Check(nameof(Curses.wscrl), "Failed to scroll the contents of the window down.");
+              .Check(nameof(Curses.wscrl), "Failed to scroll the contents of the window down.");
     }
 
     /// <summary>
@@ -515,7 +513,7 @@ public class Window: IDisposable
         }
 
         Curses.winsdelln(Handle, lines)
-                .Check(nameof(Curses.winsdelln), "Failed to insert blank lines into the window.");
+              .Check(nameof(Curses.winsdelln), "Failed to insert blank lines into the window.");
     }
 
     /// <summary>
@@ -536,7 +534,7 @@ public class Window: IDisposable
         }
 
         Curses.winsdelln(Handle, -lines)
-                .Check(nameof(Curses.winsdelln), "Failed to delete lines from the window.");
+              .Check(nameof(Curses.winsdelln), "Failed to delete lines from the window.");
     }
 
     /// <summary>
@@ -555,7 +553,7 @@ public class Window: IDisposable
         }
 
         Curses.wchgat(Handle, width, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
-                .Check(nameof(Curses.wchgat), "Failed to change style of characters in the window.");
+              .Check(nameof(Curses.wchgat), "Failed to change style of characters in the window.");
     }
 
     /// <summary>
@@ -596,7 +594,7 @@ public class Window: IDisposable
         }
 
         Curses.wvline_set(Handle, Curses.ToComplexChar(@char, style), length)
-                .Check(nameof(Curses.wvline_set), "Failed to draw a vertical line.");
+              .Check(nameof(Curses.wvline_set), "Failed to draw a vertical line.");
     }
 
     /// <summary>
@@ -609,7 +607,7 @@ public class Window: IDisposable
     public void DrawVerticalLine(int length)
     {
         Curses.wvline(Handle, 0, length)
-                .Check(nameof(Curses.wvline), "Failed to draw a vertical line.");
+              .Check(nameof(Curses.wvline), "Failed to draw a vertical line.");
     }
 
     /// <summary>
@@ -640,8 +638,8 @@ public class Window: IDisposable
         var bottomRightCorner = Curses.ToComplexChar(bottomRightCornerChar, style);
 
         Curses.wborder_set(Handle, leftSide, rightSide, topSide, bottomSide,
-                    topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner)
-                .Check(nameof(Curses.wborder_set), "Failed to draw a window border.");
+                  topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner)
+              .Check(nameof(Curses.wborder_set), "Failed to draw a window border.");
     }
 
     /// <summary>
@@ -652,8 +650,8 @@ public class Window: IDisposable
     public void DrawBorder()
     {
         Curses.wborder(Handle, 0, 0, 0, 0,
-                    0, 0, 0, 0)
-                .Check(nameof(Curses.wborder), "Failed to draw a window border.");
+                  0, 0, 0, 0)
+              .Check(nameof(Curses.wborder), "Failed to draw a window border.");
     }
 
     /// <summary>
@@ -673,7 +671,7 @@ public class Window: IDisposable
         }
 
         Curses.whline_set(Handle, Curses.ToComplexChar(@char, style), length)
-                .Check(nameof(Curses.whline_set), "Failed to draw a horizontal line.");
+              .Check(nameof(Curses.whline_set), "Failed to draw a horizontal line.");
     }
 
     /// <summary>
@@ -691,7 +689,7 @@ public class Window: IDisposable
         }
 
         Curses.whline(Handle, 0, length)
-                .Check(nameof(Curses.whline), "Failed to draw a horizontal line.");
+              .Check(nameof(Curses.whline), "Failed to draw a horizontal line.");
     }
 
     /// <summary>
@@ -710,7 +708,7 @@ public class Window: IDisposable
         while (count > 0)
         {
             if (Curses.wdelch(Handle)
-                        .Failed())
+                      .Failed())
             {
                 break;
             }
@@ -737,7 +735,7 @@ public class Window: IDisposable
         var arr = new ComplexChar[count];
 
         Curses.win_wchnstr(Handle, arr, count)
-                .Check(nameof(Curses.win_wchnstr), "Failed to get the text from the window.");
+              .Check(nameof(Curses.win_wchnstr), "Failed to get the text from the window.");
 
         return arr.Select(ch => Curses.FromComplexChar(ch))
                   .ToArray();
@@ -755,20 +753,20 @@ public class Window: IDisposable
         {
             case ClearStrategy.Full:
                 Curses.werase(Handle)
-                        .Check(nameof(Curses.werase), "Failed to queue a window erase.");
+                      .Check(nameof(Curses.werase), "Failed to queue a window erase.");
 
                 break;
             case ClearStrategy.LineFromCaret:
                 if (CaretPosition.X < Size.Width - 1)
                 {
                     Curses.wclrtoeol(Handle)
-                            .Check(nameof(Curses.wclrtoeol), "Failed to clear the line from the caret.");
+                          .Check(nameof(Curses.wclrtoeol), "Failed to clear the line from the caret.");
                 }
 
                 break;
             case ClearStrategy.FullFromCaret:
                 Curses.wclrtobot(Handle)
-                        .Check(nameof(Curses.wclrtobot), "Failed to clear the window from the caret.");
+                      .Check(nameof(Curses.wclrtobot), "Failed to clear the window from the caret.");
 
                 break;
         }
@@ -793,12 +791,12 @@ public class Window: IDisposable
         {
             case ReplaceStrategy.Overlay:
                 Curses.overlay(Handle, window.Handle)
-                        .Check(nameof(Curses.overlay), "Failed to overlay window.");
+                      .Check(nameof(Curses.overlay), "Failed to overlay window.");
 
                 break;
             case ReplaceStrategy.Overwrite:
                 Curses.overwrite(Handle, window.Handle)
-                        .Check(nameof(Curses.overwrite), "Failed to overwrite window.");
+                      .Check(nameof(Curses.overwrite), "Failed to overwrite window.");
 
                 break;
         }
@@ -828,9 +826,8 @@ public class Window: IDisposable
         }
 
         Curses.copywin(Handle, window.Handle, srcRect.Top, srcRect.Left, destRect.Top,
-                    destRect.Left, destRect.Bottom, destRect.Right,
-                    Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
-                .Check(nameof(Curses.copywin), "Failed to copy the window contents.");
+                  destRect.Left, destRect.Bottom, destRect.Right, Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
+              .Check(nameof(Curses.copywin), "Failed to copy the window contents.");
     }
 
     /// <summary>
@@ -857,7 +854,7 @@ public class Window: IDisposable
         }
 
         Curses.wtouchln(Handle, line, count, 1)
-                .Check(nameof(Curses.wtouchln), "Failed to mark lines as dirty.");
+              .Check(nameof(Curses.wtouchln), "Failed to mark lines as dirty.");
     }
 
     /// <summary>
@@ -909,16 +906,16 @@ public class Window: IDisposable
     public virtual void Refresh(bool batch, bool entireScreen)
     {
         Curses.clearok(Handle, entireScreen)
-                .Check(nameof(Curses.clearok), "Failed to configure the refresh mode.");
+              .Check(nameof(Curses.clearok), "Failed to configure the refresh mode.");
 
         if (batch)
         {
             Curses.wnoutrefresh(Handle)
-                    .Check(nameof(Curses.wnoutrefresh), "Failed to queue window refresh.");
+                  .Check(nameof(Curses.wnoutrefresh), "Failed to queue window refresh.");
         } else
         {
             Curses.wrefresh(Handle)
-                    .Check(nameof(Curses.wrefresh), "Failed to perform window refresh.");
+                  .Check(nameof(Curses.wrefresh), "Failed to perform window refresh.");
         }
     }
 
@@ -943,7 +940,7 @@ public class Window: IDisposable
         }
 
         Curses.wredrawln(Handle, line, count)
-                .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
+              .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
     }
 
     /// <summary>
@@ -961,7 +958,7 @@ public class Window: IDisposable
             }
 
             Parent?._windows.Remove(this);
-            
+
             Delete();
 
             _handle = IntPtr.Zero;

@@ -41,20 +41,20 @@ public sealed class Terminal: IDisposable
 {
     private static bool _terminalInstanceActive;
     private ColorManager _colorManager;
+    private int? _initialCaretMode;
+    private int? _initialMouseClickDelay;
+    private ulong? _initialMouseMask;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-    private int? _initialCaretMode;
-    private ulong? _initialMouseMask;
-    private int? _initialMouseClickDelay;
 
     /// <summary>
-    /// Creates a new instance of the terminal.
+    ///     Creates a new instance of the terminal.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="options">The terminal options.</param>
     /// <exception cref="ArgumentOutOfRangeException">Some of the options are invalid.</exception>
     /// <exception cref="InvalidOperationException">Another terminal instance is active.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="curses"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="curses" /> is <c>null</c>.</exception>
     public Terminal(ICursesProvider curses, TerminalOptions options)
     {
         Options = options;
@@ -77,7 +77,9 @@ public sealed class Terminal: IDisposable
 
         // Screen setup.
         _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
-        _screen = new(curses, curses.initscr().Check(nameof(curses.initscr), "Failed to create the screen window."));
+        _screen = new(curses, curses.initscr()
+                                    .Check(nameof(curses.initscr), "Failed to create the screen window."));
+
         _colorManager = new(curses, Options.UseColors);
 
         // After screen creation.
@@ -109,13 +111,11 @@ public sealed class Terminal: IDisposable
 
             curses.nocbreak()
                   .Check(nameof(curses.nocbreak), "Failed to setup terminal buffered mode.");
-        }
-        else if (Options.SuppressControlKeys)
+        } else if (Options.SuppressControlKeys)
         {
             curses.raw()
                   .Check(nameof(curses.raw), "Failed to setup terminal's raw mode.");
-        } 
-        else
+        } else
         {
             curses.cbreak()
                   .Check(nameof(curses.cbreak), "Failed to setup terminal's non-buffered mode.");
@@ -151,8 +151,9 @@ public sealed class Terminal: IDisposable
             _initialMouseMask = initialMouseMask;
         } else
         {
-            Curses.mousemask(0, out var initialMouseMask).Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
-            
+            Curses.mousemask(0, out var initialMouseMask)
+                  .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
+
             _initialMouseMask = initialMouseMask;
             _initialMouseClickDelay = Curses.mouseinterval(-1)
                                             .Check(nameof(Curses.mouseinterval),
@@ -271,26 +272,6 @@ public sealed class Terminal: IDisposable
     internal ICursesProvider Curses { get; }
 
     /// <summary>
-    ///     Attempts to notify the user with audio or flashing alert.
-    /// </summary>
-    /// <remarks>The actual notification depends on terminal support.</remarks>
-    /// <param name="silent">The alert mode.</param>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public void Alert(bool silent)
-    {
-        if (silent)
-        {
-            Curses.flash()
-                  .Check(nameof(Curses.flash), "Failed to flash the terminal.");
-        } else
-        {
-            Curses.beep()
-                  .Check(nameof(Curses.beep), "Failed to beep the terminal.");
-        }
-    }
-    
-    /// <summary>
     ///     Checks whether the terminal has been disposed of and is no longer usable.
     /// </summary>
     public bool IsDisposed => _screen.Disposed;
@@ -325,6 +306,26 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
+    ///     Attempts to notify the user with audio or flashing alert.
+    /// </summary>
+    /// <remarks>The actual notification depends on terminal support.</remarks>
+    /// <param name="silent">The alert mode.</param>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void Alert(bool silent)
+    {
+        if (silent)
+        {
+            Curses.flash()
+                  .Check(nameof(Curses.flash), "Failed to flash the terminal.");
+        } else
+        {
+            Curses.beep()
+                  .Check(nameof(Curses.beep), "Failed to beep the terminal.");
+        }
+    }
+
+    /// <summary>
     ///     Validates that the terminal is not disposed.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed of and is no longer usable.</exception>
@@ -335,7 +336,7 @@ public sealed class Terminal: IDisposable
             throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
         }
     }
-    
+
     /// <summary>
     ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>

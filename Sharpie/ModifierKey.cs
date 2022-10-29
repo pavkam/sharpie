@@ -54,5 +54,5 @@ public enum ModifierKey
     /// <summary>
     ///     Ctrl key.
     /// </summary>
-    Ctrl = Alt << 1,
+    Ctrl = Alt << 1
 }

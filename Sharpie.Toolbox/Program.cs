@@ -1,6 +1,6 @@
-﻿using Sharpie;
+﻿using System.Diagnostics.CodeAnalysis;
+using Sharpie;
 using Sharpie.Curses;
-using System.Diagnostics.CodeAnalysis;
 
 [assembly: ExcludeFromCodeCoverage]
 
@@ -8,7 +8,8 @@ var terminal = new Terminal(NativeCursesProvider.Instance, new());
 
 terminal.Screen.ApplyPendingRefreshes();
 
-while (true) {
+while (true)
+{
     if (!terminal.Screen.TryReadEvent(Timeout.Infinite, out var e))
     {
         continue;

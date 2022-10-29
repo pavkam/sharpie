@@ -38,8 +38,8 @@ using Curses;
 [PublicAPI]
 public sealed class ColorManager
 {
-    private ushort _nextPairHandle = 1;
     private readonly ICursesProvider _curses;
+    private ushort _nextPairHandle = 1;
 
     /// <summary>
     ///     Initializes color manager for a Curse provider.
@@ -47,7 +47,7 @@ public sealed class ColorManager
     /// <param name="curses">The curses provider.</param>
     /// <param name="enabled">Specifies whether colors are enabled.</param>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="curses"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="curses" /> is <c>null</c>.</exception>
     internal ColorManager(ICursesProvider curses, bool enabled)
     {
         _curses = curses ?? throw new ArgumentNullException(nameof(curses));
@@ -55,12 +55,11 @@ public sealed class ColorManager
         if (enabled && ColorsAreSupported)
         {
             _curses.start_color()
-                     .Check(nameof(_curses.start_color), "Failed to initialize terminal color mode.");
+                   .Check(nameof(_curses.start_color), "Failed to initialize terminal color mode.");
 
             _curses.use_default_colors()
-                     .Check(nameof(_curses.use_default_colors),
-                         "Failed to defined the default colors of the terminal.");
-            
+                   .Check(nameof(_curses.use_default_colors), "Failed to defined the default colors of the terminal.");
+
             Enabled = true;
         }
     }
@@ -90,7 +89,7 @@ public sealed class ColorManager
     public ColorMixture MixColors(ushort fgColor, ushort bgColor)
     {
         _curses.init_pair(_nextPairHandle, fgColor, bgColor)
-                 .Check(nameof(_curses.init_pair), "Failed to create a new color mixture.");
+               .Check(nameof(_curses.init_pair), "Failed to create a new color mixture.");
 
         var mixture = new ColorMixture { Handle = _nextPairHandle };
         _nextPairHandle++;
@@ -119,7 +118,7 @@ public sealed class ColorManager
     public void RemixColors(ColorMixture mixture, ushort fgColor, ushort bgColor)
     {
         _curses.init_pair(mixture.Handle, fgColor, bgColor)
-                 .Check(nameof(_curses.init_pair), "Failed to redefine an existing color mixture.");
+               .Check(nameof(_curses.init_pair), "Failed to redefine an existing color mixture.");
     }
 
     /// <summary>
@@ -143,8 +142,7 @@ public sealed class ColorManager
     public void RemixDefaultColors(ushort fgColor, ushort bgColor)
     {
         _curses.assume_default_colors(fgColor, bgColor)
-                 .Check(nameof(_curses.assume_default_colors),
-                     "Failed to redefine the default color mixture.");
+               .Check(nameof(_curses.assume_default_colors), "Failed to redefine the default color mixture.");
     }
 
     /// <summary>
@@ -171,7 +169,7 @@ public sealed class ColorManager
 
         return (fgColor, bgColor);
     }
-    
+
     /// <summary>
     ///     Redefines the color's RGB attributes (if supported).
     /// </summary>
@@ -246,8 +244,7 @@ public sealed class ColorManager
         }
 
         _curses.color_content(color, out var red, out var green, out var blue)
-                 .Check(nameof(_curses.color_content),
-                     "Failed to extract RGB information from a terminal color.");
+               .Check(nameof(_curses.color_content), "Failed to extract RGB information from a terminal color.");
 
         return (red, green, blue);
     }
@@ -264,5 +261,4 @@ public sealed class ColorManager
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public (ushort red, ushort green, ushort blue) BreakdownColor(StandardColor color) =>
         BreakdownColor((ushort) color);
-    
 }

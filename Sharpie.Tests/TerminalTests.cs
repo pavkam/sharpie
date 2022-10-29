@@ -36,8 +36,8 @@ using Curses;
 public class TerminalTests
 {
     private readonly TerminalOptions _settings = new(ManualFlush: true);
-    private Terminal? _terminal;
     private Mock<ICursesProvider> _cursesMock = null!;
+    private Terminal? _terminal;
 
     [TestInitialize]
     public void TestInitialize()
@@ -50,7 +50,7 @@ public class TerminalTests
     }
 
     [TestCleanup] public void TestCleanup() { _terminal?.Dispose(); }
-    
+
     [TestMethod]
     public void Ctor_Throws_IfAnotherTerminalInstanceIsAlive()
     {
@@ -101,7 +101,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.has_colors())
                    .Returns(true);
 
-        _terminal = new(_cursesMock.Object, new(UseColors: enabled));
+        _terminal = new(_cursesMock.Object, new(enabled));
 
         _terminal.Colors.Enabled.ShouldBe(enabled);
     }
@@ -280,7 +280,7 @@ public class TerminalTests
                   new Terminal(_cursesMock.Object, new(UseInputBuffering: false, SuppressControlKeys: false)))
               .Operation.ShouldBe("cbreak");
     }
-    
+
     [TestMethod]
     public void Ctor_PreparesMeta_ByAskingCurses()
     {
@@ -288,24 +288,21 @@ public class TerminalTests
 
         _cursesMock.Verify(v => v.meta(IntPtr.Zero, true));
     }
-    
+
     [TestMethod]
     public void Ctor_WillNotThrow_IfCursesFailsToPrepareMeta()
     {
         _cursesMock.Setup(v => v.meta(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.NotThrow(() =>
-        {
-            _terminal = new(_cursesMock.Object, new());
-        });
+        Should.NotThrow(() => { _terminal = new(_cursesMock.Object, new()); });
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void BaudRate_Throws_IfCursesFails()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.baudrate())
                    .Returns(-1);
 
@@ -317,7 +314,7 @@ public class TerminalTests
     public void BaudRate_Returns_IfCursesSucceeds()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.baudrate())
                    .Returns(999);
 
@@ -328,7 +325,7 @@ public class TerminalTests
     public void Colors_Throws_IfTerminalIsDisposed()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _terminal.Dispose();
         Should.Throw<ObjectDisposedException>(() => _terminal.Colors);
     }
@@ -344,7 +341,7 @@ public class TerminalTests
     public void SoftLabelKeys_Throws_IfTerminalIsDisposed()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _terminal.Dispose();
         Should.Throw<ObjectDisposedException>(() => _terminal.SoftLabelKeys);
     }
@@ -355,7 +352,6 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.SoftLabelKeys.ShouldNotBeNull();
     }
-
 
     [TestMethod]
     public void Screen_Throws_IfTerminalIsDisposed()
@@ -376,7 +372,7 @@ public class TerminalTests
     public void Name_Returns_IfCursesSucceeds()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.termname())
                    .Returns("test");
 
@@ -387,7 +383,7 @@ public class TerminalTests
     public void Name_ReturnsNull_IfCursesReturnsNull()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.termname())
                    .Returns((string) null!);
 
@@ -398,7 +394,7 @@ public class TerminalTests
     public void Description_Returns_IfCursesSucceeds()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.longname())
                    .Returns("test");
 
@@ -409,7 +405,7 @@ public class TerminalTests
     public void Description_ReturnsNull_IfCursesReturnsNull()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.longname())
                    .Returns((string) null!);
 
@@ -420,7 +416,7 @@ public class TerminalTests
     public void Version_Returns_IfCursesSucceeds()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.curses_version())
                    .Returns("test");
 
@@ -431,7 +427,7 @@ public class TerminalTests
     public void CursesVersion_ReturnsNull_IfCursesReturnsNull()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.curses_version())
                    .Returns((string) null!);
 
@@ -442,7 +438,7 @@ public class TerminalTests
     public void SupportedAttributes_Returns_WhateverCursesReturns()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.term_attrs())
                    .Returns((uint) VideoAttribute.Italic);
 
@@ -453,7 +449,7 @@ public class TerminalTests
     public void HasHardwareLineEditor_Returns_WhateverCursesReturns()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.has_il())
                    .Returns(true);
 
@@ -464,7 +460,7 @@ public class TerminalTests
     public void HasHardwareCharEditor_Returns_WhateverCursesReturns()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.has_ic())
                    .Returns(true);
 
@@ -475,7 +471,7 @@ public class TerminalTests
     public void CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.killwchar(out It.Ref<uint>.IsAny))
                    .Returns((out uint ch) =>
                    {
@@ -490,7 +486,7 @@ public class TerminalTests
     public void CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.killwchar(out It.Ref<uint>.IsAny))
                    .Returns((out uint ch) =>
                    {
@@ -505,7 +501,7 @@ public class TerminalTests
     public void CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.erasewchar(out It.Ref<uint>.IsAny))
                    .Returns((out uint ch) =>
                    {
@@ -520,7 +516,7 @@ public class TerminalTests
     public void CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.erasewchar(out It.Ref<uint>.IsAny))
                    .Returns((out uint ch) =>
                    {
@@ -633,7 +629,7 @@ public class TerminalTests
     public void Dispose_DoeNotThrow_IfCursesFails()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _cursesMock.Setup(s => s.mouseinterval(It.IsAny<int>()))
                    .Returns(-1);
 

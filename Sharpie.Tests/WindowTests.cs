@@ -38,29 +38,25 @@ public class WindowTests
 {
     private Mock<ICursesProvider> _cursesMock = null!;
 
-    [TestInitialize]
-    public void TestInitialize()
-    {
-        _cursesMock = new();
-    }
+    [TestInitialize] public void TestInitialize() { _cursesMock = new(); }
 
     [TestMethod]
     public void Ctor_Throws_WhenCursesIfNull()
     {
         Should.Throw<ArgumentNullException>(() => new Window(null!, null, IntPtr.MaxValue));
     }
-    
+
     [TestMethod]
     public void Ctor_Throws_WhenHandleIsZero()
     {
         Should.Throw<ArgumentException>(() => new Window(_cursesMock.Object, null, IntPtr.Zero));
     }
-      
+
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
     {
         var w = new Window(_cursesMock.Object, null, new(1));
-        
+
         _cursesMock.Verify(v => v.keypad(w.Handle, true), Times.Once);
         _cursesMock.Verify(v => v.notimeout(w.Handle, false), Times.Once);
         _cursesMock.Verify(v => v.nodelay(w.Handle, false), Times.Once);
@@ -74,47 +70,48 @@ public class WindowTests
         _cursesMock.Setup(s => s.keypad(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1))).Operation.ShouldBe("keypad");
+        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+              .Operation.ShouldBe("keypad");
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_IfConfigureWindow_FailsInCurses_2()
     {
         _cursesMock.Setup(s => s.notimeout(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1))).Operation.ShouldBe("notimeout");
+        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+              .Operation.ShouldBe("notimeout");
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_IfConfigureWindow_FailsInCurses_3()
     {
         _cursesMock.Setup(s => s.nodelay(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1))).Operation.ShouldBe("nodelay");
+        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+              .Operation.ShouldBe("nodelay");
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_IfConfigureWindow_FailsInCurses_4()
     {
         _cursesMock.Setup(s => s.syncok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1))).Operation.ShouldBe("syncok");
+        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+              .Operation.ShouldBe("syncok");
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_IfConfigureWindow_FailsInCurses_5()
     {
         _cursesMock.Setup(s => s.scrollok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1))).Operation.ShouldBe("scrollok");
+        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+              .Operation.ShouldBe("scrollok");
     }
 
     [TestMethod]
@@ -122,7 +119,7 @@ public class WindowTests
     {
         var p = new Window(_cursesMock.Object, null, IntPtr.MaxValue);
         var w = new Window(_cursesMock.Object, p, IntPtr.MaxValue);
-        
+
         p.Children.ShouldContain(w);
     }
 
@@ -132,30 +129,30 @@ public class WindowTests
         var w = new Window(_cursesMock.Object, null, IntPtr.MaxValue);
         w.Parent.ShouldBeNull();
     }
-    
+
     [TestMethod]
     public void Parent_IsNotNull_IfSupplied()
     {
         var p = new Window(_cursesMock.Object, null, IntPtr.MaxValue);
         var w = new Window(_cursesMock.Object, p, IntPtr.MaxValue);
-        
+
         w.Parent.ShouldBe(p);
     }
-    
+
     [TestMethod]
     public void Curses_IsInitialized()
     {
         var w = new Window(_cursesMock.Object, null, IntPtr.MaxValue);
         w.Curses.ShouldBe(_cursesMock.Object);
     }
-    
+
     [TestMethod]
     public void Handle_IsInitialized()
     {
         var w = new Window(_cursesMock.Object, null, new(22));
         w.Handle.ShouldBe(new(22));
     }
-    
+
     [TestMethod]
     public void Handle_Throws_IfDisposed()
     {
@@ -164,14 +161,14 @@ public class WindowTests
 
         Should.Throw<ObjectDisposedException>(() => w.Handle);
     }
-    
+
     [TestMethod]
     public void AssertAlive_DoesNothing_IfNotDisposed()
     {
         var w = new Window(_cursesMock.Object, null, new(22));
         Should.NotThrow(() => w.AssertAlive());
     }
-    
+
     [TestMethod]
     public void AssertAlive_Throws_IfDisposed()
     {
@@ -180,74 +177,74 @@ public class WindowTests
 
         Should.Throw<ObjectDisposedException>(() => w.AssertAlive());
     }
-    
+
     [TestMethod]
     public void ChildrenParent_RelationshipIsAutoManaged()
     {
         var p = new Window(_cursesMock.Object, null, IntPtr.MaxValue);
         p.Children.ShouldBeEmpty();
-        
+
         var c1 = new Window(_cursesMock.Object, p, IntPtr.MaxValue);
         p.Children.ShouldContain(c1);
         c1.Children.ShouldBeEmpty();
-        
+
         var c2 = new Window(_cursesMock.Object, c1, IntPtr.MaxValue);
         p.Children.ShouldContain(c1);
         c1.Children.ShouldContain(c2);
         c2.Children.ShouldBeEmpty();
-        
+
         c1.Dispose();
         c2.Disposed.ShouldBeTrue();
         c1.Children.ShouldBeEmpty();
         p.Children.ShouldBeEmpty();
         p.Disposed.ShouldBeFalse();
     }
-    
+
     [TestMethod]
     public void Children_IsEmpty_WhenCreated()
     {
         var w = new Window(_cursesMock.Object, null, new(22));
         w.Children.ShouldBeEmpty();
     }
-    
+
     [TestMethod]
     public void EnableScrolling_Get_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.is_scrollok(It.IsAny<IntPtr>()))
                    .Returns(true);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.EnableScrolling.ShouldBeTrue();
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void EnableScrolling_Set_SetsValue_IfCursesSucceeded(bool enabled)
     {
         var w = new Window(_cursesMock.Object, null, new(1));
         w.EnableScrolling = enabled;
-        
+
         _cursesMock.Verify(v => v.scrollok(new(1), enabled), Times.AtMost(2));
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void EnableScrolling_Throws_IfCursesFails()
     {
         var w = new Window(_cursesMock.Object, null, new(1));
-        
+
         _cursesMock.Setup(s => s.scrollok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => w.EnableScrolling = false).Operation.ShouldBe("scrollok");
+        Should.Throw<CursesException>(() => w.EnableScrolling = false)
+              .Operation.ShouldBe("scrollok");
     }
-    
+
     [TestMethod]
     public void Disposed_ReturnsFalse_IfNotDisposed()
     {
         var w = new Window(_cursesMock.Object, null, new(22));
         w.Disposed.ShouldBeFalse();
     }
-    
+
     [TestMethod]
     public void Disposed_ReturnsTrue_IfDisposed()
     {
@@ -255,29 +252,29 @@ public class WindowTests
         w.Dispose();
         w.Disposed.ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void UseHardwareLineEdit_Get_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.is_idlok(It.IsAny<IntPtr>()))
                    .Returns(true);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.UseHardwareLineEdit.ShouldBeTrue();
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void UseHardwareLineEdit_Set_DoesNotSetValue_IfNotSupportedByHardware(bool enabled)
     {
         _cursesMock.Setup(s => s.has_il())
                    .Returns(false);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.UseHardwareLineEdit = enabled;
-        
+
         _cursesMock.Verify(v => v.idlok(new(1), enabled), Times.Never);
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void UseHardwareLineEdit_Set_SetsValue_IfCursesSucceeded(bool enabled)
     {
@@ -286,23 +283,23 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
         w.UseHardwareLineEdit = enabled;
-        
+
         _cursesMock.Verify(v => v.idlok(new(1), enabled), Times.Once);
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void UseHardwareLineEdit_Set_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.has_il())
                    .Returns(true);
-        
+
         _cursesMock.Setup(s => s.idlok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        
-        Should.Throw<CursesException>(() => w.UseHardwareLineEdit = false).Operation.ShouldBe("idlok");
+
+        Should.Throw<CursesException>(() => w.UseHardwareLineEdit = false)
+              .Operation.ShouldBe("idlok");
     }
 
     [TestMethod]
@@ -310,32 +307,32 @@ public class WindowTests
     {
         _cursesMock.Setup(s => s.is_idcok(It.IsAny<IntPtr>()))
                    .Returns(true);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.UseHardwareCharEdit.ShouldBeTrue();
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void UseHardwareCharEdit_Set_DoesNotSetValue_IfNotSupportedByHardware(bool enabled)
     {
         _cursesMock.Setup(s => s.has_ic())
                    .Returns(false);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.UseHardwareCharEdit = enabled;
-        
+
         _cursesMock.Verify(v => v.idcok(new(1), enabled), Times.Never);
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void UseHardwareCharEdit_Set_SetsValue_IfCursesSucceeded(bool enabled)
     {
         _cursesMock.Setup(s => s.has_ic())
                    .Returns(true);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.UseHardwareCharEdit = enabled;
-        
+
         _cursesMock.Verify(v => v.idcok(new(1), enabled), Times.Once);
     }
 
@@ -359,52 +356,50 @@ public class WindowTests
         s.ColorMixture.ShouldBe(new() { Handle = 22 });
     }
 
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Style_Get_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny,  out It.Ref<ushort>.IsAny, IntPtr.Zero))
+        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny, out It.Ref<ushort>.IsAny,
+                       IntPtr.Zero))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        
-        Should.Throw<CursesException>(() => w.Style).Operation.ShouldBe("wattr_get");
+
+        Should.Throw<CursesException>(() => w.Style)
+              .Operation.ShouldBe("wattr_get");
     }
-    
+
     [TestMethod]
     public void Style_Set_SetsValue_IfCursesSucceeded()
     {
         var w = new Window(_cursesMock.Object, null, new(1));
         w.Style = new() { Attributes = VideoAttribute.Italic, ColorMixture = new() { Handle = 22 } };
 
-        _cursesMock.Verify(v => v.wattr_set(It.IsAny<IntPtr>(), (uint)VideoAttribute.Italic, 22,
-            IntPtr.Zero));
+        _cursesMock.Verify(v => v.wattr_set(It.IsAny<IntPtr>(), (uint) VideoAttribute.Italic, 22, IntPtr.Zero));
     }
-      
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Style_Set_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wattr_set(It.IsAny<IntPtr>(),  It.IsAny<uint>(), It.IsAny<ushort>(), IntPtr.Zero))
+        _cursesMock.Setup(s => s.wattr_set(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<ushort>(), IntPtr.Zero))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        
-        Should.Throw<CursesException>(() => w.Style = Style.Default).Operation.ShouldBe("wattr_set");
+
+        Should.Throw<CursesException>(() => w.Style = Style.Default)
+              .Operation.ShouldBe("wattr_set");
     }
-    
+
     [TestMethod]
     public void ColorMixture_Set_SetsValue_IfCursesSucceeded()
     {
         var w = new Window(_cursesMock.Object, null, new(1));
         w.ColorMixture = new() { Handle = 22 };
 
-        _cursesMock.Verify(v => v.wcolor_set(It.IsAny<IntPtr>(), 22,
-            IntPtr.Zero));
+        _cursesMock.Verify(v => v.wcolor_set(It.IsAny<IntPtr>(), 22, IntPtr.Zero));
     }
 
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void ColorMixture_Set_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.wcolor_set(It.IsAny<IntPtr>(), It.IsAny<ushort>(), IntPtr.Zero))
@@ -415,7 +410,7 @@ public class WindowTests
         Should.Throw<CursesException>(() => w.ColorMixture = ColorMixture.Default)
               .Operation.ShouldBe("wcolor_set");
     }
-    
+
     [TestMethod]
     public void Background_Get_Returns_IfCursesSucceeded()
     {
@@ -429,133 +424,134 @@ public class WindowTests
                        colorPair = 10;
                        return 0;
                    });
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         var bk = w.Background;
-        bk.style.ShouldBe(new()
-        {
-            Attributes = VideoAttribute.Dim,
-            ColorMixture = new() { Handle = 10 }
-        });
+        bk.style.ShouldBe(new() { Attributes = VideoAttribute.Dim, ColorMixture = new() { Handle = 10 } });
         bk.@char.ShouldBe(new('H'));
 
         _cursesMock.Verify(v => v.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<ComplexChar>.IsAny), Times.Once);
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Background_Get_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<ComplexChar>.IsAny))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Background).Operation.ShouldBe("wgetbkgrnd");
+        Should.Throw<CursesException>(() => w.Background)
+              .Operation.ShouldBe("wgetbkgrnd");
     }
-    
+
     [TestMethod]
     public void Background_Set_SetsValue_IfCursesSucceeded()
     {
         var w = new Window(_cursesMock.Object, null, new(1));
-        w.Background = (new('a'),
-            new() { Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 22 } });
+        w.Background = (new('a'), new() { Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 22 } });
 
         _cursesMock.Verify(
-            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, "a", (uint)VideoAttribute.Blink, 22,
-                It.IsAny<IntPtr>()), Times.Once);
+            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, "a", (uint) VideoAttribute.Blink, 22, It.IsAny<IntPtr>()),
+            Times.Once);
+
         _cursesMock.Verify(v => v.wbkgrnd(new(1), It.IsAny<ComplexChar>()));
     }
-      
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Background_Set_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wbkgrnd(It.IsAny<IntPtr>(),  It.IsAny<ComplexChar>()))
+        _cursesMock.Setup(s => s.wbkgrnd(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>()))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        
-        Should.Throw<CursesException>(() => w.Background = (new('a'), Style.Default)).Operation.ShouldBe("wbkgrnd");
+
+        Should.Throw<CursesException>(() => w.Background = (new('a'), Style.Default))
+              .Operation.ShouldBe("wbkgrnd");
     }
-    
+
     [TestMethod]
     public void Location_Get_ForMains_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
                    .Returns(11);
+
         _cursesMock.Setup(s => s.getbegy(It.IsAny<IntPtr>()))
                    .Returns(22);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        w.Location.ShouldBe(new(11,22));
+        w.Location.ShouldBe(new(11, 22));
     }
-    
+
     [TestMethod]
     public void Location_Get_ForSubs_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
                    .Returns(true);
+
         _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(11);
+
         _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(22);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        w.Location.ShouldBe(new(11,22));
+        w.Location.ShouldBe(new(11, 22));
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_ForMains_Throws_IfCursesFails_1()
     {
         _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        
-        Should.Throw<CursesException>(() => w.Location).Operation.ShouldBe("getbegx");
+
+        Should.Throw<CursesException>(() => w.Location)
+              .Operation.ShouldBe("getbegx");
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_ForMains_Throws_IfCursesFails_2()
     {
         _cursesMock.Setup(s => s.getbegy(It.IsAny<IntPtr>()))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        
-        Should.Throw<CursesException>(() => w.Location).Operation.ShouldBe("getbegy");
+
+        Should.Throw<CursesException>(() => w.Location)
+              .Operation.ShouldBe("getbegy");
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_ForSubs_Throws_IfCursesFails_1()
     {
         _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
                    .Returns(true);
+
         _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        
-        Should.Throw<CursesException>(() => w.Location).Operation.ShouldBe("getparx");
+
+        Should.Throw<CursesException>(() => w.Location)
+              .Operation.ShouldBe("getparx");
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_ForSubs_Throws_IfCursesFails_2()
     {
         _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
                    .Returns(true);
+
         _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
-        
-        Should.Throw<CursesException>(() => w.Location).Operation.ShouldBe("getpary");
+
+        Should.Throw<CursesException>(() => w.Location)
+              .Operation.ShouldBe("getpary");
     }
-    
+
     [TestMethod]
     public void Location_Set_ForMains_SetsValue_IfCursesSucceeded()
     {
@@ -564,53 +560,55 @@ public class WindowTests
 
         _cursesMock.Verify(v => v.mvwin(new(1), 22, 11), Times.Once);
     }
-    
+
     [TestMethod]
     public void Location_Set_ForSubs_SetsValue_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
                    .Returns(true);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.Location = new(11, 22);
 
         _cursesMock.Verify(v => v.mvderwin(new(1), 22, 11), Times.Once);
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_ForMains_Throws_IfCursesFails()
     {
         var w = new Window(_cursesMock.Object, null, new(1));
-        
+
         _cursesMock.Setup(s => s.mvwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
-       
-        Should.Throw<CursesException>(() => w.Location = new(1,1)).Operation.ShouldBe("mvwin");
+
+        Should.Throw<CursesException>(() => w.Location = new(1, 1))
+              .Operation.ShouldBe("mvwin");
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_ForSubs_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
                    .Returns(true);
+
         _cursesMock.Setup(s => s.mvderwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.Location = new(1,1)).Operation.ShouldBe("mvderwin");
+        Should.Throw<CursesException>(() => w.Location = new(1, 1))
+              .Operation.ShouldBe("mvderwin");
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfOutsideParent()
     {
         _cursesMock.Setup(s => s.getmaxx(new(1)))
                    .Returns(5);
+
         _cursesMock.Setup(s => s.getmaxy(new(1)))
                    .Returns(5);
+
         _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns((IntPtr _, int y, int x) => y is >= 0 and < 10 && x is >= 0 and < 10);
 
@@ -619,15 +617,16 @@ public class WindowTests
 
         Should.Throw<ArgumentOutOfRangeException>(() => w.Location = new(6, 6));
     }
-    
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_UpdatesLocation_IfInsideParent()
     {
         _cursesMock.Setup(s => s.getmaxx(new(1)))
                    .Returns(5);
+
         _cursesMock.Setup(s => s.getmaxy(new(1)))
                    .Returns(5);
+
         _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns((IntPtr _, int y, int x) => y is >= 0 and < 10 && x is >= 0 and < 10);
 
@@ -635,7 +634,7 @@ public class WindowTests
         var w = new Window(_cursesMock.Object, p, new(2));
 
         w.Location = new(5, 5);
-        
+
         _cursesMock.Verify(v => v.mvwin(new(2), 5, 5), Times.Once);
     }
 }

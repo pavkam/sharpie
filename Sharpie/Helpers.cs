@@ -87,7 +87,7 @@ public static class Helpers
     /// </summary>
     /// <param name="value">The millis.</param>
     /// <returns>The value in 100s of millis.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Argument <paramref name="value"/> is less than zero.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Argument <paramref name="value" /> is less than zero.</exception>
     internal static int ConvertMillisToTenths(int value)
     {
         switch (value)
@@ -105,7 +105,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Converts a given rune to a complex character.
+    ///     Converts a given rune to a complex character.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="rune">The rune to convert.</param>
@@ -129,7 +129,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Converts a complex char into a rune and its style.
+    ///     Converts a complex char into a rune and its style.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="char">The char to breakdown.</param>

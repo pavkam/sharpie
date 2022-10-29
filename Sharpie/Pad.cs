@@ -38,13 +38,8 @@ using Curses;
 [PublicAPI]
 public sealed class Pad: Window
 {
-    /// <summary>
-    ///     The parent screen of this pad.
-    /// </summary>
-    internal Screen Screen { get; }
-
-    /// <inheritdoc cref="Window(ICursesProvider, Window, IntPtr)"/>
-    /// <exception cref="ArgumentException">The <paramref name="parent"/> is not a valid ancestor.</exception>
+    /// <inheritdoc cref="Window(ICursesProvider, Window, IntPtr)" />
+    /// <exception cref="ArgumentException">The <paramref name="parent" /> is not a valid ancestor.</exception>
     internal Pad(ICursesProvider curses, Window parent, IntPtr windowHandle): base(curses, parent, windowHandle)
     {
         Screen = parent switch
@@ -54,6 +49,11 @@ public sealed class Pad: Window
             var _ => throw new ArgumentException("The parent can only be the screen or another pad.", nameof(parent))
         };
     }
+
+    /// <summary>
+    ///     The parent screen of this pad.
+    /// </summary>
+    internal Screen Screen { get; }
 
     /// <inheritdoc cref="Window.ImmediateRefresh" />
     /// <remarks>
@@ -100,18 +100,18 @@ public sealed class Pad: Window
         }
 
         Curses.clearok(Handle, entireScreen)
-                .Check(nameof(Terminal.Curses.clearok), "Failed to configure pad refresh.");
+              .Check(nameof(Terminal.Curses.clearok), "Failed to configure pad refresh.");
 
         if (batch)
         {
             Curses.pnoutrefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
-                        destRect.Bottom, destRect.Right)
-                    .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
+                      destRect.Bottom, destRect.Right)
+                  .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
         } else
         {
             Curses.prefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
-                        destRect.Bottom, destRect.Right)
-                    .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
+                      destRect.Bottom, destRect.Right)
+                  .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
         }
     }
 }
