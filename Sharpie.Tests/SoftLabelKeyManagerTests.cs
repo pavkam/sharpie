@@ -71,9 +71,9 @@ public class SoftLabelKeyManagerTests
         });
     }
 
-    [TestMethod] public void IsEnabled_IsTrue_IfModeIsNotDisabled() { _mgr1.IsEnabled.ShouldBeTrue(); }
+    [TestMethod] public void Enabled_IsTrue_IfModeIsNotDisabled() { _mgr1.Enabled.ShouldBeTrue(); }
 
-    [TestMethod] public void IsEnabled_IsFalse_IfModeIsDisabled() { _mgr2.IsEnabled.ShouldBeFalse(); }
+    [TestMethod] public void Enabled_IsFalse_IfModeIsDisabled() { _mgr2.Enabled.ShouldBeFalse(); }
 
     [TestMethod, SuppressMessage("ReSharper", "UnusedVariable")]
     public void Style_Throws_IfNotEnabled()

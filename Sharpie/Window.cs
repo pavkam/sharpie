@@ -139,7 +139,7 @@ public class Window: IDisposable
     /// </summary>
     /// <remarks>
     ///     This functionality only works if hardware has support for it. Consult
-    ///     <see cref="Sharpie.Terminal.SupportsHardwareLineInsertAndDelete" />
+    ///     <see cref="Terminal.HasHardwareLineEditor" />
     ///     Default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
@@ -161,7 +161,7 @@ public class Window: IDisposable
     /// </summary>
     /// <remarks>
     ///     This functionality only works if hardware has support for it. Consult
-    ///     <see cref="Sharpie.Terminal.SupportsHardwareCharacterInsertAndDelete" />
+    ///     <see cref="Terminal.HasHardwareCharEditor" />
     ///     Default is <c>true</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>

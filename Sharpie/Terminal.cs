@@ -34,7 +34,7 @@ using Curses;
 
 /// <summary>
 ///     This class allows the developer to interact with the terminal and its settings. This is the main
-///     class that is used
+///     class that is used in a Curses-based application.
 /// </summary>
 [PublicAPI]
 public sealed class Terminal: IDisposable
@@ -43,9 +43,9 @@ public sealed class Terminal: IDisposable
     private ColorManager _colorManager;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-    private int _initialCaretMode;
-    private ulong _initialMouseMask;
-    private int _initialMouseClickDelay;
+    private int? _initialCaretMode;
+    private ulong? _initialMouseMask;
+    private int? _initialMouseClickDelay;
 
     /// <summary>
     /// Creates a new instance of the terminal.
@@ -57,12 +57,6 @@ public sealed class Terminal: IDisposable
     /// <exception cref="ArgumentNullException">The <paramref name="curses"/> is <c>null</c>.</exception>
     public Terminal(ICursesProvider curses, TerminalOptions options)
     {
-        if (_terminalInstanceActive)
-        {
-            throw new InvalidOperationException(
-                "Another terminal instance is active. Only one instance can be active at one time.");
-        }
-
         Options = options;
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
 
@@ -70,20 +64,26 @@ public sealed class Terminal: IDisposable
         {
             throw new ArgumentOutOfRangeException(nameof(options.MouseClickDelay));
         }
-        
-        // Pre-screen creation.
-        if (Options.UseEnvironmentOverrides)
+
+        if (_terminalInstanceActive)
         {
-            curses.use_env(true);
+            throw new InvalidOperationException(
+                "Another terminal instance is active. Only one instance can be active at one time.");
         }
+
+
+        // Pre-screen creation.
+        curses.use_env(Options.UseEnvironmentOverrides);
 
         // Screen setup.
         _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
-        _screen = new(curses, curses.initscr());
+        _screen = new(curses, curses.initscr().Check(nameof(curses.initscr), "Failed to create the screen window."));
         _colorManager = new(curses, Options.UseColors);
 
         // After screen creation.
-        curses.intrflush(IntPtr.Zero, Options.ManualFlush);
+        curses.intrflush(IntPtr.Zero, Options.ManualFlush)
+              .Check(nameof(curses.intrflush), "Failed to initialize manual flush.");
+
         if (Options.ManualFlush)
         {
             curses.noqiflush();
@@ -102,24 +102,23 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(curses.noecho), "Failed to setup terminal's no-echo mode.");
         }
 
-        if (!Options.UseInputBuffering)
-        {
-            if (Options.SuppressControlKeys)
-            {
-                curses.raw()
-                      .Check(nameof(curses.raw), "Failed to setup terminal's raw mode.");
-            } else
-            {
-                curses.cbreak()
-                      .Check(nameof(curses.cbreak), "Failed to setup terminal's non-buffered mode.");
-            }
-        } else
+        if (Options.UseInputBuffering)
         {
             curses.noraw()
                   .Check(nameof(curses.noraw), "Failed to setup terminal's no-raw mode.");
 
             curses.nocbreak()
                   .Check(nameof(curses.nocbreak), "Failed to setup terminal buffered mode.");
+        }
+        else if (Options.SuppressControlKeys)
+        {
+            curses.raw()
+                  .Check(nameof(curses.raw), "Failed to setup terminal's raw mode.");
+        } 
+        else
+        {
+            curses.cbreak()
+                  .Check(nameof(curses.cbreak), "Failed to setup terminal's non-buffered mode.");
         }
 
         if (Options.TranslateReturnToNewLineChar)
@@ -135,19 +134,26 @@ public sealed class Terminal: IDisposable
         // Caret configuration
         _initialCaretMode = Curses.curs_set((int) Options.CaretMode)
                                   .Check(nameof(Curses.curs_set), "Failed to change the caret mode.");
+
         _screen.IgnoreHardwareCaret = Options.CaretMode == CaretMode.Invisible;
 
         // Mouse configuration
         if (Options.UseMouse)
         {
             _initialMouseClickDelay = Curses.mouseinterval(Options.MouseClickDelay)
-                                         .Check(nameof(Curses.mouseinterval), "Failed to set the mouse click interval.");
+                                            .Check(nameof(Curses.mouseinterval),
+                                                "Failed to set the mouse click interval.");
+
             Curses.mousemask((ulong) RawMouseEvent.EventType.ReportPosition | (ulong) RawMouseEvent.EventType.All,
-                      out _initialMouseMask)
+                      out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
+
+            _initialMouseMask = initialMouseMask;
         } else
         {
-            Curses.mousemask(0, out _initialMouseMask);
+            Curses.mousemask(0, out var initialMouseMask).Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
+            
+            _initialMouseMask = initialMouseMask;
             _initialMouseClickDelay = Curses.mouseinterval(-1)
                                             .Check(nameof(Curses.mouseinterval),
                                                 "Failed to set the mouse click interval.");
@@ -183,7 +189,7 @@ public sealed class Terminal: IDisposable
     ///     Provides access to the terminal's color management.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public SoftLabelKeyManager SoftLabelKey
+    public SoftLabelKeyManager SoftLabelKeys
     {
         get
         {
@@ -200,19 +206,16 @@ public sealed class Terminal: IDisposable
     /// <summary>
     ///     Returns the name of the terminal.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public string? Name => Curses.termname();
 
     /// <summary>
     ///     Returns the long description of the terminal.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public string? Description => Curses.longname();
 
     /// <summary>
     ///     Returns the version of the Curses library in use.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public string? CursesVersion => Curses.curses_version();
 
     /// <summary>
@@ -237,19 +240,16 @@ public sealed class Terminal: IDisposable
     /// <summary>
     ///     Specifies whether the terminal supports hardware line insert and delete.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool SupportsHardwareLineInsertAndDelete => Curses.has_il();
+    public bool HasHardwareLineEditor => Curses.has_il();
 
     /// <summary>
     ///     Specifies whether the terminal supports hardware character insert and delete.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool SupportsHardwareCharacterInsertAndDelete => Curses.has_ic();
+    public bool HasHardwareCharEditor => Curses.has_ic();
 
     /// <summary>
     ///     Gets the currently defined kill character. \0 is returned if none is defined.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     public Rune? CurrentKillChar =>
         Curses.killwchar(out var @char)
               .Failed()
@@ -300,11 +300,25 @@ public sealed class Terminal: IDisposable
     /// </summary>
     public void Dispose()
     {
-        _screen.Dispose();
-        
-        Curses.mousemask(_initialMouseMask, out var _);
-        Curses.mouseinterval(_initialMouseClickDelay);
-        Curses.curs_set(_initialCaretMode);
+        if (_screen != null!)
+        {
+            _screen.Dispose();
+        }
+
+        if (_initialMouseMask != null)
+        {
+            Curses.mousemask(_initialMouseMask.Value, out var _);
+        }
+
+        if (_initialMouseClickDelay != null)
+        {
+            Curses.mouseinterval(_initialMouseClickDelay.Value);
+        }
+
+        if (_initialCaretMode != null)
+        {
+            Curses.curs_set(_initialCaretMode.Value);
+        }
 
         _terminalInstanceActive = false;
         GC.SuppressFinalize(this);

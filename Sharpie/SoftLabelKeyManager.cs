@@ -63,7 +63,7 @@ public sealed class SoftLabelKeyManager
     /// <summary>
     ///     Specifies if the manager is enabled.
     /// </summary>
-    public bool IsEnabled => _mode != SoftLabelKeyMode.Disabled;
+    public bool Enabled => _mode != SoftLabelKeyMode.Disabled;
 
     /// <summary>
     ///     Gets the number of labels within the soft key label panel.
