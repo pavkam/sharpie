@@ -477,4 +477,165 @@ public class WindowTests
         
         Should.Throw<CursesException>(() => w.Background = (new('a'), Style.Default)).Operation.ShouldBe("wbkgrnd");
     }
+    
+    [TestMethod]
+    public void Location_Get_ForMains_Returns_IfCursesSucceeded()
+    {
+        _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
+                   .Returns(11);
+        _cursesMock.Setup(s => s.getbegy(It.IsAny<IntPtr>()))
+                   .Returns(22);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Location.ShouldBe(new(11,22));
+    }
+    
+    [TestMethod]
+    public void Location_Get_ForSubs_Returns_IfCursesSucceeded()
+    {
+        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
+                   .Returns(true);
+        _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
+                   .Returns(11);
+        _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
+                   .Returns(22);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Location.ShouldBe(new(11,22));
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Location_Get_ForMains_Throws_IfCursesFails_1()
+    {
+        _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        
+        Should.Throw<CursesException>(() => w.Location).Operation.ShouldBe("getbegx");
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Location_Get_ForMains_Throws_IfCursesFails_2()
+    {
+        _cursesMock.Setup(s => s.getbegy(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        
+        Should.Throw<CursesException>(() => w.Location).Operation.ShouldBe("getbegy");
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Location_Get_ForSubs_Throws_IfCursesFails_1()
+    {
+        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
+                   .Returns(true);
+        _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        
+        Should.Throw<CursesException>(() => w.Location).Operation.ShouldBe("getparx");
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Location_Get_ForSubs_Throws_IfCursesFails_2()
+    {
+        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
+                   .Returns(true);
+        _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        
+        Should.Throw<CursesException>(() => w.Location).Operation.ShouldBe("getpary");
+    }
+    
+    [TestMethod]
+    public void Location_Set_ForMains_SetsValue_IfCursesSucceeded()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Location = new(11, 22);
+
+        _cursesMock.Verify(v => v.mvwin(new(1), 22, 11), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Location_Set_ForSubs_SetsValue_IfCursesSucceeded()
+    {
+        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
+                   .Returns(true);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Location = new(11, 22);
+
+        _cursesMock.Verify(v => v.mvderwin(new(1), 22, 11), Times.Once);
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Location_Set_ForMains_Throws_IfCursesFails()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        
+        _cursesMock.Setup(s => s.mvwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+       
+        Should.Throw<CursesException>(() => w.Location = new(1,1)).Operation.ShouldBe("mvwin");
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Location_Set_ForSubs_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
+                   .Returns(true);
+        _cursesMock.Setup(s => s.mvderwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+
+        Should.Throw<CursesException>(() => w.Location = new(1,1)).Operation.ShouldBe("mvderwin");
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Location_Set_Throws_IfOutsideParent()
+    {
+        _cursesMock.Setup(s => s.getmaxx(new(1)))
+                   .Returns(5);
+        _cursesMock.Setup(s => s.getmaxy(new(1)))
+                   .Returns(5);
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns((IntPtr _, int y, int x) => y is >= 0 and < 10 && x is >= 0 and < 10);
+
+        var p = new Window(_cursesMock.Object, null, new(1));
+        var w = new Window(_cursesMock.Object, p, new(2));
+
+        Should.Throw<ArgumentOutOfRangeException>(() => w.Location = new(6, 6));
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Location_Set_UpdatesLocation_IfInsideParent()
+    {
+        _cursesMock.Setup(s => s.getmaxx(new(1)))
+                   .Returns(5);
+        _cursesMock.Setup(s => s.getmaxy(new(1)))
+                   .Returns(5);
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns((IntPtr _, int y, int x) => y is >= 0 and < 10 && x is >= 0 and < 10);
+
+        var p = new Window(_cursesMock.Object, null, new(1));
+        var w = new Window(_cursesMock.Object, p, new(2));
+
+        w.Location = new(5, 5);
+        
+        _cursesMock.Verify(v => v.mvwin(new(2), 5, 5), Times.Once);
+    }
 }
