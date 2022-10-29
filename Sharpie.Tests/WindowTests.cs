@@ -1062,4 +1062,255 @@ public class WindowTests
 
         _cursesMock.Verify(s => s.wscrl(new(1), -1));
     }
+    
+    [TestMethod]
+    public void InsertEmptyLines_Throws_IfLinesIsLessThanOne()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentException>(() => w.InsertEmptyLines(0));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void InsertEmptyLines_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.winsdelln(It.IsAny<IntPtr>(), It.IsAny<int>()))
+                   .Returns(-1);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.InsertEmptyLines(1)).Operation.ShouldBe("winsdelln");
+    }
+    
+    [TestMethod]
+    public void InsertEmptyLines_AddsLines_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.InsertEmptyLines(1);
+
+        _cursesMock.Verify(s => s.winsdelln(new(1), 1));
+    }
+    
+    [TestMethod]
+    public void DeleteLines_Throws_IfLinesIsLessThanOne()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentException>(() => w.DeleteLines(0));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DeleteLines_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.winsdelln(It.IsAny<IntPtr>(), It.IsAny<int>()))
+                   .Returns(-1);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.DeleteLines(1)).Operation.ShouldBe("winsdelln");
+    }
+    
+    [TestMethod]
+    public void DeleteLines_AddsLines_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.DeleteLines(1);
+
+        _cursesMock.Verify(s => s.winsdelln(new(1), -1));
+    }
+    
+    [TestMethod]
+    public void ChangeTextStyle_Throws_IfWidthIsLessThanOne()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentException>(() => w.ChangeTextStyle(0, Style.Default));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void ChangeTextStyle_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.wchgat(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<uint>(), It.IsAny<ushort>(),
+                       It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.ChangeTextStyle(1, Style.Default))
+              .Operation.ShouldBe("wchgat");
+    }
+
+    [TestMethod]
+    public void ChangeTextStyle_AddsLines_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.ChangeTextStyle(3, new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 22 } });
+
+        _cursesMock.Verify(v => v.wchgat(new(1), 3, (uint) VideoAttribute.Bold, 22, IntPtr.Zero), Times.Once);
+    }
+    
+    
+    
+    [TestMethod]
+    public void DrawVerticalLine_Throws_IfWidthIsLessThanOne()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentException>(() => w.DrawVerticalLine(0, new('a'), Style.Default));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DrawVerticalLine_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.wvline_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.DrawVerticalLine(1, new('a'), Style.Default))
+              .Operation.ShouldBe("wvline_set");
+    }
+
+    [TestMethod]
+    public void DrawVerticalLine_DrawsLine_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.DrawVerticalLine(3, new Rune('a'), new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 22 } });
+
+        _cursesMock.Verify(
+            s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(), It.IsAny<ushort>(), IntPtr.Zero),
+            Times.Once);
+        
+        _cursesMock.Verify(v => v.wvline_set(new(1), It.IsAny<ComplexChar>(), 3), Times.Once);
+    }
+    
+    [TestMethod]
+    public void DrawVerticalLine2_Throws_IfWidthIsLessThanOne()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentException>(() => w.DrawVerticalLine(0));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DrawVerticalLine2_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.wvline(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.DrawVerticalLine(1))
+              .Operation.ShouldBe("wvline");
+    }
+
+    [TestMethod]
+    public void DrawVerticalLine2_DrawsLine_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.DrawVerticalLine(3);
+
+        _cursesMock.Verify(v => v.wvline(new(1), 0, 3), Times.Once);
+    }
+    
+    [TestMethod]
+    public void DrawHorizontalLine_Throws_IfWidthIsLessThanOne()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentException>(() => w.DrawHorizontalLine(0, new('a'), Style.Default));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DrawHorizontalLine_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.whline_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.DrawHorizontalLine(1, new('a'), Style.Default))
+              .Operation.ShouldBe("whline_set");
+    }
+
+    [TestMethod]
+    public void DrawHorizontalLine_DrawsLine_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.DrawHorizontalLine(3, new Rune('a'), new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 22 } });
+
+        _cursesMock.Verify(
+            s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(), It.IsAny<ushort>(), IntPtr.Zero),
+            Times.Once);
+        _cursesMock.Verify(v => v.whline_set(new(1), It.IsAny<ComplexChar>(), 3), Times.Once);
+    }
+    
+    [TestMethod]
+    public void DrawHorizontalLine2_Throws_IfWidthIsLessThanOne()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentException>(() => w.DrawHorizontalLine(0));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DrawHorizontalLine2_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.whline(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.DrawHorizontalLine(1))
+              .Operation.ShouldBe("whline");
+    }
+
+    [TestMethod]
+    public void DrawHorizontalLine2_DrawsLine_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.DrawHorizontalLine(3);
+
+        _cursesMock.Verify(v => v.whline(new(1), 0, 3), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DrawBorder_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.wborder_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
+                       It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
+                       It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.DrawBorder(new('a'), new('a'), new('a'), new('a'), new('a'),
+                  new('a'), new('a'), new('a'), Style.Default))
+              .Operation.ShouldBe("wborder_set");
+    }
+
+    [TestMethod]
+    public void DrawBorder_DrawsBorder_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.DrawBorder(new('a'), new('a'), new('a'), new('a'), new('a'),
+            new('a'), new('a'), new('a'), Style.Default);
+
+        _cursesMock.Verify(
+            s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(), It.IsAny<ushort>(), IntPtr.Zero),
+            Times.Exactly(8));
+        
+        _cursesMock.Verify(
+            s => s.wborder_set(new(1), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
+                It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
+                It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>()), Times.Once);
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DrawBorder2_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.wborder(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<uint>(),
+                       It.IsAny<uint>(), It.IsAny<uint>(), It.IsAny<uint>(),
+                       It.IsAny<uint>(), It.IsAny<uint>(), It.IsAny<uint>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.DrawBorder())
+              .Operation.ShouldBe("wborder");
+    }
+
+    [TestMethod]
+    public void DrawBorder2_DrawsBorder_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.DrawBorder();
+
+        _cursesMock.Verify(s => s.wborder(new(1), 0, 0, 0, 0,
+            0, 0, 0, 0), Times.Once);
+    }
 }

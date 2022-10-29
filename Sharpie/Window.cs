@@ -558,9 +558,21 @@ public class Window: IDisposable
             throw new ArgumentNullException(nameof(str));
         }
 
+        var failed = 0;
+        var total = 0;
         foreach (var rune in str.EnumerateRunes())
         {
-            Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, style));
+            total++;
+            if (Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, style))
+                      .Failed())
+            {
+                failed++;
+            }
+        }
+
+        if (failed == total)
+        {
+            throw new CursesException(nameof(Curses.wadd_wch), "Failed to write the text in its entirety");
         }
     }
 
@@ -573,7 +585,7 @@ public class Window: IDisposable
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
-    public void DrawVerticalLine(Rune @char, Style style, int length)
+    public void DrawVerticalLine(int length, Rune @char, Style style)
     {
         if (length <= 0)
         {
@@ -593,10 +605,53 @@ public class Window: IDisposable
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawVerticalLine(int length)
     {
+        if (length <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length));
+        }
+        
         Curses.wvline(Handle, 0, length)
               .Check(nameof(Curses.wvline), "Failed to draw a vertical line.");
     }
 
+    /// <summary>
+    ///     Draws a horizontal line from the current caret position downwards.
+    /// </summary>
+    /// <param name="char">The character to use for the line.</param>
+    /// <param name="style">The style to use.</param>
+    /// <param name="length">The length of the line.</param>
+    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
+    public void DrawHorizontalLine(int length, Rune @char, Style style)
+    {
+        if (length <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length));
+        }
+
+        Curses.whline_set(Handle, Curses.ToComplexChar(@char, style), length)
+              .Check(nameof(Curses.whline_set), "Failed to draw a horizontal line.");
+    }
+
+    /// <summary>
+    ///     Draws a horizontal line using the standard line character from the current caret position downwards.
+    /// </summary>
+    /// <param name="length">The length of the line.</param>
+    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
+    public void DrawHorizontalLine(int length)
+    {
+        if (length <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length));
+        }
+
+        Curses.whline(Handle, 0, length)
+              .Check(nameof(Curses.whline), "Failed to draw a horizontal line.");
+    }
+    
     /// <summary>
     ///     Draws a vertical line from the current caret position downwards.
     /// </summary>
@@ -639,44 +694,6 @@ public class Window: IDisposable
         Curses.wborder(Handle, 0, 0, 0, 0,
                   0, 0, 0, 0)
               .Check(nameof(Curses.wborder), "Failed to draw a window border.");
-    }
-
-    /// <summary>
-    ///     Draws a horizontal line from the current caret position downwards.
-    /// </summary>
-    /// <param name="char">The character to use for the line.</param>
-    /// <param name="style">The style to use.</param>
-    /// <param name="length">The length of the line.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
-    public void DrawHorizontalLine(Rune @char, Style style, int length)
-    {
-        if (length <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(length));
-        }
-
-        Curses.whline_set(Handle, Curses.ToComplexChar(@char, style), length)
-              .Check(nameof(Curses.whline_set), "Failed to draw a horizontal line.");
-    }
-
-    /// <summary>
-    ///     Draws a horizontal line using the standard line character from the current caret position downwards.
-    /// </summary>
-    /// <param name="length">The length of the line.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
-    public void DrawHorizontalLine(int length)
-    {
-        if (length <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(length));
-        }
-
-        Curses.whline(Handle, 0, length)
-              .Check(nameof(Curses.whline), "Failed to draw a horizontal line.");
     }
 
     /// <summary>
