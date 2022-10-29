@@ -36,7 +36,7 @@ using System.Runtime.InteropServices;
 ///     Interface provides access to the Curses functionality. Use the <see cref="System" /> property to access the actual
 ///     implementation.
 /// </summary>
-[PublicAPI, SuppressMessage("ReSharper", "IdentifierTypo")]
+[PublicAPI, SuppressMessage("ReSharper", "IdentifierTypo"), ExcludeFromCodeCoverage]
 public sealed class NativeCursesProvider: ICursesProvider
 {
     private const string LibraryName = "ncurses";

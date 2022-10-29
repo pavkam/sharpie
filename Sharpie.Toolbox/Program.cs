@@ -1,6 +1,8 @@
-﻿
-using Sharpie;
+﻿using Sharpie;
 using Sharpie.Curses;
+using System.Diagnostics.CodeAnalysis;
+
+[assembly: ExcludeFromCodeCoverage]
 
 var terminal = new Terminal(NativeCursesProvider.Instance, new());
 

@@ -35,7 +35,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 ///     Opaque Curses character with attributes and color.
 /// </summary>
-[StructLayout(LayoutKind.Sequential)]
+[StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage]
 public struct ComplexChar
 {
     [MarshalAs(UnmanagedType.U4)] private readonly uint attrAndColorPair;
