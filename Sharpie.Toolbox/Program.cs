@@ -2,9 +2,7 @@
 using Sharpie;
 using Sharpie.Curses;
 
-var terminal = Terminal.UsingCurses(NativeCursesProvider.Instance)
-                       .WithMouse()
-                       .Build();
+var terminal = new Terminal(NativeCursesProvider.Instance, new());
 
 terminal.Screen.ApplyPendingRefreshes();
 

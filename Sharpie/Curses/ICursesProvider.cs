@@ -103,7 +103,7 @@ public interface ICursesProvider
 
     int getpary(IntPtr window); //DONE
 
-    int halfdelay(int tenthsOfSec); //DONE
+    int halfdelay(int tenthsOfSec); //NO
 
     bool has_colors(); //DONE
 

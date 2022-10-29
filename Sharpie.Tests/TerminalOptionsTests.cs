@@ -31,7 +31,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Tests;
 
 [TestClass]
-public class TerminalBuilderTests
+public class TerminalOptionsTests
 {
-    [TestMethod] public void TestMethod1() { }
+    [TestMethod]
+    public void Ctor_SetsDefaults()
+    {
+        var s = new TerminalOptions();
+
+        s.UseColors.ShouldBeTrue();
+        s.EchoInput.ShouldBeFalse();
+        s.UseInputBuffering.ShouldBeFalse();
+        s.UseMouse.ShouldBeTrue();
+        s.MouseClickDelay.ShouldBe(100);
+        s.SuppressControlKeys.ShouldBeTrue();
+        s.TranslateReturnToNewLineChar.ShouldBeFalse();
+        s.CaretMode.ShouldBe(CaretMode.Visible);
+        s.ManualFlush.ShouldBeFalse();
+        s.SoftLabelKeyMode.ShouldBe(SoftLabelKeyMode.Disabled);
+        s.UseEnvironmentOverrides.ShouldBeTrue();
+    }
 }

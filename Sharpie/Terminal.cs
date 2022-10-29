@@ -41,25 +41,21 @@ public sealed class Terminal: IDisposable
 {
     private static bool _terminalInstanceActive;
     private ColorManager _colorManager;
-    private bool _enableMouse;
-    private CaretMode _hardwareCursorMode;
-    private int? _initialHardwareCursorMode;
-    private bool _inputEchoing;
-    private bool _lineBuffering;
-    private bool _manualFlush;
-    private bool _newLineTranslation;
-    private ulong? _oldMouseMask;
-    private bool _rawMode;
-    private int _readTimeoutMillis;
     private Screen _screen;
-
     private SoftLabelKeyManager _softLabelKeyManager;
-    private bool _useEnvironmentOverrides;
+    private int _initialCaretMode;
+    private ulong _initialMouseMask;
+    private int _initialMouseClickDelay;
 
-    internal Terminal(ICursesProvider curses, bool enableLineBuffering, bool enableRawMode,
-        bool enableReturnToNewLineTranslation, int readTimeoutMillis, bool enableInputEchoing, bool enableManualFlush,
-        bool enableColors, CaretMode hardwareCursorMode, bool enableEnvironmentOverrides,
-        SoftLabelKeyMode softLabelKeyMode, bool enableMouse)
+    /// <summary>
+    /// Creates a new instance of the terminal.
+    /// </summary>
+    /// <param name="curses">The curses backend.</param>
+    /// <param name="options">The terminal options.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Some of the options are invalid.</exception>
+    /// <exception cref="InvalidOperationException">Another terminal instance is active.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="curses"/> is <c>null</c>.</exception>
+    public Terminal(ICursesProvider curses, TerminalOptions options)
     {
         if (_terminalInstanceActive)
         {
@@ -67,31 +63,28 @@ public sealed class Terminal: IDisposable
                 "Another terminal instance is active. Only one instance can be active at one time.");
         }
 
+        Options = options;
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
 
+        if (options.MouseClickDelay < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(options.MouseClickDelay));
+        }
+        
         // Pre-screen creation.
-        _useEnvironmentOverrides = enableEnvironmentOverrides;
-        if (_useEnvironmentOverrides)
+        if (Options.UseEnvironmentOverrides)
         {
             curses.use_env(true);
         }
 
-        _softLabelKeyManager = new(curses, softLabelKeyMode);
-
         // Screen setup.
+        _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
         _screen = new(curses, curses.initscr());
-        _colorManager = new(curses, enableColors);
+        _colorManager = new(curses, Options.UseColors);
 
         // After screen creation.
-        _inputEchoing = enableInputEchoing;
-        _readTimeoutMillis = readTimeoutMillis;
-        _rawMode = enableRawMode;
-        _lineBuffering = enableLineBuffering;
-        _manualFlush = enableManualFlush;
-        _newLineTranslation = enableReturnToNewLineTranslation;
-
-        curses.intrflush(IntPtr.Zero, _manualFlush);
-        if (_manualFlush)
+        curses.intrflush(IntPtr.Zero, Options.ManualFlush);
+        if (Options.ManualFlush)
         {
             curses.noqiflush();
         } else
@@ -99,7 +92,7 @@ public sealed class Terminal: IDisposable
             curses.qiflush();
         }
 
-        if (_inputEchoing)
+        if (Options.EchoInput)
         {
             curses.echo()
                   .Check(nameof(curses.echo), "Failed to setup terminal's echo mode.");
@@ -109,34 +102,27 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(curses.noecho), "Failed to setup terminal's no-echo mode.");
         }
 
-        if (!_lineBuffering)
+        if (!Options.UseInputBuffering)
         {
-            if (_rawMode)
+            if (Options.SuppressControlKeys)
             {
                 curses.raw()
                       .Check(nameof(curses.raw), "Failed to setup terminal's raw mode.");
             } else
-            {
-                curses.noraw()
-                      .Check(nameof(curses.noraw), "Failed to setup terminal's no-raw mode.");
-            }
-
-            if (_readTimeoutMillis != Timeout.Infinite)
-            {
-                curses.halfdelay(Helpers.ConvertMillisToTenths(_readTimeoutMillis))
-                      .Check(nameof(curses.halfdelay), "Failed to setup terminal's half-delay non-buffered mode.");
-            } else if (!_rawMode)
             {
                 curses.cbreak()
                       .Check(nameof(curses.cbreak), "Failed to setup terminal's non-buffered mode.");
             }
         } else
         {
+            curses.noraw()
+                  .Check(nameof(curses.noraw), "Failed to setup terminal's no-raw mode.");
+
             curses.nocbreak()
                   .Check(nameof(curses.nocbreak), "Failed to setup terminal buffered mode.");
         }
 
-        if (_newLineTranslation)
+        if (Options.TranslateReturnToNewLineChar)
         {
             curses.nl()
                   .Check(nameof(curses.nl), "Failed to enable new line translation.");
@@ -146,30 +132,39 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(curses.nonl), "Failed to disable new line translation.");
         }
 
-        CaretMode = hardwareCursorMode;
-        EnableMouse = enableMouse;
+        // Caret configuration
+        _initialCaretMode = Curses.curs_set((int) Options.CaretMode)
+                                  .Check(nameof(Curses.curs_set), "Failed to change the caret mode.");
+        _screen.IgnoreHardwareCaret = Options.CaretMode == CaretMode.Invisible;
 
-        /* Other configuration */
+        // Mouse configuration
+        if (Options.UseMouse)
+        {
+            _initialMouseClickDelay = Curses.mouseinterval(Options.MouseClickDelay)
+                                         .Check(nameof(Curses.mouseinterval), "Failed to set the mouse click interval.");
+            Curses.mousemask((ulong) RawMouseEvent.EventType.ReportPosition | (ulong) RawMouseEvent.EventType.All,
+                      out _initialMouseMask)
+                  .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
+        } else
+        {
+            Curses.mousemask(0, out _initialMouseMask);
+            _initialMouseClickDelay = Curses.mouseinterval(-1)
+                                            .Check(nameof(Curses.mouseinterval),
+                                                "Failed to set the mouse click interval.");
+        }
+
+        // Other configuration
         curses.meta(IntPtr.Zero, true);
-
         _terminalInstanceActive = true;
     }
 
     /// <summary>
     ///     Gets the terminal's baud rate.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public int BaudRate
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return Curses.baudrate()
-                         .Check(nameof(Curses.baudrate), "Failed to obtain the baud rate of the terminal.");
-        }
-    }
+    public int BaudRate =>
+        Curses.baudrate()
+              .Check(nameof(Curses.baudrate), "Failed to obtain the baud rate of the terminal.");
 
     /// <summary>
     ///     Provides access to the terminal's color management.
@@ -179,8 +174,7 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            AssertNotDisposed();
-
+            AssertAlive();
             return _colorManager;
         }
     }
@@ -193,235 +187,38 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            AssertNotDisposed();
-
+            AssertAlive();
             return _softLabelKeyManager;
         }
     }
 
     /// <summary>
-    ///     Enables or disables the line buffering mode.
+    ///     Gets the options that are used by this terminal instance.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public bool EnableMouse
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _enableMouse;
-        }
-        set
-        {
-            AssertNotDisposed();
-
-            var newMask = value
-                ? (ulong) RawMouseEvent.EventType.ReportPosition | (ulong) RawMouseEvent.EventType.All
-                : 0;
-
-            Curses.mousemask(newMask, out var oldMask)
-                  .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
-
-            _oldMouseMask ??= oldMask;
-            _enableMouse = value;
-        }
-    }
-
-    /// <summary>
-    ///     Gets or sets the interval used to treat pressed/released as clicks.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is negative.</exception>
-    public int MouseClickInterval
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return Curses.mouseinterval(-1)
-                         .Check(nameof(Curses.mouseinterval), "Failed to get the mouse click interval.");
-        }
-        set
-        {
-            AssertNotDisposed();
-
-            if (value < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
-
-            Curses.mouseinterval(value)
-                  .Check(nameof(Curses.mouseinterval), "Failed to set the mouse click interval.");
-        }
-    }
-
-    /// <summary>
-    ///     Checks if the terminal is in line buffering mode.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool LineBuffering
-    {
-        get
-        {
-            AssertNotDisposed();
-            return _lineBuffering;
-        }
-    }
-
-    /// <summary>
-    ///     Check if the control keys are silenced (e.g. CTRL+C).
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool ControlKeysSilenced
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _rawMode;
-        }
-    }
-
-    /// <summary>
-    ///     Gets timeout used when reading characters in non-buffered mode.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public int ReadTimeout
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _readTimeoutMillis;
-        }
-    }
+    public TerminalOptions Options { get; }
 
     /// <summary>
     ///     Returns the name of the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public string? Name
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return Curses.termname();
-        }
-    }
+    public string? Name => Curses.termname();
 
     /// <summary>
     ///     Returns the long description of the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public string? Description
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return Curses.longname();
-        }
-    }
+    public string? Description => Curses.longname();
 
     /// <summary>
     ///     Returns the version of the Curses library in use.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public string? CursesVersion
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return Curses.curses_version();
-        }
-    }
-
-    /// <summary>
-    ///     Checks if the input echoing is enabled in this terminal.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool InputEchoing
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _inputEchoing;
-        }
-    }
-
-    /// <summary>
-    ///     Enables or disables return to new line character translation.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public bool ReturnKeyTranslatesToNewLine
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _newLineTranslation;
-        }
-    }
-
-    /// <summary>
-    ///     Checks if the application flushes the terminal buffers when control keys are read by the application.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool ManualFlush
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _manualFlush;
-        }
-    }
-
-    /// <summary>
-    ///     Gets or sets the current caret mode of the terminal.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
-    public CaretMode CaretMode
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _hardwareCursorMode;
-        }
-        set
-        {
-            AssertNotDisposed();
-
-            var prevMode = Curses.curs_set((int) value)
-                                 .Check(nameof(Curses.curs_set), "Failed to change the caret mode.");
-
-            _initialHardwareCursorMode ??= prevMode;
-            _hardwareCursorMode = value;
-
-            _screen.IgnoreHardwareCaret = value == CaretMode.Invisible;
-        }
-    }
+    public string? CursesVersion => Curses.curses_version();
 
     /// <summary>
     ///     Gets the combination of supported terminal attributes.
     /// </summary>
-    public VideoAttribute SupportedAttributes
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return (VideoAttribute) Curses.term_attrs();
-        }
-    }
+    public VideoAttribute SupportedAttributes => (VideoAttribute) Curses.term_attrs();
 
     /// <summary>
     ///     The screen instance. Use this property to access the entire screen functionality.
@@ -431,7 +228,7 @@ public sealed class Terminal: IDisposable
     {
         get
         {
-            AssertNotDisposed();
+            AssertAlive();
 
             return _screen;
         }
@@ -441,114 +238,37 @@ public sealed class Terminal: IDisposable
     ///     Specifies whether the terminal supports hardware line insert and delete.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool SupportsHardwareLineInsertAndDelete
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return Curses.has_il();
-        }
-    }
+    public bool SupportsHardwareLineInsertAndDelete => Curses.has_il();
 
     /// <summary>
     ///     Specifies whether the terminal supports hardware character insert and delete.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool SupportsHardwareCharacterInsertAndDelete
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return Curses.has_ic();
-        }
-    }
-
-    /// <summary>
-    ///     Specifies whether the environment variables are used to setup the terminal.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public bool UsesEnvironmentOverrides
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return _useEnvironmentOverrides;
-        }
-    }
+    public bool SupportsHardwareCharacterInsertAndDelete => Curses.has_ic();
 
     /// <summary>
     ///     Gets the currently defined kill character. \0 is returned if none is defined.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public Rune CurrentKillChar
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return new(Curses.killwchar(out var @char)
-                             .Failed()
-                ? '\0'
-                : @char);
-        }
-    }
+    public Rune? CurrentKillChar =>
+        Curses.killwchar(out var @char)
+              .Failed()
+            ? null
+            : new(@char);
 
     /// <summary>
     ///     Gets the currently defined erase character. \0 is returned if none is defined.
     /// </summary>
-    public Rune CurrentEraseChar
-    {
-        get
-        {
-            AssertNotDisposed();
-
-            return new(Curses.erasewchar(out var @char)
-                             .Failed()
-                ? '\0'
-                : @char);
-        }
-    }
+    public Rune? CurrentEraseChar =>
+        Curses.erasewchar(out var @char)
+              .Failed()
+            ? null
+            : new(@char);
 
     /// <summary>
-    ///     The Curses functionality provider.
+    ///     The Curses backend.
     /// </summary>
-    public ICursesProvider Curses { get; }
-
-    /// <summary>
-    ///     Specifies whether the terminal has been disposed of and is no longer usable.
-    /// </summary>
-    public bool IsDisposed => Curses.isendwin();
-
-    /// <summary>
-    ///     Disposes the current terminal instance.
-    /// </summary>
-    public void Dispose()
-    {
-        _screen.Dispose();
-
-        // Kill off the terminal.
-        ReleaseUnmanagedResources();
-        GC.SuppressFinalize(this);
-    }
-
-    /// <summary>
-    ///     Starts the building process of the terminal.
-    /// </summary>
-    /// <param name="cursesProvider">The curses functionality provider.</param>
-    /// <returns>A new terminal builder.</returns>
-    /// <exception cref="ArgumentNullException">The <paramref name="cursesProvider" /> is <c>null</c>.</exception>
-    public static TerminalBuilder UsingCurses(ICursesProvider cursesProvider)
-    {
-        if (cursesProvider == null)
-        {
-            throw new ArgumentNullException(nameof(cursesProvider));
-        }
-
-        return new(cursesProvider);
-    }
+    internal ICursesProvider Curses { get; }
 
     /// <summary>
     ///     Attempts to notify the user with audio or flashing alert.
@@ -559,8 +279,6 @@ public sealed class Terminal: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void Alert(bool silent)
     {
-        AssertNotDisposed();
-
         if (silent)
         {
             Curses.flash()
@@ -571,44 +289,41 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(Curses.beep), "Failed to beep the terminal.");
         }
     }
+    
+    /// <summary>
+    ///     Checks whether the terminal has been disposed of and is no longer usable.
+    /// </summary>
+    public bool IsDisposed => _screen.IsDisposed;
+
+    /// <summary>
+    ///     Disposes the current terminal instance.
+    /// </summary>
+    public void Dispose()
+    {
+        _screen.Dispose();
+        
+        Curses.mousemask(_initialMouseMask, out var _);
+        Curses.mouseinterval(_initialMouseClickDelay);
+        Curses.curs_set(_initialCaretMode);
+
+        _terminalInstanceActive = false;
+        GC.SuppressFinalize(this);
+    }
 
     /// <summary>
     ///     Validates that the terminal is not disposed.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed of and is no longer usable.</exception>
-    public void AssertNotDisposed()
+    private void AssertAlive()
     {
-        if (Curses.isendwin())
+        if (IsDisposed)
         {
             throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
         }
     }
-
+    
     /// <summary>
-    ///     Disposes of any unmanaged resources.
+    ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>
-    private void ReleaseUnmanagedResources()
-    {
-        if (!IsDisposed)
-        {
-            if (_oldMouseMask != null)
-            {
-                Curses.mousemask(_oldMouseMask.Value, out var _);
-            }
-
-            if (_initialHardwareCursorMode != null)
-            {
-                Curses.curs_set(_initialHardwareCursorMode.Value);
-            }
-
-            Curses.endwin();
-        }
-
-        _terminalInstanceActive = false;
-    }
-
-    /// <summary>
-    ///     The destructor. Calls <see cref="ReleaseUnmanagedResources" />
-    /// </summary>
-    ~Terminal() { ReleaseUnmanagedResources(); }
+    ~Terminal() { Dispose(); }
 }

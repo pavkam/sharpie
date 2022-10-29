@@ -14,14 +14,12 @@ So why another one? The are many reasons, but the most important ones are:
 5. And finally -- **because I wanted to dabble in Curses**.
 
 # How To
-First, you need to build a `Terminal` instance by using the `TerminalBuilder` helper class:
+First, you need to build a `Terminal` instance as follows.
 ```csharp
-var terminal = 
-  Terminal.UsingCurses(NativeCursesProvider.Instance)
-          .WithSoftKeyLabels(SoftLabelKeyMode.ThreeTwoThree)
-          .WithMouse()
-          .Build();
+var settings = new TerminalSettings(UseMouse: true);
+var terminal = new Terminal(NativeCursesProvider.Instance, settings);
 ```
+
 The `terminal` instance can then be used to access the main screen object `terminal.Screen` which allows drawing and reading terminal commands. Other functionality includes creating windows and pads (`CreateWindow`, `CreatePad`) and manipulating their life-lime.
 
 To set the background of the screen one can easily do it:
