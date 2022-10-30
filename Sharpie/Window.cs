@@ -972,91 +972,103 @@ public class Window: IDisposable
               .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
     }
 
-    /// <summary>
-    ///     Tries to read an event from the terminal.
-    /// </summary>
-    /// <param name="timeoutMillis">The timeout to wait for the event.</param>
-    /// <param name="event">The event that was read.</param>
-    /// <returns><c>true</c> if there was an event; <c>false</c> if the timeout expired.</returns>
-    public bool TryReadEvent(int timeoutMillis, [NotNullWhen(true)] out Event? @event)
+    private (int result, uint keyCode) ReadNext(bool quickWait = false)
     {
-        /*
-
-        Curses.define_key("\x001bO2C", 1024); //shift right
-        Curses.define_key("\x001bO2B", 1024); //shift down
-        Curses.define_key("\x001bO2A", 1024); //shift up
-        Curses.define_key("\x001bO2D", 1024); //shift left
-        Curses.define_key("\x001bO2H", 1024); //shift home
-        Curses.define_key("\x001bO2F", 1024); //shift end of line
-
-        Curses.define_key("\x001b06C", 1024); //shift ctrl right
-        Curses.define_key("\x001b06B", 1024); //shift ctrl down
-        Curses.define_key("\x001b06A", 1024); //shift ctrl up
-        Curses.define_key("\x001b06D", 1024); //shift ctrl left
-        Curses.define_key("\x001b06H", 1024); //shift ctrl home
-        Curses.define_key("\x001b06F", 1024); //shift ctrl end of line
-
-        Curses.define_key("\x001bb", 1024); //alt right
-        Curses.define_key("\x001bf", 1024); //alt left
-
-        Curses.define_key("\x001b" + (char)258, 1024); //alt up
-
-         */
-        Curses.wtimeout(Handle, timeoutMillis);
-
-        @event = null;
+        Curses.wtimeout(Handle, quickWait ? 10 : 100);
         var result = Curses.wget_wch(Handle, out var keyCode);
-        if (result == (uint) RawKey.Yes)
+
+        return (result, keyCode);
+    }
+
+    /// <summary>
+    /// Reads the next event from. If the event is valid, returns it. Otherwise <c>null</c> is returned.
+    /// </summary>
+    /// <returns>The event or <c>null</c> if read failed.</returns>
+    private Event? ReadNextEvent()
+    {
+        var (result, keyCode) = ReadNext();
+        if (result.Failed())
+        {
+            return null;
+        }
+
+        if (result == (int) RawKey.Yes)
         {
             switch (keyCode)
             {
                 case (uint) RawKey.Resize:
-                    @event = new TerminalResizeEvent(Size);
-                    break;
+                    return new TerminalResizeEvent(Size);
                 case (uint) RawKey.Mouse:
                     if (Curses.getmouse(out var mouseEvent)
                               .Failed())
                     {
-                        return false;
+                        return null;
                     }
 
                     if (((RawMouseEvent.EventType) mouseEvent.buttonState).HasFlag(RawMouseEvent.EventType
                             .ReportPosition))
                     {
-                        @event = new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
-                    } else
-                    {
-                        var (button, state, mouseMod) =
-                            Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) mouseEvent.buttonState);
-                        
-                        @event = new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
+                        return new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
                     }
 
-                    break;
+                    var (button, state, mouseMod) =
+                        Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) mouseEvent.buttonState);
+
+                    return button == 0
+                        ? null
+                        : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
                 default:
                     var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
-                    @event = new KeyEvent(key, new('\0'), Curses.key_name(keyCode), keyMod);
-                    break;
+                    return new KeyEvent(key, new('\0'), Curses.key_name(keyCode), keyMod);
             }
-
-            return true;
         }
 
-        if (!result.Failed())
+        var keyName = Curses.key_name(keyCode);
+        var maybeKey = Helpers.TryConvertCharacterToKeyPressEvent(keyCode);
+        return maybeKey != null
+            ? new(maybeKey.Value, new('\0'), keyName, ModifierKey.None)
+            : new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
+    }
+
+    /// <summary>
+    /// Gets an enumerable that is used to get events from Curses. 
+    /// </summary>
+    /// <remarks>
+    /// The enumerable returned by this method only stops waiting when cancellation is requested.
+    /// </remarks>
+    /// <param name="cancellationToken">Cancellation token used to interrupt the process.</param>
+    /// <returns>An enumerable.</returns>
+    public IEnumerable<Event> ProcessEvents(CancellationToken cancellationToken)
+    {
+        /*
+       Curses.define_key("\x001bO2C", 1024); //shift right
+       Curses.define_key("\x001bO2B", 1024); //shift down
+       Curses.define_key("\x001bO2A", 1024); //shift up
+       Curses.define_key("\x001bO2D", 1024); //shift left
+       Curses.define_key("\x001bO2H", 1024); //shift home
+       Curses.define_key("\x001bO2F", 1024); //shift end of line
+
+       Curses.define_key("\x001b06C", 1024); //shift ctrl right
+       Curses.define_key("\x001b06B", 1024); //shift ctrl down
+       Curses.define_key("\x001b06A", 1024); //shift ctrl up
+       Curses.define_key("\x001b06D", 1024); //shift ctrl left
+       Curses.define_key("\x001b06H", 1024); //shift ctrl home
+       Curses.define_key("\x001b06F", 1024); //shift ctrl end of line
+
+       Curses.define_key("\x001bb", 1024); //alt right
+       Curses.define_key("\x001bf", 1024); //alt left
+
+       Curses.define_key("\x001b" + (char)258, 1024); //alt up
+
+        */
+        while (!cancellationToken.IsCancellationRequested)
         {
-            if (keyCode == 3)
+            var @event = ReadNextEvent();
+            if (@event != null)
             {
-                @event = new KeyEvent(Key.Interrupt, new('\0'), null, ModifierKey.None);
-            } else
-            {
-                var keyName = Curses.key_name(keyCode);
-                @event = new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
+                yield return @event;
             }
-
-            return true;
         }
-
-        return false;
     }
 
     /// <summary>

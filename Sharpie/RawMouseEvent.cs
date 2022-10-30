@@ -112,9 +112,9 @@ public struct RawMouseEvent
         All = ReportPosition - 1
     }
 
-    [MarshalAs(UnmanagedType.I2)] public readonly short id;
-    [MarshalAs(UnmanagedType.I4)] public readonly int x;
-    [MarshalAs(UnmanagedType.I4)] public readonly int y;
-    [MarshalAs(UnmanagedType.I4)] public readonly int z;
-    [MarshalAs(UnmanagedType.I8)] public readonly ulong buttonState;
+    [MarshalAs(UnmanagedType.I2)] public short id;
+    [MarshalAs(UnmanagedType.I4)] public int x;
+    [MarshalAs(UnmanagedType.I4)] public int y;
+    [MarshalAs(UnmanagedType.I4)] public int z;
+    [MarshalAs(UnmanagedType.I8)] public ulong buttonState;
 }

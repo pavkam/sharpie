@@ -658,4 +658,20 @@ public class TerminalTests
 
         Should.NotThrow(() => _terminal.Dispose());
     }
+    
+    [TestMethod]
+    public void SetTitle_Throws_IfTitleIsNull()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        Should.Throw<ArgumentNullException>(() => _terminal.SetTitle(null!));
+    }
+    
+    [TestMethod]
+    public void SetTitle_AsksCurses()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+
+        _terminal.SetTitle("title");
+        _cursesMock.Verify(v => v.set_title("title"), Times.Once);
+    }
 }

@@ -38,409 +38,411 @@ namespace Sharpie;
 [PublicAPI, SuppressMessage("ReSharper", "InconsistentNaming"), SuppressMessage("ReSharper", "IdentifierTypo")]
 public interface ICursesProvider
 {
-    public delegate bool ripoffline_callback(IntPtr window, int columns); //TODO
+    public delegate bool ripoffline_callback(IntPtr window, int columns); 
 
-    int baudrate(); //DONE
+    int baudrate(); 
 
-    int beep(); //DONE
+    int beep(); 
 
-    bool can_change_color(); //DONE
+    bool can_change_color(); 
 
-    int cbreak(); //DONE
+    int cbreak(); 
 
-    int clearok(IntPtr window, bool set); //DONE
+    int clearok(IntPtr window, bool set); 
 
-    int color_content(ushort color, out ushort red, out ushort green, out ushort blue); //DONE
+    int color_content(ushort color, out ushort red, out ushort green, out ushort blue); 
 
     int copywin(IntPtr fromWindow, IntPtr toWindow, int srcStartLine, int srcStartCol,
         int destStartLine, int destStartCol, int destEndLine, int destEndCol,
-        int overlay); //DONE
+        int overlay); 
 
-    int curs_set(int level); //DONE
+    int curs_set(int level); 
 
-    int def_prog_mode(); //NO
+    int def_prog_mode(); 
 
-    int def_shell_mode(); //NO
+    int def_shell_mode(); 
 
-    int delay_output(int delayMillis); //NO
+    int delay_output(int delayMillis); 
 
-    int delwin(IntPtr window); //DONE
+    int delwin(IntPtr window); 
 
     IntPtr derwin(IntPtr window, int lines, int cols, int beginLine,
-        int beginCol); //DONE
+        int beginCol); 
 
-    int doupdate(); //DONE
+    int doupdate(); 
 
-    IntPtr dupwin(IntPtr window); //DONE
+    IntPtr dupwin(IntPtr window); 
 
-    int echo(); //DONE
+    int echo(); 
 
-    int endwin(); //DONE
+    int endwin(); 
 
-    int erasewchar(out uint @char); //DONE
+    int erasewchar(out uint @char); 
 
-    void filter(); //NO
+    void filter(); 
 
-    int flash(); //DONE
+    int flash(); 
 
-    int flushinp(); //NO
+    int flushinp(); 
 
-    uint getattrs(IntPtr window); //NO
+    uint getattrs(IntPtr window); 
 
-    int getcurx(IntPtr window); //DONE
+    int getcurx(IntPtr window); 
 
-    int getcury(IntPtr window); //DONE
+    int getcury(IntPtr window); 
 
-    int getbegx(IntPtr window); //DONE
+    int getbegx(IntPtr window); 
 
-    int getbegy(IntPtr window); //DONE
+    int getbegy(IntPtr window); 
 
-    int getmaxx(IntPtr window); //DONE
+    int getmaxx(IntPtr window); 
 
-    int getmaxy(IntPtr window); //DONE
+    int getmaxy(IntPtr window); 
 
-    int getparx(IntPtr window); //DONE
+    int getparx(IntPtr window); 
 
-    int getpary(IntPtr window); //DONE
+    int getpary(IntPtr window); 
 
-    int halfdelay(int tenthsOfSec); //NO
+    int halfdelay(int tenthsOfSec); 
 
-    bool has_colors(); //DONE
+    bool has_colors(); 
 
-    bool has_ic(); //DONE
+    bool has_ic(); 
 
-    bool has_il(); //DONE
+    bool has_il(); 
 
-    void idcok(IntPtr window, bool set); //DONE
+    void idcok(IntPtr window, bool set); 
 
-    int idlok(IntPtr window, bool set); //DONE
+    int idlok(IntPtr window, bool set); 
 
-    void immedok(IntPtr window, bool set); //DONE
+    void immedok(IntPtr window, bool set); 
 
-    IntPtr initscr(); //DONE
+    IntPtr initscr(); 
 
-    int init_color(ushort color, ushort red, ushort green, ushort blue); //DONE
+    int init_color(ushort color, ushort red, ushort green, ushort blue); 
 
-    int init_pair(ushort colorPair, ushort fgColor, ushort bgColor); //DONE
+    int init_pair(ushort colorPair, ushort fgColor, ushort bgColor); 
 
-    int intrflush(IntPtr window, bool set); //DONE
+    int intrflush(IntPtr window, bool set); 
 
-    bool isendwin(); //DONE
+    bool isendwin(); 
 
-    bool is_linetouched(IntPtr window, int line); //DONE
+    bool is_linetouched(IntPtr window, int line); 
 
-    bool is_wintouched(IntPtr window); //DONE
+    bool is_wintouched(IntPtr window); 
 
     bool is_cleared(IntPtr window);
 
-    bool is_idcok(IntPtr window); //DONE
+    bool is_idcok(IntPtr window); 
 
-    bool is_idlok(IntPtr window); //DONE
+    bool is_idlok(IntPtr window); 
 
-    bool is_immedok(IntPtr window); //DONE
+    bool is_immedok(IntPtr window); 
 
-    bool is_keypad(IntPtr window); //NO
+    bool is_keypad(IntPtr window); 
 
-    bool is_leaveok(IntPtr window); //DONE
+    bool is_leaveok(IntPtr window); 
 
-    bool is_nodelay(IntPtr window); //NO
+    bool is_nodelay(IntPtr window); 
 
-    bool is_notimeout(IntPtr window); //NO
+    bool is_notimeout(IntPtr window); 
 
-    bool is_pad(IntPtr window); //NO
+    bool is_pad(IntPtr window); 
 
-    bool is_scrollok(IntPtr window); //DONE
+    bool is_scrollok(IntPtr window); 
 
-    bool is_subwin(IntPtr window); //DONE
+    bool is_subwin(IntPtr window); 
 
-    bool is_syncok(IntPtr window); //NO
+    bool is_syncok(IntPtr window); 
 
-    IntPtr wgetparent(IntPtr window); //NO
+    IntPtr wgetparent(IntPtr window); 
 
-    int wgetdelay(IntPtr window); //NO
+    int wgetdelay(IntPtr window); 
 
-    int wgetscrreg(IntPtr window, out int top, out int bottom); //NO
+    int wgetscrreg(IntPtr window, out int top, out int bottom); 
 
-    string? keyname(uint keyCode); //NO
+    string? keyname(uint keyCode); 
 
-    int keypad(IntPtr window, bool set); //DONE
+    int keypad(IntPtr window, bool set); 
 
-    int leaveok(IntPtr window, bool set); //DONE
+    int leaveok(IntPtr window, bool set); 
 
-    string? longname(); //DONE
+    string? longname(); 
 
-    int meta(IntPtr window, bool set); //DONE
+    int meta(IntPtr window, bool set); 
 
-    int mvderwin(IntPtr window, int parentLine, int parentCol); //DONE
+    int mvderwin(IntPtr window, int parentLine, int parentCol); 
 
-    int mvwin(IntPtr window, int toLine, int toCol); //DONE
+    int mvwin(IntPtr window, int toLine, int toCol); 
 
-    IntPtr newpad(int lines, int cols); //DONE
+    IntPtr newpad(int lines, int cols); 
 
-    IntPtr newwin(int lines, int cols, int atLine, int atCol); //DONE
+    IntPtr newwin(int lines, int cols, int atLine, int atCol); 
 
-    int nl(); //DONE
+    int nl(); 
 
-    int nocbreak(); //DONE
+    int nocbreak(); 
 
-    int nodelay(IntPtr window, bool set); //DONE
+    int nodelay(IntPtr window, bool set); 
 
-    int noecho(); //DONE
+    int noecho(); 
 
-    int nonl(); //DONE
+    int nonl(); 
 
-    void noqiflush(); //DONE
+    void noqiflush(); 
 
-    int noraw(); //DONE
+    int noraw(); 
 
-    int notimeout(IntPtr window, bool set); //DONE
+    int notimeout(IntPtr window, bool set); 
 
-    int overlay(IntPtr srcWindow, IntPtr destWindow); //DONE
+    int overlay(IntPtr srcWindow, IntPtr destWindow); 
 
-    int overwrite(IntPtr srcWindow, IntPtr destWindow); //DONE
+    int overwrite(IntPtr srcWindow, IntPtr destWindow); 
 
-    int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor); //DONE
+    int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor); 
 
-    uint COLOR_PAIR(uint attrs); //DONE
+    uint COLOR_PAIR(uint attrs); 
 
-    uint PAIR_NUMBER(uint colorPair); //DONE
+    uint PAIR_NUMBER(uint colorPair); 
 
-    int pechochar(IntPtr pad, uint charAndAttrs); //NO
+    int pechochar(IntPtr pad, uint charAndAttrs); 
 
     int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol); //DONE
+        int scrMinCol, int scrMaxLine, int scrMaxCol); 
 
     int prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol); //DONE
+        int scrMinCol, int scrMaxLine, int scrMaxCol); 
 
-    void qiflush(); //DONE
+    void qiflush(); 
 
-    int raw(); //DONE
+    int raw(); 
 
-    int resetty(); //NO
+    int resetty(); 
 
-    int reset_prog_mode(); //NO
+    int reset_prog_mode(); 
 
-    int reset_shell_mode(); //NO
+    int reset_shell_mode(); 
 
-    int ripoffline(int lines, ripoffline_callback callback); //TODO
+    int ripoffline(int lines, ripoffline_callback callback); 
 
-    int savetty(); //NO
+    int savetty(); 
 
-    int scrollok(IntPtr window, bool set); //DONE
+    int scrollok(IntPtr window, bool set); 
 
-    int slk_attroff(uint attrs); //NO
+    int slk_attroff(uint attrs); 
 
-    int slk_attr_off(uint attrs, IntPtr reserved); //DONE
+    int slk_attr_off(uint attrs, IntPtr reserved); 
 
-    int slk_attron(uint attrs); //NO
+    int slk_attron(uint attrs); 
 
-    int slk_attr_on(uint attrs, IntPtr reserved); //DONE
+    int slk_attr_on(uint attrs, IntPtr reserved); 
 
-    int slk_attrset(uint attrs); //NO
+    int slk_attrset(uint attrs); 
 
-    int slk_attr(); //DONE
+    int slk_attr(); 
 
-    int slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved); //DONE
+    int slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved); 
 
-    int slk_clear(); //DONE
+    int slk_clear(); 
 
-    int slk_color(ushort colorPair); //DONE
+    int slk_color(ushort colorPair); 
 
-    int slk_init(int format); //DONE
+    int slk_init(int format); 
 
-    string? slk_label(int labelIndex); //NO
+    string? slk_label(int labelIndex); 
 
-    int slk_noutrefresh(); //DONE
+    int slk_noutrefresh(); 
 
-    int slk_refresh(); //DONE
+    int slk_refresh(); 
 
-    int slk_restore(); //DONE
+    int slk_restore(); 
 
-    int slk_touch(); //DONE
+    int slk_touch(); 
 
-    int start_color(); //DONE
+    int start_color(); 
 
     IntPtr subpad(IntPtr pad, int lines, int cols, int atLine,
-        int atCol); //DONE
+        int atCol); 
 
     IntPtr subwin(IntPtr window, int lines, int cols, int atLine,
-        int atCol); //NO
+        int atCol); 
 
-    int syncok(IntPtr window, bool set); //DONE
+    int syncok(IntPtr window, bool set); 
 
-    string? termname(); //DONE
+    string? termname(); 
 
-    int ungetch(uint @char); //NO
+    int ungetch(uint @char); 
 
-    void use_env(bool set); //DONE
+    void use_env(bool set); 
 
-    int waddch(IntPtr window, uint charAndAttrs); //NO
+    int waddch(IntPtr window, uint charAndAttrs); 
 
-    int waddchnstr(IntPtr window, string text, int length); //NO
+    int waddchnstr(IntPtr window, string text, int length); 
 
-    int wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved); //DONE
+    int wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved); 
 
-    int wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved); //DONE
+    int wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved); 
 
-    int wattr_on(IntPtr window, uint attrs, IntPtr reserved); //DONE
+    int wattr_on(IntPtr window, uint attrs, IntPtr reserved); 
 
-    int wattr_off(IntPtr window, uint attrs, IntPtr reserved); //DONE
+    int wattr_off(IntPtr window, uint attrs, IntPtr reserved); 
 
-    int wbkgd(IntPtr window, uint charAndAttrs); //NO
+    int wbkgd(IntPtr window, uint charAndAttrs); 
 
-    void wbkgdset(IntPtr window, uint charAndAttrs); //NO
+    void wbkgdset(IntPtr window, uint charAndAttrs); 
 
     int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
         uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
-        uint bottomRightCorner); //DONE
+        uint bottomRightCorner); 
 
     int wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
-        IntPtr reserved); //DONE
+        IntPtr reserved); 
 
-    int wclear(IntPtr window); //NO
+    int wclear(IntPtr window); 
 
-    int wclrtobot(IntPtr window); //DONE
+    int wclrtobot(IntPtr window); 
 
-    int wclrtoeol(IntPtr window); //DONE
+    int wclrtoeol(IntPtr window); 
 
-    int wcolor_set(IntPtr window, ushort pair, IntPtr reserved); //DONE
+    int wcolor_set(IntPtr window, ushort pair, IntPtr reserved); 
 
-    void wcursyncup(IntPtr window); //NO
+    void wcursyncup(IntPtr window); 
 
-    int wdelch(IntPtr window); //DONE
+    int wdelch(IntPtr window); 
 
-    int wechochar(IntPtr window, uint charAndAttrs); //NO
+    int wechochar(IntPtr window, uint charAndAttrs); 
 
-    int werase(IntPtr window); //DONE
+    int werase(IntPtr window); 
 
-    int wgetch(IntPtr window); //NO
+    int wgetch(IntPtr window); 
 
-    int wgetnstr(IntPtr window, StringBuilder dest, int length); //NO
+    int wgetnstr(IntPtr window, StringBuilder dest, int length); 
 
-    int whline(IntPtr window, uint @char, int count); //DONE
+    int whline(IntPtr window, uint @char, int count); 
 
-    uint winch(IntPtr window); //NO
+    uint winch(IntPtr window); 
 
-    int winchnstr(IntPtr window, StringBuilder dest, int length); //NO
+    int winchnstr(IntPtr window, StringBuilder dest, int length); 
 
-    int winsch(IntPtr window, uint @char); //NO
+    int winsch(IntPtr window, uint @char); 
 
-    int winsdelln(IntPtr window, int count); //DONE
+    int winsdelln(IntPtr window, int count); 
 
-    int wmove(IntPtr window, int newLine, int newCol); //DONE
+    int wmove(IntPtr window, int newLine, int newCol); 
 
-    int wnoutrefresh(IntPtr window); //DONE
+    int wnoutrefresh(IntPtr window); 
 
-    int wredrawln(IntPtr window, int startLine, int lineCount); //DONE
+    int wredrawln(IntPtr window, int startLine, int lineCount); 
 
-    int wrefresh(IntPtr window); //DONE
+    int wrefresh(IntPtr window); 
 
-    int wscrl(IntPtr window, int count); //DONE
+    int wscrl(IntPtr window, int count); 
 
-    int wsetscrreg(IntPtr window, int top, int bottom); //NO
+    int wsetscrreg(IntPtr window, int top, int bottom); 
 
-    void wsyncdown(IntPtr window); //NO
+    void wsyncdown(IntPtr window); 
 
     void wsyncup(IntPtr window); // NO
 
-    void wtimeout(IntPtr window, int delay); //DONE
+    void wtimeout(IntPtr window, int delay); 
 
-    int wtouchln(IntPtr window, int line, int count, int changed); //DONE
+    int wtouchln(IntPtr window, int line, int count, int changed); 
 
-    int wvline(IntPtr window, uint @char, int count); //DONE
+    int wvline(IntPtr window, uint @char, int count); 
 
-    bool is_term_resized(int lines, int cols); //NO
+    bool is_term_resized(int lines, int cols); 
 
-    int resize_term(int lines, int cols); //NO
+    int resize_term(int lines, int cols); 
 
-    int resizeterm(int lines, int cols); //NO
+    int resizeterm(int lines, int cols); 
 
-    string? keybound(uint keyCode, int count); //TODO
+    string? keybound(uint keyCode, int count); 
 
-    string? curses_version(); //DONE
+    string? curses_version(); 
 
-    int assume_default_colors(int fgColor, int bgColor); //DONE
+    int assume_default_colors(int fgColor, int bgColor); 
 
-    int define_key(string keyName, int keyCode); //TODO
+    int define_key(string keyName, int keyCode); 
 
-    int key_defined(string keyName); //TODO
+    int key_defined(string keyName); 
 
-    int keyok(int keyCode, bool set); //TODO
+    int keyok(int keyCode, bool set); 
 
-    int set_tabsize(int size); //NO
+    int set_tabsize(int size); 
 
-    int use_default_colors(); //DONE
+    int use_default_colors(); 
 
-    int wresize(IntPtr window, int lines, int columns); //DONE
+    int wresize(IntPtr window, int lines, int columns); 
 
-    void nofilter(); //NO
+    void nofilter(); 
 
     int getcchar(ComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
-        IntPtr reserved); //DONE
+        IntPtr reserved); 
 
-    string? key_name(uint @char); //DONE
+    string? key_name(uint @char); 
 
-    int killwchar(out uint @char); //DONE
+    int killwchar(out uint @char); 
 
-    int pecho_wchar(IntPtr window, ComplexChar @char); //NO
+    int pecho_wchar(IntPtr window, ComplexChar @char); 
 
     int setcchar(out ComplexChar @char, string text, uint attrs, ushort colorPair,
-        IntPtr reserved); //DONE
+        IntPtr reserved); 
 
-    int slk_set(int labelIndex, string title, int align); //DONE
+    int slk_set(int labelIndex, string title, int align); 
 
-    uint term_attrs(); //DONE
+    uint term_attrs(); 
 
-    int unget_wch(uint @char); //NO
+    int unget_wch(uint @char); 
 
-    int wadd_wch(IntPtr window, ComplexChar @char); //DONE
+    int wadd_wch(IntPtr window, ComplexChar @char); 
 
-    int wadd_wchnstr(IntPtr window, ComplexChar[] str, int count); //DONE
+    int wadd_wchnstr(IntPtr window, ComplexChar[] str, int count); 
 
-    int waddnwstr(IntPtr window, string text, int length); //NO
+    int waddnwstr(IntPtr window, string text, int length); 
 
-    int wbkgrnd(IntPtr window, ComplexChar @char); //DONE
+    int wbkgrnd(IntPtr window, ComplexChar @char); 
 
-    void wbkgrndset(IntPtr window, ComplexChar @char); //NO
+    void wbkgrndset(IntPtr window, ComplexChar @char); 
 
     int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
         ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner,
-        ComplexChar bottomRightCorner); //DONE
+        ComplexChar bottomRightCorner); 
 
-    int wecho_wchar(IntPtr window, ComplexChar @char); //NO
+    int wecho_wchar(IntPtr window, ComplexChar @char); 
 
-    int wget_wch(IntPtr window, out uint @char); //DONE
+    int wget_wch(IntPtr window, out uint @char); 
 
-    int wgetbkgrnd(IntPtr window, out ComplexChar @char); //DONE
+    int wgetbkgrnd(IntPtr window, out ComplexChar @char); 
 
-    int wgetn_wstr(IntPtr window, StringBuilder dest, int length); //NO
+    int wgetn_wstr(IntPtr window, StringBuilder dest, int length); 
 
-    int whline_set(IntPtr window, ComplexChar @char, int count); //DONE
+    int whline_set(IntPtr window, ComplexChar @char, int count); 
 
-    int win_wch(IntPtr window, out ComplexChar @char); //NO
+    int win_wch(IntPtr window, out ComplexChar @char); 
 
-    int win_wchnstr(IntPtr window, ComplexChar[] @char, int length); //DONE
+    int win_wchnstr(IntPtr window, ComplexChar[] @char, int length); 
 
-    int winnwstr(IntPtr window, StringBuilder dest, int length); //NO
+    int winnwstr(IntPtr window, StringBuilder dest, int length); 
 
-    int wins_nwstr(IntPtr window, string text, int length); //NO
+    int wins_nwstr(IntPtr window, string text, int length); 
 
-    int wins_wch(IntPtr window, ComplexChar @char); //NO
+    int wins_wch(IntPtr window, ComplexChar @char); 
 
-    string? wunctrl(ComplexChar @char); //NO
+    string? wunctrl(ComplexChar @char); 
 
-    int wvline_set(IntPtr window, ComplexChar @char, int count); //DONE
+    int wvline_set(IntPtr window, ComplexChar @char, int count); 
 
-    int getmouse(out RawMouseEvent @event); //DONE
+    int getmouse(out RawMouseEvent @event); 
 
-    int ungetmouse(RawMouseEvent @event); //NO
+    int ungetmouse(RawMouseEvent @event); 
 
-    int mousemask(ulong newMask, out ulong oldMask); //DONE
+    int mousemask(ulong newMask, out ulong oldMask); 
 
-    bool wenclose(IntPtr window, int line, int col); //DONE
+    bool wenclose(IntPtr window, int line, int col); 
 
-    int mouseinterval(int millis); //DONE
+    int mouseinterval(int millis);
 
-    bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen); //TODO
+    bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
+
+    void set_title(string title);
 }

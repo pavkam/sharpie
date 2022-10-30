@@ -146,9 +146,6 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
             _initialMouseMask = initialMouseMask;
-            
-            Console.Out.Write ("\x1b[?1003h");
-            Console.Out.Flush ();
         } else
         {
             Curses.mousemask(0, out var initialMouseMask)
@@ -204,6 +201,20 @@ public sealed class Terminal: IDisposable
     /// </summary>
     public TerminalOptions Options { get; }
 
+    /// <summary>
+    ///     Sets the terminal title.
+    /// </summary>
+    /// <param name="title">The title of the terminal.</param>
+    public void SetTitle(string title)
+    {
+        if (title == null)
+        {
+            throw new ArgumentNullException(nameof(title));
+        }
+        
+        Curses.set_title(title);
+    }
+    
     /// <summary>
     ///     Returns the name of the terminal.
     /// </summary>

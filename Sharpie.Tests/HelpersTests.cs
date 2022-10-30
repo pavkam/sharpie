@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
-using System.Text;
-
 [TestClass]
 public class HelpersTests
 {
@@ -318,5 +316,15 @@ public class HelpersTests
     {
         var result = Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) evt);
         result.modifierKey.ShouldBe(expMod);
+    }
+    
+    [TestMethod, 
+     DataRow((uint)3, Key.Interrupt)]
+    public void TryConvertCharacterToKeyPressEvent_MapsSpecialCharacters(uint keyCode, Key expKey)
+    {
+        var result = Helpers.TryConvertCharacterToKeyPressEvent(keyCode);
+        
+        result.ShouldNotBeNull();
+        result.Value.ShouldBe(expKey);
     }
 }

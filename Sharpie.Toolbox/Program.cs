@@ -3,26 +3,15 @@ using Sharpie;
 
 [assembly: ExcludeFromCodeCoverage]
 
-Environment.SetEnvironmentVariable("TERM", "xterm-1003");
+var terminal = new Terminal(NativeCursesProvider.Instance, new(UseMouse: false));
 
-var terminal = new Terminal(NativeCursesProvider.Instance, new());
-
-terminal.Screen.ApplyPendingRefreshes();
-
-while (true)
+foreach (var @event in terminal.Screen.ProcessEvents(CancellationToken.None))
 {
-    if (!terminal.Screen.TryReadEvent(Timeout.Infinite, out var e))
-    {
-        continue;
-    }
-
-    if (e is KeyEvent { Key: Key.Interrupt })
+    terminal.Screen.WriteText($"{@event}\n", Style.Default);
+    if (@event is KeyEvent { Key: Key.Interrupt })
     {
         break;
     }
-
-    terminal.Screen.WriteText($"{e}\n", Style.Default);
 }
-
 
 terminal.Dispose();

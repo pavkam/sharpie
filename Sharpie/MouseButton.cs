@@ -37,14 +37,9 @@ namespace Sharpie;
 public enum MouseButton: uint
 {
     /// <summary>
-    ///     Unknown button.
-    /// </summary>
-    Unknown = 0,
-
-    /// <summary>
     ///     The button 1.
     /// </summary>
-    Button1,
+    Button1 = 1,
 
     /// <summary>
     ///     The button 2.
