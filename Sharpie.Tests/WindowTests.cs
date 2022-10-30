@@ -1520,7 +1520,32 @@ public class WindowTests
     }
     
     [TestMethod]
-    public void Invalidate_Throws_IfYIsNegative()
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Invalidate_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
+                   .Returns(10);
+
+        _cursesMock.Setup(s => s.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), 1))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.Invalidate())
+              .Operation.ShouldBe("wtouchln");
+    }
+
+    [TestMethod]
+    public void Invalidate_Succeeds_IfCursesSucceeds()
+    {
+        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
+                   .Returns(10);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.NotThrow(() => w.Invalidate());
+    }
+    
+    [TestMethod]
+    public void Invalidate2_Throws_IfYIsNegative()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
@@ -1530,7 +1555,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Invalidate_Throws_IfYIsOutsideBounds()
+    public void Invalidate2_Throws_IfYIsOutsideBounds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
@@ -1540,7 +1565,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Invalidate_Throws_IfCountIsLessThanOne()
+    public void Invalidate2_Throws_IfCountIsLessThanOne()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
@@ -1550,7 +1575,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Invalidate_Throws_IfCountGreaterThanBounds()
+    public void Invalidate2_Throws_IfCountGreaterThanBounds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
@@ -1561,7 +1586,7 @@ public class WindowTests
 
     [TestMethod]
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Invalidate_Throws_IfCursesFails()
+    public void Invalidate2_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
@@ -1575,12 +1600,235 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Invalidate_Succeeds_IfCursesSucceeds()
+    public void Invalidate2_Succeeds_IfCursesSucceeds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var w = new Window(_cursesMock.Object, null, new(1));
         Should.NotThrow(() => w.Invalidate(1, 9));
+    }
+    
+    [TestMethod]
+    public void Clear_AsksCurses_1()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Clear(ClearStrategy.Full);
+        
+        _cursesMock.Verify(v => v.werase(new(1)), Times.Once);
+    }
+
+    [TestMethod]
+    public void Clear_AsksCurses_2()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Clear(ClearStrategy.LineFromCaret);
+        
+        _cursesMock.Verify(v => v.wclrtoeol(new(1)), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Clear_AsksCurses_3()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Clear(ClearStrategy.FullFromCaret);
+        
+        _cursesMock.Verify(v => v.wclrtobot(new(1)), Times.Once);
+    }
+
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Clear_Throws_IfCursesFails_1()
+    {
+        _cursesMock.Setup(v => v.werase(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.Clear(ClearStrategy.Full))
+              .Operation.ShouldBe("werase");
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Clear_Throws_IfCursesFails_2()
+    {
+        _cursesMock.Setup(v => v.wclrtoeol(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.Clear(ClearStrategy.LineFromCaret))
+              .Operation.ShouldBe("wclrtoeol");
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Clear_Throws_IfCursesFails_3()
+    {
+        _cursesMock.Setup(v => v.wclrtobot(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.Clear(ClearStrategy.FullFromCaret))
+              .Operation.ShouldBe("wclrtobot");
+    }
+    
+    [TestMethod]
+    public void WriteText_CallsCursesForEachChar()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.WriteText("12345", Style.Default);
+        
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void WriteText_Succeeds_IfCursesNotFailedForAllChars()
+    {
+        var count = 0;
+        _cursesMock.Setup(s => s.wadd_wch(new(1), It.IsAny<ComplexChar>()))
+                   .Returns((IntPtr _, ComplexChar _) => count++ < 3 ? -1 : 0);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.WriteText("12345", Style.Default);
+    }
+    
+    [TestMethod]
+    public void RemoveText_Throws_IfCountIsLessThanOne()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentOutOfRangeException>(() => w.RemoveText(0));
+    }
+    
+    [TestMethod]
+    public void RemoveText_CallsCurses_ForCountTimes()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.RemoveText(10);
+        
+        _cursesMock.Verify(v => v.wdelch(new(1)), Times.Exactly(10));
+    }
+    
+    [TestMethod]
+    public void RemoveText_CallsCurses_UntilTheFirstFailure()
+    {
+        var count = 0;
+        _cursesMock.Setup(s => s.wdelch(It.IsAny<IntPtr>()))
+                   .Returns((IntPtr _) => count++ < 5 ? 0 : -1);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.RemoveText(10);
+        
+        _cursesMock.Verify(v => v.wdelch(new(1)), Times.Exactly(6));
+    }
+    
+    [TestMethod]
+    public void GetText_Throws_IfCountIsLessThanOne()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentOutOfRangeException>(() => w.GetText(0));
+    }
+    
+    [TestMethod]
+    public void GetText_AsksCurses_WithTheGivenCount()
+    {
+        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
+                   .Returns(20);
+        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
+                   .Returns(0);
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
+                       out It.Ref<ushort>.IsAny, IntPtr.Zero))
+                   .Returns((ComplexChar _, StringBuilder sb, out uint a, out ushort cp,
+                       IntPtr _) =>
+                   {
+                       sb.Append('a');
+                       a = 0;
+                       cp = 0;
+
+                       return 0;
+                   });
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.GetText(15).Length.ShouldBe(15);
+        
+        _cursesMock.Verify(v => v.win_wchnstr(new(1), It.IsAny<ComplexChar[]>(), 15), Times.Once);
+    }
+    
+    [TestMethod]
+    public void GetText_AsksCurses_WithTheDeltaCount_IfNotEnoughLength()
+    {
+        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
+                   .Returns(20);
+        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
+                   .Returns(0);
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
+                       out It.Ref<ushort>.IsAny, IntPtr.Zero))
+                   .Returns((ComplexChar _, StringBuilder sb, out uint a, out ushort cp,
+                       IntPtr _) =>
+                   {
+                       sb.Append('a');
+                       a = 0;
+                       cp = 0;
+
+                       return 0;
+                   });
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.GetText(50).Length.ShouldBe(20);
+        
+        _cursesMock.Verify(v => v.win_wchnstr(new(1), It.IsAny<ComplexChar[]>(), 20), Times.Once);
+    }
+    
+    [TestMethod]
+    public void GetText_GetsContents_FromCurses()
+    {
+        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
+                   .Returns(20);
+        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
+                   .Returns(0);
+
+        var ch = 'a';
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
+                       out It.Ref<ushort>.IsAny, IntPtr.Zero))
+                   .Returns((ComplexChar _, StringBuilder sb, out uint a, out ushort cp,
+                       IntPtr _) =>
+                   {
+                       sb.Append(ch);
+                       a = ch;
+                       cp = ch;
+
+                       ch++;
+                       return 0;
+                   });
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        var chars = w.GetText(3);
+        
+        chars[0].@char.ShouldBe(new('a'));
+        chars[0].style.Attributes.ShouldBe((VideoAttribute)'a');
+        chars[0].style.ColorMixture.ShouldBe(new() { Handle = 'a'});
+        
+        chars[1].@char.ShouldBe(new('b'));
+        chars[1].style.Attributes.ShouldBe((VideoAttribute)'b');
+        chars[1].style.ColorMixture.ShouldBe(new() { Handle = 'b'});
+        
+        chars[2].@char.ShouldBe(new('c'));
+        chars[2].style.Attributes.ShouldBe((VideoAttribute)'c');
+        chars[2].style.ColorMixture.ShouldBe(new() { Handle = 'c'});
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void GetText_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
+                   .Returns(20);
+        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
+                   .Returns(0);
+        _cursesMock.Setup(s => s.win_wchnstr(It.IsAny<IntPtr>(), It.IsAny<ComplexChar[]>(), It.IsAny<int>()))
+                   .Returns(-1);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(()=> w.GetText(1)).Operation.ShouldBe("win_wchnstr");
     }
 }

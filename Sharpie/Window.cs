@@ -761,11 +761,8 @@ public class Window: IDisposable
 
                 break;
             case ClearStrategy.LineFromCaret:
-                if (CaretPosition.X < Size.Width - 1)
-                {
-                    Curses.wclrtoeol(Handle)
-                          .Check(nameof(Curses.wclrtoeol), "Failed to clear the line from the caret.");
-                }
+                Curses.wclrtoeol(Handle)
+                      .Check(nameof(Curses.wclrtoeol), "Failed to clear the line from the caret.");
 
                 break;
             case ClearStrategy.FullFromCaret:
