@@ -145,9 +145,9 @@ public static class Helpers
         return (Rune.GetRuneAt(builder.ToString(), 0),
             new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
     }
-    
+
     /// <summary>
-    /// Converts a key code for a key to a known key and modifiers.
+    ///     Converts a key code for a key to a known key and modifiers.
     /// </summary>
     /// <param name="keyCode">The key code.</param>
     /// <returns>The key and modifiers combination.</returns>
@@ -277,7 +277,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Converts a Curses mouse action into proper format.
+    ///     Converts a Curses mouse action into proper format.
     /// </summary>
     /// <param name="type">The Curses mouse event type.</param>
     /// <returns>The mouse action attributes.</returns>

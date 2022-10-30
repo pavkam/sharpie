@@ -104,23 +104,6 @@ public class Window: IDisposable
     public IEnumerable<Window> Children => _windows;
 
     /// <summary>
-    ///     Checks if the given <paramref name="window"/> is either a descendant or an ancestor of this window.
-    /// </summary>
-    /// <param name="window">The window to check.</param>
-    /// <exception cref="ArgumentNullException">The <paramref name="window"/> is <c>null</c>.</exception>
-    public bool IsRelatedTo(Window window)
-    {
-        if (window == null)
-        {
-            throw new ArgumentNullException(nameof(window));
-        }
-
-        return window == this ||
-            Children.Any(child => child.IsRelatedTo(window)) ||
-            window.Children.Any(child => child.IsRelatedTo(this));
-    }
-    
-    /// <summary>
     ///     Gets or sets the ability of the window to scroll its contents when writing
     ///     needs a new line.
     /// </summary>
@@ -384,6 +367,23 @@ public class Window: IDisposable
     }
 
     /// <summary>
+    ///     Checks if the given <paramref name="window" /> is either a descendant or an ancestor of this window.
+    /// </summary>
+    /// <param name="window">The window to check.</param>
+    /// <exception cref="ArgumentNullException">The <paramref name="window" /> is <c>null</c>.</exception>
+    public bool IsRelatedTo(Window window)
+    {
+        if (window == null)
+        {
+            throw new ArgumentNullException(nameof(window));
+        }
+
+        return window == this ||
+            Children.Any(child => child.IsRelatedTo(window)) ||
+            window.Children.Any(child => child.IsRelatedTo(this));
+    }
+
+    /// <summary>
     ///     Asserts that the window is not disposed.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
@@ -427,8 +427,9 @@ public class Window: IDisposable
     /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     public bool TryMoveCaretTo(int x, int y) =>
-        IsPointWithin(new(x, y)) && !Curses.wmove(Handle, y, x)
-                                           .Failed();
+        IsPointWithin(new(x, y)) &&
+        !Curses.wmove(Handle, y, x)
+               .Failed();
 
     /// <summary>
     ///     Moves the caret to a given position within the window.
@@ -580,7 +581,7 @@ public class Window: IDisposable
         {
             return;
         }
-        
+
         var failed = 0;
         var total = 0;
         foreach (var rune in str.EnumerateRunes())
@@ -632,7 +633,7 @@ public class Window: IDisposable
         {
             throw new ArgumentOutOfRangeException(nameof(length));
         }
-        
+
         Curses.wvline(Handle, 0, length)
               .Check(nameof(Curses.wvline), "Failed to draw a vertical line.");
     }
@@ -674,7 +675,7 @@ public class Window: IDisposable
         Curses.whline(Handle, 0, length)
               .Check(nameof(Curses.whline), "Failed to draw a horizontal line.");
     }
-    
+
     /// <summary>
     ///     Draws a vertical line from the current caret position downwards.
     /// </summary>
@@ -810,7 +811,7 @@ public class Window: IDisposable
         {
             throw new ArgumentException("Cannot copy to a window that is related to this window.", nameof(window));
         }
-        
+
         switch (strategy)
         {
             case ReplaceStrategy.Overlay:
@@ -842,7 +843,7 @@ public class Window: IDisposable
         {
             throw new ArgumentException("Cannot copy to a window that is related to this window.", nameof(window));
         }
-        
+
         if (!IsRectangleWithin(srcRect))
         {
             throw new ArgumentOutOfRangeException(nameof(srcRect));
@@ -908,7 +909,8 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <returns>The result of the check.</returns>
     public bool IsRectangleWithin(Rectangle rect) =>
-        IsPointWithin(new(rect.Left, rect.Top)) && IsPointWithin(new(rect.Left + rect.Width - 1, rect.Top + rect.Height - 1));
+        IsPointWithin(new(rect.Left, rect.Top)) &&
+        IsPointWithin(new(rect.Left + rect.Width - 1, rect.Top + rect.Height - 1));
 
     /// <summary>
     ///     Checks if the line at <paramref name="y" /> is dirty.
@@ -1020,7 +1022,9 @@ public class Window: IDisposable
                         return false;
                     }
 
-                    var (button, state, mouseMod) = Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) mouseEvent.buttonState);
+                    var (button, state, mouseMod) =
+                        Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) mouseEvent.buttonState);
+
                     if (button == 0)
                     {
                         @event = new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));

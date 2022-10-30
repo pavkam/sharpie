@@ -34,7 +34,7 @@ using Curses;
 
 /// <summary>
 ///     The main Curses screen class. Implements screen-related functionality.
-/// Only one instance of this class can be active at one time.
+///     Only one instance of this class can be active at one time.
 /// </summary>
 [PublicAPI]
 public sealed class Screen: Window
@@ -99,7 +99,7 @@ public sealed class Screen: Window
     /// </remarks>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentNullException">Throws if <paramref name="window"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public Window CreateSubWindow(Window window, Rectangle area)
@@ -133,7 +133,7 @@ public sealed class Screen: Window
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="InvalidOperationException">Trying to duplicate the screen window.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">Throws if <paramref name="window"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
     public Window DuplicateWindow(Window window)
     {
         if (window == null)
@@ -168,7 +168,7 @@ public sealed class Screen: Window
         {
             throw new ArgumentOutOfRangeException(nameof(size));
         }
-        
+
         AssertAlive();
         var handle = Curses.newpad(size.Height, size.Width)
                            .Check(nameof(Terminal.Curses.newpad), "Failed to create a new pad.");
@@ -215,7 +215,7 @@ public sealed class Screen: Window
         Curses.doupdate()
               .Check(nameof(Terminal.Curses.doupdate), "Failed to update the main screen.");
     }
-   
+
     /// <summary>
     ///     Deletes the screen window and ends the terminal session.
     /// </summary>

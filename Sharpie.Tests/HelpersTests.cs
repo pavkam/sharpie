@@ -312,14 +312,14 @@ public class HelpersTests
         result.state.ShouldBe(expState);
     }
 
-    [TestMethod, DataRow((ulong)0, ModifierKey.None), DataRow(RawMouseEvent.EventType.Alt, ModifierKey.Alt),
+    [TestMethod, DataRow((ulong) 0, ModifierKey.None), DataRow(RawMouseEvent.EventType.Alt, ModifierKey.Alt),
      DataRow(RawMouseEvent.EventType.Ctrl, ModifierKey.Ctrl), DataRow(RawMouseEvent.EventType.Shift, ModifierKey.Shift),
      DataRow(RawMouseEvent.EventType.Alt | RawMouseEvent.EventType.Ctrl, ModifierKey.Alt | ModifierKey.Ctrl),
      DataRow(RawMouseEvent.EventType.Shift | RawMouseEvent.EventType.Ctrl, ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow(RawMouseEvent.EventType.Alt | RawMouseEvent.EventType.Shift, ModifierKey.Alt | ModifierKey.Shift),
      DataRow(RawMouseEvent.EventType.Ctrl | RawMouseEvent.EventType.Shift, ModifierKey.Ctrl | ModifierKey.Shift),
      DataRow(RawMouseEvent.EventType.Alt | RawMouseEvent.EventType.Ctrl | RawMouseEvent.EventType.Shift,
-         ModifierKey.Alt | ModifierKey.Shift | ModifierKey.Ctrl),]
+         ModifierKey.Alt | ModifierKey.Shift | ModifierKey.Ctrl)]
     public void ConvertMouseActionEvent_MapsModifiers(ulong evt, ModifierKey expMod)
     {
         var result = Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) evt);
