@@ -71,7 +71,6 @@ public sealed class Terminal: IDisposable
                 "Another terminal instance is active. Only one instance can be active at one time.");
         }
 
-
         // Pre-screen creation.
         curses.use_env(Options.UseEnvironmentOverrides);
 

@@ -369,7 +369,8 @@ public class Window: IDisposable
                 window.IgnoreHardwareCaret = value;
             }
 
-            Curses.leaveok(Handle, value);
+            Curses.leaveok(Handle, value)
+                  .Check(nameof(Curses.leaveok), "Failed to set hardware caret ignore mode.");
         }
     }
 

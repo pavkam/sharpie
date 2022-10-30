@@ -85,6 +85,21 @@ public class TerminalTests
         _terminal.Screen.Handle.ShouldBe(new(10));
     }
 
+    [TestMethod]
+    public void Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled()
+    {
+        _terminal = new(_cursesMock.Object, new(CaretMode: CaretMode.Invisible));
+        
+        _cursesMock.Verify(v => v.leaveok(_terminal.Screen.Handle, true), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled()
+    {
+        _terminal = new(_cursesMock.Object, new(CaretMode: CaretMode.Visible));
+        _cursesMock.Verify(v => v.leaveok(_terminal.Screen.Handle, false), Times.Once);
+    }
+    
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_IfCursesFails_WhenCreatingScreen()
     {

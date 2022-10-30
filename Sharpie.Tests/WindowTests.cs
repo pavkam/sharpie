@@ -2123,4 +2123,35 @@ public class WindowTests
         w3.IsRelatedTo(w2).ShouldBeTrue();
     }
 
+    [TestMethod]
+    public void IgnoreHardwareCaret_Get_ReturnsWhatCursesSays()
+    {
+        _cursesMock.Setup(s => s.is_leaveok(It.IsAny<IntPtr>()))
+                   .Returns(true);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        w1.IgnoreHardwareCaret.ShouldBeTrue();
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void IgnoreHardwareCaret_Set_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.leaveok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
+                   .Returns(-1);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w1.IgnoreHardwareCaret = true).Operation.ShouldBe("leaveok");
+    }
+    
+    [TestMethod]
+    public void IgnoreHardwareCaret_Set_UpdatesWindowAndChildren()
+    {
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, w1, new(2));
+        w1.IgnoreHardwareCaret = true;
+         
+        _cursesMock.Verify(v => v.leaveok(w1.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.leaveok(w2.Handle, true), Times.Once);
+    }
 }
