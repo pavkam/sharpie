@@ -52,6 +52,10 @@ jobs:
         recreate: true
         path: code-coverage-results.md
         
+    - name: Build NuGet Package
+      if: github.event_name == 'push'
+      run: dotnet pack
+      
     - name: Push to NuGet.org
       if: github.event_name == 'push'
       run: dotnet nuget push *.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
