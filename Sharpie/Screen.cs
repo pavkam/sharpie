@@ -146,9 +146,12 @@ public sealed class Screen: Window
             throw new InvalidOperationException("Cannot duplicate the screen window.");
         }
 
-        return new(Curses, this, Curses.dupwin(window.Handle)
-                                       .Check(nameof(Terminal.Curses.dupwin),
-                                           "Failed to duplicate an existing window."));
+        var handle = Curses.dupwin(window.Handle)
+                           .Check(nameof(Terminal.Curses.dupwin), "Failed to duplicate an existing window.");
+
+        return Curses.is_pad(window.Handle)
+            ? new Pad(Curses, window.Parent ?? this, handle)
+            : new Window(Curses, window.Parent, handle);
     }
 
     /// <summary>

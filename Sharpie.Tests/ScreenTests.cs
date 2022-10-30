@@ -185,6 +185,12 @@ public class ScreenTests
         Should.Throw<ArgumentNullException>(() => _screen1.DuplicateWindow(null!));
     }
 
+    [TestMethod]
+    public void DuplicateWindow_Throws_IfWindowIsScreen()
+    {
+        Should.Throw<InvalidOperationException>(() => _screen1.DuplicateWindow(_screen1));
+    }
+
     [TestMethod,SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DuplicateWindow_Throws_IfCursesFails()
     {
@@ -198,13 +204,30 @@ public class ScreenTests
     [TestMethod,SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DuplicateWindow_ReturnsNewWindow_IfCursesSucceeds()
     {
-        var w = new Window(_cursesMock.Object, _screen1, new(2));
+        var p = new Window(_cursesMock.Object, _screen1, new(2));
+        var w = new Window(_cursesMock.Object, p, new(3));
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
-                   .Returns(new IntPtr(3));
+                   .Returns(new IntPtr(4));
         
         var sw = _screen1.DuplicateWindow(w);
-        sw.Handle.ShouldBe(new(3));
-        sw.Parent.ShouldBe(_screen1);
+        sw.Handle.ShouldBe(new(4));
+        sw.Parent.ShouldBe(p);
+        sw.ShouldBeOfType<Window>();
+        
+        _cursesMock.Verify(v => v.is_pad(new(3)), Times.Once);
+    }
+       
+    [TestMethod,SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DuplicateWindow_ReturnsNewPad_IfWindowWasPad()
+    {
+        var w = new Pad(_cursesMock.Object, _screen1, new(2));
+        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+                   .Returns(new IntPtr(3));
+        _cursesMock.Setup(s => s.is_pad(new(2)))
+                   .Returns(true);
+        
+        var sw = _screen1.DuplicateWindow(w);
+        sw.ShouldBeOfType<Pad>();
     }
     
     [TestMethod]

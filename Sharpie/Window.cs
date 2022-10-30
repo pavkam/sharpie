@@ -837,32 +837,32 @@ public class Window: IDisposable
     /// <summary>
     ///     Invalidates a number of lines within the window.
     /// </summary>
-    /// <param name="line">The window to copy contents to.</param>
-    /// <param name="count">The used strategy.</param>
+    /// <param name="y">The line to start with.</param>
+    /// <param name="count">The count of lines to invalidate.</param>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="line" /> and <paramref name="count" /> combination is
+    ///     The <paramref name="y" /> and <paramref name="count" /> combination is
     ///     out of bounds.
     /// </exception>
-    public void Invalidate(int line, int count)
+    public void Invalidate(int y, int count)
     {
-        if (line < 0 || line >= Size.Height)
+        if (y < 0 || y >= Size.Height)
         {
-            throw new ArgumentOutOfRangeException(nameof(line));
+            throw new ArgumentOutOfRangeException(nameof(y));
         }
 
-        if (count <= 0 || line + count >= Size.Height)
+        if (count <= 0 || y + count - 1 >= Size.Height)
         {
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
-        Curses.wtouchln(Handle, line, count, 1)
+        Curses.wtouchln(Handle, y, count, 1)
               .Check(nameof(Curses.wtouchln), "Failed to mark lines as dirty.");
     }
 
     /// <summary>
-    ///     Invalidates the contents of the window thus forcing a redraw at the next <see cref="Refresh" />.
+    ///     Invalidates the contents of the window thus forcing a redraw at the next <see cref="Refresh(bool,bool)" />.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -883,14 +883,14 @@ public class Window: IDisposable
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <returns>The result of the check.</returns>
     public bool IsRectangleWithin(Rectangle rect) =>
-        IsPointWithin(new(rect.Left, rect.Top)) && IsPointWithin(new(rect.Right - 1, rect.Bottom - 1));
+        IsPointWithin(new(rect.Left, rect.Top)) && IsPointWithin(new(rect.Left + rect.Width - 1, rect.Top + rect.Height - 1));
 
     /// <summary>
-    ///     Checks if the row at <paramref name="y" /> is dirty.
+    ///     Checks if the line at <paramref name="y" /> is dirty.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y" /> is outside the bounds.</exception>
-    public bool IsRowDirty(int y)
+    public bool IsLineDirty(int y)
     {
         if (y < 0 || y >= Size.Height)
         {
@@ -926,28 +926,27 @@ public class Window: IDisposable
     /// <summary>
     ///     Refreshes a number of lines within the window.
     /// </summary>
-    /// <param name="line">The starting line to refresh.</param>
+    /// <param name="y">The starting line to refresh.</param>
     /// <param name="count">The number of lines to refresh.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The combination of lines and count exceed the window boundary.</exception>
-    public virtual void RefreshLines(int line, int count)
+    public virtual void Refresh(int y, int count)
     {
-        if (line < 0 || line >= Size.Height)
+        if (y < 0 || y >= Size.Height)
         {
-            throw new ArgumentOutOfRangeException(nameof(line));
+            throw new ArgumentOutOfRangeException(nameof(y));
         }
 
-        if (count < 1 || line + count - 1 >= Size.Height)
+        if (count < 1 || y + count - 1 >= Size.Height)
         {
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
-        Curses.wredrawln(Handle, line, count)
+        Curses.wredrawln(Handle, y, count)
               .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
     }
 
- 
     /// <summary>
     ///     Tries to read an event from the terminal.
     /// </summary>

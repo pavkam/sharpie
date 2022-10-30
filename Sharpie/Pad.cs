@@ -78,7 +78,7 @@ public sealed class Pad: Window
         set => throw new NotSupportedException("Pads do not have a location.");
     }
     
-    /// <inheritdoc cref="Window.Refresh" />
+    /// <inheritdoc cref="Window.Refresh(bool,bool)" />
     /// <remarks>
     ///     This functionality is disabled in the pads. Use the overloaded version of this method.
     /// </remarks>
