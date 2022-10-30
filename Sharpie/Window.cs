@@ -56,7 +56,7 @@ public class Window: IDisposable
         _handle = windowHandle;
         Parent = parent;
 
-        parent?._windows.Add(this);
+        Parent?._windows.Add(this);
 
         EnableScrolling = true;
 
@@ -224,7 +224,7 @@ public class Window: IDisposable
     {
         get
         {
-            if (Curses.is_subwin(Handle))
+            if (Parent != null && Parent is not Sharpie.Screen)
             {
                 return new(Curses.getparx(Handle)
                                  .Check(nameof(Curses.getparx), "Failed to get window X coordinate."), Curses
@@ -249,7 +249,7 @@ public class Window: IDisposable
                 }
             }
 
-            if (Curses.is_subwin(Handle))
+            if (Parent != null && Parent is not Sharpie.Screen)
             {
                 Curses.mvderwin(Handle, value.Y, value.X)
                       .Check(nameof(Curses.mvderwin), "Failed to move window to new coordinates.");
@@ -561,7 +561,7 @@ public class Window: IDisposable
     }
 
     /// <summary>
-    ///     Writes a text at the caret position at the current window and optionally, advance the caret.
+    ///     Writes a text at the caret position at the current window and advances the caret.
     /// </summary>
     /// <param name="str">The text to write.</param>
     /// <param name="style">The style of the text.</param>
@@ -598,6 +598,18 @@ public class Window: IDisposable
         }
     }
 
+    /// <summary>
+    ///     Writes a text at the caret position at the current window and advances the caret.
+    /// </summary>
+    /// <remarks>
+    /// This method uses default style.
+    /// </remarks>
+    /// <param name="str">The text to write.</param>
+    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
+    public void WriteText(string str) => WriteText(str, Style.Default);
+    
     /// <summary>
     ///     Draws a vertical line from the current caret position downwards.
     /// </summary>
@@ -949,6 +961,13 @@ public class Window: IDisposable
     }
 
     /// <summary>
+    ///     Refreshes the window by synchronizing it to the terminal with immediate redraw.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void Refresh() => Refresh(false, false);
+    
+    /// <summary>
     ///     Refreshes a number of lines within the window.
     /// </summary>
     /// <param name="y">The starting line to refresh.</param>
@@ -972,16 +991,38 @@ public class Window: IDisposable
               .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
     }
 
+    private Screen Screen
+    {
+        get
+        {
+            if (this is Screen)
+            {
+                return (Screen) this;
+            }
+
+            Debug.Assert(Parent != null);
+
+            var p = Parent;
+            while (p.Parent != null)
+            {
+                p = p.Parent;
+            }
+
+            Debug.Assert(p is Screen);
+            return (Screen) p;
+        }
+    }
+    
     private (int result, uint keyCode) ReadNext(bool quickWait = false)
     {
-        Curses.wtimeout(Handle, quickWait ? 10 : 100);
+        Curses.wtimeout(Handle, quickWait ? 10 : 1000);
         var result = Curses.wget_wch(Handle, out var keyCode);
 
         return (result, keyCode);
     }
 
     /// <summary>
-    /// Reads the next event from. If the event is valid, returns it. Otherwise <c>null</c> is returned.
+    ///     Reads the next event from. If the event is valid, returns it. Otherwise <c>null</c> is returned.
     /// </summary>
     /// <returns>The event or <c>null</c> if read failed.</returns>
     private Event? ReadNextEvent()
@@ -989,6 +1030,7 @@ public class Window: IDisposable
         var (result, keyCode) = ReadNext();
         if (result.Failed())
         {
+            Screen.ApplyPendingRefreshes();
             return null;
         }
 
@@ -997,7 +1039,7 @@ public class Window: IDisposable
             switch (keyCode)
             {
                 case (uint) RawKey.Resize:
-                    return new TerminalResizeEvent(Size);
+                    return new TerminalResizeEvent(Screen.Size);
                 case (uint) RawKey.Mouse:
                     if (Curses.getmouse(out var mouseEvent)
                               .Failed())
@@ -1030,11 +1072,23 @@ public class Window: IDisposable
             : new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
     }
 
+    private void PerformResize()
+    {
+        //TODO: invalidate all windows. 
+        if (this != Screen)
+        {
+            Invalidate();
+        }
+        
+        Screen.Invalidate();
+        Screen.Refresh(false, true);
+    }
+
     /// <summary>
-    /// Gets an enumerable that is used to get events from Curses. 
+    ///     Gets an enumerable that is used to get events from Curses.
     /// </summary>
     /// <remarks>
-    /// The enumerable returned by this method only stops waiting when cancellation is requested.
+    ///     The enumerable returned by this method only stops waiting when cancellation is requested.
     /// </remarks>
     /// <param name="cancellationToken">Cancellation token used to interrupt the process.</param>
     /// <returns>An enumerable.</returns>
@@ -1067,6 +1121,11 @@ public class Window: IDisposable
             if (@event != null)
             {
                 yield return @event;
+                
+                if (@event.Type == EventType.TerminalResize)
+                {
+                    PerformResize();
+                }
             }
         }
     }

@@ -102,9 +102,12 @@ public sealed class Screen: Window
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public Window CreateSubWindow(Window window, Rectangle area)
     {
-        if (window == null)
+        switch (window)
         {
-            throw new ArgumentNullException(nameof(window));
+            case null:
+                throw new ArgumentNullException(nameof(window));
+            case Screen:
+                return CreateWindow(area);
         }
 
         if (!window.IsRectangleWithin(area))
@@ -112,7 +115,7 @@ public sealed class Screen: Window
             throw new ArgumentOutOfRangeException(nameof(area));
         }
 
-        if (Curses.is_pad(window.Handle))
+        if (window is Pad)
         {
             throw new InvalidOperationException("Cannot create a sub-window in a pad.");
         }
@@ -134,22 +137,22 @@ public sealed class Screen: Window
     /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
     public Window DuplicateWindow(Window window)
     {
-        if (window == null)
+        switch (window)
         {
-            throw new ArgumentNullException(nameof(window));
+            case null:
+                throw new ArgumentNullException(nameof(window));
+            case Screen:
+                throw new InvalidOperationException("Cannot duplicate the screen window.");
+            default:
+            {
+                var handle = Curses.dupwin(window.Handle)
+                                   .Check(nameof(Terminal.Curses.dupwin), "Failed to duplicate an existing window.");
+
+                return window is Pad
+                    ? new Pad(Curses, window.Parent ?? this, handle)
+                    : new Window(Curses, window.Parent, handle);
+            }
         }
-
-        if (window == this)
-        {
-            throw new InvalidOperationException("Cannot duplicate the screen window.");
-        }
-
-        var handle = Curses.dupwin(window.Handle)
-                           .Check(nameof(Terminal.Curses.dupwin), "Failed to duplicate an existing window.");
-
-        return Curses.is_pad(window.Handle)
-            ? new Pad(Curses, window.Parent ?? this, handle)
-            : new Window(Curses, window.Parent, handle);
     }
 
     /// <summary>

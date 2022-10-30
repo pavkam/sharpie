@@ -29,11 +29,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 namespace Sharpie;
+#pragma warning disable CS1591
 
 /// <summary>
 ///     Internal Curses key constants.
 /// </summary>
-internal enum RawKey: uint
+public enum RawKey: uint
 {
     Yes = 0x100,
     Backspace = 0x107,

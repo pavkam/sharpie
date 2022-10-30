@@ -283,8 +283,8 @@ public static class Helpers
         RawMouseEvent.EventType type)
     {
         var modifierKey = ModifierKey.None;
-        var button = (MouseButton)0;
-        var state = (MouseButtonState)0;
+        var button = (MouseButton) 0;
+        var state = (MouseButtonState) 0;
 
         if (type.HasFlag(RawMouseEvent.EventType.Alt))
         {
@@ -385,18 +385,18 @@ public static class Helpers
 
         return (button, state, modifierKey);
     }
-    
-     /// <summary>
+
+    /// <summary>
     ///     Attempts to convert some of the standard characters to key events (e.g. backspace).
     /// </summary>
     /// <param name="keyCode">The key code.</param>
     /// <returns>The key if converted; <c>null</c> otherwise.</returns>
     internal static Key? TryConvertCharacterToKeyPressEvent(uint keyCode)
-     {
-         return keyCode switch
-         {
-             3 => Key.Interrupt,
-             var _ => null
-         };
-     }
+    {
+        return keyCode switch
+        {
+            3 => Key.Interrupt,
+            var _ => null
+        };
+    }
 }

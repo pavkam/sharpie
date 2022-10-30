@@ -3,15 +3,29 @@ using Sharpie;
 
 [assembly: ExcludeFromCodeCoverage]
 
-var terminal = new Terminal(NativeCursesProvider.Instance, new(UseMouse: false));
+var terminal = new Terminal(NativeCursesProvider.Instance, new());
 
-foreach (var @event in terminal.Screen.ProcessEvents(CancellationToken.None))
+terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, StandardColor.Blue);
+terminal.Screen.DrawBorder();
+terminal.Screen.Refresh();
+
+var subWindow = terminal.Screen.CreateWindow(
+    new(1, 1, terminal.Screen.Size.Width - 2, terminal.Screen.Size.Height - 2));
+
+foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
 {
-    terminal.Screen.WriteText($"{@event}\n", Style.Default);
+    subWindow.WriteText($"{@event}\n");
+    if (@event is TerminalResizeEvent re)
+    {
+        subWindow.Size = new(re.Size.Width - 2, re.Size.Height - 2);
+        terminal.Screen.DrawBorder();
+    }
+    
     if (@event is KeyEvent { Key: Key.Interrupt })
     {
         break;
     }
 }
 
+// Dispose this thing.
 terminal.Dispose();

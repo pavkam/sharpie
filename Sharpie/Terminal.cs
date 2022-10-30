@@ -202,20 +202,6 @@ public sealed class Terminal: IDisposable
     public TerminalOptions Options { get; }
 
     /// <summary>
-    ///     Sets the terminal title.
-    /// </summary>
-    /// <param name="title">The title of the terminal.</param>
-    public void SetTitle(string title)
-    {
-        if (title == null)
-        {
-            throw new ArgumentNullException(nameof(title));
-        }
-        
-        Curses.set_title(title);
-    }
-    
-    /// <summary>
     ///     Returns the name of the terminal.
     /// </summary>
     public string? Name => Curses.termname();
@@ -314,6 +300,20 @@ public sealed class Terminal: IDisposable
 
         _terminalInstanceActive = false;
         GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    ///     Sets the terminal title.
+    /// </summary>
+    /// <param name="title">The title of the terminal.</param>
+    public void SetTitle(string title)
+    {
+        if (title == null)
+        {
+            throw new ArgumentNullException(nameof(title));
+        }
+
+        Curses.set_title(title);
     }
 
     /// <summary>

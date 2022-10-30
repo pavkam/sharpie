@@ -13,6 +13,7 @@
         <RepositoryUrl>https://github.com/pavkam/sharpie.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>ncurses curses tui</PackageTags>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

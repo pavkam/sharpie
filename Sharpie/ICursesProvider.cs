@@ -28,6 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#pragma warning disable CS1591
 namespace Sharpie;
 
 /// <summary>
@@ -38,407 +39,403 @@ namespace Sharpie;
 [PublicAPI, SuppressMessage("ReSharper", "InconsistentNaming"), SuppressMessage("ReSharper", "IdentifierTypo")]
 public interface ICursesProvider
 {
-    public delegate bool ripoffline_callback(IntPtr window, int columns); 
+    public delegate bool ripoffline_callback(IntPtr window, int columns);
 
-    int baudrate(); 
+    int baudrate();
 
-    int beep(); 
+    int beep();
 
-    bool can_change_color(); 
+    bool can_change_color();
 
-    int cbreak(); 
+    int cbreak();
 
-    int clearok(IntPtr window, bool set); 
+    int clearok(IntPtr window, bool set);
 
-    int color_content(ushort color, out ushort red, out ushort green, out ushort blue); 
+    int color_content(ushort color, out ushort red, out ushort green, out ushort blue);
 
     int copywin(IntPtr fromWindow, IntPtr toWindow, int srcStartLine, int srcStartCol,
         int destStartLine, int destStartCol, int destEndLine, int destEndCol,
-        int overlay); 
+        int overlay);
 
-    int curs_set(int level); 
+    int curs_set(int level);
 
-    int def_prog_mode(); 
+    int def_prog_mode();
 
-    int def_shell_mode(); 
+    int def_shell_mode();
 
-    int delay_output(int delayMillis); 
+    int delay_output(int delayMillis);
 
-    int delwin(IntPtr window); 
+    int delwin(IntPtr window);
 
     IntPtr derwin(IntPtr window, int lines, int cols, int beginLine,
-        int beginCol); 
+        int beginCol);
 
-    int doupdate(); 
+    int doupdate();
 
-    IntPtr dupwin(IntPtr window); 
+    IntPtr dupwin(IntPtr window);
 
-    int echo(); 
+    int echo();
 
-    int endwin(); 
+    int endwin();
 
-    int erasewchar(out uint @char); 
+    int erasewchar(out uint @char);
 
-    void filter(); 
+    void filter();
 
-    int flash(); 
+    int flash();
 
-    int flushinp(); 
+    int flushinp();
 
-    uint getattrs(IntPtr window); 
+    uint getattrs(IntPtr window);
 
-    int getcurx(IntPtr window); 
+    int getcurx(IntPtr window);
 
-    int getcury(IntPtr window); 
+    int getcury(IntPtr window);
 
-    int getbegx(IntPtr window); 
+    int getbegx(IntPtr window);
 
-    int getbegy(IntPtr window); 
+    int getbegy(IntPtr window);
 
-    int getmaxx(IntPtr window); 
+    int getmaxx(IntPtr window);
 
-    int getmaxy(IntPtr window); 
+    int getmaxy(IntPtr window);
 
-    int getparx(IntPtr window); 
+    int getparx(IntPtr window);
 
-    int getpary(IntPtr window); 
+    int getpary(IntPtr window);
 
-    int halfdelay(int tenthsOfSec); 
+    int halfdelay(int tenthsOfSec);
 
-    bool has_colors(); 
+    bool has_colors();
 
-    bool has_ic(); 
+    bool has_ic();
 
-    bool has_il(); 
+    bool has_il();
 
-    void idcok(IntPtr window, bool set); 
+    void idcok(IntPtr window, bool set);
 
-    int idlok(IntPtr window, bool set); 
+    int idlok(IntPtr window, bool set);
 
-    void immedok(IntPtr window, bool set); 
+    void immedok(IntPtr window, bool set);
 
-    IntPtr initscr(); 
+    IntPtr initscr();
 
-    int init_color(ushort color, ushort red, ushort green, ushort blue); 
+    int init_color(ushort color, ushort red, ushort green, ushort blue);
 
-    int init_pair(ushort colorPair, ushort fgColor, ushort bgColor); 
+    int init_pair(ushort colorPair, ushort fgColor, ushort bgColor);
 
-    int intrflush(IntPtr window, bool set); 
+    int intrflush(IntPtr window, bool set);
 
-    bool isendwin(); 
+    bool isendwin();
 
-    bool is_linetouched(IntPtr window, int line); 
+    bool is_linetouched(IntPtr window, int line);
 
-    bool is_wintouched(IntPtr window); 
+    bool is_wintouched(IntPtr window);
 
     bool is_cleared(IntPtr window);
 
-    bool is_idcok(IntPtr window); 
+    bool is_idcok(IntPtr window);
 
-    bool is_idlok(IntPtr window); 
+    bool is_idlok(IntPtr window);
 
-    bool is_immedok(IntPtr window); 
+    bool is_immedok(IntPtr window);
 
-    bool is_keypad(IntPtr window); 
+    bool is_keypad(IntPtr window);
 
-    bool is_leaveok(IntPtr window); 
+    bool is_leaveok(IntPtr window);
 
-    bool is_nodelay(IntPtr window); 
+    bool is_nodelay(IntPtr window);
 
-    bool is_notimeout(IntPtr window); 
+    bool is_notimeout(IntPtr window);
+    
+    bool is_scrollok(IntPtr window);
+    
+    bool is_syncok(IntPtr window);
 
-    bool is_pad(IntPtr window); 
+    IntPtr wgetparent(IntPtr window);
 
-    bool is_scrollok(IntPtr window); 
+    int wgetdelay(IntPtr window);
 
-    bool is_subwin(IntPtr window); 
+    int wgetscrreg(IntPtr window, out int top, out int bottom);
 
-    bool is_syncok(IntPtr window); 
+    string? keyname(uint keyCode);
 
-    IntPtr wgetparent(IntPtr window); 
+    int keypad(IntPtr window, bool set);
 
-    int wgetdelay(IntPtr window); 
+    int leaveok(IntPtr window, bool set);
 
-    int wgetscrreg(IntPtr window, out int top, out int bottom); 
+    string? longname();
 
-    string? keyname(uint keyCode); 
+    int meta(IntPtr window, bool set);
 
-    int keypad(IntPtr window, bool set); 
+    int mvderwin(IntPtr window, int parentLine, int parentCol);
 
-    int leaveok(IntPtr window, bool set); 
+    int mvwin(IntPtr window, int toLine, int toCol);
 
-    string? longname(); 
+    IntPtr newpad(int lines, int cols);
 
-    int meta(IntPtr window, bool set); 
+    IntPtr newwin(int lines, int cols, int atLine, int atCol);
 
-    int mvderwin(IntPtr window, int parentLine, int parentCol); 
+    int nl();
 
-    int mvwin(IntPtr window, int toLine, int toCol); 
+    int nocbreak();
 
-    IntPtr newpad(int lines, int cols); 
+    int nodelay(IntPtr window, bool set);
 
-    IntPtr newwin(int lines, int cols, int atLine, int atCol); 
+    int noecho();
 
-    int nl(); 
+    int nonl();
 
-    int nocbreak(); 
+    void noqiflush();
 
-    int nodelay(IntPtr window, bool set); 
+    int noraw();
 
-    int noecho(); 
+    int notimeout(IntPtr window, bool set);
 
-    int nonl(); 
+    int overlay(IntPtr srcWindow, IntPtr destWindow);
 
-    void noqiflush(); 
+    int overwrite(IntPtr srcWindow, IntPtr destWindow);
 
-    int noraw(); 
+    int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor);
 
-    int notimeout(IntPtr window, bool set); 
+    uint COLOR_PAIR(uint attrs);
 
-    int overlay(IntPtr srcWindow, IntPtr destWindow); 
+    uint PAIR_NUMBER(uint colorPair);
 
-    int overwrite(IntPtr srcWindow, IntPtr destWindow); 
-
-    int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor); 
-
-    uint COLOR_PAIR(uint attrs); 
-
-    uint PAIR_NUMBER(uint colorPair); 
-
-    int pechochar(IntPtr pad, uint charAndAttrs); 
+    int pechochar(IntPtr pad, uint charAndAttrs);
 
     int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol); 
+        int scrMinCol, int scrMaxLine, int scrMaxCol);
 
     int prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol); 
+        int scrMinCol, int scrMaxLine, int scrMaxCol);
 
-    void qiflush(); 
+    void qiflush();
 
-    int raw(); 
+    int raw();
 
-    int resetty(); 
+    int resetty();
 
-    int reset_prog_mode(); 
+    int reset_prog_mode();
 
-    int reset_shell_mode(); 
+    int reset_shell_mode();
 
-    int ripoffline(int lines, ripoffline_callback callback); 
+    int ripoffline(int lines, ripoffline_callback callback);
 
-    int savetty(); 
+    int savetty();
 
-    int scrollok(IntPtr window, bool set); 
+    int scrollok(IntPtr window, bool set);
 
-    int slk_attroff(uint attrs); 
+    int slk_attroff(uint attrs);
 
-    int slk_attr_off(uint attrs, IntPtr reserved); 
+    int slk_attr_off(uint attrs, IntPtr reserved);
 
-    int slk_attron(uint attrs); 
+    int slk_attron(uint attrs);
 
-    int slk_attr_on(uint attrs, IntPtr reserved); 
+    int slk_attr_on(uint attrs, IntPtr reserved);
 
-    int slk_attrset(uint attrs); 
+    int slk_attrset(uint attrs);
 
-    int slk_attr(); 
+    int slk_attr();
 
-    int slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved); 
+    int slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved);
 
-    int slk_clear(); 
+    int slk_clear();
 
-    int slk_color(ushort colorPair); 
+    int slk_color(ushort colorPair);
 
-    int slk_init(int format); 
+    int slk_init(int format);
 
-    string? slk_label(int labelIndex); 
+    string? slk_label(int labelIndex);
 
-    int slk_noutrefresh(); 
+    int slk_noutrefresh();
 
-    int slk_refresh(); 
+    int slk_refresh();
 
-    int slk_restore(); 
+    int slk_restore();
 
-    int slk_touch(); 
+    int slk_touch();
 
-    int start_color(); 
+    int start_color();
 
     IntPtr subpad(IntPtr pad, int lines, int cols, int atLine,
-        int atCol); 
+        int atCol);
 
     IntPtr subwin(IntPtr window, int lines, int cols, int atLine,
-        int atCol); 
+        int atCol);
 
-    int syncok(IntPtr window, bool set); 
+    int syncok(IntPtr window, bool set);
 
-    string? termname(); 
+    string? termname();
 
-    int ungetch(uint @char); 
+    int ungetch(uint @char);
 
-    void use_env(bool set); 
+    void use_env(bool set);
 
-    int waddch(IntPtr window, uint charAndAttrs); 
+    int waddch(IntPtr window, uint charAndAttrs);
 
-    int waddchnstr(IntPtr window, string text, int length); 
+    int waddchnstr(IntPtr window, string text, int length);
 
-    int wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved); 
+    int wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved);
 
-    int wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved); 
+    int wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved);
 
-    int wattr_on(IntPtr window, uint attrs, IntPtr reserved); 
+    int wattr_on(IntPtr window, uint attrs, IntPtr reserved);
 
-    int wattr_off(IntPtr window, uint attrs, IntPtr reserved); 
+    int wattr_off(IntPtr window, uint attrs, IntPtr reserved);
 
-    int wbkgd(IntPtr window, uint charAndAttrs); 
+    int wbkgd(IntPtr window, uint charAndAttrs);
 
-    void wbkgdset(IntPtr window, uint charAndAttrs); 
+    void wbkgdset(IntPtr window, uint charAndAttrs);
 
     int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
         uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
-        uint bottomRightCorner); 
+        uint bottomRightCorner);
 
     int wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
-        IntPtr reserved); 
+        IntPtr reserved);
 
-    int wclear(IntPtr window); 
+    int wclear(IntPtr window);
 
-    int wclrtobot(IntPtr window); 
+    int wclrtobot(IntPtr window);
 
-    int wclrtoeol(IntPtr window); 
+    int wclrtoeol(IntPtr window);
 
-    int wcolor_set(IntPtr window, ushort pair, IntPtr reserved); 
+    int wcolor_set(IntPtr window, ushort pair, IntPtr reserved);
 
-    void wcursyncup(IntPtr window); 
+    void wcursyncup(IntPtr window);
 
-    int wdelch(IntPtr window); 
+    int wdelch(IntPtr window);
 
-    int wechochar(IntPtr window, uint charAndAttrs); 
+    int wechochar(IntPtr window, uint charAndAttrs);
 
-    int werase(IntPtr window); 
+    int werase(IntPtr window);
 
-    int wgetch(IntPtr window); 
+    int wgetch(IntPtr window);
 
-    int wgetnstr(IntPtr window, StringBuilder dest, int length); 
+    int wgetnstr(IntPtr window, StringBuilder dest, int length);
 
-    int whline(IntPtr window, uint @char, int count); 
+    int whline(IntPtr window, uint @char, int count);
 
-    uint winch(IntPtr window); 
+    uint winch(IntPtr window);
 
-    int winchnstr(IntPtr window, StringBuilder dest, int length); 
+    int winchnstr(IntPtr window, StringBuilder dest, int length);
 
-    int winsch(IntPtr window, uint @char); 
+    int winsch(IntPtr window, uint @char);
 
-    int winsdelln(IntPtr window, int count); 
+    int winsdelln(IntPtr window, int count);
 
-    int wmove(IntPtr window, int newLine, int newCol); 
+    int wmove(IntPtr window, int newLine, int newCol);
 
-    int wnoutrefresh(IntPtr window); 
+    int wnoutrefresh(IntPtr window);
 
-    int wredrawln(IntPtr window, int startLine, int lineCount); 
+    int wredrawln(IntPtr window, int startLine, int lineCount);
 
-    int wrefresh(IntPtr window); 
+    int wrefresh(IntPtr window);
 
-    int wscrl(IntPtr window, int count); 
+    int wscrl(IntPtr window, int count);
 
-    int wsetscrreg(IntPtr window, int top, int bottom); 
+    int wsetscrreg(IntPtr window, int top, int bottom);
 
-    void wsyncdown(IntPtr window); 
+    void wsyncdown(IntPtr window);
 
     void wsyncup(IntPtr window); // NO
 
-    void wtimeout(IntPtr window, int delay); 
+    void wtimeout(IntPtr window, int delay);
 
-    int wtouchln(IntPtr window, int line, int count, int changed); 
+    int wtouchln(IntPtr window, int line, int count, int changed);
 
-    int wvline(IntPtr window, uint @char, int count); 
+    int wvline(IntPtr window, uint @char, int count);
 
-    bool is_term_resized(int lines, int cols); 
+    bool is_term_resized(int lines, int cols);
 
-    int resize_term(int lines, int cols); 
+    int resize_term(int lines, int cols);
 
-    int resizeterm(int lines, int cols); 
+    int resizeterm(int lines, int cols);
 
-    string? keybound(uint keyCode, int count); 
+    string? keybound(uint keyCode, int count);
 
-    string? curses_version(); 
+    string? curses_version();
 
-    int assume_default_colors(int fgColor, int bgColor); 
+    int assume_default_colors(int fgColor, int bgColor);
 
-    int define_key(string keyName, int keyCode); 
+    int define_key(string keyName, int keyCode);
 
-    int key_defined(string keyName); 
+    int key_defined(string keyName);
 
-    int keyok(int keyCode, bool set); 
+    int keyok(int keyCode, bool set);
 
-    int set_tabsize(int size); 
+    int set_tabsize(int size);
 
-    int use_default_colors(); 
+    int use_default_colors();
 
-    int wresize(IntPtr window, int lines, int columns); 
+    int wresize(IntPtr window, int lines, int columns);
 
-    void nofilter(); 
+    void nofilter();
 
     int getcchar(ComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
-        IntPtr reserved); 
+        IntPtr reserved);
 
-    string? key_name(uint @char); 
+    string? key_name(uint @char);
 
-    int killwchar(out uint @char); 
+    int killwchar(out uint @char);
 
-    int pecho_wchar(IntPtr window, ComplexChar @char); 
+    int pecho_wchar(IntPtr window, ComplexChar @char);
 
     int setcchar(out ComplexChar @char, string text, uint attrs, ushort colorPair,
-        IntPtr reserved); 
+        IntPtr reserved);
 
-    int slk_set(int labelIndex, string title, int align); 
+    int slk_set(int labelIndex, string title, int align);
 
-    uint term_attrs(); 
+    uint term_attrs();
 
-    int unget_wch(uint @char); 
+    int unget_wch(uint @char);
 
-    int wadd_wch(IntPtr window, ComplexChar @char); 
+    int wadd_wch(IntPtr window, ComplexChar @char);
 
-    int wadd_wchnstr(IntPtr window, ComplexChar[] str, int count); 
+    int wadd_wchnstr(IntPtr window, ComplexChar[] str, int count);
 
-    int waddnwstr(IntPtr window, string text, int length); 
+    int waddnwstr(IntPtr window, string text, int length);
 
-    int wbkgrnd(IntPtr window, ComplexChar @char); 
+    int wbkgrnd(IntPtr window, ComplexChar @char);
 
-    void wbkgrndset(IntPtr window, ComplexChar @char); 
+    void wbkgrndset(IntPtr window, ComplexChar @char);
 
     int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
         ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner,
-        ComplexChar bottomRightCorner); 
+        ComplexChar bottomRightCorner);
 
-    int wecho_wchar(IntPtr window, ComplexChar @char); 
+    int wecho_wchar(IntPtr window, ComplexChar @char);
 
-    int wget_wch(IntPtr window, out uint @char); 
+    int wget_wch(IntPtr window, out uint @char);
 
-    int wgetbkgrnd(IntPtr window, out ComplexChar @char); 
+    int wgetbkgrnd(IntPtr window, out ComplexChar @char);
 
-    int wgetn_wstr(IntPtr window, StringBuilder dest, int length); 
+    int wgetn_wstr(IntPtr window, StringBuilder dest, int length);
 
-    int whline_set(IntPtr window, ComplexChar @char, int count); 
+    int whline_set(IntPtr window, ComplexChar @char, int count);
 
-    int win_wch(IntPtr window, out ComplexChar @char); 
+    int win_wch(IntPtr window, out ComplexChar @char);
 
-    int win_wchnstr(IntPtr window, ComplexChar[] @char, int length); 
+    int win_wchnstr(IntPtr window, ComplexChar[] @char, int length);
 
-    int winnwstr(IntPtr window, StringBuilder dest, int length); 
+    int winnwstr(IntPtr window, StringBuilder dest, int length);
 
-    int wins_nwstr(IntPtr window, string text, int length); 
+    int wins_nwstr(IntPtr window, string text, int length);
 
-    int wins_wch(IntPtr window, ComplexChar @char); 
+    int wins_wch(IntPtr window, ComplexChar @char);
 
-    string? wunctrl(ComplexChar @char); 
+    string? wunctrl(ComplexChar @char);
 
-    int wvline_set(IntPtr window, ComplexChar @char, int count); 
+    int wvline_set(IntPtr window, ComplexChar @char, int count);
 
-    int getmouse(out RawMouseEvent @event); 
+    int getmouse(out RawMouseEvent @event);
 
-    int ungetmouse(RawMouseEvent @event); 
+    int ungetmouse(RawMouseEvent @event);
 
-    int mousemask(ulong newMask, out ulong oldMask); 
+    int mousemask(ulong newMask, out ulong oldMask);
 
-    bool wenclose(IntPtr window, int line, int col); 
+    bool wenclose(IntPtr window, int line, int col);
 
     int mouseinterval(int millis);
 

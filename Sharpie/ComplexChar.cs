@@ -29,7 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 namespace Sharpie;
-
+#pragma warning disable CS1591
 using System.Runtime.InteropServices;
 
 /// <summary>

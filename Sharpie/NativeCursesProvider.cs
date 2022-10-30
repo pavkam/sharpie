@@ -28,6 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#pragma warning disable CS1591
 namespace Sharpie;
 
 using System.Runtime.InteropServices;
@@ -58,11 +59,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     bool ICursesProvider.is_notimeout(IntPtr window) => is_notimeout(window);
 
-    bool ICursesProvider.is_pad(IntPtr window) => is_pad(window);
-
     bool ICursesProvider.is_scrollok(IntPtr window) => is_scrollok(window);
-
-    bool ICursesProvider.is_subwin(IntPtr window) => is_subwin(window);
 
     bool ICursesProvider.is_syncok(IntPtr window) => is_syncok(window);
 
@@ -481,7 +478,7 @@ public sealed class NativeCursesProvider: ICursesProvider
         }
 
         return result;
-    } 
+    }
 
     bool ICursesProvider.wenclose(IntPtr window, int line, int col) => wenclose(window, line, col);
 
@@ -1064,16 +1061,10 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_notimeout(IntPtr window);
-
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern bool is_pad(IntPtr window);
-
+    
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_scrollok(IntPtr window);
-
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern bool is_subwin(IntPtr window);
-
+    
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_syncok(IntPtr window);
 

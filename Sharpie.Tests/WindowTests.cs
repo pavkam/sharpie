@@ -514,16 +514,14 @@ public class WindowTests
     [TestMethod]
     public void Location_Get_ForSubs_Returns_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
-                   .Returns(true);
-
         _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(11);
 
         _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(22);
 
-        var w = new Window(_cursesMock.Object, null, new(1));
+        var p = new Window(_cursesMock.Object, null, new(1));
+        var w = new Window(_cursesMock.Object, p, new(2));
         w.Location.ShouldBe(new(11, 22));
     }
 
@@ -554,13 +552,11 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_ForSubs_Throws_IfCursesFails_1()
     {
-        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
-                   .Returns(true);
-
         _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        var w = new Window(_cursesMock.Object, null, new(1));
+        var p = new Window(_cursesMock.Object, null, new(1));
+        var w = new Window(_cursesMock.Object, p, new(2));
 
         Should.Throw<CursesException>(() => w.Location)
               .Operation.ShouldBe("getparx");
@@ -569,13 +565,11 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_ForSubs_Throws_IfCursesFails_2()
     {
-        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
-                   .Returns(true);
-
         _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        var w = new Window(_cursesMock.Object, null, new(1));
+        var p = new Window(_cursesMock.Object, null, new(1));
+        var w = new Window(_cursesMock.Object, p, new(2));
 
         Should.Throw<CursesException>(() => w.Location)
               .Operation.ShouldBe("getpary");
@@ -593,13 +587,15 @@ public class WindowTests
     [TestMethod]
     public void Location_Set_ForSubs_SetsValue_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(true);
-
-        var w = new Window(_cursesMock.Object, null, new(1));
+        
+        var p = new Window(_cursesMock.Object, null, new(1));
+        var w = new Window(_cursesMock.Object, p, new(2));
+        
         w.Location = new(11, 22);
 
-        _cursesMock.Verify(v => v.mvderwin(new(1), 22, 11), Times.Once);
+        _cursesMock.Verify(v => v.mvderwin(new(2), 22, 11), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -617,13 +613,13 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_ForSubs_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.is_subwin(It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(true);
-
         _cursesMock.Setup(s => s.mvderwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        var w = new Window(_cursesMock.Object, null, new(1));
+        var p = new Window(_cursesMock.Object, null, new(1));
+        var w = new Window(_cursesMock.Object, p, new(1));
 
         Should.Throw<CursesException>(() => w.Location = new(1, 1))
               .Operation.ShouldBe("mvderwin");
@@ -657,9 +653,9 @@ public class WindowTests
                    .Returns(5);
 
         _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns((IntPtr _, int y, int x) => y is >= 0 and < 10 && x is >= 0 and < 10);
+                   .Returns(true);
 
-        var p = new Window(_cursesMock.Object, null, new(1));
+        var p = new Screen(_cursesMock.Object, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
 
         w.Location = new(5, 5);
@@ -1486,6 +1482,16 @@ public class WindowTests
     }
 
     [TestMethod]
+    public void Refresh3_AsksCursesForRefresh()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.Refresh();
+
+        _cursesMock.Verify(v => v.clearok(w.Handle, false), Times.Once);
+        _cursesMock.Verify(v => v.wrefresh(w.Handle), Times.Once);
+    }
+    
+    [TestMethod]
     public void IsLineDirty_Throws_IfLineIsNegative()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
@@ -1727,7 +1733,16 @@ public class WindowTests
         var w = new Window(_cursesMock.Object, null, new(1));
         w.WriteText("12345", Style.Default);
     }
+    
+    [TestMethod]
+    public void WriteText2_CallsCursesAlso()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.WriteText("12345");
 
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
+    }
+    
     [TestMethod]
     public void RemoveText_Throws_IfCountIsLessThanOne()
     {

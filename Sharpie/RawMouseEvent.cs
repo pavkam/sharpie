@@ -28,6 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#pragma warning disable CS1591
 namespace Sharpie;
 
 using System.Runtime.InteropServices;
@@ -104,7 +105,7 @@ public struct RawMouseEvent
         Button4DoubleClicked = Action.DoubleClicked << (((int) Button.Button4 - 1) * CursesMouseShift),
 
         Button4TripleClicked = Action.TripleClicked << (((int) Button.Button4 - 1) * CursesMouseShift),
-        
+
         Ctrl = 1UL << (((int) Button.Modifiers - 1) * CursesMouseShift),
         Shift = 2UL << (((int) Button.Modifiers - 1) * CursesMouseShift),
         Alt = 4UL << (((int) Button.Modifiers - 1) * CursesMouseShift),
