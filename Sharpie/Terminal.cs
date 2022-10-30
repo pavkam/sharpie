@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
-using Curses;
-
 /// <summary>
 ///     This class allows the developer to interact with the terminal and its settings. This is the main
 ///     class that is used in a Curses-based application.
@@ -148,6 +146,9 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
             _initialMouseMask = initialMouseMask;
+            
+            Console.Out.Write ("\x1b[?1003h");
+            Console.Out.Flush ();
         } else
         {
             Curses.mousemask(0, out var initialMouseMask)

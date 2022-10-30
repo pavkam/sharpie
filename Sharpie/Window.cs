@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
-using Curses;
-
 /// <summary>
 ///     Represents a window and contains all it's functionality.
 /// </summary>
@@ -1022,14 +1020,15 @@ public class Window: IDisposable
                         return false;
                     }
 
-                    var (button, state, mouseMod) =
-                        Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) mouseEvent.buttonState);
-
-                    if (button == 0)
+                    if (((RawMouseEvent.EventType) mouseEvent.buttonState).HasFlag(RawMouseEvent.EventType
+                            .ReportPosition))
                     {
                         @event = new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
                     } else
                     {
+                        var (button, state, mouseMod) =
+                            Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) mouseEvent.buttonState);
+                        
                         @event = new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
                     }
 

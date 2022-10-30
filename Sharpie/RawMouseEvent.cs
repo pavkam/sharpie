@@ -28,7 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Sharpie.Curses;
+namespace Sharpie;
 
 using System.Runtime.InteropServices;
 
@@ -48,7 +48,6 @@ public struct RawMouseEvent
         Button2 = 2UL,
         Button3 = 3UL,
         Button4 = 4UL,
-        Button5 = 5UL,
         Modifiers = 5UL
     }
 
@@ -105,17 +104,7 @@ public struct RawMouseEvent
         Button4DoubleClicked = Action.DoubleClicked << (((int) Button.Button4 - 1) * CursesMouseShift),
 
         Button4TripleClicked = Action.TripleClicked << (((int) Button.Button4 - 1) * CursesMouseShift),
-
-        Button5Released = Action.ButtonReleased << (((int) Button.Button5 - 1) * CursesMouseShift),
-
-        Button5Pressed = Action.ButtonPressed << (((int) Button.Button5 - 1) * CursesMouseShift),
-
-        Button5Clicked = Action.ButtonClicked << (((int) Button.Button5 - 1) * CursesMouseShift),
-
-        Button5DoubleClicked = Action.DoubleClicked << (((int) Button.Button5 - 1) * CursesMouseShift),
-
-        Button5TripleClicked = Action.TripleClicked << (((int) Button.Button5 - 1) * CursesMouseShift),
-
+        
         Ctrl = 1UL << (((int) Button.Modifiers - 1) * CursesMouseShift),
         Shift = 2UL << (((int) Button.Modifiers - 1) * CursesMouseShift),
         Alt = 4UL << (((int) Button.Modifiers - 1) * CursesMouseShift),

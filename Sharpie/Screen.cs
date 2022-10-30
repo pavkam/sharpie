@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
-using Curses;
-
 /// <summary>
 ///     The main Curses screen class. Implements screen-related functionality.
 ///     Only one instance of this class can be active at one time.

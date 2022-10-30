@@ -31,7 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Tests;
 
 using System.Text;
-using Curses;
 
 [TestClass]
 public class HelpersTests
@@ -298,12 +297,7 @@ public class HelpersTests
      DataRow(RawMouseEvent.EventType.Button4Pressed, MouseButton.Button4, MouseButtonState.Pressed),
      DataRow(RawMouseEvent.EventType.Button4Clicked, MouseButton.Button4, MouseButtonState.Clicked),
      DataRow(RawMouseEvent.EventType.Button4DoubleClicked, MouseButton.Button4, MouseButtonState.DoubleClicked),
-     DataRow(RawMouseEvent.EventType.Button4TripleClicked, MouseButton.Button4, MouseButtonState.TripleClicked),
-     DataRow(RawMouseEvent.EventType.Button5Released, MouseButton.Button5, MouseButtonState.Released),
-     DataRow(RawMouseEvent.EventType.Button5Pressed, MouseButton.Button5, MouseButtonState.Pressed),
-     DataRow(RawMouseEvent.EventType.Button5Clicked, MouseButton.Button5, MouseButtonState.Clicked),
-     DataRow(RawMouseEvent.EventType.Button5DoubleClicked, MouseButton.Button5, MouseButtonState.DoubleClicked),
-     DataRow(RawMouseEvent.EventType.Button5TripleClicked, MouseButton.Button5, MouseButtonState.TripleClicked)]
+     DataRow(RawMouseEvent.EventType.Button4TripleClicked, MouseButton.Button4, MouseButtonState.TripleClicked)]
     public void ConvertMouseActionEvent_ConvertsKnownMappings(ulong evt, MouseButton expButton,
         MouseButtonState expState)
     {

@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Sharpie;
-using Sharpie.Curses;
 
 [assembly: ExcludeFromCodeCoverage]
+
+Environment.SetEnvironmentVariable("TERM", "xterm-1003");
 
 var terminal = new Terminal(NativeCursesProvider.Instance, new());
 

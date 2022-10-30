@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
-using Curses;
-
 /// <summary>
 ///     Represents pad which is a special type of window.
 /// </summary>

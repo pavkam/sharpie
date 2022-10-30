@@ -31,7 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Tests;
 
 using System.Drawing;
-using Curses;
 
 [TestClass]
 public class ScreenTests

@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
-using Curses;
-
 /// <summary>
 ///     Internal helper routines.
 /// </summary>
@@ -382,26 +380,6 @@ public static class Helpers
         } else if (type.HasFlag(RawMouseEvent.EventType.Button4TripleClicked))
         {
             button = MouseButton.Button4;
-            state = MouseButtonState.TripleClicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button5Released))
-        {
-            button = MouseButton.Button5;
-            state = MouseButtonState.Released;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button5Pressed))
-        {
-            button = MouseButton.Button5;
-            state = MouseButtonState.Pressed;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button5Clicked))
-        {
-            button = MouseButton.Button5;
-            state = MouseButtonState.Clicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button5DoubleClicked))
-        {
-            button = MouseButton.Button5;
-            state = MouseButtonState.DoubleClicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button5TripleClicked))
-        {
-            button = MouseButton.Button5;
             state = MouseButtonState.TripleClicked;
         }
 

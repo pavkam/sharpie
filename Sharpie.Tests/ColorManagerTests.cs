@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
-using Curses;
-
 [TestClass]
 public class ColorManagerTests
 {

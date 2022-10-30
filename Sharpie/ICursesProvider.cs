@@ -28,7 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Sharpie.Curses;
+namespace Sharpie;
 
 /// <summary>
 ///     Interface provides access to the Curses functionality. Use the <see cref="NativeCursesProvider" /> property to
