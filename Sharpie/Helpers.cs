@@ -396,6 +396,8 @@ public static class Helpers
         return keyCode switch
         {
             3 => Key.Interrupt,
+            '\t' => Key.Tab,
+            0x7f => Key.Backspace,
             var _ => null
         };
     }

@@ -318,7 +318,9 @@ public class HelpersTests
         result.modifierKey.ShouldBe(expMod);
     }
 
-    [TestMethod, DataRow((uint) 3, Key.Interrupt)]
+    [TestMethod, DataRow((uint) 3, Key.Interrupt),
+     DataRow((uint) '\t', Key.Tab),
+     DataRow((uint) 0x7f, Key.Backspace)]
     public void TryConvertCharacterToKeyPressEvent_MapsSpecialCharacters(uint keyCode, Key expKey)
     {
         var result = Helpers.TryConvertCharacterToKeyPressEvent(keyCode);
