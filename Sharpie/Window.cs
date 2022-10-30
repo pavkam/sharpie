@@ -947,6 +947,91 @@ public class Window: IDisposable
               .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
     }
 
+ 
+    /// <summary>
+    ///     Tries to read an event from the terminal.
+    /// </summary>
+    /// <param name="timeoutMillis">The timeout to wait for the event.</param>
+    /// <param name="event">The event that was read.</param>
+    /// <returns><c>true</c> if there was an event; <c>false</c> if the timeout expired.</returns>
+    public bool TryReadEvent(int timeoutMillis, [NotNullWhen(true)] out Event? @event)
+    {
+        /*
+
+        Curses.define_key("\x001bO2C", 1024); //shift right
+        Curses.define_key("\x001bO2B", 1024); //shift down
+        Curses.define_key("\x001bO2A", 1024); //shift up
+        Curses.define_key("\x001bO2D", 1024); //shift left
+        Curses.define_key("\x001bO2H", 1024); //shift home
+        Curses.define_key("\x001bO2F", 1024); //shift end of line
+
+        Curses.define_key("\x001b06C", 1024); //shift ctrl right
+        Curses.define_key("\x001b06B", 1024); //shift ctrl down
+        Curses.define_key("\x001b06A", 1024); //shift ctrl up
+        Curses.define_key("\x001b06D", 1024); //shift ctrl left
+        Curses.define_key("\x001b06H", 1024); //shift ctrl home
+        Curses.define_key("\x001b06F", 1024); //shift ctrl end of line
+
+        Curses.define_key("\x001bb", 1024); //alt right
+        Curses.define_key("\x001bf", 1024); //alt left
+
+        Curses.define_key("\x001b" + (char)258, 1024); //alt up
+
+         */
+        Curses.wtimeout(Handle, timeoutMillis);
+
+        @event = null;
+        var result = Curses.wget_wch(Handle, out var keyCode);
+        if (result == (uint) RawKey.Yes)
+        {
+            switch (keyCode)
+            {
+                case (uint) RawKey.Resize:
+                    @event = new TerminalResizeEvent(Size);
+                    break;
+                case (uint) RawKey.Mouse:
+                    if (Curses.getmouse(out var mouseEvent)
+                              .Failed())
+                    {
+                        return false;
+                    }
+
+                    var (button, state, mouseMod) = Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) mouseEvent.buttonState);
+                    if (button == 0)
+                    {
+                        @event = new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
+                    } else
+                    {
+                        @event = new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
+                    }
+
+                    break;
+                default:
+                    var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
+                    @event = new KeyEvent(key, new('\0'), Curses.key_name(keyCode), keyMod);
+                    break;
+            }
+
+            return true;
+        }
+
+        if (!result.Failed())
+        {
+            if (keyCode == 3)
+            {
+                @event = new KeyEvent(Key.Interrupt, new('\0'), null, ModifierKey.None);
+            } else
+            {
+                var keyName = Curses.key_name(keyCode);
+                @event = new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     /// <summary>
     ///     Removes the window form the parent, destroys all children and itself.
     /// </summary>

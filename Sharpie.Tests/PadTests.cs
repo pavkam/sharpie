@@ -30,6 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
+using System.Drawing;
 using Curses;
 
 [TestClass]
@@ -159,6 +160,7 @@ public class PadTests
     }
 
     [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh2_Throws_IfCursesFailsAtRefreshingDirectly()
     {
         _cursesMock.Setup(s => s.prefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
@@ -167,5 +169,17 @@ public class PadTests
 
         Should.Throw<CursesException>(() => { _pad1.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
               .Operation.ShouldBe("prefresh");
+    }
+    
+    [TestMethod]
+    public void Location_Get_Throws_Always()
+    {
+        Should.Throw<NotSupportedException>(() => _pad1.Location);
+    }
+    
+    [TestMethod]
+    public void Location_Set_Throws_Always()
+    {
+        Should.Throw<NotSupportedException>(() => _pad1.Location = Point.Empty);
     }
 }

@@ -66,7 +66,18 @@ public sealed class Pad: Window
         get => false;
         set => throw new NotSupportedException("Pads cannot have immediate refresh enabled.");
     }
-
+    
+    /// <inheritdoc cref="Window.Location" />
+    /// <remarks>
+    ///     The property will always throw in this implementation as pads do not have a location.
+    /// </remarks>
+    /// <exception cref="NotSupportedException">Always throws.</exception>
+    public override Point Location
+    {
+        get => throw new NotSupportedException("Pads do not have a location.");
+        set => throw new NotSupportedException("Pads do not have a location.");
+    }
+    
     /// <inheritdoc cref="Window.Refresh" />
     /// <remarks>
     ///     This functionality is disabled in the pads. Use the overloaded version of this method.
