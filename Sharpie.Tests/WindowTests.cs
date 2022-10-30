@@ -391,6 +391,38 @@ public class WindowTests
     }
 
     [TestMethod]
+    public void ColorMixture_Get_Returns_IfCursesSucceeded()
+    {
+        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny, out It.Ref<ushort>.IsAny,
+                       IntPtr.Zero))
+                   .Returns((IntPtr _, out uint a, out ushort p, IntPtr _) =>
+                   {
+                       a = 0;
+                       p = 22;
+
+                       return 0;
+                   });
+
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.ColorMixture.ShouldBe(new() { Handle = 22 });
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void ColorMixture_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny, out It.Ref<ushort>.IsAny,
+                       IntPtr.Zero))
+                   .Returns(-1);
+
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        
+        Should.Throw<CursesException>(()=> w.ColorMixture).Operation.ShouldBe("wattr_get");
+    }
+    
+    [TestMethod]
     public void ColorMixture_Set_SetsValue_IfCursesSucceeded()
     {
         var w = new Window(_cursesMock.Object, null, new(1));
@@ -1671,7 +1703,23 @@ public class WindowTests
         Should.Throw<CursesException>(() => w.Clear(ClearStrategy.FullFromCaret))
               .Operation.ShouldBe("wclrtobot");
     }
+
+    [TestMethod]
+    public void WriteText_Throws_IfStringIsNull()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentNullException>(() => w.WriteText(null!, Style.Default));
+    }
     
+    [TestMethod]
+    public void WriteText_DoesNotCallCurse_IfEmptyString()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        w.WriteText("", Style.Default);
+        
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Never);
+    }
+
     [TestMethod]
     public void WriteText_CallsCursesForEachChar()
     {
@@ -1831,4 +1879,248 @@ public class WindowTests
         var w = new Window(_cursesMock.Object, null, new(1));
         Should.Throw<CursesException>(()=> w.GetText(1)).Operation.ShouldBe("win_wchnstr");
     }
+    
+    [TestMethod]
+    public void Replace_Throws_IfWindowIsNull()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentNullException>(() => w.Replace(null!, ReplaceStrategy.Overlay));
+    }
+    
+    [TestMethod]
+    public void Replace_Throws_IfWindowIsItself()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        
+        Should.Throw<ArgumentException>(() => w.Replace(w, ReplaceStrategy.Overlay));
+    }
+    
+    [TestMethod]
+    public void Replace_Throws_IfWindowIsDescendant()
+    {
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, w1, new(2));
+        var w3 = new Window(_cursesMock.Object, w2, new(3));
+        
+        Should.Throw<ArgumentException>(() => w1.Replace(w3, ReplaceStrategy.Overlay));
+    }
+    
+    [TestMethod]
+    public void Replace_Throws_IfWindowIsAncestor()
+    {
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, w1, new(2));
+        var w3 = new Window(_cursesMock.Object, w2, new(3));
+        
+        Should.Throw<ArgumentException>(() => w3.Replace(w1, ReplaceStrategy.Overlay));
+    }
+    
+    [TestMethod]
+    public void Replace_Succeeds_IfCursesSucceeds_Overlay()
+    {
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, null, new(2));
+
+        w1.Replace(w2, ReplaceStrategy.Overlay);
+        
+        _cursesMock.Verify(v => v.overlay(new(1), new(2)), Times.Once);
+        _cursesMock.Verify(v => v.overwrite(new(1), new(2)), Times.Never);
+    }
+    
+    [TestMethod]
+    public void Replace_Succeeds_IfCursesSucceeds_Overwrite()
+    {
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, null, new(2));
+
+        w1.Replace(w2, ReplaceStrategy.Overwrite);
+        
+        _cursesMock.Verify(v => v.overlay(new(1), new(2)), Times.Never);
+        _cursesMock.Verify(v => v.overwrite(new(1), new(2)), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Replace_Throws_IfCursesFails_Overlay()
+    {
+        _cursesMock.Setup(v => v.overlay(It.IsAny<IntPtr>(), It.IsAny<IntPtr>()))
+                   .Returns(-1);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, null, new(2));
+
+        Should.Throw<CursesException>(() => w1.Replace(w2, ReplaceStrategy.Overlay)).Operation.ShouldBe("overlay");
+    }
+
+    [TestMethod]
+    public void Replace_Throws_IfCursesFails_Overwrite()
+    {
+        _cursesMock.Setup(v => v.overwrite(It.IsAny<IntPtr>(), It.IsAny<IntPtr>()))
+                   .Returns(-1);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, null, new(2));
+
+        Should.Throw<CursesException>(() => w1.Replace(w2, ReplaceStrategy.Overwrite)).Operation.ShouldBe("overwrite");
+    }
+
+
+
+
+    [TestMethod]
+    public void Replace2_Throws_IfWindowIsNull()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<ArgumentNullException>(() =>
+            w.Replace(null!, new(0, 0, 1, 1), new(0, 0), ReplaceStrategy.Overlay));
+    }
+
+    [TestMethod]
+    public void Replace2_Throws_IfWindowIsItself()
+    {
+        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+        
+        var w = new Window(_cursesMock.Object, null, new(1));
+        
+        Should.Throw<ArgumentException>(() => w.Replace(w, new(0, 0, 1, 1), new(0, 0), ReplaceStrategy.Overlay));
+    }
+    
+    [TestMethod]
+    public void Replace2_Throws_IfWindowIsDescendant()
+    {
+        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, w1, new(2));
+        var w3 = new Window(_cursesMock.Object, w2, new(3));
+        
+        Should.Throw<ArgumentException>(() => w1.Replace(w3, new(0, 0, 1, 1), new(0, 0), ReplaceStrategy.Overlay));
+    }
+    
+    [TestMethod]
+    public void Replace2_Throws_IfWindowIsAncestor()
+    {
+        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, w1, new(2));
+        var w3 = new Window(_cursesMock.Object, w2, new(3));
+        
+        Should.Throw<ArgumentException>(() => w3.Replace(w1, new(0, 0, 1, 1), new(0, 0), ReplaceStrategy.Overlay));
+    }
+
+    [TestMethod]
+    public void Replace2_Throws_IfTheSourceRectIsOutsideTheBounds()
+    {
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(false);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, null, new(2));
+
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            w1.Replace(w2, new(1, 1, 5, 5), new(0, 0), ReplaceStrategy.Overlay);
+        });
+    }
+
+    [TestMethod]
+    public void Replace2_Throws_IfTheDestinationAreaIsOutsideTheBounds()
+    {
+        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(false);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, null, new(2));
+
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            w1.Replace(w2, new(0, 0, 5, 5), new(6, 6), ReplaceStrategy.Overlay);
+        });
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Replace2_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+
+        _cursesMock.Setup(s => s.copywin(
+                       It.IsAny<IntPtr>(), It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, null, new(2));
+
+        Should.Throw<CursesException>(() =>
+        {
+            w1.Replace(w2, new(1, 1, 5, 5), new(0, 0), ReplaceStrategy.Overlay);
+        }).Operation.ShouldBe("copywin");
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Replace2_CallsCurses_IfCursesOverlay()
+    {
+        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, null, new(2));
+
+        w1.Replace(w2, new(1, 2, 3, 4), new(5, 6), ReplaceStrategy.Overlay);
+        _cursesMock.Verify(s => s.copywin(new(1), new(2), 2, 1, 6,
+            5, 9, 9, 1));
+    }
+    
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Replace2_CallsCurses_IfCursesOverwrite()
+    {
+        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(true);
+        
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, null, new(2));
+
+        w1.Replace(w2, new(1, 2, 3, 4), new(5, 6), ReplaceStrategy.Overwrite);
+        _cursesMock.Verify(s => s.copywin(new(1), new(2), 2, 1, 6,
+            5, 9, 9, 0));
+    }
+    
+    [TestMethod]
+    public void IsRelatedTo_Throws_IfWindowIsNull()
+    {
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+
+        Should.Throw<ArgumentNullException>(() =>
+        {
+            w1.IsRelatedTo(null!);
+        });
+    }
+    
+    [TestMethod]
+    public void IsRelatedTo_ReturnsTrue_IfWindowsAreRelated()
+    {
+        var w1 = new Window(_cursesMock.Object, null, new(1));
+        var w2 = new Window(_cursesMock.Object, w1, new(2));
+        var w3 = new Window(_cursesMock.Object, w2, new(3));
+        
+        w1.IsRelatedTo(w1).ShouldBeTrue();
+        w1.IsRelatedTo(w2).ShouldBeTrue();
+        w1.IsRelatedTo(w3).ShouldBeTrue();
+        
+        w2.IsRelatedTo(w1).ShouldBeTrue();
+        w2.IsRelatedTo(w3).ShouldBeTrue();
+        
+        w3.IsRelatedTo(w1).ShouldBeTrue();
+        w3.IsRelatedTo(w2).ShouldBeTrue();
+    }
+
 }

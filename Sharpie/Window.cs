@@ -104,6 +104,23 @@ public class Window: IDisposable
     public IEnumerable<Window> Children => _windows;
 
     /// <summary>
+    ///     Checks if the given <paramref name="window"/> is either a descendant or an ancestor of this window.
+    /// </summary>
+    /// <param name="window">The window to check.</param>
+    /// <exception cref="ArgumentNullException">The <paramref name="window"/> is <c>null</c>.</exception>
+    public bool IsRelatedTo(Window window)
+    {
+        if (window == null)
+        {
+            throw new ArgumentNullException(nameof(window));
+        }
+
+        return window == this ||
+            Children.Any(child => child.IsRelatedTo(window)) ||
+            window.Children.Any(child => child.IsRelatedTo(this));
+    }
+    
+    /// <summary>
     ///     Gets or sets the ability of the window to scroll its contents when writing
     ///     needs a new line.
     /// </summary>
@@ -558,6 +575,11 @@ public class Window: IDisposable
             throw new ArgumentNullException(nameof(str));
         }
 
+        if (str.Length == 0)
+        {
+            return;
+        }
+        
         var failed = 0;
         var total = 0;
         foreach (var rune in str.EnumerateRunes())
@@ -783,11 +805,11 @@ public class Window: IDisposable
     /// <exception cref="ArgumentNullException">The <paramref name="window" /> is null.</exception>
     public void Replace(Window window, ReplaceStrategy strategy)
     {
-        if (window == null)
+        if (IsRelatedTo(window))
         {
-            throw new ArgumentNullException(nameof(window));
+            throw new ArgumentException("Cannot copy to a window that is related to this window.", nameof(window));
         }
-
+        
         switch (strategy)
         {
             case ReplaceStrategy.Overlay:
@@ -815,15 +837,20 @@ public class Window: IDisposable
     /// <exception cref="ArgumentNullException">The <paramref name="window" /> is null.</exception>
     public void Replace(Window window, Rectangle srcRect, Point destPos, ReplaceStrategy strategy)
     {
-        if (window == null)
+        if (IsRelatedTo(window))
         {
-            throw new ArgumentNullException(nameof(window));
+            throw new ArgumentException("Cannot copy to a window that is related to this window.", nameof(window));
+        }
+        
+        if (!IsRectangleWithin(srcRect))
+        {
+            throw new ArgumentOutOfRangeException(nameof(srcRect));
         }
 
         var destRect = new Rectangle(destPos, new(srcRect.Bottom - srcRect.Top, srcRect.Right - srcRect.Left));
         if (!window.IsRectangleWithin(destRect))
         {
-            throw new ArgumentOutOfRangeException(nameof(srcRect));
+            throw new ArgumentOutOfRangeException(nameof(destPos));
         }
 
         Curses.copywin(Handle, window.Handle, srcRect.Top, srcRect.Left, destRect.Top,
