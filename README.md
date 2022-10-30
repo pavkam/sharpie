@@ -14,40 +14,52 @@ So why another one? The are many reasons, but the most important ones are:
 5. And finally -- **because I wanted to dabble in Curses**.
 
 # How To
-First, you need to build a `Terminal` instance as follows.
-```csharp
-var settings = new TerminalSettings(UseMouse: true);
-var terminal = new Terminal(NativeCursesProvider.Instance, settings);
-```
+What follows is a small example of how to use the library:
 
-The `terminal` instance can then be used to access the main screen object `terminal.Screen` which allows drawing and reading terminal commands. Other functionality includes creating windows and pads (`CreateWindow`, `CreatePad`) and manipulating their life-lime.
+![Demo](media/demo-1.gif)
 
-To set the background of the screen one can easily do it:
 ```csharp
-terminal.Screen.Background = (new('.'), new()
+// Create the terminal instance without any non-standard settings.
+var terminal = new Terminal(NativeCursesProvider.Instance, new());
+
+// Set the main screen attributes for text and drawings.
+terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, StandardColor.Blue);
+
+// Draw a border on the screen.
+terminal.Screen.DrawBorder();
+
+// Force a refresh so that all drawings will be actually pushed to teh screen.
+terminal.Screen.Refresh();
+
+// Create a child window within the terminal to operate within.
+// The other cells contain the border so we don't want to overwrite those.
+var subWindow = terminal.Screen.CreateWindow(
+    new(1, 1, terminal.Screen.Size.Width - 2, terminal.Screen.Size.Height - 2));
+
+// Process all events coming from the terminal.
+// Note that one can provide a `CancellationToken` to interrupt this process.
+foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
 {
-    Attributes = VideoAttribute.Dim,
-    ColorMixture = terminal.Colors.MixColors(StandardColor.Cyan, StandardColor.Green)
-});
-```
-
-The `new('.')` creates a `System.Text.Rune` that will be displayed on each free cell of the screen. The `terminal.Colors.MixColors(StandardColor.Cyan, StandardColor.Green)` creates a _color mixture_ which is the combination of a background and foreground colors used in each cell.
-
-To read any events from the terminal one can:
-```csharp
-while (true) {
-    if (!terminal.Screen.TryReadEvent(Timeout.Infinite, out var e))
+    // Write the  event that occured.
+    subWindow.WriteText($"{@event}\n");
+    
+    // If the event is a resize, change the size of the child window
+    // to allow for the screen to maintain its border.
+    // And then redraw the border of the main screen.
+    if (@event is TerminalResizeEvent re)
     {
-        continue;
+        subWindow.Size = new(re.Size.Width - 2, re.Size.Height - 2);
+        terminal.Screen.DrawBorder();
     }
-
-    if (e is KeyEvent { Char.Value: 'q' })
+    
+    // If the user pressed CTRL+C, break the loop.
+    if (@event is KeyEvent { Key: Key.Interrupt })
     {
         break;
     }
-
-    terminal.Screen.WriteText($"{e}\n", Style.Default);
 }
-```
 
+// Dispose the terminal so that we restore the proper console mode.
+terminal.Dispose();
+```
 As you can imagine, there are numerous other uses built into the library.
