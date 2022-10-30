@@ -54,9 +54,9 @@ jobs:
         
     - name: Build NuGet Package
       if: github.event_name == 'push'
-      run: dotnet pack
+      run: dotnet pack ./Sharpie/Sharpie.csproj 
       
     - name: Push to NuGet.org
       if: github.event_name == 'push'
-      run: dotnet nuget push *.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push **/sharpie.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
       
