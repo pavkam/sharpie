@@ -305,7 +305,7 @@ public class WindowEventsTests
 
         var me = (KeyEvent) e;
         me.Char.ShouldBe(new('\0'));
-        me.Key.ShouldBe(Key.Interrupt);
+        me.Key.ShouldBe(Key.F1);
         me.Name.ShouldBe("yup");
     }
 }

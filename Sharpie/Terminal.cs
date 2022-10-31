@@ -120,7 +120,7 @@ public sealed class Terminal: IDisposable
 
         if (Options.TranslateReturnToNewLineChar)
         {
-            curses.nl()
+            curses.nl() //TODO: not working.
                   .Check(nameof(curses.nl), "Failed to enable new line translation.");
         } else
         {

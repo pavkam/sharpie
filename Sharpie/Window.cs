@@ -1013,7 +1013,7 @@ public class Window: IDisposable
         }
     }
     
-    private (int result, uint keyCode) ReadNext(bool quickWait = false)
+    private (int result, uint keyCode) ReadNext(bool quickWait)
     {
         Curses.wtimeout(Handle, quickWait ? 10 : 1000);
         var result = Curses.wget_wch(Handle, out var keyCode);
@@ -1025,9 +1025,9 @@ public class Window: IDisposable
     ///     Reads the next event from. If the event is valid, returns it. Otherwise <c>null</c> is returned.
     /// </summary>
     /// <returns>The event or <c>null</c> if read failed.</returns>
-    private Event? ReadNextEvent()
+    private Event? ReadNextEvent(bool quickWait)
     {
-        var (result, keyCode) = ReadNext();
+        var (result, keyCode) = ReadNext(quickWait);
         if (result.Failed())
         {
             Screen.ApplyPendingRefreshes();
@@ -1065,11 +1065,7 @@ public class Window: IDisposable
             }
         }
 
-        var keyName = Curses.key_name(keyCode);
-        var maybeKey = Helpers.TryConvertCharacterToKeyPressEvent(keyCode);
-        return maybeKey != null
-            ? new(maybeKey.Value, new('\0'), keyName, ModifierKey.None)
-            : new KeyEvent(Key.Character, new(keyCode), keyName, ModifierKey.None);
+        return new KeyEvent(Key.Character, new(keyCode), Curses.key_name(keyCode), ModifierKey.None);
     }
 
     private void PerformResize()
@@ -1094,38 +1090,88 @@ public class Window: IDisposable
     /// <returns>An enumerable.</returns>
     public IEnumerable<Event> ProcessEvents(CancellationToken cancellationToken)
     {
-        /*
-       Curses.define_key("\x001bO2C", 1024); //shift right
-       Curses.define_key("\x001bO2B", 1024); //shift down
-       Curses.define_key("\x001bO2A", 1024); //shift up
-       Curses.define_key("\x001bO2D", 1024); //shift left
-       Curses.define_key("\x001bO2H", 1024); //shift home
-       Curses.define_key("\x001bO2F", 1024); //shift end of line
-
-       Curses.define_key("\x001b06C", 1024); //shift ctrl right
-       Curses.define_key("\x001b06B", 1024); //shift ctrl down
-       Curses.define_key("\x001b06A", 1024); //shift ctrl up
-       Curses.define_key("\x001b06D", 1024); //shift ctrl left
-       Curses.define_key("\x001b06H", 1024); //shift ctrl home
-       Curses.define_key("\x001b06F", 1024); //shift ctrl end of line
-
-       Curses.define_key("\x001bb", 1024); //alt right
-       Curses.define_key("\x001bf", 1024); //alt left
-
-       Curses.define_key("\x001b" + (char)258, 1024); //alt up
-
-        */
+        var activeEscapeSeq = new List<KeyEvent>();
         while (!cancellationToken.IsCancellationRequested)
         {
-            var @event = ReadNextEvent();
-            if (@event != null)
+            // Read next event. Perform a quick wait if we have an active escape sequence being collected.
+            var @event = ReadNextEvent(activeEscapeSeq.Count > 0);
+            if (@event is KeyEvent k)
             {
-                yield return @event;
-                
-                if (@event.Type == EventType.TerminalResize)
-                {
-                    PerformResize();
-                }
+                @event = Helpers.TryCorrectCharacterKeyEvent(Curses, k) ?? @event;
+            }
+
+            switch (@event)
+            {
+                case null:
+                    // If no event was read but we have an active sequence, flush it.
+                    if (activeEscapeSeq.Count > 0)
+                    {
+                        foreach (var e in activeEscapeSeq)
+                        {
+                            yield return e;
+                        }
+
+                        activeEscapeSeq.Clear();
+                    }
+
+                    // And continue.
+                    continue;
+                case KeyEvent ke:
+                    if (ke.Key == Key.Escape)
+                    {
+                        // Possible escape sequence. Flush the existing events if not processed by now.
+                        if (activeEscapeSeq.Count > 0)
+                        {
+                            foreach (var e in activeEscapeSeq)
+                            {
+                                yield return e;
+                            }
+
+                            activeEscapeSeq.Clear();
+                        }
+
+                        // Add the escape into the escape sequence collector.
+                        activeEscapeSeq.Add(ke);
+                        continue;
+                    }
+
+                    if (activeEscapeSeq.Count > 0)
+                    {
+                        // Collect the key as we're in an active escape sequence collection mode.
+                        activeEscapeSeq.Add(ke);
+                        
+                        // Try to process the potential sequence.
+                        var outEvent = Helpers.TryConvertEscapeSequence(Curses, activeEscapeSeq);
+                        if (outEvent != null)
+                        {
+                            activeEscapeSeq.Clear();
+                            activeEscapeSeq.Add(outEvent);
+                        }
+                        
+                        continue;
+                    }
+
+                    break;
+                default:
+                    // If it is any other event type and we have an active escape sequence building, flush it.
+                    if (activeEscapeSeq.Count > 0)
+                    {
+                        foreach (var e in activeEscapeSeq)
+                        {
+                            yield return e;
+                        }
+
+                        activeEscapeSeq.Clear();
+                    }
+
+                    break;
+            }
+
+            yield return @event;
+
+            if (@event.Type == EventType.TerminalResize)
+            {
+                PerformResize();
             }
         }
     }

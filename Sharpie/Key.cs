@@ -47,10 +47,10 @@ public enum Key: uint
     Unknown,
 
     /// <summary>
-    ///     Interrupt key.
+    ///     The Escape key.
     /// </summary>
-    Interrupt,
-
+    Escape,
+    
     /// <summary>
     ///     The delete key.
     /// </summary>

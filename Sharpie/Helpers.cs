@@ -389,16 +389,110 @@ public static class Helpers
     /// <summary>
     ///     Attempts to convert some of the standard characters to key events (e.g. backspace).
     /// </summary>
-    /// <param name="keyCode">The key code.</param>
-    /// <returns>The key if converted; <c>null</c> otherwise.</returns>
-    internal static Key? TryConvertCharacterToKeyPressEvent(uint keyCode)
+    /// <param name="event">The key code.</param>
+    /// <param name="curses">The curse backend.</param>
+    /// <returns>The new key event if converted. Otherwise <c>null</c>.</returns>
+    /// <exception cref="ArgumentNullException">The <paramref name="event"/> or <paramref name="curses"/> is <c>null</c>.</exception>
+    internal static KeyEvent? TryCorrectCharacterKeyEvent(ICursesProvider curses, KeyEvent @event)
     {
-        return keyCode switch
+        if (curses == null)
         {
-            3 => Key.Interrupt,
-            '\t' => Key.Tab,
-            0x7f => Key.Backspace,
+            throw new ArgumentNullException(nameof(curses));
+        }
+
+        if (@event == null)
+        {
+            throw new ArgumentNullException(nameof(@event));
+        }
+         
+        return @event switch
+        {
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and 0x1b } => 
+                new(Key.Escape, new('\0'), curses.key_name((uint) ch), ModifierKey.None),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: '\t' } => 
+                new(Key.Tab, new('\0'), curses.key_name((uint) RawKey.Tab), ModifierKey.None),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => 
+                new(Key.Backspace, new('\0'), curses.key_name((uint) RawKey.Backspace), ModifierKey.None),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and >= 1 and <= 25 } => 
+                new(Key.Character, new(ch + 'A' - 1), curses.key_name((uint) ch + 'A' - 1), ModifierKey.Ctrl),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0 } => 
+                new(Key.Character, new(' '), curses.key_name(' '), ModifierKey.Ctrl),
             var _ => null
         };
+    }
+
+    /// <summary>
+    ///     Attempts to to convert a sequence or key events into one event.
+    /// </summary>
+    /// <param name="curses">The curse backend.</param>
+    /// <param name="events">The events.</param>
+    /// <returns>The key if converted; <c>null</c> otherwise.</returns>
+    /// <exception cref="ArgumentNullException">The <paramref name="events"/> or <paramref name="curses"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">The <paramref name="events"/> contains less than two events.</exception>
+    internal static KeyEvent? TryConvertEscapeSequence(ICursesProvider curses, IList<KeyEvent> events)
+    {
+        if (curses == null)
+        {
+            throw new ArgumentNullException(nameof(curses));
+        }
+
+        if (events == null)
+        {
+            throw new ArgumentNullException(nameof(events));
+        }
+        
+        if (events.Count < 2)
+        {
+            throw new ArgumentException("The events list should contain at least two events.", nameof(events));
+        }
+
+        var e0 = events[0];
+        var e1 = events[1];
+        var e2 = events.Count >= 3 ? events[2]: null;
+        
+        switch (events.Count)
+        {
+            case 2 when e0 is { Key: Key.Escape, Modifiers: ModifierKey.None }:
+            {
+                return e1 switch
+                {
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: 'f', Modifiers: ModifierKey.None } => new(
+                        Key.KeypadRight, new('\0'), curses.key_name((uint) RawKey.AltRight), ModifierKey.Alt),
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: 'b', Modifiers: ModifierKey.None } => new(
+                        Key.KeypadLeft, new('\0'), curses.key_name((uint) RawKey.AltLeft), ModifierKey.Alt),
+                    { Key: not Key.Character and not Key.Unknown and not Key.Escape } => new(e1.Key, e1.Char, e1.Name,
+                        e1.Modifiers | ModifierKey.Alt),
+                    var _ => new(Key.Character, e1.Char, curses.key_name((uint) e1.Char.Value), ModifierKey.Alt)
+                };
+            }
+            case 3 when e2 != null:
+            {
+                if (events.Count == 3 && 
+                    e0 is { Key: Key.Character, Char.IsAscii: true, Char.Value: 'O', Modifiers: ModifierKey.Alt } &&
+                    e1 is { Key: Key.Character, Char.IsAscii: true, Char.Value: >= '1' and <= '9' } &&
+                    e2 is { Key: Key.Character, Char.IsAscii: true, Char.Value: >= 'A' and <= 'H' })
+                {
+                    var (rawKey, key) = (char) e2.Char.Value switch
+                    {
+                        'A' => (RawKey.Up, Key.KeypadUp),
+                        'B' => (RawKey.Down, Key.KeypadDown),
+                        'C' => (RawKey.Right, Key.KeypadRight),
+                        'D' => (RawKey.Left, Key.KeypadLeft),
+                        'E' => (RawKey.PageUp, Key.KeypadPageUp),
+                        'F' => (RawKey.End, Key.KeypadEnd),
+                        'G' => (RawKey.PageDown, Key.KeypadDown),
+                        'H' => (RawKey.Home, Key.KeypadHome),
+                        var _ => (RawKey.Yes, Key.Unknown)
+                    };
+                
+                    var mods = (ModifierKey)(e1.Char.Value - '1');
+                    return new(key, new('\0'), curses.key_name((uint) rawKey), mods);
+                }
+
+                break;
+            }
+        }
+
+        return null;
     }
 }
