@@ -52,7 +52,6 @@ public class WindowEventsTests
 
     private Event SimulateEvent(int result, uint keyCode) => SimulateEvent((result, keyCode));
 
-
     [TestInitialize]
     public void TestInitialize()
     {
@@ -208,7 +207,7 @@ public class WindowEventsTests
                        {
                            x = dx + 5,
                            y = dx + 6,
-                           buttonState = (ulong) RawMouseEvent.EventType.ReportPosition | 0x100
+                           buttonState = (uint) RawMouseEvent.EventType.ReportPosition | 0x100
                        };
 
                        var res = skip ? -1 : 0;
@@ -231,7 +230,7 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.getmouse(out It.Ref<RawMouseEvent>.IsAny))
                    .Returns((out RawMouseEvent me) =>
                    {
-                       me = new() { buttonState = skip ? 0 : (ulong) RawMouseEvent.EventType.Button2Released };
+                       me = new() { buttonState = skip ? 0 : (uint) RawMouseEvent.EventType.Button2Released };
 
                        skip = !skip;
                        return 0;
@@ -251,7 +250,7 @@ public class WindowEventsTests
                    {
                        me = new()
                        {
-                           x = 5, y = 6, buttonState = (ulong) RawMouseEvent.EventType.ReportPosition | 0x100
+                           x = 5, y = 6, buttonState = (uint) RawMouseEvent.EventType.ReportPosition | 0x100
                        };
 
                        return 0;
@@ -272,8 +271,8 @@ public class WindowEventsTests
                        {
                            x = 5,
                            y = 6,
-                           buttonState = (ulong) RawMouseEvent.EventType.Button1Clicked |
-                               (ulong) RawMouseEvent.EventType.Alt
+                           buttonState = (uint) RawMouseEvent.EventType.Button1Clicked |
+                               (uint) RawMouseEvent.EventType.Alt
                        };
 
                        return 0;
@@ -382,7 +381,7 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.getmouse(out It.Ref<RawMouseEvent>.IsAny))
                    .Returns((out RawMouseEvent me) =>
                    {
-                       me = new() { buttonState = (ulong)RawMouseEvent.EventType.ReportPosition};
+                       me = new() { buttonState = (uint)RawMouseEvent.EventType.ReportPosition};
                        return 0;
                    });
         

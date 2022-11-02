@@ -466,13 +466,13 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     public int ungetmouse(RawMouseEvent @event) => ungetmouse(ref @event);
 
-    int ICursesProvider.mousemask(ulong newMask, out ulong oldMask)
+    int ICursesProvider.mousemask(uint newMask, out uint oldMask)
     {
         var result = mousemask(newMask, out oldMask);
         if (!result.Failed())
         {
             // Force enable mouse reporting. Curses doesn't always want to do that.
-            var csi = (newMask & (ulong) RawMouseEvent.EventType.ReportPosition) != 0 ? "\x1b[?1003h" : "\x1b[?1003l";
+            var csi = (newMask & (uint) RawMouseEvent.EventType.ReportPosition) != 0 ? "\x1b[?1003h" : "\x1b[?1003l";
             Console.Out.Write(csi);
             Console.Out.Flush();
         }
@@ -1084,7 +1084,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern int ungetmouse(ref RawMouseEvent @event);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int mousemask(ulong newMask, out ulong oldMask);
+    private static extern int mousemask(uint newMask, out uint oldMask);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool wenclose(IntPtr window, int line, int col);

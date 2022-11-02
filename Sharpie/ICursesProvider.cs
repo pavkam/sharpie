@@ -433,7 +433,7 @@ public interface ICursesProvider
 
     int ungetmouse(RawMouseEvent @event);
 
-    int mousemask(ulong newMask, out ulong oldMask);
+    int mousemask(uint newMask, out uint oldMask);
 
     bool wenclose(IntPtr window, int line, int col);
 

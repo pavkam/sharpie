@@ -215,15 +215,15 @@ public class TerminalTests
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
         var expMask =
-            enabled ? (ulong) RawMouseEvent.EventType.ReportPosition | (ulong) RawMouseEvent.EventType.All : 0;
+            enabled ? (uint) RawMouseEvent.EventType.ReportPosition | (uint) RawMouseEvent.EventType.All : 0;
 
-        _cursesMock.Verify(v => v.mousemask(expMask, out It.Ref<ulong>.IsAny), Times.Once);
+        _cursesMock.Verify(v => v.mousemask(expMask, out It.Ref<uint>.IsAny), Times.Once);
     }
 
     [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(bool enabled)
     {
-        _cursesMock.Setup(s => s.mousemask(It.IsAny<ulong>(), out It.Ref<ulong>.IsAny))
+        _cursesMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
                    .Returns(-1);
 
         Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new(UseMouse: enabled)))
@@ -619,8 +619,8 @@ public class TerminalTests
         _cursesMock.Setup(s => s.mouseinterval(It.IsAny<int>()))
                    .Returns(199);
 
-        _cursesMock.Setup(s => s.mousemask(It.IsAny<ulong>(), out It.Ref<ulong>.IsAny))
-                   .Returns((ulong _, out ulong o) =>
+        _cursesMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
+                   .Returns((uint _, out uint o) =>
                    {
                        o = 888;
                        return 0;
@@ -634,7 +634,7 @@ public class TerminalTests
         _terminal.Dispose();
 
         _cursesMock.Verify(v => v.mouseinterval(199), Times.Once);
-        _cursesMock.Verify(v => v.mousemask(888, out It.Ref<ulong>.IsAny), Times.Once);
+        _cursesMock.Verify(v => v.mousemask(888, out It.Ref<uint>.IsAny), Times.Once);
         _cursesMock.Verify(v => v.curs_set(66), Times.Once);
     }
 
@@ -646,8 +646,8 @@ public class TerminalTests
         _cursesMock.Setup(s => s.mouseinterval(It.IsAny<int>()))
                    .Returns(-1);
 
-        _cursesMock.Setup(s => s.mousemask(It.IsAny<ulong>(), out It.Ref<ulong>.IsAny))
-                   .Returns((ulong _, out ulong o) =>
+        _cursesMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
+                   .Returns((uint _, out uint o) =>
                    {
                        o = 888;
                        return -1;

@@ -41,7 +41,7 @@ public sealed class Terminal: IDisposable
     private ColorManager _colorManager;
     private int? _initialCaretMode;
     private int? _initialMouseClickDelay;
-    private ulong? _initialMouseMask;
+    private uint? _initialMouseMask;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
 
@@ -141,7 +141,7 @@ public sealed class Terminal: IDisposable
                                             .Check(nameof(Curses.mouseinterval), //TODO manual click
                                                 "Failed to set the mouse click interval.");
 
-            Curses.mousemask((ulong) RawMouseEvent.EventType.ReportPosition | (ulong) RawMouseEvent.EventType.All,
+            Curses.mousemask((uint) RawMouseEvent.EventType.ReportPosition | (uint) RawMouseEvent.EventType.All,
                       out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 

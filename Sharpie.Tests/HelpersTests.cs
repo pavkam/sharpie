@@ -296,7 +296,7 @@ public class HelpersTests
      DataRow(RawMouseEvent.EventType.Button4Clicked, MouseButton.Button4, MouseButtonState.Clicked),
      DataRow(RawMouseEvent.EventType.Button4DoubleClicked, MouseButton.Button4, MouseButtonState.DoubleClicked),
      DataRow(RawMouseEvent.EventType.Button4TripleClicked, MouseButton.Button4, MouseButtonState.TripleClicked)]
-    public void ConvertMouseActionEvent_ConvertsKnownMappings(ulong evt, MouseButton expButton,
+    public void ConvertMouseActionEvent_ConvertsKnownMappings(uint evt, MouseButton expButton,
         MouseButtonState expState)
     {
         var result = Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) evt);
@@ -304,7 +304,7 @@ public class HelpersTests
         result.state.ShouldBe(expState);
     }
 
-    [TestMethod, DataRow((ulong) 0, ModifierKey.None), DataRow(RawMouseEvent.EventType.Alt, ModifierKey.Alt),
+    [TestMethod, DataRow((uint) 0, ModifierKey.None), DataRow(RawMouseEvent.EventType.Alt, ModifierKey.Alt),
      DataRow(RawMouseEvent.EventType.Ctrl, ModifierKey.Ctrl), DataRow(RawMouseEvent.EventType.Shift, ModifierKey.Shift),
      DataRow(RawMouseEvent.EventType.Alt | RawMouseEvent.EventType.Ctrl, ModifierKey.Alt | ModifierKey.Ctrl),
      DataRow(RawMouseEvent.EventType.Shift | RawMouseEvent.EventType.Ctrl, ModifierKey.Shift | ModifierKey.Ctrl),
@@ -312,7 +312,7 @@ public class HelpersTests
      DataRow(RawMouseEvent.EventType.Ctrl | RawMouseEvent.EventType.Shift, ModifierKey.Ctrl | ModifierKey.Shift),
      DataRow(RawMouseEvent.EventType.Alt | RawMouseEvent.EventType.Ctrl | RawMouseEvent.EventType.Shift,
          ModifierKey.Alt | ModifierKey.Shift | ModifierKey.Ctrl)]
-    public void ConvertMouseActionEvent_MapsModifiers(ulong evt, ModifierKey expMod)
+    public void ConvertMouseActionEvent_MapsModifiers(uint evt, ModifierKey expMod)
     {
         var result = Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) evt);
         result.modifierKey.ShouldBe(expMod);

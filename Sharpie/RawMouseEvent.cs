@@ -42,20 +42,20 @@ public struct RawMouseEvent
     private const int CursesMouseShift = 6;
 
     [PublicAPI]
-    public enum Button: ulong //TODO: not long
+    public enum Button: uint
     {
-        None = 0UL,
-        Button1 = 1UL,
-        Button2 = 2UL,
-        Button3 = 3UL,
-        Button4 = 4UL,
-        Modifiers = 5UL
+        None = 0,
+        Button1 = 1,
+        Button2 = 2,
+        Button3 = 3,
+        Button4 = 4,
+        Modifiers = 5
     }
 
     [PublicAPI, Flags]
-    public enum Action: ulong
+    public enum Action: uint
     {
-        ButtonReleased = 1UL,
+        ButtonReleased = 1,
         ButtonPressed = ButtonReleased << 1,
         ButtonClicked = ButtonPressed << 1,
         DoubleClicked = ButtonClicked << 1,
@@ -64,7 +64,7 @@ public struct RawMouseEvent
     }
 
     [Flags, PublicAPI]
-    public enum EventType: ulong
+    public enum EventType: uint
     {
         Button1Released = Action.ButtonReleased << (((int) Button.Button1 - 1) * CursesMouseShift),
 
@@ -106,10 +106,11 @@ public struct RawMouseEvent
 
         Button4TripleClicked = Action.TripleClicked << (((int) Button.Button4 - 1) * CursesMouseShift),
 
-        Ctrl = 1UL << (((int) Button.Modifiers - 1) * CursesMouseShift),
-        Shift = 2UL << (((int) Button.Modifiers - 1) * CursesMouseShift),
-        Alt = 4UL << (((int) Button.Modifiers - 1) * CursesMouseShift),
-        ReportPosition = 8UL << (((int) Button.Modifiers - 1) * CursesMouseShift),
+        Ctrl = 1U << (((int) Button.Modifiers - 1) * CursesMouseShift),
+        Shift = 2U << (((int) Button.Modifiers - 1) * CursesMouseShift),
+        Alt = 4U << (((int) Button.Modifiers - 1) * CursesMouseShift),
+        
+        ReportPosition = 8U << (((int) Button.Modifiers - 1) * CursesMouseShift),
         All = ReportPosition - 1
     }
 
@@ -117,5 +118,5 @@ public struct RawMouseEvent
     [MarshalAs(UnmanagedType.I4)] public int x;
     [MarshalAs(UnmanagedType.I4)] public int y;
     [MarshalAs(UnmanagedType.I4)] public int z;
-    [MarshalAs(UnmanagedType.I8)] public ulong buttonState;
+    [MarshalAs(UnmanagedType.I8)] public uint buttonState;
 }
