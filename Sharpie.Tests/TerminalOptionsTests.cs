@@ -44,7 +44,6 @@ public class TerminalOptionsTests
         s.UseMouse.ShouldBeTrue();
         s.MouseClickDelay.ShouldBe(100);
         s.SuppressControlKeys.ShouldBeTrue();
-        s.TranslateReturnToNewLineChar.ShouldBeFalse();
         s.CaretMode.ShouldBe(CaretMode.Visible);
         s.ManualFlush.ShouldBeFalse();
         s.SoftLabelKeyMode.ShouldBe(SoftLabelKeyMode.Disabled);

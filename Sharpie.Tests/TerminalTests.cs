@@ -167,26 +167,24 @@ public class TerminalTests
               .Operation.ShouldBe(enabled ? "echo" : "noecho");
     }
 
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses(bool enabled)
+    [TestMethod]
+    public void Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses()
     {
-        _terminal = new(_cursesMock.Object, new(TranslateReturnToNewLineChar: enabled));
-        _cursesMock.Verify(v => v.nl(), enabled ? Times.Once : Times.Never);
-        _cursesMock.Verify(v => v.nonl(), enabled ? Times.Never : Times.Once);
+        _terminal = new(_cursesMock.Object, new());
+
+        _cursesMock.Verify(v => v.nl(), Times.Never);
+        _cursesMock.Verify(v => v.nonl(), Times.Once);
     }
 
-    [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar(bool enabled)
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar()
     {
-        _cursesMock.Setup(s => s.nl())
-                   .Returns(-1);
-
         _cursesMock.Setup(s => s.nonl())
                    .Returns(-1);
 
         Should.Throw<CursesException>(
-                  () => new Terminal(_cursesMock.Object, new(TranslateReturnToNewLineChar: enabled)))
-              .Operation.ShouldBe(enabled ? "nl" : "nonl");
+                  () => new Terminal(_cursesMock.Object, new()))
+              .Operation.ShouldBe("nonl");
     }
 
     [TestMethod]

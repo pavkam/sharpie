@@ -118,15 +118,8 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(curses.cbreak), "Failed to setup terminal's non-buffered mode.");
         }
 
-        if (Options.TranslateReturnToNewLineChar)
-        {
-            curses.nl() //TODO: not working.
-                  .Check(nameof(curses.nl), "Failed to enable new line translation.");
-        } else
-        {
-            curses.nonl()
-                  .Check(nameof(curses.nonl), "Failed to disable new line translation.");
-        }
+        curses.nonl()
+              .Check(nameof(curses.nonl), "Failed to disable new line translation.");
 
         // Caret configuration
         _initialCaretMode = Curses.curs_set((int) Options.CaretMode)

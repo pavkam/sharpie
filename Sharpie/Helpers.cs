@@ -426,6 +426,8 @@ public static class Helpers
                         new(Key.Escape, new('\0'), curses.key_name((uint) ch), e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: '\t' } => 
                         new(Key.Tab, new('\0'), curses.key_name((uint) CursesKey.Tab), e0.Modifiers),
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and '\n' } => 
+                        new(Key.Return, new('\0'), curses.key_name((uint) ch), e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => 
                         new(Key.Backspace, new('\0'), curses.key_name((uint) CursesKey.Backspace), e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and >= 1 and <= 26 } => 

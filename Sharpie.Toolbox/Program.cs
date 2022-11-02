@@ -3,7 +3,7 @@ using Sharpie;
 
 [assembly: ExcludeFromCodeCoverage]
 
-var terminal = new Terminal(NativeCursesProvider.Instance, new(TranslateReturnToNewLineChar: false));
+var terminal = new Terminal(NativeCursesProvider.Instance, new());
 
 terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, StandardColor.Blue);
 terminal.Screen.DrawBorder();

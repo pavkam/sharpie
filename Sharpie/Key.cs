@@ -47,6 +47,11 @@ public enum Key: uint
     Unknown,
 
     /// <summary>
+    ///     The Return/Enter key.
+    /// </summary>
+    Return,
+    
+    /// <summary>
     ///     The Escape key.
     /// </summary>
     Escape,

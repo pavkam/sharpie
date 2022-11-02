@@ -321,6 +321,7 @@ public class HelpersTests
     [TestMethod, 
      DataRow(Key.Character, 0x01b, ModifierKey.Shift, Key.Escape, '\0', ModifierKey.Shift),
      DataRow(Key.Character, '\t', ModifierKey.Shift, Key.Tab, '\0', ModifierKey.Shift),
+     DataRow(Key.Character, '\n', ModifierKey.Shift, Key.Return, '\0', ModifierKey.Shift),
      DataRow(Key.Character, 0x7f, ModifierKey.Shift, Key.Backspace, '\0', ModifierKey.Shift),
      DataRow(Key.Character, 0, ModifierKey.Shift, Key.Character, ' ', ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow(Key.Character, 1, ModifierKey.Shift, Key.Character, 'A', ModifierKey.Shift | ModifierKey.Ctrl),

@@ -118,5 +118,5 @@ public struct CursesMouseEvent
     [MarshalAs(UnmanagedType.I4)] public int x;
     [MarshalAs(UnmanagedType.I4)] public int y;
     [MarshalAs(UnmanagedType.I4)] public int z;
-    [MarshalAs(UnmanagedType.I8)] public uint buttonState;
+    [MarshalAs(UnmanagedType.U4)] public uint buttonState;
 }
