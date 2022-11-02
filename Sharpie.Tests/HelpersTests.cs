@@ -343,6 +343,20 @@ public class HelpersTests
     }
     
     [TestMethod, 
+     DataRow(Key.Character, 'a'),
+     DataRow(Key.Unknown, '\0'),
+     DataRow(Key.Backspace, '\0'),
+     DataRow(Key.F1, '\0'),
+    ]
+    public void TryConvertKeyEventSequence_DoesNotResolveIrrelevantSequencesOf1(Key inKey, int inCode)
+    {
+        var result = Helpers.TryConvertKeyEventSequence(_cursesMock.Object,
+            new[] { new KeyEvent(inKey, new(inCode), "dummy", ModifierKey.None) });
+        
+        result.ShouldBeNull();
+    }
+    
+    [TestMethod, 
      DataRow(Key.Character, 'f', ModifierKey.Shift, Key.KeypadRight, '\0', ModifierKey.Shift | ModifierKey.Alt, true),
      DataRow(Key.Character, 'b', ModifierKey.Shift, Key.KeypadLeft, '\0', ModifierKey.Shift | ModifierKey.Alt, true),
      DataRow(Key.F1, '\0', ModifierKey.Shift, Key.F1, '\0', ModifierKey.Shift | ModifierKey.Alt, false),
@@ -366,6 +380,31 @@ public class HelpersTests
         result.Name.ShouldBe(chName ? "new_name" : "orig_name");
     }
     
+    [TestMethod, 
+     DataRow(Key.Unknown),
+     DataRow(Key.Escape),
+    ]
+    public void TryConvertKeyEventSequence_DoesNotResolveIrrelevantSequencesOf2(Key inKey)
+    {
+        var result = Helpers.TryConvertKeyEventSequence(_cursesMock.Object,
+            new[] { 
+                new KeyEvent(Key.Escape, new('\0'), "none", ModifierKey.None),
+                new KeyEvent(inKey, new('\0'), "orig_name", ModifierKey.None) });
+        
+        result.ShouldBeNull();
+    }
+    
+    [TestMethod]
+    public void TryConvertKeyEventSequence_DoeNotResolveSequenceOf2_IfEscapeHasMods()
+    {
+        var result = Helpers.TryConvertKeyEventSequence(_cursesMock.Object,
+            new[] { 
+                new KeyEvent(Key.Escape, new('\0'), "none", ModifierKey.Shift),
+                new KeyEvent(Key.Character, new('A'), "A", ModifierKey.None) });
+        
+        result.ShouldBeNull();
+    }
+
     [TestMethod, 
      DataRow('A', Key.KeypadUp),
      DataRow('B', Key.KeypadDown),
@@ -392,7 +431,21 @@ public class HelpersTests
         result.Modifiers.ShouldBe(ModifierKey.Shift | ModifierKey.Ctrl | ModifierKey.Alt);
         result.Name.ShouldBe("new_name");
     }
-    
+
+    [TestMethod, DataRow('O', '8', 'J'), DataRow('O', 'J', 'A'), DataRow('K', '8', 'B')]
+    public void TryConvertKeyEventSequence_IgnoresIrrelevantSequencesOf3(int ch1, int ch2, int ch3)
+    {
+        var result = Helpers.TryConvertKeyEventSequence(_cursesMock.Object,
+            new[]
+            {
+                new KeyEvent(Key.Character, new(ch1), null, ModifierKey.Alt),
+                new KeyEvent(Key.Character, new(ch2), null, ModifierKey.None),
+                new KeyEvent(Key.Character, new(ch3), "orig_name", ModifierKey.None)
+            });
+
+        result.ShouldBeNull();
+    }
+
     [TestMethod]
     public void TryConvertKeyEventSequence_ThrowsIfCursesIsNull()
     {

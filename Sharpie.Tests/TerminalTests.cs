@@ -299,7 +299,7 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, new());
 
-        _cursesMock.Verify(v => v.meta(IntPtr.Zero, true));
+        _cursesMock.Verify(v => v.meta(IntPtr.Zero, false));
     }
 
     [TestMethod]

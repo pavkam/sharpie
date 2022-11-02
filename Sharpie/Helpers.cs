@@ -443,7 +443,8 @@ public static class Helpers
                         Key.KeypadRight, new('\0'), curses.key_name((uint) RawKey.AltRight), e1.Modifiers | ModifierKey.Alt),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: 'b' } => new(
                         Key.KeypadLeft, new('\0'), curses.key_name((uint) RawKey.AltLeft), e1.Modifiers | ModifierKey.Alt),
-                    { Key: not Key.Character and not Key.Unknown and not Key.Escape } => new(e1.Key, e1.Char, e1.Name,
+                    { Key: Key.Unknown or Key.Escape } => null,
+                    { Key: not Key.Character } => new(e1.Key, e1.Char, e1.Name,
                         e1.Modifiers | ModifierKey.Alt),
                     var _ => new(Key.Character, e1.Char, curses.key_name((uint) e1.Char.Value), e1.Modifiers | ModifierKey.Alt)
                 };

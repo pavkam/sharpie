@@ -8,24 +8,50 @@ public class WindowEventsTests
     private Screen _screen = null!;
     private Window _window = null!;
 
-    private Event GetOneEvent(int result, uint keyCode)
+    private Event[] SimulateEvents(int count, params (int result, uint keyCode)[] raw)
     {
+        var i = 0;
+        
         _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
                    .Returns((IntPtr _, out uint kc) =>
                    {
-                       kc = keyCode;
-                       return result;
+                       if (i == raw.Length)
+                       {
+                           kc = 0;
+                           return -1;
+                       }
+                       
+                       kc = raw[i].keyCode;
+                       var res = raw[i].result;
+                       i++;
+
+                       return res;
                    });
 
-        Event @event = null!;
+        var events =new List<Event>();
         foreach (var e in _window.ProcessEvents(_source.Token))
         {
-            _source.Cancel();
-            @event = e;
+            count--;
+            if (count == 0)
+            {
+                _source.Cancel();
+            }
+            events.Add(e);
         }
 
-        return @event;
+        return events.ToArray();
     }
+
+    private Event SimulateEvent(params (int result, uint keyCode)[] raw) =>
+        SimulateEvents(1, raw)
+            .Single();
+
+    private Event SimulateEventRep(int count, int result, uint keyCode) =>
+        SimulateEvents(1, Enumerable.Repeat((result, keyCode), count).ToArray())
+            .Single();
+
+    private Event SimulateEvent(int result, uint keyCode) => SimulateEvent((result, keyCode));
+
 
     [TestInitialize]
     public void TestInitialize()
@@ -160,7 +186,7 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.getmaxy(_window.Handle))
                    .Returns(6);
 
-        var e = GetOneEvent((int) RawKey.Yes, (uint) RawKey.Resize);
+        var e = SimulateEvent((int) RawKey.Yes, (uint) RawKey.Resize);
         e.Type.ShouldBe(EventType.TerminalResize);
         ((TerminalResizeEvent) e).Size.ShouldBe(new(20, 10));
         
@@ -191,7 +217,7 @@ public class WindowEventsTests
                        return res;
                    });
 
-        var e = GetOneEvent((int) RawKey.Yes, (uint) RawKey.Mouse);
+        var e = SimulateEventRep(2, (int) RawKey.Yes, (uint) RawKey.Mouse);
         e.Type.ShouldBe(EventType.MouseMove);
         ((MouseMoveEvent) e).Position.ShouldBe(new(5, 6));
 
@@ -211,7 +237,7 @@ public class WindowEventsTests
                        return 0;
                    });
 
-        var e = GetOneEvent((int) RawKey.Yes, (int) RawKey.Mouse);
+        var e = SimulateEventRep(2, (int) RawKey.Yes, (int) RawKey.Mouse);
         ((MouseActionEvent) e).Button.ShouldBe(MouseButton.Button2);
 
         _cursesMock.Verify(v => v.getmouse(out It.Ref<RawMouseEvent>.IsAny), Times.Exactly(2));
@@ -231,7 +257,7 @@ public class WindowEventsTests
                        return 0;
                    });
 
-        var e = GetOneEvent((int) RawKey.Yes, (uint) RawKey.Mouse);
+        var e = SimulateEvent((int) RawKey.Yes, (uint) RawKey.Mouse);
         e.Type.ShouldBe(EventType.MouseMove);
         ((MouseMoveEvent) e).Position.ShouldBe(new(5, 6));
     }
@@ -253,7 +279,7 @@ public class WindowEventsTests
                        return 0;
                    });
 
-        var e = GetOneEvent((int) RawKey.Yes, (uint) RawKey.Mouse);
+        var e = SimulateEvent((int) RawKey.Yes, (uint) RawKey.Mouse);
         e.Type.ShouldBe(EventType.MouseAction);
 
         var me = (MouseActionEvent) e;
@@ -269,7 +295,7 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = GetOneEvent((int) RawKey.Yes, (uint) RawKey.AltUp);
+        var e = SimulateEvent((int) RawKey.Yes, (uint) RawKey.AltUp);
         e.Type.ShouldBe(EventType.KeyPress);
 
         var me = (KeyEvent) e;
@@ -285,7 +311,7 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = GetOneEvent(0, 'a');
+        var e = SimulateEvent(0, 'a');
         e.Type.ShouldBe(EventType.KeyPress);
 
         var me = (KeyEvent) e;
@@ -295,17 +321,76 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesSpecialCharacterEvents()
+    public void ProcessEvents_ProcessesTranslatedCharacterEvents()
     {
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = GetOneEvent(0, 3);
+        var e = SimulateEvent(0, '\t');
         e.Type.ShouldBe(EventType.KeyPress);
 
         var me = (KeyEvent) e;
         me.Char.ShouldBe(new('\0'));
-        me.Key.ShouldBe(Key.F1);
+        me.Key.ShouldBe(Key.Tab);
         me.Name.ShouldBe("yup");
+    }
+    
+    [TestMethod]
+    public void ProcessEvents_ProcessesTranslatedSeq2Events()
+    {
+        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+                   .Returns("yup");
+
+        var e = SimulateEvent((0, '\x001b'), (0, 'a'));
+        e.Type.ShouldBe(EventType.KeyPress);
+
+        var me = (KeyEvent) e;
+        me.Char.ShouldBe(new('a'));
+        me.Modifiers.ShouldBe(ModifierKey.Alt);
+        me.Key.ShouldBe(Key.Character);
+        me.Name.ShouldBe("yup");
+    }
+    
+    [TestMethod]
+    public void ProcessEvents_ProcessesTranslatedSeq3Events()
+    {
+        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+                   .Returns("yup");
+
+        var e = SimulateEvent((0, '\x001b'), (0, 'O'), (0, '8'), (0, 'A'));
+        e.Type.ShouldBe(EventType.KeyPress);
+
+        var me = (KeyEvent) e;
+        me.Char.ShouldBe(new('\0'));
+        me.Modifiers.ShouldBe(ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
+        me.Key.ShouldBe(Key.KeypadUp);
+        me.Name.ShouldBe("yup");
+    }
+    
+    [TestMethod]
+    public void ProcessEvents_ConsidersEscapeBreaks()
+    {
+        var e = SimulateEvents(2, (0, '\x001b'), (0, '\x001b'));
+        e.Length.ShouldBe(2);
+        ((KeyEvent)e[0]).Key.ShouldBe(Key.Escape);
+        ((KeyEvent)e[1]).Key.ShouldBe(Key.Escape);
+    }
+    
+    [TestMethod]
+    public void ProcessEvents_ConsidersBreaksInSequences()
+    {
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<RawMouseEvent>.IsAny))
+                   .Returns((out RawMouseEvent me) =>
+                   {
+                       me = new() { buttonState = (ulong)RawMouseEvent.EventType.ReportPosition};
+                       return 0;
+                   });
+        
+        var e = SimulateEvents(3, (0, '\x001b'), ((int) RawKey.Yes, (int) RawKey.Mouse), (0, 'A'));
+        e.Length.ShouldBe(3);
+        
+        ((KeyEvent)e[0]).Key.ShouldBe(Key.Escape);
+        e[1].Type.ShouldBe(EventType.MouseMove);
+        ((KeyEvent)e[2]).Char.ShouldBe(new('A'));
     }
 }
