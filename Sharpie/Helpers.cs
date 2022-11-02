@@ -387,49 +387,15 @@ public static class Helpers
     }
 
     /// <summary>
-    ///     Attempts to convert some of the standard characters to key events (e.g. backspace).
-    /// </summary>
-    /// <param name="event">The key code.</param>
-    /// <param name="curses">The curse backend.</param>
-    /// <returns>The new key event if converted. Otherwise <c>null</c>.</returns>
-    /// <exception cref="ArgumentNullException">The <paramref name="event"/> or <paramref name="curses"/> is <c>null</c>.</exception>
-    internal static KeyEvent? TryCorrectCharacterKeyEvent(ICursesProvider curses, KeyEvent @event)
-    {
-        if (curses == null)
-        {
-            throw new ArgumentNullException(nameof(curses));
-        }
-
-        if (@event == null)
-        {
-            throw new ArgumentNullException(nameof(@event));
-        }
-         
-        return @event switch
-        {
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and 0x1b } => 
-                new(Key.Escape, new('\0'), curses.key_name((uint) ch), ModifierKey.None),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: '\t' } => 
-                new(Key.Tab, new('\0'), curses.key_name((uint) RawKey.Tab), ModifierKey.None),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => 
-                new(Key.Backspace, new('\0'), curses.key_name((uint) RawKey.Backspace), ModifierKey.None),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and >= 1 and <= 25 } => 
-                new(Key.Character, new(ch + 'A' - 1), curses.key_name((uint) ch + 'A' - 1), ModifierKey.Ctrl),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0 } => 
-                new(Key.Character, new(' '), curses.key_name(' '), ModifierKey.Ctrl),
-            var _ => null
-        };
-    }
-
-    /// <summary>
-    ///     Attempts to to convert a sequence or key events into one event.
+    ///     Attempts to process a sequence of key events and reduce them to another event. This is useful when
+    ///     translating complex key sequences.
     /// </summary>
     /// <param name="curses">The curse backend.</param>
     /// <param name="events">The events.</param>
-    /// <returns>The key if converted; <c>null</c> otherwise.</returns>
+    /// <returns>The new event if processed; <c>null</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">The <paramref name="events"/> or <paramref name="curses"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException">The <paramref name="events"/> contains less than two events.</exception>
-    internal static KeyEvent? TryConvertEscapeSequence(ICursesProvider curses, IList<KeyEvent> events)
+    /// <exception cref="ArgumentException">The <paramref name="events"/> contains less than one events.</exception>
+    internal static KeyEvent? TryAdjustEventSequence(ICursesProvider curses, IList<KeyEvent> events)
     {
         if (curses == null)
         {
@@ -441,18 +407,35 @@ public static class Helpers
             throw new ArgumentNullException(nameof(events));
         }
         
-        if (events.Count < 2)
+        if (events.Count < 1)
         {
-            throw new ArgumentException("The events list should contain at least two events.", nameof(events));
+            throw new ArgumentException("The events list should contain at least one event.", nameof(events));
         }
 
         var e0 = events[0];
-        var e1 = events[1];
+        var e1 = events.Count >= 2 ? events[1]: null;
         var e2 = events.Count >= 3 ? events[2]: null;
         
         switch (events.Count)
         {
-            case 2 when e0 is { Key: Key.Escape, Modifiers: ModifierKey.None }:
+            case 1:
+            {
+                return e0 switch
+                {
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and 0x1b } => 
+                        new(Key.Escape, new('\0'), curses.key_name((uint) ch), ModifierKey.None),
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: '\t' } => 
+                        new(Key.Tab, new('\0'), curses.key_name((uint) RawKey.Tab), ModifierKey.None),
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => 
+                        new(Key.Backspace, new('\0'), curses.key_name((uint) RawKey.Backspace), ModifierKey.None),
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and >= 1 and <= 25 } => 
+                        new(Key.Character, new(ch + 'A' - 1), curses.key_name((uint) ch + 'A' - 1), ModifierKey.Ctrl),
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: 0 } => 
+                        new(Key.Character, new(' '), curses.key_name(' '), ModifierKey.Ctrl),
+                    var _ => null
+                };
+            }
+            case 2 when e0 is { Key: Key.Escape, Modifiers: ModifierKey.None } && e1 is not null:
             {
                 return e1 switch
                 {
