@@ -1095,7 +1095,7 @@ public class Window: IDisposable
         {
             // Read next event. Perform a quick wait if we have an active escape sequence being collected.
             var @event = ReadNextEvent(activeEscapeSeq.Count > 0);
-            @event = (@event is KeyEvent kv ? Helpers.TryAdjustEventSequence(Curses, new[] { kv }) : null) ?? @event;
+            @event = (@event is KeyEvent kv ? Helpers.TryConvertKeyEventSequence(Curses, new[] { kv }) : null) ?? @event;
 
             switch (@event)
             {
@@ -1138,7 +1138,7 @@ public class Window: IDisposable
                         activeEscapeSeq.Add(ke);
                         
                         // Try to process the potential sequence.
-                        var outEvent = Helpers.TryAdjustEventSequence(Curses, activeEscapeSeq);
+                        var outEvent = Helpers.TryConvertKeyEventSequence(Curses, activeEscapeSeq);
                         if (outEvent != null)
                         {
                             activeEscapeSeq.Clear();

@@ -395,7 +395,7 @@ public static class Helpers
     /// <returns>The new event if processed; <c>null</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">The <paramref name="events"/> or <paramref name="curses"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">The <paramref name="events"/> contains less than one events.</exception>
-    internal static KeyEvent? TryAdjustEventSequence(ICursesProvider curses, IList<KeyEvent> events)
+    internal static KeyEvent? TryConvertKeyEventSequence(ICursesProvider curses, IList<KeyEvent> events)
     {
         if (curses == null)
         {
@@ -423,15 +423,15 @@ public static class Helpers
                 return e0 switch
                 {
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and 0x1b } => 
-                        new(Key.Escape, new('\0'), curses.key_name((uint) ch), ModifierKey.None),
+                        new(Key.Escape, new('\0'), curses.key_name((uint) ch), e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: '\t' } => 
-                        new(Key.Tab, new('\0'), curses.key_name((uint) RawKey.Tab), ModifierKey.None),
+                        new(Key.Tab, new('\0'), curses.key_name((uint) RawKey.Tab), e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => 
-                        new(Key.Backspace, new('\0'), curses.key_name((uint) RawKey.Backspace), ModifierKey.None),
-                    { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and >= 1 and <= 25 } => 
-                        new(Key.Character, new(ch + 'A' - 1), curses.key_name((uint) ch + 'A' - 1), ModifierKey.Ctrl),
+                        new(Key.Backspace, new('\0'), curses.key_name((uint) RawKey.Backspace), e0.Modifiers),
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and >= 1 and <= 26 } => 
+                        new(Key.Character, new(ch + 'A' - 1), curses.key_name((uint) ch + 'A' - 1), ModifierKey.Ctrl | e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: 0 } => 
-                        new(Key.Character, new(' '), curses.key_name(' '), ModifierKey.Ctrl),
+                        new(Key.Character, new(' '), curses.key_name(' '), e0.Modifiers | ModifierKey.Ctrl),
                     var _ => null
                 };
             }
@@ -439,13 +439,13 @@ public static class Helpers
             {
                 return e1 switch
                 {
-                    { Key: Key.Character, Char.IsAscii: true, Char.Value: 'f', Modifiers: ModifierKey.None } => new(
-                        Key.KeypadRight, new('\0'), curses.key_name((uint) RawKey.AltRight), ModifierKey.Alt),
-                    { Key: Key.Character, Char.IsAscii: true, Char.Value: 'b', Modifiers: ModifierKey.None } => new(
-                        Key.KeypadLeft, new('\0'), curses.key_name((uint) RawKey.AltLeft), ModifierKey.Alt),
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: 'f' } => new(
+                        Key.KeypadRight, new('\0'), curses.key_name((uint) RawKey.AltRight), e1.Modifiers | ModifierKey.Alt),
+                    { Key: Key.Character, Char.IsAscii: true, Char.Value: 'b' } => new(
+                        Key.KeypadLeft, new('\0'), curses.key_name((uint) RawKey.AltLeft), e1.Modifiers | ModifierKey.Alt),
                     { Key: not Key.Character and not Key.Unknown and not Key.Escape } => new(e1.Key, e1.Char, e1.Name,
                         e1.Modifiers | ModifierKey.Alt),
-                    var _ => new(Key.Character, e1.Char, curses.key_name((uint) e1.Char.Value), ModifierKey.Alt)
+                    var _ => new(Key.Character, e1.Char, curses.key_name((uint) e1.Char.Value), e1.Modifiers | ModifierKey.Alt)
                 };
             }
             case 3 when e2 != null:
@@ -463,7 +463,7 @@ public static class Helpers
                         'D' => (RawKey.Left, Key.KeypadLeft),
                         'E' => (RawKey.PageUp, Key.KeypadPageUp),
                         'F' => (RawKey.End, Key.KeypadEnd),
-                        'G' => (RawKey.PageDown, Key.KeypadDown),
+                        'G' => (RawKey.PageDown, Key.KeypadPageDown),
                         'H' => (RawKey.Home, Key.KeypadHome),
                         var _ => (RawKey.Yes, Key.Unknown)
                     };

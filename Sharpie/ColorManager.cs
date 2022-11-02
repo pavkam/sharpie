@@ -160,7 +160,7 @@ public sealed class ColorManager
     /// <param name="mixture">The color mixture to get the colors from.</param>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
-    public (ushort fgColor, ushort bgColor) UnMix(ColorMixture mixture)
+    public (ushort fgColor, ushort bgColor) UnMixColors(ColorMixture mixture)
     {
         _curses.pair_content(mixture.Handle, out var fgColor, out var bgColor)
                .Check(nameof(_curses.pair_content), "Failed to extract colors from the color mixture.");

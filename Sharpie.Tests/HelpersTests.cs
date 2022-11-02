@@ -317,17 +317,100 @@ public class HelpersTests
         var result = Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) evt);
         result.modifierKey.ShouldBe(expMod);
     }
-    //
-    // [TestMethod, 
-    //  DataRow((uint) 3, Key.Interrupt),
-    //  DataRow((uint) 0x1b, Key.Escape),
-    //  DataRow((uint) '\t', Key.Tab),
-    //  DataRow((uint) 0x7f, Key.Backspace)]
-    // public void TryConvertCharacterToKeyPressEvent_MapsSpecialCharacters(uint keyCode, Key expKey)
-    // {
-    //     var result = Helpers.TryConvertCharacterToKeyPressEvent(keyCode);
-    //
-    //     result.ShouldNotBeNull();
-    //     result.Value.ShouldBe(expKey);
-    // }
+   
+    [TestMethod, 
+     DataRow(Key.Character, 0x01b, ModifierKey.Shift, Key.Escape, '\0', ModifierKey.Shift),
+     DataRow(Key.Character, '\t', ModifierKey.Shift, Key.Tab, '\0', ModifierKey.Shift),
+     DataRow(Key.Character, 0x7f, ModifierKey.Shift, Key.Backspace, '\0', ModifierKey.Shift),
+     DataRow(Key.Character, 0, ModifierKey.Shift, Key.Character, ' ', ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(Key.Character, 1, ModifierKey.Shift, Key.Character, 'A', ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(Key.Character, 26, ModifierKey.Shift, Key.Character, 'Z', ModifierKey.Shift | ModifierKey.Ctrl)
+    ]
+    public void TryConvertKeyEventSequence_ResolvesSequenceOf1(Key inKey, int inCode, ModifierKey inMod, 
+        Key expKey, int expCode, ModifierKey expMod)
+    {
+        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+                   .Returns("key_name");
+
+        var result = Helpers.TryConvertKeyEventSequence(_cursesMock.Object,
+            new[] { new KeyEvent(inKey, new(inCode), "dummy", inMod) });
+        
+        result.ShouldNotBeNull();
+        result.Key.ShouldBe(expKey);
+        result.Char.ShouldBe(new (expCode));
+        result.Modifiers.ShouldBe(expMod);
+        result.Name.ShouldBe("key_name");
+    }
+    
+    [TestMethod, 
+     DataRow(Key.Character, 'f', ModifierKey.Shift, Key.KeypadRight, '\0', ModifierKey.Shift | ModifierKey.Alt, true),
+     DataRow(Key.Character, 'b', ModifierKey.Shift, Key.KeypadLeft, '\0', ModifierKey.Shift | ModifierKey.Alt, true),
+     DataRow(Key.F1, '\0', ModifierKey.Shift, Key.F1, '\0', ModifierKey.Shift | ModifierKey.Alt, false),
+     DataRow(Key.Character, 'A', ModifierKey.Shift, Key.Character, 'A', ModifierKey.Shift | ModifierKey.Alt, true),
+     DataRow(Key.Character, '.', ModifierKey.None, Key.Character, '.', ModifierKey.Alt, true),
+    ]
+    public void TryConvertKeyEventSequence_ResolvesSequenceOf2_UsingEscape(Key inKey, int inCode, ModifierKey inMod, 
+        Key expKey, int expCode, ModifierKey expMod, bool chName)
+    {
+        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+                   .Returns("new_name");
+
+        var result = Helpers.TryConvertKeyEventSequence(_cursesMock.Object,
+            new[] { new KeyEvent(Key.Escape, new('\0'), "none", ModifierKey.None),
+                new KeyEvent(inKey, new(inCode), "orig_name", inMod) });
+        
+        result.ShouldNotBeNull();
+        result.Key.ShouldBe(expKey);
+        result.Char.ShouldBe(new (expCode));
+        result.Modifiers.ShouldBe(expMod);
+        result.Name.ShouldBe(chName ? "new_name" : "orig_name");
+    }
+    
+    [TestMethod, 
+     DataRow('A', Key.KeypadUp),
+     DataRow('B', Key.KeypadDown),
+     DataRow('C', Key.KeypadRight),
+     DataRow('D', Key.KeypadLeft),
+     DataRow('E', Key.KeypadPageUp),
+     DataRow('F', Key.KeypadEnd),
+     DataRow('G', Key.KeypadPageDown),
+     DataRow('H', Key.KeypadHome),
+    ]
+    public void TryConvertKeyEventSequence_ResolvesSequenceOf3_AltKeyPad(int ch, Key key)
+    {
+        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+                   .Returns("new_name");
+
+        var result = Helpers.TryConvertKeyEventSequence(_cursesMock.Object,
+            new[] { 
+                new KeyEvent(Key.Character, new('O'), null, ModifierKey.Alt),
+                new KeyEvent(Key.Character, new('8'), null, ModifierKey.None),
+                new KeyEvent(Key.Character, new(ch), "orig_name", ModifierKey.None) });
+        
+        result.ShouldNotBeNull();
+        result.Key.ShouldBe(key);
+        result.Modifiers.ShouldBe(ModifierKey.Shift | ModifierKey.Ctrl | ModifierKey.Alt);
+        result.Name.ShouldBe("new_name");
+    }
+    
+    [TestMethod]
+    public void TryConvertKeyEventSequence_ThrowsIfCursesIsNull()
+    {
+        Should.Throw<ArgumentException>(() =>
+            Helpers.TryConvertKeyEventSequence(null!, Array.Empty<KeyEvent>()));
+    }
+    
+    [TestMethod]
+    public void TryConvertKeyEventSequence_ThrowsIfEventsIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() =>
+            Helpers.TryConvertKeyEventSequence(_cursesMock.Object, null!));
+    }
+    
+    [TestMethod]
+    public void TryConvertKeyEventSequence_ThrowsIfEventsIsEmpty()
+    {
+        Should.Throw<ArgumentException>(() =>
+            Helpers.TryConvertKeyEventSequence(_cursesMock.Object, Array.Empty<KeyEvent>()));
+    }
 }

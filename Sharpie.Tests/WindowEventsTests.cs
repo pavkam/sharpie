@@ -110,7 +110,7 @@ public class WindowEventsTests
                        return res;
                    });
 
-        foreach (var e in _window.ProcessEvents(_source.Token))
+        foreach (var _ in _window.ProcessEvents(_source.Token))
         {
             _source.Cancel();
         }

@@ -312,19 +312,19 @@ public class ColorManagerTests
     }
 
     [TestMethod]
-    public void UnMix_Throws_IfCursesFails()
+    public void UnMixColors_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.pair_content(It.IsAny<ushort>(), out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _colorManager.UnMix(new() { Handle = 1 }); })
+        Should.Throw<CursesException>(() => { _colorManager.UnMixColors(new() { Handle = 1 }); })
               .Operation.ShouldBe("pair_content");
 
         _cursesMock.Verify(v => v.pair_content(1, out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny), Times.Once);
     }
 
     [TestMethod]
-    public void UnMix_ReturnsColors_IfCursesSucceeds()
+    public void UnMixColors_ReturnsColors_IfCursesSucceeds()
     {
         _cursesMock.Setup(s => s.pair_content(It.IsAny<ushort>(), out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny))
                    .Returns((ushort _, out ushort fg, out ushort bg) =>
@@ -334,7 +334,7 @@ public class ColorManagerTests
                        return 0;
                    });
 
-        var (fgColor, bgColor) = _colorManager.UnMix(new() { Handle = 1 });
+        var (fgColor, bgColor) = _colorManager.UnMixColors(new() { Handle = 1 });
         fgColor.ShouldBe((ushort) 20);
         bgColor.ShouldBe((ushort) 30);
 

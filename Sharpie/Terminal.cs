@@ -138,7 +138,7 @@ public sealed class Terminal: IDisposable
         if (Options.UseMouse)
         {
             _initialMouseClickDelay = Curses.mouseinterval(Options.MouseClickDelay)
-                                            .Check(nameof(Curses.mouseinterval),
+                                            .Check(nameof(Curses.mouseinterval), //TODO manual click
                                                 "Failed to set the mouse click interval.");
 
             Curses.mousemask((ulong) RawMouseEvent.EventType.ReportPosition | (ulong) RawMouseEvent.EventType.All,
@@ -157,8 +157,8 @@ public sealed class Terminal: IDisposable
                                                 "Failed to set the mouse click interval.");
         }
 
-        // Other configuration
-        curses.meta(IntPtr.Zero, true);
+        // Disable meta interpretation and ignore the result.
+        curses.meta(IntPtr.Zero, false); //TODO test this
         _terminalInstanceActive = true;
     }
 

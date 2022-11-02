@@ -42,7 +42,7 @@ public struct RawMouseEvent
     private const int CursesMouseShift = 6;
 
     [PublicAPI]
-    public enum Button: ulong
+    public enum Button: ulong //TODO: not long
     {
         None = 0UL,
         Button1 = 1UL,
