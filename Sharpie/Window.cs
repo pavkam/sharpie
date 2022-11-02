@@ -1068,18 +1068,6 @@ public class Window: IDisposable
         return new KeyEvent(Key.Character, new(keyCode), Curses.key_name(keyCode), ModifierKey.None);
     }
 
-    private void PerformResize()
-    {
-        //TODO: invalidate all windows. 
-        if (this != Screen)
-        {
-            Invalidate();
-        }
-        
-        Screen.Invalidate();
-        Screen.Refresh(false, true);
-    }
-
     /// <summary>
     ///     Gets an enumerable that is used to get events from Curses.
     /// </summary>
@@ -1168,7 +1156,7 @@ public class Window: IDisposable
 
             if (@event.Type == EventType.TerminalResize)
             {
-                PerformResize();
+                Screen.ForceInvalidateAndRefresh();
             }
         }
     }

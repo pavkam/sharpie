@@ -96,7 +96,7 @@ public sealed class Screen: Window
     /// <remarks>
     /// </remarks>
     /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The window has been disposed and can no longer be used.</exception>
     /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -131,7 +131,7 @@ public sealed class Screen: Window
     /// </summary>
     /// <param name="window">The window to duplicate.</param>
     /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The window has been disposed and can no longer be used.</exception>
     /// <exception cref="InvalidOperationException">Trying to duplicate the screen window.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
@@ -183,7 +183,7 @@ public sealed class Screen: Window
     /// <param name="pad">The parent pad.</param>
     /// <param name="area">The are of the pad to use.</param>
     /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">The terminal or the pad have been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The pad have been disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">When <paramref name="area" /> is outside the pad's bounds.</exception>
     /// <exception cref="ArgumentNullException">When <paramref name="pad" /> is <c>null</c>.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
@@ -208,7 +208,7 @@ public sealed class Screen: Window
     /// <summary>
     ///     Applies all queued refreshes to the terminal.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The screen has been disposed and can no longer be used.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void ApplyPendingRefreshes()
     {
@@ -217,6 +217,22 @@ public sealed class Screen: Window
               .Check(nameof(Terminal.Curses.doupdate), "Failed to update the main screen.");
     }
 
+    /// <summary>
+    ///     This method invalidates the screen in its entirety and redraws if from scratch.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The screen has been disposed and can no longer be used.</exception>
+    /// <exception cref="CursesException">A Curses error occured.</exception>
+    public void ForceInvalidateAndRefresh()
+    {
+        Invalidate();
+        foreach (var child in Children)
+        {
+            child.Invalidate();
+        }
+        
+        Refresh(false, true);
+    }
+        
     /// <summary>
     ///     Deletes the screen window and ends the terminal session.
     /// </summary>

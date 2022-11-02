@@ -1733,7 +1733,18 @@ public class WindowTests
         var w = new Window(_cursesMock.Object, null, new(1));
         w.WriteText("12345", Style.Default);
     }
-    
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void WriteText_Throws_IfNoCharacterGotWritten()
+    {
+        _cursesMock.Setup(s => s.wadd_wch(new(1), It.IsAny<CursesComplexChar>()))
+                   .Returns(-1);
+
+        var w = new Window(_cursesMock.Object, null, new(1));
+        Should.Throw<CursesException>(() => w.WriteText("12345", Style.Default))
+              .Operation.ShouldBe("wadd_wch");
+    }
+
     [TestMethod]
     public void WriteText2_CallsCursesAlso()
     {

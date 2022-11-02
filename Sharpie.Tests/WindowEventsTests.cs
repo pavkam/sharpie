@@ -8,7 +8,7 @@ public class WindowEventsTests
     private Screen _screen = null!;
     private Window _window = null!;
 
-    private Event[] SimulateEvents(int count, params (int result, uint keyCode)[] raw)
+    private Event[] SimulateEvents(int count, Window w, params (int result, uint keyCode)[] raw)
     {
         var i = 0;
         
@@ -29,7 +29,7 @@ public class WindowEventsTests
                    });
 
         var events =new List<Event>();
-        foreach (var e in _window.ProcessEvents(_source.Token))
+        foreach (var e in w.ProcessEvents(_source.Token))
         {
             count--;
             if (count == 0)
@@ -42,15 +42,18 @@ public class WindowEventsTests
         return events.ToArray();
     }
 
-    private Event SimulateEvent(params (int result, uint keyCode)[] raw) =>
-        SimulateEvents(1, raw)
+    private Event SimulateEvent(Window w, params (int result, uint keyCode)[] raw) =>
+        SimulateEvents(1, w, raw)
             .Single();
 
+    private Event SimulateEvent(params (int result, uint keyCode)[] raw) => SimulateEvent(_window, raw);
+    
     private Event SimulateEventRep(int count, int result, uint keyCode) =>
-        SimulateEvents(1, Enumerable.Repeat((result, keyCode), count).ToArray())
+        SimulateEvents(1, _window, Enumerable.Repeat((result, keyCode), count).ToArray())
             .Single();
 
-    private Event SimulateEvent(int result, uint keyCode) => SimulateEvent((result, keyCode));
+    private Event SimulateEvent(Window w, int result, uint keyCode) => SimulateEvent(w, (result, keyCode));
+    private Event SimulateEvent(int result, uint keyCode) => SimulateEvent(_window, result, keyCode);
 
     [TestInitialize]
     public void TestInitialize()
@@ -90,32 +93,9 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_SkipsBadReads()
     {
-        var skip = false;
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Returns((IntPtr _, out uint kc) =>
-                   {
-                       skip = !skip;
-                       if (skip)
-                       {
-                           kc = 'b';
-                           return -1;
-                       }
-
-                       kc = 'b';
-                       return 0;
-                   });
-
-        var count = 5;
-        foreach (var _ in _window.ProcessEvents(_source.Token))
-        {
-            count--;
-            if (count == 0)
-            {
-                _source.Cancel();
-            }
-        }
-
-        count.ShouldBe(0);
+        SimulateEvents(5, _window, (-1, 0),
+            (0, 0), (-1, 0), (0, 0), (-1, 0), (0, 0),
+            (-1, 0), (0, 0), (-1, 0), (0, 0));
 
         _cursesMock.Verify(v => v.wtimeout(_window.Handle, It.IsAny<int>()), Times.Exactly(10));
         _cursesMock.Verify(v => v.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Exactly(10));
@@ -124,46 +104,31 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ApplyPendingRefreshes_WhenReadFails()
     {
-        var skip = true;
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Returns((IntPtr _, out uint kc) =>
-                   {
-                       kc = 0;
-                       var res = skip ? -1 : 0;
-                       skip = !skip;
-                       
-                       return res;
-                   });
+        SimulateEvents(1, _window, (-1, 0), (0, 0));
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+    
+    [TestMethod]
+    public void ProcessEvents_GoesDeepWithinChildren_ToApplyPendingRefreshes()
+    {
+        var w = new Window(_cursesMock.Object, _window, new(3));
 
-        foreach (var _ in _window.ProcessEvents(_source.Token))
-        {
-            _source.Cancel();
-        }
-
+        SimulateEvents(1, w, (-1, 0), (0, 0));
+        
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
     [TestMethod]
     public void ProcessEvents_ProcessesTerminalResizeEvents_InScreen()
     {
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Returns((IntPtr _, out uint kc) =>
-                   {
-                       kc = (uint) CursesKey.Resize;
-                       return (int) CursesKey.Yes;
-                   });
+        _window.Dispose();
         
         _cursesMock.Setup(s => s.getmaxy(_screen.Handle))
                    .Returns(10);
         _cursesMock.Setup(s => s.getmaxx(_screen.Handle))
                    .Returns(20);
 
-        Event @event = null!;
-        foreach (var e in _screen.ProcessEvents(_source.Token))
-        {
-            _source.Cancel();
-            @event = e;
-        }
+        var @event = SimulateEvent(_screen, (int) CursesKey.Yes,  (uint) CursesKey.Resize);
         
         @event.Type.ShouldBe(EventType.TerminalResize);
         ((TerminalResizeEvent) @event).Size.ShouldBe(new(20, 10));
@@ -176,21 +141,25 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ProcessesTerminalResizeEvents_InChild()
     {
+        var otherWindow = new Window(_cursesMock.Object, _screen, new(8));
+        
         _cursesMock.Setup(s => s.getmaxy(_screen.Handle))
                    .Returns(10);
         _cursesMock.Setup(s => s.getmaxx(_screen.Handle))
                    .Returns(20);
-        _cursesMock.Setup(s => s.getmaxx(_window.Handle))
-                   .Returns(5);
         _cursesMock.Setup(s => s.getmaxy(_window.Handle))
-                   .Returns(6);
-
+                   .Returns(5);
+        _cursesMock.Setup(s => s.getmaxy(otherWindow.Handle))
+                   .Returns(5);
+        
         var e = SimulateEvent((int) CursesKey.Yes, (uint) CursesKey.Resize);
         e.Type.ShouldBe(EventType.TerminalResize);
         ((TerminalResizeEvent) e).Size.ShouldBe(new(20, 10));
         
-        _cursesMock.Verify(v => v.wtouchln(_screen.Handle, 0, 10, 1), Times.Once);
-        _cursesMock.Verify(v => v.wtouchln(_window.Handle, 0, 6, 1), Times.Once);
+        _cursesMock.Verify(v => v.wtouchln(_screen.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
+        _cursesMock.Verify(v => v.wtouchln(_window.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
+        _cursesMock.Verify(v => v.wtouchln(otherWindow.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
+       
         _cursesMock.Verify(v => v.clearok(_screen.Handle, true), Times.Once);
         _cursesMock.Verify(v => v.wrefresh(_screen.Handle), Times.Once);
     }
@@ -369,7 +338,7 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ConsidersEscapeBreaks()
     {
-        var e = SimulateEvents(2, (0, '\x001b'), (0, '\x001b'));
+        var e = SimulateEvents(2, _window, (0, '\x001b'), (0, '\x001b'));
         e.Length.ShouldBe(2);
         ((KeyEvent)e[0]).Key.ShouldBe(Key.Escape);
         ((KeyEvent)e[1]).Key.ShouldBe(Key.Escape);
@@ -385,7 +354,7 @@ public class WindowEventsTests
                        return 0;
                    });
         
-        var e = SimulateEvents(3, (0, '\x001b'), ((int) CursesKey.Yes, (int) CursesKey.Mouse), (0, 'A'));
+        var e = SimulateEvents(3, _window, (0, '\x001b'), ((int) CursesKey.Yes, (int) CursesKey.Mouse), (0, 'A'));
         e.Length.ShouldBe(3);
         
         ((KeyEvent)e[0]).Key.ShouldBe(Key.Escape);
