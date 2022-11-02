@@ -141,7 +141,7 @@ public sealed class Terminal: IDisposable
                                             .Check(nameof(Curses.mouseinterval), //TODO manual click
                                                 "Failed to set the mouse click interval.");
 
-            Curses.mousemask((uint) RawMouseEvent.EventType.ReportPosition | (uint) RawMouseEvent.EventType.All,
+            Curses.mousemask((uint) CursesMouseEvent.EventType.ReportPosition | (uint) CursesMouseEvent.EventType.All,
                       out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 

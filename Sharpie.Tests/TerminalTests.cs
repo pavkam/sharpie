@@ -215,7 +215,7 @@ public class TerminalTests
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
         var expMask =
-            enabled ? (uint) RawMouseEvent.EventType.ReportPosition | (uint) RawMouseEvent.EventType.All : 0;
+            enabled ? (uint) CursesMouseEvent.EventType.ReportPosition | (uint) CursesMouseEvent.EventType.All : 0;
 
         _cursesMock.Verify(v => v.mousemask(expMask, out It.Ref<uint>.IsAny), Times.Once);
     }

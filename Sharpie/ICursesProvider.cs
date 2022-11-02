@@ -373,16 +373,16 @@ public interface ICursesProvider
 
     void nofilter();
 
-    int getcchar(ComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
+    int getcchar(CursesComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
         IntPtr reserved);
 
     string? key_name(uint @char);
 
     int killwchar(out uint @char);
 
-    int pecho_wchar(IntPtr window, ComplexChar @char);
+    int pecho_wchar(IntPtr window, CursesComplexChar @char);
 
-    int setcchar(out ComplexChar @char, string text, uint attrs, ushort colorPair,
+    int setcchar(out CursesComplexChar @char, string text, uint attrs, ushort colorPair,
         IntPtr reserved);
 
     int slk_set(int labelIndex, string title, int align);
@@ -391,47 +391,47 @@ public interface ICursesProvider
 
     int unget_wch(uint @char);
 
-    int wadd_wch(IntPtr window, ComplexChar @char);
+    int wadd_wch(IntPtr window, CursesComplexChar @char);
 
-    int wadd_wchnstr(IntPtr window, ComplexChar[] str, int count);
+    int wadd_wchnstr(IntPtr window, CursesComplexChar[] str, int count);
 
     int waddnwstr(IntPtr window, string text, int length);
 
-    int wbkgrnd(IntPtr window, ComplexChar @char);
+    int wbkgrnd(IntPtr window, CursesComplexChar @char);
 
-    void wbkgrndset(IntPtr window, ComplexChar @char);
+    void wbkgrndset(IntPtr window, CursesComplexChar @char);
 
-    int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
-        ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner,
-        ComplexChar bottomRightCorner);
+    int wborder_set(IntPtr window, CursesComplexChar leftSide, CursesComplexChar rightSide, CursesComplexChar topSide,
+        CursesComplexChar bottomSide, CursesComplexChar topLeftCorner, CursesComplexChar topRightCorner, CursesComplexChar bottomLeftCorner,
+        CursesComplexChar bottomRightCorner);
 
-    int wecho_wchar(IntPtr window, ComplexChar @char);
+    int wecho_wchar(IntPtr window, CursesComplexChar @char);
 
     int wget_wch(IntPtr window, out uint @char);
 
-    int wgetbkgrnd(IntPtr window, out ComplexChar @char);
+    int wgetbkgrnd(IntPtr window, out CursesComplexChar @char);
 
     int wgetn_wstr(IntPtr window, StringBuilder dest, int length);
 
-    int whline_set(IntPtr window, ComplexChar @char, int count);
+    int whline_set(IntPtr window, CursesComplexChar @char, int count);
 
-    int win_wch(IntPtr window, out ComplexChar @char);
+    int win_wch(IntPtr window, out CursesComplexChar @char);
 
-    int win_wchnstr(IntPtr window, ComplexChar[] @char, int length);
+    int win_wchnstr(IntPtr window, CursesComplexChar[] @char, int length);
 
     int winnwstr(IntPtr window, StringBuilder dest, int length);
 
     int wins_nwstr(IntPtr window, string text, int length);
 
-    int wins_wch(IntPtr window, ComplexChar @char);
+    int wins_wch(IntPtr window, CursesComplexChar @char);
 
-    string? wunctrl(ComplexChar @char);
+    string? wunctrl(CursesComplexChar @char);
 
-    int wvline_set(IntPtr window, ComplexChar @char, int count);
+    int wvline_set(IntPtr window, CursesComplexChar @char, int count);
 
-    int getmouse(out RawMouseEvent @event);
+    int getmouse(out CursesMouseEvent @event);
 
-    int ungetmouse(RawMouseEvent @event);
+    int ungetmouse(CursesMouseEvent @event);
 
     int mousemask(uint newMask, out uint oldMask);
 

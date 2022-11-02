@@ -34,7 +34,7 @@ namespace Sharpie;
 /// <summary>
 ///     Internal Curses key constants.
 /// </summary>
-public enum RawKey: uint
+public enum CursesKey: uint
 {
     Yes = 0x100,
     Backspace = 0x107,

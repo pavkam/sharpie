@@ -37,7 +37,7 @@ using System.Runtime.InteropServices;
 ///     Internal Curses mouse event.
 /// </summary>
 [PublicAPI, StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage]
-public struct RawMouseEvent
+public struct CursesMouseEvent
 {
     private const int CursesMouseShift = 6;
 

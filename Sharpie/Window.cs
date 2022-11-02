@@ -770,7 +770,7 @@ public class Window: IDisposable
         }
 
         count = Math.Min(count, Size.Width - CaretPosition.X);
-        var arr = new ComplexChar[count];
+        var arr = new CursesComplexChar[count];
 
         Curses.win_wchnstr(Handle, arr, count)
               .Check(nameof(Curses.win_wchnstr), "Failed to get the text from the window.");
@@ -1034,27 +1034,27 @@ public class Window: IDisposable
             return null;
         }
 
-        if (result == (int) RawKey.Yes)
+        if (result == (int) CursesKey.Yes)
         {
             switch (keyCode)
             {
-                case (uint) RawKey.Resize:
+                case (uint) CursesKey.Resize:
                     return new TerminalResizeEvent(Screen.Size);
-                case (uint) RawKey.Mouse:
+                case (uint) CursesKey.Mouse:
                     if (Curses.getmouse(out var mouseEvent)
                               .Failed())
                     {
                         return null;
                     }
 
-                    if (((RawMouseEvent.EventType) mouseEvent.buttonState).HasFlag(RawMouseEvent.EventType
+                    if (((CursesMouseEvent.EventType) mouseEvent.buttonState).HasFlag(CursesMouseEvent.EventType
                             .ReportPosition))
                     {
                         return new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
                     }
 
                     var (button, state, mouseMod) =
-                        Helpers.ConvertMouseActionEvent((RawMouseEvent.EventType) mouseEvent.buttonState);
+                        Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) mouseEvent.buttonState);
 
                     return button == 0
                         ? null

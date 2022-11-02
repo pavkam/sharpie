@@ -149,8 +149,8 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
                    .Returns((IntPtr _, out uint kc) =>
                    {
-                       kc = (uint) RawKey.Resize;
-                       return (int) RawKey.Yes;
+                       kc = (uint) CursesKey.Resize;
+                       return (int) CursesKey.Yes;
                    });
         
         _cursesMock.Setup(s => s.getmaxy(_screen.Handle))
@@ -185,7 +185,7 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.getmaxy(_window.Handle))
                    .Returns(6);
 
-        var e = SimulateEvent((int) RawKey.Yes, (uint) RawKey.Resize);
+        var e = SimulateEvent((int) CursesKey.Yes, (uint) CursesKey.Resize);
         e.Type.ShouldBe(EventType.TerminalResize);
         ((TerminalResizeEvent) e).Size.ShouldBe(new(20, 10));
         
@@ -199,15 +199,15 @@ public class WindowEventsTests
     public void ProcessEvents_SkipsInvalidMouseEvents()
     {
         var skip = true;
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<RawMouseEvent>.IsAny))
-                   .Returns((out RawMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
+                   .Returns((out CursesMouseEvent me) =>
                    {
                        var dx = skip ? 10 : 0;
                        me = new()
                        {
                            x = dx + 5,
                            y = dx + 6,
-                           buttonState = (uint) RawMouseEvent.EventType.ReportPosition | 0x100
+                           buttonState = (uint) CursesMouseEvent.EventType.ReportPosition | 0x100
                        };
 
                        var res = skip ? -1 : 0;
@@ -216,47 +216,47 @@ public class WindowEventsTests
                        return res;
                    });
 
-        var e = SimulateEventRep(2, (int) RawKey.Yes, (uint) RawKey.Mouse);
+        var e = SimulateEventRep(2, (int) CursesKey.Yes, (uint) CursesKey.Mouse);
         e.Type.ShouldBe(EventType.MouseMove);
         ((MouseMoveEvent) e).Position.ShouldBe(new(5, 6));
 
-        _cursesMock.Verify(v => v.getmouse(out It.Ref<RawMouseEvent>.IsAny), Times.Exactly(2));
+        _cursesMock.Verify(v => v.getmouse(out It.Ref<CursesMouseEvent>.IsAny), Times.Exactly(2));
     }
 
     [TestMethod]
     public void ProcessEvents_SkipsMouseEvents_WithBadButtons()
     {
         var skip = true;
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<RawMouseEvent>.IsAny))
-                   .Returns((out RawMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
+                   .Returns((out CursesMouseEvent me) =>
                    {
-                       me = new() { buttonState = skip ? 0 : (uint) RawMouseEvent.EventType.Button2Released };
+                       me = new() { buttonState = skip ? 0 : (uint) CursesMouseEvent.EventType.Button2Released };
 
                        skip = !skip;
                        return 0;
                    });
 
-        var e = SimulateEventRep(2, (int) RawKey.Yes, (int) RawKey.Mouse);
+        var e = SimulateEventRep(2, (int) CursesKey.Yes, (int) CursesKey.Mouse);
         ((MouseActionEvent) e).Button.ShouldBe(MouseButton.Button2);
 
-        _cursesMock.Verify(v => v.getmouse(out It.Ref<RawMouseEvent>.IsAny), Times.Exactly(2));
+        _cursesMock.Verify(v => v.getmouse(out It.Ref<CursesMouseEvent>.IsAny), Times.Exactly(2));
     }
 
     [TestMethod]
     public void ProcessEvents_ProcessesMouseMoveEvents()
     {
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<RawMouseEvent>.IsAny))
-                   .Returns((out RawMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
+                   .Returns((out CursesMouseEvent me) =>
                    {
                        me = new()
                        {
-                           x = 5, y = 6, buttonState = (uint) RawMouseEvent.EventType.ReportPosition | 0x100
+                           x = 5, y = 6, buttonState = (uint) CursesMouseEvent.EventType.ReportPosition | 0x100
                        };
 
                        return 0;
                    });
 
-        var e = SimulateEvent((int) RawKey.Yes, (uint) RawKey.Mouse);
+        var e = SimulateEvent((int) CursesKey.Yes, (uint) CursesKey.Mouse);
         e.Type.ShouldBe(EventType.MouseMove);
         ((MouseMoveEvent) e).Position.ShouldBe(new(5, 6));
     }
@@ -264,21 +264,21 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ProcessesMouseActionEvents()
     {
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<RawMouseEvent>.IsAny))
-                   .Returns((out RawMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
+                   .Returns((out CursesMouseEvent me) =>
                    {
                        me = new()
                        {
                            x = 5,
                            y = 6,
-                           buttonState = (uint) RawMouseEvent.EventType.Button1Clicked |
-                               (uint) RawMouseEvent.EventType.Alt
+                           buttonState = (uint) CursesMouseEvent.EventType.Button1Clicked |
+                               (uint) CursesMouseEvent.EventType.Alt
                        };
 
                        return 0;
                    });
 
-        var e = SimulateEvent((int) RawKey.Yes, (uint) RawKey.Mouse);
+        var e = SimulateEvent((int) CursesKey.Yes, (uint) CursesKey.Mouse);
         e.Type.ShouldBe(EventType.MouseAction);
 
         var me = (MouseActionEvent) e;
@@ -294,7 +294,7 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent((int) RawKey.Yes, (uint) RawKey.AltUp);
+        var e = SimulateEvent((int) CursesKey.Yes, (uint) CursesKey.AltUp);
         e.Type.ShouldBe(EventType.KeyPress);
 
         var me = (KeyEvent) e;
@@ -378,14 +378,14 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ConsidersBreaksInSequences()
     {
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<RawMouseEvent>.IsAny))
-                   .Returns((out RawMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
+                   .Returns((out CursesMouseEvent me) =>
                    {
-                       me = new() { buttonState = (uint)RawMouseEvent.EventType.ReportPosition};
+                       me = new() { buttonState = (uint)CursesMouseEvent.EventType.ReportPosition};
                        return 0;
                    });
         
-        var e = SimulateEvents(3, (0, '\x001b'), ((int) RawKey.Yes, (int) RawKey.Mouse), (0, 'A'));
+        var e = SimulateEvents(3, (0, '\x001b'), ((int) CursesKey.Yes, (int) CursesKey.Mouse), (0, 'A'));
         e.Length.ShouldBe(3);
         
         ((KeyEvent)e[0]).Key.ShouldBe(Key.Escape);

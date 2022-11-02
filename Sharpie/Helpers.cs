@@ -110,7 +110,7 @@ public static class Helpers
     /// <param name="style">The style to apply.</param>
     /// <returns>The complex character.</returns>
     /// <exception cref="CursesException">Thrown if <paramref name="rune" /> failed to convert to a complex char.</exception>
-    public static ComplexChar ToComplexChar(this ICursesProvider curses, Rune rune, Style style)
+    public static CursesComplexChar ToComplexChar(this ICursesProvider curses, Rune rune, Style style)
     {
         // Convert the special characters into Unicode.
         if (rune.IsAscii && rune.Value != '\n' && rune.Value != '\b' && rune.Value != '\t' && rune.Value <= 0x1F ||
@@ -132,7 +132,7 @@ public static class Helpers
     /// <param name="curses">The curses backend.</param>
     /// <param name="char">The char to breakdown.</param>
     /// <returns>The rune and the style.</returns>
-    public static (Rune rune, Style style) FromComplexChar(this ICursesProvider curses, ComplexChar @char)
+    public static (Rune rune, Style style) FromComplexChar(this ICursesProvider curses, CursesComplexChar @char)
     {
         // Use Curses to decode the characters. Assume 10 characters is enough in the string.
 
@@ -151,125 +151,125 @@ public static class Helpers
     /// <returns>The key and modifiers combination.</returns>
     internal static (Key key, ModifierKey modifierKey) ConvertKeyPressEvent(uint keyCode)
     {
-        return (RawKey) keyCode switch
+        return (CursesKey) keyCode switch
         {
-            RawKey.F1 => (Key.F1, ModifierKey.None),
-            RawKey.F2 => (Key.F2, ModifierKey.None),
-            RawKey.F3 => (Key.F3, ModifierKey.None),
-            RawKey.F4 => (Key.F4, ModifierKey.None),
-            RawKey.F5 => (Key.F5, ModifierKey.None),
-            RawKey.F6 => (Key.F6, ModifierKey.None),
-            RawKey.F7 => (Key.F7, ModifierKey.None),
-            RawKey.F8 => (Key.F8, ModifierKey.None),
-            RawKey.F9 => (Key.F9, ModifierKey.None),
-            RawKey.F10 => (Key.F10, ModifierKey.None),
-            RawKey.F11 => (Key.F11, ModifierKey.None),
-            RawKey.F12 => (Key.F12, ModifierKey.None),
-            RawKey.ShiftF1 => (Key.F1, ModifierKey.Shift),
-            RawKey.ShiftF2 => (Key.F2, ModifierKey.Shift),
-            RawKey.ShiftF3 => (Key.F3, ModifierKey.Shift),
-            RawKey.ShiftF4 => (Key.F4, ModifierKey.Shift),
-            RawKey.ShiftF5 => (Key.F5, ModifierKey.Shift),
-            RawKey.ShiftF6 => (Key.F6, ModifierKey.Shift),
-            RawKey.ShiftF7 => (Key.F7, ModifierKey.Shift),
-            RawKey.ShiftF8 => (Key.F8, ModifierKey.Shift),
-            RawKey.ShiftF9 => (Key.F9, ModifierKey.Shift),
-            RawKey.ShiftF10 => (Key.F10, ModifierKey.Shift),
-            RawKey.ShiftF11 => (Key.F11, ModifierKey.Shift),
-            RawKey.ShiftF12 => (Key.F12, ModifierKey.Shift),
-            RawKey.CtrlF1 => (Key.F1, ModifierKey.Ctrl),
-            RawKey.CtrlF2 => (Key.F2, ModifierKey.Ctrl),
-            RawKey.CtrlF3 => (Key.F3, ModifierKey.Ctrl),
-            RawKey.CtrlF4 => (Key.F4, ModifierKey.Ctrl),
-            RawKey.CtrlF5 => (Key.F5, ModifierKey.Ctrl),
-            RawKey.CtrlF6 => (Key.F6, ModifierKey.Ctrl),
-            RawKey.CtrlF7 => (Key.F7, ModifierKey.Ctrl),
-            RawKey.CtrlF8 => (Key.F8, ModifierKey.Ctrl),
-            RawKey.CtrlF9 => (Key.F9, ModifierKey.Ctrl),
-            RawKey.CtrlF10 => (Key.F10, ModifierKey.Ctrl),
-            RawKey.CtrlF11 => (Key.F11, ModifierKey.Ctrl),
-            RawKey.CtrlF12 => (Key.F12, ModifierKey.Ctrl),
-            RawKey.AltF1 => (Key.F1, ModifierKey.Alt),
-            RawKey.AltF2 => (Key.F2, ModifierKey.Alt),
-            RawKey.AltF3 => (Key.F3, ModifierKey.Alt),
-            RawKey.AltF4 => (Key.F4, ModifierKey.Alt),
-            RawKey.AltF5 => (Key.F5, ModifierKey.Alt),
-            RawKey.AltF6 => (Key.F6, ModifierKey.Alt),
-            RawKey.AltF7 => (Key.F7, ModifierKey.Alt),
-            RawKey.AltF8 => (Key.F8, ModifierKey.Alt),
-            RawKey.AltF9 => (Key.F9, ModifierKey.Alt),
-            RawKey.AltF10 => (Key.F10, ModifierKey.Alt),
-            RawKey.AltF11 => (Key.F11, ModifierKey.Alt),
-            RawKey.AltF12 => (Key.F12, ModifierKey.Alt),
-            RawKey.ShiftAltF1 => (Key.F1, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF2 => (Key.F2, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF3 => (Key.F3, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF4 => (Key.F4, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF5 => (Key.F5, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF6 => (Key.F6, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF7 => (Key.F7, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF8 => (Key.F8, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF9 => (Key.F9, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF10 => (Key.F10, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF11 => (Key.F11, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.ShiftAltF12 => (Key.F12, ModifierKey.Alt | ModifierKey.Shift),
-            RawKey.Up => (Key.KeypadUp, ModifierKey.None),
-            RawKey.Down => (Key.KeypadDown, ModifierKey.None),
-            RawKey.Left => (Key.KeypadLeft, ModifierKey.None),
-            RawKey.Right => (Key.KeypadRight, ModifierKey.None),
-            RawKey.Home => (Key.KeypadHome, ModifierKey.None),
-            RawKey.End => (Key.KeypadEnd, ModifierKey.None),
-            RawKey.PageDown => (Key.KeypadPageDown, ModifierKey.None),
-            RawKey.PageUp => (Key.KeypadPageUp, ModifierKey.None),
-            RawKey.DeleteChar => (Key.DeleteChar, ModifierKey.None),
-            RawKey.InsertChar => (Key.InsertChar, ModifierKey.None),
-            RawKey.Tab => (Key.Tab, ModifierKey.None),
-            RawKey.BackTab => (Key.Tab, ModifierKey.Shift),
-            RawKey.Backspace => (Key.Backspace, ModifierKey.None),
-            RawKey.ShiftUp => (Key.KeypadUp, ModifierKey.Shift),
-            RawKey.ShiftDown => (Key.KeypadDown, ModifierKey.Shift),
-            RawKey.ShiftLeft => (Key.KeypadLeft, ModifierKey.Shift),
-            RawKey.ShiftRight => (Key.KeypadRight, ModifierKey.Shift),
-            RawKey.ShiftHome => (Key.KeypadHome, ModifierKey.Shift),
-            RawKey.ShiftEnd => (Key.KeypadEnd, ModifierKey.Shift),
-            RawKey.ShiftPageDown => (Key.KeypadPageDown, ModifierKey.Shift),
-            RawKey.ShiftPageUp => (Key.KeypadPageUp, ModifierKey.Shift),
-            RawKey.AltUp => (Key.KeypadUp, ModifierKey.Alt),
-            RawKey.AltDown => (Key.KeypadDown, ModifierKey.Alt),
-            RawKey.AltLeft => (Key.KeypadLeft, ModifierKey.Alt),
-            RawKey.AltRight => (Key.KeypadRight, ModifierKey.Alt),
-            RawKey.AltHome => (Key.KeypadHome, ModifierKey.Alt),
-            RawKey.AltEnd => (Key.KeypadEnd, ModifierKey.Alt),
-            RawKey.AltPageDown => (Key.KeypadPageDown, ModifierKey.Alt),
-            RawKey.AltPageUp => (Key.KeypadPageUp, ModifierKey.Alt),
-            RawKey.CtrlUp => (Key.KeypadUp, ModifierKey.Ctrl),
-            RawKey.CtrlDown => (Key.KeypadDown, ModifierKey.Ctrl),
-            RawKey.CtrlLeft => (Key.KeypadLeft, ModifierKey.Ctrl),
-            RawKey.CtrlRight => (Key.KeypadRight, ModifierKey.Ctrl),
-            RawKey.CtrlHome => (Key.KeypadHome, ModifierKey.Ctrl),
-            RawKey.CtrlEnd => (Key.KeypadEnd, ModifierKey.Ctrl),
-            RawKey.CtrlPageDown => (Key.KeypadPageDown, ModifierKey.Ctrl),
-            RawKey.CtrlPageUp => (Key.KeypadPageUp, ModifierKey.Ctrl),
-            RawKey.ShiftCtrlUp => (Key.KeypadUp, ModifierKey.Shift | ModifierKey.Ctrl),
-            RawKey.ShiftCtrlDown => (Key.KeypadDown, ModifierKey.Shift | ModifierKey.Ctrl),
-            RawKey.ShiftCtrlLeft => (Key.KeypadLeft, ModifierKey.Shift | ModifierKey.Ctrl),
-            RawKey.ShiftCtrlRight => (Key.KeypadRight, ModifierKey.Shift | ModifierKey.Ctrl),
-            RawKey.ShiftCtrlHome => (Key.KeypadHome, ModifierKey.Shift | ModifierKey.Ctrl),
-            RawKey.ShiftCtrlEnd => (Key.KeypadEnd, ModifierKey.Shift | ModifierKey.Ctrl),
-            RawKey.ShiftCtrlPageDown => (Key.KeypadPageDown, ModifierKey.Shift | ModifierKey.Ctrl),
-            RawKey.ShiftCtrlPageUp => (Key.KeypadPageUp, ModifierKey.Shift | ModifierKey.Ctrl),
-            RawKey.ShiftAltUp => (Key.KeypadUp, ModifierKey.Shift | ModifierKey.Alt),
-            RawKey.ShiftAltDown => (Key.KeypadDown, ModifierKey.Shift | ModifierKey.Alt),
-            RawKey.ShiftAltLeft => (Key.KeypadLeft, ModifierKey.Shift | ModifierKey.Alt),
-            RawKey.ShiftAltRight => (Key.KeypadRight, ModifierKey.Shift | ModifierKey.Alt),
-            RawKey.ShiftAltPageDown => (Key.KeypadPageDown, ModifierKey.Shift | ModifierKey.Alt),
-            RawKey.ShiftAltPageUp => (Key.KeypadPageUp, ModifierKey.Shift | ModifierKey.Alt),
-            RawKey.ShiftAltHome => (Key.KeypadHome, ModifierKey.Shift | ModifierKey.Alt),
-            RawKey.ShiftAltEnd => (Key.KeypadEnd, ModifierKey.Shift | ModifierKey.Alt),
-            RawKey.AltCtrlPageDown => (Key.KeypadPageDown, ModifierKey.Alt | ModifierKey.Ctrl),
-            RawKey.AltCtrlPageUp => (Key.KeypadPageUp, ModifierKey.Alt | ModifierKey.Ctrl),
-            RawKey.AltCtrlHome => (Key.KeypadHome, ModifierKey.Alt | ModifierKey.Ctrl),
-            RawKey.AltCtrlEnd => (Key.KeypadEnd, ModifierKey.Alt | ModifierKey.Ctrl),
+            CursesKey.F1 => (Key.F1, ModifierKey.None),
+            CursesKey.F2 => (Key.F2, ModifierKey.None),
+            CursesKey.F3 => (Key.F3, ModifierKey.None),
+            CursesKey.F4 => (Key.F4, ModifierKey.None),
+            CursesKey.F5 => (Key.F5, ModifierKey.None),
+            CursesKey.F6 => (Key.F6, ModifierKey.None),
+            CursesKey.F7 => (Key.F7, ModifierKey.None),
+            CursesKey.F8 => (Key.F8, ModifierKey.None),
+            CursesKey.F9 => (Key.F9, ModifierKey.None),
+            CursesKey.F10 => (Key.F10, ModifierKey.None),
+            CursesKey.F11 => (Key.F11, ModifierKey.None),
+            CursesKey.F12 => (Key.F12, ModifierKey.None),
+            CursesKey.ShiftF1 => (Key.F1, ModifierKey.Shift),
+            CursesKey.ShiftF2 => (Key.F2, ModifierKey.Shift),
+            CursesKey.ShiftF3 => (Key.F3, ModifierKey.Shift),
+            CursesKey.ShiftF4 => (Key.F4, ModifierKey.Shift),
+            CursesKey.ShiftF5 => (Key.F5, ModifierKey.Shift),
+            CursesKey.ShiftF6 => (Key.F6, ModifierKey.Shift),
+            CursesKey.ShiftF7 => (Key.F7, ModifierKey.Shift),
+            CursesKey.ShiftF8 => (Key.F8, ModifierKey.Shift),
+            CursesKey.ShiftF9 => (Key.F9, ModifierKey.Shift),
+            CursesKey.ShiftF10 => (Key.F10, ModifierKey.Shift),
+            CursesKey.ShiftF11 => (Key.F11, ModifierKey.Shift),
+            CursesKey.ShiftF12 => (Key.F12, ModifierKey.Shift),
+            CursesKey.CtrlF1 => (Key.F1, ModifierKey.Ctrl),
+            CursesKey.CtrlF2 => (Key.F2, ModifierKey.Ctrl),
+            CursesKey.CtrlF3 => (Key.F3, ModifierKey.Ctrl),
+            CursesKey.CtrlF4 => (Key.F4, ModifierKey.Ctrl),
+            CursesKey.CtrlF5 => (Key.F5, ModifierKey.Ctrl),
+            CursesKey.CtrlF6 => (Key.F6, ModifierKey.Ctrl),
+            CursesKey.CtrlF7 => (Key.F7, ModifierKey.Ctrl),
+            CursesKey.CtrlF8 => (Key.F8, ModifierKey.Ctrl),
+            CursesKey.CtrlF9 => (Key.F9, ModifierKey.Ctrl),
+            CursesKey.CtrlF10 => (Key.F10, ModifierKey.Ctrl),
+            CursesKey.CtrlF11 => (Key.F11, ModifierKey.Ctrl),
+            CursesKey.CtrlF12 => (Key.F12, ModifierKey.Ctrl),
+            CursesKey.AltF1 => (Key.F1, ModifierKey.Alt),
+            CursesKey.AltF2 => (Key.F2, ModifierKey.Alt),
+            CursesKey.AltF3 => (Key.F3, ModifierKey.Alt),
+            CursesKey.AltF4 => (Key.F4, ModifierKey.Alt),
+            CursesKey.AltF5 => (Key.F5, ModifierKey.Alt),
+            CursesKey.AltF6 => (Key.F6, ModifierKey.Alt),
+            CursesKey.AltF7 => (Key.F7, ModifierKey.Alt),
+            CursesKey.AltF8 => (Key.F8, ModifierKey.Alt),
+            CursesKey.AltF9 => (Key.F9, ModifierKey.Alt),
+            CursesKey.AltF10 => (Key.F10, ModifierKey.Alt),
+            CursesKey.AltF11 => (Key.F11, ModifierKey.Alt),
+            CursesKey.AltF12 => (Key.F12, ModifierKey.Alt),
+            CursesKey.ShiftAltF1 => (Key.F1, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF2 => (Key.F2, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF3 => (Key.F3, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF4 => (Key.F4, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF5 => (Key.F5, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF6 => (Key.F6, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF7 => (Key.F7, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF8 => (Key.F8, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF9 => (Key.F9, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF10 => (Key.F10, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF11 => (Key.F11, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.ShiftAltF12 => (Key.F12, ModifierKey.Alt | ModifierKey.Shift),
+            CursesKey.Up => (Key.KeypadUp, ModifierKey.None),
+            CursesKey.Down => (Key.KeypadDown, ModifierKey.None),
+            CursesKey.Left => (Key.KeypadLeft, ModifierKey.None),
+            CursesKey.Right => (Key.KeypadRight, ModifierKey.None),
+            CursesKey.Home => (Key.KeypadHome, ModifierKey.None),
+            CursesKey.End => (Key.KeypadEnd, ModifierKey.None),
+            CursesKey.PageDown => (Key.KeypadPageDown, ModifierKey.None),
+            CursesKey.PageUp => (Key.KeypadPageUp, ModifierKey.None),
+            CursesKey.DeleteChar => (Key.DeleteChar, ModifierKey.None),
+            CursesKey.InsertChar => (Key.InsertChar, ModifierKey.None),
+            CursesKey.Tab => (Key.Tab, ModifierKey.None),
+            CursesKey.BackTab => (Key.Tab, ModifierKey.Shift),
+            CursesKey.Backspace => (Key.Backspace, ModifierKey.None),
+            CursesKey.ShiftUp => (Key.KeypadUp, ModifierKey.Shift),
+            CursesKey.ShiftDown => (Key.KeypadDown, ModifierKey.Shift),
+            CursesKey.ShiftLeft => (Key.KeypadLeft, ModifierKey.Shift),
+            CursesKey.ShiftRight => (Key.KeypadRight, ModifierKey.Shift),
+            CursesKey.ShiftHome => (Key.KeypadHome, ModifierKey.Shift),
+            CursesKey.ShiftEnd => (Key.KeypadEnd, ModifierKey.Shift),
+            CursesKey.ShiftPageDown => (Key.KeypadPageDown, ModifierKey.Shift),
+            CursesKey.ShiftPageUp => (Key.KeypadPageUp, ModifierKey.Shift),
+            CursesKey.AltUp => (Key.KeypadUp, ModifierKey.Alt),
+            CursesKey.AltDown => (Key.KeypadDown, ModifierKey.Alt),
+            CursesKey.AltLeft => (Key.KeypadLeft, ModifierKey.Alt),
+            CursesKey.AltRight => (Key.KeypadRight, ModifierKey.Alt),
+            CursesKey.AltHome => (Key.KeypadHome, ModifierKey.Alt),
+            CursesKey.AltEnd => (Key.KeypadEnd, ModifierKey.Alt),
+            CursesKey.AltPageDown => (Key.KeypadPageDown, ModifierKey.Alt),
+            CursesKey.AltPageUp => (Key.KeypadPageUp, ModifierKey.Alt),
+            CursesKey.CtrlUp => (Key.KeypadUp, ModifierKey.Ctrl),
+            CursesKey.CtrlDown => (Key.KeypadDown, ModifierKey.Ctrl),
+            CursesKey.CtrlLeft => (Key.KeypadLeft, ModifierKey.Ctrl),
+            CursesKey.CtrlRight => (Key.KeypadRight, ModifierKey.Ctrl),
+            CursesKey.CtrlHome => (Key.KeypadHome, ModifierKey.Ctrl),
+            CursesKey.CtrlEnd => (Key.KeypadEnd, ModifierKey.Ctrl),
+            CursesKey.CtrlPageDown => (Key.KeypadPageDown, ModifierKey.Ctrl),
+            CursesKey.CtrlPageUp => (Key.KeypadPageUp, ModifierKey.Ctrl),
+            CursesKey.ShiftCtrlUp => (Key.KeypadUp, ModifierKey.Shift | ModifierKey.Ctrl),
+            CursesKey.ShiftCtrlDown => (Key.KeypadDown, ModifierKey.Shift | ModifierKey.Ctrl),
+            CursesKey.ShiftCtrlLeft => (Key.KeypadLeft, ModifierKey.Shift | ModifierKey.Ctrl),
+            CursesKey.ShiftCtrlRight => (Key.KeypadRight, ModifierKey.Shift | ModifierKey.Ctrl),
+            CursesKey.ShiftCtrlHome => (Key.KeypadHome, ModifierKey.Shift | ModifierKey.Ctrl),
+            CursesKey.ShiftCtrlEnd => (Key.KeypadEnd, ModifierKey.Shift | ModifierKey.Ctrl),
+            CursesKey.ShiftCtrlPageDown => (Key.KeypadPageDown, ModifierKey.Shift | ModifierKey.Ctrl),
+            CursesKey.ShiftCtrlPageUp => (Key.KeypadPageUp, ModifierKey.Shift | ModifierKey.Ctrl),
+            CursesKey.ShiftAltUp => (Key.KeypadUp, ModifierKey.Shift | ModifierKey.Alt),
+            CursesKey.ShiftAltDown => (Key.KeypadDown, ModifierKey.Shift | ModifierKey.Alt),
+            CursesKey.ShiftAltLeft => (Key.KeypadLeft, ModifierKey.Shift | ModifierKey.Alt),
+            CursesKey.ShiftAltRight => (Key.KeypadRight, ModifierKey.Shift | ModifierKey.Alt),
+            CursesKey.ShiftAltPageDown => (Key.KeypadPageDown, ModifierKey.Shift | ModifierKey.Alt),
+            CursesKey.ShiftAltPageUp => (Key.KeypadPageUp, ModifierKey.Shift | ModifierKey.Alt),
+            CursesKey.ShiftAltHome => (Key.KeypadHome, ModifierKey.Shift | ModifierKey.Alt),
+            CursesKey.ShiftAltEnd => (Key.KeypadEnd, ModifierKey.Shift | ModifierKey.Alt),
+            CursesKey.AltCtrlPageDown => (Key.KeypadPageDown, ModifierKey.Alt | ModifierKey.Ctrl),
+            CursesKey.AltCtrlPageUp => (Key.KeypadPageUp, ModifierKey.Alt | ModifierKey.Ctrl),
+            CursesKey.AltCtrlHome => (Key.KeypadHome, ModifierKey.Alt | ModifierKey.Ctrl),
+            CursesKey.AltCtrlEnd => (Key.KeypadEnd, ModifierKey.Alt | ModifierKey.Ctrl),
             var _ => (Key.Unknown, ModifierKey.None)
         };
     }
@@ -280,104 +280,104 @@ public static class Helpers
     /// <param name="type">The Curses mouse event type.</param>
     /// <returns>The mouse action attributes.</returns>
     internal static (MouseButton button, MouseButtonState state, ModifierKey modifierKey) ConvertMouseActionEvent(
-        RawMouseEvent.EventType type)
+        CursesMouseEvent.EventType type)
     {
         var modifierKey = ModifierKey.None;
         var button = (MouseButton) 0;
         var state = (MouseButtonState) 0;
 
-        if (type.HasFlag(RawMouseEvent.EventType.Alt))
+        if (type.HasFlag(CursesMouseEvent.EventType.Alt))
         {
             modifierKey |= ModifierKey.Alt;
         }
 
-        if (type.HasFlag(RawMouseEvent.EventType.Ctrl))
+        if (type.HasFlag(CursesMouseEvent.EventType.Ctrl))
         {
             modifierKey |= ModifierKey.Ctrl;
         }
 
-        if (type.HasFlag(RawMouseEvent.EventType.Shift))
+        if (type.HasFlag(CursesMouseEvent.EventType.Shift))
         {
             modifierKey |= ModifierKey.Shift;
         }
 
-        if (type.HasFlag(RawMouseEvent.EventType.Button1Released))
+        if (type.HasFlag(CursesMouseEvent.EventType.Button1Released))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.Released;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button1Pressed))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button1Pressed))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.Pressed;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button1Clicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button1Clicked))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.Clicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button1DoubleClicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button1DoubleClicked))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.DoubleClicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button1TripleClicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button1TripleClicked))
         {
             button = MouseButton.Button1;
             state = MouseButtonState.TripleClicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button2Released))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2Released))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.Released;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button2Pressed))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2Pressed))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.Pressed;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button2Clicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2Clicked))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.Clicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button2DoubleClicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2DoubleClicked))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.DoubleClicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button2TripleClicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2TripleClicked))
         {
             button = MouseButton.Button2;
             state = MouseButtonState.TripleClicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button3Released))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3Released))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.Released;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button3Pressed))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3Pressed))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.Pressed;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button3Clicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3Clicked))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.Clicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button3DoubleClicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3DoubleClicked))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.DoubleClicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button3TripleClicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3TripleClicked))
         {
             button = MouseButton.Button3;
             state = MouseButtonState.TripleClicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button4Released))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4Released))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.Released;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button4Pressed))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4Pressed))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.Pressed;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button4Clicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4Clicked))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.Clicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button4DoubleClicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4DoubleClicked))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.DoubleClicked;
-        } else if (type.HasFlag(RawMouseEvent.EventType.Button4TripleClicked))
+        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4TripleClicked))
         {
             button = MouseButton.Button4;
             state = MouseButtonState.TripleClicked;
@@ -425,9 +425,9 @@ public static class Helpers
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and 0x1b } => 
                         new(Key.Escape, new('\0'), curses.key_name((uint) ch), e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: '\t' } => 
-                        new(Key.Tab, new('\0'), curses.key_name((uint) RawKey.Tab), e0.Modifiers),
+                        new(Key.Tab, new('\0'), curses.key_name((uint) CursesKey.Tab), e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => 
-                        new(Key.Backspace, new('\0'), curses.key_name((uint) RawKey.Backspace), e0.Modifiers),
+                        new(Key.Backspace, new('\0'), curses.key_name((uint) CursesKey.Backspace), e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and >= 1 and <= 26 } => 
                         new(Key.Character, new(ch + 'A' - 1), curses.key_name((uint) ch + 'A' - 1), ModifierKey.Ctrl | e0.Modifiers),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: 0 } => 
@@ -440,9 +440,9 @@ public static class Helpers
                 return e1 switch
                 {
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: 'f' } => new(
-                        Key.KeypadRight, new('\0'), curses.key_name((uint) RawKey.AltRight), e1.Modifiers | ModifierKey.Alt),
+                        Key.KeypadRight, new('\0'), curses.key_name((uint) CursesKey.AltRight), e1.Modifiers | ModifierKey.Alt),
                     { Key: Key.Character, Char.IsAscii: true, Char.Value: 'b' } => new(
-                        Key.KeypadLeft, new('\0'), curses.key_name((uint) RawKey.AltLeft), e1.Modifiers | ModifierKey.Alt),
+                        Key.KeypadLeft, new('\0'), curses.key_name((uint) CursesKey.AltLeft), e1.Modifiers | ModifierKey.Alt),
                     { Key: Key.Unknown or Key.Escape } => null,
                     { Key: not Key.Character } => new(e1.Key, e1.Char, e1.Name,
                         e1.Modifiers | ModifierKey.Alt),
@@ -458,15 +458,15 @@ public static class Helpers
                 {
                     var (rawKey, key) = (char) e2.Char.Value switch
                     {
-                        'A' => (RawKey.Up, Key.KeypadUp),
-                        'B' => (RawKey.Down, Key.KeypadDown),
-                        'C' => (RawKey.Right, Key.KeypadRight),
-                        'D' => (RawKey.Left, Key.KeypadLeft),
-                        'E' => (RawKey.PageUp, Key.KeypadPageUp),
-                        'F' => (RawKey.End, Key.KeypadEnd),
-                        'G' => (RawKey.PageDown, Key.KeypadPageDown),
-                        'H' => (RawKey.Home, Key.KeypadHome),
-                        var _ => (RawKey.Yes, Key.Unknown)
+                        'A' => (CursesKey.Up, Key.KeypadUp),
+                        'B' => (CursesKey.Down, Key.KeypadDown),
+                        'C' => (CursesKey.Right, Key.KeypadRight),
+                        'D' => (CursesKey.Left, Key.KeypadLeft),
+                        'E' => (CursesKey.PageUp, Key.KeypadPageUp),
+                        'F' => (CursesKey.End, Key.KeypadEnd),
+                        'G' => (CursesKey.PageDown, Key.KeypadPageDown),
+                        'H' => (CursesKey.Home, Key.KeypadHome),
+                        var _ => (CursesKey.Yes, Key.Unknown)
                     };
                 
                     var mods = (ModifierKey)(e1.Char.Value - '1');

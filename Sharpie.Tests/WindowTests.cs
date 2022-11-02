@@ -443,9 +443,9 @@ public class WindowTests
     [TestMethod]
     public void Background_Get_Returns_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
                        out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
-                   .Returns((ComplexChar _, StringBuilder sb, out uint attrs, out ushort colorPair,
+                   .Returns((CursesComplexChar _, StringBuilder sb, out uint attrs, out ushort colorPair,
                        IntPtr _) =>
                    {
                        sb.Append('H');
@@ -459,13 +459,13 @@ public class WindowTests
         bk.style.ShouldBe(new() { Attributes = VideoAttribute.Dim, ColorMixture = new() { Handle = 10 } });
         bk.@char.ShouldBe(new('H'));
 
-        _cursesMock.Verify(v => v.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<ComplexChar>.IsAny), Times.Once);
+        _cursesMock.Verify(v => v.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<CursesComplexChar>.IsAny), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Background_Get_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<ComplexChar>.IsAny))
+        _cursesMock.Setup(s => s.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<CursesComplexChar>.IsAny))
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
@@ -480,16 +480,16 @@ public class WindowTests
         w.Background = (new('a'), new() { Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 22 } });
 
         _cursesMock.Verify(
-            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, "a", (uint) VideoAttribute.Blink, 22, It.IsAny<IntPtr>()),
+            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, "a", (uint) VideoAttribute.Blink, 22, It.IsAny<IntPtr>()),
             Times.Once);
 
-        _cursesMock.Verify(v => v.wbkgrnd(new(1), It.IsAny<ComplexChar>()));
+        _cursesMock.Verify(v => v.wbkgrnd(new(1), It.IsAny<CursesComplexChar>()));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Background_Set_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wbkgrnd(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>()))
+        _cursesMock.Setup(s => s.wbkgrnd(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()))
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
@@ -1196,7 +1196,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawVerticalLine_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wvline_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<int>()))
+        _cursesMock.Setup(s => s.wvline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()))
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
@@ -1212,10 +1212,10 @@ public class WindowTests
             new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 22 } });
 
         _cursesMock.Verify(
-            s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(), It.IsAny<ushort>(),
+            s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(), It.IsAny<ushort>(),
                 IntPtr.Zero), Times.Once);
 
-        _cursesMock.Verify(v => v.wvline_set(new(1), It.IsAny<ComplexChar>(), 3), Times.Once);
+        _cursesMock.Verify(v => v.wvline_set(new(1), It.IsAny<CursesComplexChar>(), 3), Times.Once);
     }
 
     [TestMethod]
@@ -1255,7 +1255,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawHorizontalLine_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.whline_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<int>()))
+        _cursesMock.Setup(s => s.whline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()))
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
@@ -1271,10 +1271,10 @@ public class WindowTests
             new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 22 } });
 
         _cursesMock.Verify(
-            s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(), It.IsAny<ushort>(),
+            s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(), It.IsAny<ushort>(),
                 IntPtr.Zero), Times.Once);
 
-        _cursesMock.Verify(v => v.whline_set(new(1), It.IsAny<ComplexChar>(), 3), Times.Once);
+        _cursesMock.Verify(v => v.whline_set(new(1), It.IsAny<CursesComplexChar>(), 3), Times.Once);
     }
 
     [TestMethod]
@@ -1307,9 +1307,9 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawBorder_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wborder_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
-                       It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
-                       It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>()))
+        _cursesMock.Setup(s => s.wborder_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(),
+                       It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(),
+                       It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>()))
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
@@ -1326,13 +1326,13 @@ public class WindowTests
             new('a'), new('a'), new('a'), Style.Default);
 
         _cursesMock.Verify(
-            s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(), It.IsAny<ushort>(),
+            s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(), It.IsAny<ushort>(),
                 IntPtr.Zero), Times.Exactly(8));
 
         _cursesMock.Verify(
-            s => s.wborder_set(new(1), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
-                It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
-                It.IsAny<ComplexChar>()), Times.Once);
+            s => s.wborder_set(new(1), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(),
+                It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(),
+                It.IsAny<CursesComplexChar>()), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -1711,7 +1711,7 @@ public class WindowTests
         var w = new Window(_cursesMock.Object, null, new(1));
         w.WriteText("", Style.Default);
 
-        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Never);
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Never);
     }
 
     [TestMethod]
@@ -1720,15 +1720,15 @@ public class WindowTests
         var w = new Window(_cursesMock.Object, null, new(1));
         w.WriteText("12345", Style.Default);
 
-        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Exactly(5));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void WriteText_Succeeds_IfCursesNotFailedForAllChars()
     {
         var count = 0;
-        _cursesMock.Setup(s => s.wadd_wch(new(1), It.IsAny<ComplexChar>()))
-                   .Returns((IntPtr _, ComplexChar _) => count++ < 3 ? -1 : 0);
+        _cursesMock.Setup(s => s.wadd_wch(new(1), It.IsAny<CursesComplexChar>()))
+                   .Returns((IntPtr _, CursesComplexChar _) => count++ < 3 ? -1 : 0);
 
         var w = new Window(_cursesMock.Object, null, new(1));
         w.WriteText("12345", Style.Default);
@@ -1740,7 +1740,7 @@ public class WindowTests
         var w = new Window(_cursesMock.Object, null, new(1));
         w.WriteText("12345");
 
-        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Exactly(5));
     }
     
     [TestMethod]
@@ -1788,9 +1788,9 @@ public class WindowTests
         _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
                    .Returns(0);
 
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
                        out It.Ref<ushort>.IsAny, IntPtr.Zero))
-                   .Returns((ComplexChar _, StringBuilder sb, out uint a, out ushort cp,
+                   .Returns((CursesComplexChar _, StringBuilder sb, out uint a, out ushort cp,
                        IntPtr _) =>
                    {
                        sb.Append('a');
@@ -1804,7 +1804,7 @@ public class WindowTests
         w.GetText(15)
          .Length.ShouldBe(15);
 
-        _cursesMock.Verify(v => v.win_wchnstr(new(1), It.IsAny<ComplexChar[]>(), 15), Times.Once);
+        _cursesMock.Verify(v => v.win_wchnstr(new(1), It.IsAny<CursesComplexChar[]>(), 15), Times.Once);
     }
 
     [TestMethod]
@@ -1816,9 +1816,9 @@ public class WindowTests
         _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
                    .Returns(0);
 
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
                        out It.Ref<ushort>.IsAny, IntPtr.Zero))
-                   .Returns((ComplexChar _, StringBuilder sb, out uint a, out ushort cp,
+                   .Returns((CursesComplexChar _, StringBuilder sb, out uint a, out ushort cp,
                        IntPtr _) =>
                    {
                        sb.Append('a');
@@ -1832,7 +1832,7 @@ public class WindowTests
         w.GetText(50)
          .Length.ShouldBe(20);
 
-        _cursesMock.Verify(v => v.win_wchnstr(new(1), It.IsAny<ComplexChar[]>(), 20), Times.Once);
+        _cursesMock.Verify(v => v.win_wchnstr(new(1), It.IsAny<CursesComplexChar[]>(), 20), Times.Once);
     }
 
     [TestMethod]
@@ -1845,9 +1845,9 @@ public class WindowTests
                    .Returns(0);
 
         var ch = 'a';
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
                        out It.Ref<ushort>.IsAny, IntPtr.Zero))
-                   .Returns((ComplexChar _, StringBuilder sb, out uint a, out ushort cp,
+                   .Returns((CursesComplexChar _, StringBuilder sb, out uint a, out ushort cp,
                        IntPtr _) =>
                    {
                        sb.Append(ch);
@@ -1898,7 +1898,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
                    .Returns(0);
 
-        _cursesMock.Setup(s => s.win_wchnstr(It.IsAny<IntPtr>(), It.IsAny<ComplexChar[]>(), It.IsAny<int>()))
+        _cursesMock.Setup(s => s.win_wchnstr(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar[]>(), It.IsAny<int>()))
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
