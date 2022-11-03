@@ -3,7 +3,7 @@ using Sharpie;
 
 [assembly: ExcludeFromCodeCoverage]
 
-var terminal = new Terminal(NativeCursesProvider.Instance, new());
+using var terminal = new Terminal(NativeCursesProvider.Instance, new());
 
 terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, StandardColor.Blue);
 terminal.Screen.DrawBorder();
@@ -28,6 +28,3 @@ foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
         break;
     }
 }
-Console.WriteLine();
-// Dispose this thing.
-terminal.Dispose();

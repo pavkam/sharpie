@@ -151,8 +151,14 @@ public sealed class Terminal: IDisposable
         }
 
         // Disable meta interpretation and ignore the result.
-        curses.meta(IntPtr.Zero, false); //TODO test this
+        curses.meta(IntPtr.Zero, false);
         _terminalInstanceActive = true;
+        
+        // Register standard keyboard middlewares.
+        _screen.Use(KeyboardMiddleware.SpecialCharacterResolver);
+        _screen.Use(KeyboardMiddleware.ControlKeyResolver);
+        _screen.Use(KeyboardMiddleware.AltKeyResolver);
+        _screen.Use(KeyboardMiddleware.KeyPadModifiersResolver);
     }
 
     /// <summary>

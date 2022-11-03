@@ -60,6 +60,7 @@ public class WindowEventsTests
     {
         _cursesMock = new();
         _screen = new(_cursesMock.Object, new(1));
+        
         _window = new(_cursesMock.Object, _screen, new(2));
         _source = new();
     }
@@ -289,8 +290,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedCharacterEvents()
+    public void ProcessEvents_ProcessesTranslatedCharacters_IfMiddlewareInstalled()
     {
+        _screen.Use(KeyboardMiddleware.SpecialCharacterResolver);
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -304,8 +306,24 @@ public class WindowEventsTests
     }
     
     [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedSeq2Events()
+    public void ProcessEvents_DoesNotProcessesTranslatedCharacters_IfNoMiddlewareInstalled()
     {
+        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+                   .Returns("yup");
+
+        var e = SimulateEvent(0, '\t');
+        e.Type.ShouldBe(EventType.KeyPress);
+
+        var me = (KeyEvent) e;
+        me.Char.ShouldBe(new('\t'));
+        me.Key.ShouldBe(Key.Character);
+        me.Name.ShouldBe("yup");
+    }
+    
+    [TestMethod]
+    public void ProcessEvents_ProcessesTranslatedSeq2Events_IfMiddlewareInstalled()
+    {
+        _screen.Use(KeyboardMiddleware.AltKeyResolver);
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -320,8 +338,35 @@ public class WindowEventsTests
     }
     
     [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedSeq3Events()
+    public void ProcessEvents_DoeNotProcessTranslatedSeq2Events_IfMiddlewareNotInstalled()
     {
+        _cursesMock.Setup(s => s.key_name('a'))
+                   .Returns("-a-");
+        _cursesMock.Setup(s => s.key_name(0x1b))
+                   .Returns("-esc-");
+        
+        var e = SimulateEvents(2, _window, (0, '\x001b'), (0, 'a'));
+        e.Length.ShouldBe(2);
+
+        var me0 = (KeyEvent) e[0];
+        me0.Char.ShouldBe(new(0x1b));
+        me0.Modifiers.ShouldBe(ModifierKey.None);
+        me0.Key.ShouldBe(Key.Character);
+        me0.Name.ShouldBe("-esc-");
+        
+        var me1 = (KeyEvent) e[1];
+        me1.Char.ShouldBe(new('a'));
+        me1.Modifiers.ShouldBe(ModifierKey.None);
+        me1.Key.ShouldBe(Key.Character);
+        me1.Name.ShouldBe("-a-");
+    }
+    
+    [TestMethod]
+    public void ProcessEvents_ProcessesTranslatedSeq3Events_IfMiddlewareInstalled()
+    {
+        _screen.Use(KeyboardMiddleware.AltKeyResolver);
+        _screen.Use(KeyboardMiddleware.KeyPadModifiersResolver);
+
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -338,6 +383,8 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ConsidersEscapeBreaks()
     {
+        _screen.Use(KeyboardMiddleware.SpecialCharacterResolver);
+        
         var e = SimulateEvents(2, _window, (0, '\x001b'), (0, '\x001b'));
         e.Length.ShouldBe(2);
         ((KeyEvent)e[0]).Key.ShouldBe(Key.Escape);
@@ -357,7 +404,9 @@ public class WindowEventsTests
         var e = SimulateEvents(3, _window, (0, '\x001b'), ((int) CursesKey.Yes, (int) CursesKey.Mouse), (0, 'A'));
         e.Length.ShouldBe(3);
         
-        ((KeyEvent)e[0]).Key.ShouldBe(Key.Escape);
+        ((KeyEvent)e[0]).Key.ShouldBe(Key.Character);
+        ((KeyEvent)e[0]).Char.ShouldBe(new(0x1b));
+
         e[1].Type.ShouldBe(EventType.MouseMove);
         ((KeyEvent)e[2]).Char.ShouldBe(new('A'));
     }

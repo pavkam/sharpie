@@ -37,14 +37,87 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class Screen: Window
 {
+    private KeyboardMiddlewareNextFunc _keyboardMiddlewareHead = (_, _) =>
+    {
+    };
+    
     /// <summary>
     ///     Initializes the screen using a window handle. The <paramref name="windowHandle" /> should be
     ///     a screen and not a regular window.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="windowHandle">The screen handle.</param>
-    internal Screen(ICursesProvider curses, IntPtr windowHandle): base(curses, null, windowHandle) { }
+    internal Screen(ICursesProvider curses, IntPtr windowHandle): base(curses, null, windowHandle)
+    {
+    }
 
+    /// <summary>
+    /// Registers a keyboard middleware into the input pipeline.
+    /// </summary>
+    /// <param name="middlewareFunc">The middleware to register</param>
+    /// <exception cref="ArgumentNullException">Thrown is <paramref name="middlewareFunc"/> is <c>null</c>.</exception>
+    public void Use(KeyboardMiddlewareFunc middlewareFunc)
+    {
+        if (middlewareFunc == null)
+        {
+            throw new ArgumentNullException(nameof(middlewareFunc));
+        }
+
+        var nextFunc = _keyboardMiddlewareHead;
+        _keyboardMiddlewareHead = (sequence, nameFunc) =>
+        {
+            middlewareFunc(sequence, nameFunc, nextFunc);
+        };
+    }
+
+    /// <summary>
+    ///     Collects and resolves key sequences. Method used internally for input event processing.
+    /// </summary>
+    /// <param name="sequence">The sequence to collect keys into.</param>
+    /// <param name="newKey">The key that was pressed.</param>
+    /// <returns>The sequence of keys that was resolved and that can be passed to the user.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="sequence"/> is <c>null</c>.</exception>
+    internal IList<KeyEvent> CollectAndResolveKeySequence(IList<KeyEvent> sequence, KeyEvent newKey)
+    {
+        if (sequence == null)
+        {
+            throw new ArgumentNullException(nameof(sequence));
+        }
+
+        if (newKey == null)
+        {
+            throw new ArgumentNullException(nameof(newKey));
+        }
+
+        IList<KeyEvent> output = ArraySegment<KeyEvent>.Empty;
+        
+        // When an escape character arrives, flush the previous sequence, ready or not.
+        var isEscape = newKey is { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x1b };
+        if (isEscape)
+        {
+            output = sequence.ToList();
+            sequence.Clear();
+        }
+                
+        // Cache the key and invoke the middlewares
+        sequence.Add(newKey);
+        var origSequence = sequence.ToList();
+        _keyboardMiddlewareHead(sequence, Curses.key_name);
+
+        // Check if the sequence was processed.
+        if (!isEscape &&
+            (sequence.Count == 1 ||
+                origSequence.Count != sequence.Count ||
+                origSequence.Where((t, i) => !t.Equals(sequence[i]))
+                            .Any()))
+        {
+            output = sequence.ToList();
+            sequence.Clear();
+        }
+
+        return output;
+    }
+        
     /// <inheritdoc cref="Window.Location" />
     /// <remarks>
     ///     The setter will always throw in this implementation as moving the main window is not allowed.

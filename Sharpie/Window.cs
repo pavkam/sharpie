@@ -1078,85 +1078,40 @@ public class Window: IDisposable
     /// <returns>An enumerable.</returns>
     public IEnumerable<Event> ProcessEvents(CancellationToken cancellationToken)
     {
-        var activeEscapeSeq = new List<KeyEvent>();
+        var keySequence = new List<KeyEvent>();
         while (!cancellationToken.IsCancellationRequested)
         {
             // Read next event. Perform a quick wait if we have an active escape sequence being collected.
-            var @event = ReadNextEvent(activeEscapeSeq.Count > 0);
-            @event = (@event is KeyEvent kv ? Helpers.TryConvertKeyEventSequence(Curses, new[] { kv }) : null) ?? @event;
+            var @event = ReadNextEvent(keySequence.Count > 0);
 
-            switch (@event)
+            IList<KeyEvent> flushSequence = keySequence;
+            if (@event is KeyEvent ke)
             {
-                case null:
-                    // If no event was read but we have an active sequence, flush it.
-                    if (activeEscapeSeq.Count > 0)
-                    {
-                        foreach (var e in activeEscapeSeq)
-                        {
-                            yield return e;
-                        }
-
-                        activeEscapeSeq.Clear();
-                    }
-
-                    // And continue.
-                    continue;
-                case KeyEvent ke:
-                    if (ke.Key == Key.Escape)
-                    {
-                        // Possible escape sequence. Flush the existing events if not processed by now.
-                        if (activeEscapeSeq.Count > 0)
-                        {
-                            foreach (var e in activeEscapeSeq)
-                            {
-                                yield return e;
-                            }
-
-                            activeEscapeSeq.Clear();
-                        }
-
-                        // Add the escape into the escape sequence collector.
-                        activeEscapeSeq.Add(ke);
-                        continue;
-                    }
-
-                    if (activeEscapeSeq.Count > 0)
-                    {
-                        // Collect the key as we're in an active escape sequence collection mode.
-                        activeEscapeSeq.Add(ke);
-                        
-                        // Try to process the potential sequence.
-                        var outEvent = Helpers.TryConvertKeyEventSequence(Curses, activeEscapeSeq);
-                        if (outEvent != null)
-                        {
-                            activeEscapeSeq.Clear();
-                            activeEscapeSeq.Add(outEvent);
-                        }
-                        
-                        continue;
-                    }
-
-                    break;
-                default:
-                    // If it is any other event type and we have an active escape sequence building, flush it.
-                    if (activeEscapeSeq.Count > 0)
-                    {
-                        foreach (var e in activeEscapeSeq)
-                        {
-                            yield return e;
-                        }
-
-                        activeEscapeSeq.Clear();
-                    }
-
-                    break;
+                // Silence the event as we already treat this specially.
+                @event = null;
+                flushSequence = Screen.CollectAndResolveKeySequence(keySequence, ke);
+            }
+            
+            // Flush the key sequence if anything in there.
+            if (flushSequence.Count > 0)
+            {
+                foreach (var e in flushSequence)
+                {
+                    yield return e;
+                }
+                
+                flushSequence.Clear();
             }
 
-            yield return @event;
-
-            if (@event.Type == EventType.TerminalResize)
+            // Flush the event if anything in there.
+            if (@event is not null)
             {
-                Screen.ForceInvalidateAndRefresh();
+                yield return @event;
+
+                if (@event.Type == EventType.TerminalResize)
+                {
+                    Screen.ForceInvalidateAndRefresh();
+                }
             }
         }
     }
