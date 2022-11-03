@@ -1078,29 +1078,31 @@ public class Window: IDisposable
     /// <returns>An enumerable.</returns>
     public IEnumerable<Event> ProcessEvents(CancellationToken cancellationToken)
     {
-        var keySequence = new List<KeyEvent>();
+        var escapeSequence = new List<KeyEvent>();
         while (!cancellationToken.IsCancellationRequested)
         {
-            // Read next event. Perform a quick wait if we have an active escape sequence being collected.
-            var @event = ReadNextEvent(keySequence.Count > 0);
-
-            IList<KeyEvent> flushSequence = keySequence;
+            var @event = ReadNextEvent(escapeSequence.Count > 0);
             if (@event is KeyEvent ke)
             {
-                // Silence the event as we already treat this specially.
-                @event = null;
-                flushSequence = Screen.CollectAndResolveKeySequence(keySequence, ke);
-            }
-            
-            // Flush the key sequence if anything in there.
-            if (flushSequence.Count > 0)
-            {
-                foreach (var e in flushSequence)
+                escapeSequence.Add(ke);
+                var count = Screen.TryResolveKeySequence(escapeSequence, false, out var resolved);
+                if (resolved != null)
                 {
-                    yield return e;
+                    escapeSequence.RemoveRange(0, count);
                 }
                 
-                flushSequence.Clear();
+                @event = resolved;
+            } else
+            {
+                while (escapeSequence.Count > 0)
+                {
+                    var count = Screen.TryResolveKeySequence(escapeSequence, true, out var resolved);
+                    Debug.Assert(count > 0);
+                    Debug.Assert(resolved != null);
+                    
+                    escapeSequence.RemoveRange(0, count);
+                    yield return resolved;
+                }
             }
 
             // Flush the event if anything in there.

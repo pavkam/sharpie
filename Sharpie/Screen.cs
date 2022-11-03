@@ -37,9 +37,7 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class Screen: Window
 {
-    private KeyboardMiddlewareNextFunc _keyboardMiddlewareHead = (_, _) =>
-    {
-    };
+    private readonly IList<ResolveEscapeSequenceFunc> _resolvers = new List<ResolveEscapeSequenceFunc>();
     
     /// <summary>
     ///     Initializes the screen using a window handle. The <paramref name="windowHandle" /> should be
@@ -52,70 +50,51 @@ public sealed class Screen: Window
     }
 
     /// <summary>
-    /// Registers a keyboard middleware into the input pipeline.
+    ///     Registers a key sequence resolver into the input pipeline.
     /// </summary>
-    /// <param name="middlewareFunc">The middleware to register</param>
-    /// <exception cref="ArgumentNullException">Thrown is <paramref name="middlewareFunc"/> is <c>null</c>.</exception>
-    public void Use(KeyboardMiddlewareFunc middlewareFunc)
+    /// <param name="resolver">The resolver to register.</param>
+    /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver"/> is <c>null</c>.</exception>
+    public void Use(ResolveEscapeSequenceFunc resolver)
     {
-        if (middlewareFunc == null)
+        if (resolver == null)
         {
-            throw new ArgumentNullException(nameof(middlewareFunc));
+            throw new ArgumentNullException(nameof(resolver));
         }
 
-        var nextFunc = _keyboardMiddlewareHead;
-        _keyboardMiddlewareHead = (sequence, nameFunc) =>
-        {
-            middlewareFunc(sequence, nameFunc, nextFunc);
-        };
+        _resolvers.Add(resolver);
     }
 
     /// <summary>
-    ///     Collects and resolves key sequences. Method used internally for input event processing.
+    ///     Tries to resolve a sequence of keys suing the registered resolvers.
     /// </summary>
-    /// <param name="sequence">The sequence to collect keys into.</param>
-    /// <param name="newKey">The key that was pressed.</param>
-    /// <returns>The sequence of keys that was resolved and that can be passed to the user.</returns>
+    /// <param name="sequence">The sequence that contains the collected keys.</param>
+    /// <param name="best">Force the return of the best match.</param>
+    /// <param name="resolved">The resolved key (if any).</param>
+    /// <returns>The number of matching keys. A zero value indicates no matches.</returns>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="sequence"/> is <c>null</c>.</exception>
-    internal IList<KeyEvent> CollectAndResolveKeySequence(IList<KeyEvent> sequence, KeyEvent newKey)
+    internal int TryResolveKeySequence(IList<KeyEvent> sequence, bool best, out KeyEvent? resolved)
     {
         if (sequence == null)
         {
             throw new ArgumentNullException(nameof(sequence));
         }
 
-        if (newKey == null)
+        var max = sequence.Count > 0 ? 1 : 0;
+        resolved = sequence.Count > 0 ? sequence[0] : null;
+        foreach (var resolver in _resolvers)
         {
-            throw new ArgumentNullException(nameof(newKey));
+            var (resKey, resCount) = resolver(sequence, Curses.key_name);
+            if (resCount >= max && resolved != null)
+            {
+                if (resKey != null || !best)
+                {
+                    max = resCount;
+                    resolved = resKey;
+                }
+            }
         }
 
-        IList<KeyEvent> output = ArraySegment<KeyEvent>.Empty;
-        
-        // When an escape character arrives, flush the previous sequence, ready or not.
-        var isEscape = newKey is { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x1b };
-        if (isEscape)
-        {
-            output = sequence.ToList();
-            sequence.Clear();
-        }
-                
-        // Cache the key and invoke the middlewares
-        sequence.Add(newKey);
-        var origSequence = sequence.ToList();
-        _keyboardMiddlewareHead(sequence, Curses.key_name);
-
-        // Check if the sequence was processed.
-        if (!isEscape &&
-            (sequence.Count == 1 ||
-                origSequence.Count != sequence.Count ||
-                origSequence.Where((t, i) => !t.Equals(sequence[i]))
-                            .Any()))
-        {
-            output = sequence.ToList();
-            sequence.Clear();
-        }
-
-        return output;
+        return max;
     }
         
     /// <inheritdoc cref="Window.Location" />

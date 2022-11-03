@@ -155,10 +155,10 @@ public sealed class Terminal: IDisposable
         _terminalInstanceActive = true;
         
         // Register standard keyboard middlewares.
-        _screen.Use(KeyboardMiddleware.SpecialCharacterResolver);
-        _screen.Use(KeyboardMiddleware.ControlKeyResolver);
-        _screen.Use(KeyboardMiddleware.AltKeyResolver);
-        _screen.Use(KeyboardMiddleware.KeyPadModifiersResolver);
+        _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
+        _screen.Use(KeySequenceResolver.ControlKeyResolver);
+        _screen.Use(KeySequenceResolver.AltKeyResolver);
+        _screen.Use(KeySequenceResolver.KeyPadModifiersResolver);
     }
 
     /// <summary>

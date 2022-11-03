@@ -290,9 +290,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedCharacters_IfMiddlewareInstalled()
+    public void ProcessEvents_ProcessesTranslatedCharacters_IfResolverInstalled()
     {
-        _screen.Use(KeyboardMiddleware.SpecialCharacterResolver);
+        _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -321,9 +321,9 @@ public class WindowEventsTests
     }
     
     [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedSeq2Events_IfMiddlewareInstalled()
+    public void ProcessEvents_ProcessesTranslatedSeq2Events_IfResolverInstalled()
     {
-        _screen.Use(KeyboardMiddleware.AltKeyResolver);
+        _screen.Use(KeySequenceResolver.AltKeyResolver);
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -338,7 +338,7 @@ public class WindowEventsTests
     }
     
     [TestMethod]
-    public void ProcessEvents_DoeNotProcessTranslatedSeq2Events_IfMiddlewareNotInstalled()
+    public void ProcessEvents_DoeNotProcessTranslatedSeq2Events_IfResolverNotInstalled()
     {
         _cursesMock.Setup(s => s.key_name('a'))
                    .Returns("-a-");
@@ -362,11 +362,11 @@ public class WindowEventsTests
     }
     
     [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedSeq3Events_IfMiddlewareInstalled()
+    public void ProcessEvents_ProcessesTranslatedSeq4Events_IfResolverInstalled()
     {
-        _screen.Use(KeyboardMiddleware.AltKeyResolver);
-        _screen.Use(KeyboardMiddleware.KeyPadModifiersResolver);
-
+        _screen.Use(KeySequenceResolver.AltKeyResolver);
+        _screen.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -381,9 +381,24 @@ public class WindowEventsTests
     }
     
     [TestMethod]
+    public void ProcessEvents_ProcessesTranslatedSeq4Events_IfResolverInstalledOpposite()
+    {
+        _screen.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        _screen.Use(KeySequenceResolver.AltKeyResolver);
+
+        var e = SimulateEvent((0, '\x001b'), (0, 'O'), (0, '8'), (0, 'A'));
+        e.Type.ShouldBe(EventType.KeyPress);
+
+        var me = (KeyEvent) e;
+        me.Char.ShouldBe(new('\0'));
+        me.Modifiers.ShouldBe(ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
+        me.Key.ShouldBe(Key.KeypadUp);
+    }
+    
+    [TestMethod]
     public void ProcessEvents_ConsidersEscapeBreaks()
     {
-        _screen.Use(KeyboardMiddleware.SpecialCharacterResolver);
+        _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
         
         var e = SimulateEvents(2, _window, (0, '\x001b'), (0, '\x001b'));
         e.Length.ShouldBe(2);
