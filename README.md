@@ -1,4 +1,4 @@
-[![Build and Test](https://github.com/pavkam/sharpie/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/build-and-test.yml)
+[![Build, Test and Release](https://github.com/pavkam/sharpie/actions/workflows/build-test-and-release.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/build-test-and-release.yml)
 
 # Sharpie
 **Sharpie** is a terminal manipulation library based on Curses and targeting .NET 6 (dotnet core).
