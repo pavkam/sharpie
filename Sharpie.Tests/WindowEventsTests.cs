@@ -269,7 +269,7 @@ public class WindowEventsTests
 
         var me = (KeyEvent) e;
         me.Modifiers.ShouldBe(ModifierKey.Alt);
-        me.Char.ShouldBe(new('\0'));
+        me.Char.ShouldBe(new(ControlCharacter.Null));
         me.Key.ShouldBe(Key.KeypadUp);
         me.Name.ShouldBe("yup");
     }
@@ -296,11 +296,11 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent(0, '\t');
+        var e = SimulateEvent(0, ControlCharacter.Tab);
         e.Type.ShouldBe(EventType.KeyPress);
 
         var me = (KeyEvent) e;
-        me.Char.ShouldBe(new('\0'));
+        me.Char.ShouldBe(new(ControlCharacter.Null));
         me.Key.ShouldBe(Key.Tab);
         me.Name.ShouldBe("yup");
     }
@@ -311,11 +311,11 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent(0, '\t');
+        var e = SimulateEvent(0, ControlCharacter.Tab);
         e.Type.ShouldBe(EventType.KeyPress);
 
         var me = (KeyEvent) e;
-        me.Char.ShouldBe(new('\t'));
+        me.Char.ShouldBe(new(ControlCharacter.Tab));
         me.Key.ShouldBe(Key.Character);
         me.Name.ShouldBe("yup");
     }
@@ -327,7 +327,7 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent((0, '\x001b'), (0, 'a'));
+        var e = SimulateEvent((0, ControlCharacter.Escape), (0, 'a'));
         e.Type.ShouldBe(EventType.KeyPress);
 
         var me = (KeyEvent) e;
@@ -342,14 +342,14 @@ public class WindowEventsTests
     {
         _cursesMock.Setup(s => s.key_name('a'))
                    .Returns("-a-");
-        _cursesMock.Setup(s => s.key_name(0x1b))
+        _cursesMock.Setup(s => s.key_name(ControlCharacter.Escape))
                    .Returns("-esc-");
         
-        var e = SimulateEvents(2, _window, (0, '\x001b'), (0, 'a'));
+        var e = SimulateEvents(2, _window, (0, ControlCharacter.Escape), (0, 'a'));
         e.Length.ShouldBe(2);
 
         var me0 = (KeyEvent) e[0];
-        me0.Char.ShouldBe(new(0x1b));
+        me0.Char.ShouldBe(new(ControlCharacter.Escape));
         me0.Modifiers.ShouldBe(ModifierKey.None);
         me0.Key.ShouldBe(Key.Character);
         me0.Name.ShouldBe("-esc-");
@@ -370,14 +370,14 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent((0, '\x001b'), (0, 'O'), (0, '8'), (0, 'A'));
+        var e = SimulateEvent((0, ControlCharacter.Escape), (0, 'O'), (0, '8'), (0, 'A'));
         e.Type.ShouldBe(EventType.KeyPress);
 
         var me = (KeyEvent) e;
-        me.Char.ShouldBe(new('\0'));
+        me.Char.ShouldBe(new(ControlCharacter.Null));
         me.Modifiers.ShouldBe(ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
         me.Key.ShouldBe(Key.KeypadUp);
-        me.Name.ShouldBe("yup");
+        me.Name.ShouldBe("yup"); 
     }
 
     [TestMethod]
@@ -385,7 +385,7 @@ public class WindowEventsTests
     {
         _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
         
-        var e = SimulateEvents(2, _window, (0, '\x001b'), (0, '\x001b'));
+        var e = SimulateEvents(2, _window, (0, ControlCharacter.Escape), (0, ControlCharacter.Escape));
         e.Length.ShouldBe(2);
         ((KeyEvent)e[0]).Key.ShouldBe(Key.Escape);
         ((KeyEvent)e[1]).Key.ShouldBe(Key.Escape);
@@ -402,11 +402,11 @@ public class WindowEventsTests
                        return 0;
                    });
         
-        var e = SimulateEvents(3, _window, (0, '\x001b'), ((int) CursesKey.Yes, (int) CursesKey.Mouse), (0, 'A'));
+        var e = SimulateEvents(3, _window, (0, ControlCharacter.Escape), ((int) CursesKey.Yes, (int) CursesKey.Mouse), (0, 'A'));
         e.Length.ShouldBe(3);
         
         ((KeyEvent)e[0]).Key.ShouldBe(Key.Character);
-        ((KeyEvent)e[0]).Char.ShouldBe(new(0x1b));
+        ((KeyEvent)e[0]).Char.ShouldBe(new(ControlCharacter.Escape));
 
         e[1].Type.ShouldBe(EventType.MouseMove);
         ((KeyEvent)e[2]).Char.ShouldBe(new('A'));

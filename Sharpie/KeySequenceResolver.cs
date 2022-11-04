@@ -77,13 +77,13 @@ public static class KeySequenceResolver
         var one = sequence.Count > 0 ? sequence[0] : null;
         var key = one switch
         {
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and 0x1b } => new(Key.Escape, new('\0'),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and ControlCharacter.Escape } => new(Key.Escape, new(ControlCharacter.Null),
                 nameFunc((uint) ch), one.Modifiers),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: '\t' } => new(Key.Tab, new('\0'),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Tab } => new(Key.Tab, new(ControlCharacter.Null),
                 nameFunc((uint) CursesKey.Tab), one.Modifiers),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and '\n' } => new(Key.Return, new('\0'),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and ControlCharacter.NewLine } => new(Key.Return, new(ControlCharacter.Null),
                 nameFunc((uint) ch), one.Modifiers),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => new(Key.Backspace, new('\0'),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => new(Key.Backspace, new(ControlCharacter.Null),
                 nameFunc((uint) CursesKey.Backspace), one.Modifiers),
             var _ => (KeyEvent?) null
         };
@@ -150,7 +150,7 @@ public static class KeySequenceResolver
 
 
         var one = sequence.Count > 0 ? sequence[0] : null;
-        if (one is not { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x1b, Modifiers: ModifierKey.None })
+        if (one is not { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Escape, Modifiers: ModifierKey.None })
         {
             return (null, 0);
         }
@@ -158,12 +158,12 @@ public static class KeySequenceResolver
         var two = sequence.Count > 1 ? sequence[1] : null;
         KeyEvent? key = two switch
         {
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: 'f', Modifiers: var mod } => new(Key.KeypadRight, new('\0'),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: 'f', Modifiers: var mod } => new(Key.KeypadRight, new(ControlCharacter.Null),
                 nameFunc((uint) CursesKey.AltRight), mod | ModifierKey.Alt),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: 'b', Modifiers: var mod  } => new(Key.KeypadLeft, new('\0'),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: 'b', Modifiers: var mod  } => new(Key.KeypadLeft, new(ControlCharacter.Null),
                 nameFunc((uint) CursesKey.AltLeft), mod | ModifierKey.Alt),
             { Key: Key.Unknown or Key.Escape } => null,
-            { Key: var k and not Key.Character, Modifiers: var mod, Name: var n } => new(k, new('\0'), n, mod | ModifierKey.Alt),
+            { Key: var k and not Key.Character, Modifiers: var mod, Name: var n } => new(k, new(ControlCharacter.Null), n, mod | ModifierKey.Alt),
             { Char: var ch, Modifiers: var mod } => new(Key.Character, ch, nameFunc((uint) two.Char.Value), mod | ModifierKey.Alt),
             var _ => null
         };
@@ -208,7 +208,7 @@ public static class KeySequenceResolver
         }
 
         var one = sequence.Count > 0 ? sequence[0] : null;
-        if (one is not { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x1b })
+        if (one is not { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Escape })
         {
             return (null, 0);
         }
@@ -234,6 +234,6 @@ public static class KeySequenceResolver
         var (rawKey, key) = KeyMap[arrow];
 
         var mods = (ModifierKey) (csiModifier - '1');
-        return (new(key, new('\0'), nameFunc((uint) rawKey), mods), 4);
+        return (new(key, new(ControlCharacter.Null), nameFunc((uint) rawKey), mods), 4);
     }
 }

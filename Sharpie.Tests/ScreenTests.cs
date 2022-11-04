@@ -379,17 +379,17 @@ public class ScreenTests
     {
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("alex");
-        _screen1.Use((_, nameFunc) => (new(Key.F1, new('\0'), nameFunc(1), ModifierKey.None), 1));
+        _screen1.Use((_, nameFunc) => (new(Key.F1, new(ControlCharacter.Null), nameFunc(1), ModifierKey.None), 1));
         var done = _screen1.TryResolveKeySequence(new[]
         {
-            new KeyEvent(Key.KeypadHome, new('\0'), "test-1", ModifierKey.None),
-            new KeyEvent(Key.F6, new('\0'), "test-2", ModifierKey.None)
+            new KeyEvent(Key.KeypadHome, new(ControlCharacter.Null), "test-1", ModifierKey.None),
+            new KeyEvent(Key.F6, new(ControlCharacter.Null), "test-2", ModifierKey.None)
         }, false, out var resolved);
         
         done.ShouldBe(1);
         resolved.ShouldNotBeNull();
         resolved.Key.ShouldBe(Key.F1);
-        resolved.Char.ShouldBe(new(0));
+        resolved.Char.ShouldBe(new(ControlCharacter.Null));
         resolved.Modifiers.ShouldBe(ModifierKey.None);
         resolved.Name.ShouldBe("alex");
     }
@@ -418,8 +418,8 @@ public class ScreenTests
     [TestMethod]
     public void TryResolveKeySequence_ReturnsKeysIndividually_IfNoResolvers()
     {
-        var k1 = new KeyEvent(Key.KeypadHome, new('\0'), null, ModifierKey.None);
-        var k2 = new KeyEvent(Key.F1, new('\0'), null, ModifierKey.None);
+        var k1 = new KeyEvent(Key.KeypadHome, new(ControlCharacter.Null), null, ModifierKey.None);
+        var k2 = new KeyEvent(Key.F1, new(ControlCharacter.Null), null, ModifierKey.None);
         
         var count = _screen1.TryResolveKeySequence(new[]
         {
@@ -445,7 +445,7 @@ public class ScreenTests
 
         var count = _screen1.TryResolveKeySequence(new[]
         {
-            new KeyEvent(Key.Character, new(0x1b), null, ModifierKey.None),
+            new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
             new KeyEvent(Key.Character, new('O'), null, ModifierKey.None),
         }, false, out var resolved);
         
@@ -468,7 +468,7 @@ public class ScreenTests
 
         var count = _screen1.TryResolveKeySequence(new[]
         {
-            new KeyEvent(Key.Character, new(0x1b), null, ModifierKey.None),
+            new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
             new KeyEvent(Key.Character, new('O'), null, ModifierKey.None),
         }, true, out var resolved);
         

@@ -113,7 +113,7 @@ public static class Helpers
     public static CursesComplexChar ToComplexChar(this ICursesProvider curses, Rune rune, Style style)
     {
         // Convert the special characters into Unicode.
-        if (rune.IsAscii && rune.Value != '\n' && rune.Value != '\b' && rune.Value != '\t' && rune.Value <= 0x1F ||
+        if (rune.IsAscii && rune.Value != ControlCharacter.NewLine && rune.Value != '\b' && rune.Value != ControlCharacter.Tab && rune.Value <= 0x1F ||
             rune.Value is >= 0X7F and <= 0x9F)
         {
             rune = new(rune.Value + 0x2400);

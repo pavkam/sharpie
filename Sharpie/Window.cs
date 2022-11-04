@@ -1061,7 +1061,7 @@ public class Window: IDisposable
                         : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
                 default:
                     var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
-                    return new KeyEvent(key, new('\0'), Curses.key_name(keyCode), keyMod);
+                    return new KeyEvent(key, new(ControlCharacter.Null), Curses.key_name(keyCode), keyMod);
             }
         }
 

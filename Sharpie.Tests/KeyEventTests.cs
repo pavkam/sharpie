@@ -48,7 +48,7 @@ public class KeyEventTests
     [TestMethod]
     public void ToString_ProperlyFormatsKeyPress_WithNoModifiers_AndNoName()
     {
-        var e = new KeyEvent(Key.F1, new('\0'), null, ModifierKey.None);
+        var e = new KeyEvent(Key.F1, new(ControlCharacter.Null), null, ModifierKey.None);
 
         e.ToString()
          .ShouldBe("Key [F1]");
@@ -57,7 +57,7 @@ public class KeyEventTests
     [TestMethod]
     public void ToString_ProperlyFormatsKeyPress_WithNoModifiers_AndName()
     {
-        var e = new KeyEvent(Key.F1, new('\0'), "name", ModifierKey.None);
+        var e = new KeyEvent(Key.F1, new(ControlCharacter.Null), "name", ModifierKey.None);
 
         e.ToString()
          .ShouldBe("Key [name]");
@@ -66,7 +66,7 @@ public class KeyEventTests
     [TestMethod]
     public void ToString_ProperlyFormatsKeyPress_WithModifiers_AndName()
     {
-        var e = new KeyEvent(Key.F1, new('\0'), "name", ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
+        var e = new KeyEvent(Key.F1, new(ControlCharacter.Null), "name", ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
 
         e.ToString()
          .ShouldBe("Key [CTRL-SHIFT-ALT-name]");
