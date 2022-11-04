@@ -373,5 +373,106 @@ public class ScreenTests
         _cursesMock.Verify(v => v.clearok(_screen1.Handle,  true), Times.Once);
         _cursesMock.Verify(v => v.wrefresh(_screen1.Handle), Times.Once);
     }
+    
+    [TestMethod]
+    public void Use_RegistersResolver()
+    {
+        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+                   .Returns("alex");
+        _screen1.Use((_, nameFunc) => (new(Key.F1, new('\0'), nameFunc(1), ModifierKey.None), 1));
+        var done = _screen1.TryResolveKeySequence(new[]
+        {
+            new KeyEvent(Key.KeypadHome, new('\0'), "test-1", ModifierKey.None),
+            new KeyEvent(Key.F6, new('\0'), "test-2", ModifierKey.None)
+        }, false, out var resolved);
+        
+        done.ShouldBe(1);
+        resolved.ShouldNotBeNull();
+        resolved.Key.ShouldBe(Key.F1);
+        resolved.Char.ShouldBe(new(0));
+        resolved.Modifiers.ShouldBe(ModifierKey.None);
+        resolved.Name.ShouldBe("alex");
+    }
 
+    [TestMethod]
+    public void Use_Throws_IfResolverIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _screen1.Use(null!));
+    }
+    
+    [TestMethod]
+    public void TryResolveKeySequence_Throws_IfSequenceIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _screen1.TryResolveKeySequence(null!, false, out var _));
+    }
+
+    [TestMethod]
+    public void TryResolveKeySequence_IgnoresEmptySequences()
+    {
+        var count = _screen1.TryResolveKeySequence(Array.Empty<KeyEvent>(), false, out var resolved);
+        
+        count.ShouldBe(0);
+        resolved.ShouldBeNull();
+    }
+    
+    [TestMethod]
+    public void TryResolveKeySequence_ReturnsKeysIndividually_IfNoResolvers()
+    {
+        var k1 = new KeyEvent(Key.KeypadHome, new('\0'), null, ModifierKey.None);
+        var k2 = new KeyEvent(Key.F1, new('\0'), null, ModifierKey.None);
+        
+        var count = _screen1.TryResolveKeySequence(new[]
+        {
+            k1, k2
+        }, false, out var resolved);
+        
+        count.ShouldBe(1);
+        resolved.ShouldBe(k1);
+    }
+    
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void TryResolveKeySequence_WaitForMoreChars_IfBestIsFalse(bool inv)
+    {
+        if (inv)
+        {
+            _screen1.Use(KeySequenceResolver.AltKeyResolver);
+            _screen1.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        } else
+        {
+            _screen1.Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _screen1.Use(KeySequenceResolver.AltKeyResolver);
+        }
+
+        var count = _screen1.TryResolveKeySequence(new[]
+        {
+            new KeyEvent(Key.Character, new(0x1b), null, ModifierKey.None),
+            new KeyEvent(Key.Character, new('O'), null, ModifierKey.None),
+        }, false, out var resolved);
+        
+        count.ShouldBe(2);
+        resolved.ShouldBeNull();
+    }
+
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void TryResolveKeySequence_ReturnsBest_IfBestIsTrue(bool inv)
+    {
+        if (inv)
+        {
+            _screen1.Use(KeySequenceResolver.AltKeyResolver);
+            _screen1.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        } else
+        {
+            _screen1.Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _screen1.Use(KeySequenceResolver.AltKeyResolver);
+        }
+
+        var count = _screen1.TryResolveKeySequence(new[]
+        {
+            new KeyEvent(Key.Character, new(0x1b), null, ModifierKey.None),
+            new KeyEvent(Key.Character, new('O'), null, ModifierKey.None),
+        }, true, out var resolved);
+        
+        count.ShouldBe(2);
+        resolved.ShouldNotBeNull();
+    }
 }

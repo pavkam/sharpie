@@ -379,22 +379,7 @@ public class WindowEventsTests
         me.Key.ShouldBe(Key.KeypadUp);
         me.Name.ShouldBe("yup");
     }
-    
-    [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedSeq4Events_IfResolverInstalledOpposite()
-    {
-        _screen.Use(KeySequenceResolver.KeyPadModifiersResolver);
-        _screen.Use(KeySequenceResolver.AltKeyResolver);
 
-        var e = SimulateEvent((0, '\x001b'), (0, 'O'), (0, '8'), (0, 'A'));
-        e.Type.ShouldBe(EventType.KeyPress);
-
-        var me = (KeyEvent) e;
-        me.Char.ShouldBe(new('\0'));
-        me.Modifiers.ShouldBe(ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
-        me.Key.ShouldBe(Key.KeypadUp);
-    }
-    
     [TestMethod]
     public void ProcessEvents_ConsidersEscapeBreaks()
     {
@@ -409,6 +394,7 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ConsidersBreaksInSequences()
     {
+        _screen.Use(KeySequenceResolver.AltKeyResolver);
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {

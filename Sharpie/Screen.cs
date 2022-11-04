@@ -79,21 +79,40 @@ public sealed class Screen: Window
             throw new ArgumentNullException(nameof(sequence));
         }
 
-        var max = sequence.Count > 0 ? 1 : 0;
-        resolved = sequence.Count > 0 ? sequence[0] : null;
+        resolved = null;
+        var max = 0;
+        if (sequence.Count == 0)
+        {
+            return max;
+        }
+
         foreach (var resolver in _resolvers)
         {
             var (resKey, resCount) = resolver(sequence, Curses.key_name);
-            if (resCount >= max && resolved != null)
+
+            if (resCount >= max && resKey != null && best)
             {
-                if (resKey != null || !best)
-                {
-                    max = resCount;
-                    resolved = resKey;
-                }
+                max = resCount;
+                resolved = resKey;
+            }
+            else if (resCount > max && resKey != null)
+            {
+                max = resCount;
+                resolved = resKey;
+            }
+            else if (resCount >= max && resKey == null && !best)
+            {
+                max = resCount;
+                resolved = resKey;
             }
         }
 
+        if (max == 0)
+        {
+            resolved = sequence[0];
+            max = 1;
+        }
+        
         return max;
     }
         

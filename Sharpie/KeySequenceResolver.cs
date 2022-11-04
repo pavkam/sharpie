@@ -85,8 +85,6 @@ public static class KeySequenceResolver
                 nameFunc((uint) ch), one.Modifiers),
             { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => new(Key.Backspace, new('\0'),
                 nameFunc((uint) CursesKey.Backspace), one.Modifiers),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0 } => new(Key.Character, new(' '), nameFunc(' '),
-                one.Modifiers | ModifierKey.Ctrl),
             var _ => (KeyEvent?) null
         };
 
@@ -117,13 +115,14 @@ public static class KeySequenceResolver
         }
 
         var one = sequence.Count > 0 ? sequence[0] : null;
-        if (one is { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and >= 1 and <= 26, Modifiers: var mod })
+        return one switch
         {
-            // Replace the sequence of needed.
-            return (new(Key.Character, new(ch + 'A' - 1), nameFunc((uint) ch + 'A' - 1), mod | ModifierKey.Ctrl), 1);
-        }
-
-        return (null, 0);
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and >= 1 and <= 26, Modifiers: var mod } => (
+                new(Key.Character, new(ch + 'A' - 1), nameFunc((uint) ch + 'A' - 1), mod | ModifierKey.Ctrl), 1),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0, Modifiers: var spMod } => (
+                new(Key.Character, new(' '), nameFunc(' '), spMod | ModifierKey.Ctrl), 1),
+            var _ => (null, 0)
+        };
     }
 
     /// <summary>
@@ -172,6 +171,19 @@ public static class KeySequenceResolver
         return key != null ? (key, 2) : (null, 1);
     }
 
+    private static readonly Dictionary<int, (CursesKey, Key)> KeyMap =
+        new()
+        {
+            { 'A', (CursesKey.Up, Key.KeypadUp) },
+            { 'B', (CursesKey.Down, Key.KeypadDown) },
+            { 'C', (CursesKey.Right, Key.KeypadRight) },
+            { 'D', (CursesKey.Left, Key.KeypadLeft) },
+            { 'E', (CursesKey.PageUp, Key.KeypadPageUp) },
+            { 'F', (CursesKey.End, Key.KeypadEnd) },
+            { 'G', (CursesKey.PageDown, Key.KeypadPageDown) },
+            { 'H', (CursesKey.Home, Key.KeypadHome) }
+        };
+    
     /// <summary>
     /// Complex keypad resolver middleware.
     /// </summary>
@@ -218,19 +230,8 @@ public static class KeySequenceResolver
         {
             return (null, 3);
         }
-        
-        var (rawKey, key) = (char) arrow switch
-        {
-            'A' => (CursesKey.Up, Key.KeypadUp),
-            'B' => (CursesKey.Down, Key.KeypadDown),
-            'C' => (CursesKey.Right, Key.KeypadRight),
-            'D' => (CursesKey.Left, Key.KeypadLeft),
-            'E' => (CursesKey.PageUp, Key.KeypadPageUp),
-            'F' => (CursesKey.End, Key.KeypadEnd),
-            'G' => (CursesKey.PageDown, Key.KeypadPageDown),
-            'H' => (CursesKey.Home, Key.KeypadHome),
-            var _ => (CursesKey.Yes, Key.Unknown)
-        };
+
+        var (rawKey, key) = KeyMap[arrow];
 
         var mods = (ModifierKey) (csiModifier - '1');
         return (new(key, new('\0'), nameFunc((uint) rawKey), mods), 4);
