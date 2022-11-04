@@ -20,7 +20,7 @@ What follows is a small example of how to use the library:
 
 ```csharp
 // Create the terminal instance without any non-standard settings.
-var terminal = new Terminal(NativeCursesProvider.Instance, new());
+using var terminal = new Terminal(NativeCursesProvider.Instance, new());
 
 // Set the main screen attributes for text and drawings.
 terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, StandardColor.Blue);
@@ -33,7 +33,7 @@ terminal.Screen.Refresh();
 
 // Create a child window within the terminal to operate within.
 // The other cells contain the border so we don't want to overwrite those.
-var subWindow = terminal.Screen.CreateWindow(
+using var subWindow = terminal.Screen.CreateWindow(
     new(1, 1, terminal.Screen.Size.Width - 2, terminal.Screen.Size.Height - 2));
 
 // Process all events coming from the terminal.
@@ -53,7 +53,7 @@ foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
     }
     
     // If the user pressed CTRL+C, break the loop.
-    if (@event is KeyEvent { Key: Key.Interrupt })
+    if (@event is KeyEvent { Key: Key.Character, Char.IsAscii: True, Char.Value: 'C', Modifiers: ModifierKey.Ctrl })
     {
         break;
     }
