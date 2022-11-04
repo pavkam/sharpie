@@ -22,7 +22,7 @@ foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
         subWindow.Size = new(re.Size.Width - 2, re.Size.Height - 2);
         terminal.Screen.DrawBorder();
     }
-    
+
     if (@event is KeyEvent { Char.Value: 'C', Modifiers: ModifierKey.Ctrl })
     {
         break;

@@ -128,8 +128,9 @@ public class HelpersTests
                 It.IsAny<IntPtr>()), Times.Once);
     }
 
-    [TestMethod, DataRow(0x20, "\x0020"), DataRow(0x7E, "\x007E"), DataRow(0xA0, "\x00A0"), DataRow((int) ControlCharacter.NewLine, "\n"),
-     DataRow((int) '\b', "\b"), DataRow((int) ControlCharacter.Tab, "\t")]
+    [TestMethod, DataRow(0x20, "\x0020"), DataRow(0x7E, "\x007E"), DataRow(0xA0, "\x00A0"),
+     DataRow((int) ControlCharacter.NewLine, "\n"), DataRow((int) '\b', "\b"),
+     DataRow((int) ControlCharacter.Tab, "\t")]
     public void ToComplexChar_DoesNotConvertOtherAsciiToUnicode(int ch, string expected)
     {
         _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
@@ -155,8 +156,8 @@ public class HelpersTests
     [TestMethod]
     public void FromComplexChar_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
-                       out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
+                       out It.Ref<uint>.IsAny, out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         var c = new CursesComplexChar();
@@ -166,8 +167,8 @@ public class HelpersTests
     [TestMethod]
     public void FromComplexChar_ReturnsCursesChar()
     {
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<uint>.IsAny,
-                       out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
+                       out It.Ref<uint>.IsAny, out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
                    .Returns((CursesComplexChar _, StringBuilder sb, out uint attrs, out ushort colorPair,
                        IntPtr _) =>
                    {
@@ -220,13 +221,15 @@ public class HelpersTests
      DataRow(CursesKey.ShiftAltF11, Key.F11, ModifierKey.Alt | ModifierKey.Shift),
      DataRow(CursesKey.ShiftAltF12, Key.F12, ModifierKey.Alt | ModifierKey.Shift),
      DataRow(CursesKey.Up, Key.KeypadUp, ModifierKey.None), DataRow(CursesKey.Down, Key.KeypadDown, ModifierKey.None),
-     DataRow(CursesKey.Left, Key.KeypadLeft, ModifierKey.None), DataRow(CursesKey.Right, Key.KeypadRight, ModifierKey.None),
+     DataRow(CursesKey.Left, Key.KeypadLeft, ModifierKey.None),
+     DataRow(CursesKey.Right, Key.KeypadRight, ModifierKey.None),
      DataRow(CursesKey.Home, Key.KeypadHome, ModifierKey.None), DataRow(CursesKey.End, Key.KeypadEnd, ModifierKey.None),
      DataRow(CursesKey.PageDown, Key.KeypadPageDown, ModifierKey.None),
      DataRow(CursesKey.PageUp, Key.KeypadPageUp, ModifierKey.None),
      DataRow(CursesKey.DeleteChar, Key.DeleteChar, ModifierKey.None),
      DataRow(CursesKey.InsertChar, Key.InsertChar, ModifierKey.None), DataRow(CursesKey.Tab, Key.Tab, ModifierKey.None),
-     DataRow(CursesKey.BackTab, Key.Tab, ModifierKey.Shift), DataRow(CursesKey.Backspace, Key.Backspace, ModifierKey.None),
+     DataRow(CursesKey.BackTab, Key.Tab, ModifierKey.Shift),
+     DataRow(CursesKey.Backspace, Key.Backspace, ModifierKey.None),
      DataRow(CursesKey.ShiftUp, Key.KeypadUp, ModifierKey.Shift),
      DataRow(CursesKey.ShiftDown, Key.KeypadDown, ModifierKey.Shift),
      DataRow(CursesKey.ShiftLeft, Key.KeypadLeft, ModifierKey.Shift),
@@ -235,13 +238,16 @@ public class HelpersTests
      DataRow(CursesKey.ShiftEnd, Key.KeypadEnd, ModifierKey.Shift),
      DataRow(CursesKey.ShiftPageDown, Key.KeypadPageDown, ModifierKey.Shift),
      DataRow(CursesKey.ShiftPageUp, Key.KeypadPageUp, ModifierKey.Shift),
-     DataRow(CursesKey.AltUp, Key.KeypadUp, ModifierKey.Alt), DataRow(CursesKey.AltDown, Key.KeypadDown, ModifierKey.Alt),
+     DataRow(CursesKey.AltUp, Key.KeypadUp, ModifierKey.Alt),
+     DataRow(CursesKey.AltDown, Key.KeypadDown, ModifierKey.Alt),
      DataRow(CursesKey.AltLeft, Key.KeypadLeft, ModifierKey.Alt),
      DataRow(CursesKey.AltRight, Key.KeypadRight, ModifierKey.Alt),
-     DataRow(CursesKey.AltHome, Key.KeypadHome, ModifierKey.Alt), DataRow(CursesKey.AltEnd, Key.KeypadEnd, ModifierKey.Alt),
+     DataRow(CursesKey.AltHome, Key.KeypadHome, ModifierKey.Alt),
+     DataRow(CursesKey.AltEnd, Key.KeypadEnd, ModifierKey.Alt),
      DataRow(CursesKey.AltPageDown, Key.KeypadPageDown, ModifierKey.Alt),
      DataRow(CursesKey.AltPageUp, Key.KeypadPageUp, ModifierKey.Alt),
-     DataRow(CursesKey.CtrlUp, Key.KeypadUp, ModifierKey.Ctrl), DataRow(CursesKey.CtrlDown, Key.KeypadDown, ModifierKey.Ctrl),
+     DataRow(CursesKey.CtrlUp, Key.KeypadUp, ModifierKey.Ctrl),
+     DataRow(CursesKey.CtrlDown, Key.KeypadDown, ModifierKey.Ctrl),
      DataRow(CursesKey.CtrlLeft, Key.KeypadLeft, ModifierKey.Ctrl),
      DataRow(CursesKey.CtrlRight, Key.KeypadRight, ModifierKey.Ctrl),
      DataRow(CursesKey.CtrlHome, Key.KeypadHome, ModifierKey.Ctrl),
@@ -305,7 +311,8 @@ public class HelpersTests
     }
 
     [TestMethod, DataRow((uint) 0, ModifierKey.None), DataRow(CursesMouseEvent.EventType.Alt, ModifierKey.Alt),
-     DataRow(CursesMouseEvent.EventType.Ctrl, ModifierKey.Ctrl), DataRow(CursesMouseEvent.EventType.Shift, ModifierKey.Shift),
+     DataRow(CursesMouseEvent.EventType.Ctrl, ModifierKey.Ctrl),
+     DataRow(CursesMouseEvent.EventType.Shift, ModifierKey.Shift),
      DataRow(CursesMouseEvent.EventType.Alt | CursesMouseEvent.EventType.Ctrl, ModifierKey.Alt | ModifierKey.Ctrl),
      DataRow(CursesMouseEvent.EventType.Shift | CursesMouseEvent.EventType.Ctrl, ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow(CursesMouseEvent.EventType.Alt | CursesMouseEvent.EventType.Shift, ModifierKey.Alt | ModifierKey.Shift),

@@ -355,6 +355,28 @@ public class Window: IDisposable
         }
     }
 
+    private Screen Screen
+    {
+        get
+        {
+            if (this is Screen)
+            {
+                return (Screen) this;
+            }
+
+            Debug.Assert(Parent != null);
+
+            var p = Parent;
+            while (p.Parent != null)
+            {
+                p = p.Parent;
+            }
+
+            Debug.Assert(p is Screen);
+            return (Screen) p;
+        }
+    }
+
     /// <summary>
     ///     Disposes the current instance.
     /// </summary>
@@ -602,14 +624,14 @@ public class Window: IDisposable
     ///     Writes a text at the caret position at the current window and advances the caret.
     /// </summary>
     /// <remarks>
-    /// This method uses default style.
+    ///     This method uses default style.
     /// </remarks>
     /// <param name="str">The text to write.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     public void WriteText(string str) => WriteText(str, Style.Default);
-    
+
     /// <summary>
     ///     Draws a vertical line from the current caret position downwards.
     /// </summary>
@@ -966,7 +988,7 @@ public class Window: IDisposable
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="CursesException">A Curses error occured.</exception>
     public void Refresh() => Refresh(false, false);
-    
+
     /// <summary>
     ///     Refreshes a number of lines within the window.
     /// </summary>
@@ -991,28 +1013,6 @@ public class Window: IDisposable
               .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
     }
 
-    private Screen Screen
-    {
-        get
-        {
-            if (this is Screen)
-            {
-                return (Screen) this;
-            }
-
-            Debug.Assert(Parent != null);
-
-            var p = Parent;
-            while (p.Parent != null)
-            {
-                p = p.Parent;
-            }
-
-            Debug.Assert(p is Screen);
-            return (Screen) p;
-        }
-    }
-    
     private (int result, uint keyCode) ReadNext(bool quickWait)
     {
         Curses.wtimeout(Handle, quickWait ? 10 : 1000);
@@ -1090,7 +1090,7 @@ public class Window: IDisposable
                 {
                     escapeSequence.RemoveRange(0, count);
                 }
-                
+
                 @event = resolved;
             } else
             {
@@ -1099,7 +1099,7 @@ public class Window: IDisposable
                     var count = Screen.TryResolveKeySequence(escapeSequence, true, out var resolved);
                     Debug.Assert(count > 0);
                     Debug.Assert(resolved != null);
-                    
+
                     escapeSequence.RemoveRange(0, count);
                     yield return resolved;
                 }

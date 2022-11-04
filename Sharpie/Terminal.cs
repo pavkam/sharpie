@@ -153,7 +153,7 @@ public sealed class Terminal: IDisposable
         // Disable meta interpretation and ignore the result.
         curses.meta(IntPtr.Zero, false);
         _terminalInstanceActive = true;
-        
+
         // Register standard keyboard middlewares.
         _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
         _screen.Use(KeySequenceResolver.ControlKeyResolver);

@@ -424,7 +424,8 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.wadd_wch(IntPtr window, CursesComplexChar @char) => wadd_wch(window, ref @char);
 
-    int ICursesProvider.wadd_wchnstr(IntPtr window, CursesComplexChar[] str, int count) => wadd_wchnstr(window, str, count);
+    int ICursesProvider.wadd_wchnstr(IntPtr window, CursesComplexChar[] str, int count) =>
+        wadd_wchnstr(window, str, count);
 
     int ICursesProvider.waddnwstr(IntPtr window, string text, int length) => waddnwstr(window, text, length);
 
@@ -432,9 +433,9 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     void ICursesProvider.wbkgrndset(IntPtr window, CursesComplexChar @char) => wbkgrndset(window, ref @char);
 
-    int ICursesProvider.wborder_set(IntPtr window, CursesComplexChar leftSide, CursesComplexChar rightSide, CursesComplexChar topSide,
-        CursesComplexChar bottomSide, CursesComplexChar topLeftCorner, CursesComplexChar topRightCorner, CursesComplexChar bottomLeftCorner,
-        CursesComplexChar bottomRightCorner) =>
+    int ICursesProvider.wborder_set(IntPtr window, CursesComplexChar leftSide, CursesComplexChar rightSide,
+        CursesComplexChar topSide, CursesComplexChar bottomSide, CursesComplexChar topLeftCorner,
+        CursesComplexChar topRightCorner, CursesComplexChar bottomLeftCorner, CursesComplexChar bottomRightCorner) =>
         wborder_set(window, ref leftSide, ref rightSide, ref topSide, ref bottomSide,
             ref topLeftCorner, ref topRightCorner, ref bottomLeftCorner, ref bottomRightCorner);
 
@@ -446,11 +447,13 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.wgetn_wstr(IntPtr window, StringBuilder dest, int length) => wgetn_wstr(window, dest, length);
 
-    int ICursesProvider.whline_set(IntPtr window, CursesComplexChar @char, int count) => whline_set(window, ref @char, count);
+    int ICursesProvider.whline_set(IntPtr window, CursesComplexChar @char, int count) =>
+        whline_set(window, ref @char, count);
 
     int ICursesProvider.win_wch(IntPtr window, out CursesComplexChar @char) => win_wch(window, out @char);
 
-    int ICursesProvider.win_wchnstr(IntPtr window, CursesComplexChar[] dest, int length) => win_wchnstr(window, dest, length);
+    int ICursesProvider.win_wchnstr(IntPtr window, CursesComplexChar[] dest, int length) =>
+        win_wchnstr(window, dest, length);
 
     int ICursesProvider.winnwstr(IntPtr window, StringBuilder dest, int length) => winnwstr(window, dest, length);
 
@@ -460,7 +463,8 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     string? ICursesProvider.wunctrl(CursesComplexChar @char) => Marshal.PtrToStringUni(wunctrl(ref @char));
 
-    int ICursesProvider.wvline_set(IntPtr window, CursesComplexChar @char, int count) => wvline_set(window, ref @char, count);
+    int ICursesProvider.wvline_set(IntPtr window, CursesComplexChar @char, int count) =>
+        wvline_set(window, ref @char, count);
 
     int ICursesProvider.getmouse(out CursesMouseEvent @event) => getmouse(out @event);
 
@@ -911,8 +915,8 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern void nofilter();
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int getcchar(ref CursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest,
-        out uint attrs, out ushort colorPair, IntPtr reserved);
+    private static extern int getcchar(ref CursesComplexChar @char,
+        [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, out uint attrs, out ushort colorPair, IntPtr reserved);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr key_name(uint @char);
@@ -924,8 +928,8 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern int pecho_wchar(IntPtr window, ref CursesComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int setcchar(out CursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs,
-        ushort colorPair, IntPtr reserved);
+    private static extern int setcchar(out CursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text,
+        uint attrs, ushort colorPair, IntPtr reserved);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern int slk_set(int labelIndex, string title, int fmt);
@@ -952,9 +956,10 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern void wbkgrndset(IntPtr window, ref CursesComplexChar @char);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int wborder_set(IntPtr window, ref CursesComplexChar leftSide, ref CursesComplexChar rightSide,
-        ref CursesComplexChar topSide, ref CursesComplexChar bottomSide, ref CursesComplexChar topLeftCorner,
-        ref CursesComplexChar topRightCorner, ref CursesComplexChar bottomLeftCorner, ref CursesComplexChar bottomRightCorner);
+    private static extern int wborder_set(IntPtr window, ref CursesComplexChar leftSide,
+        ref CursesComplexChar rightSide, ref CursesComplexChar topSide, ref CursesComplexChar bottomSide,
+        ref CursesComplexChar topLeftCorner, ref CursesComplexChar topRightCorner,
+        ref CursesComplexChar bottomLeftCorner, ref CursesComplexChar bottomRightCorner);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wecho_wchar(IntPtr window, ref CursesComplexChar @char);
@@ -1061,10 +1066,10 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_notimeout(IntPtr window);
-    
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_scrollok(IntPtr window);
-    
+
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_syncok(IntPtr window);
 

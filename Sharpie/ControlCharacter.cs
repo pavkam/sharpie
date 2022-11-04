@@ -31,27 +31,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-/// Defines a list of special control characters in ASCII.
+///     Defines a list of special control characters in ASCII.
 /// </summary>
 public static class ControlCharacter
 {
     /// <summary>
-    /// The null character.
+    ///     The null character.
     /// </summary>
     public const char Null = '\0';
-    
+
     /// <summary>
-    /// The escape character.
+    ///     The escape character.
     /// </summary>
     public const char Escape = '\x001b';
-    
+
     /// <summary>
-    /// The new line character.
+    ///     The new line character.
     /// </summary>
     public const char NewLine = '\n';
-    
+
     /// <summary>
-    /// The tab character.
+    ///     The tab character.
     /// </summary>
     public const char Tab = '\t';
 }

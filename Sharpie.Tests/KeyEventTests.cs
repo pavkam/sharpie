@@ -66,7 +66,8 @@ public class KeyEventTests
     [TestMethod]
     public void ToString_ProperlyFormatsKeyPress_WithModifiers_AndName()
     {
-        var e = new KeyEvent(Key.F1, new(ControlCharacter.Null), "name", ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
+        var e = new KeyEvent(Key.F1, new(ControlCharacter.Null), "name",
+            ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
 
         e.ToString()
          .ShouldBe("Key [CTRL-SHIFT-ALT-name]");

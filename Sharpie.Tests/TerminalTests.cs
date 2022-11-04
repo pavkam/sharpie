@@ -182,8 +182,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.nonl())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(
-                  () => new Terminal(_cursesMock.Object, new()))
+        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new()))
               .Operation.ShouldBe("nonl");
     }
 
@@ -212,8 +211,9 @@ public class TerminalTests
 
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
-        var expMask =
-            enabled ? (uint) CursesMouseEvent.EventType.ReportPosition | (uint) CursesMouseEvent.EventType.All : 0;
+        var expMask = enabled
+            ? (uint) CursesMouseEvent.EventType.ReportPosition | (uint) CursesMouseEvent.EventType.All
+            : 0;
 
         _cursesMock.Verify(v => v.mousemask(expMask, out It.Ref<uint>.IsAny), Times.Once);
     }

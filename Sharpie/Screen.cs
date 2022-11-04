@@ -38,22 +38,42 @@ namespace Sharpie;
 public sealed class Screen: Window
 {
     private readonly IList<ResolveEscapeSequenceFunc> _resolvers = new List<ResolveEscapeSequenceFunc>();
-    
+
     /// <summary>
     ///     Initializes the screen using a window handle. The <paramref name="windowHandle" /> should be
     ///     a screen and not a regular window.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="windowHandle">The screen handle.</param>
-    internal Screen(ICursesProvider curses, IntPtr windowHandle): base(curses, null, windowHandle)
+    internal Screen(ICursesProvider curses, IntPtr windowHandle): base(curses, null, windowHandle) { }
+
+    /// <inheritdoc cref="Window.Location" />
+    /// <remarks>
+    ///     The setter will always throw in this implementation as moving the main window is not allowed.
+    /// </remarks>
+    /// <exception cref="NotSupportedException">Always throws on the setter.</exception>
+    public override Point Location
     {
+        get => base.Location;
+        set => throw new NotSupportedException("Cannot move the screen window.");
+    }
+
+    /// <inheritdoc cref="Window.Location" />
+    /// <remarks>
+    ///     The setter will always throw in this implementation changing the size of the main window is not allowed.
+    /// </remarks>
+    /// <exception cref="NotSupportedException">Always throws on the setter.</exception>
+    public override Size Size
+    {
+        get => base.Size;
+        set => throw new NotSupportedException("Cannot resize the screen window.");
     }
 
     /// <summary>
     ///     Registers a key sequence resolver into the input pipeline.
     /// </summary>
     /// <param name="resolver">The resolver to register.</param>
-    /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver" /> is <c>null</c>.</exception>
     public void Use(ResolveEscapeSequenceFunc resolver)
     {
         if (resolver == null)
@@ -71,7 +91,7 @@ public sealed class Screen: Window
     /// <param name="best">Force the return of the best match.</param>
     /// <param name="resolved">The resolved key (if any).</param>
     /// <returns>The number of matching keys. A zero value indicates no matches.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="sequence"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="sequence" /> is <c>null</c>.</exception>
     internal int TryResolveKeySequence(IList<KeyEvent> sequence, bool best, out KeyEvent? resolved)
     {
         if (sequence == null)
@@ -94,13 +114,11 @@ public sealed class Screen: Window
             {
                 max = resCount;
                 resolved = resKey;
-            }
-            else if (resCount > max && resKey != null)
+            } else if (resCount > max && resKey != null)
             {
                 max = resCount;
                 resolved = resKey;
-            }
-            else if (resCount >= max && resKey == null && !best)
+            } else if (resCount >= max && resKey == null && !best)
             {
                 max = resCount;
                 resolved = resKey;
@@ -112,30 +130,8 @@ public sealed class Screen: Window
             resolved = sequence[0];
             max = 1;
         }
-        
-        return max;
-    }
-        
-    /// <inheritdoc cref="Window.Location" />
-    /// <remarks>
-    ///     The setter will always throw in this implementation as moving the main window is not allowed.
-    /// </remarks>
-    /// <exception cref="NotSupportedException">Always throws on the setter.</exception>
-    public override Point Location
-    {
-        get => base.Location;
-        set => throw new NotSupportedException("Cannot move the screen window.");
-    }
 
-    /// <inheritdoc cref="Window.Location" />
-    /// <remarks>
-    ///     The setter will always throw in this implementation changing the size of the main window is not allowed.
-    /// </remarks>
-    /// <exception cref="NotSupportedException">Always throws on the setter.</exception>
-    public override Size Size
-    {
-        get => base.Size;
-        set => throw new NotSupportedException("Cannot resize the screen window.");
+        return max;
     }
 
     /// <summary>
@@ -300,10 +296,10 @@ public sealed class Screen: Window
         {
             child.Invalidate();
         }
-        
+
         Refresh(false, true);
     }
-        
+
     /// <summary>
     ///     Deletes the screen window and ends the terminal session.
     /// </summary>

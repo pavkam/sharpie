@@ -109,7 +109,7 @@ public struct CursesMouseEvent
         Ctrl = 1U << (((int) Button.Modifiers - 1) * CursesMouseShift),
         Shift = 2U << (((int) Button.Modifiers - 1) * CursesMouseShift),
         Alt = 4U << (((int) Button.Modifiers - 1) * CursesMouseShift),
-        
+
         ReportPosition = 8U << (((int) Button.Modifiers - 1) * CursesMouseShift),
         All = ReportPosition - 1
     }

@@ -147,9 +147,9 @@ public interface ICursesProvider
     bool is_nodelay(IntPtr window);
 
     bool is_notimeout(IntPtr window);
-    
+
     bool is_scrollok(IntPtr window);
-    
+
     bool is_syncok(IntPtr window);
 
     IntPtr wgetparent(IntPtr window);
@@ -402,8 +402,8 @@ public interface ICursesProvider
     void wbkgrndset(IntPtr window, CursesComplexChar @char);
 
     int wborder_set(IntPtr window, CursesComplexChar leftSide, CursesComplexChar rightSide, CursesComplexChar topSide,
-        CursesComplexChar bottomSide, CursesComplexChar topLeftCorner, CursesComplexChar topRightCorner, CursesComplexChar bottomLeftCorner,
-        CursesComplexChar bottomRightCorner);
+        CursesComplexChar bottomSide, CursesComplexChar topLeftCorner, CursesComplexChar topRightCorner,
+        CursesComplexChar bottomLeftCorner, CursesComplexChar bottomRightCorner);
 
     int wecho_wchar(IntPtr window, CursesComplexChar @char);
 

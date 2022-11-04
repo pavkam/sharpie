@@ -42,26 +42,45 @@ public delegate string? KeyNameFunc(uint keyCode);
 /// </summary>
 /// <param name="sequence">The sequence of events.</param>
 /// <param name="nameFunc">The name provider function.</param>
-/// <returns>The resolved key (if any) and the number of input events resolved.
-/// If the count is <c>-1</c> it means nothing matches.</returns>
+/// <returns>
+///     The resolved key (if any) and the number of input events resolved.
+///     If the count is <c>-1</c> it means nothing matches.
+/// </returns>
 public delegate (KeyEvent? key, int count) ResolveEscapeSequenceFunc(IList<KeyEvent> sequence, KeyNameFunc nameFunc);
 
 /// <summary>
-/// Contains the definitions and implementations of input middlewares.
+///     Contains the definitions and implementations of input middlewares.
 /// </summary>
 public static class KeySequenceResolver
 {
+    private static readonly Dictionary<int, (CursesKey, Key)> KeyMap = new()
+    {
+        { 'A', (CursesKey.Up, Key.KeypadUp) },
+        { 'B', (CursesKey.Down, Key.KeypadDown) },
+        { 'C', (CursesKey.Right, Key.KeypadRight) },
+        { 'D', (CursesKey.Left, Key.KeypadLeft) },
+        { 'E', (CursesKey.PageUp, Key.KeypadPageUp) },
+        { 'F', (CursesKey.End, Key.KeypadEnd) },
+        { 'G', (CursesKey.PageDown, Key.KeypadPageDown) },
+        { 'H', (CursesKey.Home, Key.KeypadHome) }
+    };
+
     /// <summary>
-    /// Special character resolver middleware.
+    ///     Special character resolver middleware.
     /// </summary>
     /// <remarks>
-    /// This middleware converts key such as \n, \t, escape and etc. to their key representations.
+    ///     This middleware converts key such as \n, \t, escape and etc. to their key representations.
     /// </remarks>
     /// <param name="sequence">The input sequence.</param>
     /// <param name="nameFunc">The name resolver function.</param>
-    /// <returns>The resolved key (if any) and the number of input events resolved.
-    /// If the count is <c>-1</c> it means nothing matches.</returns>
-    /// <exception cref="ArgumentNullException">Either <paramref name="sequence"/>, <paramref name="nameFunc"/> is <c>null</c>.</exception>
+    /// <returns>
+    ///     The resolved key (if any) and the number of input events resolved.
+    ///     If the count is <c>-1</c> it means nothing matches.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    ///     Either <paramref name="sequence" />, <paramref name="nameFunc" /> is
+    ///     <c>null</c>.
+    /// </exception>
     public static (KeyEvent? key, int count) SpecialCharacterResolver(IList<KeyEvent> sequence, KeyNameFunc nameFunc)
     {
         if (nameFunc == null)
@@ -77,14 +96,14 @@ public static class KeySequenceResolver
         var one = sequence.Count > 0 ? sequence[0] : null;
         var key = one switch
         {
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and ControlCharacter.Escape } => new(Key.Escape, new(ControlCharacter.Null),
-                nameFunc((uint) ch), one.Modifiers),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Tab } => new(Key.Tab, new(ControlCharacter.Null),
-                nameFunc((uint) CursesKey.Tab), one.Modifiers),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and ControlCharacter.NewLine } => new(Key.Return, new(ControlCharacter.Null),
-                nameFunc((uint) ch), one.Modifiers),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => new(Key.Backspace, new(ControlCharacter.Null),
-                nameFunc((uint) CursesKey.Backspace), one.Modifiers),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and ControlCharacter.Escape } => new(
+                Key.Escape, new(ControlCharacter.Null), nameFunc((uint) ch), one.Modifiers),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Tab } => new(Key.Tab,
+                new(ControlCharacter.Null), nameFunc((uint) CursesKey.Tab), one.Modifiers),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: var ch and ControlCharacter.NewLine } => new(
+                Key.Return, new(ControlCharacter.Null), nameFunc((uint) ch), one.Modifiers),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => new(Key.Backspace,
+                new(ControlCharacter.Null), nameFunc((uint) CursesKey.Backspace), one.Modifiers),
             var _ => (KeyEvent?) null
         };
 
@@ -92,16 +111,21 @@ public static class KeySequenceResolver
     }
 
     /// <summary>
-    /// Control+character resolver middleware.
+    ///     Control+character resolver middleware.
     /// </summary>
     /// <remarks>
-    /// This middleware converts characters in the form of CTRL+.. to proper keys.
+    ///     This middleware converts characters in the form of CTRL+.. to proper keys.
     /// </remarks>
     /// <param name="sequence">The input sequence.</param>
     /// <param name="nameFunc">The name resolver function.</param>
-    /// <returns>The resolved key (if any) and the number of input events resolved.
-    /// If the count is <c>-1</c> it means nothing matches.</returns>
-    /// <exception cref="ArgumentNullException">Either <paramref name="sequence"/> or <paramref name="nameFunc"/> is <c>null</c>.</exception>
+    /// <returns>
+    ///     The resolved key (if any) and the number of input events resolved.
+    ///     If the count is <c>-1</c> it means nothing matches.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    ///     Either <paramref name="sequence" /> or <paramref name="nameFunc" /> is
+    ///     <c>null</c>.
+    /// </exception>
     public static (KeyEvent? key, int count) ControlKeyResolver(IList<KeyEvent> sequence, KeyNameFunc nameFunc)
     {
         if (nameFunc == null)
@@ -126,16 +150,21 @@ public static class KeySequenceResolver
     }
 
     /// <summary>
-    /// Alt+character/key resolver middleware.
+    ///     Alt+character/key resolver middleware.
     /// </summary>
     /// <remarks>
-    /// This middleware converts characters in the form of ALT+.. to proper keys.
+    ///     This middleware converts characters in the form of ALT+.. to proper keys.
     /// </remarks>
     /// <param name="sequence">The input sequence.</param>
     /// <param name="nameFunc">The name resolver function.</param>
-    /// <returns>The resolved key (if any) and the number of input events resolved.
-    /// If the count is <c>-1</c> it means nothing matches.</returns>
-    /// <exception cref="ArgumentNullException">Either <paramref name="sequence"/> or <paramref name="nameFunc"/> is <c>null</c>.</exception>
+    /// <returns>
+    ///     The resolved key (if any) and the number of input events resolved.
+    ///     If the count is <c>-1</c> it means nothing matches.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    ///     Either <paramref name="sequence" /> or <paramref name="nameFunc" /> is
+    ///     <c>null</c>.
+    /// </exception>
     public static (KeyEvent? key, int count) AltKeyResolver(IList<KeyEvent> sequence, KeyNameFunc nameFunc)
     {
         if (nameFunc == null)
@@ -150,7 +179,10 @@ public static class KeySequenceResolver
 
 
         var one = sequence.Count > 0 ? sequence[0] : null;
-        if (one is not { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Escape, Modifiers: ModifierKey.None })
+        if (one is not
+            {
+                Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Escape, Modifiers: ModifierKey.None
+            })
         {
             return (null, 0);
         }
@@ -158,43 +190,37 @@ public static class KeySequenceResolver
         var two = sequence.Count > 1 ? sequence[1] : null;
         KeyEvent? key = two switch
         {
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: 'f', Modifiers: var mod } => new(Key.KeypadRight, new(ControlCharacter.Null),
-                nameFunc((uint) CursesKey.AltRight), mod | ModifierKey.Alt),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: 'b', Modifiers: var mod  } => new(Key.KeypadLeft, new(ControlCharacter.Null),
-                nameFunc((uint) CursesKey.AltLeft), mod | ModifierKey.Alt),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: 'f', Modifiers: var mod } => new(Key.KeypadRight,
+                new(ControlCharacter.Null), nameFunc((uint) CursesKey.AltRight), mod | ModifierKey.Alt),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: 'b', Modifiers: var mod } => new(Key.KeypadLeft,
+                new(ControlCharacter.Null), nameFunc((uint) CursesKey.AltLeft), mod | ModifierKey.Alt),
             { Key: Key.Unknown or Key.Escape } => null,
-            { Key: var k and not Key.Character, Modifiers: var mod, Name: var n } => new(k, new(ControlCharacter.Null), n, mod | ModifierKey.Alt),
-            { Char: var ch, Modifiers: var mod } => new(Key.Character, ch, nameFunc((uint) two.Char.Value), mod | ModifierKey.Alt),
+            { Key: var k and not Key.Character, Modifiers: var mod, Name: var n } => new(k, new(ControlCharacter.Null),
+                n, mod | ModifierKey.Alt),
+            { Char: var ch, Modifiers: var mod } => new(Key.Character, ch, nameFunc((uint) two.Char.Value),
+                mod | ModifierKey.Alt),
             var _ => null
         };
 
         return key != null ? (key, 2) : (null, 1);
     }
 
-    private static readonly Dictionary<int, (CursesKey, Key)> KeyMap =
-        new()
-        {
-            { 'A', (CursesKey.Up, Key.KeypadUp) },
-            { 'B', (CursesKey.Down, Key.KeypadDown) },
-            { 'C', (CursesKey.Right, Key.KeypadRight) },
-            { 'D', (CursesKey.Left, Key.KeypadLeft) },
-            { 'E', (CursesKey.PageUp, Key.KeypadPageUp) },
-            { 'F', (CursesKey.End, Key.KeypadEnd) },
-            { 'G', (CursesKey.PageDown, Key.KeypadPageDown) },
-            { 'H', (CursesKey.Home, Key.KeypadHome) }
-        };
-    
     /// <summary>
-    /// Complex keypad resolver middleware.
+    ///     Complex keypad resolver middleware.
     /// </summary>
     /// <remarks>
-    /// This middleware converts complex sequences such as CTRL/SHIFT/ALT+KeyPad to proper key representations.
+    ///     This middleware converts complex sequences such as CTRL/SHIFT/ALT+KeyPad to proper key representations.
     /// </remarks>
     /// <param name="sequence">The input sequence.</param>
     /// <param name="nameFunc">The name resolver function.</param>
-    /// <returns>The resolved key (if any) and the number of input events resolved.
-    /// If the count is <c>-1</c> it means nothing matches.</returns>
-    /// <exception cref="ArgumentNullException">Either <paramref name="sequence"/> or <paramref name="nameFunc"/> is <c>null</c>.</exception>
+    /// <returns>
+    ///     The resolved key (if any) and the number of input events resolved.
+    ///     If the count is <c>-1</c> it means nothing matches.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    ///     Either <paramref name="sequence" /> or <paramref name="nameFunc" /> is
+    ///     <c>null</c>.
+    /// </exception>
     public static (KeyEvent? key, int count) KeyPadModifiersResolver(IList<KeyEvent> sequence, KeyNameFunc nameFunc)
     {
         if (nameFunc == null)
@@ -212,7 +238,7 @@ public static class KeySequenceResolver
         {
             return (null, 0);
         }
-        
+
         var two = sequence.Count > 1 ? sequence[1] : null;
         if (two is not { Key: Key.Character, Char.IsAscii: true, Char.Value: 'O', Modifiers: ModifierKey.None })
         {

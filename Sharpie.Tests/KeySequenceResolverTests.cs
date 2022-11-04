@@ -36,136 +36,123 @@ public class KeySequenceResolverTests
     [TestMethod]
     public void SpecialCharacterResolver_ThrowsIfSequenceIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
-            KeySequenceResolver.SpecialCharacterResolver(null!, _ => null));
+        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.SpecialCharacterResolver(null!, _ => null));
     }
-    
+
     [TestMethod]
     public void SpecialCharacterResolver_ThrowsIfNameFuncIsNull()
     {
         Should.Throw<ArgumentNullException>(() =>
             KeySequenceResolver.SpecialCharacterResolver(Array.Empty<KeyEvent>(), null!));
     }
-     
+
     [TestMethod]
     public void ControlKeyResolver_ThrowsIfSequenceIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
-            KeySequenceResolver.ControlKeyResolver(null!, _ => null));
+        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.ControlKeyResolver(null!, _ => null));
     }
-    
+
     [TestMethod]
     public void ControlKeyResolver_ThrowsIfNameFuncIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
-            KeySequenceResolver.ControlKeyResolver(Array.Empty<KeyEvent>(), null!));
+        Should.Throw<ArgumentNullException>(
+            () => KeySequenceResolver.ControlKeyResolver(Array.Empty<KeyEvent>(), null!));
     }
 
     [TestMethod]
     public void AltKeyResolver_ThrowsIfSequenceIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
-            KeySequenceResolver.AltKeyResolver(null!, _ => null));
+        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.AltKeyResolver(null!, _ => null));
     }
-    
+
     [TestMethod]
     public void AltKeyResolver_ThrowsIfNameFuncIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
-            KeySequenceResolver.AltKeyResolver(Array.Empty<KeyEvent>(), null!));
+        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.AltKeyResolver(Array.Empty<KeyEvent>(), null!));
     }
-    
+
     [TestMethod]
     public void KeyPadModifiersResolver_ThrowsIfSequenceIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
-            KeySequenceResolver.KeyPadModifiersResolver(null!, _ => null));
+        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.KeyPadModifiersResolver(null!, _ => null));
     }
-    
+
     [TestMethod]
     public void KeyPadModifiersResolver_ThrowsIfNameFuncIsNull()
     {
         Should.Throw<ArgumentNullException>(() =>
             KeySequenceResolver.KeyPadModifiersResolver(Array.Empty<KeyEvent>(), null!));
     }
-    
-    
-    [TestMethod, 
-     DataRow(Key.Character, 0x01b, ModifierKey.Shift, Key.Escape, ControlCharacter.Null, ModifierKey.Shift),
-     DataRow(Key.Character, ControlCharacter.Tab, ModifierKey.Shift, Key.Tab, ControlCharacter.Null, ModifierKey.Shift),
-     DataRow(Key.Character, ControlCharacter.NewLine, ModifierKey.Shift, Key.Return, ControlCharacter.Null, ModifierKey.Shift),
-     DataRow(Key.Character, 0x7f, ModifierKey.Shift, Key.Backspace, ControlCharacter.Null, ModifierKey.Shift),
-    ]
-    public void SpecialCharacterResolver_ReturnsTheExpectedResult_ForKnown(Key inKey, int inCode, ModifierKey inMod, 
+
+    [TestMethod, DataRow(Key.Character, 0x01b, ModifierKey.Shift, Key.Escape, ControlCharacter.Null,
+         ModifierKey.Shift), DataRow(Key.Character, ControlCharacter.Tab, ModifierKey.Shift, Key.Tab,
+         ControlCharacter.Null,
+         ModifierKey.Shift),
+     DataRow(Key.Character, ControlCharacter.NewLine, ModifierKey.Shift, Key.Return, ControlCharacter.Null,
+         ModifierKey.Shift), DataRow(Key.Character, 0x7f, ModifierKey.Shift, Key.Backspace, ControlCharacter.Null,
+         ModifierKey.Shift)]
+    public void SpecialCharacterResolver_ReturnsTheExpectedResult_ForKnown(Key inKey, int inCode, ModifierKey inMod,
         Key expKey, int expCode, ModifierKey expMod)
     {
         var (key, count) = KeySequenceResolver.SpecialCharacterResolver(
             new[] { new KeyEvent(inKey, new(inCode), "dummy", inMod) }, _ => "key_name");
-        
+
         count.ShouldBe(1);
         key.ShouldNotBeNull();
         key.Key.ShouldBe(expKey);
-        key.Char.ShouldBe(new (expCode));
+        key.Char.ShouldBe(new(expCode));
         key.Modifiers.ShouldBe(expMod);
         key.Name.ShouldBe("key_name");
     }
-    
-    [TestMethod, 
-     DataRow(Key.Character, 'a'),
-     DataRow(Key.Unknown, ControlCharacter.Null),
-     DataRow(Key.Backspace, ControlCharacter.Null),
-     DataRow(Key.F1, ControlCharacter.Null),
-    ]
+
+    [TestMethod, DataRow(Key.Character, 'a'), DataRow(Key.Unknown, ControlCharacter.Null),
+     DataRow(Key.Backspace, ControlCharacter.Null), DataRow(Key.F1, ControlCharacter.Null)]
     public void SpecialCharacterResolver_ReturnsTheExpectedResult_ForUnknown(Key inKey, int inCode)
     {
         var (key, count) = KeySequenceResolver.SpecialCharacterResolver(
             new[] { new KeyEvent(inKey, new(inCode), "dummy", ModifierKey.None) }, _ => "key_name");
-        
+
         count.ShouldBe(0);
         key.ShouldBeNull();
     }
-    
-    [TestMethod, 
-     DataRow(Key.Character, 0, ModifierKey.Shift, Key.Character, ' ', ModifierKey.Shift | ModifierKey.Ctrl),
-     DataRow(Key.Character, 1, ModifierKey.Shift, Key.Character, 'A', ModifierKey.Shift | ModifierKey.Ctrl),
-     DataRow(Key.Character, 26, ModifierKey.Shift, Key.Character, 'Z', ModifierKey.Shift | ModifierKey.Ctrl)
-    ]
-    public void ControlKeyResolver_ReturnsTheExpectedResult_ForKnown(Key inKey, int inCode, ModifierKey inMod, 
+
+    [TestMethod, DataRow(Key.Character, 0, ModifierKey.Shift, Key.Character, ' ',
+         ModifierKey.Shift | ModifierKey.Ctrl), DataRow(Key.Character, 1, ModifierKey.Shift, Key.Character, 'A',
+         ModifierKey.Shift | ModifierKey.Ctrl), DataRow(Key.Character, 26, ModifierKey.Shift, Key.Character, 'Z',
+         ModifierKey.Shift | ModifierKey.Ctrl)]
+    public void ControlKeyResolver_ReturnsTheExpectedResult_ForKnown(Key inKey, int inCode, ModifierKey inMod,
         Key expKey, int expCode, ModifierKey expMod)
     {
         var (key, count) = KeySequenceResolver.ControlKeyResolver(
             new[] { new KeyEvent(inKey, new(inCode), "dummy", inMod) }, _ => "key_name");
-        
+
         count.ShouldBe(1);
         key.ShouldNotBeNull();
         key.Key.ShouldBe(expKey);
-        key.Char.ShouldBe(new (expCode));
+        key.Char.ShouldBe(new(expCode));
         key.Modifiers.ShouldBe(expMod);
         key.Name.ShouldBe("key_name");
     }
-    
-    [TestMethod, 
-     DataRow(Key.Character, 'a'),
-     DataRow(Key.Unknown, ControlCharacter.Null),
-     DataRow(Key.Backspace, ControlCharacter.Null),
-     DataRow(Key.F1, ControlCharacter.Null),
-    ]
+
+    [TestMethod, DataRow(Key.Character, 'a'), DataRow(Key.Unknown, ControlCharacter.Null),
+     DataRow(Key.Backspace, ControlCharacter.Null), DataRow(Key.F1, ControlCharacter.Null)]
     public void ControlKeyResolver_ReturnsTheExpectedResult_ForUnknown(Key inKey, int inCode)
     {
         var (key, count) = KeySequenceResolver.ControlKeyResolver(
             new[] { new KeyEvent(inKey, new(inCode), "dummy", ModifierKey.None) }, _ => "key_name");
-        
+
         count.ShouldBe(0);
         key.ShouldBeNull();
     }
 
     [TestMethod, DataRow(Key.Character, 'f', ModifierKey.Shift, Key.KeypadRight, ControlCharacter.Null,
-         ModifierKey.Shift | ModifierKey.Alt, true), DataRow(Key.Character, 'b', ModifierKey.Shift, Key.KeypadLeft,
-         ControlCharacter.Null,
-         ModifierKey.Shift | ModifierKey.Alt, true), DataRow(Key.F1, ControlCharacter.Null, ModifierKey.Shift, Key.F1, ControlCharacter.Null,
+         ModifierKey.Shift | ModifierKey.Alt, true),
+     DataRow(Key.Character, 'b', ModifierKey.Shift, Key.KeypadLeft, ControlCharacter.Null,
+         ModifierKey.Shift | ModifierKey.Alt, true),
+     DataRow(Key.F1, ControlCharacter.Null, ModifierKey.Shift, Key.F1, ControlCharacter.Null,
          ModifierKey.Shift | ModifierKey.Alt, false), DataRow(Key.Character, 'A', ModifierKey.Shift, Key.Character, 'A',
          ModifierKey.Shift | ModifierKey.Alt, true), DataRow(Key.Character, '.', ModifierKey.None, Key.Character, '.',
-         ModifierKey.Alt, true),]
+         ModifierKey.Alt, true)]
     public void AltKeyResolver_ReturnsTheExpectedResult_ForKnown(Key inKey, int inCode, ModifierKey inMod, Key expKey,
         int expCode, ModifierKey expMod, bool chName)
     {
@@ -191,13 +178,13 @@ public class KeySequenceResolverTests
             new[]
             {
                 new KeyEvent(Key.Delete, new(ControlCharacter.Null), "none", ModifierKey.None),
-                new KeyEvent(Key.F1, new(ControlCharacter.Null), "orig_name", ModifierKey.None) 
+                new KeyEvent(Key.F1, new(ControlCharacter.Null), "orig_name", ModifierKey.None)
             }, _ => "new_name");
-        
+
         count.ShouldBe(0);
         key.ShouldBeNull();
     }
-    
+
     [TestMethod]
     public void AltKeyResolver_ReturnsTheExpectedResult_ForPartial()
     {
@@ -205,23 +192,16 @@ public class KeySequenceResolverTests
             new[]
             {
                 new KeyEvent(Key.Character, new(ControlCharacter.Escape), "none", ModifierKey.None),
-                new KeyEvent(Key.Escape, new(ControlCharacter.Null), "orig_name", ModifierKey.None) 
+                new KeyEvent(Key.Escape, new(ControlCharacter.Null), "orig_name", ModifierKey.None)
             }, _ => "new_name");
-        
+
         count.ShouldBe(1);
         key.ShouldBeNull();
     }
 
-    [TestMethod, 
-     DataRow('A', Key.KeypadUp),
-     DataRow('B', Key.KeypadDown),
-     DataRow('C', Key.KeypadRight),
-     DataRow('D', Key.KeypadLeft),
-     DataRow('E', Key.KeypadPageUp),
-     DataRow('F', Key.KeypadEnd),
-     DataRow('G', Key.KeypadPageDown),
-     DataRow('H', Key.KeypadHome),
-    ]
+    [TestMethod, DataRow('A', Key.KeypadUp), DataRow('B', Key.KeypadDown), DataRow('C', Key.KeypadRight),
+     DataRow('D', Key.KeypadLeft), DataRow('E', Key.KeypadPageUp), DataRow('F', Key.KeypadEnd),
+     DataRow('G', Key.KeypadPageDown), DataRow('H', Key.KeypadHome)]
     public void KeyPadModifiersResolver_ReturnsTheExpectedResult_ForKnown(int ch, Key expKey)
     {
         var (key, count) = KeySequenceResolver.KeyPadModifiersResolver(
@@ -232,14 +212,14 @@ public class KeySequenceResolverTests
                 new KeyEvent(Key.Character, new('8'), null, ModifierKey.None),
                 new KeyEvent(Key.Character, new(ch), "orig_name", ModifierKey.None)
             }, _ => "new_name");
-        
+
         count.ShouldBe(4);
         key.ShouldNotBeNull();
         key.Key.ShouldBe(expKey);
         key.Modifiers.ShouldBe(ModifierKey.Shift | ModifierKey.Ctrl | ModifierKey.Alt);
         key.Name.ShouldBe("new_name");
     }
-    
+
     [TestMethod]
     public void KeyPadModifiersResolver_ReturnsTheExpectedResult_ForPartial_1()
     {
@@ -251,11 +231,11 @@ public class KeySequenceResolverTests
                 new KeyEvent(Key.Character, new('b'), null, ModifierKey.None),
                 new KeyEvent(Key.Character, new('c'), null, ModifierKey.None)
             }, _ => "new_name");
-        
+
         count.ShouldBe(1);
         key.ShouldBeNull();
     }
-    
+
     [TestMethod]
     public void KeyPadModifiersResolver_ReturnsTheExpectedResult_ForPartial_2()
     {
@@ -267,12 +247,11 @@ public class KeySequenceResolverTests
                 new KeyEvent(Key.Character, new('b'), null, ModifierKey.None),
                 new KeyEvent(Key.Character, new('c'), null, ModifierKey.None)
             }, _ => "new_name");
-        
+
         count.ShouldBe(2);
         key.ShouldBeNull();
     }
-    
-      
+
     [TestMethod]
     public void KeyPadModifiersResolver_ReturnsTheExpectedResult_ForPartial_3()
     {
@@ -284,20 +263,17 @@ public class KeySequenceResolverTests
                 new KeyEvent(Key.Character, new('2'), null, ModifierKey.None),
                 new KeyEvent(Key.Character, new('c'), null, ModifierKey.None)
             }, _ => "new_name");
-        
+
         count.ShouldBe(3);
         key.ShouldBeNull();
     }
-    
+
     [TestMethod]
     public void KeyPadModifiersResolver_ReturnsTheExpectedResult_Unknown()
     {
         var (key, count) = KeySequenceResolver.KeyPadModifiersResolver(
-            new[]
-            {
-                new KeyEvent(Key.Character, new('j'), null, ModifierKey.None),
-            }, _ => "new_name");
-        
+            new[] { new KeyEvent(Key.Character, new('j'), null, ModifierKey.None) }, _ => "new_name");
+
         count.ShouldBe(0);
         key.ShouldBeNull();
     }

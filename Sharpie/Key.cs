@@ -50,12 +50,12 @@ public enum Key: uint
     ///     The Return/Enter key.
     /// </summary>
     Return,
-    
+
     /// <summary>
     ///     The Escape key.
     /// </summary>
     Escape,
-    
+
     /// <summary>
     ///     The delete key.
     /// </summary>

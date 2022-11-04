@@ -170,15 +170,14 @@ public class ScreenTests
         _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(true);
 
-        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
-                       It.IsAny<int>()))
+        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
         var sw = _screen1.CreateSubWindow(_screen1, new(0, 0, 1, 1));
         sw.Handle.ShouldBe(new(3));
         sw.Parent.ShouldBe(_screen1);
     }
-    
+
     [TestMethod]
     public void DuplicateWindow_Throws_IfWindowIsNull()
     {
@@ -352,40 +351,43 @@ public class ScreenTests
         _screen1.Dispose();
         _screen1.Disposed.ShouldBe(true);
     }
-    
+
     [TestMethod]
     public void ForceInvalidateAndRefresh_CallsInADeepScrub()
     {
         var w1 = new Window(_cursesMock.Object, _screen1, new(6));
-        var w2 = new Window(_cursesMock.Object, w1, new (7));
-        
+        var w2 = new Window(_cursesMock.Object, w1, new(7));
+
         _cursesMock.Setup(s => s.getmaxy(_screen1.Handle))
                    .Returns(10);
+
         _cursesMock.Setup(s => s.getmaxy(w1.Handle))
-                   .Returns(10);   
-       
+                   .Returns(10);
+
 
         _screen1.ForceInvalidateAndRefresh();
-        
+
         _cursesMock.Verify(v => v.wtouchln(w1.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
         _cursesMock.Verify(v => v.wtouchln(w2.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Never);
         _cursesMock.Verify(v => v.wtouchln(_screen1.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
-        _cursesMock.Verify(v => v.clearok(_screen1.Handle,  true), Times.Once);
+        _cursesMock.Verify(v => v.clearok(_screen1.Handle, true), Times.Once);
         _cursesMock.Verify(v => v.wrefresh(_screen1.Handle), Times.Once);
     }
-    
+
     [TestMethod]
     public void Use_RegistersResolver()
     {
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("alex");
+
         _screen1.Use((_, nameFunc) => (new(Key.F1, new(ControlCharacter.Null), nameFunc(1), ModifierKey.None), 1));
-        var done = _screen1.TryResolveKeySequence(new[]
-        {
-            new KeyEvent(Key.KeypadHome, new(ControlCharacter.Null), "test-1", ModifierKey.None),
-            new KeyEvent(Key.F6, new(ControlCharacter.Null), "test-2", ModifierKey.None)
-        }, false, out var resolved);
-        
+        var done = _screen1.TryResolveKeySequence(
+            new[]
+            {
+                new KeyEvent(Key.KeypadHome, new(ControlCharacter.Null), "test-1", ModifierKey.None),
+                new KeyEvent(Key.F6, new(ControlCharacter.Null), "test-2", ModifierKey.None)
+            }, false, out var resolved);
+
         done.ShouldBe(1);
         resolved.ShouldNotBeNull();
         resolved.Key.ShouldBe(Key.F1);
@@ -395,11 +397,8 @@ public class ScreenTests
     }
 
     [TestMethod]
-    public void Use_Throws_IfResolverIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _screen1.Use(null!));
-    }
-    
+    public void Use_Throws_IfResolverIsNull() { Should.Throw<ArgumentNullException>(() => _screen1.Use(null!)); }
+
     [TestMethod]
     public void TryResolveKeySequence_Throws_IfSequenceIsNull()
     {
@@ -410,26 +409,23 @@ public class ScreenTests
     public void TryResolveKeySequence_IgnoresEmptySequences()
     {
         var count = _screen1.TryResolveKeySequence(Array.Empty<KeyEvent>(), false, out var resolved);
-        
+
         count.ShouldBe(0);
         resolved.ShouldBeNull();
     }
-    
+
     [TestMethod]
     public void TryResolveKeySequence_ReturnsKeysIndividually_IfNoResolvers()
     {
         var k1 = new KeyEvent(Key.KeypadHome, new(ControlCharacter.Null), null, ModifierKey.None);
         var k2 = new KeyEvent(Key.F1, new(ControlCharacter.Null), null, ModifierKey.None);
-        
-        var count = _screen1.TryResolveKeySequence(new[]
-        {
-            k1, k2
-        }, false, out var resolved);
-        
+
+        var count = _screen1.TryResolveKeySequence(new[] { k1, k2 }, false, out var resolved);
+
         count.ShouldBe(1);
         resolved.ShouldBe(k1);
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void TryResolveKeySequence_WaitForMoreChars_IfBestIsFalse(bool inv)
     {
@@ -443,12 +439,13 @@ public class ScreenTests
             _screen1.Use(KeySequenceResolver.AltKeyResolver);
         }
 
-        var count = _screen1.TryResolveKeySequence(new[]
-        {
-            new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
-            new KeyEvent(Key.Character, new('O'), null, ModifierKey.None),
-        }, false, out var resolved);
-        
+        var count = _screen1.TryResolveKeySequence(
+            new[]
+            {
+                new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
+                new KeyEvent(Key.Character, new('O'), null, ModifierKey.None)
+            }, false, out var resolved);
+
         count.ShouldBe(2);
         resolved.ShouldBeNull();
     }
@@ -466,12 +463,13 @@ public class ScreenTests
             _screen1.Use(KeySequenceResolver.AltKeyResolver);
         }
 
-        var count = _screen1.TryResolveKeySequence(new[]
-        {
-            new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
-            new KeyEvent(Key.Character, new('O'), null, ModifierKey.None),
-        }, true, out var resolved);
-        
+        var count = _screen1.TryResolveKeySequence(
+            new[]
+            {
+                new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
+                new KeyEvent(Key.Character, new('O'), null, ModifierKey.None)
+            }, true, out var resolved);
+
         count.ShouldBe(2);
         resolved.ShouldNotBeNull();
     }
