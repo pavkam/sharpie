@@ -26,10 +26,18 @@ jobs:
         V1=`cat Sharpie/Sharpie.csproj | sed -n "s/\s*<FileVersion>\(.*\)<\/FileVersion>$/\1/p"`
         V2=`cat Sharpie/Sharpie.csproj | sed -n "s/\s*<AssemblyVersion>\(.*\)<\/AssemblyVersion>$/\1/p"`
         V3=`cat Sharpie/Sharpie.csproj | sed -n "s/\s*<PackageVersion>\(.*\)<\/PackageVersion>$/\1/p"`
-        if [ "$V1" != "$V2" ] || [ "$V2" != "$V3" ]; then exit 1; fi
-        echo "version=AVAIL >> $GITHUB_OUTPUT
+        if [ "$V1" != "$V2" ] || [ "$V2" != "$V3" ]; then 
+          exit 1
+        fi
+        
+        echo "version=$V3" >> $GITHUB_OUTPUT
         DEP=`wget -q https://www.nuget.org/api/v2/package/Sharpie-Curses/$V3 -O /dev/null || echo NO`
-        if [ "$DEP" = "NO" ] ; then echo "deployed=no" >> $GITHUB_OUTPUT ; else echo "deployed=yes" >> $GITHUB_OUTPUT ; fi
+        
+        if [ "$DEP" = "NO" ]; then 
+          echo "deployed=no" >> $GITHUB_OUTPUT
+        else 
+          echo "deployed=yes" >> $GITHUB_OUTPUT
+        fi
     
     - name: Setup .NET
       id: setup_dotnet
