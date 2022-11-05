@@ -1,7 +1,8 @@
 [![Build, Test and Release](https://github.com/pavkam/sharpie/actions/workflows/build-test-and-release.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/build-test-and-release.yml)
 [![License](https://img.shields.io/github/license/pavkam/sharpie?style=plastic)](https://raw.githubusercontent.com/pavkam/sharpie/main/LICENSE)
+![.NET 6](https://img.shields.io/badge/.NET-6.0-orange)
 [![NuGet](https://img.shields.io/nuget/v/Sharpie-Curses?style=plastic)](https://www.nuget.org/packages/Sharpie-Curses)
-[![Downloads](https://img.shields.io/nuget/dt/Sharpie-Curses?style=plastic)](https://www.nuget.org/packages/Sharpie-Curses)
+![Downloads](https://img.shields.io/nuget/dt/Sharpie-Curses?style=plastic)
 
 # Sharpie
 **Sharpie** is a terminal manipulation library based on Curses and targeting .NET 6 (dotnet core).
