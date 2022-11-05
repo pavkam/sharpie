@@ -11,10 +11,14 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-test-deploy:
+  build_test_deploy:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
+    outputs:
+      version: ${{ steps.check_version.outputs.version }}
+      deployed: ${{ steps.check_version.outputs.deployed }}
+    
     steps:
     - name: Checkout
       id: checkout
@@ -78,9 +82,9 @@ jobs:
         path: code-coverage-results.md
 
     - name: Build NuGet Package
-      if: github.event_name == 'push' && ${{ steps.check_version.outputs.deployed }} == 'no'
+      if: github.event_name == 'push' && ${{ steps.build_test_deploy.outputs.deployed }} == 'no'
       run: dotnet pack ./Sharpie/Sharpie.csproj
 
     - name: Push to NuGet.org
-      if: github.event_name == 'push' && ${{ steps.check_version.outputs.deployed }} == 'no'
+      if: github.event_name == 'push' && ${{ steps.build_test_deploy.outputs.deployed }} == 'no'
       run: dotnet nuget push **/sharpie-curses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
