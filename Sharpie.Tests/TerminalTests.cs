@@ -309,6 +309,27 @@ public class TerminalTests
         Should.NotThrow(() => { _terminal = new(_cursesMock.Object, new()); });
     }
 
+    [TestMethod]
+    public void Ctor_RegistersStandardKeySequenceResolvers_IfAsked()
+    {
+        _terminal = new(_cursesMock.Object, new());
+        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver).ShouldBeTrue();
+        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver).ShouldBeTrue();
+        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver).ShouldBeTrue();
+        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver).ShouldBeTrue();
+    }
+    
+    [TestMethod]
+    public void Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked()
+    {
+        _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
+        
+        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver).ShouldBeFalse();
+        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver).ShouldBeFalse();
+        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver).ShouldBeFalse();
+        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver).ShouldBeFalse();
+    }
+    
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void BaudRate_Throws_IfCursesFails()
     {

@@ -154,11 +154,14 @@ public sealed class Terminal: IDisposable
         curses.meta(IntPtr.Zero, false);
         _terminalInstanceActive = true;
 
-        // Register standard keyboard middlewares.
-        _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
-        _screen.Use(KeySequenceResolver.ControlKeyResolver);
-        _screen.Use(KeySequenceResolver.AltKeyResolver);
-        _screen.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        if (options.UseStandardKeySequenceResolvers)
+        {
+            // Register standard key sequence resolvers.
+            _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
+            _screen.Use(KeySequenceResolver.ControlKeyResolver);
+            _screen.Use(KeySequenceResolver.AltKeyResolver);
+            _screen.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        }
     }
 
     /// <summary>

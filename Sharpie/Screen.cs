@@ -81,9 +81,28 @@ public sealed class Screen: Window
             throw new ArgumentNullException(nameof(resolver));
         }
 
-        _resolvers.Add(resolver);
+        if (!Uses(resolver))
+        {
+            _resolvers.Add(resolver);
+        }
     }
 
+    /// <summary>
+    ///     Checks if the screen has a given key sequence resolver registered.
+    /// </summary>
+    /// <param name="resolver">The resolver to check.</param>
+    /// <returns><c>true</c> if the resolver is registered; <c>false</c> otherwise.</returns>
+    /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver" /> is <c>null</c>.</exception>
+    public bool Uses(ResolveEscapeSequenceFunc resolver)
+    {
+        if (resolver == null)
+        {
+            throw new ArgumentNullException(nameof(resolver));
+        }
+
+        return _resolvers.Contains(resolver);
+    }
+    
     /// <summary>
     ///     Tries to resolve a sequence of keys suing the registered resolvers.
     /// </summary>

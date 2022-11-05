@@ -48,5 +48,6 @@ public class TerminalOptionsTests
         s.ManualFlush.ShouldBeFalse();
         s.SoftLabelKeyMode.ShouldBe(SoftLabelKeyMode.Disabled);
         s.UseEnvironmentOverrides.ShouldBeTrue();
+        s.UseStandardKeySequenceResolvers.ShouldBeTrue();
     }
 }
