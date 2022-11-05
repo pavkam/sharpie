@@ -41,7 +41,25 @@ using System.Runtime.InteropServices;
 public sealed class NativeCursesProvider: ICursesProvider
 {
     private const string LibraryName = "ncurses";
-    public static ICursesProvider Instance { get; } = new NativeCursesProvider();
+
+    private static readonly Lazy<ICursesProvider?> LazyCursesProvider = new(() =>
+    {
+        try
+        {
+            termname();
+        } 
+        catch (Exception e)
+        {
+            if (e is DllNotFoundException or EntryPointNotFoundException)
+            {
+                return null;
+            }
+        }
+
+        return new NativeCursesProvider();
+    });
+
+    public static ICursesProvider Instance => LazyCursesProvider.Value ?? throw new InvalidOperationException("Curses library not available.");
 
     bool ICursesProvider.is_cleared(IntPtr window) => is_cleared(window);
 
@@ -468,7 +486,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.getmouse(out CursesMouseEvent @event) => getmouse(out @event);
 
-    public int ungetmouse(CursesMouseEvent @event) => ungetmouse(ref @event);
+    int ICursesProvider.ungetmouse(CursesMouseEvent @event) => ungetmouse(ref @event);
 
     int ICursesProvider.mousemask(uint newMask, out uint oldMask)
     {
@@ -491,7 +509,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     bool ICursesProvider.wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen) =>
         wmouse_trafo(window, ref line, ref col, toScreen);
 
-    public void set_title(string title) { Console.Title = title; }
+    void ICursesProvider.set_title(string title) { Console.Title = title; }
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int baudrate();
