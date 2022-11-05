@@ -8,7 +8,7 @@
 **Sharpie** is a terminal manipulation library based on Curses and targeting .NET 6 (dotnet core).
 
 # Reasons
-There are a few libraries out there that already offer bindings to *NCurses*. One of the more used one is [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui). But uthers such as [dotnet-curses](https://github.com/MV10/dotnet-curses) also exist.
+There are a few libraries out there that already offer bindings to *NCurses*. One of the more popular one is [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui); and others such as [dotnet-curses](https://github.com/MV10/dotnet-curses) also exist.
 
 So why another one? The are many reasons, but the most important ones are:
 1. There is no .NET, object-oriented version of pure Curses,
