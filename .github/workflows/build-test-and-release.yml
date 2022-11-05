@@ -7,39 +7,47 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened]
     branches: [ "main" ]
 
 jobs:
   build-test-deploy:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout 
+    - name: Checkout
+      id: checkout
       uses: actions/checkout@v3
     
     - name: Check Version
+      id: check_version
       run: |
         V1=`cat Sharpie/Sharpie.csproj | sed -n "s/\s*<FileVersion>\(.*\)<\/FileVersion>$/\1/p"`
         V2=`cat Sharpie/Sharpie.csproj | sed -n "s/\s*<AssemblyVersion>\(.*\)<\/AssemblyVersion>$/\1/p"`
         V3=`cat Sharpie/Sharpie.csproj | sed -n "s/\s*<PackageVersion>\(.*\)<\/PackageVersion>$/\1/p"`
         if [ "$V1" != "$V2" ] || [ "$V2" != "$V3" ]; then exit 1; fi
+        echo "version=AVAIL >> $GITHUB_OUTPUT
+        DEP=`wget -q https://www.nuget.org/api/v2/package/Sharpie-Curses/$V3 -O /dev/null || echo NO`
+        if [ "$DEP" = "NO" ] ; then echo "deployed=no" >> $GITHUB_OUTPUT ; else echo "deployed=yes" >> $GITHUB_OUTPUT ; fi
     
     - name: Setup .NET
+      id: setup_dotnet
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
         
     - name: Restore dependencies
+      id: restore_packages
       run: dotnet restore
       
     - name: Build
+      id: build
       run: dotnet build --no-restore --configuration Release
       
     - name: Test
       run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
-      
+
     - name: Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
@@ -60,12 +68,11 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.PAT }}
         recreate: true
         path: code-coverage-results.md
-        
+
     - name: Build NuGet Package
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: dotnet pack ./Sharpie/Sharpie.csproj 
-      
+      if: github.event_name == 'push' && ${{ steps.check_version.outputs.deployed }} == 'no'
+      run: dotnet pack ./Sharpie/Sharpie.csproj
+
     - name: Push to NuGet.org
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      if: github.event_name == 'push' && ${{ steps.check_version.outputs.deployed }} == 'no'
       run: dotnet nuget push **/sharpie-curses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
-      

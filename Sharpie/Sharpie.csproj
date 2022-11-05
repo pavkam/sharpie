@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <AssemblyName>sharpie</AssemblyName>
         <Title>Curses-based TUI framework.</Title>
-        <Description>A Curses-based TUI framework for use in .NET 6+.</Description>
+        <Description>A Curses-based terminal framework for use in .NET 6+.</Description>
         <Copyright>Alexandru Ciobanu</Copyright>
         <PackageProjectUrl>https://github.com/pavkam/sharpie/</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/pavkam/sharpie/blob/main/LICENSE</PackageLicenseUrl>
@@ -15,7 +15,7 @@
         <PackageTags>ncurses curses tui</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageVersion>0.99.4</PackageVersion>
-        <AssemblyVersion>0.99.5</AssemblyVersion>
+        <AssemblyVersion>0.99.4</AssemblyVersion>
         <FileVersion>0.99.4</FileVersion>
         <PackageId>Sharpie-Curses</PackageId>
     </PropertyGroup>
