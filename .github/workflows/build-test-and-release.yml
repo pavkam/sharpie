@@ -19,6 +19,13 @@ jobs:
     - name: Checkout 
       uses: actions/checkout@v3
     
+    - name: Check Version
+      run: |
+        V1=`cat Sharpie/Sharpie.csproj | sed -n "s/\s*<FileVersion>\(.*\)<\/FileVersion>$/\1/p"`
+        V2=`cat Sharpie/Sharpie.csproj | sed -n "s/\s*<AssemblyVersion>\(.*\)<\/AssemblyVersion>$/\1/p"`
+        V3=`cat Sharpie/Sharpie.csproj | sed -n "s/\s*<PackageVersion>\(.*\)<\/PackageVersion>$/\1/p"`
+        if [ "$V1" != "$V2" ] || [ "$V2" != "$V3" ]; then exit 1; fi
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
