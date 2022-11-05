@@ -1,11 +1,14 @@
 [![Build, Test and Release](https://github.com/pavkam/sharpie/actions/workflows/build-test-and-release.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/build-test-and-release.yml)
+[![License](https://img.shields.io/github/license/pavkam/sharpie?style=plastic)](https://raw.githubusercontent.com/pavkam/sharpie/main/LICENSE)
+![.NET 6](https://img.shields.io/badge/.NET-6.0-orange)
 [![NuGet](https://img.shields.io/nuget/v/Sharpie-Curses?style=plastic)](https://www.nuget.org/packages/Sharpie-Curses)
+![Downloads](https://img.shields.io/nuget/dt/Sharpie-Curses?style=plastic)
 
 # Sharpie
 **Sharpie** is a terminal manipulation library based on Curses and targeting .NET 6 (dotnet core).
 
 # Reasons
-There are a few libraries out there that already offer bindings to *NCurses*. One of the more used one is [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui). But uthers such as [dotnet-curses](https://github.com/MV10/dotnet-curses) also exist.
+There are a few libraries out there that already offer bindings to *NCurses*. One of the more popular one is [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui); and others such as [dotnet-curses](https://github.com/MV10/dotnet-curses) also exist.
 
 So why another one? The are many reasons, but the most important ones are:
 1. There is no .NET, object-oriented version of pure Curses,
