@@ -111,7 +111,7 @@ public sealed class Screen: Window
     /// <param name="resolved">The resolved key (if any).</param>
     /// <returns>The number of matching keys. A zero value indicates no matches.</returns>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="sequence" /> is <c>null</c>.</exception>
-    internal int TryResolveKeySequence(IList<KeyEvent> sequence, bool best, out KeyEvent? resolved)
+    internal int TryResolveKeySequence(IReadOnlyList<KeyEvent> sequence, bool best, out KeyEvent? resolved)
     {
         if (sequence == null)
         {

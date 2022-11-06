@@ -46,7 +46,7 @@ public delegate string? KeyNameFunc(uint keyCode);
 ///     The resolved key (if any) and the number of input events resolved.
 ///     If the count is <c>-1</c> it means nothing matches.
 /// </returns>
-public delegate (KeyEvent? key, int count) ResolveEscapeSequenceFunc(IList<KeyEvent> sequence, KeyNameFunc nameFunc);
+public delegate (KeyEvent? key, int count) ResolveEscapeSequenceFunc(IReadOnlyList<KeyEvent> sequence, KeyNameFunc nameFunc);
 
 /// <summary>
 ///     Contains the definitions and implementations of input middlewares.
@@ -81,7 +81,7 @@ public static class KeySequenceResolver
     ///     Either <paramref name="sequence" />, <paramref name="nameFunc" /> is
     ///     <c>null</c>.
     /// </exception>
-    public static (KeyEvent? key, int count) SpecialCharacterResolver(IList<KeyEvent> sequence, KeyNameFunc nameFunc)
+    public static (KeyEvent? key, int count) SpecialCharacterResolver(IReadOnlyList<KeyEvent> sequence, KeyNameFunc nameFunc)
     {
         if (nameFunc == null)
         {
@@ -126,7 +126,7 @@ public static class KeySequenceResolver
     ///     Either <paramref name="sequence" /> or <paramref name="nameFunc" /> is
     ///     <c>null</c>.
     /// </exception>
-    public static (KeyEvent? key, int count) ControlKeyResolver(IList<KeyEvent> sequence, KeyNameFunc nameFunc)
+    public static (KeyEvent? key, int count) ControlKeyResolver(IReadOnlyList<KeyEvent> sequence, KeyNameFunc nameFunc)
     {
         if (nameFunc == null)
         {
@@ -165,7 +165,7 @@ public static class KeySequenceResolver
     ///     Either <paramref name="sequence" /> or <paramref name="nameFunc" /> is
     ///     <c>null</c>.
     /// </exception>
-    public static (KeyEvent? key, int count) AltKeyResolver(IList<KeyEvent> sequence, KeyNameFunc nameFunc)
+    public static (KeyEvent? key, int count) AltKeyResolver(IReadOnlyList<KeyEvent> sequence, KeyNameFunc nameFunc)
     {
         if (nameFunc == null)
         {
@@ -221,7 +221,7 @@ public static class KeySequenceResolver
     ///     Either <paramref name="sequence" /> or <paramref name="nameFunc" /> is
     ///     <c>null</c>.
     /// </exception>
-    public static (KeyEvent? key, int count) KeyPadModifiersResolver(IList<KeyEvent> sequence, KeyNameFunc nameFunc)
+    public static (KeyEvent? key, int count) KeyPadModifiersResolver(IReadOnlyList<KeyEvent> sequence, KeyNameFunc nameFunc)
     {
         if (nameFunc == null)
         {
