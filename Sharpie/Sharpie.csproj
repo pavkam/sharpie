@@ -42,7 +42,6 @@
         <None Remove="Curses\**" />
         <None Include="..\media\logo-128.png">
           <Pack>True</Pack>
-          <PackagePath></PackagePath>
           <Link>logo-128.png</Link>
         </None>
     </ItemGroup>
