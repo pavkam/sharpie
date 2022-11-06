@@ -13,10 +13,13 @@ namespace Sharpie;
 /// <param name="ManualFlush">Toggle the ability to manually flush the terminal. Default is <c>false</c>.</param>
 /// <param name="SoftLabelKeyMode">Specifies the SLK mode. Default is <see cref="Sharpie.SoftLabelKeyMode.Disabled" />.</param>
 /// <param name="UseEnvironmentOverrides">Toggles the use of environment LINE/COL overrides. Default is <c>true</c>.</param>
-/// <param name="UseStandardKeySequenceResolvers">Registers the standard key sequence resolvers defined in <see cref="KeySequenceResolver"/>.</param>
+/// <param name="UseStandardKeySequenceResolvers">
+///     Registers the standard key sequence resolvers defined in
+///     <see cref="KeySequenceResolver" />.
+/// </param>
 [PublicAPI]
 public record TerminalOptions(bool UseColors = true, bool EchoInput = false, bool UseInputBuffering = false,
     bool UseMouse = true, int MouseClickDelay = 100, bool SuppressControlKeys = true,
     CaretMode CaretMode = CaretMode.Visible, bool ManualFlush = false,
-    SoftLabelKeyMode SoftLabelKeyMode = SoftLabelKeyMode.Disabled, bool UseEnvironmentOverrides = true, 
+    SoftLabelKeyMode SoftLabelKeyMode = SoftLabelKeyMode.Disabled, bool UseEnvironmentOverrides = true,
     bool UseStandardKeySequenceResolvers = true);

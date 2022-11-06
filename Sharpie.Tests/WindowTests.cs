@@ -2096,7 +2096,10 @@ public class WindowTests
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, null, new(2));
 
-        Should.Throw<CursesOperationException>(() => { w1.Replace(w2, new(1, 1, 5, 5), new(0, 0), ReplaceStrategy.Overlay); })
+        Should.Throw<CursesOperationException>(() =>
+              {
+                  w1.Replace(w2, new(1, 1, 5, 5), new(0, 0), ReplaceStrategy.Overlay);
+              })
               .Operation.ShouldBe("copywin");
     }
 

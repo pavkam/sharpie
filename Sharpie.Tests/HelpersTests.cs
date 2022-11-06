@@ -330,22 +330,25 @@ public class HelpersTests
     {
         _cursesMock.Setup(s => s.termname())
                    .Throws<DllNotFoundException>();
-        
-        _cursesMock.Object.ValidOrNull().ShouldBeNull();
+
+        _cursesMock.Object.ValidOrNull()
+                   .ShouldBeNull();
     }
-    
+
     [TestMethod]
     public void ValidOrNull_ReturnsNull_IfTermNameFailsWithEntryPointNotFoundException()
     {
         _cursesMock.Setup(s => s.termname())
                    .Throws<EntryPointNotFoundException>();
-        
-        _cursesMock.Object.ValidOrNull().ShouldBeNull();
+
+        _cursesMock.Object.ValidOrNull()
+                   .ShouldBeNull();
     }
-    
+
     [TestMethod]
     public void ValidOrNull_ReturnsCurses_IfTermNameDoeNotFail()
     {
-        _cursesMock.Object.ValidOrNull().ShouldBe(_cursesMock.Object);
+        _cursesMock.Object.ValidOrNull()
+                   .ShouldBe(_cursesMock.Object);
     }
 }

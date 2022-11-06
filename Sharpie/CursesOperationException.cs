@@ -36,17 +36,17 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class CursesOperationException: CursesException
 {
-    /// <inheritdoc cref="CursesException"/>
+    /// <inheritdoc cref="CursesException" />
     /// <param name="operation">The failed operation.</param>
     /// <param name="message">The message.</param>
-    internal CursesOperationException(string operation, string message):
-        base($"The call to {operation} failed: {message}")
+    internal CursesOperationException(string operation, string message): base(
+        $"The call to {operation} failed: {message}")
     {
         if (message == null)
         {
             throw new ArgumentNullException(nameof(message));
         }
-        
+
         Operation = operation ?? throw new ArgumentNullException(nameof(operation));
     }
 

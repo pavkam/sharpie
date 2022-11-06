@@ -398,7 +398,7 @@ public class ScreenTests
 
     [TestMethod]
     public void Use_Throws_IfResolverIsNull() { Should.Throw<ArgumentNullException>(() => _screen1.Use(null!)); }
-    
+
     [TestMethod]
     public void Uses_Throws_IfResolverIsNull() { Should.Throw<ArgumentNullException>(() => _screen1.Uses(null!)); }
 
@@ -406,13 +406,15 @@ public class ScreenTests
     public void Uses_ReturnsTrue_IfResolverRegistered()
     {
         _screen1.Use(KeySequenceResolver.AltKeyResolver);
-        _screen1.Uses(KeySequenceResolver.AltKeyResolver).ShouldBeTrue();
+        _screen1.Uses(KeySequenceResolver.AltKeyResolver)
+                .ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void Uses_ReturnsFalse_IfResolverNotRegistered()
     {
-        _screen1.Uses(KeySequenceResolver.AltKeyResolver).ShouldBeFalse();
+        _screen1.Uses(KeySequenceResolver.AltKeyResolver)
+                .ShouldBeFalse();
     }
 
     [TestMethod]

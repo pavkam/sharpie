@@ -200,7 +200,8 @@ public class TerminalTests
         _cursesMock.Setup(s => s.curs_set(It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(CaretMode: CaretMode.VeryVisible)))
+        Should.Throw<CursesOperationException>(() =>
+                  new Terminal(_cursesMock.Object, new(CaretMode: CaretMode.VeryVisible)))
               .Operation.ShouldBe("curs_set");
     }
 
@@ -313,23 +314,37 @@ public class TerminalTests
     public void Ctor_RegistersStandardKeySequenceResolvers_IfAsked()
     {
         _terminal = new(_cursesMock.Object, new());
-        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver).ShouldBeTrue();
-        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver).ShouldBeTrue();
-        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver).ShouldBeTrue();
-        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver).ShouldBeTrue();
+        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver)
+                 .ShouldBeTrue();
+
+        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver)
+                 .ShouldBeTrue();
+
+        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver)
+                 .ShouldBeTrue();
+
+        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver)
+                 .ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked()
     {
         _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
-        
-        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver).ShouldBeFalse();
-        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver).ShouldBeFalse();
-        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver).ShouldBeFalse();
-        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver).ShouldBeFalse();
+
+        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver)
+                 .ShouldBeFalse();
+
+        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver)
+                 .ShouldBeFalse();
+
+        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver)
+                 .ShouldBeFalse();
+
+        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver)
+                 .ShouldBeFalse();
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void BaudRate_Throws_IfCursesFails()
     {

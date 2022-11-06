@@ -36,6 +36,6 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class CursesInitializationException: CursesException
 {
-    ///<inheritdoc cref="CursesException"/>
+    /// <inheritdoc cref="CursesException" />
     internal CursesInitializationException(): base("Failed to load or initialize the Curses library.") { }
 }

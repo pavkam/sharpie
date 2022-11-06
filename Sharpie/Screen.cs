@@ -102,7 +102,7 @@ public sealed class Screen: Window
 
         return _resolvers.Contains(resolver);
     }
-    
+
     /// <summary>
     ///     Tries to resolve a sequence of keys suing the registered resolvers.
     /// </summary>

@@ -103,17 +103,16 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Checks that a given Curses backend is valid.
+    ///     Checks that a given Curses backend is valid.
     /// </summary>
     /// <param name="curses">The Curses backend.</param>
-    /// <returns>Returns <paramref name="curses"/> if it's valid. <c>null</c> otherwise.</returns>
+    /// <returns>Returns <paramref name="curses" /> if it's valid. <c>null</c> otherwise.</returns>
     internal static ICursesProvider? ValidOrNull(this ICursesProvider curses)
     {
         try
         {
             curses.termname();
-        } 
-        catch (Exception e)
+        } catch (Exception e)
         {
             if (e is DllNotFoundException or EntryPointNotFoundException)
             {
@@ -123,7 +122,7 @@ public static class Helpers
 
         return curses;
     }
-    
+
     /// <summary>
     ///     Converts a given rune to a complex character.
     /// </summary>

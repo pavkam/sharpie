@@ -41,7 +41,7 @@ using System.Runtime.InteropServices;
 public sealed class NativeCursesProvider: ICursesProvider
 {
     private const string LibraryName = "ncurses";
-    private static readonly ICursesProvider? _instance = new NativeCursesProvider().ValidOrNull(); 
+    private static readonly ICursesProvider? _instance = new NativeCursesProvider().ValidOrNull();
 
     public static ICursesProvider Instance => _instance ?? throw new CursesInitializationException();
 
