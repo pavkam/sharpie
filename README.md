@@ -1,4 +1,5 @@
 [![Build, Test and Release](https://github.com/pavkam/sharpie/actions/workflows/build-test-and-release.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/build-test-and-release.yml)
+[![codecov](https://codecov.io/gh/pavkam/sharpie/branch/main/graph/badge.svg?token=QI3EVFGHUZ)](https://codecov.io/gh/pavkam/sharpie)
 [![License](https://img.shields.io/github/license/pavkam/sharpie?style=plastic)](https://raw.githubusercontent.com/pavkam/sharpie/main/LICENSE)
 ![.NET 6](https://img.shields.io/badge/.NET-6.0-orange)
 [![NuGet](https://img.shields.io/nuget/v/Sharpie-Curses?style=plastic)](https://www.nuget.org/packages/Sharpie-Curses)
