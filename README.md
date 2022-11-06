@@ -6,6 +6,8 @@
 ![Downloads](https://img.shields.io/nuget/dt/Sharpie-Curses?style=plastic)
 
 # Sharpie
+![Sharpie](https://github.com/pavkam/sharpie/raw/main/media/logo-128.png)
+
 **Sharpie** is a terminal manipulation library based on Curses and targeting .NET 6 (dotnet core).
 
 # Reasons
