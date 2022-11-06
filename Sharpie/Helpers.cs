@@ -51,12 +51,12 @@ public static class Helpers
     /// <param name="operation">The operation name.</param>
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="code" /> value.</returns>
-    /// <exception cref="CursesException">Thrown if <paramref name="code" /> indicates an error.</exception>
+    /// <exception cref="CursesOperationException">Thrown if <paramref name="code" /> indicates an error.</exception>
     internal static int Check(this int code, string operation, string message)
     {
         if (code == CursesErrorResult)
         {
-            throw new CursesException(operation, message);
+            throw new CursesOperationException(operation, message);
         }
 
         return code;
@@ -69,12 +69,12 @@ public static class Helpers
     /// <param name="operation">The operation name.</param>
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="ptr" /> value.</returns>
-    /// <exception cref="CursesException">Thrown if <paramref name="ptr" /> is zero.</exception>
+    /// <exception cref="CursesOperationException">Thrown if <paramref name="ptr" /> is zero.</exception>
     internal static IntPtr Check(this IntPtr ptr, string operation, string message)
     {
         if (ptr == IntPtr.Zero)
         {
-            throw new CursesException(operation, message);
+            throw new CursesOperationException(operation, message);
         }
 
         return ptr;
@@ -103,13 +103,35 @@ public static class Helpers
     }
 
     /// <summary>
+    /// Checks that a given Curses backend is valid.
+    /// </summary>
+    /// <param name="curses">The Curses backend.</param>
+    /// <returns>Returns <paramref name="curses"/> if it's valid. <c>null</c> otherwise.</returns>
+    internal static ICursesProvider? ValidOrNull(this ICursesProvider curses)
+    {
+        try
+        {
+            curses.termname();
+        } 
+        catch (Exception e)
+        {
+            if (e is DllNotFoundException or EntryPointNotFoundException)
+            {
+                return null;
+            }
+        }
+
+        return curses;
+    }
+    
+    /// <summary>
     ///     Converts a given rune to a complex character.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="rune">The rune to convert.</param>
     /// <param name="style">The style to apply.</param>
     /// <returns>The complex character.</returns>
-    /// <exception cref="CursesException">Thrown if <paramref name="rune" /> failed to convert to a complex char.</exception>
+    /// <exception cref="CursesOperationException">Thrown if <paramref name="rune" /> failed to convert to a complex char.</exception>
     public static CursesComplexChar ToComplexChar(this ICursesProvider curses, Rune rune, Style style)
     {
         // Convert the special characters into Unicode.

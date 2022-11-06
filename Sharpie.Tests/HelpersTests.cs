@@ -61,7 +61,7 @@ public class HelpersTests
     [TestMethod]
     public void Check_Throws_IfCodeIsMinus1()
     {
-        var exception = Should.Throw<CursesException>(() => { (-1).Check("operation", "message"); });
+        var exception = Should.Throw<CursesOperationException>(() => { (-1).Check("operation", "message"); });
         exception.Operation.ShouldBe("operation");
         exception.Message.ShouldBe("The call to operation failed: message");
     }
@@ -76,7 +76,7 @@ public class HelpersTests
     [TestMethod]
     public void Check_Throws_IfZeroPointer()
     {
-        var exception = Should.Throw<CursesException>(() => { IntPtr.Zero.Check("operation", "message"); });
+        var exception = Should.Throw<CursesOperationException>(() => { IntPtr.Zero.Check("operation", "message"); });
         exception.Operation.ShouldBe("operation");
         exception.Message.ShouldBe("The call to operation failed: message");
     }
@@ -150,7 +150,7 @@ public class HelpersTests
                        It.IsAny<ushort>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => _cursesMock.Object.ToComplexChar(new('a'), Style.Default));
+        Should.Throw<CursesOperationException>(() => _cursesMock.Object.ToComplexChar(new('a'), Style.Default));
     }
 
     [TestMethod]
@@ -161,7 +161,7 @@ public class HelpersTests
                    .Returns(-1);
 
         var c = new CursesComplexChar();
-        Should.Throw<CursesException>(() => _cursesMock.Object.FromComplexChar(c));
+        Should.Throw<CursesOperationException>(() => _cursesMock.Object.FromComplexChar(c));
     }
 
     [TestMethod]
@@ -323,5 +323,29 @@ public class HelpersTests
     {
         var result = Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) evt);
         result.modifierKey.ShouldBe(expMod);
+    }
+
+    [TestMethod]
+    public void ValidOrNull_ReturnsNull_IfTermNameFailsWithDllNotFoundException()
+    {
+        _cursesMock.Setup(s => s.termname())
+                   .Throws<DllNotFoundException>();
+        
+        _cursesMock.Object.ValidOrNull().ShouldBeNull();
+    }
+    
+    [TestMethod]
+    public void ValidOrNull_ReturnsNull_IfTermNameFailsWithEntryPointNotFoundException()
+    {
+        _cursesMock.Setup(s => s.termname())
+                   .Throws<EntryPointNotFoundException>();
+        
+        _cursesMock.Object.ValidOrNull().ShouldBeNull();
+    }
+    
+    [TestMethod]
+    public void ValidOrNull_ReturnsCurses_IfTermNameDoeNotFail()
+    {
+        _cursesMock.Object.ValidOrNull().ShouldBe(_cursesMock.Object);
     }
 }

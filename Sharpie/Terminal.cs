@@ -167,7 +167,7 @@ public sealed class Terminal: IDisposable
     /// <summary>
     ///     Gets the terminal's baud rate.
     /// </summary>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public int BaudRate =>
         Curses.baudrate()
               .Check(nameof(Curses.baudrate), "Failed to obtain the baud rate of the terminal.");
@@ -324,7 +324,7 @@ public sealed class Terminal: IDisposable
     /// <remarks>The actual notification depends on terminal support.</remarks>
     /// <param name="silent">The alert mode.</param>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Alert(bool silent)
     {
         if (silent)

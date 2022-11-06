@@ -31,19 +31,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Tests;
 
 [TestClass]
-public class CursesExceptionTests
+public class CursesInitializationExceptionTests
 {
-    [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
-     SuppressMessage("Performance", "CA1806:Do not ignore method results")]
-    public void Ctor_ThrowsException_IfMessageIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => { new CursesException(null!); });
-    }
-
     [TestMethod]
-    public void Ctor_StoresTheMessage()
+    public void HasTheCorrectMessage()
     {
-        var ex = new CursesException("message");
-        ex.Message.ShouldBe("message");
+        var ex = new CursesInitializationException();
+        ex.Message.ShouldBe("Failed to load or initialize the Curses library.");
     }
 }

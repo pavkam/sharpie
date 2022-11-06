@@ -160,7 +160,7 @@ public sealed class Screen: Window
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the screen bounds.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Window CreateWindow(Rectangle area)
     {
         if (!IsRectangleWithin(area))
@@ -185,7 +185,7 @@ public sealed class Screen: Window
     /// <exception cref="ObjectDisposedException">The window has been disposed and can no longer be used.</exception>
     /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Window CreateSubWindow(Window window, Rectangle area)
     {
         switch (window)
@@ -219,7 +219,7 @@ public sealed class Screen: Window
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The window has been disposed and can no longer be used.</exception>
     /// <exception cref="InvalidOperationException">Trying to duplicate the screen window.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
     public Window DuplicateWindow(Window window)
     {
@@ -248,7 +248,7 @@ public sealed class Screen: Window
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size" /> is invalid.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Pad CreatePad(Size size)
     {
         if (size.Width < 1 || size.Height < 1)
@@ -272,7 +272,7 @@ public sealed class Screen: Window
     /// <exception cref="ObjectDisposedException">The pad have been disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">When <paramref name="area" /> is outside the pad's bounds.</exception>
     /// <exception cref="ArgumentNullException">When <paramref name="pad" /> is <c>null</c>.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Pad CreateSubPad(Pad pad, Rectangle area)
     {
         if (pad == null)
@@ -295,7 +295,7 @@ public sealed class Screen: Window
     ///     Applies all queued refreshes to the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The screen has been disposed and can no longer be used.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ApplyPendingRefreshes()
     {
         AssertAlive();
@@ -307,7 +307,7 @@ public sealed class Screen: Window
     ///     This method invalidates the screen in its entirety and redraws if from scratch.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The screen has been disposed and can no longer be used.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ForceInvalidateAndRefresh()
     {
         Invalidate();

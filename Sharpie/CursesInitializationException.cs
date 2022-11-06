@@ -26,24 +26,16 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
-namespace Sharpie.Tests;
+namespace Sharpie;
 
-[TestClass]
-public class CursesExceptionTests
+/// <summary>
+///     A generic Curses exception.
+/// </summary>
+[PublicAPI]
+public sealed class CursesInitializationException: CursesException
 {
-    [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
-     SuppressMessage("Performance", "CA1806:Do not ignore method results")]
-    public void Ctor_ThrowsException_IfMessageIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => { new CursesException(null!); });
-    }
-
-    [TestMethod]
-    public void Ctor_StoresTheMessage()
-    {
-        var ex = new CursesException("message");
-        ex.Message.ShouldBe("message");
-    }
+    ///<inheritdoc cref="CursesException"/>
+    internal CursesInitializationException(): base("Failed to load or initialize the Curses library.") { }
 }

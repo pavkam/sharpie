@@ -44,7 +44,7 @@ public sealed class SoftLabelKeyManager
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="mode">The mode of the manager.</param>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="curses" /> is <c>null</c>.</exception>
     internal SoftLabelKeyManager(ICursesProvider curses, SoftLabelKeyMode mode)
     {
@@ -79,7 +79,7 @@ public sealed class SoftLabelKeyManager
     ///     Gets or sets the style of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public Style Style
     {
@@ -107,7 +107,7 @@ public sealed class SoftLabelKeyManager
     ///     Gets or sets the color mixture of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public ColorMixture ColorMixture
     {
@@ -142,7 +142,7 @@ public sealed class SoftLabelKeyManager
     /// </exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void SetLabel(int index, string title, SoftLabelKeyAlignment align)
     {
         if (title == null)
@@ -166,7 +166,7 @@ public sealed class SoftLabelKeyManager
     /// </summary>
     /// <param name="attributes">The attributes to enable.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
@@ -181,7 +181,7 @@ public sealed class SoftLabelKeyManager
     /// </summary>
     /// <param name="attributes">The attributes to disable.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
@@ -195,7 +195,7 @@ public sealed class SoftLabelKeyManager
     ///     Clears the soft key labels from the screen. They can be restored by calling <see cref="Restore" /> method.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void Clear()
     {
@@ -208,7 +208,7 @@ public sealed class SoftLabelKeyManager
     ///     Restores the soft key labels to the screen. They can be cleared by calling <see cref="Clear" /> method.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void Restore()
     {
@@ -221,7 +221,7 @@ public sealed class SoftLabelKeyManager
     ///     Invalidates the soft key labels. They will be queued for refresh the next time <see cref="Refresh" /> is called.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void Invalidate()
     {
@@ -235,7 +235,7 @@ public sealed class SoftLabelKeyManager
     /// </summary>
     /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void Refresh(bool batch)
     {

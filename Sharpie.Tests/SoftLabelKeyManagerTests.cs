@@ -90,7 +90,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_attr())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() =>
+        Should.Throw<CursesOperationException>(() =>
               {
                   var l = _mgr1.Style;
               })
@@ -103,7 +103,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_attr_set(It.IsAny<uint>(), It.IsAny<ushort>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.Style = Style.Default; })
+        Should.Throw<CursesOperationException>(() => { _mgr1.Style = Style.Default; })
               .Operation.ShouldBe("slk_attr_set");
     }
 
@@ -148,7 +148,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_attr())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() =>
+        Should.Throw<CursesOperationException>(() =>
               {
                   var l = _mgr1.ColorMixture;
               })
@@ -176,7 +176,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_color(It.IsAny<ushort>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.ColorMixture = ColorMixture.Default; })
+        Should.Throw<CursesOperationException>(() => { _mgr1.ColorMixture = ColorMixture.Default; })
               .Operation.ShouldBe("slk_color");
     }
 
@@ -220,7 +220,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_set(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.SetLabel(0, "test", SoftLabelKeyAlignment.Left); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.SetLabel(0, "test", SoftLabelKeyAlignment.Left); })
               .Operation.ShouldBe("slk_set");
     }
 
@@ -247,7 +247,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_attr_on(It.IsAny<uint>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.EnableAttributes(VideoAttribute.Italic); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.EnableAttributes(VideoAttribute.Italic); })
               .Operation.ShouldBe("slk_attr_on");
     }
 
@@ -274,7 +274,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_attr_off(It.IsAny<uint>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.DisableAttributes(VideoAttribute.Italic); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.DisableAttributes(VideoAttribute.Italic); })
               .Operation.ShouldBe("slk_attr_off");
     }
 
@@ -298,7 +298,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_clear())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.Clear(); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.Clear(); })
               .Operation.ShouldBe("slk_clear");
     }
 
@@ -322,7 +322,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_restore())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.Restore(); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.Restore(); })
               .Operation.ShouldBe("slk_restore");
     }
 
@@ -346,7 +346,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_touch())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.Invalidate(); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.Invalidate(); })
               .Operation.ShouldBe("slk_touch");
     }
 
@@ -367,7 +367,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_noutrefresh())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.Refresh(true); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.Refresh(true); })
               .Operation.ShouldBe("slk_noutrefresh");
     }
 
@@ -377,7 +377,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_refresh())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _mgr1.Refresh(false); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.Refresh(false); })
               .Operation.ShouldBe("slk_refresh");
     }
 

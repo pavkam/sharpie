@@ -31,28 +31,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     A Curses exception.
+///     A generic Curses exception, base for all other curses errors.
 /// </summary>
 [PublicAPI]
-public sealed class CursesException: Exception
+public class CursesException: Exception
 {
     /// <summary>
     ///     Creates a new instance of this exception.
     /// </summary>
-    /// <param name="operation">The failed operation.</param>
-    /// <param name="message">The message.</param>
-    internal CursesException(string operation, string message): base($"The call to {operation} failed: {message}")
+    /// <param name="message">The error message.</param>
+    /// <exception cref="ArgumentNullException">The <paramref name="message"/> is <c>null</c>.</exception>
+    internal CursesException(string message): base(message)
     {
         if (message == null)
         {
             throw new ArgumentNullException(nameof(message));
         }
-
-        Operation = operation ?? throw new ArgumentNullException(nameof(operation));
     }
-
-    /// <summary>
-    ///     The operation that failed.
-    /// </summary>
-    public string Operation { get; }
 }

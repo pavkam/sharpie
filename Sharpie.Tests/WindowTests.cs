@@ -67,7 +67,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.keypad(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+        Should.Throw<CursesOperationException>(() => new Window(_cursesMock.Object, null, new(1)))
               .Operation.ShouldBe("keypad");
     }
 
@@ -77,7 +77,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.notimeout(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+        Should.Throw<CursesOperationException>(() => new Window(_cursesMock.Object, null, new(1)))
               .Operation.ShouldBe("notimeout");
     }
 
@@ -87,7 +87,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.nodelay(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+        Should.Throw<CursesOperationException>(() => new Window(_cursesMock.Object, null, new(1)))
               .Operation.ShouldBe("nodelay");
     }
 
@@ -97,7 +97,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.syncok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+        Should.Throw<CursesOperationException>(() => new Window(_cursesMock.Object, null, new(1)))
               .Operation.ShouldBe("syncok");
     }
 
@@ -107,7 +107,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.scrollok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Window(_cursesMock.Object, null, new(1)))
+        Should.Throw<CursesOperationException>(() => new Window(_cursesMock.Object, null, new(1)))
               .Operation.ShouldBe("scrollok");
     }
 
@@ -231,7 +231,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.scrollok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => w.EnableScrolling = false)
+        Should.Throw<CursesOperationException>(() => w.EnableScrolling = false)
               .Operation.ShouldBe("scrollok");
     }
 
@@ -295,7 +295,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.UseHardwareLineEdit = false)
+        Should.Throw<CursesOperationException>(() => w.UseHardwareLineEdit = false)
               .Operation.ShouldBe("idlok");
     }
 
@@ -362,7 +362,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.Style)
+        Should.Throw<CursesOperationException>(() => w.Style)
               .Operation.ShouldBe("wattr_get");
     }
 
@@ -383,7 +383,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.Style = Style.Default)
+        Should.Throw<CursesOperationException>(() => w.Style = Style.Default)
               .Operation.ShouldBe("wattr_set");
     }
 
@@ -415,7 +415,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.ColorMixture)
+        Should.Throw<CursesOperationException>(() => w.ColorMixture)
               .Operation.ShouldBe("wattr_get");
     }
 
@@ -436,7 +436,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.ColorMixture = ColorMixture.Default)
+        Should.Throw<CursesOperationException>(() => w.ColorMixture = ColorMixture.Default)
               .Operation.ShouldBe("wcolor_set");
     }
 
@@ -469,7 +469,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Background)
+        Should.Throw<CursesOperationException>(() => w.Background)
               .Operation.ShouldBe("wgetbkgrnd");
     }
 
@@ -494,7 +494,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.Background = (new('a'), Style.Default))
+        Should.Throw<CursesOperationException>(() => w.Background = (new('a'), Style.Default))
               .Operation.ShouldBe("wbkgrnd");
     }
 
@@ -533,7 +533,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.Location)
+        Should.Throw<CursesOperationException>(() => w.Location)
               .Operation.ShouldBe("getbegx");
     }
 
@@ -545,7 +545,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.Location)
+        Should.Throw<CursesOperationException>(() => w.Location)
               .Operation.ShouldBe("getbegy");
     }
 
@@ -558,7 +558,7 @@ public class WindowTests
         var p = new Window(_cursesMock.Object, null, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
 
-        Should.Throw<CursesException>(() => w.Location)
+        Should.Throw<CursesOperationException>(() => w.Location)
               .Operation.ShouldBe("getparx");
     }
 
@@ -571,7 +571,7 @@ public class WindowTests
         var p = new Window(_cursesMock.Object, null, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
 
-        Should.Throw<CursesException>(() => w.Location)
+        Should.Throw<CursesOperationException>(() => w.Location)
               .Operation.ShouldBe("getpary");
     }
 
@@ -606,7 +606,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.mvwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => w.Location = new(1, 1))
+        Should.Throw<CursesOperationException>(() => w.Location = new(1, 1))
               .Operation.ShouldBe("mvwin");
     }
 
@@ -622,7 +622,7 @@ public class WindowTests
         var p = new Window(_cursesMock.Object, null, new(1));
         var w = new Window(_cursesMock.Object, p, new(1));
 
-        Should.Throw<CursesException>(() => w.Location = new(1, 1))
+        Should.Throw<CursesOperationException>(() => w.Location = new(1, 1))
               .Operation.ShouldBe("mvderwin");
     }
 
@@ -685,7 +685,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.Size)
+        Should.Throw<CursesOperationException>(() => w.Size)
               .Operation.ShouldBe("getmaxx");
     }
 
@@ -697,7 +697,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.Size)
+        Should.Throw<CursesOperationException>(() => w.Size)
               .Operation.ShouldBe("getmaxy");
     }
 
@@ -718,7 +718,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => w.Size = new(1, 1))
+        Should.Throw<CursesOperationException>(() => w.Size = new(1, 1))
               .Operation.ShouldBe("wresize");
     }
 
@@ -769,7 +769,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.CaretPosition)
+        Should.Throw<CursesOperationException>(() => w.CaretPosition)
               .Operation.ShouldBe("getcurx");
     }
 
@@ -781,7 +781,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.CaretPosition)
+        Should.Throw<CursesOperationException>(() => w.CaretPosition)
               .Operation.ShouldBe("getcury");
     }
 
@@ -808,7 +808,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => w.CaretPosition = new(1, 1))
+        Should.Throw<CursesOperationException>(() => w.CaretPosition = new(1, 1))
               .Operation.ShouldBe("wmove");
     }
 
@@ -897,7 +897,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.EnableAttributes(VideoAttribute.Bold))
+        Should.Throw<CursesOperationException>(() => w.EnableAttributes(VideoAttribute.Bold))
               .Operation.ShouldBe("wattr_on");
     }
 
@@ -918,7 +918,7 @@ public class WindowTests
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
-        Should.Throw<CursesException>(() => w.DisableAttributes(VideoAttribute.Bold))
+        Should.Throw<CursesOperationException>(() => w.DisableAttributes(VideoAttribute.Bold))
               .Operation.ShouldBe("wattr_off");
     }
 
@@ -1024,7 +1024,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.ScrollUp(1))
+        Should.Throw<CursesOperationException>(() => w.ScrollUp(1))
               .Operation.ShouldBe("wscrl");
     }
 
@@ -1086,7 +1086,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.ScrollDown(1))
+        Should.Throw<CursesOperationException>(() => w.ScrollDown(1))
               .Operation.ShouldBe("wscrl");
     }
 
@@ -1119,7 +1119,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.InsertEmptyLines(1))
+        Should.Throw<CursesOperationException>(() => w.InsertEmptyLines(1))
               .Operation.ShouldBe("winsdelln");
     }
 
@@ -1146,7 +1146,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.DeleteLines(1))
+        Should.Throw<CursesOperationException>(() => w.DeleteLines(1))
               .Operation.ShouldBe("winsdelln");
     }
 
@@ -1174,7 +1174,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.ChangeTextStyle(1, Style.Default))
+        Should.Throw<CursesOperationException>(() => w.ChangeTextStyle(1, Style.Default))
               .Operation.ShouldBe("wchgat");
     }
 
@@ -1201,7 +1201,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.DrawVerticalLine(1, new('a'), Style.Default))
+        Should.Throw<CursesOperationException>(() => w.DrawVerticalLine(1, new('a'), Style.Default))
               .Operation.ShouldBe("wvline_set");
     }
 
@@ -1233,7 +1233,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.DrawVerticalLine(1))
+        Should.Throw<CursesOperationException>(() => w.DrawVerticalLine(1))
               .Operation.ShouldBe("wvline");
     }
 
@@ -1260,7 +1260,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.DrawHorizontalLine(1, new('a'), Style.Default))
+        Should.Throw<CursesOperationException>(() => w.DrawHorizontalLine(1, new('a'), Style.Default))
               .Operation.ShouldBe("whline_set");
     }
 
@@ -1292,7 +1292,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.DrawHorizontalLine(1))
+        Should.Throw<CursesOperationException>(() => w.DrawHorizontalLine(1))
               .Operation.ShouldBe("whline");
     }
 
@@ -1315,7 +1315,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.DrawBorder(new('a'), new('a'), new('a'), new('a'), new('a'),
+        Should.Throw<CursesOperationException>(() => w.DrawBorder(new('a'), new('a'), new('a'), new('a'), new('a'),
                   new('a'), new('a'), new('a'), Style.Default))
               .Operation.ShouldBe("wborder_set");
     }
@@ -1346,7 +1346,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.DrawBorder())
+        Should.Throw<CursesOperationException>(() => w.DrawBorder())
               .Operation.ShouldBe("wborder");
     }
 
@@ -1394,7 +1394,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Refresh(false, false))
+        Should.Throw<CursesOperationException>(() => w.Refresh(false, false))
               .Operation.ShouldBe("clearok");
     }
 
@@ -1405,7 +1405,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Refresh(false, false))
+        Should.Throw<CursesOperationException>(() => w.Refresh(false, false))
               .Operation.ShouldBe("wrefresh");
     }
 
@@ -1416,7 +1416,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Refresh(true, false))
+        Should.Throw<CursesOperationException>(() => w.Refresh(true, false))
               .Operation.ShouldBe("wnoutrefresh");
     }
 
@@ -1470,7 +1470,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Refresh(1, 1))
+        Should.Throw<CursesOperationException>(() => w.Refresh(1, 1))
               .Operation.ShouldBe("wredrawln");
     }
 
@@ -1563,7 +1563,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Invalidate())
+        Should.Throw<CursesOperationException>(() => w.Invalidate())
               .Operation.ShouldBe("wtouchln");
     }
 
@@ -1627,7 +1627,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Invalidate(1, 1))
+        Should.Throw<CursesOperationException>(() => w.Invalidate(1, 1))
               .Operation.ShouldBe("wtouchln");
     }
 
@@ -1675,7 +1675,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Clear(ClearStrategy.Full))
+        Should.Throw<CursesOperationException>(() => w.Clear(ClearStrategy.Full))
               .Operation.ShouldBe("werase");
     }
 
@@ -1686,7 +1686,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Clear(ClearStrategy.LineFromCaret))
+        Should.Throw<CursesOperationException>(() => w.Clear(ClearStrategy.LineFromCaret))
               .Operation.ShouldBe("wclrtoeol");
     }
 
@@ -1697,7 +1697,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.Clear(ClearStrategy.FullFromCaret))
+        Should.Throw<CursesOperationException>(() => w.Clear(ClearStrategy.FullFromCaret))
               .Operation.ShouldBe("wclrtobot");
     }
 
@@ -1744,7 +1744,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.WriteText("12345", Style.Default))
+        Should.Throw<CursesOperationException>(() => w.WriteText("12345", Style.Default))
               .Operation.ShouldBe("wadd_wch");
     }
 
@@ -1916,7 +1916,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w.GetText(1))
+        Should.Throw<CursesOperationException>(() => w.GetText(1))
               .Operation.ShouldBe("win_wchnstr");
     }
 
@@ -1988,7 +1988,7 @@ public class WindowTests
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, null, new(2));
 
-        Should.Throw<CursesException>(() => w1.Replace(w2, ReplaceStrategy.Overlay))
+        Should.Throw<CursesOperationException>(() => w1.Replace(w2, ReplaceStrategy.Overlay))
               .Operation.ShouldBe("overlay");
     }
 
@@ -2001,7 +2001,7 @@ public class WindowTests
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, null, new(2));
 
-        Should.Throw<CursesException>(() => w1.Replace(w2, ReplaceStrategy.Overwrite))
+        Should.Throw<CursesOperationException>(() => w1.Replace(w2, ReplaceStrategy.Overwrite))
               .Operation.ShouldBe("overwrite");
     }
 
@@ -2096,7 +2096,7 @@ public class WindowTests
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, null, new(2));
 
-        Should.Throw<CursesException>(() => { w1.Replace(w2, new(1, 1, 5, 5), new(0, 0), ReplaceStrategy.Overlay); })
+        Should.Throw<CursesOperationException>(() => { w1.Replace(w2, new(1, 1, 5, 5), new(0, 0), ReplaceStrategy.Overlay); })
               .Operation.ShouldBe("copywin");
     }
 
@@ -2182,7 +2182,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w1 = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<CursesException>(() => w1.IgnoreHardwareCaret = true)
+        Should.Throw<CursesOperationException>(() => w1.IgnoreHardwareCaret = true)
               .Operation.ShouldBe("leaveok");
     }
 

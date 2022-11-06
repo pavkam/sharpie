@@ -94,7 +94,7 @@ public sealed class Pad: Window
     /// <param name="rect">The rectangle of the pad to place onto the screen.</param>
     /// <param name="screenPos">The point on the screen to place that rectangle.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(bool batch, bool entireScreen, Rectangle rect, Point screenPos)
     {
         if (!IsRectangleWithin(rect))

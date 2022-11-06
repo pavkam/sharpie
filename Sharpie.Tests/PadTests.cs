@@ -141,7 +141,7 @@ public class PadTests
         _cursesMock.Setup(s => s.clearok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _pad1.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
+        Should.Throw<CursesOperationException>(() => { _pad1.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
               .Operation.ShouldBe("clearok");
     }
 
@@ -152,7 +152,7 @@ public class PadTests
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _pad1.Refresh(true, false, new(0, 0, 1, 1), new(0, 0)); })
+        Should.Throw<CursesOperationException>(() => { _pad1.Refresh(true, false, new(0, 0, 1, 1), new(0, 0)); })
               .Operation.ShouldBe("pnoutrefresh");
     }
 
@@ -163,7 +163,7 @@ public class PadTests
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => { _pad1.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
+        Should.Throw<CursesOperationException>(() => { _pad1.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
               .Operation.ShouldBe("prefresh");
     }
 

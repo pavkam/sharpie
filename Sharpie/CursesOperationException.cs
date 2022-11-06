@@ -26,24 +26,32 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
-namespace Sharpie.Tests;
+namespace Sharpie;
 
-[TestClass]
-public class CursesExceptionTests
+/// <summary>
+///     A Curses exception raised when an operation fails.
+/// </summary>
+[PublicAPI]
+public sealed class CursesOperationException: CursesException
 {
-    [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
-     SuppressMessage("Performance", "CA1806:Do not ignore method results")]
-    public void Ctor_ThrowsException_IfMessageIsNull()
+    /// <inheritdoc cref="CursesException"/>
+    /// <param name="operation">The failed operation.</param>
+    /// <param name="message">The message.</param>
+    internal CursesOperationException(string operation, string message):
+        base($"The call to {operation} failed: {message}")
     {
-        Should.Throw<ArgumentNullException>(() => { new CursesException(null!); });
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
+        }
+        
+        Operation = operation ?? throw new ArgumentNullException(nameof(operation));
     }
 
-    [TestMethod]
-    public void Ctor_StoresTheMessage()
-    {
-        var ex = new CursesException("message");
-        ex.Message.ShouldBe("message");
-    }
+    /// <summary>
+    ///     The operation that failed.
+    /// </summary>
+    public string Operation { get; }
 }

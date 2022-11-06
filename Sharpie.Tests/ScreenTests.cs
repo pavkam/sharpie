@@ -91,7 +91,7 @@ public class ScreenTests
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesException>(() => _screen1.CreateWindow(new(0, 0, 1, 1)))
+        Should.Throw<CursesOperationException>(() => _screen1.CreateWindow(new(0, 0, 1, 1)))
               .Operation.ShouldBe("newwin");
     }
 
@@ -143,7 +143,7 @@ public class ScreenTests
                        It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesException>(() => _screen1.CreateSubWindow(w, new(0, 0, 1, 1)))
+        Should.Throw<CursesOperationException>(() => _screen1.CreateSubWindow(w, new(0, 0, 1, 1)))
               .Operation.ShouldBe("derwin");
     }
 
@@ -197,7 +197,7 @@ public class ScreenTests
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesException>(() => _screen1.DuplicateWindow(w))
+        Should.Throw<CursesOperationException>(() => _screen1.DuplicateWindow(w))
               .Operation.ShouldBe("dupwin");
     }
 
@@ -244,7 +244,7 @@ public class ScreenTests
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesException>(() => _screen1.CreatePad(new(1, 1)))
+        Should.Throw<CursesOperationException>(() => _screen1.CreatePad(new(1, 1)))
               .Operation.ShouldBe("newpad");
     }
 
@@ -286,7 +286,7 @@ public class ScreenTests
                        It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesException>(() => _screen1.CreateSubPad(p, new(0, 0, 1, 1)))
+        Should.Throw<CursesOperationException>(() => _screen1.CreateSubPad(p, new(0, 0, 1, 1)))
               .Operation.ShouldBe("subpad");
     }
 
@@ -321,7 +321,7 @@ public class ScreenTests
         _cursesMock.Setup(s => s.doupdate())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => _screen1.ApplyPendingRefreshes())
+        Should.Throw<CursesOperationException>(() => _screen1.ApplyPendingRefreshes())
               .Operation.ShouldBe("doupdate");
     }
 

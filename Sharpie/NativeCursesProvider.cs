@@ -41,25 +41,9 @@ using System.Runtime.InteropServices;
 public sealed class NativeCursesProvider: ICursesProvider
 {
     private const string LibraryName = "ncurses";
+    private static readonly ICursesProvider? _instance = new NativeCursesProvider().ValidOrNull(); 
 
-    private static readonly Lazy<ICursesProvider?> LazyCursesProvider = new(() =>
-    {
-        try
-        {
-            termname();
-        } 
-        catch (Exception e)
-        {
-            if (e is DllNotFoundException or EntryPointNotFoundException)
-            {
-                return null;
-            }
-        }
-
-        return new NativeCursesProvider();
-    });
-
-    public static ICursesProvider Instance => LazyCursesProvider.Value ?? throw new InvalidOperationException("Curses library not available.");
+    public static ICursesProvider Instance => _instance ?? throw new CursesInitializationException();
 
     bool ICursesProvider.is_cleared(IntPtr window) => is_cleared(window);
 

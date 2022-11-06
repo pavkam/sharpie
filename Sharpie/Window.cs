@@ -106,7 +106,7 @@ public class Window: IDisposable
     ///     needs a new line.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public bool EnableScrolling
     {
         get => Curses.is_scrollok(Handle);
@@ -167,7 +167,7 @@ public class Window: IDisposable
     ///     Gets or sets the style of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Style Style
     {
         get
@@ -186,7 +186,7 @@ public class Window: IDisposable
     ///     Gets or sets the color mixture of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ColorMixture ColorMixture
     {
         get => Style.ColorMixture;
@@ -199,7 +199,7 @@ public class Window: IDisposable
     ///     Gets or sets the window background.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (Rune @char, Style style) Background
     {
         get
@@ -218,7 +218,7 @@ public class Window: IDisposable
     ///     Gets or sets the location of the window within its parent.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the parent's bounds.</exception>
     public virtual Point Location
     {
@@ -265,7 +265,7 @@ public class Window: IDisposable
     ///     Gets or sets the size of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the bounds.</exception>
     public virtual Size Size
     {
@@ -294,7 +294,7 @@ public class Window: IDisposable
     ///     Gets or sets the current position of the caret within the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the window bounds.</exception>
     public Point CaretPosition
     {
@@ -420,7 +420,7 @@ public class Window: IDisposable
     /// </summary>
     /// <param name="attributes">The attributes to enable.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
         Curses.wattr_on(Handle, (uint) attributes, IntPtr.Zero)
@@ -432,7 +432,7 @@ public class Window: IDisposable
     /// </summary>
     /// <param name="attributes">The attributes to disable.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
         Curses.wattr_off(Handle, (uint) attributes, IntPtr.Zero)
@@ -477,7 +477,7 @@ public class Window: IDisposable
     /// </exception>
     /// <exception cref="NotSupportedException">The <see cref="EnableScrolling" /> is <c>false</c>.</exception>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ScrollUp(int lines)
     {
         if (lines <= 0 || lines > Size.Height)
@@ -504,7 +504,7 @@ public class Window: IDisposable
     /// </exception>
     /// <exception cref="NotSupportedException">The <see cref="EnableScrolling" /> is <c>false</c>.</exception>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ScrollDown(int lines)
     {
         if (lines <= 0 || lines > Size.Height)
@@ -530,7 +530,7 @@ public class Window: IDisposable
     ///     of the window.
     /// </exception>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void InsertEmptyLines(int lines)
     {
         if (lines <= 0)
@@ -551,7 +551,7 @@ public class Window: IDisposable
     ///     of the window.
     /// </exception>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DeleteLines(int lines)
     {
         if (lines <= 0)
@@ -570,7 +570,7 @@ public class Window: IDisposable
     /// <param name="style">The applied style.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     /// <exception cref="ArgumentException">The <paramref name="width" /> is less than one.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ChangeTextStyle(int width, Style style)
     {
         if (width < 1)
@@ -588,7 +588,7 @@ public class Window: IDisposable
     /// <param name="str">The text to write.</param>
     /// <param name="style">The style of the text.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     public void WriteText(string str, Style style)
     {
@@ -616,7 +616,7 @@ public class Window: IDisposable
 
         if (failed == total)
         {
-            throw new CursesException(nameof(Curses.wadd_wch), "Failed to write the text in its entirety");
+            throw new CursesOperationException(nameof(Curses.wadd_wch), "Failed to write the text in its entirety");
         }
     }
 
@@ -628,7 +628,7 @@ public class Window: IDisposable
     /// </remarks>
     /// <param name="str">The text to write.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     public void WriteText(string str) => WriteText(str, Style.Default);
 
@@ -639,7 +639,7 @@ public class Window: IDisposable
     /// <param name="length">The length of the line.</param>
     /// <param name="style">The style to use.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawVerticalLine(int length, Rune @char, Style style)
     {
@@ -657,7 +657,7 @@ public class Window: IDisposable
     /// </summary>
     /// <param name="length">The length of the line.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawVerticalLine(int length)
     {
@@ -677,7 +677,7 @@ public class Window: IDisposable
     /// <param name="style">The style to use.</param>
     /// <param name="length">The length of the line.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawHorizontalLine(int length, Rune @char, Style style)
     {
@@ -695,7 +695,7 @@ public class Window: IDisposable
     /// </summary>
     /// <param name="length">The length of the line.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawHorizontalLine(int length)
     {
@@ -721,7 +721,7 @@ public class Window: IDisposable
     /// <param name="bottomSideChar">The bottom-side character.</param>
     /// <param name="style">The style to use.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawBorder(Rune leftSideChar, Rune rightSideChar, Rune topSideChar, Rune bottomSideChar,
         Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar,
         Style style)
@@ -744,7 +744,7 @@ public class Window: IDisposable
     ///     Draws a border around the window's edges using standard characters.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawBorder()
     {
         Curses.wborder(Handle, 0, 0, 0, 0,
@@ -782,7 +782,7 @@ public class Window: IDisposable
     /// </summary>
     /// <param name="count">The number of characters to get.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     public (Rune @char, Style style)[] GetText(int count)
     {
@@ -806,7 +806,7 @@ public class Window: IDisposable
     /// </summary>
     /// <param name="strategy">The strategy to use.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Clear(ClearStrategy strategy)
     {
         switch (strategy)
@@ -835,7 +835,7 @@ public class Window: IDisposable
     /// <param name="window">The window to copy contents to.</param>
     /// <param name="strategy">The used strategy.</param>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="window" /> is null.</exception>
     public void Replace(Window window, ReplaceStrategy strategy)
     {
@@ -867,7 +867,7 @@ public class Window: IDisposable
     /// <param name="srcRect">The source rectangle to copy.</param>
     /// <param name="destPos">The destination position.</param>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="window" /> is null.</exception>
     public void Replace(Window window, Rectangle srcRect, Point destPos, ReplaceStrategy strategy)
     {
@@ -898,7 +898,7 @@ public class Window: IDisposable
     /// <param name="y">The line to start with.</param>
     /// <param name="count">The count of lines to invalidate.</param>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
     ///     The <paramref name="y" /> and <paramref name="count" /> combination is
     ///     out of bounds.
@@ -923,14 +923,14 @@ public class Window: IDisposable
     ///     Invalidates the contents of the window thus forcing a redraw at the next <see cref="Refresh(bool,bool)" />.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Invalidate() { Invalidate(0, Size.Height); }
 
     /// <summary>
     ///     Checks if a given point fits within the current window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <returns>The result of the check.</returns>
     public bool IsPointWithin(Point point) => Curses.wenclose(Handle, point.Y, point.X);
 
@@ -938,7 +938,7 @@ public class Window: IDisposable
     ///     Checks if a given rectangle fits within the current window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <returns>The result of the check.</returns>
     public bool IsRectangleWithin(Rectangle rect) =>
         IsPointWithin(new(rect.Left, rect.Top)) &&
@@ -965,7 +965,7 @@ public class Window: IDisposable
     /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void Refresh(bool batch, bool entireScreen)
     {
         Curses.clearok(Handle, entireScreen)
@@ -986,7 +986,7 @@ public class Window: IDisposable
     ///     Refreshes the window by synchronizing it to the terminal with immediate redraw.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh() => Refresh(false, false);
 
     /// <summary>
@@ -995,7 +995,7 @@ public class Window: IDisposable
     /// <param name="y">The starting line to refresh.</param>
     /// <param name="count">The number of lines to refresh.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The combination of lines and count exceed the window boundary.</exception>
     public virtual void Refresh(int y, int count)
     {

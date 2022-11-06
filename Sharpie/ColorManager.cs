@@ -44,7 +44,7 @@ public sealed class ColorManager
     /// </summary>
     /// <param name="curses">The curses provider.</param>
     /// <param name="enabled">Specifies whether colors are enabled.</param>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="curses" /> is <c>null</c>.</exception>
     internal ColorManager(ICursesProvider curses, bool enabled)
     {
@@ -82,7 +82,7 @@ public sealed class ColorManager
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <returns>A new color mixture.</returns>
     public ColorMixture MixColors(ushort fgColor, ushort bgColor)
     {
@@ -101,7 +101,7 @@ public sealed class ColorManager
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="InvalidOperationException">The maximum number of pairs has been exhausted.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <returns>A new color mixture.</returns>
     public ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor) =>
         MixColors((ushort) fgColor, (ushort) bgColor);
@@ -112,7 +112,7 @@ public sealed class ColorManager
     /// <param name="mixture">The color mixture to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixColors(ColorMixture mixture, ushort fgColor, ushort bgColor)
     {
         _curses.init_pair(mixture.Handle, fgColor, bgColor)
@@ -125,7 +125,7 @@ public sealed class ColorManager
     /// <param name="mixture">The color mixture to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixColors(ColorMixture mixture, StandardColor fgColor, StandardColor bgColor)
     {
         RemixColors(mixture, (ushort) fgColor, (ushort) bgColor);
@@ -136,7 +136,7 @@ public sealed class ColorManager
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixDefaultColors(ushort fgColor, ushort bgColor)
     {
         _curses.assume_default_colors(fgColor, bgColor)
@@ -148,7 +148,7 @@ public sealed class ColorManager
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixDefaultColors(StandardColor fgColor, StandardColor bgColor)
     {
         RemixDefaultColors((ushort) fgColor, (ushort) bgColor);
@@ -159,7 +159,7 @@ public sealed class ColorManager
     /// </summary>
     /// <param name="mixture">The color mixture to get the colors from.</param>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (ushort fgColor, ushort bgColor) UnMixColors(ColorMixture mixture)
     {
         _curses.pair_content(mixture.Handle, out var fgColor, out var bgColor)
@@ -180,7 +180,7 @@ public sealed class ColorManager
     ///     <see cref="CanRedefineColors" />
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RedefineColor(ushort color, ushort red, ushort green, ushort blue)
     {
         if (!CanRedefineColors)
@@ -220,7 +220,7 @@ public sealed class ColorManager
     /// </remarks>
     /// <exception cref="ArgumentOutOfRangeException">If any of the three components is greater than 1000.</exception>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RedefineColor(StandardColor color, ushort red, ushort green, ushort blue) =>
         RedefineColor((ushort) color, red, green, blue);
 
@@ -233,7 +233,7 @@ public sealed class ColorManager
     ///     <see cref="CanRedefineColors" />
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (ushort red, ushort green, ushort blue) BreakdownColor(ushort color)
     {
         if (!CanRedefineColors)
@@ -256,7 +256,7 @@ public sealed class ColorManager
     ///     <see cref="CanRedefineColors" />
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (ushort red, ushort green, ushort blue) BreakdownColor(StandardColor color) =>
         BreakdownColor((ushort) color);
 }

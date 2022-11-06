@@ -104,7 +104,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(0));
 
-        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new()))
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new()))
               .Operation.ShouldBe("initscr");
     }
 
@@ -142,7 +142,7 @@ public class TerminalTests
         _cursesMock.Setup(v => v.intrflush(IntPtr.Zero, It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new()))
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new()))
               .Operation.ShouldBe("intrflush");
     }
 
@@ -163,7 +163,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.noecho())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new(EchoInput: enabled)))
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(EchoInput: enabled)))
               .Operation.ShouldBe(enabled ? "echo" : "noecho");
     }
 
@@ -182,7 +182,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.nonl())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new()))
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new()))
               .Operation.ShouldBe("nonl");
     }
 
@@ -200,7 +200,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.curs_set(It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new(CaretMode: CaretMode.VeryVisible)))
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(CaretMode: CaretMode.VeryVisible)))
               .Operation.ShouldBe("curs_set");
     }
 
@@ -224,7 +224,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new(UseMouse: enabled)))
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(UseMouse: enabled)))
               .Operation.ShouldBe("mousemask");
     }
 
@@ -234,7 +234,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.mouseinterval(It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new(UseMouse: enabled)))
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(UseMouse: enabled)))
               .Operation.ShouldBe("mouseinterval");
     }
 
@@ -256,7 +256,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.noraw())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new(UseInputBuffering: true)))
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(UseInputBuffering: true)))
               .Operation.ShouldBe("noraw");
     }
 
@@ -266,7 +266,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.nocbreak())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => new Terminal(_cursesMock.Object, new(UseInputBuffering: true)))
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(UseInputBuffering: true)))
               .Operation.ShouldBe("nocbreak");
     }
 
@@ -276,7 +276,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.raw())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() =>
+        Should.Throw<CursesOperationException>(() =>
                   new Terminal(_cursesMock.Object, new(UseInputBuffering: false, SuppressControlKeys: true)))
               .Operation.ShouldBe("raw");
     }
@@ -287,7 +287,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.cbreak())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() =>
+        Should.Throw<CursesOperationException>(() =>
                   new Terminal(_cursesMock.Object, new(UseInputBuffering: false, SuppressControlKeys: false)))
               .Operation.ShouldBe("cbreak");
     }
@@ -338,7 +338,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.baudrate())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => _terminal.BaudRate.ShouldBe(999))
+        Should.Throw<CursesOperationException>(() => _terminal.BaudRate.ShouldBe(999))
               .Operation.ShouldBe("baudrate");
     }
 
@@ -582,7 +582,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.beep())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => _terminal.Alert(false))
+        Should.Throw<CursesOperationException>(() => _terminal.Alert(false))
               .Operation.ShouldBe("beep");
     }
 
@@ -602,7 +602,7 @@ public class TerminalTests
         _cursesMock.Setup(s => s.flash())
                    .Returns(-1);
 
-        Should.Throw<CursesException>(() => _terminal.Alert(true))
+        Should.Throw<CursesOperationException>(() => _terminal.Alert(true))
               .Operation.ShouldBe("flash");
     }
 
