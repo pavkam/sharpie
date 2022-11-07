@@ -43,7 +43,16 @@ public sealed class NativeCursesProvider: ICursesProvider
     private const string LibraryName = "ncurses";
     private static readonly ICursesProvider? _instance = new NativeCursesProvider().ValidOrNull();
 
+    /// <summary>
+    /// Returns the instance of the Curses backend.
+    /// </summary>
+    /// <exception cref="CursesInitializationException">Thrown if Curses library not available.</exception>
     public static ICursesProvider Instance => _instance ?? throw new CursesInitializationException();
+
+    /// <summary>
+    /// Checks if the Curses library is available.
+    /// </summary>
+    public static bool IsAvailable => _instance != null;
 
     bool ICursesProvider.is_cleared(IntPtr window) => is_cleared(window);
 
