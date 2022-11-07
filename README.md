@@ -20,9 +20,7 @@ So why another one? The are many reasons, but the most important ones are:
 
 # How To
 What follows is a small example of how to use the library:
-
 ![Demo](media/demo-1.gif)
-
 ```csharp
 // Create the terminal instance without any non-standard settings.
 using var terminal = new Terminal(NativeCursesProvider.Instance, new());
