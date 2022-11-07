@@ -64,6 +64,14 @@ public class TerminalTests
     {
         Should.Throw<ArgumentOutOfRangeException>(() => new Terminal(_cursesMock.Object, new(MouseClickInterval: -1)));
     }
+    
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void Ctor_SetsTheApplicationLocale(bool enable)
+    {
+        _terminal = new(_cursesMock.Object, new());
+
+        _cursesMock.Verify(v => v.setlocale(It.IsAny<int>(), ""));
+    }
 
     [TestMethod, DataRow(true), DataRow(false)]
     public void Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(bool enable)

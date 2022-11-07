@@ -442,4 +442,6 @@ public interface ICursesProvider
     bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
 
     void set_title(string title);
+
+    int setlocale(int category, string locale);
 }

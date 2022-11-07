@@ -602,21 +602,10 @@ public class Window: IDisposable
             return;
         }
 
-        var failed = 0;
-        var total = 0;
         foreach (var rune in str.EnumerateRunes())
         {
-            total++;
-            if (Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, style))
-                      .Failed())
-            {
-                failed++;
-            }
-        }
-
-        if (failed == total)
-        {
-            throw new CursesOperationException(nameof(Curses.wadd_wch), "Failed to write the text in its entirety");
+            Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, style))
+                  .Check(nameof(Curses.wadd_wch), "Failed to write character to the terminal.");
         }
     }
 

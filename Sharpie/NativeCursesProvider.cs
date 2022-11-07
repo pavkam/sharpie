@@ -31,8 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma warning disable CS1591
 namespace Sharpie;
 
-using System.Runtime.InteropServices;
-
 /// <summary>
 ///     Interface provides access to the Curses functionality. Use the <see cref="System" /> property to access the actual
 ///     implementation.
@@ -40,7 +38,9 @@ using System.Runtime.InteropServices;
 [PublicAPI, SuppressMessage("ReSharper", "IdentifierTypo"), ExcludeFromCodeCoverage]
 public sealed class NativeCursesProvider: ICursesProvider
 {
-    private const string LibraryName = "ncurses";
+    private const string CursesLibraryName = "ncurses";
+    private const string LibCLibraryName = "libc";
+    
     private static readonly ICursesProvider? _instance = new NativeCursesProvider().ValidOrNull();
 
     /// <summary>
@@ -504,610 +504,615 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     void ICursesProvider.set_title(string title) { Console.Title = title; }
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    int ICursesProvider.setlocale(int category, string locale) => setlocale(category, locale);
+    
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int baudrate();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int beep();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool can_change_color();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int cbreak();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int clearok(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int color_content(ushort color, out ushort red, out ushort green, out ushort blue);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int copywin(IntPtr fromWindow, IntPtr toWindow, int srcMinLine, int srcMinCol,
         int destMinLine, int destMinCol, int destMaxLine, int destMaxCol,
         int overlay);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int curs_set(int level);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int def_prog_mode();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int def_shell_mode();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int delay_output(int delayMillis);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int delwin(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern IntPtr derwin(IntPtr window, int lines, int cols, int beginLine,
         int beginCol);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int doupdate();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern IntPtr dupwin(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int echo();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int endwin();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern char erasechar();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void filter();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int flash();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int flushinp();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int halfdelay(int tenthsOfSec);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool has_colors();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool has_ic();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool has_il();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void idcok(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int idlok(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void immedok(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern IntPtr initscr();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int init_color(ushort color, ushort red, ushort green, ushort blue);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int init_pair(ushort colorPair, ushort fgColor, ushort bgColor);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int intrflush(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool isendwin();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_linetouched(IntPtr window, int line);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_wintouched(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr keyname(uint keyCode);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int keypad(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern char killchar();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int leaveok(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr longname();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int meta(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int mvderwin(IntPtr window, int parentLine, int parentCol);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int mvwin(IntPtr window, int toLine, int toCol);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern IntPtr newpad(int lines, int cols);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern IntPtr newwin(int lines, int cols, int atLine, int atCol);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int nl();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int nocbreak();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int nodelay(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int noecho();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int nonl();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void noqiflush();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int noraw();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int notimeout(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int overlay(IntPtr srcWindow, IntPtr destWindow);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int overwrite(IntPtr srcWindow, IntPtr destWindow);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint COLOR_PAIR(uint attrs);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint PAIR_NUMBER(uint colorPair);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int pechochar(IntPtr pad, uint @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void qiflush();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int raw();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int resetty();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int reset_prog_mode();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int reset_shell_mode();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int ripoffline(int lines, ICursesProvider.ripoffline_callback callback);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int savetty();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int scrollok(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_attroff(uint attrs);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_attron(uint attrs);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_attrset(uint attrs);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern char slk_attr();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_clear();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_color(ushort colorPair);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_init(int format);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr slk_label(int labelIndex);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_noutrefresh();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_refresh();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_restore();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_touch();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int start_color();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern IntPtr subpad(IntPtr pad, int lines, int cols, int atRow,
         int atCol);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern IntPtr subwin(IntPtr window, int lines, int cols, int atLine,
         int atCol);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int syncok(IntPtr window, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint termattrs();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr termname();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int ungetch(uint @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void use_env(bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int waddch(IntPtr window, uint charAndAttrs);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int waddchnstr(IntPtr window, uint[] charsAndAttrs, int length);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wattr_on(IntPtr window, uint attrs, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wattr_off(IntPtr window, uint attrs, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wbkgd(IntPtr window, uint charAndAttrs);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void wbkgdset(IntPtr window, uint charAndAttrs);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
         uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
         uint bottomRightCorner);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
         IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wclear(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wclrtobot(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wclrtoeol(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wcolor_set(IntPtr window, ushort pair, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void wcursyncup(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wdelch(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wechochar(IntPtr window, uint @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int werase(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wgetch(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern int wgetnstr(IntPtr window, StringBuilder dest, int length);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int whline(IntPtr window, uint @char, int count);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint winch(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int winchnstr(IntPtr window, StringBuilder dest, int length);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int winsch(IntPtr window, uint charAndAttrs);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int winsdelln(IntPtr window, int count);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wmove(IntPtr window, int newLine, int newCol);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wnoutrefresh(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wredrawln(IntPtr window, int startLine, int lineCount);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wrefresh(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wscrl(IntPtr window, int count);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wsetscrreg(IntPtr window, int top, int bottom);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void wsyncdown(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void wsyncup(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void wtimeout(IntPtr window, int delay);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wtouchln(IntPtr window, int line, int count, int changed);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wvline(IntPtr window, uint @char, int count);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_term_resized(int lines, int cols);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int resize_term(int lines, int cols);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int resizeterm(int lines, int cols);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr keybound(uint keyCode, int count);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr curses_version();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int assume_default_colors(int fgColor, int bgColor);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int define_key(string keyName, int keyCode);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern int key_defined(string keyName);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int keyok(int keyCode, bool set);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int set_tabsize(int size);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int use_default_colors();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wresize(IntPtr window, int lines, int columns);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void nofilter();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getcchar(ref CursesComplexChar @char,
         [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, out uint attrs, out ushort colorPair, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr key_name(uint @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int killwchar(out uint @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int pecho_wchar(IntPtr window, ref CursesComplexChar @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int setcchar(out CursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text,
         uint attrs, ushort colorPair, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern int slk_set(int labelIndex, string title, int fmt);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint term_attrs();
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int unget_wch(uint @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wadd_wch(IntPtr window, ref CursesComplexChar @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wadd_wchnstr(IntPtr window, CursesComplexChar[] @char, int count);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int waddnwstr(IntPtr window, string text, int length);
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
+    private static extern int waddnwstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] string text, int length);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wbkgrnd(IntPtr window, ref CursesComplexChar @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void wbkgrndset(IntPtr window, ref CursesComplexChar @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wborder_set(IntPtr window, ref CursesComplexChar leftSide,
         ref CursesComplexChar rightSide, ref CursesComplexChar topSide, ref CursesComplexChar bottomSide,
         ref CursesComplexChar topLeftCorner, ref CursesComplexChar topRightCorner,
         ref CursesComplexChar bottomLeftCorner, ref CursesComplexChar bottomRightCorner);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wecho_wchar(IntPtr window, ref CursesComplexChar @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wget_wch(IntPtr window, out uint dest);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wgetbkgrnd(IntPtr window, out CursesComplexChar @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wgetn_wstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest,
         int length);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int whline_set(IntPtr window, ref CursesComplexChar @char, int count);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int win_wch(IntPtr window, out CursesComplexChar @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int win_wchnstr(IntPtr window, CursesComplexChar[] @char, int length);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int winnwstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder text, int length);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wins_nwstr(IntPtr window, string text, int length);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wins_wch(IntPtr window, ref CursesComplexChar @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int winwstr(IntPtr window, string text);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern IntPtr wunctrl(ref CursesComplexChar @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wvline_set(IntPtr window, ref CursesComplexChar @char, int count);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int erasewchar(out uint @char);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint getattrs(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getcurx(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getcury(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getbegx(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getbegy(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getmaxx(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getmaxy(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getparx(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getpary(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_attr_off(uint attrs, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_attr_on(uint attrs, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_cleared(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_idcok(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_idlok(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_immedok(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_keypad(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_leaveok(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_nodelay(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_notimeout(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_scrollok(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_syncok(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern IntPtr wgetparent(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wgetdelay(IntPtr window);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wgetscrreg(IntPtr window, out int top, out int bottom);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getmouse(out CursesMouseEvent @event);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int ungetmouse(ref CursesMouseEvent @event);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int mousemask(uint newMask, out uint oldMask);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool wenclose(IntPtr window, int line, int col);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int mouseinterval(int millis);
 
-    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
+    
+    [DllImport(LibCLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    private static extern int setlocale(int cate, string locale);
 }
