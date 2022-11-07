@@ -210,7 +210,7 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, new(UseMouse: enabled, MouseClickInterval: 999));
         _terminal.Screen.UseInternalMouseEventResolver.ShouldBeFalse();
-        
+
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
         var expMask = enabled
@@ -219,13 +219,13 @@ public class TerminalTests
 
         _cursesMock.Verify(v => v.mousemask(expMask, out It.Ref<uint>.IsAny), Times.Once);
     }
-    
+
     [TestMethod]
     public void Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses()
     {
         _terminal = new(_cursesMock.Object, new(UseMouse: true, MouseClickInterval: null));
         _cursesMock.Verify(v => v.mouseinterval(0), Times.Once);
-        
+
         _terminal.Screen.UseInternalMouseEventResolver.ShouldBeTrue();
     }
 

@@ -48,8 +48,8 @@ public class MouseEventResolverTests
     {
         var e = new MouseMoveEvent(new(1, 1));
         _eventResolver.Process(e)
-                 .Single()
-                 .ShouldBe(e);
+                      .Single()
+                      .ShouldBe(e);
     }
 
     [TestMethod]
@@ -60,9 +60,8 @@ public class MouseEventResolverTests
 
         _eventResolver.Process(e1);
         _eventResolver.Process(e2)
-                 .ShouldBeEmpty();
+                      .ShouldBeEmpty();
     }
-
 
     [TestMethod]
     public void Process2_Throws_IfEventIsNull()
@@ -75,8 +74,8 @@ public class MouseEventResolverTests
     {
         var e = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Released, ModifierKey.None);
         _eventResolver.Process(e)
-                 .First()
-                 .ShouldBe(new MouseMoveEvent(new(1, 1)));
+                      .First()
+                      .ShouldBe(new MouseMoveEvent(new(1, 1)));
     }
 
     [TestMethod]
@@ -86,19 +85,19 @@ public class MouseEventResolverTests
 
         _eventResolver.Process(new MouseMoveEvent(new(1, 1)));
         _eventResolver.Process(e)
-                 .First()
-                 .Type.ShouldNotBe(EventType.MouseMove);
+                      .First()
+                      .Type.ShouldNotBe(EventType.MouseMove);
     }
-    
+
     [TestMethod]
     public void Process2_IssuesActionSecond_IfDifferentPosition()
     {
         var e = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.None);
         _eventResolver.Process(e)
-                 .Last()
-                 .ShouldBe(e);
+                      .Last()
+                      .ShouldBe(e);
     }
-    
+
     [TestMethod]
     public void Process2_IssuesOnlyAction_IfSamePosition()
     {
@@ -106,10 +105,10 @@ public class MouseEventResolverTests
 
         _eventResolver.Process(new MouseMoveEvent(new(1, 1)));
         _eventResolver.Process(e)
-                 .Single()
-                 .ShouldBe(e);
+                      .Single()
+                      .ShouldBe(e);
     }
-    
+
     [TestMethod]
     public void Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged()
     {
@@ -117,9 +116,11 @@ public class MouseEventResolverTests
         var e2 = new MouseActionEvent(new(1, 2), MouseButton.Button2, MouseButtonState.Pressed, ModifierKey.None);
 
         _eventResolver.Process(e1);
-        _eventResolver.Process(e2).Single().Type.ShouldBe(EventType.MouseMove);
+        _eventResolver.Process(e2)
+                      .Single()
+                      .Type.ShouldBe(EventType.MouseMove);
     }
-    
+
     [TestMethod]
     public void Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange()
     {
@@ -127,9 +128,11 @@ public class MouseEventResolverTests
         var e2 = new MouseActionEvent(new(1, 1), MouseButton.Button2, MouseButtonState.Pressed, ModifierKey.None);
 
         _eventResolver.Process(e1);
-        _eventResolver.Process(e2).Single().ShouldBe(e2);
+        _eventResolver.Process(e2)
+                      .Single()
+                      .ShouldBe(e2);
     }
-    
+
     [TestMethod]
     public void Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent()
     {
@@ -137,30 +140,36 @@ public class MouseEventResolverTests
         var e2 = new MouseActionEvent(new(1, 1), MouseButton.Button2, MouseButtonState.Released, ModifierKey.None);
 
         _eventResolver.Process(e1);
-        _eventResolver.Process(e2).Single().ShouldBe(
-            new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Released, ModifierKey.None));
+        _eventResolver.Process(e2)
+                      .Single()
+                      .ShouldBe(new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Released,
+                          ModifierKey.None));
     }
-    
+
     [TestMethod]
     public void Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore()
     {
         var e1 = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Released, ModifierKey.None);
 
         _eventResolver.Process(e1)
-                 .Single()
-                 .Type.ShouldBe(EventType.MouseMove);
+                      .Single()
+                      .Type.ShouldBe(EventType.MouseMove);
     }
-    
+
     [TestMethod]
     public void Process2_ConvertsClicksIntoPressAndReleaseEvents()
     {
         var e1 = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Ctrl);
         _eventResolver.Process(new MouseMoveEvent(new(1, 1)));
         var two = _eventResolver.Process(e1)
-                           .ToArray();
-        
+                                .ToArray();
+
         two.Length.ShouldBe(2);
-        two[0].ShouldBe(new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.Ctrl));
-        two[1].ShouldBe(new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Released, ModifierKey.Ctrl));
+        two[0]
+            .ShouldBe(new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.Ctrl));
+
+        two[1]
+            .ShouldBe(new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Released,
+                ModifierKey.Ctrl));
     }
 }

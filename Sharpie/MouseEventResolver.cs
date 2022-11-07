@@ -31,21 +31,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-/// Resolves and normalizes mouse events. Class used internally.
+///     Resolves and normalizes mouse events. Class used internally.
 /// </summary>
 internal sealed class MouseEventResolver
 {
-    private Point _previousPos = new(-1, -1);
     private MouseButton _previousButton = 0;
-    private MouseButtonState _previousState = 0;
     private ModifierKey _previousMods = ModifierKey.None;
+    private Point _previousPos = new(-1, -1);
+    private MouseButtonState _previousState = 0;
 
     /// <summary>
-    /// Processes a given <see cref="MouseActionEvent"/>.
+    ///     Processes a given <see cref="MouseActionEvent" />.
     /// </summary>
     /// <param name="event">The mouse event to process.</param>
     /// <returns>A list of new events that resulted from breaking the given one.</returns>
-    /// <exception cref="ArgumentNullException">The <paramref name="event"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="event" /> is <c>null</c>.</exception>
     public IEnumerable<Event> Process(MouseActionEvent @event)
     {
         if (@event == null)
@@ -75,7 +75,7 @@ internal sealed class MouseEventResolver
                 _previousState = MouseButtonState.Released;
                 _previousButton = @event.Button;
                 _previousMods = @event.Modifiers;
-               
+
                 break;
             case { State: MouseButtonState.Released } when _previousState == MouseButtonState.Pressed:
                 _previousState = MouseButtonState.Released;
@@ -92,7 +92,7 @@ internal sealed class MouseEventResolver
                 _previousButton = @event.Button;
 
                 output.Add(@event);
-                
+
                 break;
             case { State: var state, Modifiers: var mods } when state != _previousState || mods != _previousMods:
                 // All other cases
@@ -101,7 +101,7 @@ internal sealed class MouseEventResolver
                 _previousMods = @event.Modifiers;
 
                 output.Add(@event);
-                
+
                 break;
         }
 
@@ -109,11 +109,11 @@ internal sealed class MouseEventResolver
     }
 
     /// <summary>
-    /// Processes a given <see cref="MouseMoveEvent"/>.
+    ///     Processes a given <see cref="MouseMoveEvent" />.
     /// </summary>
     /// <param name="event">The mouse event to process.</param>
     /// <returns>A list of new events that resulted from breaking the given one.</returns>
-    /// <exception cref="ArgumentNullException">The <paramref name="event"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">The <paramref name="event" /> is <c>null</c>.</exception>
     public IEnumerable<Event> Process(MouseMoveEvent @event)
     {
         if (@event == null)

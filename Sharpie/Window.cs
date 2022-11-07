@@ -1047,7 +1047,7 @@ public class Window: IDisposable
                         return null;
                     }
 
-                    if (mouseEvent.buttonState == (uint)CursesMouseEvent.EventType.ReportPosition)
+                    if (mouseEvent.buttonState == (uint) CursesMouseEvent.EventType.ReportPosition)
                     {
                         return new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
                     }
@@ -1078,7 +1078,7 @@ public class Window: IDisposable
     public IEnumerable<Event> ProcessEvents(CancellationToken cancellationToken)
     {
         var escapeSequence = new List<KeyEvent>();
-        
+
         while (!cancellationToken.IsCancellationRequested)
         {
             var @event = ReadNextEvent(escapeSequence.Count > 0);
@@ -1130,7 +1130,7 @@ public class Window: IDisposable
                                 yield return oe;
                             }
                         }
-                        
+
                         break;
                     }
                 }

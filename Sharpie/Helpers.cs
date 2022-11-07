@@ -107,7 +107,7 @@ public static class Helpers
     /// </summary>
     /// <param name="curses">The Curses backend.</param>
     /// <returns>Returns <paramref name="curses" /> if it's valid. <c>null</c> otherwise.</returns>
-    /// <exception cref="ArgumentNullException">When <paramref name="curses"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">When <paramref name="curses" /> is <c>null</c>.</exception>
     internal static ICursesProvider? ValidOrNull(this ICursesProvider curses)
     {
         if (curses == null)

@@ -34,7 +34,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Sharpie\Sharpie.csproj" />
+        <ProjectReference Include="..\Sharpie\Sharpie.csproj"/>
     </ItemGroup>
 
 </Project>

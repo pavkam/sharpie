@@ -39,7 +39,7 @@ public sealed class Screen: Window
 {
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
     private MouseEventResolver? _mouseEventResolver;
-    
+
     /// <summary>
     ///     Initializes the screen using a window handle. The <paramref name="windowHandle" /> should be
     ///     a screen and not a regular window.
@@ -71,8 +71,8 @@ public sealed class Screen: Window
     }
 
     /// <summary>
-    /// Gets or sets the flag indicating whether the internal mouse resolver should be used.
-    /// This is an internal property and initialized by the terminal.
+    ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
+    ///     This is an internal property and initialized by the terminal.
     /// </summary>
     internal bool UseInternalMouseEventResolver
     {
@@ -87,7 +87,7 @@ public sealed class Screen: Window
             };
         }
     }
-    
+
     /// <summary>
     ///     Registers a key sequence resolver into the input pipeline.
     /// </summary>

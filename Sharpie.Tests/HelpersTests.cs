@@ -330,7 +330,7 @@ public class HelpersTests
     {
         Should.Throw<ArgumentNullException>(() => Helpers.ValidOrNull(null!));
     }
-    
+
     [TestMethod]
     public void ValidOrNull_ReturnsNull_IfTermNameFailsWithDllNotFoundException()
     {

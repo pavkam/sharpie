@@ -491,22 +491,26 @@ public class ScreenTests
         count.ShouldBe(2);
         resolved.ShouldNotBeNull();
     }
-    
+
     [TestMethod]
     public void UseInternalMouseEventResolver_SetToTrue_InitializesMouseResolver()
     {
         _screen1.UseInternalMouseEventResolver = true;
 
         var me = new MouseMoveEvent(new(1, 1));
-        _screen1.TryResolveMouseEvent(me, out var l).ShouldBeTrue();
+        _screen1.TryResolveMouseEvent(me, out var l)
+                .ShouldBeTrue();
+
         // ReSharper disable once PossibleMultipleEnumeration
         l.ShouldNotBeNull();
+
         // ReSharper disable once PossibleMultipleEnumeration
         var ll = l.ToArray();
         ll.Length.ShouldBe(1);
-        ll[0].ShouldBe(me);
+        ll[0]
+            .ShouldBe(me);
     }
-    
+
     [TestMethod]
     public void UseInternalMouseEventResolver_SetToFalse_UnInitializesMouseResolver()
     {
@@ -514,22 +518,24 @@ public class ScreenTests
         _screen1.UseInternalMouseEventResolver = false;
 
         var me = new MouseMoveEvent(new(1, 1));
-        _screen1.TryResolveMouseEvent(me, out var _).ShouldBeFalse();
+        _screen1.TryResolveMouseEvent(me, out var _)
+                .ShouldBeFalse();
     }
-    
+
     [TestMethod]
     public void TryResolveMouseEvent1_CallsTheInternalMouseResolver()
     {
         _screen1.UseInternalMouseEventResolver = true;
 
         var me = new MouseMoveEvent(new(1, 1));
-        _screen1.TryResolveMouseEvent(me, out var _).ShouldBeTrue();
+        _screen1.TryResolveMouseEvent(me, out var _)
+                .ShouldBeTrue();
     }
 
     [TestMethod]
     public void TryResolveMouseEvent1_Throws_IfEventIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => _screen1.TryResolveMouseEvent((MouseMoveEvent)null!, out var _));
+        Should.Throw<ArgumentNullException>(() => _screen1.TryResolveMouseEvent((MouseMoveEvent) null!, out var _));
     }
 
     [TestMethod]
@@ -538,12 +544,13 @@ public class ScreenTests
         _screen1.UseInternalMouseEventResolver = true;
 
         var me = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Ctrl);
-        _screen1.TryResolveMouseEvent(me, out var _).ShouldBeTrue();
+        _screen1.TryResolveMouseEvent(me, out var _)
+                .ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void TryResolveMouseEvent2_Throws_IfEventIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => _screen1.TryResolveMouseEvent((MouseActionEvent)null!, out var _));
+        Should.Throw<ArgumentNullException>(() => _screen1.TryResolveMouseEvent((MouseActionEvent) null!, out var _));
     }
 }

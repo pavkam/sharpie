@@ -7,7 +7,10 @@ namespace Sharpie;
 /// <param name="EchoInput">Toggle the input echoing. Default is <c>false</c>.</param>
 /// <param name="UseInputBuffering">Toggles buffering input. Default is <c>false</c>.</param>
 /// <param name="UseMouse">Toggles the use of mouse. Default is <c>true</c>.</param>
-/// <param name="MouseClickInterval">The mouse click delay. Default is <c>null</c> which disables Curses handling of clicks.</param>
+/// <param name="MouseClickInterval">
+///     The mouse click delay. Default is <c>null</c> which disables Curses handling of
+///     clicks.
+/// </param>
 /// <param name="SuppressControlKeys">Toggles the suppression of control keys such as CTRL+C. Default is <c>true</c>.</param>
 /// <param name="CaretMode">Specifies the caret mode. Default is <see cref="Sharpie.CaretMode.Visible" />.</param>
 /// <param name="ManualFlush">Toggle the ability to manually flush the terminal. Default is <c>false</c>.</param>
