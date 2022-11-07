@@ -64,4 +64,4 @@ foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
     }
 }
 ```
-As you can imagine, there are numerous other uses built into the library. Start out by reading [Setting Up The Terminal](Setting-Up-the-Terminal) wiki page.
+As you can imagine, there are numerous other uses built into the library. Start out by reading [Setting Up The Terminal](wiki/Setting-Up-the-Terminal) wiki page.
