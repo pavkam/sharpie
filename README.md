@@ -20,9 +20,7 @@ So why another one? The are many reasons, but the most important ones are:
 
 # How To
 What follows is a small example of how to use the library:
-
 ![Demo](media/demo-1.gif)
-
 ```csharp
 // Create the terminal instance without any non-standard settings.
 using var terminal = new Terminal(NativeCursesProvider.Instance, new());
@@ -63,8 +61,5 @@ foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
         break;
     }
 }
-
-// Dispose the terminal so that we restore the proper console mode.
-terminal.Dispose();
 ```
-As you can imagine, there are numerous other uses built into the library.
+As you can imagine, there are numerous other uses built into the library. Start out by reading [Setting Up The Terminal](https://github.com/pavkam/sharpie/wiki/Setting-Up-the-Terminal) wiki page.

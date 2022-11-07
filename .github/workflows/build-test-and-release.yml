@@ -74,14 +74,6 @@ jobs:
         output: both
         thresholds: '95 99'
 
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
-      with:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-        recreate: true
-        path: code-coverage-results.md
-
     - name: Build NuGet Package
       if: github.event_name == 'push' && steps.check_version.outputs.deployed == 'no'
       run: |
