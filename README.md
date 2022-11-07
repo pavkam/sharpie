@@ -63,8 +63,5 @@ foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
         break;
     }
 }
-
-// Dispose the terminal so that we restore the proper console mode.
-terminal.Dispose();
 ```
-As you can imagine, there are numerous other uses built into the library.
+As you can imagine, there are numerous other uses built into the library. Start out by reading [Setting Up The Terminal](Setting-Up-the-Terminal) wiki page.
