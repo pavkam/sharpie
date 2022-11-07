@@ -921,7 +921,11 @@ public class Window: IDisposable
     /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <returns>The result of the check.</returns>
-    public bool IsPointWithin(Point point) => Curses.wenclose(Handle, point.Y, point.X);
+    public bool IsPointWithin(Point point)
+    {
+        var size = Size;
+        return point.X >= 0 && point.Y >= 0 && point.X < size.Width && point.Y < size.Height;
+    }
 
     /// <summary>
     ///     Checks if a given rectangle fits within the current window.
