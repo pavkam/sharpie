@@ -40,16 +40,24 @@ public class ScreenTests
     public void TestInitialize()
     {
         _cursesMock = new();
-        _cursesMock.Setup(s => s.getmaxx(new(1)))
-                   .Returns(5);
-
-        _cursesMock.Setup(s => s.getmaxy(new(1)))
-                   .Returns(6);
-
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
 
         _screen1 = new(_cursesMock.Object, new(1));
+    }
+
+    private void MockLargeArea(IntPtr window)
+    {
+        _cursesMock.Setup(s => s.getmaxx(window))
+                   .Returns(1000);
+        _cursesMock.Setup(s => s.getmaxy(window))
+                   .Returns(1000);
+    }
+    
+    private void MockSmallArea(IntPtr window)
+    {
+        _cursesMock.Setup(s => s.getmaxx(window))
+                   .Returns(1);
+        _cursesMock.Setup(s => s.getmaxy(window))
+                   .Returns(1);
     }
 
     [TestMethod]
@@ -71,7 +79,12 @@ public class ScreenTests
         Should.Throw<NotSupportedException>(() => _screen1.Location = Point.Empty);
     }
 
-    [TestMethod] public void Size_Get_ReturnsTheSize() { _screen1.Size.ShouldBe(new(5, 6)); }
+    [TestMethod]
+    public void Size_Get_ReturnsTheSize()
+    {
+        MockLargeArea(new(1));
+        _screen1.Size.ShouldBe(new(1000, 1000));
+    }
 
     [TestMethod]
     public void Size_Set_Throws_Always() { Should.Throw<NotSupportedException>(() => _screen1.Size = new(1, 1)); }
@@ -79,15 +92,16 @@ public class ScreenTests
     [TestMethod]
     public void CreateWindow_Throws_IfAreaOutsideBoundaries()
     {
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(false);
+        MockSmallArea(new(1));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateWindow(new(0, 0, 1, 1)));
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateWindow(new(0, 0, 2, 2)));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CreateWindow_Throws_IfCursesFails()
     {
+        MockLargeArea(new(1));
+
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
@@ -98,6 +112,8 @@ public class ScreenTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CreateWindow_ReturnsNewWindow_IfCursesSucceeds()
     {
+        MockLargeArea(new(1));
+        
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
 
@@ -115,19 +131,19 @@ public class ScreenTests
     [TestMethod]
     public void CreateSubWindow_Throws_IfAreaOutsideBoundaries()
     {
+        MockSmallArea(new(2));
+        
         var p = new Window(_cursesMock.Object, _screen1, new(2));
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(false);
 
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateSubWindow(p, new(0, 0, 1, 1)));
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateSubWindow(p, new(0, 0, 2, 2)));
     }
 
     [TestMethod]
     public void CreateSubWindow_Throws_IfWindowIsPad()
     {
+        MockSmallArea(new(2));
+        
         var p = new Pad(_cursesMock.Object, _screen1, new(2));
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
 
         Should.Throw<InvalidOperationException>(() => _screen1.CreateSubWindow(p, new(0, 0, 1, 1)));
     }
@@ -135,9 +151,9 @@ public class ScreenTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CreateSubWindow_Throws_IfCursesFails()
     {
+        MockSmallArea(new(2));
+        
         var w = new Window(_cursesMock.Object, _screen1, new(2));
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
 
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
@@ -150,10 +166,9 @@ public class ScreenTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CreateSubWindow_ReturnsNewWindow_IfCursesSucceeds()
     {
+        MockLargeArea(new(2));
+        
         var w = new Window(_cursesMock.Object, _screen1, new(2));
-
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
 
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
@@ -167,8 +182,7 @@ public class ScreenTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CreateSubWindow_ReturnsNewWindowInScreen_IfParentIsScreen()
     {
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockLargeArea(new(1));
 
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(3));
@@ -268,20 +282,18 @@ public class ScreenTests
     [TestMethod]
     public void CreateSubPad_Throws_IfAreaOutsideBoundaries()
     {
+        MockSmallArea(new(2));
         var p = new Pad(_cursesMock.Object, _screen1, new(2));
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(false);
 
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateSubPad(p, new(0, 0, 1, 1)));
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateSubPad(p, new(0, 0, 2, 2)));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CreateSubPad_Throws_IfCursesFails()
     {
+        MockLargeArea(new(2));
+        
         var p = new Pad(_cursesMock.Object, _screen1, new(2));
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
-
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
@@ -293,10 +305,9 @@ public class ScreenTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CreateSubPad_ReturnsNewPad_IfCursesSucceeds()
     {
+        MockLargeArea(new(2));
+        
         var p = new Pad(_cursesMock.Object, _screen1, new(2));
-
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
 
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))

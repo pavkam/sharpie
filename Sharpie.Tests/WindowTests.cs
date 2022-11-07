@@ -37,6 +37,22 @@ public class WindowTests
 
     [TestInitialize] public void TestInitialize() { _cursesMock = new(); }
 
+    private void MockLargeArea(IntPtr window)
+    {
+        _cursesMock.Setup(s => s.getmaxx(window))
+                   .Returns(1000);
+        _cursesMock.Setup(s => s.getmaxy(window))
+                   .Returns(1000);
+    }
+    
+    private void MockSmallArea(IntPtr window)
+    {
+        _cursesMock.Setup(s => s.getmaxx(window))
+                   .Returns(1);
+        _cursesMock.Setup(s => s.getmaxy(window))
+                   .Returns(1);
+    }
+    
     [TestMethod]
     public void Ctor_Throws_WhenCursesIfNull()
     {
@@ -587,8 +603,8 @@ public class WindowTests
     [TestMethod]
     public void Location_Set_ForSubs_SetsValue_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockLargeArea(new(1));
+        MockSmallArea(new(2));
 
         var p = new Window(_cursesMock.Object, null, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
@@ -613,14 +629,14 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_ForSubs_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
-
-        _cursesMock.Setup(s => s.mvderwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+        MockLargeArea(new(1));
+        MockSmallArea(new(2));
+        
+        _cursesMock.Setup(s => s.mvderwin(new(2), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
         var p = new Window(_cursesMock.Object, null, new(1));
-        var w = new Window(_cursesMock.Object, p, new(1));
+        var w = new Window(_cursesMock.Object, p, new(2));
 
         Should.Throw<CursesOperationException>(() => w.Location = new(1, 1))
               .Operation.ShouldBe("mvderwin");
@@ -629,15 +645,9 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfOutsideParent()
     {
-        _cursesMock.Setup(s => s.getmaxx(new(1)))
-                   .Returns(5);
-
-        _cursesMock.Setup(s => s.getmaxy(new(1)))
-                   .Returns(5);
-
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns((IntPtr _, int y, int x) => y is >= 0 and < 10 && x is >= 0 and < 10);
-
+        MockSmallArea(new(1));
+        MockSmallArea(new(2));
+        
         var p = new Window(_cursesMock.Object, null, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
 
@@ -647,14 +657,8 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_UpdatesLocation_IfInsideParent()
     {
-        _cursesMock.Setup(s => s.getmaxx(new(1)))
-                   .Returns(5);
-
-        _cursesMock.Setup(s => s.getmaxy(new(1)))
-                   .Returns(5);
-
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockLargeArea(new(1));
+        MockSmallArea(new(2));
 
         var p = new Screen(_cursesMock.Object, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
@@ -725,8 +729,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_Throws_IfOutsideParent()
     {
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(false);
+        MockSmallArea(new(1));
 
         var p = new Window(_cursesMock.Object, null, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
@@ -737,8 +740,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_UpdatesSize_IfInsideParent()
     {
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockLargeArea(new(1));
 
         var p = new Window(_cursesMock.Object, null, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
@@ -788,9 +790,8 @@ public class WindowTests
     [TestMethod]
     public void CaretPosition_Set_SetsValue_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
-
+        MockLargeArea(new(1));
+        
         var w = new Window(_cursesMock.Object, null, new(1));
         w.CaretPosition = new(11, 22);
 
@@ -800,10 +801,9 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CaretPosition_Set_Throws_IfCursesFails()
     {
+        MockLargeArea(new(1));
+        
         var w = new Window(_cursesMock.Object, null, new(1));
-
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
 
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -815,8 +815,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CaretPosition_Set_Throws_IfOutsideArea()
     {
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(false);
+        MockSmallArea(new(1));
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
@@ -826,8 +825,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void CaretPosition_Set_UpdatesLocation_IfInsideArea()
     {
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockLargeArea(new(1));
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
@@ -925,9 +923,8 @@ public class WindowTests
     [TestMethod]
     public void TryMoveCaretTo_ReturnsFalse_IfCoordinatesOutsideWindow()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(false);
-
+        MockSmallArea(new(1));
+        
         var w = new Window(_cursesMock.Object, null, new(1));
         w.TryMoveCaretTo(1, 1)
          .ShouldBeFalse();
@@ -936,9 +933,8 @@ public class WindowTests
     [TestMethod]
     public void TryMoveCaretTo_ReturnsFalse_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
-
+        MockLargeArea(new(1));
+        
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
@@ -950,8 +946,7 @@ public class WindowTests
     [TestMethod]
     public void TryMoveCaretTo_ReturnsTrue_IfCursesSucceeds()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockLargeArea(new(1));
 
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(0);
@@ -964,9 +959,8 @@ public class WindowTests
     [TestMethod]
     public void MoveCaretTo_Throws_IfMovingFails()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(false);
-
+        MockSmallArea(new(1));
+        
         var w = new Window(_cursesMock.Object, null, new(1));
         Should.Throw<ArgumentException>(() => w.MoveCaretTo(1, 1));
     }
@@ -974,9 +968,8 @@ public class WindowTests
     [TestMethod]
     public void MoveCaretTo_Succeeds_IfMovingSucceeds()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
-
+        MockLargeArea(new(1));
+        
         var w = new Window(_cursesMock.Object, null, new(1));
         Should.NotThrow(() => w.MoveCaretTo(1, 1));
     }
@@ -1531,26 +1524,36 @@ public class WindowTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void IsPointWithin_ReturnsTrue_IfCursesSaysSo(bool yes)
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(yes);
+        if (yes)
+        {
+            MockLargeArea(new(1));
+        } else
+        {
+            MockSmallArea(new(1));
+        }
 
         var w = new Window(_cursesMock.Object, null, new(1));
         w.IsPointWithin(new(100, 100))
          .ShouldBe(yes);
     }
 
-    [TestMethod, DataRow(true, true), DataRow(true, false), DataRow(false, true), DataRow(false, false)]
-    public void IsIsRectangleWithin_AsksCursesTwice(bool yes1, bool yes2)
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void IsRectangleWithin_AsksCursesTwice(bool yes)
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), 0, 0))
-                   .Returns(yes1);
-
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), 4, 4))
-                   .Returns(yes2);
-
+        if (yes)
+        {
+            MockLargeArea(new(1));
+        } else
+        {
+            MockSmallArea(new(1));
+        }
+        
         var w = new Window(_cursesMock.Object, null, new(1));
         w.IsRectangleWithin(new(0, 0, 5, 5))
-         .ShouldBe(yes1 && yes2);
+         .ShouldBe(yes);
+
+        _cursesMock.Verify(v => v.getmaxx(w.Handle), Times.Exactly(2));
+        _cursesMock.Verify(v => v.getmaxy(w.Handle), Times.Exactly(2));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -2005,8 +2008,7 @@ public class WindowTests
     [TestMethod]
     public void Replace2_Throws_IfWindowIsItself()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockSmallArea(new(1));
 
         var w = new Window(_cursesMock.Object, null, new(1));
 
@@ -2016,8 +2018,7 @@ public class WindowTests
     [TestMethod]
     public void Replace2_Throws_IfWindowIsDescendant()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockSmallArea(new(1));
 
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, w1, new(2));
@@ -2029,8 +2030,7 @@ public class WindowTests
     [TestMethod]
     public void Replace2_Throws_IfWindowIsAncestor()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockSmallArea(new(1));
 
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, w1, new(2));
@@ -2042,8 +2042,7 @@ public class WindowTests
     [TestMethod]
     public void Replace2_Throws_IfTheSourceRectIsOutsideTheBounds()
     {
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(false);
+        MockSmallArea(new(1));
 
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, null, new(2));
@@ -2057,27 +2056,24 @@ public class WindowTests
     [TestMethod]
     public void Replace2_Throws_IfTheDestinationAreaIsOutsideTheBounds()
     {
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
-
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(false);
-
+        MockLargeArea(new(1));
+        MockLargeArea(new(2));
+        
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, null, new(2));
 
         Should.Throw<ArgumentOutOfRangeException>(() =>
         {
-            w1.Replace(w2, new(0, 0, 5, 5), new(6, 6), ReplaceStrategy.Overlay);
+            w1.Replace(w2, new(0, 0, 5, 5), new(999, 999), ReplaceStrategy.Overlay);
         });
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Replace2_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
-
+        MockLargeArea(new(1));
+        MockLargeArea(new(2));
+        
         _cursesMock.Setup(s => s.copywin(It.IsAny<IntPtr>(), It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -2095,8 +2091,8 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Replace2_CallsCurses_IfCursesOverlay()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockLargeArea(new(1));
+        MockLargeArea(new(2));
 
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, null, new(2));
@@ -2109,8 +2105,8 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Replace2_CallsCurses_IfCursesOverwrite()
     {
-        _cursesMock.Setup(s => s.wenclose(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(true);
+        MockLargeArea(new(1));
+        MockLargeArea(new(2));
 
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, null, new(2));

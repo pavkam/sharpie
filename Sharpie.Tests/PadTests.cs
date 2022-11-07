@@ -42,12 +42,16 @@ public class PadTests
     {
         _cursesMock = new();
 
-        _cursesMock.Setup(s => s.wenclose(new(2), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns((IntPtr _, int y, int x) => y is >= 0 and < 5 && x is >= 0 and < 5);
-
-        _cursesMock.Setup(s => s.wenclose(new(1), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns((IntPtr _, int y, int x) => y is >= 0 and < 10 && x is >= 0 and < 10);
-
+        _cursesMock.Setup(s => s.getmaxx(new(2)))
+                   .Returns(5);
+        _cursesMock.Setup(s => s.getmaxy(new(2)))
+                   .Returns(5);
+        
+        _cursesMock.Setup(s => s.getmaxx(new(1)))
+                   .Returns(10);
+        _cursesMock.Setup(s => s.getmaxy(new(1)))
+                   .Returns(10);
+        
         _screen = new(_cursesMock.Object, new(1));
         _pad1 = new(_cursesMock.Object, _screen, new(2));
     }
