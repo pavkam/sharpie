@@ -31,19 +31,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="Curses\**" />
+      <None Include="..\media\logo-128.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>logo-128.png</Link>
+      </None>
     </ItemGroup>
-
-    <ItemGroup>
-        <EmbeddedResource Remove="Curses\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Remove="Curses\**" />
-        <None Include="..\media\logo-128.png">
-            <Pack>True</Pack>
-            <Link>logo-128.png</Link>
-        </None>
-    </ItemGroup>
-
+    
 </Project>
