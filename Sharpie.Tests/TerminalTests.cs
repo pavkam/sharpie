@@ -60,9 +60,9 @@ public class TerminalTests
     public void Ctor_Throws_IfCursesIsNull() { Should.Throw<ArgumentNullException>(() => new Terminal(null!, new())); }
 
     [TestMethod]
-    public void Ctor_Throws_IfMouseClickDelayNegative()
+    public void Ctor_Throws_IfMouseClickIntervalNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => new Terminal(_cursesMock.Object, new(MouseClickDelay: -1)));
+        Should.Throw<ArgumentOutOfRangeException>(() => new Terminal(_cursesMock.Object, new(MouseClickInterval: -1)));
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
@@ -208,8 +208,9 @@ public class TerminalTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void Ctor_PreparesUseMouse_ByAskingCurses(bool enabled)
     {
-        _terminal = new(_cursesMock.Object, new(UseMouse: enabled, MouseClickDelay: 999));
-
+        _terminal = new(_cursesMock.Object, new(UseMouse: enabled, MouseClickInterval: 999));
+        _terminal.Screen.UseInternalMouseEventResolver.ShouldBeFalse();
+        
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
         var expMask = enabled
@@ -217,6 +218,15 @@ public class TerminalTests
             : 0;
 
         _cursesMock.Verify(v => v.mousemask(expMask, out It.Ref<uint>.IsAny), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses()
+    {
+        _terminal = new(_cursesMock.Object, new(UseMouse: true, MouseClickInterval: null));
+        _cursesMock.Verify(v => v.mouseinterval(0), Times.Once);
+        
+        _terminal.Screen.UseInternalMouseEventResolver.ShouldBeTrue();
     }
 
     [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]

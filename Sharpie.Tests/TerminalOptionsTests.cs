@@ -42,7 +42,7 @@ public class TerminalOptionsTests
         s.EchoInput.ShouldBeFalse();
         s.UseInputBuffering.ShouldBeFalse();
         s.UseMouse.ShouldBeTrue();
-        s.MouseClickDelay.ShouldBe(100);
+        s.MouseClickInterval.ShouldBeNull();
         s.SuppressControlKeys.ShouldBeTrue();
         s.CaretMode.ShouldBe(CaretMode.Visible);
         s.ManualFlush.ShouldBeFalse();

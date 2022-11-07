@@ -1047,8 +1047,7 @@ public class Window: IDisposable
                         return null;
                     }
 
-                    if (((CursesMouseEvent.EventType) mouseEvent.buttonState).HasFlag(CursesMouseEvent.EventType
-                            .ReportPosition))
+                    if (mouseEvent.buttonState == (uint)CursesMouseEvent.EventType.ReportPosition)
                     {
                         return new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
                     }
@@ -1079,6 +1078,7 @@ public class Window: IDisposable
     public IEnumerable<Event> ProcessEvents(CancellationToken cancellationToken)
     {
         var escapeSequence = new List<KeyEvent>();
+        
         while (!cancellationToken.IsCancellationRequested)
         {
             var @event = ReadNextEvent(escapeSequence.Count > 0);
@@ -1102,6 +1102,37 @@ public class Window: IDisposable
 
                     escapeSequence.RemoveRange(0, count);
                     yield return resolved;
+                }
+
+                // Process/resolve mouse events.
+                switch (@event)
+                {
+                    case MouseMoveEvent mme:
+                    {
+                        if (Screen.TryResolveMouseEvent(mme, out var l))
+                        {
+                            @event = null;
+                            foreach (var oe in l)
+                            {
+                                yield return oe;
+                            }
+                        }
+
+                        break;
+                    }
+                    case MouseActionEvent mae:
+                    {
+                        if (Screen.TryResolveMouseEvent(mae, out var l))
+                        {
+                            @event = null;
+                            foreach (var oe in l)
+                            {
+                                yield return oe;
+                            }
+                        }
+                        
+                        break;
+                    }
                 }
             }
 

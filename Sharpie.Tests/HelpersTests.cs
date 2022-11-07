@@ -326,6 +326,12 @@ public class HelpersTests
     }
 
     [TestMethod]
+    public void ValidOrNull_Throws_IfCursesIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => Helpers.ValidOrNull(null!));
+    }
+    
+    [TestMethod]
     public void ValidOrNull_ReturnsNull_IfTermNameFailsWithDllNotFoundException()
     {
         _cursesMock.Setup(s => s.termname())
@@ -343,6 +349,15 @@ public class HelpersTests
 
         _cursesMock.Object.ValidOrNull()
                    .ShouldBeNull();
+    }
+
+    [TestMethod]
+    public void ValidOrNull_Throws_IfUnexpectedErrorOccurs()
+    {
+        _cursesMock.Setup(s => s.termname())
+                   .Throws<ArgumentOutOfRangeException>();
+
+        Should.Throw<ArgumentOutOfRangeException>(() => _cursesMock.Object.ValidOrNull());
     }
 
     [TestMethod]

@@ -37,8 +37,9 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class Screen: Window
 {
-    private readonly IList<ResolveEscapeSequenceFunc> _resolvers = new List<ResolveEscapeSequenceFunc>();
-
+    private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
+    private MouseEventResolver? _mouseEventResolver;
+    
     /// <summary>
     ///     Initializes the screen using a window handle. The <paramref name="windowHandle" /> should be
     ///     a screen and not a regular window.
@@ -70,6 +71,24 @@ public sealed class Screen: Window
     }
 
     /// <summary>
+    /// Gets or sets the flag indicating whether the internal mouse resolver should be used.
+    /// This is an internal property and initialized by the terminal.
+    /// </summary>
+    internal bool UseInternalMouseEventResolver
+    {
+        get => _mouseEventResolver != null;
+        set
+        {
+            _mouseEventResolver = value switch
+            {
+                true when _mouseEventResolver == null => new(),
+                false when _mouseEventResolver != null => null,
+                var _ => _mouseEventResolver
+            };
+        }
+    }
+    
+    /// <summary>
     ///     Registers a key sequence resolver into the input pipeline.
     /// </summary>
     /// <param name="resolver">The resolver to register.</param>
@@ -83,7 +102,7 @@ public sealed class Screen: Window
 
         if (!Uses(resolver))
         {
-            _resolvers.Add(resolver);
+            _keySequenceResolvers.Add(resolver);
         }
     }
 
@@ -100,7 +119,7 @@ public sealed class Screen: Window
             throw new ArgumentNullException(nameof(resolver));
         }
 
-        return _resolvers.Contains(resolver);
+        return _keySequenceResolvers.Contains(resolver);
     }
 
     /// <summary>
@@ -125,7 +144,7 @@ public sealed class Screen: Window
             return max;
         }
 
-        foreach (var resolver in _resolvers)
+        foreach (var resolver in _keySequenceResolvers)
         {
             var (resKey, resCount) = resolver(sequence, Curses.key_name);
 
@@ -151,6 +170,54 @@ public sealed class Screen: Window
         }
 
         return max;
+    }
+
+    /// <summary>
+    ///     Tries to resolve a given mouse event into a sequence of different events.
+    /// </summary>
+    /// <param name="event">The mouse event to try and process.</param>
+    /// <param name="resolved">The resolved events (if any).</param>
+    /// <returns>The number of matching keys. A zero value indicates no matches.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="event" /> is <c>null</c>.</exception>
+    internal bool TryResolveMouseEvent(MouseMoveEvent @event, [NotNullWhen(true)] out IEnumerable<Event>? resolved)
+    {
+        if (@event == null)
+        {
+            throw new ArgumentNullException(nameof(@event));
+        }
+
+        if (_mouseEventResolver == null)
+        {
+            resolved = null;
+            return false;
+        }
+
+        resolved = _mouseEventResolver.Process(@event);
+        return true;
+    }
+
+    /// <summary>
+    ///     Tries to resolve a given mouse event into a sequence of different events.
+    /// </summary>
+    /// <param name="event">The mouse event to try and process.</param>
+    /// <param name="resolved">The resolved events (if any).</param>
+    /// <returns>The number of matching keys. A zero value indicates no matches.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="event" /> is <c>null</c>.</exception>
+    internal bool TryResolveMouseEvent(MouseActionEvent @event, [NotNullWhen(true)] out IEnumerable<Event>? resolved)
+    {
+        if (@event == null)
+        {
+            throw new ArgumentNullException(nameof(@event));
+        }
+
+        if (_mouseEventResolver == null)
+        {
+            resolved = null;
+            return false;
+        }
+
+        resolved = _mouseEventResolver.Process(@event);
+        return true;
     }
 
     /// <summary>

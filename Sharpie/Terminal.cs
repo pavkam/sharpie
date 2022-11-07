@@ -58,9 +58,9 @@ public sealed class Terminal: IDisposable
         Options = options;
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
 
-        if (options.MouseClickDelay < 0)
+        if (options.MouseClickInterval is < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(options.MouseClickDelay));
+            throw new ArgumentOutOfRangeException(nameof(options.MouseClickInterval));
         }
 
         if (_terminalInstanceActive)
@@ -130,7 +130,7 @@ public sealed class Terminal: IDisposable
         // Mouse configuration
         if (Options.UseMouse)
         {
-            _initialMouseClickDelay = Curses.mouseinterval(Options.MouseClickDelay)
+            _initialMouseClickDelay = Curses.mouseinterval(Options.MouseClickInterval ?? 0)
                                             .Check(nameof(Curses.mouseinterval), //TODO manual click
                                                 "Failed to set the mouse click interval.");
 
@@ -138,6 +138,7 @@ public sealed class Terminal: IDisposable
                       out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
+            _screen.UseInternalMouseEventResolver = Options.MouseClickInterval == null;
             _initialMouseMask = initialMouseMask;
         } else
         {
