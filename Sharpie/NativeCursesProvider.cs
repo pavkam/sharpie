@@ -44,13 +44,13 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static readonly ICursesProvider? _instance = new NativeCursesProvider().ValidOrNull();
 
     /// <summary>
-    /// Returns the instance of the Curses backend.
+    ///     Returns the instance of the Curses backend.
     /// </summary>
     /// <exception cref="CursesInitializationException">Thrown if Curses library not available.</exception>
     public static ICursesProvider Instance => _instance ?? throw new CursesInitializationException();
 
     /// <summary>
-    /// Checks if the Curses library is available.
+    ///     Checks if the Curses library is available.
     /// </summary>
     public static bool IsAvailable => _instance != null;
 
