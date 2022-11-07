@@ -274,7 +274,7 @@ public interface ICursesProvider
 
     int waddch(IntPtr window, uint charAndAttrs);
 
-    int waddchnstr(IntPtr window, string text, int length);
+    int waddchnstr(IntPtr window, uint[] charsAndAttrs, int length);
 
     int wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved);
 
@@ -321,7 +321,7 @@ public interface ICursesProvider
 
     int winchnstr(IntPtr window, StringBuilder dest, int length);
 
-    int winsch(IntPtr window, uint @char);
+    int winsch(IntPtr window, uint @charAndAttrs);
 
     int winsdelln(IntPtr window, int count);
 

@@ -304,7 +304,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.waddch(IntPtr window, uint charAndAttrs) => waddch(window, charAndAttrs);
 
-    int ICursesProvider.waddchnstr(IntPtr window, string text, int length) => waddchnstr(window, text, length);
+    int ICursesProvider.waddchnstr(IntPtr window, uint[] charsAndAttrs, int length) => waddchnstr(window, charsAndAttrs, length);
 
     int ICursesProvider.wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved) =>
         wattr_get(window, out attrs, out colorPair, reserved);
@@ -359,7 +359,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     int ICursesProvider.winchnstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, int length) =>
         winchnstr(window, dest, length);
 
-    int ICursesProvider.winsch(IntPtr window, uint @char) => winsch(window, @char);
+    int ICursesProvider.winsch(IntPtr window, uint @charAndAttrs) => winsch(window, @charAndAttrs);
 
     int ICursesProvider.winsdelln(IntPtr window, int count) => winsdelln(window, count);
 
@@ -438,7 +438,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     int ICursesProvider.wadd_wchnstr(IntPtr window, CursesComplexChar[] str, int count) =>
         wadd_wchnstr(window, str, count);
 
-    int ICursesProvider.waddnwstr(IntPtr window, string text, int length) => waddnwstr(window, text, length);
+    int ICursesProvider.waddnwstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] string text, int length) => waddnwstr(window, text, length);
 
     int ICursesProvider.wbkgrnd(IntPtr window, CursesComplexChar @char) => wbkgrnd(window, ref @char);
 
@@ -785,7 +785,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern int waddch(IntPtr window, uint charAndAttrs);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int waddchnstr(IntPtr window, string text, int length);
+    private static extern int waddchnstr(IntPtr window, uint[] charsAndAttrs, int length);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int wattr_on(IntPtr window, uint attrs, IntPtr reserved);
@@ -848,7 +848,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern int winchnstr(IntPtr window, StringBuilder dest, int length);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int winsch(IntPtr window, uint @char);
+    private static extern int winsch(IntPtr window, uint charAndAttrs);
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int winsdelln(IntPtr window, int count);
