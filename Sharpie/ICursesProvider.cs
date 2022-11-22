@@ -321,7 +321,7 @@ public interface ICursesProvider
 
     int winchnstr(IntPtr window, StringBuilder dest, int length);
 
-    int winsch(IntPtr window, uint @charAndAttrs);
+    int winsch(IntPtr window, uint charAndAttrs);
 
     int winsdelln(IntPtr window, int count);
 

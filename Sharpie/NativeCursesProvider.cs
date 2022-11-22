@@ -40,19 +40,19 @@ public sealed class NativeCursesProvider: ICursesProvider
 {
     private const string CursesLibraryName = "ncurses";
     private const string LibCLibraryName = "libc";
-    
-    private static readonly ICursesProvider? _instance = new NativeCursesProvider().ValidOrNull();
+
+    private static readonly ICursesProvider? LazyInstance = new NativeCursesProvider().ValidOrNull();
 
     /// <summary>
     ///     Returns the instance of the Curses backend.
     /// </summary>
     /// <exception cref="CursesInitializationException">Thrown if Curses library not available.</exception>
-    public static ICursesProvider Instance => _instance ?? throw new CursesInitializationException();
+    public static ICursesProvider Instance => LazyInstance ?? throw new CursesInitializationException();
 
     /// <summary>
     ///     Checks if the Curses library is available.
     /// </summary>
-    public static bool IsAvailable => _instance != null;
+    public static bool IsAvailable => LazyInstance != null;
 
     bool ICursesProvider.is_cleared(IntPtr window) => is_cleared(window);
 
@@ -304,7 +304,8 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.waddch(IntPtr window, uint charAndAttrs) => waddch(window, charAndAttrs);
 
-    int ICursesProvider.waddchnstr(IntPtr window, uint[] charsAndAttrs, int length) => waddchnstr(window, charsAndAttrs, length);
+    int ICursesProvider.waddchnstr(IntPtr window, uint[] charsAndAttrs, int length) =>
+        waddchnstr(window, charsAndAttrs, length);
 
     int ICursesProvider.wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved) =>
         wattr_get(window, out attrs, out colorPair, reserved);
@@ -359,7 +360,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     int ICursesProvider.winchnstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, int length) =>
         winchnstr(window, dest, length);
 
-    int ICursesProvider.winsch(IntPtr window, uint @charAndAttrs) => winsch(window, @charAndAttrs);
+    int ICursesProvider.winsch(IntPtr window, uint charAndAttrs) => winsch(window, charAndAttrs);
 
     int ICursesProvider.winsdelln(IntPtr window, int count) => winsdelln(window, count);
 
@@ -438,7 +439,8 @@ public sealed class NativeCursesProvider: ICursesProvider
     int ICursesProvider.wadd_wchnstr(IntPtr window, CursesComplexChar[] str, int count) =>
         wadd_wchnstr(window, str, count);
 
-    int ICursesProvider.waddnwstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] string text, int length) => waddnwstr(window, text, length);
+    int ICursesProvider.waddnwstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] string text, int length) =>
+        waddnwstr(window, text, length);
 
     int ICursesProvider.wbkgrnd(IntPtr window, CursesComplexChar @char) => wbkgrnd(window, ref @char);
 
@@ -505,7 +507,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     void ICursesProvider.set_title(string title) { Console.Title = title; }
 
     int ICursesProvider.setlocale(int category, string locale) => setlocale(category, locale);
-    
+
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int baudrate();
 
@@ -1112,7 +1114,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
-    
+
     [DllImport(LibCLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern int setlocale(int cate, string locale);
 }

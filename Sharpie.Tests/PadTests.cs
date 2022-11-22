@@ -44,14 +44,16 @@ public class PadTests
 
         _cursesMock.Setup(s => s.getmaxx(new(2)))
                    .Returns(5);
+
         _cursesMock.Setup(s => s.getmaxy(new(2)))
                    .Returns(5);
-        
+
         _cursesMock.Setup(s => s.getmaxx(new(1)))
                    .Returns(10);
+
         _cursesMock.Setup(s => s.getmaxy(new(1)))
                    .Returns(10);
-        
+
         _screen = new(_cursesMock.Object, new(1));
         _pad1 = new(_cursesMock.Object, _screen, new(2));
     }

@@ -36,8 +36,8 @@ namespace Sharpie;
 [PublicAPI]
 public class Window: IDisposable
 {
+    private readonly IList<Window> _windows = new List<Window>();
     private IntPtr _handle;
-    private IList<Window> _windows = new List<Window>();
 
     /// <summary>
     ///     Initializes the window using a Curses handle.

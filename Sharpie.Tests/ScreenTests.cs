@@ -48,14 +48,16 @@ public class ScreenTests
     {
         _cursesMock.Setup(s => s.getmaxx(window))
                    .Returns(1000);
+
         _cursesMock.Setup(s => s.getmaxy(window))
                    .Returns(1000);
     }
-    
+
     private void MockSmallArea(IntPtr window)
     {
         _cursesMock.Setup(s => s.getmaxx(window))
                    .Returns(1);
+
         _cursesMock.Setup(s => s.getmaxy(window))
                    .Returns(1);
     }
@@ -113,7 +115,7 @@ public class ScreenTests
     public void CreateWindow_ReturnsNewWindow_IfCursesSucceeds()
     {
         MockLargeArea(new(1));
-        
+
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
 
@@ -132,7 +134,7 @@ public class ScreenTests
     public void CreateSubWindow_Throws_IfAreaOutsideBoundaries()
     {
         MockSmallArea(new(2));
-        
+
         var p = new Window(_cursesMock.Object, _screen1, new(2));
 
         Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateSubWindow(p, new(0, 0, 2, 2)));
@@ -142,7 +144,7 @@ public class ScreenTests
     public void CreateSubWindow_Throws_IfWindowIsPad()
     {
         MockSmallArea(new(2));
-        
+
         var p = new Pad(_cursesMock.Object, _screen1, new(2));
 
         Should.Throw<InvalidOperationException>(() => _screen1.CreateSubWindow(p, new(0, 0, 1, 1)));
@@ -152,7 +154,7 @@ public class ScreenTests
     public void CreateSubWindow_Throws_IfCursesFails()
     {
         MockSmallArea(new(2));
-        
+
         var w = new Window(_cursesMock.Object, _screen1, new(2));
 
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
@@ -167,7 +169,7 @@ public class ScreenTests
     public void CreateSubWindow_ReturnsNewWindow_IfCursesSucceeds()
     {
         MockLargeArea(new(2));
-        
+
         var w = new Window(_cursesMock.Object, _screen1, new(2));
 
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
@@ -292,7 +294,7 @@ public class ScreenTests
     public void CreateSubPad_Throws_IfCursesFails()
     {
         MockLargeArea(new(2));
-        
+
         var p = new Pad(_cursesMock.Object, _screen1, new(2));
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
@@ -306,7 +308,7 @@ public class ScreenTests
     public void CreateSubPad_ReturnsNewPad_IfCursesSucceeds()
     {
         MockLargeArea(new(2));
-        
+
         var p = new Pad(_cursesMock.Object, _screen1, new(2));
 
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),

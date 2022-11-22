@@ -41,18 +41,20 @@ public class WindowTests
     {
         _cursesMock.Setup(s => s.getmaxx(window))
                    .Returns(1000);
+
         _cursesMock.Setup(s => s.getmaxy(window))
                    .Returns(1000);
     }
-    
+
     private void MockSmallArea(IntPtr window)
     {
         _cursesMock.Setup(s => s.getmaxx(window))
                    .Returns(1);
+
         _cursesMock.Setup(s => s.getmaxy(window))
                    .Returns(1);
     }
-    
+
     [TestMethod]
     public void Ctor_Throws_WhenCursesIfNull()
     {
@@ -631,7 +633,7 @@ public class WindowTests
     {
         MockLargeArea(new(1));
         MockSmallArea(new(2));
-        
+
         _cursesMock.Setup(s => s.mvderwin(new(2), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
@@ -647,7 +649,7 @@ public class WindowTests
     {
         MockSmallArea(new(1));
         MockSmallArea(new(2));
-        
+
         var p = new Window(_cursesMock.Object, null, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
 
@@ -791,7 +793,7 @@ public class WindowTests
     public void CaretPosition_Set_SetsValue_IfCursesSucceeded()
     {
         MockLargeArea(new(1));
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.CaretPosition = new(11, 22);
 
@@ -802,7 +804,7 @@ public class WindowTests
     public void CaretPosition_Set_Throws_IfCursesFails()
     {
         MockLargeArea(new(1));
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
 
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
@@ -924,7 +926,7 @@ public class WindowTests
     public void TryMoveCaretTo_ReturnsFalse_IfCoordinatesOutsideWindow()
     {
         MockSmallArea(new(1));
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.TryMoveCaretTo(1, 1)
          .ShouldBeFalse();
@@ -934,7 +936,7 @@ public class WindowTests
     public void TryMoveCaretTo_ReturnsFalse_IfCursesFails()
     {
         MockLargeArea(new(1));
-        
+
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
@@ -960,7 +962,7 @@ public class WindowTests
     public void MoveCaretTo_Throws_IfMovingFails()
     {
         MockSmallArea(new(1));
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         Should.Throw<ArgumentException>(() => w.MoveCaretTo(1, 1));
     }
@@ -969,7 +971,7 @@ public class WindowTests
     public void MoveCaretTo_Succeeds_IfMovingSucceeds()
     {
         MockLargeArea(new(1));
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         Should.NotThrow(() => w.MoveCaretTo(1, 1));
     }
@@ -1547,7 +1549,7 @@ public class WindowTests
         {
             MockSmallArea(new(1));
         }
-        
+
         var w = new Window(_cursesMock.Object, null, new(1));
         w.IsRectangleWithin(new(0, 0, 5, 5))
          .ShouldBe(yes);
@@ -2058,7 +2060,7 @@ public class WindowTests
     {
         MockLargeArea(new(1));
         MockLargeArea(new(2));
-        
+
         var w1 = new Window(_cursesMock.Object, null, new(1));
         var w2 = new Window(_cursesMock.Object, null, new(2));
 
@@ -2073,7 +2075,7 @@ public class WindowTests
     {
         MockLargeArea(new(1));
         MockLargeArea(new(2));
-        
+
         _cursesMock.Setup(s => s.copywin(It.IsAny<IntPtr>(), It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);

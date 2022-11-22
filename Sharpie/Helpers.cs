@@ -418,4 +418,26 @@ public static class Helpers
 
         return (button, state, modifierKey);
     }
+
+    internal static (int fullCellCount, int optionIndex) CalculateOptionDistribution(int cells, int options,
+        double percent)
+    {
+        if (cells < 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(cells));
+        }
+
+        if (percent is < 0 or > 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(percent));
+        }
+
+        var fullCells = Convert.ToInt32(Math.Floor(percent * cells));
+        var percentPerCell = 1.0 / cells;
+        var percentLeft = percent - percentPerCell * fullCells;
+        var percentInLast = percentLeft / percentPerCell;
+
+        var optionIndex = Convert.ToInt32(Math.Floor(percentInLast * options));
+        return (fullCells, optionIndex);
+    }
 }
