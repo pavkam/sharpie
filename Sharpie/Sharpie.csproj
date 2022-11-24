@@ -22,12 +22,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="$(AssemblyName)-tests"/>
+        <InternalsVisibleTo Include="$(AssemblyName)-tests" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0"/>
-        <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
+        <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>
