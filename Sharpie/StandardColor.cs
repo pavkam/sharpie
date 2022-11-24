@@ -34,12 +34,12 @@ namespace Sharpie;
 ///     Defines the well-known standard video colors.
 /// </summary>
 [PublicAPI]
-public enum StandardColor: short
+public enum StandardColor: ushort
 {
     /// <summary>
     ///     The default color (fg or bg).
     /// </summary>
-    Default = -1,
+    Default = ushort.MaxValue,
 
     /// <summary>
     ///     The black color.
