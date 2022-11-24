@@ -6,35 +6,113 @@ namespace Sharpie.Drawing;
 [PublicAPI]
 public static class Line
 {
+    /// <summary>
+    /// Defines the lines and their styles. Combine multiple of these to create a box drawing character.
+    /// </summary>
     [Flags]
     public enum SideAndStyle
     {
+        /// <summary>
+        /// Light right line.
+        /// </summary>
         RightLight = 1 << 0,
+
+        /// <summary>
+        /// Light left line.
+        /// </summary>
         LeftLight = 1 << 1,
+
+        /// <summary>
+        /// Light top line.
+        /// </summary>
         TopLight = 1 << 2,
+
+        /// <summary>
+        /// Light bottom line.
+        /// </summary>
         BottomLight = 1 << 3,
-        
+
+        /// <summary>
+        /// Heavy right line.
+        /// </summary>
         RightHeavy = 1 << 4,
+
+        /// <summary>
+        /// Heavy left line.
+        /// </summary>
         LeftHeavy = 1 << 5,
+
+        /// <summary>
+        /// Heavy top line.
+        /// </summary>
         TopHeavy = 1 << 6,
+
+        /// <summary>
+        /// Heavy bottom line.
+        /// </summary>
         BottomHeavy = 1 << 7,
-        
+
+        /// <summary>
+        /// Light dashed right line.
+        /// </summary>
         RightLightDashed = 1 << 8,
+
+        /// <summary>
+        /// Light dashed left line.
+        /// </summary>
         LeftLightDashed = 1 << 9,
+
+        /// <summary>
+        /// Light dashed top line.
+        /// </summary>
         TopLightDashed = 1 << 10,
+
+        /// <summary>
+        /// Light dashed bottom line.
+        /// </summary>
         BottomLightDashed = 1 << 11,
-        
+
+        /// <summary>
+        /// Heavy dashed right line.
+        /// </summary>
         RightHeavyDashed = 1 << 12,
+
+        /// <summary>
+        /// Heavy dashed left line.
+        /// </summary>
         LeftHeavyDashed = 1 << 13,
+
+        /// <summary>
+        /// Heavy dashed top line.
+        /// </summary>
         TopHeavyDashed = 1 << 14,
+
+        /// <summary>
+        /// Heavy dashed bottom line.
+        /// </summary>
         BottomHeavyDashed = 1 << 15,
 
+        /// <summary>
+        /// Double right line.
+        /// </summary>
         RightDouble = 1 << 16,
+
+        /// <summary>
+        /// Double left line.
+        /// </summary>
         LeftDouble = 1 << 17,
+
+        /// <summary>
+        /// Double top line.
+        /// </summary>
         TopDouble = 1 << 18,
+
+        /// <summary>
+        /// Double bottom line.
+        /// </summary>
         BottomDouble = 1 << 19,
     }
-    
+
     private static readonly Dictionary<SideAndStyle, Rune> BoxCharacters = new()
     {
         { SideAndStyle.RightLight, new('╶') },
@@ -52,6 +130,10 @@ public static class Line
         { SideAndStyle.TopLight | SideAndStyle.BottomLight | SideAndStyle.LeftLight, new('┤') },
         { SideAndStyle.TopLight | SideAndStyle.BottomLight | SideAndStyle.RightLight, new('├') },
         { SideAndStyle.RightLight | SideAndStyle.LeftLight | SideAndStyle.TopLight | SideAndStyle.BottomLight, new('┼') },
+        { SideAndStyle.LeftLight | SideAndStyle.RightHeavy, new('╼') },
+        { SideAndStyle.LeftLight | SideAndStyle.RightLightDashed, new('─') },
+        { SideAndStyle.LeftLight | SideAndStyle.RightHeavyDashed, new('╼') },
+        { SideAndStyle.LeftLight | SideAndStyle.RightDouble, new('═') },
         
         
         { SideAndStyle.RightHeavy, new('╺') },
@@ -69,6 +151,10 @@ public static class Line
         { SideAndStyle.TopHeavy | SideAndStyle.BottomHeavy | SideAndStyle.LeftHeavy, new('┫') },
         { SideAndStyle.TopHeavy | SideAndStyle.BottomHeavy | SideAndStyle.RightHeavy, new('┣') },
         { SideAndStyle.RightHeavy | SideAndStyle.LeftHeavy | SideAndStyle.TopHeavy | SideAndStyle.BottomHeavy, new('╋') },
+        { SideAndStyle.LeftHeavy | SideAndStyle.RightLight, new('╾') },
+        { SideAndStyle.LeftHeavy | SideAndStyle.RightLightDashed, new('─') },
+        { SideAndStyle.LeftHeavy | SideAndStyle.RightHeavyDashed, new('━') },
+        { SideAndStyle.LeftHeavy | SideAndStyle.RightDouble, new('═') },
         
         { SideAndStyle.RightLightDashed, new('╶') },
         { SideAndStyle.LeftLightDashed, new('╴') },
@@ -85,7 +171,11 @@ public static class Line
         { SideAndStyle.TopLightDashed | SideAndStyle.BottomLightDashed | SideAndStyle.LeftLightDashed, new('┤') },
         { SideAndStyle.TopLightDashed | SideAndStyle.BottomLightDashed | SideAndStyle.RightLightDashed, new('├') },
         { SideAndStyle.RightLightDashed | SideAndStyle.LeftLightDashed | SideAndStyle.TopLightDashed | SideAndStyle.BottomLightDashed, new('┼') },
-
+        { SideAndStyle.LeftLightDashed | SideAndStyle.RightLight, new('─') },
+        { SideAndStyle.LeftLightDashed | SideAndStyle.RightHeavy, new('╼') },
+        { SideAndStyle.LeftLightDashed | SideAndStyle.RightHeavyDashed, new('╼') },
+        { SideAndStyle.LeftLightDashed | SideAndStyle.RightDouble, new('═') },
+        
         
         { SideAndStyle.RightHeavyDashed, new('╺') },
         { SideAndStyle.LeftHeavyDashed, new('╸') },
@@ -102,6 +192,11 @@ public static class Line
         { SideAndStyle.TopHeavyDashed | SideAndStyle.BottomHeavyDashed | SideAndStyle.LeftHeavyDashed, new('┫') },
         { SideAndStyle.TopHeavyDashed | SideAndStyle.BottomHeavyDashed | SideAndStyle.RightHeavyDashed, new('┣') },
         { SideAndStyle.RightHeavyDashed | SideAndStyle.LeftHeavyDashed | SideAndStyle.TopHeavyDashed | SideAndStyle.BottomHeavyDashed, new('╋') },
+        { SideAndStyle.LeftHeavyDashed | SideAndStyle.RightLight, new('╾') },
+        { SideAndStyle.LeftHeavyDashed | SideAndStyle.RightLightDashed, new('╾') },
+        { SideAndStyle.LeftHeavyDashed | SideAndStyle.RightHeavy, new('━') },
+        { SideAndStyle.LeftHeavyDashed | SideAndStyle.RightDouble, new('═') },
+        
         
         { SideAndStyle.RightDouble, new('═') },
         { SideAndStyle.LeftDouble, new('═') },
@@ -117,8 +212,11 @@ public static class Line
         { SideAndStyle.RightDouble | SideAndStyle.LeftDouble | SideAndStyle.BottomDouble, new('╦') },
         { SideAndStyle.TopDouble | SideAndStyle.BottomDouble | SideAndStyle.LeftDouble, new('╣') },
         { SideAndStyle.TopDouble | SideAndStyle.BottomDouble | SideAndStyle.RightDouble, new('╠') },
-        
         { SideAndStyle.RightDouble | SideAndStyle.LeftDouble | SideAndStyle.TopDouble | SideAndStyle.BottomDouble, new('╬') },
+        { SideAndStyle.LeftDouble | SideAndStyle.RightLight, new('═') },
+        { SideAndStyle.LeftDouble | SideAndStyle.RightHeavy, new('═') },
+        { SideAndStyle.LeftDouble | SideAndStyle.RightLightDashed, new('═') },
+        { SideAndStyle.LeftDouble | SideAndStyle.RightHeavyDashed, new('═') },
     };
 
     /// <summary>
