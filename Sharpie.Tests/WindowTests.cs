@@ -928,7 +928,7 @@ public class WindowTests
         MockSmallArea(new(1));
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        w.TryMoveCaretTo(1, 1)
+        w.TryMoveCaretTo(new(1, 1))
          .ShouldBeFalse();
     }
 
@@ -941,7 +941,7 @@ public class WindowTests
                    .Returns(-1);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        w.TryMoveCaretTo(1, 1)
+        w.TryMoveCaretTo(new(1, 1))
          .ShouldBeFalse();
     }
 
@@ -954,7 +954,7 @@ public class WindowTests
                    .Returns(0);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        w.TryMoveCaretTo(1, 1)
+        w.TryMoveCaretTo(new(1, 1))
          .ShouldBeTrue();
     }
 
@@ -964,7 +964,7 @@ public class WindowTests
         MockSmallArea(new(1));
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<ArgumentException>(() => w.MoveCaretTo(1, 1));
+        Should.Throw<ArgumentException>(() => w.MoveCaretTo(new(1, 1)));
     }
 
     [TestMethod]
@@ -973,7 +973,7 @@ public class WindowTests
         MockLargeArea(new(1));
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.NotThrow(() => w.MoveCaretTo(1, 1));
+        Should.NotThrow(() => w.MoveCaretTo(new(1, 1)));
     }
 
     [TestMethod]

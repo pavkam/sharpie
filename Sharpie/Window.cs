@@ -442,26 +442,24 @@ public class Window: IDisposable
     /// <summary>
     ///     Tries to move the caret to a given position within the window.
     /// </summary>
-    /// <param name="x">The new X.</param>
-    /// <param name="y">The new Y.</param>
+    /// <param name="location">The new location.</param>
     /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    public bool TryMoveCaretTo(int x, int y) =>
-        IsPointWithin(new(x, y)) &&
-        !Curses.wmove(Handle, y, x)
+    public bool TryMoveCaretTo(Point location) =>
+        IsPointWithin(location) &&
+        !Curses.wmove(Handle, location.Y, location.X)
                .Failed();
 
     /// <summary>
     ///     Moves the caret to a given position within the window.
     /// </summary>
-    /// <param name="x">The new X.</param>
-    /// <param name="y">The new Y.</param>
+    /// <param name="location">The new location.</param>
     /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     /// <exception cref="ArgumentException">The given coordinates are outside the window.</exception>
-    public void MoveCaretTo(int x, int y)
+    public void MoveCaretTo(Point location)
     {
-        if (!TryMoveCaretTo(x, y))
+        if (!TryMoveCaretTo(location))
         {
             throw new ArgumentException("The coordinates are outside the window.");
         }
