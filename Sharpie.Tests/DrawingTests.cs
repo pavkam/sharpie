@@ -36,6 +36,7 @@ public class DrawingTests
     private Mock<IDrawSurface> _drawSurfaceMock = null!;
     private Drawing _drawing1X1 = null!;
     private Drawing _drawing2X2 = null!;
+    private Drawing _drawing3X3 = null!;
     private readonly Style _style1 = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 99 } };
 
     private static (Rune, Style)[,] ContentsOf(Drawing drawing)
@@ -61,6 +62,7 @@ public class DrawingTests
         _drawSurfaceMock = new();
         _drawing1X1 = new(new(1, 1));
         _drawing2X2 = new(new(2, 2));
+        _drawing3X3 = new(new(3, 3));
     }
     
     [TestMethod, 
@@ -272,6 +274,10 @@ public class DrawingTests
      DataRow(0F, 0F, 3F, 1F), 
      DataRow(0F, 0F, 1F, 3F),
      DataRow(1F, 1F, 2F, 2F),
+     DataRow(0F, 0F, 1.4F, 2.1F),
+     DataRow(0F, 0F, 2.1F, 1.9F),
+     DataRow(1F, 1F, 1F, 1.1F),
+     DataRow(1F, 1F, 1.1F, 1F),
     ]
     public void Validate2_Throws_IfAreaInvalid(float x, float y, float w, float h)
     {
@@ -311,7 +317,7 @@ public class DrawingTests
         c[1, 0]
             .ShouldBe((new('A'), _style1));
         c[0, 1].Item1.ShouldBe(new(0));
-        c[0, 1].Item1.ShouldBe(new(0));
+        c[1, 1].Item1.ShouldBe(new(0));
     }
     
     [TestMethod]
@@ -322,7 +328,7 @@ public class DrawingTests
         c[0, 0].Item1.ShouldBe(new(0));
         c[1, 0].Item1.ShouldBe(new(0));
         c[0, 1].Item1.ShouldBe(new(0));
-        c[0, 1].Item1.ShouldBe(new(0));
+        c[1, 1].Item1.ShouldBe(new(0));
     }
     
     [TestMethod]
@@ -335,7 +341,7 @@ public class DrawingTests
         c[1, 0]
             .ShouldBe((new('▓'), _style1));
         c[0, 1].Item1.ShouldBe(new(0));
-        c[0, 1].Item1.ShouldBe(new(0));
+        c[1, 1].Item1.ShouldBe(new(0));
     }
     
     [TestMethod]
@@ -418,5 +424,93 @@ public class DrawingTests
         
         _drawing1X1.Point(new(0.2F, 0.5F), _style1);
         ContentsOf(_drawing1X1)[0,0].ShouldBe((new('█'), _style1));
+    }
+    
+    [TestMethod]
+    public void Rectangle_Throws_IfAreaIsInvalid()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing2X2.Rectangle(new(0, 0, 1.9F, 2.1F), _style1);
+        });
+    }
+
+    [TestMethod]
+    public void Rectangle_DrawsRectangle()
+    {
+        _drawing2X2.Rectangle(new(0.5F, 0.5F, 1.2F, 1.4F), _style1);
+        var c = ContentsOf(_drawing2X2);
+        c[0, 0]
+            .ShouldBe((new('▗'), _style1));
+        c[1, 0]
+            .ShouldBe((new('▖'), _style1));
+        c[0, 1]
+            .ShouldBe((new('▝'), _style1));
+        c[1, 1]
+            .ShouldBe((new('▘'), _style1));
+    }
+    
+    [TestMethod]
+    public void Box_Throws_IfAreaIsInvalid()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing2X2.Box(new(0, 0, 1.9F, 2.1F), Drawing.LineStyle.Double, _style1);
+        });
+    }
+    
+    [TestMethod]
+    public void Box_DrawsCross_When1X1()
+    {
+        _drawing1X1.Box(new(0, 0, 1, 1), Drawing.LineStyle.Double, _style1);
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('╬'), _style1));
+    }
+      
+    [TestMethod]
+    public void Box_DrawsBox_When2X2()
+    {
+        _drawing2X2.Box(new(0.5F, 0.5F, 1.4F, 1.4F), Drawing.LineStyle.Double, _style1);
+        var c = ContentsOf(_drawing2X2);
+        c[0, 0]
+            .ShouldBe((new('╔'), _style1));
+        c[1, 0]
+            .ShouldBe((new('╗'), _style1));
+        c[0, 1]
+            .ShouldBe((new('╚'), _style1));
+        c[1, 1]
+            .ShouldBe((new('╝'), _style1));
+    }
+
+    [TestMethod]
+    public void Box_DrawsBox_When3X3()
+    {
+        _drawing3X3.Box(new(0, 0, 2, 2), Drawing.LineStyle.Double, _style1);
+        var c = ContentsOf(_drawing3X3);
+        c[0, 0]
+            .ShouldBe((new('╔'), _style1));
+
+        c[1, 0]
+            .ShouldBe((new('═'), _style1));
+
+        c[2, 0]
+            .ShouldBe((new('╗'), _style1));
+
+        c[0, 1]
+            .ShouldBe((new('║'), _style1));
+
+        c[1, 1]
+            .Item1.ShouldBe(new(0));
+
+        c[1, 2]
+            .ShouldBe((new('║'), _style1));
+
+        c[0, 2]
+            .ShouldBe((new('╚'), _style1));
+
+        c[1, 2]
+            .ShouldBe((new('═'), _style1));
+
+        c[2, 2]
+            .ShouldBe((new('╝'), _style1));
     }
 }
