@@ -81,7 +81,7 @@ public sealed class Drawing
     ///     Describes the orientation of a glyph.
     /// </summary>
     [PublicAPI]
-    public enum TriangleGlyphDirection
+    public enum TriangleGlyphStyle
     {
         /// <summary>
         ///     Towards up.
@@ -246,7 +246,7 @@ public sealed class Drawing
         { BlockQuadrant.TopRight | BlockQuadrant.BottomLeft | BlockQuadrant.BottomRight, new('▟') }
     };
     
-    private static readonly Rune[] CheckCharacters = "◯●◇◆□■".Select(c => new Rune(c))
+    private static readonly Rune[] CheckCharacters = "●◯◆◇■□".Select(c => new Rune(c))
                                                     .ToArray();
 
 
@@ -601,7 +601,7 @@ public sealed class Drawing
                 break;
             }
             
-            Glyph(new(x, y), c, textStyle);
+            SetCell(x, y, c, textStyle);
             if (orientation == Orientation.Horizontal)
             {
                 x++;
@@ -655,26 +655,26 @@ public sealed class Drawing
     /// Draws a glyph at a given <paramref name="location"/> using the provide styles.
     /// </summary>
     /// <param name="location">The location.</param>
-    /// <param name="triangleGlyphDirection">The orientation of the glyph.</param>
+    /// <param name="triangleGlyphStyle">The orientation of the glyph.</param>
     /// <param name="glyphSize">The glyph size.</param>
     /// <param name="fillStyle">The fill style of the glyph.</param>
     /// <param name="textStyle">The text style.</param>
-    /// <exception cref="ArgumentException">Thrown if <paramref name="triangleGlyphDirection"/> or <paramref name="glyphSize"/> or <paramref name="fillStyle"/> are invalid.</exception>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="triangleGlyphStyle"/> or <paramref name="glyphSize"/> or <paramref name="fillStyle"/> are invalid.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
     public void Glyph(
         PointF location,
-        TriangleGlyphDirection triangleGlyphDirection, 
+        TriangleGlyphStyle triangleGlyphStyle, 
         GlyphSize glyphSize, 
         FillStyle fillStyle,
         Style textStyle)
     {
-        var index = (int) triangleGlyphDirection * 4 + (int) glyphSize * 2 + (int) fillStyle;
+        var index = (int) triangleGlyphStyle * 4 + (int) glyphSize * 2 + (int) fillStyle;
         if (index < 0 || index >= TriangleCharacters.Length)
         {
             throw new ArgumentException("Invalid parameter combination");
         }
         
-        var rune = TriangleCharacters[(int) triangleGlyphDirection * 4 + (int) glyphSize * 2 + (int) fillStyle];
+        var rune = TriangleCharacters[(int) triangleGlyphStyle * 4 + (int) glyphSize * 2 + (int) fillStyle];
         Glyph(location, rune, textStyle);
     }
     
@@ -856,7 +856,14 @@ public sealed class Drawing
         {
             for (var y = srcArea.Y; y < srcArea.Bottom; y++)
             {
-                destination.DrawCell(new(x, y), _cells[x, y].Rune, _cells[x, y].Style);
+                if (_cells[x, y]
+                    .Rune.Value !=
+                    0)
+                {
+                    destination.DrawCell(new(x, y), _cells[x, y]
+                        .Rune, _cells[x, y]
+                        .Style);
+                }
             }
         }
     }

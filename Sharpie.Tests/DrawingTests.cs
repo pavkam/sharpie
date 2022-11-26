@@ -37,7 +37,24 @@ public class DrawingTests
     private Drawing _drawing1X1 = null!;
     private Drawing _drawing2X2 = null!;
     private readonly Style _style1 = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 99 } };
-    
+
+    private (Rune, Style)[,] ContentsOf(Drawing drawing)
+    {
+        var mock = new Mock<IDrawSurface>();
+        mock.Setup(s => s.CoversArea(It.IsAny<Rectangle>()))
+             .Returns(true);
+
+        var collector = new (Rune, Style)[drawing.Size.Width, drawing.Size.Height];
+        mock.Setup(s => s.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()))
+             .Callback<Point, Rune, Style>((location, rune, textStyle) =>
+             {
+                 collector[location.X, location.Y] = (rune, textStyle);
+             });
+
+        drawing.DrawTo(mock.Object, new(0, 0, 1, 1), new(0, 0));
+        return collector;
+    }
+
     [TestInitialize]
     public void TestInitialize()
     {
@@ -124,5 +141,113 @@ public class DrawingTests
         
         _drawSurfaceMock.Verify(v => v.CoversArea(new(0, 0, 1, 1)), Times.Once);
         _drawSurfaceMock.Verify(v => v.DrawCell(new(0, 0), new('A'), _style1), Times.Once);
+    }
+    
+    [TestMethod]
+    public void DrawTo_SkipsEmptyCells()
+    {
+        _drawSurfaceMock.Setup(s => s.CoversArea(It.IsAny<Rectangle>()))
+                        .Returns(true);
+
+        _drawing2X2.Glyph(new(1, 1), new('A'), _style1);
+
+        _drawing2X2.DrawTo(_drawSurfaceMock.Object, new(0, 0, 2, 2), new(0, 0));
+        _drawSurfaceMock.Verify(v => v.DrawCell(new(1, 1), new('A'), _style1), Times.Once);
+        _drawSurfaceMock.Verify(v => v.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Glyph1_Throws_IfLocationIsInvalid()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing1X1.Glyph(new(1, 1), new('A'), _style1);
+        });
+    }
+
+    [TestMethod]
+    public void Glyph1_DrawsGlyph()
+    {
+        _drawing1X1.Glyph(new(0, 0), new('Z'), _style1);
+        ContentsOf(_drawing1X1)[0, 0]
+            .ShouldBe((new('Z'), _style1));
+    }
+    
+    [TestMethod]
+    public void Glyph2_Throws_IfLocationIsInvalid()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing1X1.Glyph(new(1, 1), Drawing.CheckGlyphStyle.Diamond, Drawing.FillStyle.Black, _style1);
+        });
+    }
+
+    [TestMethod]
+    public void Glyph2_Throws_IfStyleIsInvalid()
+    {
+        Should.Throw<ArgumentException>(() =>
+        {
+            _drawing1X1.Glyph(new(1, 1), (Drawing.CheckGlyphStyle)100, Drawing.FillStyle.Black, _style1);
+        });
+    }
+
+    [TestMethod]
+    public void Glyph2_DrawsGlyph()
+    {
+        _drawing1X1.Glyph(new(0, 0), Drawing.CheckGlyphStyle.Diamond, Drawing.FillStyle.Black, _style1);
+        ContentsOf(_drawing1X1)[0, 0]
+            .ShouldBe((new('◇'), _style1));
+    }
+
+    [TestMethod]
+    public void Glyph3_Throws_IfLocationIsInvalid()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing1X1.Glyph(new(1, 1), Drawing.TriangleGlyphStyle.Down, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, _style1);
+        });
+    }
+    
+    [TestMethod]
+    public void Glyph3_Throws_IfStyleIsInvalid()
+    {
+        Should.Throw<ArgumentException>(() =>
+        {
+            _drawing1X1.Glyph(new(1, 1), (Drawing.TriangleGlyphStyle)100, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, _style1);
+        });
+    }
+
+    [TestMethod]
+    public void Glyph3_DrawsGlyph()
+    {
+        _drawing1X1.Glyph(new(0, 0), Drawing.TriangleGlyphStyle.Down, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, _style1);
+        ContentsOf(_drawing1X1)[0, 0]
+            .ShouldBe((new('▽'), _style1));
+    }
+    
+    [TestMethod]
+    public void Glyph4_Throws_IfLocationIsInvalid()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing1X1.Glyph(new(1, 1), Drawing.GradientGlyphStyle.LeftToRight, 7, _style1);
+        });
+    }
+    
+    [TestMethod, DataRow(-1), DataRow(9)]
+    public void Glyph4_Throws_IfFillIsInvalid_1(int fill)
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing1X1.Glyph(new(1, 1), Drawing.GradientGlyphStyle.LeftToRight, fill, _style1);
+        });
+    }
+    
+    [TestMethod]
+    public void Glyph4_DrawsGlyph()
+    {
+        _drawing1X1.Glyph(new(0, 0), Drawing.GradientGlyphStyle.LeftToRight, 8, _style1);
+        ContentsOf(_drawing1X1)[0, 0]
+            .ShouldBe((new('█'), _style1));
     }
 }
