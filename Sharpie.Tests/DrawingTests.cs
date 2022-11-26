@@ -38,7 +38,7 @@ public class DrawingTests
     private Drawing _drawing2X2 = null!;
     private readonly Style _style1 = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 99 } };
 
-    private (Rune, Style)[,] ContentsOf(Drawing drawing)
+    private static (Rune, Style)[,] ContentsOf(Drawing drawing)
     {
         var mock = new Mock<IDrawSurface>();
         mock.Setup(s => s.CoversArea(It.IsAny<Rectangle>()))
@@ -51,7 +51,7 @@ public class DrawingTests
                  collector[location.X, location.Y] = (rune, textStyle);
              });
 
-        drawing.DrawTo(mock.Object, new(0, 0, 1, 1), new(0, 0));
+        drawing.DrawTo(mock.Object, new(0, 0, drawing.Size.Width, drawing.Size.Height), new(0, 0));
         return collector;
     }
 
@@ -93,15 +93,15 @@ public class DrawingTests
     }
     
     [TestMethod]
-    public void DrawTo_Throws_IfSrcAreaIsInvalid_1()
+    public void DrawTo_DoesNothing_IfSrcAreaIsEmpty()
     {
         _drawSurfaceMock.Setup(s => s.CoversArea(It.IsAny<Rectangle>()))
                         .Returns(true);
         
-        Should.Throw<ArgumentOutOfRangeException>(() =>
-        {
-            _drawing1X1.DrawTo(_drawSurfaceMock.Object, Rectangle.Empty, Point.Empty);
-        });
+        _drawing1X1.DrawTo(_drawSurfaceMock.Object, Rectangle.Empty, Point.Empty);
+        
+        _drawSurfaceMock.Verify(v => v.CoversArea(It.IsAny<Rectangle>()), Times.Never);
+        _drawSurfaceMock.Verify(v => v.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()), Times.Never);
     }
     
     [TestMethod]
@@ -172,16 +172,18 @@ public class DrawingTests
         ContentsOf(_drawing1X1)[0, 0]
             .ShouldBe((new('Z'), _style1));
     }
-    
-    [TestMethod]
-    public void Glyph2_Throws_IfLocationIsInvalid()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() =>
-        {
-            _drawing1X1.Glyph(new(1, 1), Drawing.CheckGlyphStyle.Diamond, Drawing.FillStyle.Black, _style1);
-        });
-    }
 
+    [TestMethod]
+    public void Glyph1_ReplacesSpecialChars_WithWhitespace()
+    {
+        for (var ch = 0; ch <= ControlCharacter.Escape; ch++)
+        {
+            _drawing1X1.Glyph(new(0, 0), new(ch), _style1);
+            ContentsOf(_drawing1X1)[0, 0]
+                .ShouldBe((new(' '), _style1));
+        }
+    }
+    
     [TestMethod]
     public void Glyph2_Throws_IfStyleIsInvalid()
     {
@@ -200,15 +202,6 @@ public class DrawingTests
     }
 
     [TestMethod]
-    public void Glyph3_Throws_IfLocationIsInvalid()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() =>
-        {
-            _drawing1X1.Glyph(new(1, 1), Drawing.TriangleGlyphStyle.Down, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, _style1);
-        });
-    }
-    
-    [TestMethod]
     public void Glyph3_Throws_IfStyleIsInvalid()
     {
         Should.Throw<ArgumentException>(() =>
@@ -225,17 +218,8 @@ public class DrawingTests
             .ShouldBe((new('▽'), _style1));
     }
     
-    [TestMethod]
-    public void Glyph4_Throws_IfLocationIsInvalid()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() =>
-        {
-            _drawing1X1.Glyph(new(1, 1), Drawing.GradientGlyphStyle.LeftToRight, 7, _style1);
-        });
-    }
-    
     [TestMethod, DataRow(-1), DataRow(9)]
-    public void Glyph4_Throws_IfFillIsInvalid_1(int fill)
+    public void Glyph4_Throws_IfFillIsInvalid(int fill)
     {
         Should.Throw<ArgumentOutOfRangeException>(() =>
         {
@@ -249,5 +233,190 @@ public class DrawingTests
         _drawing1X1.Glyph(new(0, 0), Drawing.GradientGlyphStyle.LeftToRight, 8, _style1);
         ContentsOf(_drawing1X1)[0, 0]
             .ShouldBe((new('█'), _style1));
+    }
+
+    [TestMethod, 
+     DataRow(-1F, 0F), 
+     DataRow(2F, 0F), 
+     DataRow(2.1F, 0F), 
+     DataRow(0F, -1F), 
+     DataRow(0F, 2F),
+     DataRow(0F, 2.1F)
+    ]
+    public void Validate1_Throws_IfLocationInvalid(float x, float y)
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() => { _drawing2X2.Validate(new PointF(x, y)); });
+    }
+    
+    [TestMethod]
+    public void Validate1_TruncatesCoords()
+    {
+        var p = _drawing2X2.Validate(new PointF(0.4F, 1.9F));
+        p.ShouldBe(new(0, 1));
+    }
+    
+    [TestMethod]
+    public void Validate1_AppliesQuanta()
+    {
+        var p = _drawing2X2.Validate(new PointF(0.1F, 0.5F), 2);
+        p.ShouldBe(new(0, 1));
+    }
+    
+    [TestMethod, 
+     DataRow(-1F, 0F, 1F, 1F), 
+     DataRow(0F, -1F, 1F, 1F), 
+     DataRow(0F, 0F, -1F, 1F), 
+     DataRow(0F, 0F, 1F, -1F), 
+     DataRow(2F, 0F, 1F, 1F), 
+     DataRow(0F, 2F, 1F, 1F), 
+     DataRow(0F, 0F, 3F, 1F), 
+     DataRow(0F, 0F, 1F, 3F),
+     DataRow(1F, 1F, 2F, 2F),
+    ]
+    public void Validate2_Throws_IfAreaInvalid(float x, float y, float w, float h)
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() => { _drawing2X2.Validate(new RectangleF(x, y, w, h)); });
+    }
+    
+    [TestMethod]
+    public void Validate2_TruncatesCoords()
+    {
+        var p = _drawing2X2.Validate(new RectangleF(0.4F, 1.9F, 2.5F, 1.01F));
+        p.ShouldBe(new(0, 1, 2, 1));
+    }
+    
+    [TestMethod]
+    public void Validate2_AppliesQuanta()
+    {
+        var p = _drawing2X2.Validate(new RectangleF(0.1F, 0.5F, 1.1F, 0.7F), 2);
+        p.ShouldBe(new(0, 1, 2, 1));
+    }
+    
+    [TestMethod]
+    public void Fill1_Throws_IfAreaIsInvalid()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing2X2.Fill(new(0F, 0F, 2F, 3F), new Rune('A'), _style1);
+        });
+    }
+    
+    [TestMethod]
+    public void Fill1_FillsArea()
+    {
+        _drawing2X2.Fill(new(0, 0, 2, 1), new Rune('A'), _style1);
+        var c = ContentsOf(_drawing2X2);
+        c[0, 0]
+            .ShouldBe((new('A'), _style1));
+        c[1, 0]
+            .ShouldBe((new('A'), _style1));
+        c[0, 1].Item1.ShouldBe(new(0));
+        c[0, 1].Item1.ShouldBe(new(0));
+    }
+    
+    [TestMethod]
+    public void Fill1_FillsNothing_IfAreaIsEmpty()
+    {
+        _drawing2X2.Fill(new(0, 0, 2, 0), new Rune('A'), _style1);
+        var c = ContentsOf(_drawing2X2);
+        c[0, 0].Item1.ShouldBe(new(0));
+        c[1, 0].Item1.ShouldBe(new(0));
+        c[0, 1].Item1.ShouldBe(new(0));
+        c[0, 1].Item1.ShouldBe(new(0));
+    }
+    
+    [TestMethod]
+    public void Fill2_FillsArea()
+    {
+        _drawing2X2.Fill(new(0, 0, 2, 1), Drawing.ShadeGlyphStyle.Dark, _style1);
+        var c = ContentsOf(_drawing2X2);
+        c[0, 0]
+            .ShouldBe((new('▓'), _style1));
+        c[1, 0]
+            .ShouldBe((new('▓'), _style1));
+        c[0, 1].Item1.ShouldBe(new(0));
+        c[0, 1].Item1.ShouldBe(new(0));
+    }
+    
+    [TestMethod]
+    public void Text_Throws_IfLocationIsInvalid()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing2X2.Text(new(0F, 2F), "text", _style1);
+        });
+    }
+
+    [TestMethod]
+    public void Text_DrawsEmoji()
+    {
+        const string emoji = "❤️";
+        Rune.TryGetRuneAt(emoji, 0, out var rune);
+            
+        _drawing1X1.Text(new(0F, 0F), emoji, _style1);
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((rune, _style1));
+    }
+    
+    [TestMethod]
+    public void Text_TextThatFits_Horizontal()
+    {
+        _drawing2X2.Text(new(0F, 0F), "text", _style1);
+        var c = ContentsOf(_drawing2X2);
+        c[0, 0]
+            .ShouldBe((new('t'), _style1));
+        c[1, 0]
+            .ShouldBe((new('e'), _style1));
+        c[0, 1].Item1.ShouldBe(new(0));
+        c[0, 1].Item1.ShouldBe(new(0));
+    }
+    
+    [TestMethod]
+    public void Text_TextThatFits_Vertical()
+    {
+        _drawing2X2.Text(new(0F, 0F), "text", _style1, Drawing.Orientation.Vertical);
+        var c = ContentsOf(_drawing2X2);
+        c[0, 0]
+            .ShouldBe((new('t'), _style1));
+        c[0, 1]
+            .ShouldBe((new('e'), _style1));
+        c[1, 0].Item1.ShouldBe(new(0));
+        c[1, 0].Item1.ShouldBe(new(0));
+    }
+    
+    [TestMethod]
+    public void Point_Throws_IfLocationIsInvalid()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing2X2.Point(new(0F, 2F), _style1);
+        });
+    }
+
+    [TestMethod, 
+     DataRow(0.4F, 0.4F, '▘'),
+     DataRow(0.5F, 0.4F, '▝'),
+     DataRow(0.4F, 0.5F, '▖'),
+     DataRow(0.5F, 0.5F, '▗'),
+    ]
+    public void Point_DrawsSinglePoint(float x, float y, char c)
+    {
+        _drawing1X1.Point(new(x, y), _style1);
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new(c), _style1));
+    }
+    
+    [TestMethod]
+    public void Point_CombinesPoints()
+    {
+        _drawing1X1.Point(new(0, 0), _style1);
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('▘'), _style1));
+        
+        _drawing1X1.Point(new(0.6F, 0), _style1);
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('▀'), _style1));
+        
+        _drawing1X1.Point(new(0.6F, 0.9F), _style1);
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('▜'), _style1));
+        
+        _drawing1X1.Point(new(0.2F, 0.5F), _style1);
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('█'), _style1));
     }
 }

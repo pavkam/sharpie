@@ -243,7 +243,8 @@ public sealed class Drawing
         { BlockQuadrant.TopLeft | BlockQuadrant.BottomLeft | BlockQuadrant.TopRight, new('▛') },
         { BlockQuadrant.TopLeft | BlockQuadrant.TopRight | BlockQuadrant.BottomRight, new('▜') },
         { BlockQuadrant.TopLeft | BlockQuadrant.BottomLeft | BlockQuadrant.BottomRight, new('▙') },
-        { BlockQuadrant.TopRight | BlockQuadrant.BottomLeft | BlockQuadrant.BottomRight, new('▟') }
+        { BlockQuadrant.TopRight | BlockQuadrant.BottomLeft | BlockQuadrant.BottomRight, new('▟') },
+        { BlockQuadrant.TopLeft | BlockQuadrant.TopRight | BlockQuadrant.BottomLeft | BlockQuadrant.BottomRight, new('█') }
     };
     
     private static readonly Rune[] CheckCharacters = "●◯◆◇■□".Select(c => new Rune(c))
@@ -444,21 +445,16 @@ public sealed class Drawing
         _cells = new Cell[size.Width, size.Height];
     }
 
-    private bool SetCell(int x, int y, Rune rune, Style style)
+    private void SetCell(int x, int y, Rune rune, Style style)
     {
-        if (x < 0 || x >= Size.Width || y < 0 || y >= Size.Height)
-        {
-            return false;
-        }
+        Debug.Assert(x >= 0 && x < Size.Width && y >= 0 && y < Size.Height);
         
         _cells[x, y] = new() { Rune = rune, Style = style, Special = 0 };
-
-        return true;
     }
 
     private void SetCell(int x, int y, BlockQuadrant quads, Style style)
     {
-        Debug.Assert(x < 0 || x >= Size.Width || y < 0 || y >= Size.Height);
+        Debug.Assert(x >= 0 && x < Size.Width && y >= 0 && y < Size.Height);
 
         var b = (_cells[x, y]
                     .Block ??
@@ -470,7 +466,7 @@ public sealed class Drawing
 
     private void SetCell(int x, int y, LineSideAndStyle stl, Style style)
     {
-        Debug.Assert(x < 0 || x >= Size.Width || y < 0 || y >= Size.Height);
+        Debug.Assert(x >= 0 && x < Size.Width && y >= 0 && y < Size.Height);
 
         var b = (_cells[x, y]
                     .Line ??
@@ -507,7 +503,7 @@ public sealed class Drawing
         _cells[x, y] = new() { Special = -(int) b, Style = style, Rune = rune };
     }
 
-    private Point Validate(PointF location, int quanta = 1)
+    internal Point Validate(PointF location, int quanta = 1)
     {
         if (location.X < 0 || location.X >= Size.Width || location.Y < 0 || location.Y >= Size.Height)
         {
@@ -517,10 +513,10 @@ public sealed class Drawing
         return new((int) Math.Floor(location.X * quanta), (int) Math.Floor(location.Y * quanta));
     }
 
-    private Rectangle Validate(RectangleF area, int quanta = 1)
+    internal Rectangle Validate(RectangleF area, int quanta = 1)
     {
         if (area.Left < 0 || area.Top < 0 || area.Right - 1 >= Size.Width || area.Bottom - 1 >= Size.Height
-            || area.Width <= 0 || area.Height <= 0)
+            || area.Width < 0 || area.Height < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }
@@ -590,7 +586,7 @@ public sealed class Drawing
         {
             return;
         }
-
+        
         var x = preciseLocation.X;
         var y = preciseLocation.Y;
         
