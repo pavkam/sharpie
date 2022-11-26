@@ -1,9 +1,10 @@
 namespace Sharpie;
 
 /// <summary>
-///     A general-purpose drawing surface that can be latter applied on a <see cref="Window"/>.
+///     A general-purpose drawing surface that can be latter applied on a <see cref="IDrawSurface"/>.
 ///     Supports multiple types of drawing operations most commonly used in terminal apps.
 /// </summary>
+[PublicAPI]
 public sealed class Drawing
 {
     /// <summary>
@@ -58,7 +59,7 @@ public sealed class Drawing
     ///     The possible shapes used by the check.
     /// </summary>
     [PublicAPI]
-    public enum CheckStyle
+    public enum CheckGlyphStyle
     {
         /// <summary>
         ///     A circle.
@@ -80,7 +81,7 @@ public sealed class Drawing
     ///     Describes the orientation of a glyph.
     /// </summary>
     [PublicAPI]
-    public enum GlyphDirection
+    public enum TriangleGlyphDirection
     {
         /// <summary>
         ///     Towards up.
@@ -141,7 +142,7 @@ public sealed class Drawing
     ///     The types of possible shades.
     /// </summary>
     [PublicAPI]
-    public enum ShadeStyle
+    public enum ShadeGlyphStyle
     {
         /// <summary>
         ///     No shade.
@@ -168,7 +169,7 @@ public sealed class Drawing
     ///     The gradient style.
     /// </summary>
     [PublicAPI]
-    public enum GradientStyle
+    public enum GradientGlyphStyle
     {
         /// <summary>
         ///     Bottom-to-top fill.
@@ -222,10 +223,10 @@ public sealed class Drawing
         public Style Style { get; init; }
 
         public BlockQuadrant? Block => Special > 0 ? (BlockQuadrant) Special : null;
+        public LineSideAndStyle? Line => Special < 0 ? (LineSideAndStyle) (-Special) : null;
     }
 
     private readonly Cell[,] _cells;
-    private readonly Size _size;
 
     private static readonly Dictionary<BlockQuadrant, Rune> BlockCharacters = new()
     {
@@ -423,24 +424,29 @@ public sealed class Drawing
     };
 
     /// <summary>
+    /// The size of the drawing.
+    /// </summary>
+    public Size Size { get; }
+    
+    /// <summary>
     /// Creates a new instances of this class with a given surface <paramref name="size"/>.
     /// </summary>
     /// <param name="size">The size of the drawing.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="size"/> is invalid.</exception>
-    public Drawing1(Size size)
+    public Drawing(Size size)
     {
         if (size.Width < 1 || size.Height < 1)
         {
             throw new ArgumentOutOfRangeException(nameof(size));
         }
 
-        _size = size;
+        Size = size;
         _cells = new Cell[size.Width, size.Height];
     }
 
     private bool SetCell(int x, int y, Rune rune, Style style)
     {
-        if (x < 0 || x >= _size.Width || y < 0 || y >= _size.Height)
+        if (x < 0 || x >= Size.Width || y < 0 || y >= Size.Height)
         {
             return false;
         }
@@ -452,7 +458,7 @@ public sealed class Drawing
 
     private void SetCell(int x, int y, BlockQuadrant quads, Style style)
     {
-        Debug.Assert(x < 0 || x >= _size.Width || y < 0 || y >= _size.Height);
+        Debug.Assert(x < 0 || x >= Size.Width || y < 0 || y >= Size.Height);
 
         var b = (_cells[x, y]
                     .Block ??
@@ -462,116 +468,103 @@ public sealed class Drawing
         _cells[x, y] = new() { Special = (int) b, Style = style, Rune = BlockCharacters[b] };
     }
 
-    private Point ValidateLocation(PointF location)
+    private void SetCell(int x, int y, LineSideAndStyle stl, Style style)
     {
-        if (location.X < 0 || location.X >= _size.Width || location.Y < 0 || location.Y >= _size.Height)
+        Debug.Assert(x < 0 || x >= Size.Width || y < 0 || y >= Size.Height);
+
+        var b = (_cells[x, y]
+                    .Line ??
+                0) |
+            stl;
+
+        bool TryGet(LineSideAndStyle replaceWhat, LineSideAndStyle replaceWith, out Rune r)
+        {
+            if (replaceWhat != 0 && b.HasFlag(replaceWhat))
+            {
+                b = (b & ~replaceWhat) | replaceWith;
+            }
+
+            return BoxCharacters.TryGetValue(b, out r);
+        }
+
+        if (!TryGet(0, 0, out var rune) &&
+            !TryGet(LineSideAndStyle.RightLightDashed, LineSideAndStyle.RightLight, out rune) &&
+            !TryGet(LineSideAndStyle.LeftLightDashed, LineSideAndStyle.LeftLight, out rune) &&
+            !TryGet(LineSideAndStyle.TopLightDashed, LineSideAndStyle.TopLight, out rune) &&
+            !TryGet(LineSideAndStyle.BottomLightDashed, LineSideAndStyle.BottomLight, out rune) &&
+            !TryGet(LineSideAndStyle.RightHeavyDashed, LineSideAndStyle.RightHeavy, out rune) &&
+            !TryGet(LineSideAndStyle.LeftHeavyDashed, LineSideAndStyle.LeftHeavy, out rune) &&
+            !TryGet(LineSideAndStyle.TopHeavyDashed, LineSideAndStyle.TopHeavy, out rune) &&
+            !TryGet(LineSideAndStyle.BottomHeavyDashed, LineSideAndStyle.BottomHeavy, out rune) &&
+            !TryGet(LineSideAndStyle.RightDouble, LineSideAndStyle.RightHeavy, out rune) &&
+            !TryGet(LineSideAndStyle.LeftDouble, LineSideAndStyle.LeftHeavy, out rune) &&
+            !TryGet(LineSideAndStyle.TopDouble, LineSideAndStyle.TopHeavy, out rune) &&
+            !TryGet(LineSideAndStyle.BottomDouble, LineSideAndStyle.BottomHeavy, out rune))
+        {
+            rune = new(0);
+        }
+
+        _cells[x, y] = new() { Special = -(int) b, Style = style, Rune = rune };
+    }
+
+    private Point Validate(PointF location, int quanta = 1)
+    {
+        if (location.X < 0 || location.X >= Size.Width || location.Y < 0 || location.Y >= Size.Height)
         {
             throw new ArgumentOutOfRangeException(nameof(location));
         }
 
-        return new((int) Math.Floor(location.X), (int) Math.Floor(location.Y));
+        return new((int) Math.Floor(location.X * quanta), (int) Math.Floor(location.Y * quanta));
     }
 
-    private Rectangle ValidateArea(RectangleF area)
+    private Rectangle Validate(RectangleF area, int quanta = 1)
     {
-        if (area.Left < 0 || area.Top < 0 || area.Right - 1 >= _size.Width || area.Bottom - 1 >= _size.Height)
+        if (area.Left < 0 || area.Top < 0 || area.Right - 1 >= Size.Width || area.Bottom - 1 >= Size.Height
+            || area.Width <= 0 || area.Height <= 0)
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }
 
-        return new((int) Math.Floor(area.X), (int) Math.Floor(area.Y), (int) Math.Floor(area.Width),
-            (int) Math.Floor(area.Height));
+        return new((int) Math.Floor(area.X * quanta), (int) Math.Floor(area.Y * quanta), (int) Math.Floor(area.Width * quanta),
+            (int) Math.Floor(area.Height * quanta));
     }
 
     /// <summary>
-    /// Fills a given <paramref name="area"/> with a given <paramref name="rune"/> and <paramref name="style"/>.
+    /// Fills a given <paramref name="area"/> with a given <paramref name="rune"/> and <paramref name="textStyle"/>.
     /// </summary>
     /// <param name="area">The area to fill.</param>
     /// <param name="rune">The rune to draw.</param>
-    /// <param name="style">The style to apply to the runes.</param>
+    /// <param name="textStyle">The text style..</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="area"/> is invalid.</exception>
-    public void Fill(RectangleF area, Rune rune, Style style)
+    public void Fill(RectangleF area, Rune rune, Style textStyle)
     {
-        var fixedArea = ValidateArea(area);
+        var fixedArea = Validate(area);
         
         for (var x = fixedArea.Left; x < fixedArea.Right; x++)
         {
             for (var y = fixedArea.Top; y < fixedArea.Bottom; y++)
             {
-                SetCell(x, y, rune, style);
+                SetCell(x, y, rune, textStyle);
             }
         }
     }
     
     /// <summary>
-    /// Fills a given <paramref name="area"/> with a given <paramref name="shade"/> and <paramref name="style"/>.
+    /// Fills a given <paramref name="area"/> with a given <paramref name="shadeGlyph"/> and <paramref name="textStyle"/>.
     /// </summary>
     /// <param name="area">The area to fill.</param>
-    /// <param name="shade">The share to draw.</param>
-    /// <param name="style">The style to apply to the runes.</param>
+    /// <param name="shadeGlyph">The share to draw.</param>
+    /// <param name="textStyle">The text style.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="area"/> is invalid.</exception>
-    public void Fill(RectangleF area, ShadeStyle shade, Style style)
+    public void Fill(RectangleF area, ShadeGlyphStyle shadeGlyph, Style textStyle)
     {
-        if (shade < 0 || (int) shade > ShadeCharacters.Length)
+        if (shadeGlyph < 0 || (int) shadeGlyph > ShadeCharacters.Length)
         {
-            throw new ArgumentException("Invalid shade style value.", nameof(shade));
+            throw new ArgumentException("Invalid shade style value.", nameof(shadeGlyph));
         }
 
-        var shadeChar = ShadeCharacters[(int) shade];
-        Fill(area, shadeChar, style);
-    }
-
-    /// <summary>
-    ///     Fills a given <paramref name="area"/> using <paramref name="orientation"/> for up to <paramref name="percent"/>.
-    /// </summary>
-    /// <param name="area">The area fill.</param>
-    /// <param name="orientation">The gradient orientation.</param>
-    /// <param name="percent">The percent of gradient that is filled.</param>
-    /// <param name="style">The text style.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     Thrown if the <paramref name="percent" /> is negative or greater than
-    ///     <c>1</c> or <paramref name="area" /> is invalid.
-    /// </exception>
-    public void Fill(Rectangle area, GradientStyle orientation, Style style, double percent)
-    {
-        ValidateLocation(area);
-
-        var (fillRunes, cells) = orientation switch
-        {
-            GradientStyle.BottomToTop => (HorizontalGradientCharacters, area.Height),
-            var _ => (VerticalGradientCharacters, area.Width)
-        };
-
-        var (fullCellCount, charIndex) = Helpers.CalculateOptionDistribution(cells, fillRunes.Length, percent);
-        
-        var gradient = new Rune[cells];
-        Array.Fill(gradient, fillRunes.Last(), 0, fullCellCount);
-        if (fullCellCount < cells - 1)
-        {
-            Array.Fill(gradient, fillRunes.First(), fullCellCount + 1, cells - fullCellCount);
-        }
-
-        gradient[fullCellCount] = fillRunes[charIndex];
-
-        if (orientation == GradientStyle.BottomToTop)
-        {
-            for (var x = area.Left; x < area.Right; x++)
-            {
-                for (var y = 0; y < area.Height; y++)
-                {
-                    SetCell(x, y + area.Top, gradient[^y], style);
-                }
-            }
-        } else
-        {
-            for (var y = area.Top; y < area.Bottom; y++)
-            {
-                for (var x = 0; x < area.Width; x++)
-                {
-                    SetCell(x + area.Left, y, gradient[x], style);
-                }
-            }
-        }
+        var shadeChar = ShadeCharacters[(int) shadeGlyph];
+        Fill(area, shadeChar, textStyle);
     }
 
     /// <summary>
@@ -580,13 +573,13 @@ public sealed class Drawing
     /// </summary>
     /// <param name="location">The start location of the text.</param>
     /// <param name="text">The text.</param>
-    /// <param name="style">The style to use for drawing.</param>
+    /// <param name="textStyle">The text style.</param>
     /// <param name="orientation">The orientation for the text.</param>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="text"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
-    public void Text(PointF location, string text, Style style, Orientation orientation = Orientation.Horizontal)
+    public void Text(PointF location, string text, Style textStyle, Orientation orientation = Orientation.Horizontal)
     {
-        var preciseLocation = ValidateLocation(location);
+        var preciseLocation = Validate(location);
 
         if (text == null)
         {
@@ -603,23 +596,12 @@ public sealed class Drawing
         
         foreach (var c in text.EnumerateRunes())
         {
-            if (x >= _size.Width || y >= _size.Height)
+            if (x >= Size.Width || y >= Size.Height)
             {
                 break;
             }
             
-            SetCell(x, y, c, style);
-            if (orientation == Orientation.Horizontal)
-            {
-                x++;
-            } else
-            {
-                y++;
-            }
-        }
-        
-        foreach (var c in text.EnumerateRunes().TakeWhile(c => SetCell(x, y, c, style)))
-        {
+            Glyph(new(x, y), c, textStyle);
             if (orientation == Orientation.Horizontal)
             {
                 x++;
@@ -629,60 +611,97 @@ public sealed class Drawing
             }
         }
     }
+
+    /// <summary>
+    /// Draws a glyph at a given <paramref name="location"/> using the given text style.
+    /// </summary>
+    /// <param name="location">The location.</param>
+    /// <param name="rune">The rune to draw.</param>
+    /// <param name="textStyle">The text style.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
+    public void Glyph(
+        PointF location,
+        Rune rune,
+        Style textStyle)
+    {
+        var preciseLocation = Validate(location);
+        SetCell(preciseLocation.X, preciseLocation.Y, rune, textStyle);
+    }
     
     /// <summary>
     /// Draws a glyph at a given <paramref name="location"/> using the provide styles.
     /// </summary>
     /// <param name="location">The location.</param>
-    /// <param name="checkStyle">The check style of the glyph.</param>
+    /// <param name="checkGlyphStyle">The check style of the glyph.</param>
     /// <param name="fillStyle">The fill style of the glyph.</param>
-    /// <param name="style">The general style.</param>
-    /// <exception cref="ArgumentException">Thrown if <paramref name="checkStyle"/> or <paramref name="fillStyle"/> are invalid.</exception>
+    /// <param name="textStyle">The text style.</param>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="checkGlyphStyle"/> or <paramref name="fillStyle"/> are invalid.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
     public void Glyph(PointF location, 
-        CheckStyle checkStyle, 
+        CheckGlyphStyle checkGlyphStyle, 
         FillStyle fillStyle,
-        Style style)
+        Style textStyle)
     {
-        var preciseLocation = ValidateLocation(location);
-        
-        var index = (int) checkStyle * 2 + (int) fillStyle;
+        var index = (int) checkGlyphStyle * 2 + (int) fillStyle;
         if (index < 0 || index >= CheckCharacters.Length)
         {
             throw new ArgumentException("Invalid style and fill combination.");
         }
 
-        var rune = CheckCharacters[index];
-        SetCell(preciseLocation.X, preciseLocation.Y, rune, style);
+        Glyph(location, CheckCharacters[index], textStyle);
     }
     
     /// <summary>
     /// Draws a glyph at a given <paramref name="location"/> using the provide styles.
     /// </summary>
     /// <param name="location">The location.</param>
-    /// <param name="glyphDirection">The orientation of the glyph.</param>
+    /// <param name="triangleGlyphDirection">The orientation of the glyph.</param>
     /// <param name="glyphSize">The glyph size.</param>
     /// <param name="fillStyle">The fill style of the glyph.</param>
-    /// <param name="style">The general style.</param>
-    /// <exception cref="ArgumentException">Thrown if <paramref name="glyphDirection"/> or <paramref name="glyphSize"/> or <paramref name="fillStyle"/> are invalid.</exception>
+    /// <param name="textStyle">The text style.</param>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="triangleGlyphDirection"/> or <paramref name="glyphSize"/> or <paramref name="fillStyle"/> are invalid.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
     public void Glyph(
         PointF location,
-        GlyphDirection glyphDirection, 
+        TriangleGlyphDirection triangleGlyphDirection, 
         GlyphSize glyphSize, 
         FillStyle fillStyle,
-        Style style)
+        Style textStyle)
     {
-        var preciseLocation = ValidateLocation(location);
-        
-        var index = (int) glyphDirection * 4 + (int) glyphSize * 2 + (int) fillStyle;
+        var index = (int) triangleGlyphDirection * 4 + (int) glyphSize * 2 + (int) fillStyle;
         if (index < 0 || index >= TriangleCharacters.Length)
         {
             throw new ArgumentException("Invalid parameter combination");
         }
+        
+        var rune = TriangleCharacters[(int) triangleGlyphDirection * 4 + (int) glyphSize * 2 + (int) fillStyle];
+        Glyph(location, rune, textStyle);
+    }
+    
+    /// <summary>
+    /// Draws a glyph at a given <paramref name="location"/> using the provide gradient style and fill count.
+    /// </summary>
+    /// <param name="location">The location.</param>
+    /// <param name="gradientGlyphStyle">The gradient style.</param>
+    /// <param name="fill">The glyph fill count.</param>
+    /// <param name="textStyle">The text style.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> or <paramref name="fill"/> are invalid.</exception>
+    public void Glyph(
+        PointF location,
+        GradientGlyphStyle gradientGlyphStyle,
+        int fill,
+        Style textStyle)
+    {
+        var runes = gradientGlyphStyle == GradientGlyphStyle.BottomToTop
+            ? HorizontalGradientCharacters
+            : VerticalGradientCharacters;
 
-        var rune = TriangleCharacters[(int) glyphDirection * 4 + (int) glyphSize * 2 + (int) fillStyle];
-        SetCell(preciseLocation.X, preciseLocation.Y, rune, style);
+        if (fill < 0 || fill >= runes.Length)
+        {
+            throw new ArgumentOutOfRangeException(nameof(fill));
+        }
+
+        Glyph(location, runes[fill], textStyle);
     }
 
     /// <summary>
@@ -693,62 +712,87 @@ public sealed class Drawing
     /// <param name="length">The length of the line.</param>
     /// <param name="lineStyle">The line style.</param>
     /// <param name="textStyle">The text style.</param>
-    public void Line(PointF location, Orientation orientation, float length, LineStyle lineStyle,
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> or <paramref name="length"/> are invalid.</exception>
+    public void Line(PointF location, float length, Orientation orientation, LineStyle lineStyle,
         Style textStyle)
     {
-        
-    }
+        var preciseArea = orientation == Orientation.Horizontal
+            ? Validate((RectangleF) new(location.X, location.Y, length, 1), 2)
+            : Validate((RectangleF) new(location.X, location.Y, 1, length), 2);
 
-    public static Rune Get(SideAndStyle lines)
-    {
-        if (TryGet(lines, 0, 0, out var result) ||
-            TryGet(lines, SideAndStyle.RightLightDashed, SideAndStyle.RightLight, out result) ||
-            TryGet(lines, SideAndStyle.LeftLightDashed, SideAndStyle.LeftLight, out result) ||
-            TryGet(lines, SideAndStyle.TopLightDashed, SideAndStyle.TopLight, out result) ||
-            TryGet(lines, SideAndStyle.BottomLightDashed, SideAndStyle.BottomLight, out result) ||
-            TryGet(lines, SideAndStyle.RightHeavyDashed, SideAndStyle.RightHeavy, out result) ||
-            TryGet(lines, SideAndStyle.LeftHeavyDashed, SideAndStyle.LeftHeavy, out result) ||
-            TryGet(lines, SideAndStyle.TopHeavyDashed, SideAndStyle.TopHeavy, out result) ||
-            TryGet(lines, SideAndStyle.BottomHeavyDashed, SideAndStyle.BottomHeavy, out result) ||
-            TryGet(lines, SideAndStyle.RightDouble, SideAndStyle.RightHeavy, out result) ||
-            TryGet(lines, SideAndStyle.LeftDouble, SideAndStyle.LeftHeavy, out result) ||
-            TryGet(lines, SideAndStyle.TopDouble, SideAndStyle.TopHeavy, out result) ||
-            TryGet(lines, SideAndStyle.BottomDouble, SideAndStyle.BottomHeavy, out result))
+        if (orientation == Orientation.Horizontal)
         {
-            return result;
-        }
+            for (var x = preciseArea.X; x < preciseArea.Right; x++)
+            {
+                var stl = (x % 2, lineStyle) switch
+                {
+                    (0, LineStyle.Light) => LineSideAndStyle.LeftLight,
+                    (0, LineStyle.Heavy) => LineSideAndStyle.LeftHeavy,
+                    (0, LineStyle.LightDashed) => LineSideAndStyle.LeftLightDashed,
+                    (0, LineStyle.HeavyDashed) => LineSideAndStyle.LeftHeavyDashed,
+                    (0, LineStyle.Double) => LineSideAndStyle.LeftDouble,
+                    (1, LineStyle.Light) => LineSideAndStyle.RightLight,
+                    (1, LineStyle.Heavy) => LineSideAndStyle.RightHeavy,
+                    (1, LineStyle.LightDashed) => LineSideAndStyle.RightLightDashed,
+                    (1, LineStyle.HeavyDashed) => LineSideAndStyle.RightHeavyDashed,
+                    (1, LineStyle.Double) => LineSideAndStyle.RightDouble,
+                    var _ => (LineSideAndStyle) 0
+                };
 
-        throw new ArgumentException("Invalid line combination.", nameof(lines));
-    }
-
-    private static bool TryGet(SideAndStyle lines, SideAndStyle replaceWhat, SideAndStyle replaceWith, out Rune rune)
-    {
-        if (replaceWhat != 0 && lines.HasFlag(replaceWhat))
+                SetCell(x / 2, preciseArea.Y / 2, stl, textStyle);
+            }
+        } else
         {
-            lines = (lines & ~replaceWhat) | replaceWith;
-        }
+            for (var y = preciseArea.Y; y < preciseArea.Bottom; y++)
+            {
+                var stl = (y % 2, lineStyle) switch
+                {
+                    (0, LineStyle.Light) => LineSideAndStyle.TopLight,
+                    (0, LineStyle.Heavy) => LineSideAndStyle.TopHeavy,
+                    (0, LineStyle.LightDashed) => LineSideAndStyle.TopLightDashed,
+                    (0, LineStyle.HeavyDashed) => LineSideAndStyle.TopHeavyDashed,
+                    (0, LineStyle.Double) => LineSideAndStyle.TopDouble,
+                    (1, LineStyle.Light) => LineSideAndStyle.BottomLight,
+                    (1, LineStyle.Heavy) => LineSideAndStyle.BottomHeavy,
+                    (1, LineStyle.LightDashed) => LineSideAndStyle.BottomLightDashed,
+                    (1, LineStyle.HeavyDashed) => LineSideAndStyle.BottomHeavyDashed,
+                    (1, LineStyle.Double) => LineSideAndStyle.BottomDouble,
+                    var _ => (LineSideAndStyle) 0
+                };
 
-        return BoxCharacters.TryGetValue(lines, out rune);
+                SetCell(preciseArea.X / 2, y / 2, stl, textStyle);
+            }
+        }
     }
-    
-    
+
+    /// <summary>
+    /// Draws a rectangle starting in a given <paramref name="perimeter"/>.
+    /// </summary>
+    /// <param name="perimeter">The box perimeter.</param>
+    /// <param name="lineStyle">The line style.</param>
+    /// <param name="textStyle">The text style.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="perimeter"/> is invalid.</exception>
+    public void Box(RectangleF perimeter, LineStyle lineStyle, Style textStyle)
+    {
+        Line(new(perimeter.X, perimeter.Y), perimeter.Width, Orientation.Horizontal, lineStyle, textStyle);
+        Line(new(perimeter.X, perimeter.Bottom - 1), perimeter.Width, Orientation.Horizontal, lineStyle, textStyle);
+        Line(new(perimeter.X, perimeter.Y), perimeter.Height, Orientation.Vertical, lineStyle, textStyle);
+        Line(new(perimeter.Right - 1, perimeter.Y), perimeter.Height, Orientation.Vertical, lineStyle, textStyle);
+    }
+
     /// <summary>
     /// Draws a block-based rectangle in the given <paramref name="area"/>.
     /// </summary>
     /// <param name="area">The area of the rectangle</param>
     /// <param name="style">The text style to use.</param>
-    public void BlockRectangle(RectangleF area, Style style)
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="area"/> is invalid.</exception>
+    public void Rectangle(RectangleF area, Style style)
     {
-        ValidateArea(area);
+        var preciseArea = Validate(area, 2);
 
-        var iX = (int)Math.Floor(area.X * 2);
-        var iW = (int)Math.Floor(area.Right * 2);
-        var iY = (int)Math.Floor(area.Y * 2);
-        var iH = (int)Math.Floor(area.Bottom * 2);
-
-        for (var x = iX; x < iW; x++)
+        for (var x = preciseArea.X; x < preciseArea.Right; x++)
         {
-            for (var y = iY; y < iH; y++)
+            for (var y = preciseArea.Y; y < preciseArea.Bottom; y++)
             {
                 var quad = (x % 2, y % 2) switch
                 {
@@ -760,6 +804,59 @@ public sealed class Drawing
                 };
 
                 SetCell(x / 2, y / 2, quad, style);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Draws a block-based point in the given <paramref name="location"/>.
+    /// </summary>
+    /// <param name="location">The location of the point.</param>
+    /// <param name="textStyle">The text style to use.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
+    public void Point(PointF location, Style textStyle)
+    {
+        var preciseLocation = Validate(location, 2);
+        var quad = (preciseLocation.X % 2, preciseLocation.Y % 2) switch
+        {
+            (0, 0) => BlockQuadrant.TopLeft,
+            (0, 1) => BlockQuadrant.BottomLeft,
+            (1, 0) => BlockQuadrant.TopRight,
+            (1, 1) => BlockQuadrant.BottomRight,
+            var _ => (BlockQuadrant)0
+        };
+
+        SetCell(preciseLocation.X / 2, preciseLocation.Y / 2, quad, textStyle);
+    }
+
+    /// <summary>
+    /// Draws the drawing onto a given surface.
+    /// </summary>
+    /// <param name="destination">The surface to draw on.</param>
+    /// <param name="srcArea">The source area to draw.</param>
+    /// <param name="destLocation">The destination location.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="srcArea"/> or <paramref name="destLocation"/> are invalid.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="destination"/> is <c>null</c>.</exception>
+    public void DrawTo(IDrawSurface destination, Rectangle srcArea, Point destLocation)
+    {
+        if (destination == null)
+        {
+            throw new ArgumentNullException(nameof(destination));
+        }
+
+        Validate(srcArea);
+
+        var destArea = srcArea with { X = destLocation.X, Y = destLocation.Y };
+        if (!destination.CoversArea(destArea))
+        {
+            throw new ArgumentOutOfRangeException(nameof(destLocation));
+        }
+
+        for (var x = srcArea.X; x < srcArea.Right; x++)
+        {
+            for (var y = srcArea.Y; y < srcArea.Bottom; y++)
+            {
+                destination.DrawCell(new(x, y), _cells[x, y].Rune, _cells[x, y].Style);
             }
         }
     }

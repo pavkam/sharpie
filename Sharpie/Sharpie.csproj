@@ -19,6 +19,7 @@
         <FileVersion>1.0.0</FileVersion>
         <PackageId>Sharpie-Curses</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
+        <LangVersion>11</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

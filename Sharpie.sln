@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie", "Sharpie\Sharpie.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Tests", "Sharpie.Tests\Sharpie.Tests.csproj", "{055BCCFA-476F-4BE6-B810-5A2D14E6BD42}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{D93C7AAD-B597-44E4-B05B-81A52F0D5E9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Events", "Sharpie.Demos.Events\Sharpie.Demos.Events.csproj", "{8F82A851-2053-4079-82D2-5BA2C1987AF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,12 @@ Global
 		{055BCCFA-476F-4BE6-B810-5A2D14E6BD42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{055BCCFA-476F-4BE6-B810-5A2D14E6BD42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{055BCCFA-476F-4BE6-B810-5A2D14E6BD42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F82A851-2053-4079-82D2-5BA2C1987AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F82A851-2053-4079-82D2-5BA2C1987AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F82A851-2053-4079-82D2-5BA2C1987AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F82A851-2053-4079-82D2-5BA2C1987AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8F82A851-2053-4079-82D2-5BA2C1987AF2} = {D93C7AAD-B597-44E4-B05B-81A52F0D5E9B}
 	EndGlobalSection
 EndGlobal
