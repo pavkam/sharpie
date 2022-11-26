@@ -419,25 +419,15 @@ public static class Helpers
         return (button, state, modifierKey);
     }
 
-    internal static (int fullCellCount, int optionIndex) CalculateOptionDistribution(int cells, int options,
-        double percent)
+    internal static IEnumerable<(int coord, bool start)> EnumerateInHalves(float start, float count)
     {
-        if (cells < 1)
+        var halfCount = (int) Math.Floor(count * 2);
+        var halvesStart = (int) Math.Floor(start * 2);
+        var fixedStart = (int) Math.Floor(start);
+
+        for (var half = 0; half < halfCount; half++)
         {
-            throw new ArgumentOutOfRangeException(nameof(cells));
+            yield return (fixedStart + half / 2, (half + halvesStart) % 2 == 0);
         }
-
-        if (percent is < 0 or > 1)
-        {
-            throw new ArgumentOutOfRangeException(nameof(percent));
-        }
-
-        var fullCells = Convert.ToInt32(Math.Floor(percent * cells));
-        var percentPerCell = 1.0 / cells;
-        var percentLeft = percent - percentPerCell * fullCells;
-        var percentInLast = percentLeft / percentPerCell;
-
-        var optionIndex = Convert.ToInt32(Math.Floor(percentInLast * options));
-        return (fullCells, optionIndex);
     }
 }

@@ -448,6 +448,11 @@ public sealed class Drawing
     private void SetCell(int x, int y, Rune rune, Style style)
     {
         Debug.Assert(x >= 0 && x < Size.Width && y >= 0 && y < Size.Height);
+
+        if (rune.IsAscii && rune.Value <= ControlCharacter.Escape)
+        {
+            rune = new(ControlCharacter.Whitespace);
+        }
         
         _cells[x, y] = new() { Rune = rune, Style = style, Special = 0 };
     }
@@ -515,8 +520,12 @@ public sealed class Drawing
 
     internal Rectangle Validate(RectangleF area, int quanta = 1)
     {
-        if (area.Left < 0 || area.Top < 0 || area.Right - 1 >= Size.Width || area.Bottom - 1 >= Size.Height
-            || area.Width < 0 || area.Height < 0)
+        if (area.Left < 0 || 
+            area.Top < 0 || 
+            area.Width < 0 || 
+            area.Height < 0 ||
+            area.Right > Size.Width || 
+            area.Bottom > Size.Height)
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }
@@ -532,13 +541,13 @@ public sealed class Drawing
     /// <param name="rune">The rune to draw.</param>
     /// <param name="textStyle">The text style..</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="area"/> is invalid.</exception>
-    public void Fill(RectangleF area, Rune rune, Style textStyle)
+    public void Fill(Rectangle area, Rune rune, Style textStyle)
     {
-        var fixedArea = Validate(area);
+        Validate(area);
         
-        for (var x = fixedArea.Left; x < fixedArea.Right; x++)
+        for (var x = area.Left; x < area.Right; x++)
         {
-            for (var y = fixedArea.Top; y < fixedArea.Bottom; y++)
+            for (var y = area.Top; y < area.Bottom; y++)
             {
                 SetCell(x, y, rune, textStyle);
             }
@@ -552,7 +561,7 @@ public sealed class Drawing
     /// <param name="shadeGlyph">The share to draw.</param>
     /// <param name="textStyle">The text style.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="area"/> is invalid.</exception>
-    public void Fill(RectangleF area, ShadeGlyphStyle shadeGlyph, Style textStyle)
+    public void Fill(Rectangle area, ShadeGlyphStyle shadeGlyph, Style textStyle)
     {
         if (shadeGlyph < 0 || (int) shadeGlyph > ShadeCharacters.Length)
         {
@@ -573,9 +582,9 @@ public sealed class Drawing
     /// <param name="orientation">The orientation for the text.</param>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="text"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
-    public void Text(PointF location, string text, Style textStyle, Orientation orientation = Orientation.Horizontal)
+    public void Text(Point location, string text, Style textStyle, Orientation orientation = Orientation.Horizontal)
     {
-        var preciseLocation = Validate(location);
+        Validate(location);
 
         if (text == null)
         {
@@ -586,17 +595,17 @@ public sealed class Drawing
         {
             return;
         }
-        
-        var x = preciseLocation.X;
-        var y = preciseLocation.Y;
-        
+
+        var x = location.X;
+        var y = location.Y;
+
         foreach (var c in text.EnumerateRunes())
         {
             if (x >= Size.Width || y >= Size.Height)
             {
                 break;
             }
-            
+
             SetCell(x, y, c, textStyle);
             if (orientation == Orientation.Horizontal)
             {
@@ -616,7 +625,7 @@ public sealed class Drawing
     /// <param name="textStyle">The text style.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
     public void Glyph(
-        PointF location,
+        Point location,
         Rune rune,
         Style textStyle)
     {
@@ -633,7 +642,7 @@ public sealed class Drawing
     /// <param name="textStyle">The text style.</param>
     /// <exception cref="ArgumentException">Thrown if <paramref name="checkGlyphStyle"/> or <paramref name="fillStyle"/> are invalid.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
-    public void Glyph(PointF location, 
+    public void Glyph(Point location, 
         CheckGlyphStyle checkGlyphStyle, 
         FillStyle fillStyle,
         Style textStyle)
@@ -658,7 +667,7 @@ public sealed class Drawing
     /// <exception cref="ArgumentException">Thrown if <paramref name="triangleGlyphStyle"/> or <paramref name="glyphSize"/> or <paramref name="fillStyle"/> are invalid.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
     public void Glyph(
-        PointF location,
+        Point location,
         TriangleGlyphStyle triangleGlyphStyle, 
         GlyphSize glyphSize, 
         FillStyle fillStyle,
@@ -683,7 +692,7 @@ public sealed class Drawing
     /// <param name="textStyle">The text style.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> or <paramref name="fill"/> are invalid.</exception>
     public void Glyph(
-        PointF location,
+        Point location,
         GradientGlyphStyle gradientGlyphStyle,
         int fill,
         Style textStyle)
@@ -712,51 +721,52 @@ public sealed class Drawing
     public void Line(PointF location, float length, Orientation orientation, LineStyle lineStyle,
         Style textStyle)
     {
-        var preciseArea = orientation == Orientation.Horizontal
-            ? Validate((RectangleF) new(location.X, location.Y, length, 1), 2)
-            : Validate((RectangleF) new(location.X, location.Y, 1, length), 2);
+        var x = (int) Math.Floor(location.X);
+        var y = (int) Math.Floor(location.X);
+
+        Validate(new PointF(x, y));
 
         if (orientation == Orientation.Horizontal)
         {
-            for (var x = preciseArea.X; x < preciseArea.Right; x++)
+            foreach (var (i, left) in Helpers.EnumerateInHalves(location.X, length))
             {
-                var stl = (x % 2, lineStyle) switch
+                var stl = (left, lineStyle) switch
                 {
-                    (0, LineStyle.Light) => LineSideAndStyle.LeftLight,
-                    (0, LineStyle.Heavy) => LineSideAndStyle.LeftHeavy,
-                    (0, LineStyle.LightDashed) => LineSideAndStyle.LeftLightDashed,
-                    (0, LineStyle.HeavyDashed) => LineSideAndStyle.LeftHeavyDashed,
-                    (0, LineStyle.Double) => LineSideAndStyle.LeftDouble,
-                    (1, LineStyle.Light) => LineSideAndStyle.RightLight,
-                    (1, LineStyle.Heavy) => LineSideAndStyle.RightHeavy,
-                    (1, LineStyle.LightDashed) => LineSideAndStyle.RightLightDashed,
-                    (1, LineStyle.HeavyDashed) => LineSideAndStyle.RightHeavyDashed,
-                    (1, LineStyle.Double) => LineSideAndStyle.RightDouble,
+                    (true, LineStyle.Light) => LineSideAndStyle.LeftLight,
+                    (true, LineStyle.Heavy) => LineSideAndStyle.LeftHeavy,
+                    (true, LineStyle.LightDashed) => LineSideAndStyle.LeftLightDashed,
+                    (true, LineStyle.HeavyDashed) => LineSideAndStyle.LeftHeavyDashed,
+                    (true, LineStyle.Double) => LineSideAndStyle.LeftDouble,
+                    (false, LineStyle.Light) => LineSideAndStyle.RightLight,
+                    (false, LineStyle.Heavy) => LineSideAndStyle.RightHeavy,
+                    (false, LineStyle.LightDashed) => LineSideAndStyle.RightLightDashed,
+                    (false, LineStyle.HeavyDashed) => LineSideAndStyle.RightHeavyDashed,
+                    (false, LineStyle.Double) => LineSideAndStyle.RightDouble,
                     var _ => (LineSideAndStyle) 0
                 };
 
-                SetCell(x / 2, preciseArea.Y / 2, stl, textStyle);
+                SetCell(i, y, stl, textStyle);
             }
         } else
         {
-            for (var y = preciseArea.Y; y < preciseArea.Bottom; y++)
+            foreach (var (i, top) in Helpers.EnumerateInHalves(location.Y, length))
             {
-                var stl = (y % 2, lineStyle) switch
+                var stl = (top, lineStyle) switch
                 {
-                    (0, LineStyle.Light) => LineSideAndStyle.TopLight,
-                    (0, LineStyle.Heavy) => LineSideAndStyle.TopHeavy,
-                    (0, LineStyle.LightDashed) => LineSideAndStyle.TopLightDashed,
-                    (0, LineStyle.HeavyDashed) => LineSideAndStyle.TopHeavyDashed,
-                    (0, LineStyle.Double) => LineSideAndStyle.TopDouble,
-                    (1, LineStyle.Light) => LineSideAndStyle.BottomLight,
-                    (1, LineStyle.Heavy) => LineSideAndStyle.BottomHeavy,
-                    (1, LineStyle.LightDashed) => LineSideAndStyle.BottomLightDashed,
-                    (1, LineStyle.HeavyDashed) => LineSideAndStyle.BottomHeavyDashed,
-                    (1, LineStyle.Double) => LineSideAndStyle.BottomDouble,
+                    (true, LineStyle.Light) => LineSideAndStyle.TopLight,
+                    (true, LineStyle.Heavy) => LineSideAndStyle.TopHeavy,
+                    (true, LineStyle.LightDashed) => LineSideAndStyle.TopLightDashed,
+                    (true, LineStyle.HeavyDashed) => LineSideAndStyle.TopHeavyDashed,
+                    (true, LineStyle.Double) => LineSideAndStyle.TopDouble,
+                    (false, LineStyle.Light) => LineSideAndStyle.BottomLight,
+                    (false, LineStyle.Heavy) => LineSideAndStyle.BottomHeavy,
+                    (false, LineStyle.LightDashed) => LineSideAndStyle.BottomLightDashed,
+                    (false, LineStyle.HeavyDashed) => LineSideAndStyle.BottomHeavyDashed,
+                    (false, LineStyle.Double) => LineSideAndStyle.BottomDouble,
                     var _ => (LineSideAndStyle) 0
                 };
 
-                SetCell(preciseArea.X / 2, y / 2, stl, textStyle);
+                SetCell(x, i, stl, textStyle);
             }
         }
     }
@@ -768,12 +778,19 @@ public sealed class Drawing
     /// <param name="lineStyle">The line style.</param>
     /// <param name="textStyle">The text style.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="perimeter"/> is invalid.</exception>
-    public void Box(RectangleF perimeter, LineStyle lineStyle, Style textStyle)
+    public void Box(Rectangle perimeter, LineStyle lineStyle, Style textStyle)
     {
-        Line(new(perimeter.X, perimeter.Y), perimeter.Width, Orientation.Horizontal, lineStyle, textStyle);
-        Line(new(perimeter.X, perimeter.Bottom - 1), perimeter.Width, Orientation.Horizontal, lineStyle, textStyle);
-        Line(new(perimeter.X, perimeter.Y), perimeter.Height, Orientation.Vertical, lineStyle, textStyle);
-        Line(new(perimeter.Right - 1, perimeter.Y), perimeter.Height, Orientation.Vertical, lineStyle, textStyle);
+        Validate(perimeter);
+
+        Line(new(perimeter.X + 0.5F, perimeter.Y + 0.5F), perimeter.Width - 1,
+            Orientation.Horizontal, lineStyle, textStyle);
+        Line(new(perimeter.X + 0.5F, perimeter.Bottom - 0.5F), perimeter.Width - 1, 
+            Orientation.Horizontal, lineStyle, textStyle);
+        
+        Line(new(perimeter.X + 0.5F, perimeter.Y + 0.5F), perimeter.Height - 1, 
+            Orientation.Vertical, lineStyle, textStyle);
+        Line(new(perimeter.Right - 0.5F, perimeter.Y + 0.5F), perimeter.Height - 1, 
+            Orientation.Vertical, lineStyle, textStyle);
     }
 
     /// <summary>
@@ -784,22 +801,21 @@ public sealed class Drawing
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="area"/> is invalid.</exception>
     public void Rectangle(RectangleF area, Style style)
     {
-        var preciseArea = Validate(area, 2);
+        Validate(area, 2);
 
-        for (var x = preciseArea.X; x < preciseArea.Right; x++)
+        foreach (var (x, left) in Helpers.EnumerateInHalves(area.X, area.Width))
         {
-            for (var y = preciseArea.Y; y < preciseArea.Bottom; y++)
+            foreach (var (y, top) in Helpers.EnumerateInHalves(area.Y, area.Height))
             {
-                var quad = (x % 2, y % 2) switch
+                var quad = (left, top) switch
                 {
-                    (0, 0) => BlockQuadrant.TopLeft,
-                    (0, 1) => BlockQuadrant.BottomLeft,
-                    (1, 0) => BlockQuadrant.TopRight,
-                    (1, 1) => BlockQuadrant.BottomRight,
-                    var _ => (BlockQuadrant)0
+                    (true, true) => BlockQuadrant.TopLeft,
+                    (true, false) => BlockQuadrant.BottomLeft,
+                    (false, true) => BlockQuadrant.TopRight,
+                    (false, false) => BlockQuadrant.BottomRight,
                 };
 
-                SetCell(x / 2, y / 2, quad, style);
+                SetCell(x, y, quad, style);
             }
         }
     }
@@ -841,6 +857,11 @@ public sealed class Drawing
         }
 
         Validate(srcArea);
+
+        if (srcArea.Width == 0 || srcArea.Height == 0)
+        {
+            return;
+        }
 
         var destArea = srcArea with { X = destLocation.X, Y = destLocation.Y };
         if (!destination.CoversArea(destArea))
