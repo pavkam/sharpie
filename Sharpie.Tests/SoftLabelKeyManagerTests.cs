@@ -100,7 +100,7 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void StyleSet_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.slk_attr_set(It.IsAny<uint>(), It.IsAny<ushort>(), It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.slk_attr_set(It.IsAny<uint>(), It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _mgr1.Style = Style.Default; })
@@ -173,7 +173,7 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void ColorMixtureSet_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.slk_color(It.IsAny<ushort>()))
+        _cursesMock.Setup(s => s.slk_color(It.IsAny<short>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _mgr1.ColorMixture = ColorMixture.Default; })

@@ -892,7 +892,7 @@ public sealed class Drawing
                     .Rune.Value !=
                     0)
                 {
-                    destination.DrawCell(new(x, y), _cells[x, y]
+                    destination.DrawCell(new(x + destLocation.X, y + destLocation.Y), _cells[x, y]
                         .Rune, _cells[x, y]
                         .Style);
                 }

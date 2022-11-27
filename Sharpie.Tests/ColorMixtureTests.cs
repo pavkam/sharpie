@@ -33,9 +33,9 @@ namespace Sharpie.Tests;
 [TestClass]
 public class ColorMixtureTests
 {
-    [TestMethod] public void Default_HasCorrectHandle() { ColorMixture.Default.Handle.ShouldBe((ushort) 0); }
+    [TestMethod] public void Default_HasCorrectHandle() { ColorMixture.Default.Handle.ShouldBe((short) 0); }
 
-    [TestMethod] public void Ctor_StoresTheHandle() { new ColorMixture { Handle = 100 }.Handle.ShouldBe((ushort) 100); }
+    [TestMethod] public void Ctor_StoresTheHandle() { new ColorMixture { Handle = 100 }.Handle.ShouldBe((short) 100); }
 
     [TestMethod]
     public void ToString_ProperlyFormats()

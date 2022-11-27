@@ -44,7 +44,7 @@ public struct ColorMixture
     /// <summary>
     ///     The handle of the color pair.
     /// </summary>
-    internal ushort Handle { get; init; }
+    internal short Handle { get; init; }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => $"Mixture [{Handle}]";

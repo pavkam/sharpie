@@ -91,7 +91,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.clearok(IntPtr window, bool set) => clearok(window, set);
 
-    int ICursesProvider.color_content(ushort color, out ushort red, out ushort green, out ushort blue) =>
+    int ICursesProvider.color_content(short color, out short red, out short green, out short blue) =>
         color_content(color, out red, out green, out blue);
 
     int ICursesProvider.copywin(IntPtr fromWindow, IntPtr toWindow, int srcStartLine, int srcStartCol,
@@ -164,10 +164,10 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     IntPtr ICursesProvider.initscr() => initscr();
 
-    int ICursesProvider.init_color(ushort color, ushort red, ushort green, ushort blue) =>
+    int ICursesProvider.init_color(short color, short red, short green, short blue) =>
         init_color(color, red, green, blue);
 
-    int ICursesProvider.init_pair(ushort colorPair, ushort fgColor, ushort bgColor) =>
+    int ICursesProvider.init_pair(short colorPair, short fgColor, short bgColor) =>
         init_pair(colorPair, fgColor, bgColor);
 
     int ICursesProvider.intrflush(IntPtr window, bool set) => intrflush(window, set);
@@ -217,7 +217,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.overwrite(IntPtr srcWindow, IntPtr destWindow) => overwrite(srcWindow, destWindow);
 
-    int ICursesProvider.pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor) =>
+    int ICursesProvider.pair_content(short colorPair, out short fgColor, out short bgColor) =>
         pair_content(colorPair, out fgColor, out bgColor);
 
     uint ICursesProvider.COLOR_PAIR(uint attrs) => COLOR_PAIR(attrs);
@@ -265,12 +265,12 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.slk_attr() => slk_attr();
 
-    int ICursesProvider.slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved) =>
+    int ICursesProvider.slk_attr_set(uint attrs, short colorPair, IntPtr reserved) =>
         slk_attr_set(attrs, colorPair, reserved);
 
     int ICursesProvider.slk_clear() => slk_clear();
 
-    int ICursesProvider.slk_color(ushort colorPair) => slk_color(colorPair);
+    int ICursesProvider.slk_color(short colorPair) => slk_color(colorPair);
 
     int ICursesProvider.slk_init(int format) => slk_init(format);
 
@@ -307,10 +307,10 @@ public sealed class NativeCursesProvider: ICursesProvider
     int ICursesProvider.waddchnstr(IntPtr window, uint[] charsAndAttrs, int length) =>
         waddchnstr(window, charsAndAttrs, length);
 
-    int ICursesProvider.wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved) =>
+    int ICursesProvider.wattr_get(IntPtr window, out uint attrs, out short colorPair, IntPtr reserved) =>
         wattr_get(window, out attrs, out colorPair, reserved);
 
-    int ICursesProvider.wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved) =>
+    int ICursesProvider.wattr_set(IntPtr window, uint attrs, short colorPair, IntPtr reserved) =>
         wattr_set(window, attrs, colorPair, reserved);
 
     int ICursesProvider.wattr_on(IntPtr window, uint attrs, IntPtr reserved) => wattr_on(window, attrs, reserved);
@@ -327,7 +327,7 @@ public sealed class NativeCursesProvider: ICursesProvider
         wborder(window, leftSide, rightSide, topSide, bottomSide,
             topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner);
 
-    int ICursesProvider.wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
+    int ICursesProvider.wchgat(IntPtr window, int count, uint attrs, short colorPair,
         IntPtr reserved) =>
         wchgat(window, count, attrs, colorPair, reserved);
 
@@ -337,7 +337,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.wclrtoeol(IntPtr window) => wclrtoeol(window);
 
-    int ICursesProvider.wcolor_set(IntPtr window, ushort colorPair, IntPtr reserved) =>
+    int ICursesProvider.wcolor_set(IntPtr window, short colorPair, IntPtr reserved) =>
         wcolor_set(window, colorPair, reserved);
 
     void ICursesProvider.wcursyncup(IntPtr window) => wcursyncup(window);
@@ -414,7 +414,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     void ICursesProvider.nofilter() => nofilter();
 
-    int ICursesProvider.getcchar(CursesComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
+    int ICursesProvider.getcchar(CursesComplexChar @char, StringBuilder dest, out uint attrs, out short colorPair,
         IntPtr reserved) =>
         getcchar(ref @char, dest, out attrs, out colorPair, reserved);
 
@@ -424,7 +424,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     int ICursesProvider.pecho_wchar(IntPtr window, CursesComplexChar @char) => pecho_wchar(window, ref @char);
 
-    int ICursesProvider.setcchar(out CursesComplexChar @char, string text, uint attrs, ushort colorPair,
+    int ICursesProvider.setcchar(out CursesComplexChar @char, string text, uint attrs, short colorPair,
         IntPtr reserved) =>
         setcchar(out @char, text, attrs, colorPair, reserved);
 
@@ -524,7 +524,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern int clearok(IntPtr window, bool set);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int color_content(ushort color, out ushort red, out ushort green, out ushort blue);
+    private static extern int color_content(short color, out short red, out short green, out short blue);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int copywin(IntPtr fromWindow, IntPtr toWindow, int srcMinLine, int srcMinCol,
@@ -599,10 +599,10 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern IntPtr initscr();
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int init_color(ushort color, ushort red, ushort green, ushort blue);
+    private static extern int init_color(short color, short red, short green, short blue);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int init_pair(ushort colorPair, ushort fgColor, ushort bgColor);
+    private static extern int init_pair(short colorPair, short fgColor, short bgColor);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int intrflush(IntPtr window, bool set);
@@ -677,7 +677,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern int overwrite(IntPtr srcWindow, IntPtr destWindow);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor);
+    private static extern int pair_content(short colorPair, out short fgColor, out short bgColor);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint COLOR_PAIR(uint attrs);
@@ -733,13 +733,13 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern char slk_attr();
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved);
+    private static extern int slk_attr_set(uint attrs, short colorPair, IntPtr reserved);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_clear();
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int slk_color(ushort colorPair);
+    private static extern int slk_color(short colorPair);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int slk_init(int format);
@@ -809,7 +809,7 @@ public sealed class NativeCursesProvider: ICursesProvider
         uint bottomRightCorner);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
+    private static extern int wchgat(IntPtr window, int count, uint attrs, short colorPair,
         IntPtr reserved);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -822,7 +822,7 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern int wclrtoeol(IntPtr window);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int wcolor_set(IntPtr window, ushort pair, IntPtr reserved);
+    private static extern int wcolor_set(IntPtr window, short colorPair, IntPtr reserved);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void wcursyncup(IntPtr window);
@@ -931,7 +931,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int getcchar(ref CursesComplexChar @char,
-        [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, out uint attrs, out ushort colorPair, IntPtr reserved);
+        [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, out uint attrs, out short colorPair, IntPtr reserved);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr key_name(uint @char);
@@ -944,7 +944,7 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int setcchar(out CursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text,
-        uint attrs, ushort colorPair, IntPtr reserved);
+        uint attrs, short colorPair, IntPtr reserved);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern int slk_set(int labelIndex, string title, int fmt);
@@ -1053,10 +1053,10 @@ public sealed class NativeCursesProvider: ICursesProvider
     private static extern int slk_attr_on(uint attrs, IntPtr reserved);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved);
+    private static extern int wattr_get(IntPtr window, out uint attrs, out short colorPair, IntPtr reserved);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved);
+    private static extern int wattr_set(IntPtr window, uint attrs, short colorPair, IntPtr reserved);
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern bool is_cleared(IntPtr window);

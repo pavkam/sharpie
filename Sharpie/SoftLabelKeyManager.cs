@@ -91,7 +91,7 @@ public sealed class SoftLabelKeyManager
                                         .Check(nameof(_curses.slk_attr),
                                             "Failed to get the soft label key attributes.");
 
-            var colorPair = (ushort) _curses.COLOR_PAIR((uint) attrsAndColors);
+            var colorPair = (short) _curses.COLOR_PAIR((uint) attrsAndColors);
             return new() { Attributes = (VideoAttribute) attrsAndColors, ColorMixture = new() { Handle = colorPair } };
         }
         set

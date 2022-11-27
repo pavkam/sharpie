@@ -119,12 +119,12 @@ public class HelpersTests
     public void ToComplexChar_ConvertsSpecialAsciiToUnicode(int ch, string expected)
     {
         _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
-                       It.IsAny<ushort>(), It.IsAny<IntPtr>()))
+                       It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
         _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
         _cursesMock.Verify(
-            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<ushort>(),
+            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<short>(),
                 It.IsAny<IntPtr>()), Times.Once);
     }
 
@@ -134,12 +134,12 @@ public class HelpersTests
     public void ToComplexChar_DoesNotConvertOtherAsciiToUnicode(int ch, string expected)
     {
         _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
-                       It.IsAny<ushort>(), It.IsAny<IntPtr>()))
+                       It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
         _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
         _cursesMock.Verify(
-            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<ushort>(),
+            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<short>(),
                 It.IsAny<IntPtr>()), Times.Once);
     }
 
@@ -147,7 +147,7 @@ public class HelpersTests
     public void ToComplexChar_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
-                       It.IsAny<ushort>(), It.IsAny<IntPtr>()))
+                       It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => _cursesMock.Object.ToComplexChar(new('a'), Style.Default));
@@ -157,7 +157,7 @@ public class HelpersTests
     public void FromComplexChar_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
+                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         var c = new CursesComplexChar();
@@ -168,8 +168,8 @@ public class HelpersTests
     public void FromComplexChar_ReturnsCursesChar()
     {
         _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<ushort>.IsAny, It.IsAny<IntPtr>()))
-                   .Returns((CursesComplexChar _, StringBuilder sb, out uint attrs, out ushort colorPair,
+                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
+                   .Returns((CursesComplexChar _, StringBuilder sb, out uint attrs, out short colorPair,
                        IntPtr _) =>
                    {
                        sb.Append('H');

@@ -794,7 +794,7 @@ public class Window: IDisposable, IDrawSurface
     /// <param name="strategy">The strategy to use.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Clear(ClearStrategy strategy)
+    public void Clear(ClearStrategy strategy = ClearStrategy.Full)
     {
         switch (strategy)
         {

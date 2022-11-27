@@ -37,7 +37,7 @@ namespace Sharpie;
 public sealed class ColorManager
 {
     private readonly ICursesProvider _curses;
-    private ushort _nextPairHandle = 1;
+    private short _nextPairHandle = 1;
 
     /// <summary>
     ///     Initializes color manager for a Curse provider.
@@ -84,7 +84,7 @@ public sealed class ColorManager
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <returns>A new color mixture.</returns>
-    public ColorMixture MixColors(ushort fgColor, ushort bgColor)
+    public ColorMixture MixColors(short fgColor, short bgColor)
     {
         _curses.init_pair(_nextPairHandle, fgColor, bgColor)
                .Check(nameof(_curses.init_pair), "Failed to create a new color mixture.");
@@ -104,7 +104,7 @@ public sealed class ColorManager
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <returns>A new color mixture.</returns>
     public ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor) =>
-        MixColors((ushort) fgColor, (ushort) bgColor);
+        MixColors((short) fgColor, (short) bgColor);
 
     /// <summary>
     ///     Redefines an existing color pair with the given colors.
@@ -113,7 +113,7 @@ public sealed class ColorManager
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void RemixColors(ColorMixture mixture, ushort fgColor, ushort bgColor)
+    public void RemixColors(ColorMixture mixture, short fgColor, short bgColor)
     {
         _curses.init_pair(mixture.Handle, fgColor, bgColor)
                .Check(nameof(_curses.init_pair), "Failed to redefine an existing color mixture.");
@@ -128,7 +128,7 @@ public sealed class ColorManager
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixColors(ColorMixture mixture, StandardColor fgColor, StandardColor bgColor)
     {
-        RemixColors(mixture, (ushort) fgColor, (ushort) bgColor);
+        RemixColors(mixture, (short) fgColor, (short) bgColor);
     }
 
     /// <summary>
@@ -137,7 +137,7 @@ public sealed class ColorManager
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void RemixDefaultColors(ushort fgColor, ushort bgColor)
+    public void RemixDefaultColors(short fgColor, short bgColor)
     {
         _curses.assume_default_colors(fgColor, bgColor)
                .Check(nameof(_curses.assume_default_colors), "Failed to redefine the default color mixture.");
@@ -151,7 +151,7 @@ public sealed class ColorManager
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixDefaultColors(StandardColor fgColor, StandardColor bgColor)
     {
-        RemixDefaultColors((ushort) fgColor, (ushort) bgColor);
+        RemixDefaultColors((short) fgColor, (short) bgColor);
     }
 
     /// <summary>
@@ -160,7 +160,7 @@ public sealed class ColorManager
     /// <param name="mixture">The color mixture to get the colors from.</param>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public (ushort fgColor, ushort bgColor) UnMixColors(ColorMixture mixture)
+    public (short fgColor, short bgColor) UnMixColors(ColorMixture mixture)
     {
         _curses.pair_content(mixture.Handle, out var fgColor, out var bgColor)
                .Check(nameof(_curses.pair_content), "Failed to extract colors from the color mixture.");
@@ -181,7 +181,7 @@ public sealed class ColorManager
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void RedefineColor(ushort color, ushort red, ushort green, ushort blue)
+    public void RedefineColor(short color, short red, short green, short blue)
     {
         if (!CanRedefineColors)
         {
@@ -221,8 +221,8 @@ public sealed class ColorManager
     /// <exception cref="ArgumentOutOfRangeException">If any of the three components is greater than 1000.</exception>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void RedefineColor(StandardColor color, ushort red, ushort green, ushort blue) =>
-        RedefineColor((ushort) color, red, green, blue);
+    public void RedefineColor(StandardColor color, short red, short green, short blue) =>
+        RedefineColor((short) color, red, green, blue);
 
     /// <summary>
     ///     Extracts the RBG attributes from a color.
@@ -234,7 +234,7 @@ public sealed class ColorManager
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public (ushort red, ushort green, ushort blue) BreakdownColor(ushort color)
+    public (short red, short green, short blue) BreakdownColor(short color)
     {
         if (!CanRedefineColors)
         {
@@ -257,6 +257,6 @@ public sealed class ColorManager
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public (ushort red, ushort green, ushort blue) BreakdownColor(StandardColor color) =>
-        BreakdownColor((ushort) color);
+    public (short red, short green, short blue) BreakdownColor(StandardColor color) =>
+        BreakdownColor((short) color);
 }

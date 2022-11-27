@@ -106,7 +106,7 @@ public class ColorManagerTests
     [TestMethod]
     public void MixColors_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds()
     {
-        _cursesMock.Setup(s => s.init_pair(It.IsAny<ushort>(), It.IsAny<ushort>(), It.IsAny<ushort>()))
+        _cursesMock.Setup(s => s.init_pair(It.IsAny<short>(), It.IsAny<short>(), It.IsAny<short>()))
                    .Returns(0);
 
         _colorManager.MixColors(2, 3)
@@ -122,7 +122,7 @@ public class ColorManagerTests
     [TestMethod]
     public void MixColors_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.init_pair(It.IsAny<ushort>(), It.IsAny<ushort>(), It.IsAny<ushort>()))
+        _cursesMock.Setup(s => s.init_pair(It.IsAny<short>(), It.IsAny<short>(), It.IsAny<short>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _colorManager.MixColors(2, 3); })
@@ -141,13 +141,13 @@ public class ColorManagerTests
         _colorManager.MixColors(StandardColor.Black, StandardColor.Cyan)
                      .ShouldBe(new() { Handle = 1 });
 
-        _cursesMock.Verify(v => v.init_pair(1, (ushort) StandardColor.Black, (ushort) StandardColor.Cyan), Times.Once);
+        _cursesMock.Verify(v => v.init_pair(1, (short) StandardColor.Black, (short) StandardColor.Cyan), Times.Once);
     }
 
     [TestMethod]
     public void RemixColors_FinishesOK_IfCursesSucceeds()
     {
-        _cursesMock.Setup(s => s.init_pair(It.IsAny<ushort>(), It.IsAny<ushort>(), It.IsAny<ushort>()))
+        _cursesMock.Setup(s => s.init_pair(It.IsAny<short>(), It.IsAny<short>(), It.IsAny<short>()))
                    .Returns(0);
 
         _colorManager.RemixColors(new() { Handle = 1 }, 2, 3);
@@ -157,7 +157,7 @@ public class ColorManagerTests
     [TestMethod]
     public void RemixColors_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.init_pair(It.IsAny<ushort>(), It.IsAny<ushort>(), It.IsAny<ushort>()))
+        _cursesMock.Setup(s => s.init_pair(It.IsAny<short>(), It.IsAny<short>(), It.IsAny<short>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _colorManager.RemixColors(new() { Handle = 1 }, 2, 3); })
@@ -170,7 +170,7 @@ public class ColorManagerTests
     public void RemixColors2_CallsCursesAsWell()
     {
         _colorManager.RemixColors(new() { Handle = 1 }, StandardColor.Black, StandardColor.Cyan);
-        _cursesMock.Verify(v => v.init_pair(1, (ushort) StandardColor.Black, (ushort) StandardColor.Cyan), Times.Once);
+        _cursesMock.Verify(v => v.init_pair(1, (short) StandardColor.Black, (short) StandardColor.Cyan), Times.Once);
     }
 
     [TestMethod]
@@ -217,8 +217,8 @@ public class ColorManagerTests
     [TestMethod]
     public void RedefineColor_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.init_color(It.IsAny<ushort>(), It.IsAny<ushort>(), It.IsAny<ushort>(),
-                       It.IsAny<ushort>()))
+        _cursesMock.Setup(s => s.init_color(It.IsAny<short>(), It.IsAny<short>(), It.IsAny<short>(),
+                       It.IsAny<short>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _colorManager.RedefineColor(1, 2, 3, 4); })
@@ -246,7 +246,7 @@ public class ColorManagerTests
     public void RedefineColor2_AlsoCallsCurses()
     {
         _colorManager.RedefineColor(StandardColor.Magenta, 2, 3, 4);
-        _cursesMock.Verify(v => v.init_color((ushort) StandardColor.Magenta, 2, 3, 4), Times.Once);
+        _cursesMock.Verify(v => v.init_color((short) StandardColor.Magenta, 2, 3, 4), Times.Once);
     }
 
     [TestMethod]
@@ -263,24 +263,24 @@ public class ColorManagerTests
     [TestMethod]
     public void BreakdownColor_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.color_content(It.IsAny<ushort>(), out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny,
-                       out It.Ref<ushort>.IsAny))
+        _cursesMock.Setup(s => s.color_content(It.IsAny<short>(), out It.Ref<short>.IsAny, out It.Ref<short>.IsAny,
+                       out It.Ref<short>.IsAny))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _colorManager.BreakdownColor(1); })
               .Operation.ShouldBe("color_content");
 
         _cursesMock.Verify(
-            v => v.color_content(1, out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny),
+            v => v.color_content(1, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny),
             Times.Once);
     }
 
     [TestMethod]
     public void BreakdownColor_ReturnsColors_IfCursesSucceeds()
     {
-        _cursesMock.Setup(s => s.color_content(It.IsAny<ushort>(), out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny,
-                       out It.Ref<ushort>.IsAny))
-                   .Returns((ushort _, out ushort r, out ushort g, out ushort b) =>
+        _cursesMock.Setup(s => s.color_content(It.IsAny<short>(), out It.Ref<short>.IsAny, out It.Ref<short>.IsAny,
+                       out It.Ref<short>.IsAny))
+                   .Returns((short _, out short r, out short g, out short b) =>
                    {
                        r = 10;
                        g = 20;
@@ -289,45 +289,45 @@ public class ColorManagerTests
                    });
 
         var (red, green, blue) = _colorManager.BreakdownColor(1);
-        red.ShouldBe((ushort) 10);
-        green.ShouldBe((ushort) 20);
-        blue.ShouldBe((ushort) 30);
+        red.ShouldBe((short) 10);
+        green.ShouldBe((short) 20);
+        blue.ShouldBe((short) 30);
 
         _cursesMock.Verify(
-            v => v.color_content(1, out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny),
+            v => v.color_content(1, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny),
             Times.Once);
     }
 
     [TestMethod]
     public void BreakdownColor2_AlsoCallsCurses()
     {
-        _cursesMock.Setup(s => s.color_content(It.IsAny<ushort>(), out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny,
-                       out It.Ref<ushort>.IsAny))
+        _cursesMock.Setup(s => s.color_content(It.IsAny<short>(), out It.Ref<short>.IsAny, out It.Ref<short>.IsAny,
+                       out It.Ref<short>.IsAny))
                    .Returns(0);
 
         _colorManager.BreakdownColor(StandardColor.Blue);
         _cursesMock.Verify(
-            v => v.color_content((ushort) StandardColor.Blue, out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny,
-                out It.Ref<ushort>.IsAny), Times.Once);
+            v => v.color_content((short) StandardColor.Blue, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny,
+                out It.Ref<short>.IsAny), Times.Once);
     }
 
     [TestMethod]
     public void UnMixColors_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.pair_content(It.IsAny<ushort>(), out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny))
+        _cursesMock.Setup(s => s.pair_content(It.IsAny<short>(), out It.Ref<short>.IsAny, out It.Ref<short>.IsAny))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _colorManager.UnMixColors(new() { Handle = 1 }); })
               .Operation.ShouldBe("pair_content");
 
-        _cursesMock.Verify(v => v.pair_content(1, out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny), Times.Once);
+        _cursesMock.Verify(v => v.pair_content(1, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny), Times.Once);
     }
 
     [TestMethod]
     public void UnMixColors_ReturnsColors_IfCursesSucceeds()
     {
-        _cursesMock.Setup(s => s.pair_content(It.IsAny<ushort>(), out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny))
-                   .Returns((ushort _, out ushort fg, out ushort bg) =>
+        _cursesMock.Setup(s => s.pair_content(It.IsAny<short>(), out It.Ref<short>.IsAny, out It.Ref<short>.IsAny))
+                   .Returns((short _, out short fg, out short bg) =>
                    {
                        fg = 20;
                        bg = 30;
@@ -335,9 +335,9 @@ public class ColorManagerTests
                    });
 
         var (fgColor, bgColor) = _colorManager.UnMixColors(new() { Handle = 1 });
-        fgColor.ShouldBe((ushort) 20);
-        bgColor.ShouldBe((ushort) 30);
+        fgColor.ShouldBe((short) 20);
+        bgColor.ShouldBe((short) 30);
 
-        _cursesMock.Verify(v => v.pair_content(1, out It.Ref<ushort>.IsAny, out It.Ref<ushort>.IsAny), Times.Once);
+        _cursesMock.Verify(v => v.pair_content(1, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny), Times.Once);
     }
 }

@@ -153,8 +153,8 @@ public class DrawingTests
 
         _drawing2X2.Glyph(new(1, 1), new('A'), _style1);
 
-        _drawing2X2.DrawTo(_drawSurfaceMock.Object, new(0, 0, 2, 2), new(0, 0));
-        _drawSurfaceMock.Verify(v => v.DrawCell(new(1, 1), new('A'), _style1), Times.Once);
+        _drawing2X2.DrawTo(_drawSurfaceMock.Object, new(0, 0, 2, 2), new(10, 10));
+        _drawSurfaceMock.Verify(v => v.DrawCell(new(11, 11), new('A'), _style1), Times.Once);
         _drawSurfaceMock.Verify(v => v.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()), Times.Once);
     }
     
