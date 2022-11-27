@@ -418,4 +418,28 @@ public static class Helpers
 
         return (button, state, modifierKey);
     }
+
+    internal static IEnumerable<(int coord, bool start)> EnumerateInHalves(float start, float count)
+    {
+        if (start < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(start));
+        }
+        
+        if (count < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count));
+        }
+        
+        var halves = (int) Math.Floor(count * 2);
+        var allHalves = (int) Math.Floor(start * 2);
+
+        while (halves > 0)
+        {
+            halves--;
+            
+            yield return (allHalves / 2, allHalves % 2 == 0);
+            allHalves++;
+        }
+    }
 }

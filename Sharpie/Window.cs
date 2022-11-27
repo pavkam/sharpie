@@ -34,10 +34,10 @@ namespace Sharpie;
 ///     Represents a window and contains all it's functionality.
 /// </summary>
 [PublicAPI]
-public class Window: IDisposable
+public class Window: IDisposable, IDrawSurface
 {
+    private readonly IList<Window> _windows = new List<Window>();
     private IntPtr _handle;
-    private IList<Window> _windows = new List<Window>();
 
     /// <summary>
     ///     Initializes the window using a Curses handle.
@@ -442,26 +442,24 @@ public class Window: IDisposable
     /// <summary>
     ///     Tries to move the caret to a given position within the window.
     /// </summary>
-    /// <param name="x">The new X.</param>
-    /// <param name="y">The new Y.</param>
+    /// <param name="location">The new location.</param>
     /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    public bool TryMoveCaretTo(int x, int y) =>
-        IsPointWithin(new(x, y)) &&
-        !Curses.wmove(Handle, y, x)
+    public bool TryMoveCaretTo(Point location) =>
+        IsPointWithin(location) &&
+        !Curses.wmove(Handle, location.Y, location.X)
                .Failed();
 
     /// <summary>
     ///     Moves the caret to a given position within the window.
     /// </summary>
-    /// <param name="x">The new X.</param>
-    /// <param name="y">The new Y.</param>
+    /// <param name="location">The new location.</param>
     /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     /// <exception cref="ArgumentException">The given coordinates are outside the window.</exception>
-    public void MoveCaretTo(int x, int y)
+    public void MoveCaretTo(Point location)
     {
-        if (!TryMoveCaretTo(x, y))
+        if (!TryMoveCaretTo(location))
         {
             throw new ArgumentException("The coordinates are outside the window.");
         }
@@ -796,7 +794,7 @@ public class Window: IDisposable
     /// <param name="strategy">The strategy to use.</param>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Clear(ClearStrategy strategy)
+    public void Clear(ClearStrategy strategy = ClearStrategy.Full)
     {
         switch (strategy)
         {
@@ -936,7 +934,47 @@ public class Window: IDisposable
     public bool IsRectangleWithin(Rectangle rect) =>
         IsPointWithin(new(rect.Left, rect.Top)) &&
         IsPointWithin(new(rect.Left + rect.Width - 1, rect.Top + rect.Height - 1));
+    
+    /// <inheritdoc cref="IDrawSurface.DrawCell"/>
+    void IDrawSurface.DrawCell(Point location, Rune rune, Style textStyle)
+    {
+        Curses.wmove(Handle, location.Y, location.X)
+               .Check(nameof(Curses.wmove), "Failed to move the caret to the given coordinates.");
+        Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, textStyle))
+              .Check(nameof(Curses.wadd_wch), "Failed to write character to the window.");
+    }
 
+    /// <inheritdoc cref="IDrawSurface.CoversArea"/>
+    bool IDrawSurface.CoversArea(Rectangle area) => IsRectangleWithin(area);
+
+    /// <summary>
+    /// Draws a given <paramref name="drawing"/> to the window.
+    /// </summary>
+    /// <param name="area">The area of the drawing to draw.</param>
+    /// <param name="drawing">The drawing to draw.</param>
+    /// <param name="location">The location of the drawing.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> or  <paramref name="area"/> are out of bounds.</exception>
+    public void Draw(Point location, Rectangle area, Drawing drawing)
+    {
+        if (drawing == null)
+        {
+            throw new ArgumentNullException(nameof(drawing));
+        }
+
+        drawing.DrawTo(this, area, location);
+    }
+
+    /// <summary>
+    /// Draws a given <paramref name="drawing"/> to the window.
+    /// </summary>
+    /// <param name="drawing">The drawing to draw.</param>
+    /// <param name="location">The location of the drawing.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is out of bounds.</exception>
+    public void Draw(Point location, Drawing drawing) =>
+        Draw(location, new(0, 0, drawing.Size.Width, drawing.Size.Height), drawing);
+    
     /// <summary>
     ///     Checks if the line at <paramref name="y" /> is dirty.
     /// </summary>

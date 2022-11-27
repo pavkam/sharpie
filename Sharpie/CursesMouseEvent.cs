@@ -31,8 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma warning disable CS1591
 namespace Sharpie;
 
-using System.Runtime.InteropServices;
-
 /// <summary>
 ///     Internal Curses mouse event.
 /// </summary>

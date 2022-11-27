@@ -51,7 +51,7 @@ public interface ICursesProvider
 
     int clearok(IntPtr window, bool set);
 
-    int color_content(ushort color, out ushort red, out ushort green, out ushort blue);
+    int color_content(short color, out short red, out short green, out short blue);
 
     int copywin(IntPtr fromWindow, IntPtr toWindow, int srcStartLine, int srcStartCol,
         int destStartLine, int destStartCol, int destEndLine, int destEndCol,
@@ -120,9 +120,9 @@ public interface ICursesProvider
 
     IntPtr initscr();
 
-    int init_color(ushort color, ushort red, ushort green, ushort blue);
+    int init_color(short color, short red, short green, short blue);
 
-    int init_pair(ushort colorPair, ushort fgColor, ushort bgColor);
+    int init_pair(short colorPair, short fgColor, short bgColor);
 
     int intrflush(IntPtr window, bool set);
 
@@ -196,7 +196,7 @@ public interface ICursesProvider
 
     int overwrite(IntPtr srcWindow, IntPtr destWindow);
 
-    int pair_content(ushort colorPair, out ushort fgColor, out ushort bgColor);
+    int pair_content(short colorPair, out short fgColor, out short bgColor);
 
     uint COLOR_PAIR(uint attrs);
 
@@ -238,11 +238,11 @@ public interface ICursesProvider
 
     int slk_attr();
 
-    int slk_attr_set(uint attrs, ushort colorPair, IntPtr reserved);
+    int slk_attr_set(uint attrs, short colorPair, IntPtr reserved);
 
     int slk_clear();
 
-    int slk_color(ushort colorPair);
+    int slk_color(short colorPair);
 
     int slk_init(int format);
 
@@ -276,9 +276,9 @@ public interface ICursesProvider
 
     int waddchnstr(IntPtr window, uint[] charsAndAttrs, int length);
 
-    int wattr_get(IntPtr window, out uint attrs, out ushort colorPair, IntPtr reserved);
+    int wattr_get(IntPtr window, out uint attrs, out short colorPair, IntPtr reserved);
 
-    int wattr_set(IntPtr window, uint attrs, ushort colorPair, IntPtr reserved);
+    int wattr_set(IntPtr window, uint attrs, short colorPair, IntPtr reserved);
 
     int wattr_on(IntPtr window, uint attrs, IntPtr reserved);
 
@@ -292,7 +292,7 @@ public interface ICursesProvider
         uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
         uint bottomRightCorner);
 
-    int wchgat(IntPtr window, int count, uint attrs, ushort colorPair,
+    int wchgat(IntPtr window, int count, uint attrs, short colorPair,
         IntPtr reserved);
 
     int wclear(IntPtr window);
@@ -301,7 +301,7 @@ public interface ICursesProvider
 
     int wclrtoeol(IntPtr window);
 
-    int wcolor_set(IntPtr window, ushort pair, IntPtr reserved);
+    int wcolor_set(IntPtr window, short colorPair, IntPtr reserved);
 
     void wcursyncup(IntPtr window);
 
@@ -321,7 +321,7 @@ public interface ICursesProvider
 
     int winchnstr(IntPtr window, StringBuilder dest, int length);
 
-    int winsch(IntPtr window, uint @charAndAttrs);
+    int winsch(IntPtr window, uint charAndAttrs);
 
     int winsdelln(IntPtr window, int count);
 
@@ -373,7 +373,7 @@ public interface ICursesProvider
 
     void nofilter();
 
-    int getcchar(CursesComplexChar @char, StringBuilder dest, out uint attrs, out ushort colorPair,
+    int getcchar(CursesComplexChar @char, StringBuilder dest, out uint attrs, out short colorPair,
         IntPtr reserved);
 
     string? key_name(uint @char);
@@ -382,7 +382,7 @@ public interface ICursesProvider
 
     int pecho_wchar(IntPtr window, CursesComplexChar @char);
 
-    int setcchar(out CursesComplexChar @char, string text, uint attrs, ushort colorPair,
+    int setcchar(out CursesComplexChar @char, string text, uint attrs, short colorPair,
         IntPtr reserved);
 
     int slk_set(int labelIndex, string title, int align);
