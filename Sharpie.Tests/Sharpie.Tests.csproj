@@ -24,6 +24,12 @@
         <AssemblyName>sharpie-tests</AssemblyName>
 
         <LangVersion>11</LangVersion>
+
+        <PackageVersion>1.1.0</PackageVersion>
+
+        <AssemblyVersion>1.1.0</AssemblyVersion>
+
+        <FileVersion>1.1.0</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
