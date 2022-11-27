@@ -508,17 +508,15 @@ public sealed class Drawing
         _cells[x, y] = new() { Special = -(int) b, Style = style, Rune = rune };
     }
 
-    internal Point Validate(PointF location, int quanta = 1)
+    internal void Validate(PointF location)
     {
         if (location.X < 0 || location.X >= Size.Width || location.Y < 0 || location.Y >= Size.Height)
         {
             throw new ArgumentOutOfRangeException(nameof(location));
         }
-
-        return new((int) Math.Floor(location.X * quanta), (int) Math.Floor(location.Y * quanta));
     }
 
-    internal Rectangle Validate(RectangleF area, int quanta = 1)
+    internal void Validate(RectangleF area)
     {
         if (area.Left < 0 || 
             area.Top < 0 || 
@@ -529,9 +527,6 @@ public sealed class Drawing
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }
-
-        return new((int) Math.Floor(area.X * quanta), (int) Math.Floor(area.Y * quanta), (int) Math.Floor(area.Width * quanta),
-            (int) Math.Floor(area.Height * quanta));
     }
 
     /// <summary>
@@ -629,8 +624,8 @@ public sealed class Drawing
         Rune rune,
         Style textStyle)
     {
-        var preciseLocation = Validate(location);
-        SetCell(preciseLocation.X, preciseLocation.Y, rune, textStyle);
+        Validate(location);
+        SetCell(location.X, location.Y, rune, textStyle);
     }
     
     /// <summary>
@@ -722,12 +717,17 @@ public sealed class Drawing
         Style textStyle)
     {
         var x = (int) Math.Floor(location.X);
-        var y = (int) Math.Floor(location.X);
+        var y = (int) Math.Floor(location.Y);
 
         Validate(new PointF(x, y));
 
         if (orientation == Orientation.Horizontal)
         {
+            if (length + location.X > Size.Width)
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+            
             foreach (var (i, left) in Helpers.EnumerateInHalves(location.X, length))
             {
                 var stl = (left, lineStyle) switch
@@ -749,6 +749,11 @@ public sealed class Drawing
             }
         } else
         {
+            if (length + location.Y > Size.Height)
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+            
             foreach (var (i, top) in Helpers.EnumerateInHalves(location.Y, length))
             {
                 var stl = (top, lineStyle) switch
@@ -782,15 +787,17 @@ public sealed class Drawing
     {
         Validate(perimeter);
 
-        Line(new(perimeter.X + 0.5F, perimeter.Y + 0.5F), perimeter.Width - 1,
-            Orientation.Horizontal, lineStyle, textStyle);
-        Line(new(perimeter.X + 0.5F, perimeter.Bottom - 0.5F), perimeter.Width - 1, 
-            Orientation.Horizontal, lineStyle, textStyle);
-        
-        Line(new(perimeter.X + 0.5F, perimeter.Y + 0.5F), perimeter.Height - 1, 
-            Orientation.Vertical, lineStyle, textStyle);
-        Line(new(perimeter.Right - 0.5F, perimeter.Y + 0.5F), perimeter.Height - 1, 
-            Orientation.Vertical, lineStyle, textStyle);
+        Line(new(perimeter.X + 0.5F, perimeter.Y), Math.Max(0.5F, perimeter.Width - 1), Orientation.Horizontal,
+            lineStyle, textStyle);
+
+        Line(new(perimeter.X + 0.5F, perimeter.Bottom - 1), Math.Max(0.5F, perimeter.Width - 1), Orientation.Horizontal,
+            lineStyle, textStyle);
+
+        Line(new(perimeter.X, perimeter.Y + 0.5F), Math.Max(0.5F, perimeter.Height - 1), Orientation.Vertical,
+            lineStyle, textStyle);
+
+        Line(new(perimeter.Right - 1, perimeter.Y + 0.5F), Math.Max(0.5F, perimeter.Height - 1), Orientation.Vertical,
+            lineStyle, textStyle);
     }
 
     /// <summary>
@@ -801,7 +808,7 @@ public sealed class Drawing
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="area"/> is invalid.</exception>
     public void Rectangle(RectangleF area, Style style)
     {
-        Validate(area, 2);
+        Validate(area);
 
         foreach (var (x, left) in Helpers.EnumerateInHalves(area.X, area.Width))
         {
@@ -828,8 +835,12 @@ public sealed class Drawing
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is invalid.</exception>
     public void Point(PointF location, Style textStyle)
     {
-        var preciseLocation = Validate(location, 2);
-        var quad = (preciseLocation.X % 2, preciseLocation.Y % 2) switch
+        Validate(location);
+        
+        var x = (int) Math.Floor(location.X * 2);
+        var y = (int) Math.Floor(location.Y * 2);
+
+        var quad = (x % 2, y % 2) switch
         {
             (0, 0) => BlockQuadrant.TopLeft,
             (0, 1) => BlockQuadrant.BottomLeft,
@@ -838,7 +849,7 @@ public sealed class Drawing
             var _ => (BlockQuadrant)0
         };
 
-        SetCell(preciseLocation.X / 2, preciseLocation.Y / 2, quad, textStyle);
+        SetCell(x / 2, y / 2, quad, textStyle);
     }
 
     /// <summary>

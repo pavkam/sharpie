@@ -421,13 +421,25 @@ public static class Helpers
 
     internal static IEnumerable<(int coord, bool start)> EnumerateInHalves(float start, float count)
     {
-        var halfCount = (int) Math.Floor(count * 2);
-        var halvesStart = (int) Math.Floor(start * 2);
-        var fixedStart = (int) Math.Floor(start);
-
-        for (var half = 0; half < halfCount; half++)
+        if (start < 0)
         {
-            yield return (fixedStart + half / 2, (half + halvesStart) % 2 == 0);
+            throw new ArgumentOutOfRangeException(nameof(start));
+        }
+        
+        if (count < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count));
+        }
+        
+        var halves = (int) Math.Floor(count * 2);
+        var allHalves = (int) Math.Floor(start * 2);
+
+        while (halves > 0)
+        {
+            halves--;
+            
+            yield return (allHalves / 2, allHalves % 2 == 0);
+            allHalves++;
         }
     }
 }

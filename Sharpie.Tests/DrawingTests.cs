@@ -250,20 +250,6 @@ public class DrawingTests
         Should.Throw<ArgumentOutOfRangeException>(() => { _drawing2X2.Validate(new PointF(x, y)); });
     }
     
-    [TestMethod]
-    public void Validate1_TruncatesCoords()
-    {
-        var p = _drawing2X2.Validate(new PointF(0.4F, 1.9F));
-        p.ShouldBe(new(0, 1));
-    }
-    
-    [TestMethod]
-    public void Validate1_AppliesQuanta()
-    {
-        var p = _drawing2X2.Validate(new PointF(0.1F, 0.5F), 2);
-        p.ShouldBe(new(0, 1));
-    }
-    
     [TestMethod, 
      DataRow(-1F, 0F, 1F, 1F), 
      DataRow(0F, -1F, 1F, 1F), 
@@ -282,20 +268,6 @@ public class DrawingTests
     public void Validate2_Throws_IfAreaInvalid(float x, float y, float w, float h)
     {
         Should.Throw<ArgumentOutOfRangeException>(() => { _drawing2X2.Validate(new RectangleF(x, y, w, h)); });
-    }
-    
-    [TestMethod]
-    public void Validate2_TruncatesCoords()
-    {
-        var p = _drawing2X2.Validate(new RectangleF(0.4F, 1.9F, 1.1F, 0.01F));
-        p.ShouldBe(new(0, 1, 1, 0));
-    }
-    
-    [TestMethod]
-    public void Validate2_AppliesQuanta()
-    {
-        var p = _drawing2X2.Validate(new RectangleF(0.1F, 0.5F, 1.1F, 0.7F), 2);
-        p.ShouldBe(new(0, 1, 2, 1));
     }
     
     [TestMethod]
@@ -455,7 +427,7 @@ public class DrawingTests
     {
         Should.Throw<ArgumentOutOfRangeException>(() =>
         {
-            _drawing2X2.Box(new(0, 0, 1, 2), Drawing.LineStyle.Double, _style1);
+            _drawing2X2.Box(new(0, 1, 1, 2), Drawing.LineStyle.Double, _style1);
         });
     }
     
@@ -463,9 +435,36 @@ public class DrawingTests
     public void Box_DrawsCross_When1X1()
     {
         _drawing1X1.Box(new(0, 0, 1, 1), Drawing.LineStyle.Double, _style1);
-        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('╬'), _style1));
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('╔'), _style1));
     }
       
+    
+    [TestMethod]
+    public void Box_DrawsBox_When2X1()
+    {
+        _drawing2X2.Box(new(0, 0, 2, 1), Drawing.LineStyle.Double, _style1);
+        var c = ContentsOf(_drawing2X2);
+        c[0, 0]
+            .ShouldBe((new('╔'), _style1));
+        c[1, 0]
+            .ShouldBe((new('╗'), _style1));
+        c[0, 1].Item1.ShouldBe(new(0));
+        c[1, 1].Item1.ShouldBe(new(0));
+    }
+    
+    [TestMethod]
+    public void Box_DrawsBox_When1X2()
+    {
+        _drawing2X2.Box(new(0, 0, 1, 2), Drawing.LineStyle.Double, _style1);
+        var c = ContentsOf(_drawing2X2);
+        c[0, 0]
+            .ShouldBe((new('╔'), _style1));
+        c[1, 0].Item1.ShouldBe(new(0));
+        c[0, 1]
+            .ShouldBe((new('╚'), _style1));
+        c[1, 1].Item1.ShouldBe(new(0));
+    }
+    
     [TestMethod]
     public void Box_DrawsBox_When2X2()
     {
@@ -549,6 +548,16 @@ public class DrawingTests
         ContentsOf(_drawing1X1)[0,0].ShouldBe((new('╶'), _style1));
     }
     
+    [TestMethod]
+    public void Line_DrawsFullLine_Horizontal()
+    {
+        _drawing1X1.Line(new(0, 0), 1, 
+            Drawing.Orientation.Horizontal, 
+            Drawing.LineStyle.Light, _style1);
+        
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('─'), _style1));
+    }
+    
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
     public void Line_DrawsHalfLine_Vertical_AtStart(float x)
     {
@@ -567,5 +576,58 @@ public class DrawingTests
             Drawing.LineStyle.Light, _style1);
         
         ContentsOf(_drawing1X1)[0,0].ShouldBe((new('╷'), _style1));
+    }
+    
+    [TestMethod]
+    public void Line_DrawsFullLine_Vertical()
+    {
+        _drawing1X1.Line(new(0, 0), 1, 
+            Drawing.Orientation.Vertical, 
+            Drawing.LineStyle.Light, _style1);
+        
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('│'), _style1));
+    }
+    
+    [TestMethod]
+    public void Line_Throws_IfLengthLongerThanArea_Y()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing1X1.Line(new(0, 0), 1.5F, Drawing.Orientation.Vertical, 
+                Drawing.LineStyle.Light, _style1);
+        });
+    }
+    
+    [TestMethod]
+    public void Line_Throws_IfLengthLongerThanArea_X()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing1X1.Line(new(0, 0), 1.5F, Drawing.Orientation.Horizontal, 
+                Drawing.LineStyle.Light, _style1);
+        });
+    }
+    
+    [TestMethod]
+    public void Line_DoesNotDraw_IfLengthNotHalf()
+    {
+        _drawing1X1.Line(new(0, 0), 0.4F, 
+            Drawing.Orientation.Vertical, 
+            Drawing.LineStyle.Light, _style1);
+        
+        ContentsOf(_drawing1X1)[0,0].Item1.ShouldBe(new(0));
+    }
+    
+    [TestMethod]
+    public void Line_CombinesLineRunes()
+    {
+        _drawing1X1.Line(new(0, 0), 1, 
+            Drawing.Orientation.Vertical, 
+            Drawing.LineStyle.Light, _style1);
+        _drawing1X1.Line(new(0, 0), 1, 
+            Drawing.Orientation.Horizontal, 
+            Drawing.LineStyle.Double, _style1);
+        
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('╪'), _style1));
     }
 }
