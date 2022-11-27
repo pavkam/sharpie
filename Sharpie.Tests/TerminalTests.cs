@@ -70,7 +70,7 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, new());
 
-        _cursesMock.Verify(v => v.setlocale(It.IsAny<int>(), ""));
+        _cursesMock.Verify(v => v.set_unicode_locale());
     }
 
     [TestMethod, DataRow(true), DataRow(false)]

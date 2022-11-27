@@ -69,8 +69,8 @@ public sealed class Terminal: IDisposable
                 "Another terminal instance is active. Only one instance can be active at one time.");
         }
 
-        // Set locale information.
-        curses.setlocale(RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? 0 : 6, "");
+        // Set unicode locale.
+        curses.set_unicode_locale();
 
         // Pre-screen creation.
         curses.use_env(Options.UseEnvironmentOverrides);

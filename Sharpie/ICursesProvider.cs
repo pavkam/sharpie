@@ -443,5 +443,5 @@ public interface ICursesProvider
 
     void set_title(string title);
 
-    int setlocale(int category, string locale);
+    void set_unicode_locale();
 }
