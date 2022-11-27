@@ -505,6 +505,11 @@ public sealed class Drawing
             rune = new(0);
         }
 
+        if (rune is { IsAscii: true, Value: 0 })
+        {
+            throw new ArgumentOutOfRangeException(nameof(stl));
+        }
+        
         _cells[x, y] = new() { Special = -(int) b, Style = style, Rune = rune };
     }
 
@@ -840,13 +845,12 @@ public sealed class Drawing
         var x = (int) Math.Floor(location.X * 2);
         var y = (int) Math.Floor(location.Y * 2);
 
-        var quad = (x % 2, y % 2) switch
+        var quad = (x % 2 == 0, y % 2 == 0) switch
         {
-            (0, 0) => BlockQuadrant.TopLeft,
-            (0, 1) => BlockQuadrant.BottomLeft,
-            (1, 0) => BlockQuadrant.TopRight,
-            (1, 1) => BlockQuadrant.BottomRight,
-            var _ => (BlockQuadrant)0
+            (true, true) => BlockQuadrant.TopLeft,
+            (true, false) => BlockQuadrant.BottomLeft,
+            (false, true) => BlockQuadrant.TopRight,
+            (false, false) => BlockQuadrant.BottomRight,
         };
 
         SetCell(x / 2, y / 2, quad, textStyle);

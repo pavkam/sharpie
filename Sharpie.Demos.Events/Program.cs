@@ -1,7 +1,8 @@
-﻿// Create the terminal instance without any non-standard settings.
+﻿using Sharpie;
 
-using Sharpie;
+[assembly:System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 
+// Create the terminal instance without any non-standard settings.
 using var terminal = new Terminal(NativeCursesProvider.Instance, new());
 
 // Set the main screen attributes for text and drawings.

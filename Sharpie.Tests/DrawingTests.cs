@@ -304,6 +304,15 @@ public class DrawingTests
     }
     
     [TestMethod]
+    public void Fill2_Throws_IfShadeIsInvalid()
+    {
+        Should.Throw<ArgumentException>(() =>
+        {
+            _drawing2X2.Fill(new(0, 0, 2, 3), (Drawing.ShadeGlyphStyle)100, _style1);
+        });
+    }
+    
+    [TestMethod]
     public void Fill2_FillsArea()
     {
         _drawing2X2.Fill(new(0, 0, 2, 1), Drawing.ShadeGlyphStyle.Dark, _style1);
@@ -324,6 +333,23 @@ public class DrawingTests
             _drawing2X2.Text(new(0, 2), "text", _style1);
         });
     }
+    
+    [TestMethod]
+    public void Text_Throws_IfTextIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() =>
+        {
+            _drawing2X2.Text(new(0, 0), null!, _style1);
+        });
+    }
+    
+    [TestMethod]
+    public void Text_DoesNothingIfTextIsEmpty()
+    {
+        _drawing1X1.Text(new(0, 0), "", _style1);
+        ContentsOf(_drawing1X1)[0,0].Item1.ShouldBe(new(0));
+    }
+
 
     [TestMethod]
     public void Text_DrawsEmoji()
@@ -548,14 +574,20 @@ public class DrawingTests
         ContentsOf(_drawing1X1)[0,0].ShouldBe((new('╶'), _style1));
     }
     
-    [TestMethod]
-    public void Line_DrawsFullLine_Horizontal()
+    [TestMethod, 
+     DataRow(Drawing.LineStyle.Light, '─'),
+     DataRow(Drawing.LineStyle.Heavy, '━'),
+     DataRow(Drawing.LineStyle.LightDashed, '┄'),
+     DataRow(Drawing.LineStyle.HeavyDashed, '┅'),
+     DataRow(Drawing.LineStyle.Double, '═'),
+    ]
+    public void Line_DrawsFullLine_Horizontal(Drawing.LineStyle style, char exp)
     {
         _drawing1X1.Line(new(0, 0), 1, 
             Drawing.Orientation.Horizontal, 
-            Drawing.LineStyle.Light, _style1);
+            style, _style1);
         
-        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('─'), _style1));
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new(exp), _style1));
     }
     
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -578,14 +610,20 @@ public class DrawingTests
         ContentsOf(_drawing1X1)[0,0].ShouldBe((new('╷'), _style1));
     }
     
-    [TestMethod]
-    public void Line_DrawsFullLine_Vertical()
+    [TestMethod, 
+     DataRow(Drawing.LineStyle.Light, '│'),
+     DataRow(Drawing.LineStyle.Heavy, '┃'),
+     DataRow(Drawing.LineStyle.LightDashed, '┆'),
+     DataRow(Drawing.LineStyle.HeavyDashed, '┇'),
+     DataRow(Drawing.LineStyle.Double, '║'),
+    ]
+    public void Line_DrawsFullLine_Vertical(Drawing.LineStyle style, char exp)
     {
         _drawing1X1.Line(new(0, 0), 1, 
             Drawing.Orientation.Vertical, 
-            Drawing.LineStyle.Light, _style1);
+            style, _style1);
         
-        ContentsOf(_drawing1X1)[0,0].ShouldBe((new('│'), _style1));
+        ContentsOf(_drawing1X1)[0,0].ShouldBe((new(exp), _style1));
     }
     
     [TestMethod]
@@ -630,4 +668,15 @@ public class DrawingTests
         
         ContentsOf(_drawing1X1)[0,0].ShouldBe((new('╪'), _style1));
     }
+    
+    [TestMethod, DataRow(Drawing.Orientation.Horizontal), DataRow(Drawing.Orientation.Vertical)]
+    public void Line_Throws_IfStyleIsInvalid(Drawing.Orientation orientation)
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _drawing1X1.Line(new(0, 0), 1, orientation, 
+                (Drawing.LineStyle)100, _style1);
+        });
+    }
+    
 }
