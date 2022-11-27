@@ -2186,4 +2186,28 @@ public class WindowTests
         _cursesMock.Verify(v => v.leaveok(w1.Handle, true), Times.Once);
         _cursesMock.Verify(v => v.leaveok(w2.Handle, true), Times.Once);
     }
+    
+    [TestMethod]
+    public void Draw_Throws_IfDrawingIsNull()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        MockLargeArea(w.Handle);
+        
+        Should.Throw<ArgumentNullException>(() => w.Draw(new(0, 0), new(0, 0, 1, 1), null!));
+    }
+
+    [TestMethod]
+    public void Draw_DrawsCharacters_OntoWindow()
+    {
+        var w = new Window(_cursesMock.Object, null, new(1));
+        MockLargeArea(w.Handle);
+
+        var drawing = new Drawing(new(1, 2));
+        drawing.Glyph(new(0,1), new Rune('A'), Style.Default);
+
+        w.Draw(new(0,0), new(0,0,drawing.Size.Width,drawing.Size.Height), drawing);
+        
+        _cursesMock.Verify(v => v.wmove(w.Handle, 1, 0), Times.Once);
+        _cursesMock.Verify(v => v.wadd_wch(w.Handle, It.IsAny<CursesComplexChar>()), Times.Once);
+    }
 }
