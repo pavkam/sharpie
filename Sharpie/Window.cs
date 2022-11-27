@@ -964,6 +964,16 @@ public class Window: IDisposable, IDrawSurface
 
         drawing.DrawTo(this, area, location);
     }
+
+    /// <summary>
+    /// Draws a given <paramref name="drawing"/> to the window.
+    /// </summary>
+    /// <param name="drawing">The drawing to draw.</param>
+    /// <param name="location">The location of the drawing.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is out of bounds.</exception>
+    public void Draw(Point location, Drawing drawing) =>
+        Draw(location, new(0, 0, drawing.Size.Width, drawing.Size.Height), drawing);
     
     /// <summary>
     ///     Checks if the line at <paramref name="y" /> is dirty.
