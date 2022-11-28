@@ -162,7 +162,7 @@ public sealed class EventPump
             }
         }
     }
-
+    
     /// <summary>
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
     /// </summary>
