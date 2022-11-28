@@ -217,7 +217,7 @@ public class TerminalTests
     public void Ctor_PreparesUseMouse_ByAskingCurses(bool enabled)
     {
         _terminal = new(_cursesMock.Object, new(UseMouse: enabled, MouseClickInterval: 999));
-        _terminal.Screen.UseInternalMouseEventResolver.ShouldBeFalse();
+        _terminal.UseInternalMouseEventResolver.ShouldBeFalse();
 
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
@@ -234,7 +234,7 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, new(UseMouse: true, MouseClickInterval: null));
         _cursesMock.Verify(v => v.mouseinterval(0), Times.Once);
 
-        _terminal.Screen.UseInternalMouseEventResolver.ShouldBeTrue();
+        _terminal.UseInternalMouseEventResolver.ShouldBeTrue();
     }
 
     [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -332,16 +332,16 @@ public class TerminalTests
     public void Ctor_RegistersStandardKeySequenceResolvers_IfAsked()
     {
         _terminal = new(_cursesMock.Object, new());
-        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver)
+        _terminal.Uses(KeySequenceResolver.SpecialCharacterResolver)
                  .ShouldBeTrue();
 
-        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver)
+        _terminal.Uses(KeySequenceResolver.ControlKeyResolver)
                  .ShouldBeTrue();
 
-        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver)
+        _terminal.Uses(KeySequenceResolver.AltKeyResolver)
                  .ShouldBeTrue();
 
-        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver)
+        _terminal.Uses(KeySequenceResolver.KeyPadModifiersResolver)
                  .ShouldBeTrue();
     }
 
@@ -350,16 +350,16 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
 
-        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver)
+        _terminal.Uses(KeySequenceResolver.SpecialCharacterResolver)
                  .ShouldBeFalse();
 
-        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver)
+        _terminal.Uses(KeySequenceResolver.ControlKeyResolver)
                  .ShouldBeFalse();
 
-        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver)
+        _terminal.Uses(KeySequenceResolver.AltKeyResolver)
                  .ShouldBeFalse();
 
-        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver)
+        _terminal.Uses(KeySequenceResolver.KeyPadModifiersResolver)
                  .ShouldBeFalse();
     }
 
@@ -725,5 +725,221 @@ public class TerminalTests
 
         _terminal.SetTitle("title");
         _cursesMock.Verify(v => v.set_title("title"), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Use_RegistersResolver()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        
+        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+                   .Returns("alex");
+
+        _terminal.Use((_, nameFunc) => (new(Key.F1, new(ControlCharacter.Null), nameFunc(1), ModifierKey.None), 1));
+        var done = _terminal.TryResolveKeySequence(
+            new[]
+            {
+                new KeyEvent(Key.KeypadHome, new(ControlCharacter.Null), "test-1", ModifierKey.None),
+                new KeyEvent(Key.F6, new(ControlCharacter.Null), "test-2", ModifierKey.None)
+            }, false, out var resolved);
+
+        done.ShouldBe(1);
+        resolved.ShouldNotBeNull();
+        resolved.Key.ShouldBe(Key.F1);
+        resolved.Char.ShouldBe(new(ControlCharacter.Null));
+        resolved.Modifiers.ShouldBe(ModifierKey.None);
+        resolved.Name.ShouldBe("alex");
+    }
+
+    [TestMethod]
+    public void Use_Throws_IfResolverIsNull()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        Should.Throw<ArgumentNullException>(() => _terminal.Use(null!));
+    }
+
+    [TestMethod]
+    public void Uses_Throws_IfResolverIsNull()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        Should.Throw<ArgumentNullException>(() => _terminal.Uses(null!));
+    }
+
+    [TestMethod]
+    public void Uses_ReturnsTrue_IfResolverRegistered()
+    {
+        _terminal = new(_cursesMock.Object, _settings with {UseStandardKeySequenceResolvers= false});
+        
+        _terminal.Use(KeySequenceResolver.AltKeyResolver);
+        _terminal.Uses(KeySequenceResolver.AltKeyResolver)
+                 .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void Uses_ReturnsFalse_IfResolverNotRegistered()
+    {
+        _terminal = new(_cursesMock.Object,  _settings with {UseStandardKeySequenceResolvers= false});
+        
+        _terminal.Uses(KeySequenceResolver.AltKeyResolver)
+                 .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void TryResolveKeySequence_Throws_IfSequenceIsNull()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        
+        Should.Throw<ArgumentNullException>(() => _terminal.TryResolveKeySequence(null!, false, out var _));
+    }
+
+    [TestMethod]
+    public void TryResolveKeySequence_IgnoresEmptySequences()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        
+        var count = _terminal.TryResolveKeySequence(Array.Empty<KeyEvent>(), false, out var resolved);
+
+        count.ShouldBe(0);
+        resolved.ShouldBeNull();
+    }
+
+    [TestMethod]
+    public void TryResolveKeySequence_ReturnsKeysIndividually_IfNoResolvers()
+    {
+        _terminal = new(_cursesMock.Object, _settings with {UseStandardKeySequenceResolvers= false});
+        
+        var k1 = new KeyEvent(Key.KeypadHome, new(ControlCharacter.Null), null, ModifierKey.None);
+        var k2 = new KeyEvent(Key.F1, new(ControlCharacter.Null), null, ModifierKey.None);
+
+        var count = _terminal.TryResolveKeySequence(new[] { k1, k2 }, false, out var resolved);
+
+        count.ShouldBe(1);
+        resolved.ShouldBe(k1);
+    }
+
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void TryResolveKeySequence_WaitForMoreChars_IfBestIsFalse(bool inv)
+    {
+        _terminal = new(_cursesMock.Object, _settings with {UseStandardKeySequenceResolvers= false});
+        
+        if (inv)
+        {
+            _terminal.Use(KeySequenceResolver.AltKeyResolver);
+            _terminal.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        } else
+        {
+            _terminal.Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _terminal.Use(KeySequenceResolver.AltKeyResolver);
+        }
+
+        var count = _terminal.TryResolveKeySequence(
+            new[]
+            {
+                new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
+                new KeyEvent(Key.Character, new('O'), null, ModifierKey.None)
+            }, false, out var resolved);
+
+        count.ShouldBe(2);
+        resolved.ShouldBeNull();
+    }
+
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void TryResolveKeySequence_ReturnsBest_IfBestIsTrue(bool inv)
+    {
+        _terminal = new(_cursesMock.Object, _settings with {UseStandardKeySequenceResolvers= false});
+        
+        if (inv)
+        {
+            _terminal.Use(KeySequenceResolver.AltKeyResolver);
+            _terminal.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        } else
+        {
+            _terminal.Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _terminal.Use(KeySequenceResolver.AltKeyResolver);
+        }
+
+        var count = _terminal.TryResolveKeySequence(
+            new[]
+            {
+                new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
+                new KeyEvent(Key.Character, new('O'), null, ModifierKey.None)
+            }, true, out var resolved);
+
+        count.ShouldBe(2);
+        resolved.ShouldNotBeNull();
+    }
+
+    [TestMethod]
+    public void UseInternalMouseEventResolver_SetToTrue_InitializesMouseResolver()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        
+        _terminal.UseInternalMouseEventResolver = true;
+
+        var me = new MouseMoveEvent(new(1, 1));
+        _terminal.TryResolveMouseEvent(me, out var l)
+                 .ShouldBeTrue();
+
+        // ReSharper disable once PossibleMultipleEnumeration
+        l.ShouldNotBeNull();
+
+        // ReSharper disable once PossibleMultipleEnumeration
+        var ll = l.ToArray();
+        ll.Length.ShouldBe(1);
+        ll[0]
+            .ShouldBe(me);
+    }
+
+    [TestMethod]
+    public void UseInternalMouseEventResolver_SetToFalse_UnInitializesMouseResolver()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        
+        _terminal.UseInternalMouseEventResolver = true;
+        _terminal.UseInternalMouseEventResolver = false;
+
+        var me = new MouseMoveEvent(new(1, 1));
+        _terminal.TryResolveMouseEvent(me, out var _)
+                 .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void TryResolveMouseEvent1_CallsTheInternalMouseResolver()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        
+        _terminal.UseInternalMouseEventResolver = true;
+
+        var me = new MouseMoveEvent(new(1, 1));
+        _terminal.TryResolveMouseEvent(me, out var _)
+                 .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void TryResolveMouseEvent1_Throws_IfEventIsNull()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        
+        Should.Throw<ArgumentNullException>(() => _terminal.TryResolveMouseEvent((MouseMoveEvent) null!, out var _));
+    }
+
+    [TestMethod]
+    public void TryResolveMouseEvent2_CallsTheInternalMouseResolver()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        
+        _terminal.UseInternalMouseEventResolver = true;
+
+        var me = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Ctrl);
+        _terminal.TryResolveMouseEvent(me, out var _)
+                 .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void TryResolveMouseEvent2_Throws_IfEventIsNull()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        
+        Should.Throw<ArgumentNullException>(() => _terminal.TryResolveMouseEvent((MouseActionEvent) null!, out var _));
     }
 }

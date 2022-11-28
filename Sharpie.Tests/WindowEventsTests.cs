@@ -69,7 +69,7 @@ public class WindowEventsTests
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
         
-        _terminal = new(_cursesMock.Object, new());
+        _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers:false));
         _screen = new(_cursesMock.Object, _terminal, new(1));
         _window = new(_cursesMock.Object, _screen, new(2));
         _source = new();
@@ -214,6 +214,8 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_SkipsMouseEvents_WithBadButtons()
     {
+        _terminal.UseInternalMouseEventResolver = false;
+        
         var skip = true;
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
@@ -249,7 +251,7 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ProcessesMouseMoveEvents_AndUsesInternalMouseResolver()
     {
-        _screen.UseInternalMouseEventResolver = true;
+        _terminal.UseInternalMouseEventResolver = true;
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {
@@ -269,6 +271,7 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ProcessesMouseActionEvents()
     {
+        _terminal.UseInternalMouseEventResolver = false;
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {
@@ -296,7 +299,7 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ProcessesMouseActionEvents_AndUsesInternalMouseResolver()
     {
-        _screen.UseInternalMouseEventResolver = true;
+        _terminal.UseInternalMouseEventResolver = true;
 
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
@@ -355,7 +358,7 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ProcessesTranslatedCharacters_IfResolverInstalled()
     {
-        _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
+        _terminal.Use(KeySequenceResolver.SpecialCharacterResolver);
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -386,7 +389,7 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ProcessesTranslatedSeq2Events_IfResolverInstalled()
     {
-        _screen.Use(KeySequenceResolver.AltKeyResolver);
+        _terminal.Use(KeySequenceResolver.AltKeyResolver);
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -428,8 +431,8 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ProcessesTranslatedSeq4Events_IfResolverInstalled()
     {
-        _screen.Use(KeySequenceResolver.AltKeyResolver);
-        _screen.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        _terminal.Use(KeySequenceResolver.AltKeyResolver);
+        _terminal.Use(KeySequenceResolver.KeyPadModifiersResolver);
 
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
@@ -447,7 +450,7 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ConsidersEscapeBreaks()
     {
-        _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
+        _terminal.Use(KeySequenceResolver.SpecialCharacterResolver);
 
         var e = SimulateEvents(2, _window, (0, ControlCharacter.Escape), (0, ControlCharacter.Escape));
         e.Length.ShouldBe(2);
@@ -458,7 +461,7 @@ public class WindowEventsTests
     [TestMethod]
     public void ProcessEvents_ConsidersBreaksInSequences()
     {
-        _screen.Use(KeySequenceResolver.AltKeyResolver);
+        _terminal.Use(KeySequenceResolver.AltKeyResolver);
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {
