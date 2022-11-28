@@ -44,7 +44,8 @@ public sealed class Terminal: IDisposable
     private uint? _initialMouseMask;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-
+    private EventPump _eventPump;
+    
     /// <summary>
     ///     Creates a new instance of the terminal.
     /// </summary>
@@ -69,17 +70,18 @@ public sealed class Terminal: IDisposable
                 "Another terminal instance is active. Only one instance can be active at one time.");
         }
 
-        // Set locale information.
-        curses.setlocale(RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? 0 : 6, "");
+        // Set unicode locale.
+        curses.set_unicode_locale();
 
         // Pre-screen creation.
         curses.use_env(Options.UseEnvironmentOverrides);
 
         // Screen setup.
         _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
-        _screen = new(curses, curses.initscr()
+        _screen = new(curses, this, curses.initscr()
                                     .Check(nameof(curses.initscr), "Failed to create the screen window."));
 
+        _eventPump = new(curses, _screen);
         _colorManager = new(curses, Options.UseColors);
 
         // After screen creation.
@@ -141,7 +143,7 @@ public sealed class Terminal: IDisposable
                       out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
-            _screen.UseInternalMouseEventResolver = Options.MouseClickInterval == null;
+            _eventPump.UseInternalMouseEventResolver = Options.MouseClickInterval == null;
             _initialMouseMask = initialMouseMask;
         } else
         {
@@ -161,10 +163,10 @@ public sealed class Terminal: IDisposable
         if (options.UseStandardKeySequenceResolvers)
         {
             // Register standard key sequence resolvers.
-            _screen.Use(KeySequenceResolver.SpecialCharacterResolver);
-            _screen.Use(KeySequenceResolver.ControlKeyResolver);
-            _screen.Use(KeySequenceResolver.AltKeyResolver);
-            _screen.Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _eventPump.Use(KeySequenceResolver.SpecialCharacterResolver);
+            _eventPump. Use(KeySequenceResolver.ControlKeyResolver);
+            _eventPump.Use(KeySequenceResolver.AltKeyResolver);
+            _eventPump. Use(KeySequenceResolver.KeyPadModifiersResolver);
         }
     }
 
@@ -241,6 +243,19 @@ public sealed class Terminal: IDisposable
         }
     }
 
+    /// <summary>
+    ///     The event pump instance that can be used to read events from the terminal.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    public EventPump Events
+    {
+        get
+        {
+            AssertAlive();
+            return _eventPump;
+        }
+    }
+    
     /// <summary>
     ///     Specifies whether the terminal supports hardware line insert and delete.
     /// </summary>
@@ -341,7 +356,7 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(Curses.beep), "Failed to beep the terminal.");
         }
     }
-
+    
     /// <summary>
     ///     Validates that the terminal is not disposed.
     /// </summary>

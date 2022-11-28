@@ -70,7 +70,7 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, new());
 
-        _cursesMock.Verify(v => v.setlocale(It.IsAny<int>(), ""));
+        _cursesMock.Verify(v => v.set_unicode_locale());
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
@@ -217,7 +217,7 @@ public class TerminalTests
     public void Ctor_PreparesUseMouse_ByAskingCurses(bool enabled)
     {
         _terminal = new(_cursesMock.Object, new(UseMouse: enabled, MouseClickInterval: 999));
-        _terminal.Screen.UseInternalMouseEventResolver.ShouldBeFalse();
+        _terminal.Events.UseInternalMouseEventResolver.ShouldBeFalse();
 
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
@@ -234,7 +234,7 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, new(UseMouse: true, MouseClickInterval: null));
         _cursesMock.Verify(v => v.mouseinterval(0), Times.Once);
 
-        _terminal.Screen.UseInternalMouseEventResolver.ShouldBeTrue();
+        _terminal.Events.UseInternalMouseEventResolver.ShouldBeTrue();
     }
 
     [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -332,16 +332,16 @@ public class TerminalTests
     public void Ctor_RegistersStandardKeySequenceResolvers_IfAsked()
     {
         _terminal = new(_cursesMock.Object, new());
-        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver)
+        _terminal.Events.Uses(KeySequenceResolver.SpecialCharacterResolver)
                  .ShouldBeTrue();
 
-        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver)
+        _terminal.Events.Uses(KeySequenceResolver.ControlKeyResolver)
                  .ShouldBeTrue();
 
-        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver)
+        _terminal.Events.Uses(KeySequenceResolver.AltKeyResolver)
                  .ShouldBeTrue();
 
-        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver)
+        _terminal.Events.Uses(KeySequenceResolver.KeyPadModifiersResolver)
                  .ShouldBeTrue();
     }
 
@@ -350,16 +350,16 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
 
-        _terminal.Screen.Uses(KeySequenceResolver.SpecialCharacterResolver)
+        _terminal.Events.Uses(KeySequenceResolver.SpecialCharacterResolver)
                  .ShouldBeFalse();
 
-        _terminal.Screen.Uses(KeySequenceResolver.ControlKeyResolver)
+        _terminal.Events.Uses(KeySequenceResolver.ControlKeyResolver)
                  .ShouldBeFalse();
 
-        _terminal.Screen.Uses(KeySequenceResolver.AltKeyResolver)
+        _terminal.Events.Uses(KeySequenceResolver.AltKeyResolver)
                  .ShouldBeFalse();
 
-        _terminal.Screen.Uses(KeySequenceResolver.KeyPadModifiersResolver)
+        _terminal.Events.Uses(KeySequenceResolver.KeyPadModifiersResolver)
                  .ShouldBeFalse();
     }
 
@@ -427,10 +427,25 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void Screen_ReturnsTheColorManager_IfTerminalAlive()
+    public void Screen_ReturnsTheInstance_IfTerminalAlive()
     {
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.Screen.ShouldNotBeNull();
+    }
+    
+    [TestMethod]
+    public void Events_Throws_IfTerminalIsDisposed()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.Dispose();
+        Should.Throw<ObjectDisposedException>(() => _terminal.Events);
+    }
+
+    [TestMethod]
+    public void Events_ReturnsTheInstance_IfTerminalAlive()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.Events.ShouldNotBeNull();
     }
 
     [TestMethod]

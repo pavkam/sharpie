@@ -20,8 +20,7 @@ using var subWindow = terminal.Screen.CreateWindow(
     new(1, 1, terminal.Screen.Size.Width - 2, terminal.Screen.Size.Height - 2));
 
 // Process all events coming from the terminal.
-// Note that one can provide a `CancellationToken` to interrupt this process.
-foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
+foreach (var @event in terminal.Events.Listen(subWindow))
 {
     // Write the  event that occured.
     subWindow.WriteText($"{@event}\n");

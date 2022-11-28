@@ -6,9 +6,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Tests", "Sharpie.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{D93C7AAD-B597-44E4-B05B-81A52F0D5E9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Events", "Sharpie.Demos.Events\Sharpie.Demos.Events.csproj", "{8F82A851-2053-4079-82D2-5BA2C1987AF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Events", "Demos\Sharpie.Demos.Events\Sharpie.Demos.Events.csproj", "{8F82A851-2053-4079-82D2-5BA2C1987AF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Bounce", "Sharpie.Demos.Bounce\Sharpie.Demos.Bounce.csproj", "{68997860-DF84-4DFF-9B24-5F5B531B994A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Bounce", "Demos\Sharpie.Demos.Bounce\Sharpie.Demos.Bounce.csproj", "{68997860-DF84-4DFF-9B24-5F5B531B994A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

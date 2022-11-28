@@ -506,7 +506,13 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     void ICursesProvider.set_title(string title) { Console.Title = title; }
 
-    int ICursesProvider.setlocale(int category, string locale) => setlocale(category, locale);
+    void ICursesProvider.set_unicode_locale()
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            setlocale(RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? 0 : 6, "");
+        }
+    }
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int baudrate();
