@@ -45,9 +45,15 @@ public sealed class Screen: Window
     ///     a screen and not a regular window.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
+    /// <param name="terminal">The owner terminal.</param>
     /// <param name="windowHandle">The screen handle.</param>
-    internal Screen(ICursesProvider curses, IntPtr windowHandle): base(curses, null, windowHandle) { }
+    internal Screen(ICursesProvider curses, Terminal terminal, IntPtr windowHandle): base(curses, null, windowHandle) => Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
 
+    /// <summary>
+    /// The terminal this screen belongs to.
+    /// </summary>
+    public Terminal Terminal { get; }
+    
     /// <inheritdoc cref="Window.Location" />
     /// <remarks>
     ///     The setter will always throw in this implementation as moving the main window is not allowed.

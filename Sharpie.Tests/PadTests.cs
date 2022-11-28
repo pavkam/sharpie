@@ -36,6 +36,7 @@ public class PadTests
     private Mock<ICursesProvider> _cursesMock = null!;
     private Pad _pad1 = null!;
     private Screen _screen = null!;
+    private Terminal _terminal = null!;
 
     [TestInitialize]
     public void TestInitialize()
@@ -54,8 +55,18 @@ public class PadTests
         _cursesMock.Setup(s => s.getmaxy(new(1)))
                    .Returns(10);
 
-        _screen = new(_cursesMock.Object, new(1));
+        _cursesMock.Setup(s => s.initscr())
+                   .Returns(new IntPtr(100));
+        
+        _terminal = new(_cursesMock.Object, new());
+        _screen = new(_cursesMock.Object, _terminal, new(1));
         _pad1 = new(_cursesMock.Object, _screen, new(2));
+    }
+    
+    [TestCleanup]
+    public void TestCleanup()
+    {
+        _terminal.Dispose();
     }
 
     [TestMethod]

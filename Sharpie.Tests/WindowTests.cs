@@ -662,7 +662,11 @@ public class WindowTests
         MockLargeArea(new(1));
         MockSmallArea(new(2));
 
-        var p = new Screen(_cursesMock.Object, new(1));
+        _cursesMock.Setup(s => s.initscr())
+                   .Returns(new IntPtr(100));
+        
+        using var t = new Terminal(_cursesMock.Object, new());
+        var p = new Screen(_cursesMock.Object, t, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
 
         w.Location = new(5, 5);

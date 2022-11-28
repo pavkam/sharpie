@@ -7,7 +7,8 @@ public class WindowEventsTests
     private Screen _screen = null!;
     private CancellationTokenSource _source = null!;
     private Window _window = null!;
-
+    private Terminal _terminal = null!;
+    
     private Event[] SimulateEvents(int count, Window w, params (int result, uint keyCode)[] raw)
     {
         var i = 0;
@@ -65,10 +66,19 @@ public class WindowEventsTests
     public void TestInitialize()
     {
         _cursesMock = new();
-        _screen = new(_cursesMock.Object, new(1));
-
+        _cursesMock.Setup(s => s.initscr())
+                   .Returns(new IntPtr(100));
+        
+        _terminal = new(_cursesMock.Object, new());
+        _screen = new(_cursesMock.Object, _terminal, new(1));
         _window = new(_cursesMock.Object, _screen, new(2));
         _source = new();
+    }
+
+    [TestCleanup]
+    public void TestCleanup()
+    {
+        _terminal.Dispose();
     }
 
     [TestMethod]

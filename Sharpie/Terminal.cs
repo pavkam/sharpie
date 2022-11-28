@@ -77,7 +77,7 @@ public sealed class Terminal: IDisposable
 
         // Screen setup.
         _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
-        _screen = new(curses, curses.initscr()
+        _screen = new(curses, this, curses.initscr()
                                     .Check(nameof(curses.initscr), "Failed to create the screen window."));
 
         _colorManager = new(curses, Options.UseColors);
