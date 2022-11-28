@@ -224,7 +224,7 @@ public class Window: IDisposable, IDrawSurface
     {
         get
         {
-            if (Parent != null && Parent is not Sharpie.Screen)
+            if (Parent != null && Parent is not Screen)
             {
                 return new(Curses.getparx(Handle)
                                  .Check(nameof(Curses.getparx), "Failed to get window X coordinate."), Curses
@@ -249,7 +249,7 @@ public class Window: IDisposable, IDrawSurface
                 }
             }
 
-            if (Parent != null && Parent is not Sharpie.Screen)
+            if (Parent != null && Parent is not Screen)
             {
                 Curses.mvderwin(Handle, value.Y, value.X)
                       .Check(nameof(Curses.mvderwin), "Failed to move window to new coordinates.");
@@ -354,29 +354,7 @@ public class Window: IDisposable, IDrawSurface
                   .Check(nameof(Curses.leaveok), "Failed to set hardware caret ignore mode.");
         }
     }
-
-    private Screen Screen
-    {
-        get
-        {
-            if (this is Screen)
-            {
-                return (Screen) this;
-            }
-
-            Debug.Assert(Parent != null);
-
-            var p = Parent;
-            while (p.Parent != null)
-            {
-                p = p.Parent;
-            }
-
-            Debug.Assert(p is Screen);
-            return (Screen) p;
-        }
-    }
-
+    
     /// <summary>
     ///     Disposes the current instance.
     /// </summary>
@@ -1043,142 +1021,6 @@ public class Window: IDisposable, IDrawSurface
 
         Curses.wredrawln(Handle, y, count)
               .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
-    }
-
-    private (int result, uint keyCode) ReadNext(bool quickWait)
-    {
-        Curses.wtimeout(Handle, quickWait ? 10 : 1000);
-        var result = Curses.wget_wch(Handle, out var keyCode);
-
-        return (result, keyCode);
-    }
-
-    /// <summary>
-    ///     Reads the next event from. If the event is valid, returns it. Otherwise <c>null</c> is returned.
-    /// </summary>
-    /// <returns>The event or <c>null</c> if read failed.</returns>
-    private Event? ReadNextEvent(bool quickWait)
-    {
-        var (result, keyCode) = ReadNext(quickWait);
-        if (result.Failed())
-        {
-            Screen.ApplyPendingRefreshes();
-            return null;
-        }
-
-        if (result == (int) CursesKey.Yes)
-        {
-            switch (keyCode)
-            {
-                case (uint) CursesKey.Resize:
-                    return new TerminalResizeEvent(Screen.Size);
-                case (uint) CursesKey.Mouse:
-                    if (Curses.getmouse(out var mouseEvent)
-                              .Failed())
-                    {
-                        return null;
-                    }
-
-                    if (mouseEvent.buttonState == (uint) CursesMouseEvent.EventType.ReportPosition)
-                    {
-                        return new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
-                    }
-
-                    var (button, state, mouseMod) =
-                        Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) mouseEvent.buttonState);
-
-                    return button == 0
-                        ? null
-                        : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
-                default:
-                    var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
-                    return new KeyEvent(key, new(ControlCharacter.Null), Curses.key_name(keyCode), keyMod);
-            }
-        }
-
-        return new KeyEvent(Key.Character, new(keyCode), Curses.key_name(keyCode), ModifierKey.None);
-    }
-
-    /// <summary>
-    ///     Gets an enumerable that is used to get events from Curses.
-    /// </summary>
-    /// <remarks>
-    ///     The enumerable returned by this method only stops waiting when cancellation is requested.
-    /// </remarks>
-    /// <param name="cancellationToken">Cancellation token used to interrupt the process.</param>
-    /// <returns>An enumerable.</returns>
-    public IEnumerable<Event> ProcessEvents(CancellationToken cancellationToken)
-    {
-        var escapeSequence = new List<KeyEvent>();
-
-        while (!cancellationToken.IsCancellationRequested)
-        {
-            var @event = ReadNextEvent(escapeSequence.Count > 0);
-            if (@event is KeyEvent ke)
-            {
-                escapeSequence.Add(ke);
-                var count = Screen.Terminal.TryResolveKeySequence(escapeSequence, false, out var resolved);
-                if (resolved != null)
-                {
-                    escapeSequence.RemoveRange(0, count);
-                }
-
-                @event = resolved;
-            } else
-            {
-                while (escapeSequence.Count > 0)
-                {
-                    var count = Screen.Terminal.TryResolveKeySequence(escapeSequence, true, out var resolved);
-                    Debug.Assert(count > 0);
-                    Debug.Assert(resolved != null);
-
-                    escapeSequence.RemoveRange(0, count);
-                    yield return resolved;
-                }
-
-                // Process/resolve mouse events.
-                switch (@event)
-                {
-                    case MouseMoveEvent mme:
-                    {
-                        if (Screen.Terminal.TryResolveMouseEvent(mme, out var l))
-                        {
-                            @event = null;
-                            foreach (var oe in l)
-                            {
-                                yield return oe;
-                            }
-                        }
-
-                        break;
-                    }
-                    case MouseActionEvent mae:
-                    {
-                        if (Screen.Terminal.TryResolveMouseEvent(mae, out var l))
-                        {
-                            @event = null;
-                            foreach (var oe in l)
-                            {
-                                yield return oe;
-                            }
-                        }
-
-                        break;
-                    }
-                }
-            }
-
-            // Flush the event if anything in there.
-            if (@event is not null)
-            {
-                yield return @event;
-
-                if (@event.Type == EventType.TerminalResize)
-                {
-                    Screen.ForceInvalidateAndRefresh();
-                }
-            }
-        }
     }
 
     /// <summary>

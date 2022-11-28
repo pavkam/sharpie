@@ -44,9 +44,7 @@ public sealed class Terminal: IDisposable
     private uint? _initialMouseMask;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-    private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private MouseEventResolver? _mouseEventResolver;
-
+    private EventPump _eventPump;
     
     /// <summary>
     ///     Creates a new instance of the terminal.
@@ -83,6 +81,7 @@ public sealed class Terminal: IDisposable
         _screen = new(curses, this, curses.initscr()
                                     .Check(nameof(curses.initscr), "Failed to create the screen window."));
 
+        _eventPump = new(curses, _screen);
         _colorManager = new(curses, Options.UseColors);
 
         // After screen creation.
@@ -144,7 +143,7 @@ public sealed class Terminal: IDisposable
                       out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
-            UseInternalMouseEventResolver = Options.MouseClickInterval == null;
+            _eventPump.UseInternalMouseEventResolver = Options.MouseClickInterval == null;
             _initialMouseMask = initialMouseMask;
         } else
         {
@@ -164,10 +163,10 @@ public sealed class Terminal: IDisposable
         if (options.UseStandardKeySequenceResolvers)
         {
             // Register standard key sequence resolvers.
-            Use(KeySequenceResolver.SpecialCharacterResolver);
-            Use(KeySequenceResolver.ControlKeyResolver);
-            Use(KeySequenceResolver.AltKeyResolver);
-            Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _eventPump.Use(KeySequenceResolver.SpecialCharacterResolver);
+            _eventPump. Use(KeySequenceResolver.ControlKeyResolver);
+            _eventPump.Use(KeySequenceResolver.AltKeyResolver);
+            _eventPump. Use(KeySequenceResolver.KeyPadModifiersResolver);
         }
     }
 
@@ -244,6 +243,19 @@ public sealed class Terminal: IDisposable
         }
     }
 
+    /// <summary>
+    ///     The event pump instance that can be used to read events from the terminal.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    public EventPump Events
+    {
+        get
+        {
+            AssertAlive();
+            return _eventPump;
+        }
+    }
+    
     /// <summary>
     ///     Specifies whether the terminal supports hardware line insert and delete.
     /// </summary>
@@ -345,157 +357,6 @@ public sealed class Terminal: IDisposable
         }
     }
     
-    
-    /// <summary>
-    ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
-    ///     This is an internal property and initialized by the terminal.
-    /// </summary>
-    internal bool UseInternalMouseEventResolver
-    {
-        get => _mouseEventResolver != null;
-        set
-        {
-            _mouseEventResolver = value switch
-            {
-                true when _mouseEventResolver == null => new(),
-                false when _mouseEventResolver != null => null,
-                var _ => _mouseEventResolver
-            };
-        }
-    }
-
-    /// <summary>
-    ///     Registers a key sequence resolver into the input pipeline.
-    /// </summary>
-    /// <param name="resolver">The resolver to register.</param>
-    /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver" /> is <c>null</c>.</exception>
-    public void Use(ResolveEscapeSequenceFunc resolver)
-    {
-        if (resolver == null)
-        {
-            throw new ArgumentNullException(nameof(resolver));
-        }
-
-        if (!Uses(resolver))
-        {
-            _keySequenceResolvers.Add(resolver);
-        }
-    }
-
-    /// <summary>
-    ///     Checks if the screen has a given key sequence resolver registered.
-    /// </summary>
-    /// <param name="resolver">The resolver to check.</param>
-    /// <returns><c>true</c> if the resolver is registered; <c>false</c> otherwise.</returns>
-    /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver" /> is <c>null</c>.</exception>
-    public bool Uses(ResolveEscapeSequenceFunc resolver)
-    {
-        if (resolver == null)
-        {
-            throw new ArgumentNullException(nameof(resolver));
-        }
-
-        return _keySequenceResolvers.Contains(resolver);
-    }
-
-    /// <summary>
-    ///     Tries to resolve a sequence of keys suing the registered resolvers.
-    /// </summary>
-    /// <param name="sequence">The sequence that contains the collected keys.</param>
-    /// <param name="best">Force the return of the best match.</param>
-    /// <param name="resolved">The resolved key (if any).</param>
-    /// <returns>The number of matching keys. A zero value indicates no matches.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="sequence" /> is <c>null</c>.</exception>
-    internal int TryResolveKeySequence(IReadOnlyList<KeyEvent> sequence, bool best, out KeyEvent? resolved)
-    {
-        if (sequence == null)
-        {
-            throw new ArgumentNullException(nameof(sequence));
-        }
-
-        resolved = null;
-        var max = 0;
-        if (sequence.Count == 0)
-        {
-            return max;
-        }
-
-        foreach (var resolver in _keySequenceResolvers)
-        {
-            var (resKey, resCount) = resolver(sequence, Curses.key_name);
-
-            if (resCount >= max && resKey != null && best)
-            {
-                max = resCount;
-                resolved = resKey;
-            } else if (resCount > max && resKey != null)
-            {
-                max = resCount;
-                resolved = resKey;
-            } else if (resCount >= max && resKey == null && !best)
-            {
-                max = resCount;
-                resolved = resKey;
-            }
-        }
-
-        if (max == 0)
-        {
-            resolved = sequence[0];
-            max = 1;
-        }
-
-        return max;
-    }
-
-    /// <summary>
-    ///     Tries to resolve a given mouse event into a sequence of different events.
-    /// </summary>
-    /// <param name="event">The mouse event to try and process.</param>
-    /// <param name="resolved">The resolved events (if any).</param>
-    /// <returns>The number of matching keys. A zero value indicates no matches.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="event" /> is <c>null</c>.</exception>
-    internal bool TryResolveMouseEvent(MouseMoveEvent @event, [NotNullWhen(true)] out IEnumerable<Event>? resolved)
-    {
-        if (@event == null)
-        {
-            throw new ArgumentNullException(nameof(@event));
-        }
-
-        if (_mouseEventResolver == null)
-        {
-            resolved = null;
-            return false;
-        }
-
-        resolved = _mouseEventResolver.Process(@event);
-        return true;
-    }
-
-    /// <summary>
-    ///     Tries to resolve a given mouse event into a sequence of different events.
-    /// </summary>
-    /// <param name="event">The mouse event to try and process.</param>
-    /// <param name="resolved">The resolved events (if any).</param>
-    /// <returns>The number of matching keys. A zero value indicates no matches.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="event" /> is <c>null</c>.</exception>
-    internal bool TryResolveMouseEvent(MouseActionEvent @event, [NotNullWhen(true)] out IEnumerable<Event>? resolved)
-    {
-        if (@event == null)
-        {
-            throw new ArgumentNullException(nameof(@event));
-        }
-
-        if (_mouseEventResolver == null)
-        {
-            resolved = null;
-            return false;
-        }
-
-        resolved = _mouseEventResolver.Process(@event);
-        return true;
-    }
-
     /// <summary>
     ///     Validates that the terminal is not disposed.
     /// </summary>

@@ -70,7 +70,7 @@ using var timer = new Timer(_ =>
 }, null, 0, 50);
 
 // The default event processing.
-foreach (var @event in terminal.Screen.ProcessEvents(CancellationToken.None))
+foreach (var @event in terminal.Events.Listen())
 {
     // If the user pressed CTRL+C, break the loop.
     if (@event is KeyEvent { Key: Key.Character, Char.IsAscii: true, Char.Value: 'C', Modifiers: ModifierKey.Ctrl })

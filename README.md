@@ -23,6 +23,7 @@ So why another one? The are many reasons, but the most important ones are:
 What follows is a small example of how to use the library:
 ![Demo](media/demo-1.gif)
 ```csharp
+
 // Create the terminal instance without any non-standard settings.
 using var terminal = new Terminal(NativeCursesProvider.Instance, new());
 
@@ -41,8 +42,7 @@ using var subWindow = terminal.Screen.CreateWindow(
     new(1, 1, terminal.Screen.Size.Width - 2, terminal.Screen.Size.Height - 2));
 
 // Process all events coming from the terminal.
-// Note that one can provide a `CancellationToken` to interrupt this process.
-foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
+foreach (var @event in terminal.Events.Listen(subWindow))
 {
     // Write the  event that occured.
     subWindow.WriteText($"{@event}\n");
@@ -57,7 +57,7 @@ foreach (var @event in subWindow.ProcessEvents(CancellationToken.None))
     }
     
     // If the user pressed CTRL+C, break the loop.
-    if (@event is KeyEvent { Key: Key.Character, Char.IsAscii: True, Char.Value: 'C', Modifiers: ModifierKey.Ctrl })
+    if (@event is KeyEvent { Key: Key.Character, Char.IsAscii: true, Char.Value: 'C', Modifiers: ModifierKey.Ctrl })
     {
         break;
     }

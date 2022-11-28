@@ -1,14 +1,44 @@
+/*
+Copyright (c) 2022, Alexandru Ciobanu
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
 namespace Sharpie.Tests;
 
 [TestClass]
-public class WindowEventsTests
+public class EventPumpTests
 {
     private Mock<ICursesProvider> _cursesMock = null!;
-    private Screen _screen = null!;
+    private Terminal _terminal = null!;
+    private EventPump _pump = null!;
     private CancellationTokenSource _source = null!;
     private Window _window = null!;
-    private Terminal _terminal = null!;
-    
+
     private Event[] SimulateEvents(int count, Window w, params (int result, uint keyCode)[] raw)
     {
         var i = 0;
@@ -34,7 +64,7 @@ public class WindowEventsTests
                    });
 
         var events = new List<Event>();
-        foreach (var e in w.ProcessEvents(_source.Token))
+        foreach (var e in _pump.Listen(w, _source.Token))
         {
             count--;
             if (count == 0)
@@ -66,12 +96,13 @@ public class WindowEventsTests
     public void TestInitialize()
     {
         _cursesMock = new();
+
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-        
-        _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers:false));
-        _screen = new(_cursesMock.Object, _terminal, new(1));
-        _window = new(_cursesMock.Object, _screen, new(2));
+
+        _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
+        _pump = new(_cursesMock.Object, _terminal.Screen);
+        _window = new(_cursesMock.Object, _terminal.Screen, new(2));
         _source = new();
     }
 
@@ -82,7 +113,253 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_KeepsReadingUntilCancelled()
+    public void Ctor_Throws_IfCursesIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => new EventPump(null!, _terminal.Screen));
+    }
+
+    [TestMethod]
+    public void Ctor_Throws_IfScreenIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => new EventPump(_cursesMock.Object, null!));
+    }
+
+    [TestMethod]
+    public void Use_RegistersResolver()
+    {
+        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+                   .Returns("alex");
+
+        _pump.Use((_, nameFunc) => (new(Key.F1, new(ControlCharacter.Null), nameFunc(1), ModifierKey.None), 1));
+        var done = _pump.TryResolveKeySequence(
+            new[]
+            {
+                new KeyEvent(Key.KeypadHome, new(ControlCharacter.Null), "test-1", ModifierKey.None),
+                new KeyEvent(Key.F6, new(ControlCharacter.Null), "test-2", ModifierKey.None)
+            }, false, out var resolved);
+
+        done.ShouldBe(1);
+        resolved.ShouldNotBeNull();
+        resolved.Key.ShouldBe(Key.F1);
+        resolved.Char.ShouldBe(new(ControlCharacter.Null));
+        resolved.Modifiers.ShouldBe(ModifierKey.None);
+        resolved.Name.ShouldBe("alex");
+    }
+
+    [TestMethod]
+    public void Use_Throws_IfResolverIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _pump.Use(null!));
+    }
+
+    [TestMethod]
+    public void Uses_Throws_IfResolverIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _pump.Uses(null!));
+    }
+
+    [TestMethod]
+    public void Uses_ReturnsTrue_IfResolverRegistered()
+    {
+        _pump.Use(KeySequenceResolver.AltKeyResolver);
+        _pump.Uses(KeySequenceResolver.AltKeyResolver)
+                 .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void Uses_ReturnsFalse_IfResolverNotRegistered()
+    {
+        _pump.Uses(KeySequenceResolver.AltKeyResolver)
+                 .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void TryResolveKeySequence_Throws_IfSequenceIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _pump.TryResolveKeySequence(null!, false, out var _));
+    }
+
+    [TestMethod]
+    public void TryResolveKeySequence_IgnoresEmptySequences()
+    {
+        var count = _pump.TryResolveKeySequence(Array.Empty<KeyEvent>(), false, out var resolved);
+
+        count.ShouldBe(0);
+        resolved.ShouldBeNull();
+    }
+
+    [TestMethod]
+    public void TryResolveKeySequence_ReturnsKeysIndividually_IfNoResolvers()
+    {
+        var k1 = new KeyEvent(Key.KeypadHome, new(ControlCharacter.Null), null, ModifierKey.None);
+        var k2 = new KeyEvent(Key.F1, new(ControlCharacter.Null), null, ModifierKey.None);
+
+        var count = _pump.TryResolveKeySequence(new[] { k1, k2 }, false, out var resolved);
+
+        count.ShouldBe(1);
+        resolved.ShouldBe(k1);
+    }
+
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void TryResolveKeySequence_WaitForMoreChars_IfBestIsFalse(bool inv)
+    {
+        if (inv)
+        {
+            _pump.Use(KeySequenceResolver.AltKeyResolver);
+            _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        } else
+        {
+            _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _pump.Use(KeySequenceResolver.AltKeyResolver);
+        }
+
+        var count = _pump.TryResolveKeySequence(
+            new[]
+            {
+                new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
+                new KeyEvent(Key.Character, new('O'), null, ModifierKey.None)
+            }, false, out var resolved);
+
+        count.ShouldBe(2);
+        resolved.ShouldBeNull();
+    }
+
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void TryResolveKeySequence_ReturnsBest_IfBestIsTrue(bool inv)
+    {
+        if (inv)
+        {
+            _pump.Use(KeySequenceResolver.AltKeyResolver);
+            _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        } else
+        {
+            _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _pump.Use(KeySequenceResolver.AltKeyResolver);
+        }
+
+        var count = _pump.TryResolveKeySequence(
+            new[]
+            {
+                new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
+                new KeyEvent(Key.Character, new('O'), null, ModifierKey.None)
+            }, true, out var resolved);
+
+        count.ShouldBe(2);
+        resolved.ShouldNotBeNull();
+    }
+
+    [TestMethod]
+    public void UseInternalMouseEventResolver_SetToTrue_InitializesMouseResolver()
+    {
+        _pump.UseInternalMouseEventResolver = true;
+
+        var me = new MouseMoveEvent(new(1, 1));
+        _pump.TryResolveMouseEvent(me, out var l)
+                 .ShouldBeTrue();
+
+        // ReSharper disable once PossibleMultipleEnumeration
+        l.ShouldNotBeNull();
+
+        // ReSharper disable once PossibleMultipleEnumeration
+        var ll = l.ToArray();
+        ll.Length.ShouldBe(1);
+        ll[0]
+            .ShouldBe(me);
+    }
+
+    [TestMethod]
+    public void UseInternalMouseEventResolver_SetToFalse_UnInitializesMouseResolver()
+    {
+        _pump.UseInternalMouseEventResolver = true;
+        _pump.UseInternalMouseEventResolver = false;
+
+        var me = new MouseMoveEvent(new(1, 1));
+        _pump.TryResolveMouseEvent(me, out var _)
+                 .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void TryResolveMouseEvent1_CallsTheInternalMouseResolver()
+    {
+        _pump.UseInternalMouseEventResolver = true;
+
+        var me = new MouseMoveEvent(new(1, 1));
+        _pump.TryResolveMouseEvent(me, out var _)
+                 .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void TryResolveMouseEvent1_Throws_IfEventIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _pump.TryResolveMouseEvent((MouseMoveEvent) null!, out var _));
+    }
+
+    [TestMethod]
+    public void TryResolveMouseEvent2_CallsTheInternalMouseResolver()
+    {
+        _pump.UseInternalMouseEventResolver = true;
+
+        var me = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Ctrl);
+        _pump.TryResolveMouseEvent(me, out var _)
+                 .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void TryResolveMouseEvent2_Throws_IfEventIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _pump.TryResolveMouseEvent((MouseActionEvent) null!, out var _));
+    }
+    
+    [TestMethod]
+    public void Listen1_ThrowsIfWindowIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _pump.Listen(null!, CancellationToken.None).ToArray());
+    }
+    
+    [TestMethod,SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen1_CallsCurses_ForWindow()
+    {
+        _pump.Listen(_window, CancellationToken.None)
+             .First();
+
+        _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
+    }
+    
+    [TestMethod,SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen2_CallsCurses_ForWindow()
+    {
+        _pump.Listen(_window)
+             .First();
+
+        _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
+    }
+    
+    [TestMethod,SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen3_CallsCurses_ForScreen()
+    {
+        _pump.Listen(CancellationToken.None)
+             .First();
+
+        _cursesMock.Verify(s => s.wget_wch(_terminal.Screen.Handle, out It.Ref<uint>.IsAny), Times.Once);
+    }
+    
+    [TestMethod,SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen4_CallsCurses_ForScreen()
+    {
+        _pump.Listen()
+             .First();
+
+        _cursesMock.Verify(s => s.wget_wch(_terminal.Screen.Handle, out It.Ref<uint>.IsAny), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Listen2_ThrowsIfWindowIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _pump.Listen(null!).ToArray());
+    }
+    
+    [TestMethod]
+    public void Listen1_KeepsReadingUntilCancelled()
     {
         _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
                    .Returns((IntPtr _, out uint kc) =>
@@ -92,7 +369,7 @@ public class WindowEventsTests
                    });
 
         var count = 5;
-        foreach (var _ in _window.ProcessEvents(_source.Token))
+        foreach (var _ in _pump.Listen(_window, _source.Token))
         {
             count--;
             if (count == 0)
@@ -108,7 +385,7 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_SkipsBadReads()
+    public void Listen1_SkipsBadReads()
     {
         SimulateEvents(5, _window, (-1, 0), (0, 0), (-1, 0),
             (0, 0), (-1, 0), (0, 0), (-1, 0), (0, 0),
@@ -119,14 +396,14 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ApplyPendingRefreshes_WhenReadFails()
+    public void Listen1_ApplyPendingRefreshes_WhenReadFails()
     {
         SimulateEvents(1, _window, (-1, 0), (0, 0));
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
     [TestMethod]
-    public void ProcessEvents_GoesDeepWithinChildren_ToApplyPendingRefreshes()
+    public void Listen1_GoesDeepWithinChildren_ToApplyPendingRefreshes()
     {
         var w = new Window(_cursesMock.Object, _window, new(3));
 
@@ -136,35 +413,35 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesTerminalResizeEvents_InScreen()
+    public void Listen1_ProcessesTerminalResizeEvents_InScreen()
     {
         _window.Dispose();
 
-        _cursesMock.Setup(s => s.getmaxy(_screen.Handle))
+        _cursesMock.Setup(s => s.getmaxy(_terminal.Screen.Handle))
                    .Returns(10);
 
-        _cursesMock.Setup(s => s.getmaxx(_screen.Handle))
+        _cursesMock.Setup(s => s.getmaxx(_terminal.Screen.Handle))
                    .Returns(20);
 
-        var @event = SimulateEvent(_screen, (int) CursesKey.Yes, (uint) CursesKey.Resize);
+        var @event = SimulateEvent(_terminal.Screen, (int) CursesKey.Yes, (uint) CursesKey.Resize);
 
         @event.Type.ShouldBe(EventType.TerminalResize);
         ((TerminalResizeEvent) @event).Size.ShouldBe(new(20, 10));
 
-        _cursesMock.Verify(v => v.wtouchln(_screen.Handle, 0, 10, 1), Times.Once);
-        _cursesMock.Verify(v => v.clearok(_screen.Handle, true), Times.Once);
-        _cursesMock.Verify(v => v.wrefresh(_screen.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, 0, 10, 1), Times.Once);
+        _cursesMock.Verify(v => v.clearok(_terminal.Screen.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.wrefresh(_terminal.Screen.Handle), Times.Once);
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesTerminalResizeEvents_InChild()
+    public void Listen1_ProcessesTerminalResizeEvents_InChild()
     {
-        var otherWindow = new Window(_cursesMock.Object, _screen, new(8));
+        var otherWindow = new Window(_cursesMock.Object, _terminal.Screen, new(8));
 
-        _cursesMock.Setup(s => s.getmaxy(_screen.Handle))
+        _cursesMock.Setup(s => s.getmaxy(_terminal.Screen.Handle))
                    .Returns(10);
 
-        _cursesMock.Setup(s => s.getmaxx(_screen.Handle))
+        _cursesMock.Setup(s => s.getmaxx(_terminal.Screen.Handle))
                    .Returns(20);
 
         _cursesMock.Setup(s => s.getmaxy(_window.Handle))
@@ -177,16 +454,16 @@ public class WindowEventsTests
         e.Type.ShouldBe(EventType.TerminalResize);
         ((TerminalResizeEvent) e).Size.ShouldBe(new(20, 10));
 
-        _cursesMock.Verify(v => v.wtouchln(_screen.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
+        _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
         _cursesMock.Verify(v => v.wtouchln(_window.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
         _cursesMock.Verify(v => v.wtouchln(otherWindow.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
 
-        _cursesMock.Verify(v => v.clearok(_screen.Handle, true), Times.Once);
-        _cursesMock.Verify(v => v.wrefresh(_screen.Handle), Times.Once);
+        _cursesMock.Verify(v => v.clearok(_terminal.Screen.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.wrefresh(_terminal.Screen.Handle), Times.Once);
     }
 
     [TestMethod]
-    public void ProcessEvents_SkipsInvalidMouseEvents()
+    public void Listen1_SkipsInvalidMouseEvents()
     {
         var skip = true;
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
@@ -212,9 +489,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_SkipsMouseEvents_WithBadButtons()
+    public void Listen1_SkipsMouseEvents_WithBadButtons()
     {
-        _terminal.UseInternalMouseEventResolver = false;
+        _pump.UseInternalMouseEventResolver = false;
         
         var skip = true;
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
@@ -233,7 +510,7 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesMouseMoveEvents()
+    public void Listen1_ProcessesMouseMoveEvents()
     {
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
@@ -249,9 +526,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesMouseMoveEvents_AndUsesInternalMouseResolver()
+    public void Listen1_ProcessesMouseMoveEvents_AndUsesInternalMouseResolver()
     {
-        _terminal.UseInternalMouseEventResolver = true;
+        _pump.UseInternalMouseEventResolver = true;
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {
@@ -269,9 +546,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesMouseActionEvents()
+    public void Listen1_ProcessesMouseActionEvents()
     {
-        _terminal.UseInternalMouseEventResolver = false;
+        _pump.UseInternalMouseEventResolver = false;
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {
@@ -297,9 +574,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesMouseActionEvents_AndUsesInternalMouseResolver()
+    public void Listen1_ProcessesMouseActionEvents_AndUsesInternalMouseResolver()
     {
-        _terminal.UseInternalMouseEventResolver = true;
+        _pump.UseInternalMouseEventResolver = true;
 
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
@@ -325,7 +602,7 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesKeypadEvents()
+    public void Listen1_ProcessesKeypadEvents()
     {
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
@@ -341,7 +618,7 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesCharacterEvents()
+    public void Listen1_ProcessesCharacterEvents()
     {
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
@@ -356,9 +633,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedCharacters_IfResolverInstalled()
+    public void Listen1_ProcessesTranslatedCharacters_IfResolverInstalled()
     {
-        _terminal.Use(KeySequenceResolver.SpecialCharacterResolver);
+        _pump.Use(KeySequenceResolver.SpecialCharacterResolver);
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -372,7 +649,7 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_DoesNotProcessesTranslatedCharacters_IfNoMiddlewareInstalled()
+    public void Listen1_DoesNotProcessesTranslatedCharacters_IfNoMiddlewareInstalled()
     {
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
@@ -387,9 +664,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedSeq2Events_IfResolverInstalled()
+    public void Listen1_ProcessesTranslatedSeq2Events_IfResolverInstalled()
     {
-        _terminal.Use(KeySequenceResolver.AltKeyResolver);
+        _pump.Use(KeySequenceResolver.AltKeyResolver);
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
@@ -404,7 +681,7 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_DoeNotProcessTranslatedSeq2Events_IfResolverNotInstalled()
+    public void Listen1_DoeNotProcessTranslatedSeq2Events_IfResolverNotInstalled()
     {
         _cursesMock.Setup(s => s.key_name('a'))
                    .Returns("-a-");
@@ -429,10 +706,10 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ProcessesTranslatedSeq4Events_IfResolverInstalled()
+    public void Listen1_ProcessesTranslatedSeq4Events_IfResolverInstalled()
     {
-        _terminal.Use(KeySequenceResolver.AltKeyResolver);
-        _terminal.Use(KeySequenceResolver.KeyPadModifiersResolver);
+        _pump.Use(KeySequenceResolver.AltKeyResolver);
+        _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
 
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
@@ -448,9 +725,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ConsidersEscapeBreaks()
+    public void Listen1_ConsidersEscapeBreaks()
     {
-        _terminal.Use(KeySequenceResolver.SpecialCharacterResolver);
+        _pump.Use(KeySequenceResolver.SpecialCharacterResolver);
 
         var e = SimulateEvents(2, _window, (0, ControlCharacter.Escape), (0, ControlCharacter.Escape));
         e.Length.ShouldBe(2);
@@ -459,9 +736,9 @@ public class WindowEventsTests
     }
 
     [TestMethod]
-    public void ProcessEvents_ConsidersBreaksInSequences()
+    public void Listen1_ConsidersBreaksInSequences()
     {
-        _terminal.Use(KeySequenceResolver.AltKeyResolver);
+        _pump.Use(KeySequenceResolver.AltKeyResolver);
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {
