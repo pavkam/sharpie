@@ -30,6 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
+using System.Collections.Concurrent;
+
 /// <summary>
 ///     This class allows the developer to interact with the terminal and its settings. This is the main
 ///     class that is used in a Curses-based application.
@@ -46,6 +48,9 @@ public sealed class Terminal: IDisposable
     private SoftLabelKeyManager _softLabelKeyManager;
     private EventPump _eventPump;
     
+    private BlockingCollection<object>? _invokeQueue;
+    private ConcurrentDictionary<Guid, Timer> _timers = new();
+
     /// <summary>
     ///     Creates a new instance of the terminal.
     /// </summary>
@@ -368,7 +373,158 @@ public sealed class Terminal: IDisposable
             throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
         }
     }
+    
+    private bool Post(Func<Task> action)
+    {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
+        var queue = _invokeQueue;
+        return !IsDisposed && queue is { IsCompleted: false } && queue.TryAdd(action);
+    }
+     
+    private Guid Timer<TState>(
+        Func<Terminal, TState?, Task> action, 
+        int dueMillis, int periodMillis, 
+        TState? initialState)
+    {
+        var timerId = Guid.NewGuid();
+        var timer = new Timer(id =>
+        {
+            Debug.Assert(id is Guid);
+            
+            try
+            {
+                Post(() => action(this, initialState));
+            } finally
+            {
+                _timers.Remove((Guid) id, out var _);
+            }
+        }, timerId, dueMillis, periodMillis);
+
+        _timers.AddOrUpdate(timerId, _ => timer, (_, _) => timer);
+        return timerId;
+    }
+
+    [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
+    public async Task RunAsync(Func<Event, Task<bool>> eventAction, bool stopOnCtrlC = true)
+    {
+        if (eventAction == null)
+        {
+            throw new ArgumentNullException(nameof(eventAction));
+        }
+
+        using var queue = new BlockingCollection<object>();
+        _invokeQueue = queue;
+        
+        using var ct = new CancellationTokenSource();
+        var pumpTask = Task.Run(() =>
+        {
+            foreach (var @event in Events.Listen(ct.Token))
+            {
+                if (stopOnCtrlC &&
+                    @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
+                {
+                    break;
+                }
+
+                if (!ct.IsCancellationRequested)
+                {
+                    queue.Add(@event, ct.Token);
+                }
+            }
+            
+            queue.CompleteAdding();
+        }, ct.Token);
+
+        foreach (var message in queue.GetConsumingEnumerable())
+        {
+            switch (message)
+            {
+                case Event @event:
+                {
+                    var @continue = await eventAction(@event);
+                
+                    if (!@continue)
+                    {
+                        ct.Cancel();
+                    }
+
+                    break;
+                }
+                case Func<Task> invoke:
+                    await invoke();
+                    break;
+                default:
+                    Debug.Fail("Unsupported message.");
+                    break;
+            }
+        }
+
+        await pumpTask;
+        _invokeQueue = null;
+    }
+
+    public void Delegate(Func<Task> action)
+    {
+        Post(action);
+    }
+    
+    public Guid DelayInterval<TState>(Func<Terminal, TState?, Task> action, 
+        int delayMillis, TState? initialState = default)
+    {
+        if (delayMillis < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(delayMillis));
+        }
+
+        return Timer(action, delayMillis, Timeout.Infinite, initialState);
+    }
+    
+    public Guid DelayInterval(Func<Terminal, Task> action, int delayMillis)
+    {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+        return DelayInterval<DBNull>((t, s) => action(t), delayMillis);
+    }
+       
+    public Guid RepeatInterval<TState>(Func<Terminal, TState?, Task> action, 
+        int intervalMillis, bool immediate = false, TState? initialState = default)
+    {
+        if (intervalMillis < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(intervalMillis));
+        }
+
+        return Timer(action, immediate ? 0 : intervalMillis, intervalMillis, initialState);
+    }
+    
+    public Guid RepeatInterval(Func<Terminal, Task> action, int intervalMillis, bool immediate = false)
+    {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+        return RepeatInterval<DBNull>((t, s) => action(t), intervalMillis, immediate);
+    }
+
+    public bool CancelInterval(Guid timerId)
+    {
+        if (_timers.TryRemove(timerId, out var timer))
+        {
+            timer.Dispose();
+            return true;
+        }
+
+        return false;
+    }
+    
     /// <summary>
     ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>

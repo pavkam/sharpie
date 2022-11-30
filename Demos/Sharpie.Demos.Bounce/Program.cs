@@ -17,18 +17,16 @@ var styles = Enum.GetValues<StandardColor>()
 
 // Prepare the glyph.
 var glyph = new Drawing(new(1, 1));
-var glyphStyle = Drawing.TriangleGlyphStyle.Up;
+var glyphStyle = Drawing.TriangleGlyphStyle.Up; 
 var currentStyle = 0;
 var x = -1;
 var y = -1;
 var dx = 1;
 var dy = 1;
 
-var window = terminal.Screen;
-using var timer = new Timer(_ =>
+terminal.RepeatInterval((t) =>
 {
-    glyph.Glyph(new(0, 0), glyphStyle, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black,
-        styles[currentStyle]);
+    glyph.Glyph(new(0, 0), glyphStyle, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, styles[currentStyle]);
 
     glyphStyle++;
     if (glyphStyle > Drawing.TriangleGlyphStyle.Right)
@@ -38,43 +36,40 @@ using var timer = new Timer(_ =>
 
     x += dx;
     y += dy;
-    
+
     if (x <= 0)
     {
         x = 0;
         dx = 1;
         currentStyle = (currentStyle + 1) % styles.Length;
     }
-    if (x >= window.Size.Width)
+
+    if (x >= t.Screen.Size.Width)
     {
-        x = window.Size.Width - 1;
+        x = t.Screen.Size.Width - 1;
         dx = -1;
         currentStyle = (currentStyle + 1) % styles.Length;
     }
+
     if (y <= 0)
     {
         y = 0;
         dy = 1;
         currentStyle = (currentStyle + 1) % styles.Length;
     }
-    if (y >= window.Size.Height)
+
+    if (y >= t.Screen.Size.Height)
     {
-        y = window.Size.Height - 1;
+        y = t.Screen.Size.Height - 1;
         dy = -1;
         currentStyle = (currentStyle + 1) % styles.Length;
     }
-    
-    window.Clear();
-    window.Draw(new(x, y), glyph);
-    window.Refresh();
-}, null, 0, 50);
 
-// The default event processing.
-foreach (var @event in terminal.Events.Listen())
-{
-    // If the user pressed CTRL+C, break the loop.
-    if (@event is KeyEvent { Key: Key.Character, Char.IsAscii: true, Char.Value: 'C', Modifiers: ModifierKey.Ctrl })
-    {
-        break;
-    }
-}
+    t.Screen.Clear();
+    t.Screen.Draw(new(x, y), glyph);
+    t.Screen.Refresh();
+    
+    return Task.CompletedTask;
+}, 50);
+
+await terminal.RunAsync(_ => Task.FromResult(true));
