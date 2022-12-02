@@ -40,28 +40,21 @@ using Nito.AsyncEx;
 [PublicAPI]
 public sealed class Terminal: IDisposable
 {
-    private sealed class Interval: IInterval
-    {
-        public Timer? Timer;
-        public bool Stopped;
-        public void Stop() { Stopped = true; }
-    }
-
     private static bool _terminalInstanceActive;
+    private readonly ManualResetEventSlim _delegateAvailable = new();
+
+    private readonly ConcurrentQueue<object> _delegateQueue = new();
     private ColorManager _colorManager;
+    private EventPump _eventPump;
     private int? _initialCaretMode;
     private int? _initialMouseClickDelay;
     private uint? _initialMouseMask;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-    private EventPump _eventPump;
-    
-    private readonly ConcurrentQueue<object> _delegateQueue = new();
-    private readonly ManualResetEventSlim _delegateAvailable = new();
-    
+
     /// <summary>
     ///     Creates a new instance
-    /// of the terminal.
+    ///     of the terminal.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="options">The terminal options.</param>
@@ -402,13 +395,13 @@ public sealed class Terminal: IDisposable
 
         return interval;
     }
-    
+
     /// <summary>
-    /// Runs the application main loop and dispatches each event to <paramref name="eventAction"/>.
+    ///     Runs the application main loop and dispatches each event to <paramref name="eventAction" />.
     /// </summary>
     /// <param name="eventAction">The method to accept the events.</param>
     /// <param name="stopOnCtrlC">Set to <c>true</c> if CTRL+C should interrupt the main loop.</param>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
     public async Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true)
     {
         if (eventAction == null)
@@ -419,13 +412,13 @@ public sealed class Terminal: IDisposable
         var cts = new CancellationTokenSource();
         var pumpTask = Task.Run(() =>
         {
-            foreach(var @event in Events.Listen(cts.Token))
+            foreach (var @event in Events.Listen(cts.Token))
             {
                 _delegateQueue.Enqueue(@event);
                 _delegateAvailable.Set();
             }
         }, cts.Token);
-        
+
         AsyncContext.Run(async () =>
         {
             var loop = true;
@@ -439,16 +432,17 @@ public sealed class Terminal: IDisposable
                         case Func<Task> @delegate:
                             await @delegate();
                             break;
-                        case KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl } when stopOnCtrlC:
+                        case KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl }
+                            when stopOnCtrlC:
                             loop = false;
-                            break; 
+                            break;
                         case Event @event:
                             await eventAction(@event);
                             break;
                     }
                 }
             }
-            
+
             cts.Cancel();
         });
 
@@ -456,10 +450,10 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Delegates an action to be executed on the main thread.
+    ///     Delegates an action to be executed on the main thread.
     /// </summary>
     /// <param name="action">The action to execute.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="action"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="action" /> is <c>null</c>.</exception>
     public void Delegate(Func<Task> action)
     {
         if (action == null)
@@ -472,16 +466,15 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Sets up a delayed action that is to be executed after some time.
+    ///     Sets up a delayed action that is to be executed after some time.
     /// </summary>
     /// <param name="action">The action to be executed.</param>
     /// <param name="delayMillis">The delay in milliseconds.</param>
     /// <param name="state">User-supplied state object.</param>
     /// <typeparam name="TState">The type of the state object.</typeparam>
     /// <returns>The interval object.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis"/> is negative.</exception>
-    public IInterval Delay<TState>(Func<Terminal, TState?, Task> action, int delayMillis,
-        TState? state = default)
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis" /> is negative.</exception>
+    public IInterval Delay<TState>(Func<Terminal, TState?, Task> action, int delayMillis, TState? state = default)
     {
         if (delayMillis < 0)
         {
@@ -492,12 +485,12 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Sets up a delayed action that is to be executed after some time.
+    ///     Sets up a delayed action that is to be executed after some time.
     /// </summary>
     /// <param name="action">The action to be executed.</param>
     /// <param name="delayMillis">The delay in milliseconds.</param>
     /// <returns>The interval object.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis"/> is negative.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis" /> is negative.</exception>
     public IInterval Delay(Func<Terminal, Task> action, int delayMillis)
     {
         if (action == null)
@@ -509,7 +502,7 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Sets up a delayed action that is to be executed after some time.
+    ///     Sets up a delayed action that is to be executed after some time.
     /// </summary>
     /// <param name="action">The action to be executed.</param>
     /// <param name="intervalMillis">The interval in milliseconds.</param>
@@ -517,11 +510,8 @@ public sealed class Terminal: IDisposable
     /// <param name="state">User-supplied state object.</param>
     /// <typeparam name="TState">The type of the state object.</typeparam>
     /// <returns>The interval object.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis"/> is negative.</exception>
-    public IInterval Repeat<TState>(
-        Func<Terminal, TState?, Task> action, 
-        int intervalMillis, 
-        bool immediate = false,
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis" /> is negative.</exception>
+    public IInterval Repeat<TState>(Func<Terminal, TState?, Task> action, int intervalMillis, bool immediate = false,
         TState? state = default)
     {
         if (intervalMillis < 0)
@@ -533,13 +523,13 @@ public sealed class Terminal: IDisposable
     }
 
     /// <summary>
-    /// Sets up a delayed action that is to be executed after some time.
+    ///     Sets up a delayed action that is to be executed after some time.
     /// </summary>
     /// <param name="action">The action to be executed.</param>
     /// <param name="intervalMillis">The interval in milliseconds.</param>
     /// <param name="immediate">If <c>true</c>, triggers the execution of the action immediately.</param>
     /// <returns>The interval object.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis"/> is negative.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis" /> is negative.</exception>
     public IInterval Repeat(Func<Terminal, Task> action, int intervalMillis, bool immediate = false)
     {
         if (action == null)
@@ -554,4 +544,11 @@ public sealed class Terminal: IDisposable
     ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>
     ~Terminal() { Dispose(); }
+
+    private sealed class Interval: IInterval
+    {
+        public bool Stopped;
+        public Timer? Timer;
+        public void Stop() { Stopped = true; }
+    }
 }

@@ -354,7 +354,7 @@ public class Window: IDisposable, IDrawSurface
                   .Check(nameof(Curses.leaveok), "Failed to set hardware caret ignore mode.");
         }
     }
-    
+
     /// <summary>
     ///     Disposes the current instance.
     /// </summary>
@@ -363,6 +363,19 @@ public class Window: IDisposable, IDrawSurface
         Destroy();
         GC.SuppressFinalize(this);
     }
+
+    /// <inheritdoc cref="IDrawSurface.DrawCell" />
+    void IDrawSurface.DrawCell(Point location, Rune rune, Style textStyle)
+    {
+        Curses.wmove(Handle, location.Y, location.X)
+              .Check(nameof(Curses.wmove), "Failed to move the caret to the given coordinates.");
+
+        Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, textStyle))
+              .Check(nameof(Curses.wadd_wch), "Failed to write character to the window.");
+    }
+
+    /// <inheritdoc cref="IDrawSurface.CoversArea" />
+    bool IDrawSurface.CoversArea(Rectangle area) => IsRectangleWithin(area);
 
     /// <summary>
     ///     Checks if the given <paramref name="window" /> is either a descendant or an ancestor of this window.
@@ -913,27 +926,17 @@ public class Window: IDisposable, IDrawSurface
         IsPointWithin(new(rect.Left, rect.Top)) &&
         IsPointWithin(new(rect.Left + rect.Width - 1, rect.Top + rect.Height - 1));
 
-    /// <inheritdoc cref="IDrawSurface.DrawCell"/>
-    void IDrawSurface.DrawCell(Point location, Rune rune, Style textStyle)
-    {
-        Curses.wmove(Handle, location.Y, location.X)
-              .Check(nameof(Curses.wmove), "Failed to move the caret to the given coordinates.");
-
-        Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, textStyle))
-              .Check(nameof(Curses.wadd_wch), "Failed to write character to the window.");
-    }
-
-    /// <inheritdoc cref="IDrawSurface.CoversArea"/>
-    bool IDrawSurface.CoversArea(Rectangle area) => IsRectangleWithin(area);
-
     /// <summary>
-    /// Draws a given <paramref name="drawing"/> to the window.
+    ///     Draws a given <paramref name="drawing" /> to the window.
     /// </summary>
     /// <param name="area">The area of the drawing to draw.</param>
     /// <param name="drawing">The drawing to draw.</param>
     /// <param name="location">The location of the drawing.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> or  <paramref name="area"/> are out of bounds.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     Thrown if <paramref name="location" /> or  <paramref name="area" /> are
+    ///     out of bounds.
+    /// </exception>
     public void Draw(Point location, Rectangle area, Drawing drawing)
     {
         if (drawing == null)
@@ -945,12 +948,12 @@ public class Window: IDisposable, IDrawSurface
     }
 
     /// <summary>
-    /// Draws a given <paramref name="drawing"/> to the window.
+    ///     Draws a given <paramref name="drawing" /> to the window.
     /// </summary>
     /// <param name="drawing">The drawing to draw.</param>
     /// <param name="location">The location of the drawing.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location"/> is out of bounds.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location" /> is out of bounds.</exception>
     public void Draw(Point location, Drawing drawing) =>
         Draw(location, new(0, 0, drawing.Size.Width, drawing.Size.Height), drawing);
 

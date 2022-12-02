@@ -664,7 +664,7 @@ public class WindowTests
 
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-        
+
         using var t = new Terminal(_cursesMock.Object, new());
         var p = new Screen(_cursesMock.Object, t, new(1));
         var w = new Window(_cursesMock.Object, p, new(2));
@@ -1864,7 +1864,7 @@ public class WindowTests
                    {
                        sb.Append(ch);
                        a = ch;
-                       cp = (short)ch;
+                       cp = (short) ch;
 
                        ch++;
                        return 0;
@@ -1880,7 +1880,7 @@ public class WindowTests
             .style.Attributes.ShouldBe((VideoAttribute) 'a');
 
         chars[0]
-            .style.ColorMixture.ShouldBe(new() { Handle = (short)'a' });
+            .style.ColorMixture.ShouldBe(new() { Handle = (short) 'a' });
 
         chars[1]
             .@char.ShouldBe(new('b'));
@@ -1889,7 +1889,7 @@ public class WindowTests
             .style.Attributes.ShouldBe((VideoAttribute) 'b');
 
         chars[1]
-            .style.ColorMixture.ShouldBe(new() { Handle = (short)'b' });
+            .style.ColorMixture.ShouldBe(new() { Handle = (short) 'b' });
 
         chars[2]
             .@char.ShouldBe(new('c'));
@@ -1898,7 +1898,7 @@ public class WindowTests
             .style.Attributes.ShouldBe((VideoAttribute) 'c');
 
         chars[2]
-            .style.ColorMixture.ShouldBe(new() { Handle = (short)'c' });
+            .style.ColorMixture.ShouldBe(new() { Handle = (short) 'c' });
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -2190,13 +2190,13 @@ public class WindowTests
         _cursesMock.Verify(v => v.leaveok(w1.Handle, true), Times.Once);
         _cursesMock.Verify(v => v.leaveok(w2.Handle, true), Times.Once);
     }
-    
+
     [TestMethod]
     public void Draw1_Throws_IfDrawingIsNull()
     {
         var w = new Window(_cursesMock.Object, null, new(1));
         MockLargeArea(w.Handle);
-        
+
         Should.Throw<ArgumentNullException>(() => w.Draw(new(0, 0), new(0, 0, 1, 1), null!));
     }
 
@@ -2207,14 +2207,14 @@ public class WindowTests
         MockLargeArea(w.Handle);
 
         var drawing = new Drawing(new(1, 2));
-        drawing.Glyph(new(0,1), new Rune('A'), Style.Default);
+        drawing.Glyph(new(0, 1), new('A'), Style.Default);
 
-        w.Draw(new(0,0), new(0,0,drawing.Size.Width,drawing.Size.Height), drawing);
-        
+        w.Draw(new(0, 0), new(0, 0, drawing.Size.Width, drawing.Size.Height), drawing);
+
         _cursesMock.Verify(v => v.wmove(w.Handle, 1, 0), Times.Once);
         _cursesMock.Verify(v => v.wadd_wch(w.Handle, It.IsAny<CursesComplexChar>()), Times.Once);
     }
-    
+
     [TestMethod]
     public void Draw2_DrawsCharacters_OntoWindow()
     {
@@ -2222,10 +2222,10 @@ public class WindowTests
         MockLargeArea(w.Handle);
 
         var drawing = new Drawing(new(1, 2));
-        drawing.Glyph(new(0,1), new Rune('A'), Style.Default);
+        drawing.Glyph(new(0, 1), new('A'), Style.Default);
 
-        w.Draw(new(0,0), drawing);
-        
+        w.Draw(new(0, 0), drawing);
+
         _cursesMock.Verify(v => v.wmove(w.Handle, 1, 0), Times.Once);
         _cursesMock.Verify(v => v.wadd_wch(w.Handle, It.IsAny<CursesComplexChar>()), Times.Once);
     }

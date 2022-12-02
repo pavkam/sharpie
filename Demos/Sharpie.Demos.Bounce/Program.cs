@@ -1,6 +1,7 @@
-﻿using Sharpie;
+﻿using System.Diagnostics.CodeAnalysis;
+using Sharpie;
 
-[assembly:System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+[assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance.
 using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: CaretMode.Invisible));
@@ -17,14 +18,14 @@ var styles = Enum.GetValues<StandardColor>()
 
 // Prepare the glyph.
 var glyph = new Drawing(new(1, 1));
-var glyphStyle = Drawing.TriangleGlyphStyle.Up; 
+var glyphStyle = Drawing.TriangleGlyphStyle.Up;
 var currentStyle = 0;
 var x = -1;
 var y = -1;
 var dx = 1;
 var dy = 1;
 
-terminal.Repeat((t) =>
+terminal.Repeat(t =>
 {
     glyph.Glyph(new(0, 0), glyphStyle, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, styles[currentStyle]);
 
@@ -68,7 +69,7 @@ terminal.Repeat((t) =>
     t.Screen.Clear();
     t.Screen.Draw(new(x, y), glyph);
     t.Screen.Refresh();
-    
+
     return Task.CompletedTask;
 }, 50);
 

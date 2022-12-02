@@ -513,7 +513,7 @@ public sealed class NativeCursesProvider: ICursesProvider
             setlocale(RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? 0 : 6, "");
         }
     }
-    
+
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern int baudrate();
 

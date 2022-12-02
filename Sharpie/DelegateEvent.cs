@@ -41,8 +41,9 @@ public sealed class DelegateEvent: Event
     ///     Creates a new instance of the class.
     /// </summary>
     /// <param name="data">The delegated data.</param>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="data"/> is <c>null</c>.</exception>
-    public DelegateEvent(object data): base(EventType.Delegate) => Data = data ?? throw new ArgumentNullException(nameof(data));
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="data" /> is <c>null</c>.</exception>
+    public DelegateEvent(object data): base(EventType.Delegate) =>
+        Data = data ?? throw new ArgumentNullException(nameof(data));
 
     /// <summary>
     ///     The delegated data.

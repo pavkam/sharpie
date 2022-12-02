@@ -1,30 +1,50 @@
 namespace Sharpie;
 
 /// <summary>
-/// The event "pump" class listens to all events from Curses, processes them and passes them along to
-/// consumers.
+///     The event "pump" class listens to all events from Curses, processes them and passes them along to
+///     consumers.
 /// </summary>
 [PublicAPI]
 public sealed class EventPump
 {
-    private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private MouseEventResolver? _mouseEventResolver;
-    
     private readonly ICursesProvider _curses;
+    private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
     private readonly Screen _screen;
-        
+    private MouseEventResolver? _mouseEventResolver;
+
     /// <summary>
-    /// Creates a new instances of this class.
+    ///     Creates a new instances of this class.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="screen">The screen object.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="curses"/> or <paramref name="screen"/> are <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">
+    ///     Thrown if <paramref name="curses" /> or <paramref name="screen" /> are
+    ///     <c>null</c>.
+    /// </exception>
     internal EventPump(ICursesProvider curses, Screen screen)
     {
         _curses = curses ?? throw new ArgumentNullException(nameof(curses));
         _screen = screen ?? throw new ArgumentNullException(nameof(screen));
     }
-    
+
+    /// <summary>
+    ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
+    ///     This is an internal property and initialized by the terminal.
+    /// </summary>
+    internal bool UseInternalMouseEventResolver
+    {
+        get => _mouseEventResolver != null;
+        set
+        {
+            _mouseEventResolver = value switch
+            {
+                true when _mouseEventResolver == null => new(),
+                false when _mouseEventResolver != null => null,
+                var _ => _mouseEventResolver
+            };
+        }
+    }
+
     private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)
     {
         _curses.wtimeout(windowHandle, quickWait ? 10 : 100);
@@ -162,14 +182,14 @@ public sealed class EventPump
             }
         }
     }
-    
+
     /// <summary>
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
     /// </summary>
     /// <param name="window">The window to refresh during event processing.</param>
     /// <returns>The event listening enumerable.</returns>
     public IEnumerable<Event> Listen(Window window) => Listen(window, CancellationToken.None);
-    
+
     /// <summary>
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
     /// </summary>
@@ -185,24 +205,6 @@ public sealed class EventPump
     /// </summary>
     /// <returns>The event listening enumerable.</returns>
     public IEnumerable<Event> Listen() => Listen(CancellationToken.None);
-    
-    /// <summary>
-    ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
-    ///     This is an internal property and initialized by the terminal.
-    /// </summary>
-    internal bool UseInternalMouseEventResolver
-    {
-        get => _mouseEventResolver != null;
-        set
-        {
-            _mouseEventResolver = value switch
-            {
-                true when _mouseEventResolver == null => new(),
-                false when _mouseEventResolver != null => null,
-                var _ => _mouseEventResolver
-            };
-        }
-    }
 
     /// <summary>
     ///     Registers a key sequence resolver into the input pipeline.

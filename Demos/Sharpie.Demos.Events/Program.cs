@@ -1,6 +1,7 @@
-﻿using Sharpie;
+﻿using System.Diagnostics.CodeAnalysis;
+using Sharpie;
 
-[assembly:System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+[assembly: ExcludeFromCodeCoverage]
 
 // Create the terminal instance without any non-standard settings.
 using var terminal = new Terminal(NativeCursesProvider.Instance, new());
@@ -24,7 +25,7 @@ foreach (var @event in terminal.Events.Listen(subWindow))
 {
     // Write the  event that occured.
     subWindow.WriteText($"{@event}\n");
-    
+
     // If the event is a resize, change the size of the child window
     // to allow for the screen to maintain its border.
     // And then redraw the border of the main screen.
@@ -33,7 +34,7 @@ foreach (var @event in terminal.Events.Listen(subWindow))
         subWindow.Size = new(re.Size.Width - 2, re.Size.Height - 2);
         terminal.Screen.DrawBorder();
     }
-    
+
     // If the user pressed CTRL+C, break the loop.
     if (@event is KeyEvent { Key: Key.Character, Char.IsAscii: true, Char.Value: 'C', Modifiers: ModifierKey.Ctrl })
     {

@@ -60,7 +60,7 @@ public enum EventType
     ///     The mouse buttons have been used.
     /// </summary>
     MouseAction,
-    
+
     /// <summary>
     ///     Delegated data needs to be processed on main thread.
     /// </summary>
