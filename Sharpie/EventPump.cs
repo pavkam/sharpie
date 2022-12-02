@@ -12,7 +12,7 @@ public sealed class EventPump
     
     private readonly ICursesProvider _curses;
     private readonly Screen _screen;
-
+        
     /// <summary>
     /// Creates a new instances of this class.
     /// </summary>
@@ -27,7 +27,7 @@ public sealed class EventPump
     
     private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)
     {
-        _curses.wtimeout(windowHandle, quickWait ? 10 : 1000);
+        _curses.wtimeout(windowHandle, quickWait ? 10 : 100);
         var result = _curses.wget_wch(windowHandle, out var keyCode);
 
         return (result, keyCode);
@@ -106,7 +106,7 @@ public sealed class EventPump
                 }
 
                 @event = resolved;
-            } else
+            } else if (@event is not DelegateEvent)
             {
                 while (escapeSequence.Count > 0)
                 {

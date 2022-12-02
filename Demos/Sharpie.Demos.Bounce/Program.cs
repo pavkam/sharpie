@@ -24,7 +24,7 @@ var y = -1;
 var dx = 1;
 var dy = 1;
 
-terminal.RepeatInterval((t) =>
+terminal.Repeat((t) =>
 {
     glyph.Glyph(new(0, 0), glyphStyle, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, styles[currentStyle]);
 

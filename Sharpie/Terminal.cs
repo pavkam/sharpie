@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 using System.Collections.Concurrent;
+using Nito.AsyncEx;
 
 /// <summary>
 ///     This class allows the developer to interact with the terminal and its settings. This is the main
@@ -39,6 +40,13 @@ using System.Collections.Concurrent;
 [PublicAPI]
 public sealed class Terminal: IDisposable
 {
+    private sealed class Interval: IInterval
+    {
+        public Timer? Timer;
+        public bool Stopped;
+        public void Stop() { Stopped = true; }
+    }
+
     private static bool _terminalInstanceActive;
     private ColorManager _colorManager;
     private int? _initialCaretMode;
@@ -48,11 +56,12 @@ public sealed class Terminal: IDisposable
     private SoftLabelKeyManager _softLabelKeyManager;
     private EventPump _eventPump;
     
-    private BlockingCollection<object>? _invokeQueue;
-    private ConcurrentDictionary<Guid, Timer> _timers = new();
-
+    private readonly ConcurrentQueue<object> _delegateQueue = new();
+    private readonly ManualResetEventSlim _delegateAvailable = new();
+    
     /// <summary>
-    ///     Creates a new instance of the terminal.
+    ///     Creates a new instance
+    /// of the terminal.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="options">The terminal options.</param>
@@ -84,7 +93,7 @@ public sealed class Terminal: IDisposable
         // Screen setup.
         _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
         _screen = new(curses, this, curses.initscr()
-                                    .Check(nameof(curses.initscr), "Failed to create the screen window."));
+                                          .Check(nameof(curses.initscr), "Failed to create the screen window."));
 
         _eventPump = new(curses, _screen);
         _colorManager = new(curses, Options.UseColors);
@@ -169,9 +178,9 @@ public sealed class Terminal: IDisposable
         {
             // Register standard key sequence resolvers.
             _eventPump.Use(KeySequenceResolver.SpecialCharacterResolver);
-            _eventPump. Use(KeySequenceResolver.ControlKeyResolver);
+            _eventPump.Use(KeySequenceResolver.ControlKeyResolver);
             _eventPump.Use(KeySequenceResolver.AltKeyResolver);
-            _eventPump. Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _eventPump.Use(KeySequenceResolver.KeyPadModifiersResolver);
         }
     }
 
@@ -260,7 +269,7 @@ public sealed class Terminal: IDisposable
             return _eventPump;
         }
     }
-    
+
     /// <summary>
     ///     Specifies whether the terminal supports hardware line insert and delete.
     /// </summary>
@@ -361,7 +370,7 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(Curses.beep), "Failed to beep the terminal.");
         }
     }
-    
+
     /// <summary>
     ///     Validates that the terminal is not disposed.
     /// </summary>
@@ -373,158 +382,174 @@ public sealed class Terminal: IDisposable
             throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
         }
     }
-    
-    private bool Post(Func<Task> action)
-    {
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
 
-        var queue = _invokeQueue;
-        return !IsDisposed && queue is { IsCompleted: false } && queue.TryAdd(action);
-    }
-     
-    private Guid Timer<TState>(
-        Func<Terminal, TState?, Task> action, 
-        int dueMillis, int periodMillis, 
+    private Interval NewInterval<TState>(Func<Terminal, TState?, Task> action, int dueMillis, int periodMillis,
         TState? initialState)
     {
-        var timerId = Guid.NewGuid();
-        var timer = new Timer(id =>
+        var interval = new Interval();
+
+        interval.Timer = new(i =>
         {
-            Debug.Assert(id is Guid);
-            
-            try
+            Debug.Assert(i is Interval);
+            if (((Interval) i).Stopped || IsDisposed)
             {
-                Post(() => action(this, initialState));
-            } finally
+                ((Interval) i).Timer?.Dispose();
+            } else
             {
-                _timers.Remove((Guid) id, out var _);
+                Delegate(() => action(this, initialState));
             }
-        }, timerId, dueMillis, periodMillis);
+        }, interval, dueMillis, periodMillis);
 
-        _timers.AddOrUpdate(timerId, _ => timer, (_, _) => timer);
-        return timerId;
+        return interval;
     }
-
-    [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
-    public async Task RunAsync(Func<Event, Task<bool>> eventAction, bool stopOnCtrlC = true)
+    
+    /// <summary>
+    /// Runs the application main loop and dispatches each event to <paramref name="eventAction"/>.
+    /// </summary>
+    /// <param name="eventAction">The method to accept the events.</param>
+    /// <param name="stopOnCtrlC">Set to <c>true</c> if CTRL+C should interrupt the main loop.</param>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction"/> is <c>null</c>.</exception>
+    public async Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true)
     {
         if (eventAction == null)
         {
             throw new ArgumentNullException(nameof(eventAction));
         }
 
-        using var queue = new BlockingCollection<object>();
-        _invokeQueue = queue;
-        
-        using var ct = new CancellationTokenSource();
+        var cts = new CancellationTokenSource();
         var pumpTask = Task.Run(() =>
         {
-            foreach (var @event in Events.Listen(ct.Token))
+            foreach(var @event in Events.Listen(cts.Token))
             {
-                if (stopOnCtrlC &&
-                    @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
+                _delegateQueue.Enqueue(@event);
+                _delegateAvailable.Set();
+            }
+        }, cts.Token);
+        
+        AsyncContext.Run(async () =>
+        {
+            var loop = true;
+            while (loop)
+            {
+                _delegateAvailable.Wait(cts.Token);
+                while (loop && _delegateQueue.TryDequeue(out var message))
                 {
-                    break;
-                }
-
-                if (!ct.IsCancellationRequested)
-                {
-                    queue.Add(@event, ct.Token);
+                    switch (message)
+                    {
+                        case Func<Task> @delegate:
+                            await @delegate();
+                            break;
+                        case KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl } when stopOnCtrlC:
+                            loop = false;
+                            break; 
+                        case Event @event:
+                            await eventAction(@event);
+                            break;
+                    }
                 }
             }
             
-            queue.CompleteAdding();
-        }, ct.Token);
-
-        foreach (var message in queue.GetConsumingEnumerable())
-        {
-            switch (message)
-            {
-                case Event @event:
-                {
-                    var @continue = await eventAction(@event);
-                
-                    if (!@continue)
-                    {
-                        ct.Cancel();
-                    }
-
-                    break;
-                }
-                case Func<Task> invoke:
-                    await invoke();
-                    break;
-                default:
-                    Debug.Fail("Unsupported message.");
-                    break;
-            }
-        }
+            cts.Cancel();
+        });
 
         await pumpTask;
-        _invokeQueue = null;
     }
 
+    /// <summary>
+    /// Delegates an action to be executed on the main thread.
+    /// </summary>
+    /// <param name="action">The action to execute.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="action"/> is <c>null</c>.</exception>
     public void Delegate(Func<Task> action)
     {
-        Post(action);
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+        AssertAlive();
+        _delegateQueue.Enqueue(action);
     }
-    
-    public Guid DelayInterval<TState>(Func<Terminal, TState?, Task> action, 
-        int delayMillis, TState? initialState = default)
+
+    /// <summary>
+    /// Sets up a delayed action that is to be executed after some time.
+    /// </summary>
+    /// <param name="action">The action to be executed.</param>
+    /// <param name="delayMillis">The delay in milliseconds.</param>
+    /// <param name="state">User-supplied state object.</param>
+    /// <typeparam name="TState">The type of the state object.</typeparam>
+    /// <returns>The interval object.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis"/> is negative.</exception>
+    public IInterval Delay<TState>(Func<Terminal, TState?, Task> action, int delayMillis,
+        TState? state = default)
     {
         if (delayMillis < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(delayMillis));
         }
 
-        return Timer(action, delayMillis, Timeout.Infinite, initialState);
+        return NewInterval(action, delayMillis, Timeout.Infinite, state);
     }
-    
-    public Guid DelayInterval(Func<Terminal, Task> action, int delayMillis)
+
+    /// <summary>
+    /// Sets up a delayed action that is to be executed after some time.
+    /// </summary>
+    /// <param name="action">The action to be executed.</param>
+    /// <param name="delayMillis">The delay in milliseconds.</param>
+    /// <returns>The interval object.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis"/> is negative.</exception>
+    public IInterval Delay(Func<Terminal, Task> action, int delayMillis)
     {
         if (action == null)
         {
             throw new ArgumentNullException(nameof(action));
         }
 
-        return DelayInterval<DBNull>((t, s) => action(t), delayMillis);
+        return Delay<DBNull>((t, _) => action(t), delayMillis);
     }
-       
-    public Guid RepeatInterval<TState>(Func<Terminal, TState?, Task> action, 
-        int intervalMillis, bool immediate = false, TState? initialState = default)
+
+    /// <summary>
+    /// Sets up a delayed action that is to be executed after some time.
+    /// </summary>
+    /// <param name="action">The action to be executed.</param>
+    /// <param name="intervalMillis">The interval in milliseconds.</param>
+    /// <param name="immediate">If <c>true</c>, triggers the execution of the action immediately.</param>
+    /// <param name="state">User-supplied state object.</param>
+    /// <typeparam name="TState">The type of the state object.</typeparam>
+    /// <returns>The interval object.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis"/> is negative.</exception>
+    public IInterval Repeat<TState>(
+        Func<Terminal, TState?, Task> action, 
+        int intervalMillis, 
+        bool immediate = false,
+        TState? state = default)
     {
         if (intervalMillis < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(intervalMillis));
         }
 
-        return Timer(action, immediate ? 0 : intervalMillis, intervalMillis, initialState);
+        return NewInterval(action, immediate ? 0 : intervalMillis, intervalMillis, state);
     }
-    
-    public Guid RepeatInterval(Func<Terminal, Task> action, int intervalMillis, bool immediate = false)
+
+    /// <summary>
+    /// Sets up a delayed action that is to be executed after some time.
+    /// </summary>
+    /// <param name="action">The action to be executed.</param>
+    /// <param name="intervalMillis">The interval in milliseconds.</param>
+    /// <param name="immediate">If <c>true</c>, triggers the execution of the action immediately.</param>
+    /// <returns>The interval object.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis"/> is negative.</exception>
+    public IInterval Repeat(Func<Terminal, Task> action, int intervalMillis, bool immediate = false)
     {
         if (action == null)
         {
             throw new ArgumentNullException(nameof(action));
         }
 
-        return RepeatInterval<DBNull>((t, s) => action(t), intervalMillis, immediate);
+        return Repeat<DBNull>((t, _) => action(t), intervalMillis, immediate);
     }
 
-    public bool CancelInterval(Guid timerId)
-    {
-        if (_timers.TryRemove(timerId, out var timer))
-        {
-            timer.Dispose();
-            return true;
-        }
-
-        return false;
-    }
-    
     /// <summary>
     ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>

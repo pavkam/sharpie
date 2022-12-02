@@ -31,38 +31,31 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     Defines the possible event types.
+///     Defines an event that carries delegated data. Event useful mostly to
+///     synchronize across threads.
 /// </summary>
 [PublicAPI]
-public enum EventType
+public sealed class DelegateEvent: Event
 {
     /// <summary>
-    ///     Undefined event.
+    ///     Creates a new instance of the class.
     /// </summary>
-    Undefined = 0,
+    /// <param name="data">The delegated data.</param>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="data"/> is <c>null</c>.</exception>
+    public DelegateEvent(object data): base(EventType.Delegate) => Data = data ?? throw new ArgumentNullException(nameof(data));
 
     /// <summary>
-    ///     The terminal has been resized.
+    ///     The delegated data.
     /// </summary>
-    TerminalResize,
+    public object Data { get; }
 
-    /// <summary>
-    ///     A key has been pressed.
-    /// </summary>
-    KeyPress,
+    /// <inheritdoc cref="object.ToString" />
+    public override string ToString() => $"Delegate [{Data}]";
 
-    /// <summary>
-    ///     The mouse has moved.
-    /// </summary>
-    MouseMove,
+    /// <inheritdoc cref="object.Equals(object)" />
+    public override bool Equals(object? obj) =>
+        obj is DelegateEvent mae && mae.Data.Equals(Data) && mae.Type == Type && obj.GetType() == GetType();
 
-    /// <summary>
-    ///     The mouse buttons have been used.
-    /// </summary>
-    MouseAction,
-    
-    /// <summary>
-    ///     Delegated data needs to be processed on main thread.
-    /// </summary>
-    Delegate
+    /// <inheritdoc cref="object.GetHashCode" />
+    public override int GetHashCode() => HashCode.Combine(Data, Type);
 }
