@@ -257,6 +257,5 @@ public sealed class ColorManager
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public (short red, short green, short blue) BreakdownColor(StandardColor color) =>
-        BreakdownColor((short) color);
+    public (short red, short green, short blue) BreakdownColor(StandardColor color) => BreakdownColor((short) color);
 }

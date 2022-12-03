@@ -54,7 +54,7 @@ public static class ControlCharacter
     ///     The tab character.
     /// </summary>
     public const char Tab = '\t';
-    
+
     /// <summary>
     ///     The whitespace character.
     /// </summary>

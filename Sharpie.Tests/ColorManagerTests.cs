@@ -217,8 +217,7 @@ public class ColorManagerTests
     [TestMethod]
     public void RedefineColor_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.init_color(It.IsAny<short>(), It.IsAny<short>(), It.IsAny<short>(),
-                       It.IsAny<short>()))
+        _cursesMock.Setup(s => s.init_color(It.IsAny<short>(), It.IsAny<short>(), It.IsAny<short>(), It.IsAny<short>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _colorManager.RedefineColor(1, 2, 3, 4); })

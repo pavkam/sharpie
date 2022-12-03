@@ -57,17 +57,13 @@ public class PadTests
 
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-        
+
         _terminal = new(_cursesMock.Object, new());
         _screen = new(_cursesMock.Object, _terminal, new(1));
         _pad1 = new(_cursesMock.Object, _screen, new(2));
     }
-    
-    [TestCleanup]
-    public void TestCleanup()
-    {
-        _terminal.Dispose();
-    }
+
+    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
 
     [TestMethod]
     public void Ctor_Throws_IfCursesIsNull()

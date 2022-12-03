@@ -34,9 +34,9 @@ namespace Sharpie.Tests;
 public class EventPumpTests
 {
     private Mock<ICursesProvider> _cursesMock = null!;
-    private Terminal _terminal = null!;
     private EventPump _pump = null!;
     private CancellationTokenSource _source = null!;
+    private Terminal _terminal = null!;
     private Window _window = null!;
 
     private Event[] SimulateEvents(int count, Window w, params (int result, uint keyCode)[] raw)
@@ -106,11 +106,7 @@ public class EventPumpTests
         _source = new();
     }
 
-    [TestCleanup]
-    public void TestCleanup()
-    {
-        _terminal.Dispose();
-    }
+    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
 
     [TestMethod]
     public void Ctor_Throws_IfCursesIsNull()
@@ -147,30 +143,24 @@ public class EventPumpTests
     }
 
     [TestMethod]
-    public void Use_Throws_IfResolverIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _pump.Use(null!));
-    }
+    public void Use_Throws_IfResolverIsNull() { Should.Throw<ArgumentNullException>(() => _pump.Use(null!)); }
 
     [TestMethod]
-    public void Uses_Throws_IfResolverIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _pump.Uses(null!));
-    }
+    public void Uses_Throws_IfResolverIsNull() { Should.Throw<ArgumentNullException>(() => _pump.Uses(null!)); }
 
     [TestMethod]
     public void Uses_ReturnsTrue_IfResolverRegistered()
     {
         _pump.Use(KeySequenceResolver.AltKeyResolver);
         _pump.Uses(KeySequenceResolver.AltKeyResolver)
-                 .ShouldBeTrue();
+             .ShouldBeTrue();
     }
 
     [TestMethod]
     public void Uses_ReturnsFalse_IfResolverNotRegistered()
     {
         _pump.Uses(KeySequenceResolver.AltKeyResolver)
-                 .ShouldBeFalse();
+             .ShouldBeFalse();
     }
 
     [TestMethod]
@@ -255,7 +245,7 @@ public class EventPumpTests
 
         var me = new MouseMoveEvent(new(1, 1));
         _pump.TryResolveMouseEvent(me, out var l)
-                 .ShouldBeTrue();
+             .ShouldBeTrue();
 
         // ReSharper disable once PossibleMultipleEnumeration
         l.ShouldNotBeNull();
@@ -275,7 +265,7 @@ public class EventPumpTests
 
         var me = new MouseMoveEvent(new(1, 1));
         _pump.TryResolveMouseEvent(me, out var _)
-                 .ShouldBeFalse();
+             .ShouldBeFalse();
     }
 
     [TestMethod]
@@ -285,7 +275,7 @@ public class EventPumpTests
 
         var me = new MouseMoveEvent(new(1, 1));
         _pump.TryResolveMouseEvent(me, out var _)
-                 .ShouldBeTrue();
+             .ShouldBeTrue();
     }
 
     [TestMethod]
@@ -301,7 +291,7 @@ public class EventPumpTests
 
         var me = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Ctrl);
         _pump.TryResolveMouseEvent(me, out var _)
-                 .ShouldBeTrue();
+             .ShouldBeTrue();
     }
 
     [TestMethod]
@@ -309,14 +299,15 @@ public class EventPumpTests
     {
         Should.Throw<ArgumentNullException>(() => _pump.TryResolveMouseEvent((MouseActionEvent) null!, out var _));
     }
-    
+
     [TestMethod]
     public void Listen1_ThrowsIfWindowIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => _pump.Listen(null!, CancellationToken.None).ToArray());
+        Should.Throw<ArgumentNullException>(() => _pump.Listen(null!, CancellationToken.None)
+                                                       .ToArray());
     }
-    
-    [TestMethod,SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen1_CallsCurses_ForWindow()
     {
         _pump.Listen(_window, CancellationToken.None)
@@ -324,8 +315,8 @@ public class EventPumpTests
 
         _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
     }
-    
-    [TestMethod,SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen2_CallsCurses_ForWindow()
     {
         _pump.Listen(_window)
@@ -333,8 +324,8 @@ public class EventPumpTests
 
         _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
     }
-    
-    [TestMethod,SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen3_CallsCurses_ForScreen()
     {
         _pump.Listen(CancellationToken.None)
@@ -342,8 +333,8 @@ public class EventPumpTests
 
         _cursesMock.Verify(s => s.wget_wch(_terminal.Screen.Handle, out It.Ref<uint>.IsAny), Times.Once);
     }
-    
-    [TestMethod,SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen4_CallsCurses_ForScreen()
     {
         _pump.Listen()
@@ -351,13 +342,14 @@ public class EventPumpTests
 
         _cursesMock.Verify(s => s.wget_wch(_terminal.Screen.Handle, out It.Ref<uint>.IsAny), Times.Once);
     }
-    
+
     [TestMethod]
     public void Listen2_ThrowsIfWindowIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => _pump.Listen(null!).ToArray());
+        Should.Throw<ArgumentNullException>(() => _pump.Listen(null!)
+                                                       .ToArray());
     }
-    
+
     [TestMethod]
     public void Listen1_KeepsReadingUntilCancelled()
     {
@@ -492,7 +484,7 @@ public class EventPumpTests
     public void Listen1_SkipsMouseEvents_WithBadButtons()
     {
         _pump.UseInternalMouseEventResolver = false;
-        
+
         var skip = true;
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>

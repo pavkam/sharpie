@@ -30,6 +30,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
+using System.Collections.Concurrent;
+using Nito.AsyncEx;
+
 /// <summary>
 ///     This class allows the developer to interact with the terminal and its settings. This is the main
 ///     class that is used in a Curses-based application.
@@ -38,16 +41,21 @@ namespace Sharpie;
 public sealed class Terminal: IDisposable
 {
     private static bool _terminalInstanceActive;
+    private static object _stopSignal = new();
+    
+    private BlockingCollection<object>? _delegateQueue;
+    private ManualResetEventSlim _runCompletedEvent = new(true);
     private ColorManager _colorManager;
+    private EventPump _eventPump;
     private int? _initialCaretMode;
     private int? _initialMouseClickDelay;
     private uint? _initialMouseMask;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-    private EventPump _eventPump;
-    
+
     /// <summary>
-    ///     Creates a new instance of the terminal.
+    ///     Creates a new instance
+    ///     of the terminal.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
     /// <param name="options">The terminal options.</param>
@@ -79,7 +87,7 @@ public sealed class Terminal: IDisposable
         // Screen setup.
         _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
         _screen = new(curses, this, curses.initscr()
-                                    .Check(nameof(curses.initscr), "Failed to create the screen window."));
+                                          .Check(nameof(curses.initscr), "Failed to create the screen window."));
 
         _eventPump = new(curses, _screen);
         _colorManager = new(curses, Options.UseColors);
@@ -164,9 +172,9 @@ public sealed class Terminal: IDisposable
         {
             // Register standard key sequence resolvers.
             _eventPump.Use(KeySequenceResolver.SpecialCharacterResolver);
-            _eventPump. Use(KeySequenceResolver.ControlKeyResolver);
+            _eventPump.Use(KeySequenceResolver.ControlKeyResolver);
             _eventPump.Use(KeySequenceResolver.AltKeyResolver);
-            _eventPump. Use(KeySequenceResolver.KeyPadModifiersResolver);
+            _eventPump.Use(KeySequenceResolver.KeyPadModifiersResolver);
         }
     }
 
@@ -255,7 +263,7 @@ public sealed class Terminal: IDisposable
             return _eventPump;
         }
     }
-    
+
     /// <summary>
     ///     Specifies whether the terminal supports hardware line insert and delete.
     /// </summary>
@@ -292,13 +300,22 @@ public sealed class Terminal: IDisposable
     /// <summary>
     ///     Checks whether the terminal has been disposed of and is no longer usable.
     /// </summary>
-    public bool IsDisposed => _screen.Disposed;
+    public bool IsDisposed { get; private set; }
 
     /// <summary>
     ///     Disposes the current terminal instance.
     /// </summary>
     public void Dispose()
     {
+        if (IsDisposed)
+        {
+            return;
+        }
+        
+        _delegateQueue?.Add(_stopSignal);
+        _runCompletedEvent.Wait();
+        _runCompletedEvent.Dispose();
+        
         if (_screen != null!)
         {
             _screen.Dispose();
@@ -320,6 +337,7 @@ public sealed class Terminal: IDisposable
         }
 
         _terminalInstanceActive = false;
+        IsDisposed = true;
         GC.SuppressFinalize(this);
     }
 
@@ -356,7 +374,7 @@ public sealed class Terminal: IDisposable
                   .Check(nameof(Curses.beep), "Failed to beep the terminal.");
         }
     }
-    
+
     /// <summary>
     ///     Validates that the terminal is not disposed.
     /// </summary>
@@ -369,8 +387,230 @@ public sealed class Terminal: IDisposable
         }
     }
 
+    private Interval NewInterval<TState>(Func<Terminal, TState?, Task> action, int dueMillis, int periodMillis,
+        TState? initialState)
+    {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+        var interval = new Interval();
+
+        interval.Timer = new(i =>
+        {
+            Debug.Assert(i is Interval);
+            if (((Interval) i).Stopped || IsDisposed)
+            {
+                ((Interval) i).Timer?.Dispose();
+            } else
+            {
+                Delegate(() => action(this, initialState));
+            }
+        }, interval, dueMillis, periodMillis);
+
+        return interval;
+    }
+    
+    private Task PumpEventsAsync(CancellationToken cancellationToken)
+    {
+        Debug.Assert(_delegateQueue != null);
+        
+        return Task.Run(() =>
+        {
+            foreach (var @event in Events.Listen(cancellationToken))
+            {
+                _delegateQueue.Add(@event, CancellationToken.None);
+            }
+        }, cancellationToken);
+    }
+
+    private Task PumpMessagesAsync(Func<Event, Task> action, CancellationTokenSource cancellationTokenSource,
+        bool stopOnCtrlC)
+    {
+        Debug.Assert(_delegateQueue != null);
+        Debug.Assert(action != null);
+        Debug.Assert(cancellationTokenSource != null);
+
+        return Task.Run(() =>
+        {
+            AsyncContext.Run(async () =>
+            {
+                foreach (var message in _delegateQueue.GetConsumingEnumerable())
+                {
+                    switch (message)
+                    {
+                        case Func<Task> @delegate:
+                            await @delegate();
+                            break;
+                        case not null when message.Equals(_stopSignal):
+                        case KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl }
+                            when stopOnCtrlC:
+                            cancellationTokenSource.Cancel();
+                            break;
+                        case Event @event:
+                            await action(@event);
+                            break;
+                    }
+                    
+                    if (cancellationTokenSource.Token.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                }
+            });
+        });
+    }
+
+    /// <summary>
+    ///     Runs the application main loop and dispatches each event to <paramref name="eventAction" />.
+    /// </summary>
+    /// <param name="eventAction">The method to accept the events.</param>
+    /// <param name="stopOnCtrlC">Set to <c>true</c> if CTRL+C should interrupt the main loop.</param>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync"/> is already running.</exception>
+    [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
+    public async Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true)
+    {
+        if (eventAction == null)
+        {
+            throw new ArgumentNullException(nameof(eventAction));
+        }
+
+        if (_delegateQueue != null)
+        {
+            throw new InvalidOperationException("Event processing already running.");
+        }
+
+        _delegateQueue = new();
+        _runCompletedEvent.Reset();
+        
+        var cts = new CancellationTokenSource();
+        var eventTask = PumpEventsAsync(cts.Token);
+        var messageTask = PumpMessagesAsync(eventAction, cts, stopOnCtrlC);
+
+        await Task.WhenAll(eventTask, messageTask);
+
+        _delegateQueue.Dispose();
+        _delegateQueue = null;
+        _runCompletedEvent.Set();
+    }
+
+    /// <summary>
+    ///     Delegates an action to be executed on the main thread.
+    /// </summary>
+    /// <param name="action">The action to execute.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="action" /> is <c>null</c>.</exception>
+    public void Delegate(Func<Task> action)
+    {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+        AssertAlive();
+        _delegateQueue?.Add(action);
+    }
+
+    /// <summary>
+    ///     Sets up a delayed action that is to be executed after some time.
+    /// </summary>
+    /// <param name="action">The action to be executed.</param>
+    /// <param name="delayMillis">The delay in milliseconds.</param>
+    /// <param name="state">User-supplied state object.</param>
+    /// <typeparam name="TState">The type of the state object.</typeparam>
+    /// <returns>The interval object.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis" /> is negative.</exception>
+    public IInterval Delay<TState>(Func<Terminal, TState?, Task> action, int delayMillis, TState? state)
+    {
+        if (delayMillis < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(delayMillis));
+        }
+
+        return NewInterval(action, delayMillis, Timeout.Infinite, state);
+    }
+
+    /// <summary>
+    ///     Sets up a delayed action that is to be executed after some time.
+    /// </summary>
+    /// <param name="action">The action to be executed.</param>
+    /// <param name="delayMillis">The delay in milliseconds.</param>
+    /// <returns>The interval object.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis" /> is negative.</exception>
+    public IInterval Delay(Func<Terminal, Task> action, int delayMillis)
+    {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+        return Delay((t, _) => action(t), delayMillis, DBNull.Value);
+    }
+
+    /// <summary>
+    ///     Sets up a delayed action that is to be executed after some time.
+    /// </summary>
+    /// <param name="action">The action to be executed.</param>
+    /// <param name="intervalMillis">The interval in milliseconds.</param>
+    /// <param name="immediate">If <c>true</c>, triggers the execution of the action immediately.</param>
+    /// <param name="state">User-supplied state object.</param>
+    /// <typeparam name="TState">The type of the state object.</typeparam>
+    /// <returns>The interval object.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis" /> is negative.</exception>
+    public IInterval Repeat<TState>(Func<Terminal, TState?, Task> action, int intervalMillis, bool immediate = false,
+        TState? state = default)
+    {
+        if (intervalMillis < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(intervalMillis));
+        }
+
+        return NewInterval(action, immediate ? 0 : intervalMillis, intervalMillis, state);
+    }
+
+    /// <summary>
+    ///     Sets up a delayed action that is to be executed after some time.
+    /// </summary>
+    /// <param name="action">The action to be executed.</param>
+    /// <param name="intervalMillis">The interval in milliseconds.</param>
+    /// <param name="immediate">If <c>true</c>, triggers the execution of the action immediately.</param>
+    /// <returns>The interval object.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis" /> is negative.</exception>
+    public IInterval Repeat(Func<Terminal, Task> action, int intervalMillis, bool immediate = false)
+    {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+        return Repeat<DBNull>((t, _) => action(t), intervalMillis, immediate);
+    }
+
+    /// <summary>
+    /// Enqueues a stop signal for the <see cref="RunAsync"/> method.
+    /// </summary>
+    /// <param name="wait">If <c>true</c>, waits until running completes.</param>
+    public void Stop(bool wait = false)
+    {
+        AssertAlive();
+
+        _delegateQueue?.Add(_stopSignal);
+        if (wait)
+        {
+            _runCompletedEvent.Wait();
+        }
+    }
+
     /// <summary>
     ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>
     ~Terminal() { Dispose(); }
+
+    private sealed class Interval: IInterval
+    {
+        public bool Stopped;
+        public Timer? Timer;
+        public void Stop() { Stopped = true; }
+    }
 }

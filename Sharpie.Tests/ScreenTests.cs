@@ -41,19 +41,15 @@ public class ScreenTests
     public void TestInitialize()
     {
         _cursesMock = new();
-        
+
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-        
-        _terminal  = new(_cursesMock.Object, new());
-        _screen1 = new(_cursesMock.Object,_terminal, new(1));
+
+        _terminal = new(_cursesMock.Object, new());
+        _screen1 = new(_cursesMock.Object, _terminal, new(1));
     }
-    
-    [TestCleanup]
-    public void TestCleanup()
-    {
-        _terminal.Dispose();
-    }
+
+    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
 
     private void MockLargeArea(IntPtr window)
     {
@@ -74,7 +70,10 @@ public class ScreenTests
     }
 
     [TestMethod]
-    public void Ctor_Throws_IfCursesIsNull() { Should.Throw<ArgumentNullException>(() => new Screen(null!, _terminal, new(1))); }
+    public void Ctor_Throws_IfCursesIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => new Screen(null!, _terminal, new(1)));
+    }
 
     [TestMethod]
     public void Ctor_Throws_IfTerminalIsNull()
@@ -85,14 +84,10 @@ public class ScreenTests
     [TestMethod]
     public void Ctor_Throws_IfHandleIsZero()
     {
-        Should.Throw<ArgumentException>(() => new Screen(_cursesMock.Object, _terminal,IntPtr.Zero));
+        Should.Throw<ArgumentException>(() => new Screen(_cursesMock.Object, _terminal, IntPtr.Zero));
     }
 
-    [TestMethod]
-    public void Terminal_IsInitialized()
-    {
-        _screen1.Terminal.ShouldBe(_terminal);
-    }
+    [TestMethod] public void Terminal_IsInitialized() { _screen1.Terminal.ShouldBe(_terminal); }
 
     [TestMethod] public void Parent_IsNull() { _screen1.Parent.ShouldBeNull(); }
 
@@ -409,5 +404,4 @@ public class ScreenTests
         _cursesMock.Verify(v => v.clearok(_screen1.Handle, true), Times.Once);
         _cursesMock.Verify(v => v.wrefresh(_screen1.Handle), Times.Once);
     }
-
 }

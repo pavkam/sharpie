@@ -432,7 +432,7 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.Screen.ShouldNotBeNull();
     }
-    
+
     [TestMethod]
     public void Events_Throws_IfTerminalIsDisposed()
     {

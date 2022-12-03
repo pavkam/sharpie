@@ -366,23 +366,27 @@ public class HelpersTests
         _cursesMock.Object.ValidOrNull()
                    .ShouldBe(_cursesMock.Object);
     }
-    
+
     [TestMethod]
     public void EnumerateInHalves_Throws_IfStartIsNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.EnumerateInHalves(-1, 1).ToArray());
+        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.EnumerateInHalves(-1, 1)
+                                                               .ToArray());
     }
-    
+
     [TestMethod]
     public void EnumerateInHalves_Throws_IfCountIsNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.EnumerateInHalves(0, -1).ToArray());
+        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.EnumerateInHalves(0, -1)
+                                                               .ToArray());
     }
-    
+
     [TestMethod]
     public void EnumerateInHalves_ReturnsNothingIsCountIsZero()
     {
-        Helpers.EnumerateInHalves(0, 0).ToArray().ShouldBeEmpty();
+        Helpers.EnumerateInHalves(0, 0)
+               .ToArray()
+               .ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -392,15 +396,16 @@ public class HelpersTests
                .ToArray()
                .ShouldBeEmpty();
     }
-    
+
     [TestMethod]
     public void EnumerateInHalves_ReturnsOneIfCountIsApproxHalf()
     {
         var r = Helpers.EnumerateInHalves(0, 0.7F)
                        .ToArray();
-        
+
         r.Length.ShouldBe(1);
-        r[0].ShouldBe((0, true));
+        r[0]
+            .ShouldBe((0, true));
     }
 
     [TestMethod]
@@ -408,33 +413,44 @@ public class HelpersTests
     {
         var r = Helpers.EnumerateInHalves(0, 1.2F)
                        .ToArray();
-        
+
         r.Length.ShouldBe(2);
-        r[0].ShouldBe((0, true));
-        r[1].ShouldBe((0, false));
+        r[0]
+            .ShouldBe((0, true));
+
+        r[1]
+            .ShouldBe((0, false));
     }
-    
+
     [TestMethod]
     public void EnumerateInHalves_ReturnsThreeIfCountAllows()
     {
         var r = Helpers.EnumerateInHalves(0, 1.5F)
                        .ToArray();
-        
+
         r.Length.ShouldBe(3);
-        r[0].ShouldBe((0, true));
-        r[1].ShouldBe((0, false));
-        r[2].ShouldBe((1, true));
+        r[0]
+            .ShouldBe((0, true));
+
+        r[1]
+            .ShouldBe((0, false));
+
+        r[2]
+            .ShouldBe((1, true));
     }
-    
+
     [TestMethod]
     public void EnumerateInHalves_OffsetsByStart_1()
     {
         var r = Helpers.EnumerateInHalves(0.6F, 1)
                        .ToArray();
-        
+
         r.Length.ShouldBe(2);
-        r[0].ShouldBe((0, false));
-        r[1].ShouldBe((1, true));
+        r[0]
+            .ShouldBe((0, false));
+
+        r[1]
+            .ShouldBe((1, true));
     }
 
     [TestMethod]
@@ -442,9 +458,12 @@ public class HelpersTests
     {
         var r = Helpers.EnumerateInHalves(1.5F, 1.2F)
                        .ToArray();
-        
+
         r.Length.ShouldBe(2);
-        r[0].ShouldBe((1, false));
-        r[1].ShouldBe((2, true));
+        r[0]
+            .ShouldBe((1, false));
+
+        r[1]
+            .ShouldBe((2, true));
     }
 }
