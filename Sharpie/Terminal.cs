@@ -41,6 +41,7 @@ using Nito.AsyncEx;
 public sealed class Terminal: IDisposable
 {
     private static bool _terminalInstanceActive;
+    private static object _stopSignal = new();
     
     private BlockingCollection<object>? _delegateQueue;
     private ManualResetEventSlim _runCompletedEvent = new(true);
@@ -311,13 +312,8 @@ public sealed class Terminal: IDisposable
             return;
         }
         
-        var dq = _delegateQueue;
-        if (dq != null)
-        {
-            dq.CompleteAdding();
-            _runCompletedEvent.Wait();
-        }
-
+        _delegateQueue?.Add(_stopSignal);
+        _runCompletedEvent.Wait();
         _runCompletedEvent.Dispose();
         
         if (_screen != null!)
@@ -424,17 +420,7 @@ public sealed class Terminal: IDisposable
         {
             foreach (var @event in Events.Listen(cancellationToken))
             {
-                if (!_delegateQueue.IsAddingCompleted && 
-                    !cancellationToken.IsCancellationRequested)
-                {
-                    try
-                    {
-                        _delegateQueue.Add(@event, cancellationToken);
-                    } catch (InvalidOperationException)
-                    {
-                        // Eat the potential error.
-                    }
-                }
+                _delegateQueue.Add(@event, CancellationToken.None);
             }
         }, cancellationToken);
     }
@@ -457,17 +443,21 @@ public sealed class Terminal: IDisposable
                         case Func<Task> @delegate:
                             await @delegate();
                             break;
+                        case not null when message.Equals(_stopSignal):
                         case KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl }
                             when stopOnCtrlC:
-                            _delegateQueue.CompleteAdding();
+                            cancellationTokenSource.Cancel();
                             break;
                         case Event @event:
                             await action(@event);
                             break;
                     }
+                    
+                    if (cancellationTokenSource.Token.IsCancellationRequested)
+                    {
+                        break;
+                    }
                 }
-
-                cancellationTokenSource.Cancel();
             });
         });
     }
@@ -519,17 +509,7 @@ public sealed class Terminal: IDisposable
         }
 
         AssertAlive();
-        var dq = _delegateQueue;
-        if (dq is { IsAddingCompleted: false })
-        {
-            try
-            {
-                dq.Add(action);
-            } catch (InvalidOperationException)
-            {
-                // Ignore potential race conditions.
-            }
-        }
+        _delegateQueue?.Add(action);
     }
 
     /// <summary>
@@ -615,17 +595,13 @@ public sealed class Terminal: IDisposable
     {
         AssertAlive();
 
-        var dq = _delegateQueue;
-        if (dq != null)
+        _delegateQueue?.Add(_stopSignal);
+        if (wait)
         {
-            dq.CompleteAdding();
-            if (wait)
-            {
-                _runCompletedEvent.Wait();
-            }
+            _runCompletedEvent.Wait();
         }
     }
-    
+
     /// <summary>
     ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>

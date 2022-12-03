@@ -265,6 +265,15 @@ public class TerminalMainLoopTests
         
         ch.ShouldBe('c');
     }
+    
+    [TestMethod]
+    public async Task Stop_WaitsForThingsToFinish()
+    {
+        var ra = _terminal.RunAsync(_ => Task.CompletedTask);
+        _terminal.Stop(true);
+
+        await ra;
+    }
 
     [TestMethod]
     public async Task RunAsync_StopsOnCtrlC()
