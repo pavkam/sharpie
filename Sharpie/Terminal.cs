@@ -299,7 +299,7 @@ public sealed class Terminal: IDisposable
     /// <summary>
     ///     Checks whether the terminal has been disposed of and is no longer usable.
     /// </summary>
-    public bool IsDisposed => _screen.Disposed;
+    public bool IsDisposed { get; private set; }
 
     /// <summary>
     ///     Disposes the current terminal instance.
@@ -341,6 +341,7 @@ public sealed class Terminal: IDisposable
         }
 
         _terminalInstanceActive = false;
+        IsDisposed = true;
         GC.SuppressFinalize(this);
     }
 
