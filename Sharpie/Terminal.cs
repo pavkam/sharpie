@@ -41,9 +41,9 @@ using Nito.AsyncEx;
 public sealed class Terminal: IDisposable
 {
     private static bool _terminalInstanceActive;
-    private readonly ManualResetEventSlim _delegateAvailable = new();
-
-    private readonly ConcurrentQueue<object> _delegateQueue = new();
+    
+    private BlockingCollection<object>? _delegateQueue;
+    private ManualResetEventSlim _runCompletedEvent = new(true);
     private ColorManager _colorManager;
     private EventPump _eventPump;
     private int? _initialCaretMode;
@@ -306,6 +306,20 @@ public sealed class Terminal: IDisposable
     /// </summary>
     public void Dispose()
     {
+        if (IsDisposed)
+        {
+            return;
+        }
+        
+        var dq = _delegateQueue;
+        if (dq != null)
+        {
+            dq.CompleteAdding();
+            _runCompletedEvent.Wait();
+        }
+
+        _runCompletedEvent.Dispose();
+        
         if (_screen != null!)
         {
             _screen.Dispose();
@@ -379,6 +393,11 @@ public sealed class Terminal: IDisposable
     private Interval NewInterval<TState>(Func<Terminal, TState?, Task> action, int dueMillis, int periodMillis,
         TState? initialState)
     {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
         var interval = new Interval();
 
         interval.Timer = new(i =>
@@ -395,37 +414,42 @@ public sealed class Terminal: IDisposable
 
         return interval;
     }
-
-    /// <summary>
-    ///     Runs the application main loop and dispatches each event to <paramref name="eventAction" />.
-    /// </summary>
-    /// <param name="eventAction">The method to accept the events.</param>
-    /// <param name="stopOnCtrlC">Set to <c>true</c> if CTRL+C should interrupt the main loop.</param>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
-    public async Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true)
+    
+    private Task PumpEventsAsync(CancellationToken cancellationToken)
     {
-        if (eventAction == null)
+        Debug.Assert(_delegateQueue != null);
+        
+        return Task.Run(() =>
         {
-            throw new ArgumentNullException(nameof(eventAction));
-        }
-
-        var cts = new CancellationTokenSource();
-        var pumpTask = Task.Run(() =>
-        {
-            foreach (var @event in Events.Listen(cts.Token))
+            foreach (var @event in Events.Listen(cancellationToken))
             {
-                _delegateQueue.Enqueue(@event);
-                _delegateAvailable.Set();
+                if (!_delegateQueue.IsAddingCompleted && 
+                    !cancellationToken.IsCancellationRequested)
+                {
+                    try
+                    {
+                        _delegateQueue.Add(@event, cancellationToken);
+                    } catch (InvalidOperationException)
+                    {
+                        // Eat the potential error.
+                    }
+                }
             }
-        }, cts.Token);
+        }, cancellationToken);
+    }
 
-        AsyncContext.Run(async () =>
+    private Task PumpMessagesAsync(Func<Event, Task> action, CancellationTokenSource cancellationTokenSource,
+        bool stopOnCtrlC)
+    {
+        Debug.Assert(_delegateQueue != null);
+        Debug.Assert(action != null);
+        Debug.Assert(cancellationTokenSource != null);
+
+        return Task.Run(() =>
         {
-            var loop = true;
-            while (loop)
+            AsyncContext.Run(async () =>
             {
-                _delegateAvailable.Wait(cts.Token);
-                while (loop && _delegateQueue.TryDequeue(out var message))
+                foreach (var message in _delegateQueue.GetConsumingEnumerable())
                 {
                     switch (message)
                     {
@@ -434,19 +458,51 @@ public sealed class Terminal: IDisposable
                             break;
                         case KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl }
                             when stopOnCtrlC:
-                            loop = false;
+                            _delegateQueue.CompleteAdding();
                             break;
                         case Event @event:
-                            await eventAction(@event);
+                            await action(@event);
                             break;
                     }
                 }
-            }
 
-            cts.Cancel();
+                cancellationTokenSource.Cancel();
+            });
         });
+    }
 
-        await pumpTask;
+    /// <summary>
+    ///     Runs the application main loop and dispatches each event to <paramref name="eventAction" />.
+    /// </summary>
+    /// <param name="eventAction">The method to accept the events.</param>
+    /// <param name="stopOnCtrlC">Set to <c>true</c> if CTRL+C should interrupt the main loop.</param>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync"/> is already running.</exception>
+    [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
+    public async Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true)
+    {
+        if (eventAction == null)
+        {
+            throw new ArgumentNullException(nameof(eventAction));
+        }
+
+        if (_delegateQueue != null)
+        {
+            throw new InvalidOperationException("Event processing already running.");
+        }
+
+        _delegateQueue = new();
+        _runCompletedEvent.Reset();
+        
+        var cts = new CancellationTokenSource();
+        var eventTask = PumpEventsAsync(cts.Token);
+        var messageTask = PumpMessagesAsync(eventAction, cts, stopOnCtrlC);
+
+        await Task.WhenAll(eventTask, messageTask);
+
+        _delegateQueue.Dispose();
+        _delegateQueue = null;
+        _runCompletedEvent.Set();
     }
 
     /// <summary>
@@ -462,7 +518,17 @@ public sealed class Terminal: IDisposable
         }
 
         AssertAlive();
-        _delegateQueue.Enqueue(action);
+        var dq = _delegateQueue;
+        if (dq is { IsAddingCompleted: false })
+        {
+            try
+            {
+                dq.Add(action);
+            } catch (InvalidOperationException)
+            {
+                // Ignore potential race conditions.
+            }
+        }
     }
 
     /// <summary>
@@ -474,7 +540,7 @@ public sealed class Terminal: IDisposable
     /// <typeparam name="TState">The type of the state object.</typeparam>
     /// <returns>The interval object.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis" /> is negative.</exception>
-    public IInterval Delay<TState>(Func<Terminal, TState?, Task> action, int delayMillis, TState? state = default)
+    public IInterval Delay<TState>(Func<Terminal, TState?, Task> action, int delayMillis, TState? state)
     {
         if (delayMillis < 0)
         {
@@ -498,7 +564,7 @@ public sealed class Terminal: IDisposable
             throw new ArgumentNullException(nameof(action));
         }
 
-        return Delay<DBNull>((t, _) => action(t), delayMillis);
+        return Delay((t, _) => action(t), delayMillis, DBNull.Value);
     }
 
     /// <summary>
@@ -540,6 +606,25 @@ public sealed class Terminal: IDisposable
         return Repeat<DBNull>((t, _) => action(t), intervalMillis, immediate);
     }
 
+    /// <summary>
+    /// Enqueues a stop signal for the <see cref="RunAsync"/> method.
+    /// </summary>
+    /// <param name="wait">If <c>true</c>, waits until running completes.</param>
+    public void Stop(bool wait = false)
+    {
+        AssertAlive();
+
+        var dq = _delegateQueue;
+        if (dq != null)
+        {
+            dq.CompleteAdding();
+            if (wait)
+            {
+                _runCompletedEvent.Wait();
+            }
+        }
+    }
+    
     /// <summary>
     ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>

@@ -126,7 +126,7 @@ public sealed class EventPump
                 }
 
                 @event = resolved;
-            } else if (@event is not DelegateEvent)
+            } else
             {
                 while (escapeSequence.Count > 0)
                 {

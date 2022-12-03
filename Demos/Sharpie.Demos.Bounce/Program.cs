@@ -25,6 +25,7 @@ var y = -1;
 var dx = 1;
 var dy = 1;
 
+// Set up a timer that will animate the glyph.
 terminal.Repeat(t =>
 {
     glyph.Glyph(new(0, 0), glyphStyle, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, styles[currentStyle]);
@@ -73,4 +74,5 @@ terminal.Repeat(t =>
     return Task.CompletedTask;
 }, 50);
 
+// Run the main loop.
 await terminal.RunAsync(_ => Task.FromResult(true));
