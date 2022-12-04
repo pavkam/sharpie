@@ -300,14 +300,14 @@ public sealed class Terminal: IDisposable
     /// <summary>
     ///     Checks whether the terminal has been disposed of and is no longer usable.
     /// </summary>
-    public bool IsDisposed { get; private set; }
+    public bool Disposed { get; private set; }
 
     /// <summary>
     ///     Disposes the current terminal instance.
     /// </summary>
     public void Dispose()
     {
-        if (IsDisposed)
+        if (Disposed)
         {
             return;
         }
@@ -337,7 +337,7 @@ public sealed class Terminal: IDisposable
         }
 
         _terminalInstanceActive = false;
-        IsDisposed = true;
+        Disposed = true;
         GC.SuppressFinalize(this);
     }
 
@@ -381,7 +381,7 @@ public sealed class Terminal: IDisposable
     /// <exception cref="ObjectDisposedException">The terminal has been disposed of and is no longer usable.</exception>
     private void AssertAlive()
     {
-        if (IsDisposed)
+        if (Disposed)
         {
             throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
         }
@@ -400,7 +400,7 @@ public sealed class Terminal: IDisposable
         interval.Timer = new(i =>
         {
             Debug.Assert(i is Interval);
-            if (((Interval) i).Stopped || IsDisposed)
+            if (((Interval) i).Stopped || Disposed)
             {
                 ((Interval) i).Timer?.Dispose();
             } else

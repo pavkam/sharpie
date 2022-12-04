@@ -319,7 +319,7 @@ public class Window: IDisposable, IDrawSurface
     ///     to the console.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    public bool IsDirty => Curses.is_wintouched(Handle);
+    public bool Invalidated => Curses.is_wintouched(Handle);
 
     /// <summary>
     ///     Set or get the immediate refresh capability of the window.
@@ -962,7 +962,7 @@ public class Window: IDisposable, IDrawSurface
     /// </summary>
     /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y" /> is outside the bounds.</exception>
-    public bool IsLineDirty(int y)
+    public bool LineInvalidated(int y)
     {
         if (y < 0 || y >= Size.Height)
         {
@@ -977,7 +977,7 @@ public class Window: IDisposable, IDrawSurface
     /// </summary>
     /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>
-    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The window has been disposed.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void Refresh(bool batch, bool entireScreen)
     {
@@ -998,7 +998,7 @@ public class Window: IDisposable, IDrawSurface
     /// <summary>
     ///     Refreshes the window by synchronizing it to the terminal with immediate redraw.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The window has been disposed.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh() => Refresh(false, false);
 
@@ -1007,7 +1007,7 @@ public class Window: IDisposable, IDrawSurface
     /// </summary>
     /// <param name="y">The starting line to refresh.</param>
     /// <param name="count">The number of lines to refresh.</param>
-    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="ObjectDisposedException">The window has been disposed.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The combination of lines and count exceed the window boundary.</exception>
     public virtual void Refresh(int y, int count)

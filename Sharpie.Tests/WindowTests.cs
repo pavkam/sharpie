@@ -840,13 +840,13 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void IsDirty_Returns_IfCursesSucceeded()
+    public void Invalidated_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.is_wintouched(It.IsAny<IntPtr>()))
                    .Returns(true);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        w.IsDirty.ShouldBeTrue();
+        w.Invalidated.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -1494,27 +1494,27 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void IsLineDirty_Throws_IfLineIsNegative()
+    public void LineInvalidated_Throws_IfLineIsNegative()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => w.IsLineDirty(-1));
+        Should.Throw<ArgumentOutOfRangeException>(() => w.LineInvalidated(-1));
     }
 
     [TestMethod]
-    public void IsLineDirty_Throws_IfYIsOutsideBounds()
+    public void LineInvalidated_Throws_IfYIsOutsideBounds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => w.IsLineDirty(10));
+        Should.Throw<ArgumentOutOfRangeException>(() => w.LineInvalidated(10));
     }
 
     [TestMethod]
-    public void IsLineDirty_Succeeds_IfCursesSucceeds()
+    public void LineInvalidated_Succeeds_IfCursesSucceeds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
@@ -1523,7 +1523,7 @@ public class WindowTests
                    .Returns(true);
 
         var w = new Window(_cursesMock.Object, null, new(1));
-        w.IsLineDirty(1)
+        w.LineInvalidated(1)
          .ShouldBeTrue();
     }
 
