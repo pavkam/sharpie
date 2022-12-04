@@ -387,7 +387,7 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void Colors_Throws_IfTerminalIsDisposed()
+    public void Colors_Throws_IfTerminalDisposed()
     {
         _terminal = new(_cursesMock.Object, _settings);
 
@@ -403,7 +403,7 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void SoftLabelKeys_Throws_IfTerminalIsDisposed()
+    public void SoftLabelKeys_Throws_IfTerminalDisposed()
     {
         _terminal = new(_cursesMock.Object, _settings);
 
@@ -419,7 +419,7 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void Screen_Throws_IfTerminalIsDisposed()
+    public void Screen_Throws_IfTerminalDisposed()
     {
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.Dispose();
@@ -434,7 +434,7 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void Events_Throws_IfTerminalIsDisposed()
+    public void Events_Throws_IfTerminalDisposed()
     {
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.Dispose();
@@ -655,19 +655,19 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void IsDisposed_ReturnsFalse_IfTerminalIsAlive()
+    public void Disposed_ReturnsFalse_IfTerminalIsAlive()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        _terminal.IsDisposed.ShouldBeFalse();
-        _terminal.IsDisposed.ShouldBe(_terminal.Screen.Disposed);
+        _terminal.Disposed.ShouldBeFalse();
+        _terminal.Disposed.ShouldBe(_terminal.Screen.Disposed);
     }
 
     [TestMethod]
-    public void IsDisposed_ReturnsTrue_IfDisposeIsCalled()
+    public void Disposed_ReturnsTrue_IfDisposeIsCalled()
     {
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.Dispose();
-        _terminal.IsDisposed.ShouldBeTrue();
+        _terminal.Disposed.ShouldBeTrue();
     }
 
     [TestMethod]
