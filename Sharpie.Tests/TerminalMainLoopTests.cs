@@ -430,7 +430,7 @@ public class TerminalMainLoopTests
         await Task.Delay(50)
                   .ContinueWith(_ => _terminal.Dispose());
         
-        executed.ShouldBeInRange(9, 11);
+        executed.ShouldBeInRange(8, 11);
     }
     
     [TestMethod]
@@ -453,6 +453,6 @@ public class TerminalMainLoopTests
         _terminal.Stop();
         await ra;
 
-        executed.ShouldBeInRange(19, 21);
+        executed.ShouldBeInRange(18, 21);
     }
 }
