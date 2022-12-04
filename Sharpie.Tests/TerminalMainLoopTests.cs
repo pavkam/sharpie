@@ -263,7 +263,7 @@ public class TerminalMainLoopTests
             return Task.CompletedTask;
         });
         
-        ch.ShouldBe('c');
+        ch.ShouldNotBe('a');
     }
     
     [TestMethod]
