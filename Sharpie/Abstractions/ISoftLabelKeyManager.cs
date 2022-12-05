@@ -52,14 +52,14 @@ public interface ISoftLabelKeyManager
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
-    Style Style { get; }
+    Style Style { get; set; }
 
     /// <summary>
     ///     Gets or sets the color mixture of the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
-    ColorMixture ColorMixture { get; }
+    ColorMixture ColorMixture { get; set; }
 
     /// <summary>
     ///     Sets a given label within the soft key label panel.
