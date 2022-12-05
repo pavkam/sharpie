@@ -35,7 +35,7 @@ namespace Sharpie;
 ///     Only one instance of this class can be active at one time.
 /// </summary>
 [PublicAPI]
-public sealed class Screen: Window
+public sealed class Screen: Window, IScreen
 {
     /// <summary>
     ///     Initializes the screen using a window handle. The <paramref name="windowHandle" /> should be
@@ -44,13 +44,11 @@ public sealed class Screen: Window
     /// <param name="curses">The curses backend.</param>
     /// <param name="terminal">The owner terminal.</param>
     /// <param name="windowHandle">The screen handle.</param>
-    internal Screen(ICursesProvider curses, Terminal terminal, IntPtr windowHandle): base(curses, null, windowHandle) =>
+    internal Screen(ICursesProvider curses, ITerminal terminal, IntPtr windowHandle): base(curses, null, windowHandle) =>
         Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
 
-    /// <summary>
-    ///     The terminal this screen belongs to.
-    /// </summary>
-    public Terminal Terminal { get; }
+    /// <inheritdoc cref="IScreen.Terminal"/>
+    public ITerminal Terminal { get; }
 
     /// <inheritdoc cref="Window.Location" />
     /// <remarks>
@@ -74,40 +72,24 @@ public sealed class Screen: Window
         set => throw new NotSupportedException("Cannot resize the screen window.");
     }
 
-    /// <summary>
-    ///     Created a new window in the screen.
-    /// </summary>
-    /// <param name="area">The area for the new window.</param>
-    /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the screen bounds.</exception>
+    /// <inheritdoc cref="IScreen.CreateWindow"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public Window CreateWindow(Rectangle area)
+    public IWindow CreateWindow(Rectangle area)
     {
-        if (!IsRectangleWithin(area))
+        if (!((IWindow)this).IsRectangleWithin(area))
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }
 
         var handle = Curses.newwin(area.Height, area.Width, area.Y, area.X)
-                           .Check(nameof(Terminal.Curses.newwin), "Failed to create a new window.");
+                           .Check(nameof(Curses.newwin), "Failed to create a new window.");
 
-        return new(Curses, this, handle);
+        return new Window(Curses, this, handle);
     }
 
-    /// <summary>
-    ///     Created a new sub-window in the parent window.
-    /// </summary>
-    /// <param name="window">The parent window.</param>
-    /// <param name="area">The area of the window to put the sub-window in.</param>
-    /// <remarks>
-    /// </remarks>
-    /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">The window has been disposed and can no longer be used.</exception>
-    /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
+    /// <inheritdoc cref="IScreen.CreateSubWindow"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public Window CreateSubWindow(Window window, Rectangle area)
+    public IWindow CreateSubWindow(IWindow window, Rectangle area)
     {
         switch (window)
         {
@@ -128,21 +110,14 @@ public sealed class Screen: Window
         }
 
         var handle = Curses.derwin(window.Handle, area.Height, area.Width, area.Y, area.X)
-                           .Check(nameof(Terminal.Curses.derwin), "Failed to create a new sub-window.");
+                           .Check(nameof(Curses.derwin), "Failed to create a new sub-window.");
 
-        return new(Curses, window, handle);
+        return new Window(Curses, window, handle);
     }
 
-    /// <summary>
-    ///     Duplicates and existing window, including its attributes.
-    /// </summary>
-    /// <param name="window">The window to duplicate.</param>
-    /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">The window has been disposed and can no longer be used.</exception>
-    /// <exception cref="InvalidOperationException">Trying to duplicate the screen window.</exception>
+    /// <inheritdoc cref="IScreen.DuplicateWindow"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
-    public Window DuplicateWindow(Window window)
+    public IWindow DuplicateWindow(IWindow window)
     {
         switch (window)
         {
@@ -153,7 +128,7 @@ public sealed class Screen: Window
             default:
             {
                 var handle = Curses.dupwin(window.Handle)
-                                   .Check(nameof(Terminal.Curses.dupwin), "Failed to duplicate an existing window.");
+                                   .Check(nameof(Curses.dupwin), "Failed to duplicate an existing window.");
 
                 return window is Pad
                     ? new Pad(Curses, window.Parent ?? this, handle)
@@ -162,15 +137,9 @@ public sealed class Screen: Window
         }
     }
 
-    /// <summary>
-    ///     Created a new pad.
-    /// </summary>
-    /// <param name="size">The pad size.</param>
-    /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size" /> is invalid.</exception>
+    /// <inheritdoc cref="IScreen.CreatePad"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public Pad CreatePad(Size size)
+    public IPad CreatePad(Size size)
     {
         if (size.Width < 1 || size.Height < 1)
         {
@@ -179,22 +148,14 @@ public sealed class Screen: Window
 
         AssertAlive();
         var handle = Curses.newpad(size.Height, size.Width)
-                           .Check(nameof(Terminal.Curses.newpad), "Failed to create a new pad.");
+                           .Check(nameof(Curses.newpad), "Failed to create a new pad.");
 
-        return new(Curses, this, handle);
+        return new Pad(Curses, this, handle);
     }
 
-    /// <summary>
-    ///     Created a new sub-pad.
-    /// </summary>
-    /// <param name="pad">The parent pad.</param>
-    /// <param name="area">The are of the pad to use.</param>
-    /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">The pad have been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">When <paramref name="area" /> is outside the pad's bounds.</exception>
-    /// <exception cref="ArgumentNullException">When <paramref name="pad" /> is <c>null</c>.</exception>
+    /// <inheritdoc cref="IScreen.CreateSubPad"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public Pad CreateSubPad(Pad pad, Rectangle area)
+    public IPad CreateSubPad(IPad pad, Rectangle area)
     {
         if (pad == null)
         {
@@ -207,39 +168,21 @@ public sealed class Screen: Window
         }
 
         var handle = Curses.subpad(pad.Handle, area.Height, area.Width, area.Top, area.Right)
-                           .Check(nameof(Terminal.Curses.subpad), "Failed to create a new sub-pad.");
+                           .Check(nameof(Curses.subpad), "Failed to create a new sub-pad.");
 
-        return new(Curses, pad, handle);
+        return new Pad(Curses, pad, handle);
     }
 
-    /// <summary>
-    ///     Applies all queued refreshes to the terminal.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The screen has been disposed and can no longer be used.</exception>
+    /// <inheritdoc cref="IScreen.ApplyPendingRefreshes"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ApplyPendingRefreshes()
     {
         AssertAlive();
         Curses.doupdate()
-              .Check(nameof(Terminal.Curses.doupdate), "Failed to update the main screen.");
+              .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
     }
 
-    /// <summary>
-    ///     This method invalidates the screen in its entirety and redraws if from scratch.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The screen has been disposed and can no longer be used.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void ForceInvalidateAndRefresh()
-    {
-        Invalidate();
-        foreach (var child in Children)
-        {
-            child.Invalidate();
-        }
-
-        Refresh(false, true);
-    }
-
+    /// <inheritdoc cref="Window.Delete"/>
     /// <summary>
     ///     Deletes the screen window and ends the terminal session.
     /// </summary>

@@ -34,11 +34,11 @@ namespace Sharpie;
 ///     Represents pad which is a special type of window.
 /// </summary>
 [PublicAPI]
-public sealed class Pad: Window
+public sealed class Pad: Window, IPad
 {
     /// <inheritdoc cref="Window(ICursesProvider, Window, IntPtr)" />
     /// <exception cref="ArgumentException">The <paramref name="parent" /> is not a valid ancestor.</exception>
-    internal Pad(ICursesProvider curses, Window parent, IntPtr windowHandle): base(curses, parent, windowHandle)
+    internal Pad(ICursesProvider curses, IWindow parent, IntPtr windowHandle): base(curses, parent, windowHandle)
     {
         Screen = parent switch
         {
@@ -76,7 +76,7 @@ public sealed class Pad: Window
         set => throw new NotSupportedException("Pads do not have a location.");
     }
 
-    /// <inheritdoc cref="Window.Refresh(bool,bool)" />
+    /// <inheritdoc cref="IWindow.Refresh(bool,bool)" />
     /// <remarks>
     ///     This functionality is disabled in the pads. Use the overloaded version of this method.
     /// </remarks>
@@ -86,18 +86,11 @@ public sealed class Pad: Window
         throw new NotSupportedException("Pads cannot be refreshed in this way.");
     }
 
-    /// <summary>
-    ///     Refreshes the pad by synchronizing it to the terminal screen.
-    /// </summary>
-    /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
-    /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>
-    /// <param name="rect">The rectangle of the pad to place onto the screen.</param>
-    /// <param name="screenPos">The point on the screen to place that rectangle.</param>
-    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <inheritdoc cref="IPad.Refresh(bool,bool,System.Drawing.Rectangle,System.Drawing.Point)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(bool batch, bool entireScreen, Rectangle rect, Point screenPos)
     {
-        if (!IsRectangleWithin(rect))
+        if (!((IWindow) this).IsRectangleWithin(rect))
         {
             throw new ArgumentOutOfRangeException(nameof(rect));
         }

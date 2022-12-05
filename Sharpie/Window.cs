@@ -34,7 +34,7 @@ namespace Sharpie;
 ///     Represents a window and contains all it's functionality.
 /// </summary>
 [PublicAPI]
-public class Window: IDisposable, IDrawSurface
+public class Window: IWindow, IDisposable
 {
     private readonly IList<Window> _windows = new List<Window>();
     private IntPtr _handle;
@@ -45,7 +45,7 @@ public class Window: IDisposable, IDrawSurface
     /// <param name="curses">The curses backend.</param>
     /// <param name="parent">The parent window (if any).</param>
     /// <param name="windowHandle">The window handle.</param>
-    internal Window(ICursesProvider curses, Window? parent, IntPtr windowHandle)
+    internal Window(ICursesProvider curses, IWindow? parent, IntPtr windowHandle)
     {
         if (windowHandle == IntPtr.Zero)
         {
@@ -56,7 +56,7 @@ public class Window: IDisposable, IDrawSurface
         _handle = windowHandle;
         Parent = parent;
 
-        Parent?._windows.Add(this);
+        parent?._windows.Add(this);
 
         EnableScrolling = true;
 
@@ -78,15 +78,10 @@ public class Window: IDisposable, IDrawSurface
     /// </summary>
     protected internal ICursesProvider Curses { get; }
 
-    /// <summary>
-    ///     The parent of this window.
-    /// </summary>
-    protected internal Window? Parent { get; }
+    /// <inheritdoc cref="IWindow.Parent"/>
+    public IWindow? Parent { get; }
 
-    /// <summary>
-    ///     The Curses handle for the window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.Handle"/>
     public IntPtr Handle
     {
         get
@@ -96,17 +91,10 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Lists the active windows in this terminal.
-    /// </summary>
-    public IEnumerable<Window> Children => _windows;
+    /// <inheritdoc cref="IWindow.Children"/>
+    public IEnumerable<IWindow> Children => _windows;
 
-    /// <summary>
-    ///     Gets or sets the ability of the window to scroll its contents when writing
-    ///     needs a new line.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <inheritdoc cref="IWindow.EnableScrolling"/>
     public bool EnableScrolling
     {
         get => Curses.is_scrollok(Handle);
@@ -115,20 +103,10 @@ public class Window: IDisposable, IDrawSurface
                   .Check(nameof(Curses.scrollok), "Failed to change the scrolling mode.");
     }
 
-    /// <summary>
-    ///     Checks if the window is not disposed.
-    /// </summary>
+    /// <inheritdoc cref="IWindow.Disposed"/>
     public bool Disposed => _handle == IntPtr.Zero;
 
-    /// <summary>
-    ///     Enables or disables the use of hardware line insert/delete handling fpr this window.
-    /// </summary>
-    /// <remarks>
-    ///     This functionality only works if hardware has support for it. Consult
-    ///     <see cref="Terminal.HasHardwareLineEditor" />
-    ///     Default is <c>false</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.UseHardwareLineEdit"/>
     public bool UseHardwareLineEdit
     {
         get => Curses.is_idlok(Handle);
@@ -142,15 +120,7 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Enables or disables the use of hardware character insert/delete handling for this window.
-    /// </summary>
-    /// <remarks>
-    ///     This functionality only works if hardware has support for it. Consult
-    ///     <see cref="Terminal.HasHardwareCharEditor" />
-    ///     Default is <c>true</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.UseHardwareCharEdit"/>
     public bool UseHardwareCharEdit
     {
         get => Curses.is_idcok(Handle);
@@ -163,11 +133,7 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Gets or sets the style of the window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <inheritdoc cref="IWindow.Style"/>
     public Style Style
     {
         get
@@ -182,11 +148,7 @@ public class Window: IDisposable, IDrawSurface
                   .Check(nameof(Curses.wattr_set), "Failed to set the window style.");
     }
 
-    /// <summary>
-    ///     Gets or sets the color mixture of the window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <inheritdoc cref="IWindow.ColorMixture"/>
     public ColorMixture ColorMixture
     {
         get => Style.ColorMixture;
@@ -195,11 +157,7 @@ public class Window: IDisposable, IDrawSurface
                   .Check(nameof(Curses.wcolor_set), "Failed to set the window color mixture.");
     }
 
-    /// <summary>
-    ///     Gets or sets the window background.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <inheritdoc cref="IWindow.Background"/>
     public (Rune @char, Style style) Background
     {
         get
@@ -214,12 +172,7 @@ public class Window: IDisposable, IDrawSurface
                   .Check(nameof(Curses.wbkgrnd), "Failed to set the window background.");
     }
 
-    /// <summary>
-    ///     Gets or sets the location of the window within its parent.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the parent's bounds.</exception>
+    /// <inheritdoc cref="IWindow.Location"/>
     public virtual Point Location
     {
         get
@@ -261,12 +214,7 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Gets or sets the size of the window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the bounds.</exception>
+    /// <inheritdoc cref="IWindow.Size"/>
     public virtual Size Size
     {
         get =>
@@ -290,12 +238,7 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Gets or sets the current position of the caret within the window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the window bounds.</exception>
+    /// <inheritdoc cref="IWindow.CaretPosition"/>
     public Point CaretPosition
     {
         get =>
@@ -304,7 +247,7 @@ public class Window: IDisposable, IDrawSurface
                 .Check(nameof(Curses.getcury), "Failed to get caret Y position."));
         set
         {
-            if (!IsPointWithin(value))
+            if (!((IWindow)this).IsPointWithin(value))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -314,22 +257,10 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Specifies whether the window has some "dirty" parts that need to be synchronized
-    ///     to the console.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.Invalidated"/>
     public bool Invalidated => Curses.is_wintouched(Handle);
 
-    /// <summary>
-    ///     Set or get the immediate refresh capability of the window.
-    /// </summary>
-    /// <remarks>
-    ///     Immediate refresh will redraw the window on each change.
-    ///     This might be very slow for most use cases.
-    ///     Default is <c>false</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.ImmediateRefresh"/>
     public virtual bool ImmediateRefresh
     {
         get => Curses.is_immedok(Handle);
@@ -365,6 +296,7 @@ public class Window: IDisposable, IDrawSurface
     }
 
     /// <inheritdoc cref="IDrawSurface.DrawCell" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     void IDrawSurface.DrawCell(Point location, Rune rune, Style textStyle)
     {
         Curses.wmove(Handle, location.Y, location.X)
@@ -375,14 +307,12 @@ public class Window: IDisposable, IDrawSurface
     }
 
     /// <inheritdoc cref="IDrawSurface.CoversArea" />
-    bool IDrawSurface.CoversArea(Rectangle area) => IsRectangleWithin(area);
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    bool IDrawSurface.CoversArea(Rectangle area) => ((IWindow)this).IsRectangleWithin(area);
 
-    /// <summary>
-    ///     Checks if the given <paramref name="window" /> is either a descendant or an ancestor of this window.
-    /// </summary>
-    /// <param name="window">The window to check.</param>
+    /// <inheritdoc cref="IWindow.IsRelatedTo"/>
     /// <exception cref="ArgumentNullException">The <paramref name="window" /> is <c>null</c>.</exception>
-    public bool IsRelatedTo(Window window)
+    public bool IsRelatedTo(IWindow window)
     {
         if (window == null)
         {
@@ -397,7 +327,7 @@ public class Window: IDisposable, IDrawSurface
     /// <summary>
     ///     Asserts that the window is not disposed.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <exception cref="ObjectDisposedException">The window has been disposed.</exception>
     protected internal void AssertAlive()
     {
         if (Disposed)
@@ -406,11 +336,7 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Enables specified attributes and keep the others untouched.
-    /// </summary>
-    /// <param name="attributes">The attributes to enable.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.EnableAttributes"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
@@ -418,11 +344,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wattr_on), "Failed to enable window attributes.");
     }
 
-    /// <summary>
-    ///     Disables specified attributes and keep the others untouched.
-    /// </summary>
-    /// <param name="attributes">The attributes to disable.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.DisableAttributes"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
@@ -430,42 +352,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wattr_off), "Failed to disable window attributes.");
     }
 
-    /// <summary>
-    ///     Tries to move the caret to a given position within the window.
-    /// </summary>
-    /// <param name="location">The new location.</param>
-    /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    public bool TryMoveCaretTo(Point location) =>
-        IsPointWithin(location) &&
-        !Curses.wmove(Handle, location.Y, location.X)
-               .Failed();
-
-    /// <summary>
-    ///     Moves the caret to a given position within the window.
-    /// </summary>
-    /// <param name="location">The new location.</param>
-    /// <returns><c>true</c> if the caret was moved. <c>false</c> if the coordinates are out of the window.</returns>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="ArgumentException">The given coordinates are outside the window.</exception>
-    public void MoveCaretTo(Point location)
-    {
-        if (!TryMoveCaretTo(location))
-        {
-            throw new ArgumentException("The coordinates are outside the window.");
-        }
-    }
-
-    /// <summary>
-    ///     Scrolls the contents of the window <paramref name="lines" /> up. Only works for scrollable windows.
-    /// </summary>
-    /// <param name="lines">Number of lines to scroll.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="lines" /> is less than one or greater than the size
-    ///     of the window.
-    /// </exception>
-    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling" /> is <c>false</c>.</exception>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.ScrollUp"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ScrollUp(int lines)
     {
@@ -483,16 +370,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wscrl), "Failed to scroll the contents of the window up.");
     }
 
-    /// <summary>
-    ///     Scrolls the contents of the window <paramref name="lines" /> down. Only works for scrollable windows.
-    /// </summary>
-    /// <param name="lines">Number of lines to scroll.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="lines" /> is less than one or greater than the size
-    ///     of the window.
-    /// </exception>
-    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling" /> is <c>false</c>.</exception>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.ScrollDown"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ScrollDown(int lines)
     {
@@ -510,15 +388,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wscrl), "Failed to scroll the contents of the window down.");
     }
 
-    /// <summary>
-    ///     Inserts <paramref name="lines" /> empty lines at the current caret position.
-    /// </summary>
-    /// <param name="lines">Number of lines to inserts.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="lines" /> is less than one or greater than the size
-    ///     of the window.
-    /// </exception>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.InsertEmptyLines"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void InsertEmptyLines(int lines)
     {
@@ -531,15 +401,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.winsdelln), "Failed to insert blank lines into the window.");
     }
 
-    /// <summary>
-    ///     Deletes <paramref name="lines" /> lines starting with the current caret position. All lines below move up.
-    /// </summary>
-    /// <param name="lines">Number of lines to inserts.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="lines" /> is less than one or greater than the size
-    ///     of the window.
-    /// </exception>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.DeleteLines"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DeleteLines(int lines)
     {
@@ -552,13 +414,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.winsdelln), "Failed to delete lines from the window.");
     }
 
-    /// <summary>
-    ///     Changes the style of the text on the current line and starting from the caret position.
-    /// </summary>
-    /// <param name="width">The number of characters to change.</param>
-    /// <param name="style">The applied style.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="ArgumentException">The <paramref name="width" /> is less than one.</exception>
+    /// <inheritdoc cref="IWindow.ChangeTextStyle"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ChangeTextStyle(int width, Style style)
     {
@@ -571,14 +427,8 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wchgat), "Failed to change style of characters in the window.");
     }
 
-    /// <summary>
-    ///     Writes a text at the caret position at the current window and advances the caret.
-    /// </summary>
-    /// <param name="str">The text to write.</param>
-    /// <param name="style">The style of the text.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.WriteText(string,Sharpie.Style)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     public void WriteText(string str, Style style)
     {
         if (str == null)
@@ -598,27 +448,8 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Writes a text at the caret position at the current window and advances the caret.
-    /// </summary>
-    /// <remarks>
-    ///     This method uses default style.
-    /// </remarks>
-    /// <param name="str">The text to write.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.DrawVerticalLine(int,System.Text.Rune,Sharpie.Style)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
-    public void WriteText(string str) => WriteText(str, Style.Default);
-
-    /// <summary>
-    ///     Draws a vertical line from the current caret position downwards.
-    /// </summary>
-    /// <param name="char">The character to use for the line.</param>
-    /// <param name="length">The length of the line.</param>
-    /// <param name="style">The style to use.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawVerticalLine(int length, Rune @char, Style style)
     {
         if (length <= 0)
@@ -630,13 +461,8 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wvline_set), "Failed to draw a vertical line.");
     }
 
-    /// <summary>
-    ///     Draws a vertical line using the standard line character from the current caret position downwards.
-    /// </summary>
-    /// <param name="length">The length of the line.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.DrawVerticalLine(int)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawVerticalLine(int length)
     {
         if (length <= 0)
@@ -648,15 +474,8 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wvline), "Failed to draw a vertical line.");
     }
 
-    /// <summary>
-    ///     Draws a horizontal line from the current caret position downwards.
-    /// </summary>
-    /// <param name="char">The character to use for the line.</param>
-    /// <param name="style">The style to use.</param>
-    /// <param name="length">The length of the line.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.DrawHorizontalLine(int,System.Text.Rune,Sharpie.Style)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawHorizontalLine(int length, Rune @char, Style style)
     {
         if (length <= 0)
@@ -668,13 +487,8 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.whline_set), "Failed to draw a horizontal line.");
     }
 
-    /// <summary>
-    ///     Draws a horizontal line using the standard line character from the current caret position downwards.
-    /// </summary>
-    /// <param name="length">The length of the line.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.DrawHorizontalLine(int)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     public void DrawHorizontalLine(int length)
     {
         if (length <= 0)
@@ -686,19 +500,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.whline), "Failed to draw a horizontal line.");
     }
 
-    /// <summary>
-    ///     Draws a vertical line from the current caret position downwards.
-    /// </summary>
-    /// <param name="bottomRightCornerChar">The bottom-right corner character.</param>
-    /// <param name="leftSideChar">The left-side character.</param>
-    /// <param name="rightSideChar">The right-side character.</param>
-    /// <param name="topLeftCornerChar">The top-left corner character.</param>
-    /// <param name="topRightCornerChar">The top-right corner character.</param>
-    /// <param name="topSideChar">The top-side character.</param>
-    /// <param name="bottomLeftCornerChar">The bottom-left corner character.</param>
-    /// <param name="bottomSideChar">The bottom-side character.</param>
-    /// <param name="style">The style to use.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawBorder(Rune leftSideChar, Rune rightSideChar, Rune topSideChar, Rune bottomSideChar,
         Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar,
@@ -718,10 +520,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wborder_set), "Failed to draw a window border.");
     }
 
-    /// <summary>
-    ///     Draws a border around the window's edges using standard characters.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.DrawBorder()"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawBorder()
     {
@@ -730,11 +529,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wborder), "Failed to draw a window border.");
     }
 
-    /// <summary>
-    ///     Removes the text under the caret and moves the contents of the line to the left.
-    /// </summary>
-    /// <param name="count">The number of characters to remove.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.RemoveText"/>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     public void RemoveText(int count)
     {
@@ -755,13 +550,8 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Gets the text from the window at the caret position to the right.
-    /// </summary>
-    /// <param name="count">The number of characters to get.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.RemoveText"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     public (Rune @char, Style style)[] GetText(int count)
     {
         if (count <= 0)
@@ -779,11 +569,7 @@ public class Window: IDisposable, IDrawSurface
                   .ToArray();
     }
 
-    /// <summary>
-    ///     Clears the contents of the row/window.
-    /// </summary>
-    /// <param name="strategy">The strategy to use.</param>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
+    /// <inheritdoc cref="IWindow.Clear"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Clear(ClearStrategy strategy = ClearStrategy.Full)
     {
@@ -807,15 +593,9 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Replaces the content of a given window with the contents of the current window.
-    /// </summary>
-    /// <param name="window">The window to copy contents to.</param>
-    /// <param name="strategy">The used strategy.</param>
-    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
+    /// <inheritdoc cref="IWindow.Replace(Sharpie.IWindow, Sharpie.ReplaceStrategy)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="window" /> is null.</exception>
-    public void Replace(Window window, ReplaceStrategy strategy)
+    public void Replace(IWindow window, ReplaceStrategy strategy)
     {
         if (IsRelatedTo(window))
         {
@@ -837,24 +617,16 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Replaces the content of a given window with the contents of the current window.
-    /// </summary>
-    /// <param name="window">The window to copy contents to.</param>
-    /// <param name="strategy">The used strategy.</param>
-    /// <param name="srcRect">The source rectangle to copy.</param>
-    /// <param name="destPos">The destination position.</param>
-    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
+    /// <inheritdoc cref="IWindow.Replace(Sharpie.IWindow, System.Drawing.Rectangle, System.Drawing.Point, Sharpie.ReplaceStrategy)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="window" /> is null.</exception>
-    public void Replace(Window window, Rectangle srcRect, Point destPos, ReplaceStrategy strategy)
+    public void Replace(IWindow window, Rectangle srcRect, Point destPos, ReplaceStrategy strategy)
     {
         if (IsRelatedTo(window))
         {
             throw new ArgumentException("Cannot copy to a window that is related to this window.", nameof(window));
         }
 
-        if (!IsRectangleWithin(srcRect))
+        if (!((IWindow)this).IsRectangleWithin(srcRect))
         {
             throw new ArgumentOutOfRangeException(nameof(srcRect));
         }
@@ -870,17 +642,8 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.copywin), "Failed to copy the window contents.");
     }
 
-    /// <summary>
-    ///     Invalidates a number of lines within the window.
-    /// </summary>
-    /// <param name="y">The line to start with.</param>
-    /// <param name="count">The count of lines to invalidate.</param>
-    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
+    /// <inheritdoc cref="IWindow.Invalidate(int, int)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="y" /> and <paramref name="count" /> combination is
-    ///     out of bounds.
-    /// </exception>
     public void Invalidate(int y, int count)
     {
         if (y < 0 || y >= Size.Height)
@@ -897,71 +660,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wtouchln), "Failed to mark lines as dirty.");
     }
 
-    /// <summary>
-    ///     Invalidates the contents of the window thus forcing a redraw at the next <see cref="Refresh(bool,bool)" />.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Invalidate() { Invalidate(0, Size.Height); }
-
-    /// <summary>
-    ///     Checks if a given point fits within the current window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <returns>The result of the check.</returns>
-    public bool IsPointWithin(Point point)
-    {
-        var size = Size;
-        return point.X >= 0 && point.Y >= 0 && point.X < size.Width && point.Y < size.Height;
-    }
-
-    /// <summary>
-    ///     Checks if a given rectangle fits within the current window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or either of the windows have been disposed.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <returns>The result of the check.</returns>
-    public bool IsRectangleWithin(Rectangle rect) =>
-        IsPointWithin(new(rect.Left, rect.Top)) &&
-        IsPointWithin(new(rect.Left + rect.Width - 1, rect.Top + rect.Height - 1));
-
-    /// <summary>
-    ///     Draws a given <paramref name="drawing" /> to the window.
-    /// </summary>
-    /// <param name="area">The area of the drawing to draw.</param>
-    /// <param name="drawing">The drawing to draw.</param>
-    /// <param name="location">The location of the drawing.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     Thrown if <paramref name="location" /> or  <paramref name="area" /> are
-    ///     out of bounds.
-    /// </exception>
-    public void Draw(Point location, Rectangle area, Drawing drawing)
-    {
-        if (drawing == null)
-        {
-            throw new ArgumentNullException(nameof(drawing));
-        }
-
-        drawing.DrawTo(this, area, location);
-    }
-
-    /// <summary>
-    ///     Draws a given <paramref name="drawing" /> to the window.
-    /// </summary>
-    /// <param name="drawing">The drawing to draw.</param>
-    /// <param name="location">The location of the drawing.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location" /> is out of bounds.</exception>
-    public void Draw(Point location, Drawing drawing) =>
-        Draw(location, new(0, 0, drawing.Size.Width, drawing.Size.Height), drawing);
-
-    /// <summary>
-    ///     Checks if the line at <paramref name="y" /> is dirty.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The current window has been disposed and is no longer usable.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y" /> is outside the bounds.</exception>
+    /// <inheritdoc cref="IWindow.LineInvalidated"/>
     public bool LineInvalidated(int y)
     {
         if (y < 0 || y >= Size.Height)
@@ -972,12 +671,7 @@ public class Window: IDisposable, IDrawSurface
         return Curses.is_linetouched(Handle, y);
     }
 
-    /// <summary>
-    ///     Refreshes the window by synchronizing it to the terminal.
-    /// </summary>
-    /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
-    /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>
-    /// <exception cref="ObjectDisposedException">The window has been disposed.</exception>
+    /// <inheritdoc cref="IWindow.Refresh(bool, bool)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void Refresh(bool batch, bool entireScreen)
     {
@@ -995,21 +689,8 @@ public class Window: IDisposable, IDrawSurface
         }
     }
 
-    /// <summary>
-    ///     Refreshes the window by synchronizing it to the terminal with immediate redraw.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The window has been disposed.</exception>
+    /// <inheritdoc cref="IWindow.Refresh(int, int)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh() => Refresh(false, false);
-
-    /// <summary>
-    ///     Refreshes a number of lines within the window.
-    /// </summary>
-    /// <param name="y">The starting line to refresh.</param>
-    /// <param name="count">The number of lines to refresh.</param>
-    /// <exception cref="ObjectDisposedException">The window has been disposed.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The combination of lines and count exceed the window boundary.</exception>
     public virtual void Refresh(int y, int count)
     {
         if (y < 0 || y >= Size.Height)
@@ -1026,9 +707,7 @@ public class Window: IDisposable, IDrawSurface
               .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
     }
 
-    /// <summary>
-    ///     Removes the window form the parent, destroys all children and itself.
-    /// </summary>
+    /// <inheritdoc cref="IWindow.Destroy"/>
     public void Destroy()
     {
         if (!Disposed)

@@ -38,7 +38,7 @@ using Nito.AsyncEx;
 ///     class that is used in a Curses-based application.
 /// </summary>
 [PublicAPI]
-public sealed class Terminal: IDisposable
+public sealed class Terminal: ITerminal, IDisposable
 {
     private static bool _terminalInstanceActive;
     private static object _stopSignal = new();
@@ -62,6 +62,7 @@ public sealed class Terminal: IDisposable
     /// <exception cref="ArgumentOutOfRangeException">Some of the options are invalid.</exception>
     /// <exception cref="InvalidOperationException">Another terminal instance is active.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="curses" /> is <c>null</c>.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Terminal(ICursesProvider curses, TerminalOptions options)
     {
         Options = options;
@@ -178,19 +179,14 @@ public sealed class Terminal: IDisposable
         }
     }
 
-    /// <summary>
-    ///     Gets the terminal's baud rate.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.BaudRate"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public int BaudRate =>
         Curses.baudrate()
               .Check(nameof(Curses.baudrate), "Failed to obtain the baud rate of the terminal.");
 
-    /// <summary>
-    ///     Provides access to the terminal's color management.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public ColorManager Colors
+    /// <inheritdoc cref="ITerminal.Colors"/>
+    public IColorManager Colors
     {
         get
         {
@@ -199,11 +195,8 @@ public sealed class Terminal: IDisposable
         }
     }
 
-    /// <summary>
-    ///     Provides access to the terminal's color management.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public SoftLabelKeyManager SoftLabelKeys
+    /// <inheritdoc cref="ITerminal.SoftLabelKeys"/>
+    public ISoftLabelKeyManager SoftLabelKeys
     {
         get
         {
@@ -217,31 +210,20 @@ public sealed class Terminal: IDisposable
     /// </summary>
     public TerminalOptions Options { get; }
 
-    /// <summary>
-    ///     Returns the name of the terminal.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.Name"/>
     public string? Name => Curses.termname();
 
-    /// <summary>
-    ///     Returns the long description of the terminal.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.Description"/>
     public string? Description => Curses.longname();
 
-    /// <summary>
-    ///     Returns the version of the Curses library in use.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.CursesVersion"/>
     public string? CursesVersion => Curses.curses_version();
 
-    /// <summary>
-    ///     Gets the combination of supported terminal attributes.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.SupportedAttributes"/>
     public VideoAttribute SupportedAttributes => (VideoAttribute) Curses.term_attrs();
 
-    /// <summary>
-    ///     The screen instance. Use this property to access the entire screen functionality.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public Screen Screen
+    /// <inheritdoc cref="ITerminal.Screen"/>
+    public IScreen Screen
     {
         get
         {
@@ -251,11 +233,8 @@ public sealed class Terminal: IDisposable
         }
     }
 
-    /// <summary>
-    ///     The event pump instance that can be used to read events from the terminal.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    public EventPump Events
+    /// <inheritdoc cref="ITerminal.Events"/>
+    public IEventPump Events
     {
         get
         {
@@ -264,28 +243,20 @@ public sealed class Terminal: IDisposable
         }
     }
 
-    /// <summary>
-    ///     Specifies whether the terminal supports hardware line insert and delete.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.HasHardwareLineEditor"/>
     public bool HasHardwareLineEditor => Curses.has_il();
 
-    /// <summary>
-    ///     Specifies whether the terminal supports hardware character insert and delete.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.HasHardwareCharEditor"/>
     public bool HasHardwareCharEditor => Curses.has_ic();
 
-    /// <summary>
-    ///     Gets the currently defined kill character. \0 is returned if none is defined.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.CurrentKillChar"/>
     public Rune? CurrentKillChar =>
         Curses.killwchar(out var @char)
               .Failed()
             ? null
             : new(@char);
 
-    /// <summary>
-    ///     Gets the currently defined erase character. \0 is returned if none is defined.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.CurrentEraseChar"/>
     public Rune? CurrentEraseChar =>
         Curses.erasewchar(out var @char)
               .Failed()
@@ -341,9 +312,7 @@ public sealed class Terminal: IDisposable
         GC.SuppressFinalize(this);
     }
 
-    /// <summary>
-    ///     Sets the terminal title.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.SetTitle"/>
     /// <param name="title">The title of the terminal.</param>
     public void SetTitle(string title)
     {
@@ -355,12 +324,7 @@ public sealed class Terminal: IDisposable
         Curses.set_title(title);
     }
 
-    /// <summary>
-    ///     Attempts to notify the user with audio or flashing alert.
-    /// </summary>
-    /// <remarks>The actual notification depends on terminal support.</remarks>
-    /// <param name="silent">The alert mode.</param>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
+    /// <inheritdoc cref="ITerminal.Alert"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Alert(bool silent)
     {
@@ -462,11 +426,7 @@ public sealed class Terminal: IDisposable
         });
     }
 
-    /// <summary>
-    ///     Runs the application main loop and dispatches each event to <paramref name="eventAction" />.
-    /// </summary>
-    /// <param name="eventAction">The method to accept the events.</param>
-    /// <param name="stopOnCtrlC">Set to <c>true</c> if CTRL+C should interrupt the main loop.</param>
+    /// <inheritdoc cref="ITerminal.RunAsync"/>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync"/> is already running.</exception>
     [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
@@ -482,6 +442,8 @@ public sealed class Terminal: IDisposable
             throw new InvalidOperationException("Event processing already running.");
         }
 
+        AssertAlive();
+        
         _delegateQueue = new();
         _runCompletedEvent.Reset();
         
@@ -496,11 +458,7 @@ public sealed class Terminal: IDisposable
         _runCompletedEvent.Set();
     }
 
-    /// <summary>
-    ///     Delegates an action to be executed on the main thread.
-    /// </summary>
-    /// <param name="action">The action to execute.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="action" /> is <c>null</c>.</exception>
+    /// <inheritdoc cref="ITerminal.Delegate"/>
     public void Delegate(Func<Task> action)
     {
         if (action == null)
@@ -512,15 +470,7 @@ public sealed class Terminal: IDisposable
         _delegateQueue?.Add(action);
     }
 
-    /// <summary>
-    ///     Sets up a delayed action that is to be executed after some time.
-    /// </summary>
-    /// <param name="action">The action to be executed.</param>
-    /// <param name="delayMillis">The delay in milliseconds.</param>
-    /// <param name="state">User-supplied state object.</param>
-    /// <typeparam name="TState">The type of the state object.</typeparam>
-    /// <returns>The interval object.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis" /> is negative.</exception>
+    /// <inheritdoc cref="ITerminal.Delay"/>
     public IInterval Delay<TState>(Func<Terminal, TState?, Task> action, int delayMillis, TState? state)
     {
         if (delayMillis < 0)
@@ -531,13 +481,7 @@ public sealed class Terminal: IDisposable
         return NewInterval(action, delayMillis, Timeout.Infinite, state);
     }
 
-    /// <summary>
-    ///     Sets up a delayed action that is to be executed after some time.
-    /// </summary>
-    /// <param name="action">The action to be executed.</param>
-    /// <param name="delayMillis">The delay in milliseconds.</param>
-    /// <returns>The interval object.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="delayMillis" /> is negative.</exception>
+    /// <inheritdoc cref="ITerminal.Delay"/>
     public IInterval Delay(Func<Terminal, Task> action, int delayMillis)
     {
         if (action == null)
@@ -548,16 +492,7 @@ public sealed class Terminal: IDisposable
         return Delay((t, _) => action(t), delayMillis, DBNull.Value);
     }
 
-    /// <summary>
-    ///     Sets up a delayed action that is to be executed after some time.
-    /// </summary>
-    /// <param name="action">The action to be executed.</param>
-    /// <param name="intervalMillis">The interval in milliseconds.</param>
-    /// <param name="immediate">If <c>true</c>, triggers the execution of the action immediately.</param>
-    /// <param name="state">User-supplied state object.</param>
-    /// <typeparam name="TState">The type of the state object.</typeparam>
-    /// <returns>The interval object.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis" /> is negative.</exception>
+    /// <inheritdoc cref="ITerminal.Repeat"/>
     public IInterval Repeat<TState>(Func<Terminal, TState?, Task> action, int intervalMillis, bool immediate = false,
         TState? state = default)
     {
@@ -569,14 +504,7 @@ public sealed class Terminal: IDisposable
         return NewInterval(action, immediate ? 0 : intervalMillis, intervalMillis, state);
     }
 
-    /// <summary>
-    ///     Sets up a delayed action that is to be executed after some time.
-    /// </summary>
-    /// <param name="action">The action to be executed.</param>
-    /// <param name="intervalMillis">The interval in milliseconds.</param>
-    /// <param name="immediate">If <c>true</c>, triggers the execution of the action immediately.</param>
-    /// <returns>The interval object.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="intervalMillis" /> is negative.</exception>
+    /// <inheritdoc cref="ITerminal.Repeat"/>
     public IInterval Repeat(Func<Terminal, Task> action, int intervalMillis, bool immediate = false)
     {
         if (action == null)
@@ -587,9 +515,7 @@ public sealed class Terminal: IDisposable
         return Repeat<DBNull>((t, _) => action(t), intervalMillis, immediate);
     }
 
-    /// <summary>
-    /// Enqueues a stop signal for the <see cref="RunAsync"/> method.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.Stop"/>
     /// <param name="wait">If <c>true</c>, waits until running completes.</param>
     public void Stop(bool wait = false)
     {
