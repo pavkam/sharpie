@@ -34,7 +34,7 @@ namespace Sharpie;
 ///     Adds support for soft function keys.
 /// </summary>
 [PublicAPI]
-public sealed class SoftLabelKeyManager
+public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
 {
     private readonly ICursesProvider _curses;
     private readonly SoftLabelKeyMode _mode;
@@ -58,14 +58,10 @@ public sealed class SoftLabelKeyManager
         }
     }
 
-    /// <summary>
-    ///     Specifies if the manager is enabled.
-    /// </summary>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Enabled"/>
     public bool Enabled => _mode != SoftLabelKeyMode.Disabled;
 
-    /// <summary>
-    ///     Gets the number of labels within the soft key label panel.
-    /// </summary>
+    /// <inheritdoc cref="ISoftLabelKeyManager.LabelCount"/>
     public int LabelCount
     {
         get
@@ -75,12 +71,8 @@ public sealed class SoftLabelKeyManager
         }
     }
 
-    /// <summary>
-    ///     Gets or sets the style of the window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Style"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public Style Style
     {
         get
@@ -103,12 +95,8 @@ public sealed class SoftLabelKeyManager
         }
     }
 
-    /// <summary>
-    ///     Gets or sets the color mixture of the window.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <inheritdoc cref="ISoftLabelKeyManager.ColorMixture"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public ColorMixture ColorMixture
     {
         get => Style.ColorMixture;
@@ -129,19 +117,7 @@ public sealed class SoftLabelKeyManager
         }
     }
 
-    /// <summary>
-    ///     Sets a given label within the soft key label panel.
-    /// </summary>
-    /// <param name="index">The index of the label.</param>
-    /// <param name="title">The title of the label.</param>
-    /// <param name="align">Alignment of the label title.</param>
-    /// <exception cref="ArgumentNullException">The <paramref name="title" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="index" /> negative or greater than
-    ///     <see cref="LabelCount" />.
-    /// </exception>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <inheritdoc cref="ISoftLabelKeyManager.SetLabel"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void SetLabel(int index, string title, SoftLabelKeyAlignment align)
     {
@@ -161,13 +137,8 @@ public sealed class SoftLabelKeyManager
                .Check(nameof(_curses.slk_set), "Failed to set the soft label.");
     }
 
-    /// <summary>
-    ///     Enables specified attributes and keep the others untouched.
-    /// </summary>
-    /// <param name="attributes">The attributes to enable.</param>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <inheritdoc cref="ISoftLabelKeyManager.EnableAttributes"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
         AssertEnabled();
@@ -176,13 +147,8 @@ public sealed class SoftLabelKeyManager
                .Check(nameof(_curses.slk_attr_on), "Failed to configure the soft label key attributes.");
     }
 
-    /// <summary>
-    ///     Disables specified attributes and keep the others untouched.
-    /// </summary>
-    /// <param name="attributes">The attributes to disable.</param>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <inheritdoc cref="ISoftLabelKeyManager.DisableAttributes"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
         AssertEnabled();
@@ -191,12 +157,8 @@ public sealed class SoftLabelKeyManager
                .Check(nameof(_curses.slk_attr_off), "Failed to configure the soft label key attributes.");
     }
 
-    /// <summary>
-    ///     Clears the soft key labels from the screen. They can be restored by calling <see cref="Restore" /> method.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Clear"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void Clear()
     {
         AssertEnabled();
@@ -204,12 +166,8 @@ public sealed class SoftLabelKeyManager
                .Check(nameof(_curses.slk_clear), "Failed to clear the soft label keys.");
     }
 
-    /// <summary>
-    ///     Restores the soft key labels to the screen. They can be cleared by calling <see cref="Clear" /> method.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Restore"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void Restore()
     {
         AssertEnabled();
@@ -217,12 +175,8 @@ public sealed class SoftLabelKeyManager
                .Check(nameof(_curses.slk_restore), "Failed to restore the soft label keys.");
     }
 
-    /// <summary>
-    ///     Invalidates the soft key labels. They will be queued for refresh the next time <see cref="Refresh" /> is called.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Invalidate"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void Invalidate()
     {
         AssertEnabled();
@@ -230,13 +184,8 @@ public sealed class SoftLabelKeyManager
                .Check(nameof(_curses.slk_touch), "Failed to mark soft label keys as dirty.");
     }
 
-    /// <summary>
-    ///     Refreshes the soft label keys immediately.
-    /// </summary>
-    /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
-    /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Refresh"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
     public void Refresh(bool batch)
     {
         AssertEnabled();

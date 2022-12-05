@@ -26,15 +26,21 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
-global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using Moq;
-global using Shouldly;
-global using System.Diagnostics.CodeAnalysis;
-global using System.Text;
-global using System.Drawing;
-global using Sharpie.Abstractions;
-global using Sharpie.Backend;
+namespace Sharpie.Backend;
+#pragma warning disable CS1591
 
-[assembly: ExcludeFromCodeCoverage]
+/// <summary>
+///     Opaque Curses character with attributes and color.
+/// </summary>
+[StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage]
+public struct CursesComplexChar
+{
+    [MarshalAs(UnmanagedType.U4)] private readonly uint attrAndColorPair;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char0;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char1;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char2;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char3;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char4;
+}

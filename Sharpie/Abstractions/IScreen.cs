@@ -26,15 +26,48 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
-global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using Moq;
-global using Shouldly;
-global using System.Diagnostics.CodeAnalysis;
-global using System.Text;
-global using System.Drawing;
-global using Sharpie.Abstractions;
-global using Sharpie.Backend;
+namespace Sharpie.Abstractions;
 
-[assembly: ExcludeFromCodeCoverage]
+/// <summary>
+///     Defines the traits that a <see cref="Screen"/> implements.
+/// </summary>
+[PublicAPI]
+public interface IScreen: IWindow
+{
+    /// <summary>
+    ///     The terminal this screen belongs to.
+    /// </summary>
+    ITerminal Terminal { get; }
+
+    /// <summary>
+    ///     Creates a new pad.
+    /// </summary>
+    /// <param name="size">The pad size.</param>
+    /// <returns>A new window object.</returns>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size" /> is invalid.</exception>
+    IPad Pad(Size size);
+    
+    /// <summary>
+    ///     Applies all queued refreshes to the terminal.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    void ApplyPendingRefreshes();
+
+    /// <summary>
+    ///     This method invalidates the screen in its entirety and redraws if from scratch.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Screen or some children are no longer usable.</exception>
+    void ForceInvalidateAndRefresh()
+    {
+        Invalidate();
+        foreach (var child in Children)
+        {
+            child.Invalidate();
+        }
+
+        Refresh(false, true);
+    }
+}

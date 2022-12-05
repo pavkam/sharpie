@@ -135,6 +135,14 @@ public class TerminalMainLoopTests
     }
     
     [TestMethod]
+    public void RunAsync_Throws_IfTerminalDisposed()
+    {
+        _terminal.Dispose();
+        Should.Throw<ObjectDisposedException>(() => 
+            _terminal.RunAsync(_ => Task.CompletedTask, false));
+    }
+    
+    [TestMethod]
     public async Task RunAsync_Throws_IfAnotherRunsAlready()
     {
         var ra1 = _terminal.RunAsync(_ => Task.CompletedTask);

@@ -28,13 +28,31 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using Moq;
-global using Shouldly;
-global using System.Diagnostics.CodeAnalysis;
-global using System.Text;
-global using System.Drawing;
-global using Sharpie.Abstractions;
-global using Sharpie.Backend;
+namespace Sharpie.Tests;
 
-[assembly: ExcludeFromCodeCoverage]
+[TestClass]
+public class ScreenInterfaceTests
+{
+    [TestMethod]
+    public void ForceInvalidateAndRefresh_CallsInADeepScrub()
+    {
+        var w1 = new Mock<IWindow>();
+        var w2 = new Mock<IWindow>();
+        var scr = new Mock<IScreen>();
+
+        w1.Setup(s => s.Children)
+          .Returns(new[] { w2.Object });
+        scr.Setup(s => s.Children)
+           .Returns(new[] { w1.Object });
+
+        scr.Setup(s => s.ForceInvalidateAndRefresh())
+           .CallBase();
+        
+        scr.Object.ForceInvalidateAndRefresh();
+        
+        scr.Verify(v => v.Invalidate(), Times.Once);
+        scr.Verify(v => v.Refresh(false, true), Times.Once);
+        w1.Verify(v => v.Invalidate(), Times.Once);
+        w2.Verify(v => v.Invalidate(), Times.Never);
+    }
+}

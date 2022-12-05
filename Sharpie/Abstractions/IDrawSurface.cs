@@ -1,4 +1,4 @@
-namespace Sharpie;
+namespace Sharpie.Abstractions;
 
 /// <summary>
 ///     Defines the traits needed by an object to draw a <see cref="Drawing" /> onto.

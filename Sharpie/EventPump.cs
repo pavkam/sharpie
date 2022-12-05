@@ -5,11 +5,11 @@ namespace Sharpie;
 ///     consumers.
 /// </summary>
 [PublicAPI]
-public sealed class EventPump
+public sealed class EventPump: IEventPump
 {
     private readonly ICursesProvider _curses;
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private readonly Screen _screen;
+    private readonly IScreen _screen;
     private MouseEventResolver? _mouseEventResolver;
 
     /// <summary>
@@ -21,7 +21,7 @@ public sealed class EventPump
     ///     Thrown if <paramref name="curses" /> or <paramref name="screen" /> are
     ///     <c>null</c>.
     /// </exception>
-    internal EventPump(ICursesProvider curses, Screen screen)
+    internal EventPump(ICursesProvider curses, IScreen screen)
     {
         _curses = curses ?? throw new ArgumentNullException(nameof(curses));
         _screen = screen ?? throw new ArgumentNullException(nameof(screen));
@@ -95,16 +95,9 @@ public sealed class EventPump
         return new KeyEvent(Key.Character, new(keyCode), _curses.key_name(keyCode), ModifierKey.None);
     }
 
-    /// <summary>
-    ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
-    /// </summary>
-    /// <remarks>
-    ///     The enumerable returned by this method only stops waiting when cancellation is requested.
-    /// </remarks>
-    /// <param name="window">The window to refresh during event processing.</param>
-    /// <param name="cancellationToken">Cancellation token used to interrupt the process.</param>
-    /// <returns>The event listening enumerable.</returns>
-    public IEnumerable<Event> Listen(Window window, CancellationToken cancellationToken)
+    /// <inheritdoc cref="IEventPump.Listen(Sharpie.IWindow,System.Threading.CancellationToken)"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public IEnumerable<Event> Listen(IWindow window, CancellationToken cancellationToken)
     {
         if (window == null)
         {
@@ -183,34 +176,11 @@ public sealed class EventPump
         }
     }
 
-    /// <summary>
-    ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
-    /// </summary>
-    /// <param name="window">The window to refresh during event processing.</param>
-    /// <returns>The event listening enumerable.</returns>
-    public IEnumerable<Event> Listen(Window window) => Listen(window, CancellationToken.None);
-
-    /// <summary>
-    ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
-    /// </summary>
-    /// <remarks>
-    ///     The enumerable returned by this method only stops waiting when cancellation is requested.
-    /// </remarks>
-    /// <param name="cancellationToken">Cancellation token used to interrupt the process.</param>
-    /// <returns>The event listening enumerable.</returns>
+    /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen(CancellationToken cancellationToken) => Listen(_screen, cancellationToken);
 
-    /// <summary>
-    ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
-    /// </summary>
-    /// <returns>The event listening enumerable.</returns>
-    public IEnumerable<Event> Listen() => Listen(CancellationToken.None);
-
-    /// <summary>
-    ///     Registers a key sequence resolver into the input pipeline.
-    /// </summary>
-    /// <param name="resolver">The resolver to register.</param>
-    /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver" /> is <c>null</c>.</exception>
+    /// <inheritdoc cref="IEventPump.Use"/>
     public void Use(ResolveEscapeSequenceFunc resolver)
     {
         if (resolver == null)
@@ -224,12 +194,7 @@ public sealed class EventPump
         }
     }
 
-    /// <summary>
-    ///     Checks if the screen has a given key sequence resolver registered.
-    /// </summary>
-    /// <param name="resolver">The resolver to check.</param>
-    /// <returns><c>true</c> if the resolver is registered; <c>false</c> otherwise.</returns>
-    /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver" /> is <c>null</c>.</exception>
+    /// <inheritdoc cref="IEventPump.Uses"/>
     public bool Uses(ResolveEscapeSequenceFunc resolver)
     {
         if (resolver == null)

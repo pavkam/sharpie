@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class ColorManagerTests
 {
-    private ColorManager _colorManager = null!;
+    private IColorManager _colorManager = null!;
     private Mock<ICursesProvider> _cursesMock = null!;
 
     [TestInitialize]
@@ -46,7 +46,7 @@ public class ColorManagerTests
         _cursesMock.Setup(s => s.can_change_color())
                    .Returns(true);
 
-        _colorManager = new(_cursesMock.Object, true);
+        _colorManager = new ColorManager(_cursesMock.Object, true);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),

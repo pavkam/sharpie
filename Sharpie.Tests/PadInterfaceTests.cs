@@ -28,13 +28,22 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using Moq;
-global using Shouldly;
-global using System.Diagnostics.CodeAnalysis;
-global using System.Text;
-global using System.Drawing;
-global using Sharpie.Abstractions;
-global using Sharpie.Backend;
+namespace Sharpie.Tests;
 
-[assembly: ExcludeFromCodeCoverage]
+[TestClass]
+public class PadInterfaceTests
+{
+    [TestMethod]
+    public void Refresh2_CallsTheActualImplementation()
+    {
+        var p = new Mock<IPad>();
+        p.Setup(s => s.Refresh(It.IsAny<Rectangle>(), It.IsAny<Point>()))
+         .CallBase();
+
+        var a = new Rectangle(1, 2, 3, 4);
+        var l = new Point(5, 6);
+        p.Object.Refresh(a, l);
+        
+        p.Verify(v => v.Refresh(false, false, a, l), Times.Once);
+    }
+}

@@ -39,7 +39,7 @@ public class EventPumpTests
     private Terminal _terminal = null!;
     private Window _window = null!;
 
-    private Event[] SimulateEvents(int count, Window w, params (int result, uint keyCode)[] raw)
+    private Event[] SimulateEvents(int count, IWindow w, params (int result, uint keyCode)[] raw)
     {
         var i = 0;
 
@@ -78,7 +78,7 @@ public class EventPumpTests
         return events.ToArray();
     }
 
-    private Event SimulateEvent(Window w, params (int result, uint keyCode)[] raw) =>
+    private Event SimulateEvent(IWindow w, params (int result, uint keyCode)[] raw) =>
         SimulateEvents(1, w, raw)
             .Single();
 
@@ -89,7 +89,7 @@ public class EventPumpTests
                                              .ToArray())
             .Single();
 
-    private Event SimulateEvent(Window w, int result, uint keyCode) => SimulateEvent(w, (result, keyCode));
+    private Event SimulateEvent(IWindow w, int result, uint keyCode) => SimulateEvent(w, (result, keyCode));
     private Event SimulateEvent(int result, uint keyCode) => SimulateEvent(_window, result, keyCode);
 
     [TestInitialize]
@@ -102,7 +102,7 @@ public class EventPumpTests
 
         _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
         _pump = new(_cursesMock.Object, _terminal.Screen);
-        _window = new(_cursesMock.Object, _terminal.Screen, new(2));
+        _window = new(_cursesMock.Object, (Screen)_terminal.Screen, new(2));
         _source = new();
     }
 
@@ -317,37 +317,12 @@ public class EventPumpTests
     }
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen2_CallsCurses_ForWindow()
-    {
-        _pump.Listen(_window)
-             .First();
-
-        _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen3_CallsCurses_ForScreen()
     {
         _pump.Listen(CancellationToken.None)
              .First();
 
         _cursesMock.Verify(s => s.wget_wch(_terminal.Screen.Handle, out It.Ref<uint>.IsAny), Times.Once);
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen4_CallsCurses_ForScreen()
-    {
-        _pump.Listen()
-             .First();
-
-        _cursesMock.Verify(s => s.wget_wch(_terminal.Screen.Handle, out It.Ref<uint>.IsAny), Times.Once);
-    }
-
-    [TestMethod]
-    public void Listen2_ThrowsIfWindowIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _pump.Listen(null!)
-                                                       .ToArray());
     }
 
     [TestMethod]
@@ -428,7 +403,7 @@ public class EventPumpTests
     [TestMethod]
     public void Listen1_ProcessesTerminalResizeEvents_InChild()
     {
-        var otherWindow = new Window(_cursesMock.Object, _terminal.Screen, new(8));
+        var otherWindow = new Window(_cursesMock.Object, (Screen)_terminal.Screen, new(8));
 
         _cursesMock.Setup(s => s.getmaxy(_terminal.Screen.Handle))
                    .Returns(10);

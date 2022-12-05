@@ -29,7 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #pragma warning disable CS1591
-namespace Sharpie;
+namespace Sharpie.Abstractions;
 
 /// <summary>
 ///     Interface provides access to the Curses functionality. Use the <see cref="NativeCursesProvider" /> property to

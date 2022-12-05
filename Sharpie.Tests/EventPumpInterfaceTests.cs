@@ -26,21 +26,35 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
-namespace Sharpie;
-#pragma warning disable CS1591
+namespace Sharpie.Tests;
 
-/// <summary>
-///     Opaque Curses character with attributes and color.
-/// </summary>
-[StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage]
-public struct CursesComplexChar
+[TestClass]
+public class EventPumpInterfaceTests
 {
-    [MarshalAs(UnmanagedType.U4)] public uint attrAndColorPair;
-    [MarshalAs(UnmanagedType.U4)] public uint char0;
-    [MarshalAs(UnmanagedType.U4)] public uint char1;
-    [MarshalAs(UnmanagedType.U4)] public uint char2;
-    [MarshalAs(UnmanagedType.U4)] public uint char3;
-    [MarshalAs(UnmanagedType.U4)] public uint char4;
+    [TestMethod]
+    public void Listen1_CallActualImplementation()
+    {
+        var p = new Mock<IEventPump>();
+        var w = new Mock<IWindow>();
+        p.Setup(s => s.Listen(It.IsAny<IWindow>()))
+         .CallBase();
+        
+        p.Object.Listen(w.Object).ShouldBeEmpty();
+
+        p.Verify(s => s.Listen(w.Object, CancellationToken.None), Times.Once);
+    }
+
+    [TestMethod]
+    public void Listen2_CallActualImplementation()
+    {
+        var p = new Mock<IEventPump>();
+        p.Setup(s => s.Listen())
+         .CallBase();
+        
+        p.Object.Listen().ShouldBeEmpty();
+
+        p.Verify(s => s.Listen(CancellationToken.None), Times.Once);
+    }
 }

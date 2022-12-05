@@ -86,8 +86,9 @@ public class PadTests
     [TestMethod]
     public void Ctor_Throws_IfParentNotPadOrScreen()
     {
+        var w = new Window(_cursesMock.Object, null, new(1));
         Should.Throw<ArgumentException>(() =>
-            new Pad(_cursesMock.Object, new(_cursesMock.Object, null, IntPtr.MaxValue), IntPtr.Zero));
+            new Pad(_cursesMock.Object, w, IntPtr.Zero));
     }
 
     [TestMethod]
@@ -186,5 +187,56 @@ public class PadTests
     public void Location_Set_Throws_Always()
     {
         Should.Throw<NotSupportedException>(() => _pad1.Location = Point.Empty);
+    }
+    
+    [TestMethod]
+    public void SubWindow_Throws_IfAreaOutsideBoundaries()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() => 
+            _pad1.SubWindow(new(0, 0, _pad1.Size.Width + 1, _pad1.Size.Height + 1)));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void SubWindow_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>()))
+                   .Returns(IntPtr.Zero);
+
+        Should.Throw<CursesOperationException>(() => _pad1.SubWindow(new(0, 0, 1, 1)))
+              .Operation.ShouldBe("subpad");
+    }
+
+    [TestMethod]
+    public void SubWindow_ReturnsNewPad_IfCursesSucceeds()
+    {
+        _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>()))
+                   .Returns(new IntPtr(3));
+
+        var sp = _pad1.SubWindow(new(0, 0, 1, 1));
+        sp.Handle.ShouldBe(new(3));
+        sp.Parent.ShouldBe(_pad1);
+        _pad1.Children.ShouldContain(sp);
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Duplicate_Throws_IfCursesFails()
+    {
+        Should.Throw<CursesOperationException>(() => _pad1.Duplicate())
+              .Operation.ShouldBe("dupwin");
+    }
+
+    [TestMethod]
+    public void Duplicate_ReturnsNewPad()
+    {
+        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+                   .Returns(new IntPtr(3));
+
+        var sw = _pad1.Duplicate();
+        
+        sw.Parent.ShouldBe(_pad1.Parent);
+        sw.Handle.ShouldBe(new(3));
+        _pad1.Parent.Children.ShouldContain(sw);
     }
 }

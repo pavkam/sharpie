@@ -29,7 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #pragma warning disable CS1591
-namespace Sharpie;
+namespace Sharpie.Backend;
 
 /// <summary>
 ///     Internal Curses mouse event.

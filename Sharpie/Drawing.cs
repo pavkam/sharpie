@@ -1,11 +1,13 @@
 namespace Sharpie;
 
+using Abstractions;
+
 /// <summary>
-///     A general-purpose drawing surface that can be latter applied on a <see cref="IDrawSurface" />.
+///     A general-purpose drawing surface that can be latter applied on a <see cref="Sharpie.Abstractions.IDrawSurface" />.
 ///     Supports multiple types of drawing operations most commonly used in terminal apps.
 /// </summary>
 [PublicAPI]
-public sealed class Drawing
+public sealed class Drawing: IDrawable
 {
     /// <summary>
     ///     The possible shapes used by the check.
@@ -557,9 +559,7 @@ public sealed class Drawing
         _cells = new Cell[size.Width, size.Height];
     }
 
-    /// <summary>
-    ///     The size of the drawing.
-    /// </summary>
+    /// <inheritdoc cref="IDrawable.Size"/>
     public Size Size { get; }
 
     private void SetCell(int x, int y, Rune rune, Style style)
@@ -973,17 +973,7 @@ public sealed class Drawing
         SetCell(x / 2, y / 2, quad, textStyle);
     }
 
-    /// <summary>
-    ///     Draws the drawing onto a given surface.
-    /// </summary>
-    /// <param name="destination">The surface to draw on.</param>
-    /// <param name="srcArea">The source area to draw.</param>
-    /// <param name="destLocation">The destination location.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     Thrown if <paramref name="srcArea" /> or <paramref name="destLocation" />
-    ///     are invalid.
-    /// </exception>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="destination" /> is <c>null</c>.</exception>
+    /// <inheritdoc cref="IDrawable.DrawTo"/>
     public void DrawTo(IDrawSurface destination, Rectangle srcArea, Point destLocation)
     {
         if (destination == null)

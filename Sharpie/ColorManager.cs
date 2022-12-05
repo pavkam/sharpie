@@ -34,7 +34,7 @@ namespace Sharpie;
 ///     Exposes functionality to manage colors.
 /// </summary>
 [PublicAPI]
-public sealed class ColorManager
+public sealed class ColorManager: IColorManager
 {
     private readonly ICursesProvider _curses;
     private short _nextPairHandle = 1;
@@ -62,28 +62,17 @@ public sealed class ColorManager
         }
     }
 
-    /// <summary>
-    ///     Specifies whether the colors are enabled.
-    /// </summary>
+    /// <inheritdoc cref="IColorManager.Enabled"/>
     public bool Enabled { get; }
 
-    /// <summary>
-    ///     Specifies whether the terminal supports colors.
-    /// </summary>
+    /// <inheritdoc cref="IColorManager.ColorsAreSupported"/>
     public bool ColorsAreSupported => _curses.has_colors();
 
-    /// <summary>
-    ///     Specifies whether the terminal supports redefining colors.
-    /// </summary>
+    /// <inheritdoc cref="IColorManager.CanRedefineColors"/>
     public bool CanRedefineColors => _curses.can_change_color();
 
-    /// <summary>
-    ///     Creates a new color mixture from the given colors.
-    /// </summary>
-    /// <param name="fgColor">The foreground color.</param>
-    /// <param name="bgColor">The background color.</param>
+    /// <inheritdoc cref="IColorManager.MixColors(short, short)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <returns>A new color mixture.</returns>
     public ColorMixture MixColors(short fgColor, short bgColor)
     {
         _curses.init_pair(_nextPairHandle, fgColor, bgColor)
@@ -95,23 +84,7 @@ public sealed class ColorManager
         return mixture;
     }
 
-    /// <summary>
-    ///     Creates a new color mixture from the given standard colors.
-    /// </summary>
-    /// <param name="fgColor">The foreground color.</param>
-    /// <param name="bgColor">The background color.</param>
-    /// <exception cref="InvalidOperationException">The maximum number of pairs has been exhausted.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <returns>A new color mixture.</returns>
-    public ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor) =>
-        MixColors((short) fgColor, (short) bgColor);
-
-    /// <summary>
-    ///     Redefines an existing color pair with the given colors.
-    /// </summary>
-    /// <param name="mixture">The color mixture to redefine.</param>
-    /// <param name="fgColor">The foreground color.</param>
-    /// <param name="bgColor">The background color.</param>
+    /// <inheritdoc cref="IColorManager.RemixColors(Sharpie.ColorMixture, short, short)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixColors(ColorMixture mixture, short fgColor, short bgColor)
     {
@@ -119,23 +92,7 @@ public sealed class ColorManager
                .Check(nameof(_curses.init_pair), "Failed to redefine an existing color mixture.");
     }
 
-    /// <summary>
-    ///     Redefines an existing color pair with the given standard colors.
-    /// </summary>
-    /// <param name="mixture">The color mixture to redefine.</param>
-    /// <param name="fgColor">The foreground color.</param>
-    /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void RemixColors(ColorMixture mixture, StandardColor fgColor, StandardColor bgColor)
-    {
-        RemixColors(mixture, (short) fgColor, (short) bgColor);
-    }
-
-    /// <summary>
-    ///     Redefines the default colors of the terminal.
-    /// </summary>
-    /// <param name="fgColor">The foreground color.</param>
-    /// <param name="bgColor">The background color.</param>
+    /// <inheritdoc cref="IColorManager.RemixDefaultColors(short, short)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixDefaultColors(short fgColor, short bgColor)
     {
@@ -143,22 +100,7 @@ public sealed class ColorManager
                .Check(nameof(_curses.assume_default_colors), "Failed to redefine the default color mixture.");
     }
 
-    /// <summary>
-    ///     Redefines the default colors of the terminal.
-    /// </summary>
-    /// <param name="fgColor">The foreground color.</param>
-    /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void RemixDefaultColors(StandardColor fgColor, StandardColor bgColor)
-    {
-        RemixDefaultColors((short) fgColor, (short) bgColor);
-    }
-
-    /// <summary>
-    ///     Extracts the colors of a color mixture.
-    /// </summary>
-    /// <param name="mixture">The color mixture to get the colors from.</param>
-    /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
+    /// <inheritdoc cref="IColorManager.UnMixColors"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (short fgColor, short bgColor) UnMixColors(ColorMixture mixture)
     {
@@ -168,18 +110,7 @@ public sealed class ColorManager
         return (fgColor, bgColor);
     }
 
-    /// <summary>
-    ///     Redefines the color's RGB attributes (if supported).
-    /// </summary>
-    /// <param name="color">The color to redefine.</param>
-    /// <param name="red">The value of red (0-1000).</param>
-    /// <param name="green">The value of green (0-1000).</param>
-    /// <param name="blue">The value of blue (0-1000).</param>
-    /// <remarks>
-    ///     Before calling this function make sure that terminal supports this functionality by checking
-    ///     <see cref="CanRedefineColors" />
-    /// </remarks>
-    /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
+    /// <inheritdoc cref="IColorManager.RedefineColor(short, short, short, short)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RedefineColor(short color, short red, short green, short blue)
     {
@@ -207,32 +138,7 @@ public sealed class ColorManager
                .Check(nameof(_curses.init_color), "Failed to redefine a terminal color.");
     }
 
-    /// <summary>
-    ///     Redefines the standard color's RGB attributes (if supported).
-    /// </summary>
-    /// <param name="color">The color to redefine.</param>
-    /// <param name="red">The value of red (0-1000).</param>
-    /// <param name="green">The value of green (0-1000).</param>
-    /// <param name="blue">The value of blue (0-1000).</param>
-    /// <remarks>
-    ///     Before calling this function make sure that terminal supports this functionality by checking
-    ///     <see cref="CanRedefineColors" />
-    /// </remarks>
-    /// <exception cref="ArgumentOutOfRangeException">If any of the three components is greater than 1000.</exception>
-    /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void RedefineColor(StandardColor color, short red, short green, short blue) =>
-        RedefineColor((short) color, red, green, blue);
-
-    /// <summary>
-    ///     Extracts the RBG attributes from a color.
-    /// </summary>
-    /// <param name="color">The color to get the RGB from.</param>
-    /// <remarks>
-    ///     Before calling this function make sure that terminal supports this functionality by checking
-    ///     <see cref="CanRedefineColors" />
-    /// </remarks>
-    /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
+    /// <inheritdoc cref="IColorManager.BreakdownColor(short)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (short red, short green, short blue) BreakdownColor(short color)
     {
@@ -246,16 +152,4 @@ public sealed class ColorManager
 
         return (red, green, blue);
     }
-
-    /// <summary>
-    ///     Extracts the RBG attributes from a standard color.
-    /// </summary>
-    /// <param name="color">The color to get the RGB from.</param>
-    /// <remarks>
-    ///     Before calling this function make sure that terminal supports this functionality by checking
-    ///     <see cref="CanRedefineColors" />
-    /// </remarks>
-    /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public (short red, short green, short blue) BreakdownColor(StandardColor color) => BreakdownColor((short) color);
 }
