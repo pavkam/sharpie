@@ -101,8 +101,8 @@ public class EventPumpTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
-        _pump = new EventPump(_cursesMock.Object, _terminal.Screen);
-        _window = new(_cursesMock.Object, _terminal.Screen, new(2));
+        _pump = new(_cursesMock.Object, _terminal.Screen);
+        _window = new(_cursesMock.Object, (Screen)_terminal.Screen, new(2));
         _source = new();
     }
 
@@ -403,7 +403,7 @@ public class EventPumpTests
     [TestMethod]
     public void Listen1_ProcessesTerminalResizeEvents_InChild()
     {
-        var otherWindow = new Window(_cursesMock.Object, _terminal.Screen, new(8));
+        var otherWindow = new Window(_cursesMock.Object, (Screen)_terminal.Screen, new(8));
 
         _cursesMock.Setup(s => s.getmaxy(_terminal.Screen.Handle))
                    .Returns(10);

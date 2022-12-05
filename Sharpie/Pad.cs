@@ -53,6 +53,9 @@ public sealed class Pad: Window, IPad
     /// </summary>
     internal IScreen Screen { get; }
 
+    /// <inheritdoc cref="IWindow.Parent"/>
+    public new IWindow Parent => base.Parent!;
+
     /// <inheritdoc cref="Window.ImmediateRefresh" />
     /// <remarks>
     ///     This functionality is disabled in the pads. Any call to set the value to <c>true</c> will
@@ -115,5 +118,30 @@ public sealed class Pad: Window, IPad
                       destRect.Bottom, destRect.Right)
                   .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
         }
+    }
+
+    /// <inheritdoc cref="IPad.Duplicate"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public override IPad Duplicate()
+    {
+        var handle = Curses.dupwin(Handle)
+                           .Check(nameof(Curses.dupwin), "Failed to duplicate an existing window.");
+
+        return new Pad(Curses, (Window)Parent, handle);
+    }
+
+    /// <inheritdoc cref="IPad.SubWindow"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public override IPad SubWindow(Rectangle area)
+    {
+        if (!((IWindow)this).IsRectangleWithin(area))
+        {
+            throw new ArgumentOutOfRangeException(nameof(area));
+        }
+
+        var handle = Curses.subpad(Handle, area.Height, area.Width, area.Top, area.Right)
+                           .Check(nameof(Curses.subpad), "Failed to create a new sub-pad.");
+
+        return new Pad(Curses, this, handle);
     }
 }

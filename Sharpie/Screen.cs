@@ -72,9 +72,9 @@ public sealed class Screen: Window, IScreen
         set => throw new NotSupportedException("Cannot resize the screen window.");
     }
 
-    /// <inheritdoc cref="IScreen.CreateWindow"/>
+    /// <inheritdoc cref="IScreen.SubWindow"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IWindow CreateWindow(Rectangle area)
+    public override IWindow SubWindow(Rectangle area)
     {
         if (!((IWindow)this).IsRectangleWithin(area))
         {
@@ -86,60 +86,14 @@ public sealed class Screen: Window, IScreen
 
         return new Window(Curses, this, handle);
     }
+    
+    /// <inheritdoc cref="IWindow.Duplicate"/>
+    /// <exception cref="InvalidOperationException">Cannot duplicate the screen window.</exception>
+    public override IWindow Duplicate() => throw new InvalidOperationException("Cannot duplicate the screen window.");
 
-    /// <inheritdoc cref="IScreen.CreateSubWindow"/>
+    /// <inheritdoc cref="IScreen.Pad"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IWindow CreateSubWindow(IWindow window, Rectangle area)
-    {
-        switch (window)
-        {
-            case null:
-                throw new ArgumentNullException(nameof(window));
-            case Screen:
-                return CreateWindow(area);
-        }
-
-        if (!window.IsRectangleWithin(area))
-        {
-            throw new ArgumentOutOfRangeException(nameof(area));
-        }
-
-        if (window is Pad)
-        {
-            throw new InvalidOperationException("Cannot create a sub-window in a pad.");
-        }
-
-        var handle = Curses.derwin(window.Handle, area.Height, area.Width, area.Y, area.X)
-                           .Check(nameof(Curses.derwin), "Failed to create a new sub-window.");
-
-        return new Window(Curses, window, handle);
-    }
-
-    /// <inheritdoc cref="IScreen.DuplicateWindow"/>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IWindow DuplicateWindow(IWindow window)
-    {
-        switch (window)
-        {
-            case null:
-                throw new ArgumentNullException(nameof(window));
-            case Screen:
-                throw new InvalidOperationException("Cannot duplicate the screen window.");
-            default:
-            {
-                var handle = Curses.dupwin(window.Handle)
-                                   .Check(nameof(Curses.dupwin), "Failed to duplicate an existing window.");
-
-                return window is Pad
-                    ? new Pad(Curses, window.Parent ?? this, handle)
-                    : new Window(Curses, window.Parent, handle);
-            }
-        }
-    }
-
-    /// <inheritdoc cref="IScreen.CreatePad"/>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IPad CreatePad(Size size)
+    public IPad Pad(Size size)
     {
         if (size.Width < 1 || size.Height < 1)
         {
@@ -151,26 +105,6 @@ public sealed class Screen: Window, IScreen
                            .Check(nameof(Curses.newpad), "Failed to create a new pad.");
 
         return new Pad(Curses, this, handle);
-    }
-
-    /// <inheritdoc cref="IScreen.CreateSubPad"/>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IPad CreateSubPad(IPad pad, Rectangle area)
-    {
-        if (pad == null)
-        {
-            throw new ArgumentNullException(nameof(pad));
-        }
-
-        if (!pad.IsRectangleWithin(area))
-        {
-            throw new ArgumentOutOfRangeException(nameof(area));
-        }
-
-        var handle = Curses.subpad(pad.Handle, area.Height, area.Width, area.Top, area.Right)
-                           .Check(nameof(Curses.subpad), "Failed to create a new sub-pad.");
-
-        return new Pad(Curses, pad, handle);
     }
 
     /// <inheritdoc cref="IScreen.ApplyPendingRefreshes"/>

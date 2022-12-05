@@ -44,12 +44,15 @@ public class ScreenInterfaceTests
           .Returns(new[] { w2.Object });
         scr.Setup(s => s.Children)
            .Returns(new[] { w1.Object });
+
+        scr.Setup(s => s.ForceInvalidateAndRefresh())
+           .CallBase();
         
         scr.Object.ForceInvalidateAndRefresh();
         
-        scr.Verify(v => v.Invalidate(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        scr.Verify(v => v.Invalidate(), Times.Once);
         scr.Verify(v => v.Refresh(false, true), Times.Once);
-        w1.Verify(v => v.Invalidate(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
-        w2.Verify(v => v.Invalidate(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        w1.Verify(v => v.Invalidate(), Times.Once);
+        w2.Verify(v => v.Invalidate(), Times.Never);
     }
 }

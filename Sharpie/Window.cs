@@ -36,7 +36,6 @@ namespace Sharpie;
 [PublicAPI]
 public class Window: IWindow, IDisposable
 {
-    private readonly Window? _parent;
     private readonly IList<Window> _windows = new List<Window>();
     private IntPtr _handle;
 
@@ -56,8 +55,8 @@ public class Window: IWindow, IDisposable
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
         _handle = windowHandle;
 
-        _parent = parent;
-        _parent?._windows.Add(this);
+        Parent = parent;
+        parent?._windows.Add(this);
 
         EnableScrolling = true;
 
@@ -80,8 +79,8 @@ public class Window: IWindow, IDisposable
     protected internal ICursesProvider Curses { get; }
 
     /// <inheritdoc cref="IWindow.Parent"/>
-    public IWindow? Parent => _parent;
-    
+    public IWindow? Parent { get; }
+
     /// <inheritdoc cref="IWindow.Handle"/>
     public IntPtr Handle
     {
@@ -720,12 +719,37 @@ public class Window: IWindow, IDisposable
                 window.Destroy();
             }
 
-            _parent?._windows.Remove(this);
+            ((Window?)Parent)?._windows.Remove(this);
 
             Delete();
 
             _handle = IntPtr.Zero;
         }
+    }
+    
+    /// <inheritdoc cref="IWindow.SubWindow"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public virtual IWindow SubWindow(Rectangle area)
+    {
+        if (!((IWindow)this).IsRectangleWithin(area))
+        {
+            throw new ArgumentOutOfRangeException(nameof(area));
+        }
+
+        var handle = Curses.derwin(Handle, area.Height, area.Width, area.Y, area.X)
+                           .Check(nameof(Curses.derwin), "Failed to create a new sub-window.");
+
+        return new Window(Curses, this, handle);
+    }
+
+    /// <inheritdoc cref="IWindow.Duplicate"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public virtual IWindow Duplicate()
+    {
+        var handle = Curses.dupwin(Handle)
+                           .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
+
+        return new Window(Curses, (Window?)Parent, handle);
     }
 
     /// <summary>

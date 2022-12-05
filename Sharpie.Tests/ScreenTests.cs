@@ -110,232 +110,62 @@ public class ScreenTests
     public void Size_Set_Throws_Always() { Should.Throw<NotSupportedException>(() => _screen1.Size = new(1, 1)); }
 
     [TestMethod]
-    public void CreateWindow_Throws_IfAreaOutsideBoundaries()
+    public void SubWindow_Throws_IfAreaOutsideBoundaries()
     {
         MockSmallArea(new(1));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateWindow(new(0, 0, 2, 2)));
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.SubWindow(new(0, 0, 2, 2)));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CreateWindow_Throws_IfCursesFails()
+    public void SubWindow_Throws_IfCursesFails()
     {
         MockLargeArea(new(1));
 
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesOperationException>(() => _screen1.CreateWindow(new(0, 0, 1, 1)))
+        Should.Throw<CursesOperationException>(() => _screen1.SubWindow(new(0, 0, 1, 1)))
               .Operation.ShouldBe("newwin");
     }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CreateWindow_ReturnsNewWindow_IfCursesSucceeds()
+    
+    [TestMethod]
+    public void Duplicate_Throws_Always()
     {
-        MockLargeArea(new(1));
-
-        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(new IntPtr(2));
-
-        var w = _screen1.CreateWindow(new(0, 0, 1, 1));
-        w.Handle.ShouldBe(new(2));
-        w.Parent.ShouldBe(_screen1);
+        Should.Throw<InvalidOperationException>(() => _screen1.Duplicate());
     }
 
     [TestMethod]
-    public void CreateSubWindow_Throws_IfWindowIsNull()
+    public void Pad_Throws_IfWidthLessThanOne()
     {
-        Should.Throw<ArgumentNullException>(() => _screen1.CreateSubWindow(null!, new(0, 0, 1, 1)));
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.Pad(new(0, 1)));
     }
 
     [TestMethod]
-    public void CreateSubWindow_Throws_IfAreaOutsideBoundaries()
+    public void Pad_Throws_IfHeightLessThanOne()
     {
-        MockSmallArea(new(2));
-
-        var p = new Window(_cursesMock.Object, _screen1, new(2));
-
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateSubWindow(p, new(0, 0, 2, 2)));
-    }
-
-    [TestMethod]
-    public void CreateSubWindow_Throws_IfWindowIsPad()
-    {
-        MockSmallArea(new(2));
-
-        var p = new Pad(_cursesMock.Object, _screen1, new(2));
-
-        Should.Throw<InvalidOperationException>(() => _screen1.CreateSubWindow(p, new(0, 0, 1, 1)));
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.Pad(new(1, 0)));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CreateSubWindow_Throws_IfCursesFails()
-    {
-        MockSmallArea(new(2));
-
-        var w = new Window(_cursesMock.Object, _screen1, new(2));
-
-        _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
-                       It.IsAny<int>()))
-                   .Returns(IntPtr.Zero);
-
-        Should.Throw<CursesOperationException>(() => _screen1.CreateSubWindow(w, new(0, 0, 1, 1)))
-              .Operation.ShouldBe("derwin");
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CreateSubWindow_ReturnsNewWindow_IfCursesSucceeds()
-    {
-        MockLargeArea(new(2));
-
-        var w = new Window(_cursesMock.Object, _screen1, new(2));
-
-        _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
-                       It.IsAny<int>()))
-                   .Returns(new IntPtr(3));
-
-        var sw = _screen1.CreateSubWindow(w, new(0, 0, 1, 1));
-        sw.Handle.ShouldBe(new(3));
-        sw.Parent.ShouldBe(w);
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CreateSubWindow_ReturnsNewWindowInScreen_IfParentIsScreen()
-    {
-        MockLargeArea(new(1));
-
-        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(new IntPtr(3));
-
-        var sw = _screen1.CreateSubWindow(_screen1, new(0, 0, 1, 1));
-        sw.Handle.ShouldBe(new(3));
-        sw.Parent.ShouldBe(_screen1);
-    }
-
-    [TestMethod]
-    public void DuplicateWindow_Throws_IfWindowIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _screen1.DuplicateWindow(null!));
-    }
-
-    [TestMethod]
-    public void DuplicateWindow_Throws_IfWindowIsScreen()
-    {
-        Should.Throw<InvalidOperationException>(() => _screen1.DuplicateWindow(_screen1));
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void DuplicateWindow_Throws_IfCursesFails()
-    {
-        var w = new Window(_cursesMock.Object, _screen1, new(2));
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
-                   .Returns(IntPtr.Zero);
-
-        Should.Throw<CursesOperationException>(() => _screen1.DuplicateWindow(w))
-              .Operation.ShouldBe("dupwin");
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void DuplicateWindow_ReturnsNewWindow_IfCursesSucceeds()
-    {
-        var p = new Window(_cursesMock.Object, _screen1, new(2));
-        var w = new Window(_cursesMock.Object, p, new(3));
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
-                   .Returns(new IntPtr(4));
-
-        var sw = _screen1.DuplicateWindow(w);
-        sw.Handle.ShouldBe(new(4));
-        sw.Parent.ShouldBe(p);
-        sw.ShouldBeOfType<Window>();
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void DuplicateWindow_ReturnsNewPad_IfWindowWasPad()
-    {
-        var w = new Pad(_cursesMock.Object, _screen1, new(2));
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
-                   .Returns(new IntPtr(3));
-
-        var sw = _screen1.DuplicateWindow(w);
-        sw.ShouldBeOfType<Pad>();
-    }
-
-    [TestMethod]
-    public void CreatePad_Throws_IfWidthLessThanOne()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreatePad(new(0, 1)));
-    }
-
-    [TestMethod]
-    public void CreatePad_Throws_IfHeightLessThanOne()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreatePad(new(1, 0)));
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CreatePad_Throws_IfCursesFails()
+    public void Pad_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesOperationException>(() => _screen1.CreatePad(new(1, 1)))
+        Should.Throw<CursesOperationException>(() => _screen1.Pad(new(1, 1)))
               .Operation.ShouldBe("newpad");
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CreatePad_ReturnsNewPad_IfCursesSucceeds()
+    public void Pad_ReturnsNewPad_IfCursesSucceeds()
     {
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
 
-        var w = _screen1.CreatePad(new(1, 1));
+        var w = _screen1.Pad(new(1, 1));
         w.Handle.ShouldBe(new(2));
         w.Parent.ShouldBe(_screen1);
-    }
-
-    [TestMethod]
-    public void CreateSubPad_Throws_IfPadIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _screen1.CreateSubPad(null!, new(0, 0, 1, 1)));
-    }
-
-    [TestMethod]
-    public void CreateSubPad_Throws_IfAreaOutsideBoundaries()
-    {
-        MockSmallArea(new(2));
-        var p = new Pad(_cursesMock.Object, _screen1, new(2));
-
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.CreateSubPad(p, new(0, 0, 2, 2)));
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CreateSubPad_Throws_IfCursesFails()
-    {
-        MockLargeArea(new(2));
-
-        var p = new Pad(_cursesMock.Object, _screen1, new(2));
-        _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
-                       It.IsAny<int>()))
-                   .Returns(IntPtr.Zero);
-
-        Should.Throw<CursesOperationException>(() => _screen1.CreateSubPad(p, new(0, 0, 1, 1)))
-              .Operation.ShouldBe("subpad");
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CreateSubPad_ReturnsNewPad_IfCursesSucceeds()
-    {
-        MockLargeArea(new(2));
-
-        var p = new Pad(_cursesMock.Object, _screen1, new(2));
-
-        _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
-                       It.IsAny<int>()))
-                   .Returns(new IntPtr(3));
-
-        var sp = _screen1.CreateSubPad(p, new(0, 0, 1, 1));
-        sp.Handle.ShouldBe(new(3));
-        sp.Parent.ShouldBe(p);
     }
 
     [TestMethod]

@@ -40,6 +40,9 @@ public class WindowInterfaceTests
     [TestMethod]
     public void Refresh_CallsActualImplementation()
     {
+        _windowMock.Setup(s => s.Refresh())
+                   .CallBase();
+        
         _windowMock.Object.Refresh();
         _windowMock.Verify(v => v.Refresh(false, false), Times.Once);
     }
@@ -47,6 +50,9 @@ public class WindowInterfaceTests
     [TestMethod]
     public void IsPointWithin_ReturnsTrue_IfPointInside()
     {
+        _windowMock.Setup(s => s.IsPointWithin(It.IsAny<Point>()))
+                   .CallBase();
+        
         _windowMock.Setup(s => s.Size)
                    .Returns(new Size(1, 1));
             
@@ -57,6 +63,9 @@ public class WindowInterfaceTests
     [TestMethod]
     public void IsPointWithin_ReturnsFalse_IfPointNotInside()
     {
+        _windowMock.Setup(s => s.IsPointWithin(It.IsAny<Point>()))
+                   .CallBase();
+        
         _windowMock.Setup(s => s.Size)
                    .Returns(new Size(1, 1));
             
@@ -67,33 +76,47 @@ public class WindowInterfaceTests
     [TestMethod]
     public void IsRectangleWithin_ReturnsTrue_IfInside()
     {
-        _windowMock.Setup(s => s.Size)
-                   .Returns(new Size(5, 5));
-            
+        _windowMock.Setup(s => s.IsRectangleWithin(It.IsAny<Rectangle>()))
+                   .CallBase();
+        
+        _windowMock.Setup(s => s.IsPointWithin(It.IsAny<Point>()))
+                   .Returns(true);
+
         _windowMock.Object.IsRectangleWithin(new(2, 2, 2, 2)).ShouldBeTrue();
-        _windowMock.Verify(v => v.Size, Times.Exactly(2));
+        _windowMock.Verify(v => v.IsPointWithin(It.IsAny<Point>()), Times.Exactly(2));
     }
 
     [TestMethod]
     public void IsRectangleWithin_ReturnsFalse_IfNotInside()
     {
-        _windowMock.Setup(s => s.Size)
-                   .Returns(new Size(5, 5));
-            
-        _windowMock.Object.IsRectangleWithin(new(2, 2, 3, 3)).ShouldBeFalse();
-        _windowMock.Verify(v => v.Size, Times.Exactly(2));
+        _windowMock.Setup(s => s.IsRectangleWithin(It.IsAny<Rectangle>()))
+                   .CallBase();
+
+        _windowMock.Setup(s => s.IsPointWithin(new(2, 2)))
+                   .Returns(true);
+        _windowMock.Setup(s => s.IsPointWithin(new(3, 5)))
+                   .Returns(false);
+        
+        _windowMock.Object.IsRectangleWithin(new(2, 2, 3, 5)).ShouldBeFalse();
+        _windowMock.Verify(v => v.IsPointWithin(It.IsAny<Point>()), Times.Exactly(2));
     }
 
     [TestMethod]
-    public void WriteText2_CallsCursesAlso()
+    public void WriteText_CallsActualImplementation()
     {
+        _windowMock.Setup(s => s.WriteText(It.IsAny<string>()))
+                   .CallBase();
+        
         _windowMock.Object.WriteText("12345");
-        _windowMock.Verify(v => v.WriteText("12345", Style.Default), Times.Once);
+        _windowMock.Verify(v => v.WriteText("12345", It.Is<Style>(s => s == Style.Default)), Times.Once);
     }
 
     [TestMethod]
     public void Draw1_Throws_IfDrawingIsNull()
     {
+        _windowMock.Setup(s => s.Draw(It.IsAny<Point>(), It.IsAny<Rectangle>(), It.IsAny<IDrawable>()))
+                   .CallBase();
+        
         Should.Throw<ArgumentNullException>(
             () => _windowMock.Object.Draw(new(0, 0), new(0, 0, 1, 1), null!));
     }
@@ -101,6 +124,9 @@ public class WindowInterfaceTests
     [TestMethod]
     public void Draw1_CallsDrawing_DrawTo_ToDraw()
     {
+        _windowMock.Setup(s => s.Draw(It.IsAny<Point>(), It.IsAny<Rectangle>(), It.IsAny<IDrawable>()))
+                   .CallBase();
+        
         var drawingMock = new Mock<IDrawable>();
 
         var area = new Rectangle(1, 2, 100, 200);
@@ -114,6 +140,9 @@ public class WindowInterfaceTests
     [TestMethod]
     public void Draw2_CallsDrawing_DrawTo_ToDraw()
     {
+        _windowMock.Setup(s => s.Draw(It.IsAny<Point>(), It.IsAny<Rectangle>(), It.IsAny<IDrawable>()))
+                   .CallBase();
+        
         var drawingMock = new Mock<IDrawable>();
         drawingMock.Setup(s => s.Size)
                    .Returns(new Size(100, 200));
@@ -129,6 +158,9 @@ public class WindowInterfaceTests
     [TestMethod]
     public void Invalidate_CallsActualImplementation()
     {
+        _windowMock.Setup(s => s.Invalidate())
+                   .CallBase();
+        
         _windowMock.Setup(s => s.Size)
                    .Returns(new Size(10, 20));
         

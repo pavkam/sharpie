@@ -446,4 +446,22 @@ public interface IWindow: IDrawSurface
     ///     Removes the window form the parent, destroys all children and itself.
     /// </summary>
     void Destroy();
+    
+    /// <summary>
+    ///     Creates a new sub-window in the parent window.
+    /// </summary>
+    /// <param name="area">The area of the window to put the sub-window in.</param>
+    /// <remarks>
+    /// </remarks>
+    /// <returns>A new window object.</returns>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
+    IWindow SubWindow(Rectangle area);
+
+    /// <summary>
+    ///     Duplicates and existing window, including its attributes.
+    /// </summary>
+    /// <returns>A new window object.</returns>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    IWindow Duplicate();
 }

@@ -55,4 +55,22 @@ public interface IPad: IWindow
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="rect"/> or <paramref name="screenPos"/> are out of bounds.</exception>
     void Refresh(Rectangle rect, Point screenPos) => Refresh(false, false, rect, screenPos);
+    
+    /// <summary>
+    ///     Creates a new sub-pad in the parent pad.
+    /// </summary>
+    /// <param name="area">The area of the pad to put the sub-pad in.</param>
+    /// <remarks>
+    /// </remarks>
+    /// <returns>A new pad object.</returns>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
+    new IPad SubWindow(Rectangle area);
+
+    /// <summary>
+    ///     Duplicates and existing pad, including its attributes.
+    /// </summary>
+    /// <returns>A new pad object.</returns>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    new IPad Duplicate();
 }

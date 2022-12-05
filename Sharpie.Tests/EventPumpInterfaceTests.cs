@@ -38,9 +38,10 @@ public class EventPumpInterfaceTests
     {
         var p = new Mock<IEventPump>();
         var w = new Mock<IWindow>();
+        p.Setup(s => s.Listen(It.IsAny<IWindow>()))
+         .CallBase();
         
-        p.Object.Listen(w.Object)
-         .First().ShouldBeNull();
+        p.Object.Listen(w.Object).ShouldBeEmpty();
 
         p.Verify(s => s.Listen(w.Object, CancellationToken.None), Times.Once);
     }
@@ -49,8 +50,10 @@ public class EventPumpInterfaceTests
     public void Listen2_CallActualImplementation()
     {
         var p = new Mock<IEventPump>();
-        p.Object.Listen()
-         .First().ShouldBeNull();
+        p.Setup(s => s.Listen())
+         .CallBase();
+        
+        p.Object.Listen().ShouldBeEmpty();
 
         p.Verify(s => s.Listen(CancellationToken.None), Times.Once);
     }

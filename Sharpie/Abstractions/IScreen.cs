@@ -42,57 +42,14 @@ public interface IScreen: IWindow
     ITerminal Terminal { get; }
 
     /// <summary>
-    ///     Creates a new window in the screen.
-    /// </summary>
-    /// <param name="area">The area for the new window.</param>
-    /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the screen bounds.</exception>
-    IWindow CreateWindow(Rectangle area);
-
-    /// <summary>
-    ///     Creates a new sub-window in the parent window.
-    /// </summary>
-    /// <param name="window">The parent window.</param>
-    /// <param name="area">The area of the window to put the sub-window in.</param>
-    /// <remarks>
-    /// </remarks>
-    /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
-    IWindow CreateSubWindow(IWindow window, Rectangle area);
-
-    /// <summary>
-    ///     Duplicates and existing window, including its attributes.
-    /// </summary>
-    /// <param name="window">The window to duplicate.</param>
-    /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    /// <exception cref="InvalidOperationException">Trying to duplicate the screen window.</exception>
-    /// <exception cref="ArgumentNullException">Throws if <paramref name="window" /> is <c>null</c>.</exception>
-    IWindow DuplicateWindow(IWindow window);
-
-    /// <summary>
     ///     Creates a new pad.
     /// </summary>
     /// <param name="size">The pad size.</param>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size" /> is invalid.</exception>
-    IPad CreatePad(Size size);
-
-    /// <summary>
-    ///     Creates a new sub-pad.
-    /// </summary>
-    /// <param name="pad">The parent pad.</param>
-    /// <param name="area">The are of the pad to use.</param>
-    /// <returns>A new window object.</returns>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">When <paramref name="area" /> is outside the pad's bounds.</exception>
-    /// <exception cref="ArgumentNullException">When <paramref name="pad" /> is <c>null</c>.</exception>
-    IPad CreateSubPad(IPad pad, Rectangle area);
-
+    IPad Pad(Size size);
+    
     /// <summary>
     ///     Applies all queued refreshes to the terminal.
     /// </summary>

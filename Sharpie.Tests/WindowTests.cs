@@ -2058,4 +2058,71 @@ public class WindowTests
         _cursesMock.Verify(v => v.leaveok(w1.Handle, true), Times.Once);
         _cursesMock.Verify(v => v.leaveok(w2.Handle, true), Times.Once);
     }
+    
+    [TestMethod]
+    public void SubWindow_Throws_IfAreaOutsideBoundaries()
+    {
+        var w = new Window(_cursesMock.Object, null, new(2));
+        MockSmallArea(w.Handle);
+
+        Should.Throw<ArgumentOutOfRangeException>(() => w.SubWindow(new(0, 0, 2, 2)));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void SubWindow_Throws_IfCursesFails()
+    {
+        var w = new Window(_cursesMock.Object, null, new(2));
+        MockSmallArea(w.Handle);
+        
+        _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>()))
+                   .Returns(IntPtr.Zero);
+
+        Should.Throw<CursesOperationException>(() => w.SubWindow(new(0, 0, 1, 1)))
+              .Operation.ShouldBe("derwin");
+    }
+
+    [TestMethod]
+    public void SubWindow_ReturnsNewWindow_IfCursesSucceeds()
+    {
+        var w = new Window(_cursesMock.Object, null, new(2));
+        MockLargeArea(w.Handle);
+
+        _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>()))
+                   .Returns(new IntPtr(3));
+
+        var sw = w.SubWindow(new(0, 0, 1, 1));
+        sw.Handle.ShouldBe(new(3));
+        sw.Parent.ShouldBe(w);
+        w.Children.ShouldContain(sw);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Duplicate_Throws_IfCursesFails()
+    {
+        var w = new Window(_cursesMock.Object, null, new(3));
+        
+        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+                   .Returns(IntPtr.Zero);
+
+        Should.Throw<CursesOperationException>(() => w.Duplicate())
+              .Operation.ShouldBe("dupwin");
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Duplicate_ReturnsNewWindow_IfCursesSucceeds()
+    {
+        var p = new Window(_cursesMock.Object, null, new(2));
+        var w = new Window(_cursesMock.Object, p, new(3));
+        
+        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+                   .Returns(new IntPtr(4));
+
+        var sw = w.Duplicate();
+        
+        sw.Handle.ShouldBe(new(4));
+        sw.Parent.ShouldBe(p);
+        p.Children.ShouldContain(sw);
+    }
 }
