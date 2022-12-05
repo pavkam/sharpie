@@ -87,7 +87,7 @@ public class PadTests
     public void Ctor_Throws_IfParentNotPadOrScreen()
     {
         Should.Throw<ArgumentException>(() =>
-            new Pad(_cursesMock.Object, new(_cursesMock.Object, null, IntPtr.MaxValue), IntPtr.Zero));
+            new Pad(_cursesMock.Object, new Mock<IWindow>().Object, IntPtr.Zero));
     }
 
     [TestMethod]

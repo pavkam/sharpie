@@ -28,7 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Sharpie;
+namespace Sharpie.Abstractions;
 
 /// <summary>
 ///    Defines the traits needed to implement a terminal. The only existing implementation of this interface is <see cref="Terminal"/> class.

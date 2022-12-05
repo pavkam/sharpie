@@ -593,7 +593,7 @@ public class Window: IWindow, IDisposable
         }
     }
 
-    /// <inheritdoc cref="IWindow.Replace(Sharpie.IWindow, Sharpie.ReplaceStrategy)"/>
+    /// <inheritdoc cref="IWindow.Replace(Sharpie.Abstractions.IWindow, Sharpie.ReplaceStrategy)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Replace(IWindow window, ReplaceStrategy strategy)
     {
@@ -617,7 +617,7 @@ public class Window: IWindow, IDisposable
         }
     }
 
-    /// <inheritdoc cref="IWindow.Replace(Sharpie.IWindow, System.Drawing.Rectangle, System.Drawing.Point, Sharpie.ReplaceStrategy)"/>
+    /// <inheritdoc cref="IWindow.Replace(Sharpie.Abstractions.IWindow, System.Drawing.Rectangle, System.Drawing.Point, Sharpie.ReplaceStrategy)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Replace(IWindow window, Rectangle srcRect, Point destPos, ReplaceStrategy strategy)
     {

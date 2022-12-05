@@ -28,7 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Sharpie;
+namespace Sharpie.Abstractions;
 
 /// <summary>
 ///     Defines the traits implemented by the <see cref="Window"/> class.
@@ -380,37 +380,37 @@ public interface IWindow: IDrawSurface
         IsPointWithin(new(rect.Left + rect.Width - 1, rect.Top + rect.Height - 1));
 
     /// <summary>
-    ///     Draws a given <paramref name="drawing" /> to the window.
+    ///     Draws a given <paramref name="drawable" /> to the window.
     /// </summary>
     /// <param name="area">The area of the drawing to draw.</param>
-    /// <param name="drawing">The drawing to draw.</param>
+    /// <param name="drawable">The drawing to draw.</param>
     /// <param name="location">The location of the drawing.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawable" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
     ///     Thrown if <paramref name="location" /> or  <paramref name="area" /> are
     ///     out of bounds.
     /// </exception>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
-    void Draw(Point location, Rectangle area, Drawing drawing)
+    void Draw(Point location, Rectangle area, IDrawable drawable)
     {
-        if (drawing == null)
+        if (drawable == null)
         {
-            throw new ArgumentNullException(nameof(drawing));
+            throw new ArgumentNullException(nameof(drawable));
         }
 
-        drawing.DrawTo(this, area, location);
+        drawable.DrawTo(this, area, location);
     }
 
     /// <summary>
-    ///     Draws a given <paramref name="drawing" /> to the window.
+    ///     Draws a given <paramref name="drawable" /> to the window.
     /// </summary>
-    /// <param name="drawing">The drawing to draw.</param>
+    /// <param name="drawable">The drawing to draw.</param>
     /// <param name="location">The location of the drawing.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawing" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawable" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location" /> is out of bounds.</exception>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
-    void Draw(Point location, Drawing drawing) =>
-        Draw(location, new(0, 0, drawing.Size.Width, drawing.Size.Height), drawing);
+    void Draw(Point location, IDrawable drawable) =>
+        Draw(location, new(0, 0, drawable.Size.Width, drawable.Size.Height), drawable);
 
     /// <summary>
     ///     Checks if the line at <paramref name="y" /> is dirty.

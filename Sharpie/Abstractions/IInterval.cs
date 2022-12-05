@@ -1,4 +1,4 @@
-namespace Sharpie;
+namespace Sharpie.Abstractions;
 
 /// <summary>
 ///     Describes a timed interval.

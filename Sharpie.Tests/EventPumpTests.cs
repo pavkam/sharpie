@@ -39,7 +39,7 @@ public class EventPumpTests
     private Terminal _terminal = null!;
     private Window _window = null!;
 
-    private Event[] SimulateEvents(int count, Window w, params (int result, uint keyCode)[] raw)
+    private Event[] SimulateEvents(int count, IWindow w, params (int result, uint keyCode)[] raw)
     {
         var i = 0;
 
@@ -78,7 +78,7 @@ public class EventPumpTests
         return events.ToArray();
     }
 
-    private Event SimulateEvent(Window w, params (int result, uint keyCode)[] raw) =>
+    private Event SimulateEvent(IWindow w, params (int result, uint keyCode)[] raw) =>
         SimulateEvents(1, w, raw)
             .Single();
 
@@ -89,7 +89,7 @@ public class EventPumpTests
                                              .ToArray())
             .Single();
 
-    private Event SimulateEvent(Window w, int result, uint keyCode) => SimulateEvent(w, (result, keyCode));
+    private Event SimulateEvent(IWindow w, int result, uint keyCode) => SimulateEvent(w, (result, keyCode));
     private Event SimulateEvent(int result, uint keyCode) => SimulateEvent(_window, result, keyCode);
 
     [TestInitialize]
@@ -101,7 +101,7 @@ public class EventPumpTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
-        _pump = new(_cursesMock.Object, _terminal.Screen);
+        _pump = new EventPump(_cursesMock.Object, _terminal.Screen);
         _window = new(_cursesMock.Object, _terminal.Screen, new(2));
         _source = new();
     }

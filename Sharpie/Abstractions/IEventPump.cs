@@ -1,4 +1,4 @@
-namespace Sharpie;
+namespace Sharpie.Abstractions;
 
 /// <summary>
 ///     Defines the traits needed to implement <see cref="EventPump"/>.

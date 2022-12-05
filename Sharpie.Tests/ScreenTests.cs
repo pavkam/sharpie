@@ -382,26 +382,4 @@ public class ScreenTests
         _screen1.Dispose();
         _screen1.Disposed.ShouldBe(true);
     }
-
-    [TestMethod]
-    public void ForceInvalidateAndRefresh_CallsInADeepScrub()
-    {
-        var w1 = new Window(_cursesMock.Object, _screen1, new(6));
-        var w2 = new Window(_cursesMock.Object, w1, new(7));
-
-        _cursesMock.Setup(s => s.getmaxy(_screen1.Handle))
-                   .Returns(10);
-
-        _cursesMock.Setup(s => s.getmaxy(w1.Handle))
-                   .Returns(10);
-
-
-        _screen1.ForceInvalidateAndRefresh();
-
-        _cursesMock.Verify(v => v.wtouchln(w1.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
-        _cursesMock.Verify(v => v.wtouchln(w2.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Never);
-        _cursesMock.Verify(v => v.wtouchln(_screen1.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
-        _cursesMock.Verify(v => v.clearok(_screen1.Handle, true), Times.Once);
-        _cursesMock.Verify(v => v.wrefresh(_screen1.Handle), Times.Once);
-    }
 }

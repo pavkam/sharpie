@@ -28,7 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Sharpie;
+namespace Sharpie.Backend;
 #pragma warning disable CS1591
 
 /// <summary>
@@ -37,10 +37,10 @@ namespace Sharpie;
 [StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage]
 public struct CursesComplexChar
 {
-    [MarshalAs(UnmanagedType.U4)] public uint attrAndColorPair;
-    [MarshalAs(UnmanagedType.U4)] public uint char0;
-    [MarshalAs(UnmanagedType.U4)] public uint char1;
-    [MarshalAs(UnmanagedType.U4)] public uint char2;
-    [MarshalAs(UnmanagedType.U4)] public uint char3;
-    [MarshalAs(UnmanagedType.U4)] public uint char4;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint attrAndColorPair;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char0;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char1;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char2;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char3;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint char4;
 }
