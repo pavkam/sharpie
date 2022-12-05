@@ -95,16 +95,18 @@ public sealed class Terminal: ITerminal, IDisposable
             {
                 _header = handle != IntPtr.Zero ? new Window(curses, null, handle) : null;
                 return 0;
-            });
+            })
+                  .Check(nameof(curses.ripoffline), "Failed to allocate header line.");
         }
 
         if (Options.AllocateFooter)
         {
             curses.ripoffline(-1, (handle, _) =>
-            {
-                _footer = handle != IntPtr.Zero ? new Window(curses, null, handle) : null;
-                return 0;
-            });
+                  {
+                      _footer = handle != IntPtr.Zero ? new Window(curses, null, handle) : null;
+                      return 0;
+                  })
+                  .Check(nameof(curses.ripoffline), "Failed to allocate footer line.");
         }
 
         _screen = new(curses, this, curses.initscr()

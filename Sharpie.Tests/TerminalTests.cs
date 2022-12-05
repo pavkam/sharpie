@@ -183,7 +183,84 @@ public class TerminalTests
         _cursesMock.Verify(v => v.nl(), Times.Never);
         _cursesMock.Verify(v => v.nonl(), Times.Once);
     }
+    
+    [TestMethod]
+    public void Ctor_PreparesHeader_ByAskingCurses()
+    {
+        _cursesMock.Setup(s => s.ripoffline(1, It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+                   {
+                       cb(new(100), 1).ShouldBe(0);
+                   });
+        
+        _terminal = new(_cursesMock.Object, new(AllocateHeader: true));
 
+
+        _terminal.Header.ShouldNotBeNull();
+        _terminal.Header!.Handle.ShouldBe(new(100));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_WhenPreparingHeader_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Returns(-1);
+       
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateHeader: true)))
+              .Operation.ShouldBe("ripoffline");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle()
+    {
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+                   {
+                       cb(IntPtr.Zero, 0);
+                   });
+        
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateHeader: true)))
+              .Operation.ShouldBe("ripoffline");
+    }
+
+    [TestMethod]
+    public void Ctor_PreparesFooter_ByAskingCurses()
+    {
+        _cursesMock.Setup(s => s.ripoffline(-1, It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+                   {
+                       cb(new(100), 1).ShouldBe(0);
+                   });
+        
+        _terminal = new(_cursesMock.Object, new(AllocateFooter: true));
+        
+        _terminal.Footer.ShouldNotBeNull();
+        _terminal.Footer!.Handle.ShouldBe(new(100));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_WhenPreparingFooter_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Returns(-1);
+       
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateFooter: true)))
+              .Operation.ShouldBe("ripoffline");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle()
+    {
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+                   {
+                       cb(IntPtr.Zero, 0);
+                   });
+        
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateFooter: true)))
+              .Operation.ShouldBe("ripoffline");
+    }
+    
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar()
     {
@@ -418,6 +495,24 @@ public class TerminalTests
         _terminal.SoftLabelKeys.ShouldNotBeNull();
     }
 
+    [TestMethod]
+    public void Header_Throws_IfTerminalDisposed()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.Dispose();
+        
+        Should.Throw<ObjectDisposedException>(() => _terminal.Header);
+    }
+    
+    [TestMethod]
+    public void Footer_Throws_IfTerminalDisposed()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.Dispose();
+        
+        Should.Throw<ObjectDisposedException>(() => _terminal.Footer);
+    }
+    
     [TestMethod]
     public void Screen_Throws_IfTerminalDisposed()
     {
