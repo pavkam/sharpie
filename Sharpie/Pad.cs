@@ -36,9 +36,9 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class Pad: Window, IPad
 {
-    /// <inheritdoc cref="Window(ICursesProvider, IWindow, IntPtr)" />
+    /// <inheritdoc cref="Window(ICursesProvider, Window, IntPtr)" />
     /// <exception cref="ArgumentException">The <paramref name="parent" /> is not a valid ancestor.</exception>
-    internal Pad(ICursesProvider curses, IWindow parent, IntPtr windowHandle): base(curses, parent, windowHandle)
+    internal Pad(ICursesProvider curses, Window parent, IntPtr windowHandle): base(curses, parent, windowHandle)
     {
         Screen = parent switch
         {

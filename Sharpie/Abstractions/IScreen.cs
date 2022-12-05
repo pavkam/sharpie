@@ -102,7 +102,7 @@ public interface IScreen: IWindow
     /// <summary>
     ///     This method invalidates the screen in its entirety and redraws if from scratch.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    /// <exception cref="ObjectDisposedException">Screen or some children are no longer usable.</exception>
     void ForceInvalidateAndRefresh()
     {
         Invalidate();

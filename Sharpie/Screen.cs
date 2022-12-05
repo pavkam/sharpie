@@ -44,7 +44,7 @@ public sealed class Screen: Window, IScreen
     /// <param name="curses">The curses backend.</param>
     /// <param name="terminal">The owner terminal.</param>
     /// <param name="windowHandle">The screen handle.</param>
-    internal Screen(ICursesProvider curses, ITerminal terminal, IntPtr windowHandle): base(curses, null, windowHandle) =>
+    internal Screen(ICursesProvider curses, Terminal terminal, IntPtr windowHandle): base(curses, null, windowHandle) =>
         Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
 
     /// <inheritdoc cref="IScreen.Terminal"/>

@@ -317,37 +317,12 @@ public class EventPumpTests
     }
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen2_CallsCurses_ForWindow()
-    {
-        _pump.Listen(_window)
-             .First();
-
-        _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen3_CallsCurses_ForScreen()
     {
         _pump.Listen(CancellationToken.None)
              .First();
 
         _cursesMock.Verify(s => s.wget_wch(_terminal.Screen.Handle, out It.Ref<uint>.IsAny), Times.Once);
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen4_CallsCurses_ForScreen()
-    {
-        _pump.Listen()
-             .First();
-
-        _cursesMock.Verify(s => s.wget_wch(_terminal.Screen.Handle, out It.Ref<uint>.IsAny), Times.Once);
-    }
-
-    [TestMethod]
-    public void Listen2_ThrowsIfWindowIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _pump.Listen(null!)
-                                                       .ToArray());
     }
 
     [TestMethod]

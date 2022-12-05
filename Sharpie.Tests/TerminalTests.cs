@@ -217,7 +217,7 @@ public class TerminalTests
     public void Ctor_PreparesUseMouse_ByAskingCurses(bool enabled)
     {
         _terminal = new(_cursesMock.Object, new(UseMouse: enabled, MouseClickInterval: 999));
-        _terminal.Events.UseInternalMouseEventResolver.ShouldBeFalse();
+        ((EventPump)_terminal.Events).UseInternalMouseEventResolver.ShouldBeFalse();
 
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
@@ -234,7 +234,7 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, new(UseMouse: true, MouseClickInterval: null));
         _cursesMock.Verify(v => v.mouseinterval(0), Times.Once);
 
-        _terminal.Events.UseInternalMouseEventResolver.ShouldBeTrue();
+        ((EventPump)_terminal.Events).UseInternalMouseEventResolver.ShouldBeTrue();
     }
 
     [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]

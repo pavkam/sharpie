@@ -37,6 +37,23 @@ namespace Sharpie.Abstractions;
 public interface IWindow: IDrawSurface
 {
     /// <summary>
+    ///     The parent of this object.
+    /// </summary>
+    IWindow? Parent { get; }
+
+    /// <summary>
+    ///     Lists of children of this object.
+    /// </summary>
+    IEnumerable<IWindow> Children { get; }
+
+    /// <summary>
+    ///     Checks if the given <paramref name="window" /> is either a descendant or an ancestor of this window.
+    /// </summary>
+    /// <param name="window">The window to check.</param>
+    /// <exception cref="ArgumentNullException">The <paramref name="window" /> is <c>null</c>.</exception>
+    bool IsRelatedTo(IWindow window);
+    
+    /// <summary>
     ///     The Curses handle for the window.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
@@ -46,16 +63,6 @@ public interface IWindow: IDrawSurface
     ///     Checks if the window has been disposed and is no longer usable.
     /// </summary>
     public bool Disposed { get; }
-    
-    /// <summary>
-    ///     The parent of this window.
-    /// </summary>
-    IWindow? Parent { get; }
-
-    /// <summary>
-    ///     Lists the active windows in this terminal.
-    /// </summary>
-    IEnumerable<IWindow> Children { get; }
 
     /// <summary>
     ///     Gets or sets the ability of the window to scroll its contents when writing
@@ -142,14 +149,7 @@ public interface IWindow: IDrawSurface
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
     bool ImmediateRefresh { get; set; }
-
-    /// <summary>
-    ///     Checks if the given <paramref name="window" /> is either a descendant or an ancestor of this window.
-    /// </summary>
-    /// <param name="window">The window to check.</param>
-    /// <exception cref="ArgumentNullException">The <paramref name="window" /> is <c>null</c>.</exception>
-    bool IsRelatedTo(IWindow window);
-
+    
     /// <summary>
     ///     Enables specified attributes and keep the others untouched.
     /// </summary>

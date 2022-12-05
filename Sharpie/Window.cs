@@ -36,6 +36,7 @@ namespace Sharpie;
 [PublicAPI]
 public class Window: IWindow, IDisposable
 {
+    private readonly Window? _parent;
     private readonly IList<Window> _windows = new List<Window>();
     private IntPtr _handle;
 
@@ -45,7 +46,7 @@ public class Window: IWindow, IDisposable
     /// <param name="curses">The curses backend.</param>
     /// <param name="parent">The parent window (if any).</param>
     /// <param name="windowHandle">The window handle.</param>
-    internal Window(ICursesProvider curses, IWindow? parent, IntPtr windowHandle)
+    internal Window(ICursesProvider curses, Window? parent, IntPtr windowHandle)
     {
         if (windowHandle == IntPtr.Zero)
         {
@@ -54,9 +55,9 @@ public class Window: IWindow, IDisposable
 
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
         _handle = windowHandle;
-        Parent = parent;
 
-        parent?._windows.Add(this);
+        _parent = parent;
+        _parent?._windows.Add(this);
 
         EnableScrolling = true;
 
@@ -79,8 +80,8 @@ public class Window: IWindow, IDisposable
     protected internal ICursesProvider Curses { get; }
 
     /// <inheritdoc cref="IWindow.Parent"/>
-    public IWindow? Parent { get; }
-
+    public IWindow? Parent => _parent;
+    
     /// <inheritdoc cref="IWindow.Handle"/>
     public IntPtr Handle
     {
@@ -310,7 +311,7 @@ public class Window: IWindow, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     bool IDrawSurface.CoversArea(Rectangle area) => ((IWindow)this).IsRectangleWithin(area);
 
-    /// <inheritdoc cref="IWindow.IsRelatedTo"/>
+    /// <inheritdoc cref="IWindow.IsRelatedTo" />
     /// <exception cref="ArgumentNullException">The <paramref name="window" /> is <c>null</c>.</exception>
     public bool IsRelatedTo(IWindow window)
     {
@@ -319,8 +320,8 @@ public class Window: IWindow, IDisposable
             throw new ArgumentNullException(nameof(window));
         }
 
-        return window == this ||
-            Children.Any(child => child.IsRelatedTo(window)) ||
+        return window.Equals(this) ||
+            Children.Any(child => window.IsRelatedTo(child)) ||
             window.Children.Any(child => child.IsRelatedTo(this));
     }
 
@@ -719,7 +720,7 @@ public class Window: IWindow, IDisposable
                 window.Destroy();
             }
 
-            Parent?._windows.Remove(this);
+            _parent?._windows.Remove(this);
 
             Delete();
 

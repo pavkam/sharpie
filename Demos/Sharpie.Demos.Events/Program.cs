@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Sharpie;
+using Sharpie.Backend;
 
 [assembly: ExcludeFromCodeCoverage]
 
@@ -17,7 +18,7 @@ terminal.Screen.Refresh();
 
 // Create a child window within the terminal to operate within.
 // The other cells contain the border so we don't want to overwrite those.
-using var subWindow = terminal.Screen.CreateWindow(
+var subWindow = terminal.Screen.CreateWindow(
     new(1, 1, terminal.Screen.Size.Width - 2, terminal.Screen.Size.Height - 2));
 
 // Process all events coming from the terminal.
