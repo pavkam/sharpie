@@ -2110,7 +2110,7 @@ public class WindowTests
               .Operation.ShouldBe("dupwin");
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestMethod]
     public void Duplicate_ReturnsNewWindow_IfCursesSucceeds()
     {
         var p = new Window(_cursesMock.Object, null, new(2));
@@ -2125,4 +2125,57 @@ public class WindowTests
         sw.Parent.ShouldBe(p);
         p.Children.ShouldContain(sw);
     }
+    
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DrawCell_Throws_IfCursesFails_1()
+    {
+        IDrawSurface p = new Window(_cursesMock.Object, null, new(1));
+        _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesOperationException>(() => p.DrawCell(new(1, 1), new('A'), Style.Default))
+              .Operation.ShouldBe("wmove");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DrawCell_Throws_IfCursesFails_2()
+    {
+        IDrawSurface p = new Window(_cursesMock.Object, null, new(1));
+        _cursesMock.Setup(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesOperationException>(() => p.DrawCell(new(1, 1), new('A'), Style.Default))
+              .Operation.ShouldBe("wadd_wch");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void DrawCell_CallsCurses()
+    {
+        IDrawSurface p = new Window(_cursesMock.Object, null, new(1));
+
+        p.DrawCell(new(3, 4), new('A'), Style.Default);
+
+        _cursesMock.Verify(s => s.wmove(new(1), 4, 3), Times.Once);
+        _cursesMock.Verify(s => s.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Once);
+    }
+    
+    [TestMethod]
+    public void CoversArea_ReturnsTrue_IfInside()
+    {
+        IDrawSurface p = new Window(_cursesMock.Object, null, new(1));
+        MockLargeArea(new(1));
+        
+        p.CoversArea(new (0,0, 5, 5)).ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void CoversArea_ReturnsFalse_IfNotInside()
+    {
+        IDrawSurface p = new Window(_cursesMock.Object, null, new(1));
+        MockSmallArea(new(1));
+        
+        p.CoversArea(new (0,0, 5, 5)).ShouldBeFalse();
+    }
+
 }

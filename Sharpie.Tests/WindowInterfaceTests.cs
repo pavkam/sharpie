@@ -140,7 +140,7 @@ public class WindowInterfaceTests
     [TestMethod]
     public void Draw2_CallsDrawing_DrawTo_ToDraw()
     {
-        _windowMock.Setup(s => s.Draw(It.IsAny<Point>(), It.IsAny<Rectangle>(), It.IsAny<IDrawable>()))
+        _windowMock.Setup(s => s.Draw(It.IsAny<Point>(), It.IsAny<IDrawable>()))
                    .CallBase();
         
         var drawingMock = new Mock<IDrawable>();
@@ -150,9 +150,9 @@ public class WindowInterfaceTests
         var area = new Rectangle(0, 0, 100, 200);
         var location = new Point(10, 20);
 
-        _windowMock.Object.Draw(location, area, drawingMock.Object);
+        _windowMock.Object.Draw(location, drawingMock.Object);
 
-        drawingMock.Verify(v => v.DrawTo(_windowMock.Object, area, location), Times.Once);
+        _windowMock.Verify(v => v.Draw(location, area, drawingMock.Object), Times.Once);
     }
 
     [TestMethod]

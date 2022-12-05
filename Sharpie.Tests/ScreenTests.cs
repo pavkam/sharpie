@@ -130,6 +130,21 @@ public class ScreenTests
     }
     
     [TestMethod]
+    public void SubWindow_ReturnsNewWindow_IfCursesSucceeds()
+    {
+        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(2));
+        MockLargeArea(_screen1.Handle);
+        
+        var w = _screen1.SubWindow(new(1, 2, 3, 4));
+        w.Handle.ShouldBe(new(2));
+        w.Parent.ShouldBe(_screen1);
+        _screen1.Children.ShouldContain(w);
+
+        _cursesMock.Verify(v => v.newwin(4, 3, 2, 1), Times.Once);
+    }
+    
+    [TestMethod]
     public void Duplicate_Throws_Always()
     {
         Should.Throw<InvalidOperationException>(() => _screen1.Duplicate());
@@ -157,15 +172,18 @@ public class ScreenTests
               .Operation.ShouldBe("newpad");
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestMethod]
     public void Pad_ReturnsNewPad_IfCursesSucceeds()
     {
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
 
-        var w = _screen1.Pad(new(1, 1));
+        var w = _screen1.Pad(new(1, 2));
         w.Handle.ShouldBe(new(2));
         w.Parent.ShouldBe(_screen1);
+        _screen1.Children.ShouldContain(w);
+
+        _cursesMock.Verify(v => v.newpad(2, 1), Times.Once);
     }
 
     [TestMethod]
