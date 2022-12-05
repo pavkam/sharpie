@@ -15,6 +15,8 @@ namespace Sharpie;
 /// <param name="CaretMode">Specifies the caret mode. Default is <see cref="Sharpie.CaretMode.Visible" />.</param>
 /// <param name="ManualFlush">Toggle the ability to manually flush the terminal. Default is <c>false</c>.</param>
 /// <param name="SoftLabelKeyMode">Specifies the SLK mode. Default is <see cref="Sharpie.SoftLabelKeyMode.Disabled" />.</param>
+/// <param name="AllocateHeader">If <c>true</c>, allocates one line at the top as a header.</param>
+/// <param name="AllocateFooter">If <c>true</c>, allocates one line at the bottom as a footer.</param>
 /// <param name="UseEnvironmentOverrides">Toggles the use of environment LINE/COL overrides. Default is <c>true</c>.</param>
 /// <param name="UseStandardKeySequenceResolvers">
 ///     Registers the standard key sequence resolvers defined in
@@ -24,5 +26,7 @@ namespace Sharpie;
 public record TerminalOptions(bool UseColors = true, bool EchoInput = false, bool UseInputBuffering = false,
     bool UseMouse = true, int? MouseClickInterval = null, bool SuppressControlKeys = true,
     CaretMode CaretMode = CaretMode.Visible, bool ManualFlush = false,
-    SoftLabelKeyMode SoftLabelKeyMode = SoftLabelKeyMode.Disabled, bool UseEnvironmentOverrides = true,
+    SoftLabelKeyMode SoftLabelKeyMode = SoftLabelKeyMode.Disabled,
+    bool AllocateHeader = false, bool AllocateFooter = false,
+    bool UseEnvironmentOverrides = true,
     bool UseStandardKeySequenceResolvers = true);

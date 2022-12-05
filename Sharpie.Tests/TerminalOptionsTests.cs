@@ -47,6 +47,8 @@ public class TerminalOptionsTests
         s.CaretMode.ShouldBe(CaretMode.Visible);
         s.ManualFlush.ShouldBeFalse();
         s.SoftLabelKeyMode.ShouldBe(SoftLabelKeyMode.Disabled);
+        s.AllocateFooter.ShouldBeFalse();
+        s.AllocateHeader.ShouldBeFalse();
         s.UseEnvironmentOverrides.ShouldBeTrue();
         s.UseStandardKeySequenceResolvers.ShouldBeTrue();
     }

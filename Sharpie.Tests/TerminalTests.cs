@@ -183,7 +183,84 @@ public class TerminalTests
         _cursesMock.Verify(v => v.nl(), Times.Never);
         _cursesMock.Verify(v => v.nonl(), Times.Once);
     }
+    
+    [TestMethod]
+    public void Ctor_PreparesHeader_ByAskingCurses()
+    {
+        _cursesMock.Setup(s => s.ripoffline(1, It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+                   {
+                       cb(new(100), 1).ShouldBe(0);
+                   });
+        
+        _terminal = new(_cursesMock.Object, new(AllocateHeader: true));
 
+
+        _terminal.Header.ShouldNotBeNull();
+        _terminal.Header!.Handle.ShouldBe(new(100));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_WhenPreparingHeader_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Returns(-1);
+       
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateHeader: true)))
+              .Operation.ShouldBe("ripoffline");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle()
+    {
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+                   {
+                       cb(IntPtr.Zero, 0);
+                   });
+        
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateHeader: true)))
+              .Operation.ShouldBe("ripoffline");
+    }
+
+    [TestMethod]
+    public void Ctor_PreparesFooter_ByAskingCurses()
+    {
+        _cursesMock.Setup(s => s.ripoffline(-1, It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+                   {
+                       cb(new(100), 1).ShouldBe(0);
+                   });
+        
+        _terminal = new(_cursesMock.Object, new(AllocateFooter: true));
+        
+        _terminal.Footer.ShouldNotBeNull();
+        _terminal.Footer!.Handle.ShouldBe(new(100));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_WhenPreparingFooter_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Returns(-1);
+       
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateFooter: true)))
+              .Operation.ShouldBe("ripoffline");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle()
+    {
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+                   {
+                       cb(IntPtr.Zero, 0);
+                   });
+        
+        Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateFooter: true)))
+              .Operation.ShouldBe("ripoffline");
+    }
+    
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar()
     {
@@ -222,10 +299,10 @@ public class TerminalTests
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
         var expMask = enabled
-            ? (uint) CursesMouseEvent.EventType.ReportPosition | (uint) CursesMouseEvent.EventType.All
+            ? (int) CursesMouseEvent.EventType.ReportPosition | (int) CursesMouseEvent.EventType.All
             : 0;
 
-        _cursesMock.Verify(v => v.mousemask(expMask, out It.Ref<uint>.IsAny), Times.Once);
+        _cursesMock.Verify(v => v.mousemask(expMask, out It.Ref<int>.IsAny), Times.Once);
     }
 
     [TestMethod]
@@ -240,7 +317,7 @@ public class TerminalTests
     [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(bool enabled)
     {
-        _cursesMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
+        _cursesMock.Setup(s => s.mousemask(It.IsAny<int>(), out It.Ref<int>.IsAny))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(UseMouse: enabled)))
@@ -418,6 +495,24 @@ public class TerminalTests
         _terminal.SoftLabelKeys.ShouldNotBeNull();
     }
 
+    [TestMethod]
+    public void Header_Throws_IfTerminalDisposed()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.Dispose();
+        
+        Should.Throw<ObjectDisposedException>(() => _terminal.Header);
+    }
+    
+    [TestMethod]
+    public void Footer_Throws_IfTerminalDisposed()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.Dispose();
+        
+        Should.Throw<ObjectDisposedException>(() => _terminal.Footer);
+    }
+    
     [TestMethod]
     public void Screen_Throws_IfTerminalDisposed()
     {
@@ -686,8 +781,8 @@ public class TerminalTests
         _cursesMock.Setup(s => s.mouseinterval(It.IsAny<int>()))
                    .Returns(199);
 
-        _cursesMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
-                   .Returns((uint _, out uint o) =>
+        _cursesMock.Setup(s => s.mousemask(It.IsAny<int>(), out It.Ref<int>.IsAny))
+                   .Returns((int _, out int o) =>
                    {
                        o = 888;
                        return 0;
@@ -701,7 +796,7 @@ public class TerminalTests
         _terminal.Dispose();
 
         _cursesMock.Verify(v => v.mouseinterval(199), Times.Once);
-        _cursesMock.Verify(v => v.mousemask(888, out It.Ref<uint>.IsAny), Times.Once);
+        _cursesMock.Verify(v => v.mousemask(888, out It.Ref<int>.IsAny), Times.Once);
         _cursesMock.Verify(v => v.curs_set(66), Times.Once);
     }
 
@@ -713,8 +808,8 @@ public class TerminalTests
         _cursesMock.Setup(s => s.mouseinterval(It.IsAny<int>()))
                    .Returns(-1);
 
-        _cursesMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
-                   .Returns((uint _, out uint o) =>
+        _cursesMock.Setup(s => s.mousemask(It.IsAny<int>(), out It.Ref<int>.IsAny))
+                   .Returns((int _, out int o) =>
                    {
                        o = 888;
                        return -1;

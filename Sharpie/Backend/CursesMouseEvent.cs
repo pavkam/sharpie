@@ -40,7 +40,7 @@ public struct CursesMouseEvent
     private const int CursesMouseShift = 6;
 
     [PublicAPI]
-    public enum Button: uint
+    public enum Button
     {
         None = 0,
         Button1 = 1,
@@ -51,7 +51,7 @@ public struct CursesMouseEvent
     }
 
     [PublicAPI, Flags]
-    public enum Action: uint
+    public enum Action
     {
         ButtonReleased = 1,
         ButtonPressed = ButtonReleased << 1,
@@ -62,53 +62,53 @@ public struct CursesMouseEvent
     }
 
     [Flags, PublicAPI]
-    public enum EventType: uint
+    public enum EventType
     {
-        Button1Released = Action.ButtonReleased << (((int) Button.Button1 - 1) * CursesMouseShift),
+        Button1Released = Action.ButtonReleased << ((Button.Button1 - 1) * CursesMouseShift),
 
-        Button1Pressed = Action.ButtonPressed << (((int) Button.Button1 - 1) * CursesMouseShift),
+        Button1Pressed = Action.ButtonPressed << ((Button.Button1 - 1) * CursesMouseShift),
 
-        Button1Clicked = Action.ButtonClicked << (((int) Button.Button1 - 1) * CursesMouseShift),
+        Button1Clicked = Action.ButtonClicked << ((Button.Button1 - 1) * CursesMouseShift),
 
-        Button1DoubleClicked = Action.DoubleClicked << (((int) Button.Button1 - 1) * CursesMouseShift),
+        Button1DoubleClicked = Action.DoubleClicked << ((Button.Button1 - 1) * CursesMouseShift),
 
-        Button1TripleClicked = Action.TripleClicked << (((int) Button.Button1 - 1) * CursesMouseShift),
+        Button1TripleClicked = Action.TripleClicked << ((Button.Button1 - 1) * CursesMouseShift),
 
-        Button2Released = Action.ButtonReleased << (((int) Button.Button2 - 1) * CursesMouseShift),
+        Button2Released = Action.ButtonReleased << ((Button.Button2 - 1) * CursesMouseShift),
 
-        Button2Pressed = Action.ButtonPressed << (((int) Button.Button2 - 1) * CursesMouseShift),
+        Button2Pressed = Action.ButtonPressed << ((Button.Button2 - 1) * CursesMouseShift),
 
-        Button2Clicked = Action.ButtonClicked << (((int) Button.Button2 - 1) * CursesMouseShift),
+        Button2Clicked = Action.ButtonClicked << ((Button.Button2 - 1) * CursesMouseShift),
 
-        Button2DoubleClicked = Action.DoubleClicked << (((int) Button.Button2 - 1) * CursesMouseShift),
+        Button2DoubleClicked = Action.DoubleClicked << ((Button.Button2 - 1) * CursesMouseShift),
 
-        Button2TripleClicked = Action.TripleClicked << (((int) Button.Button2 - 1) * CursesMouseShift),
+        Button2TripleClicked = Action.TripleClicked << ((Button.Button2 - 1) * CursesMouseShift),
 
-        Button3Released = Action.ButtonReleased << (((int) Button.Button3 - 1) * CursesMouseShift),
+        Button3Released = Action.ButtonReleased << ((Button.Button3 - 1) * CursesMouseShift),
 
-        Button3Pressed = Action.ButtonPressed << (((int) Button.Button3 - 1) * CursesMouseShift),
+        Button3Pressed = Action.ButtonPressed << ((Button.Button3 - 1) * CursesMouseShift),
 
-        Button3Clicked = Action.ButtonClicked << (((int) Button.Button3 - 1) * CursesMouseShift),
+        Button3Clicked = Action.ButtonClicked << ((Button.Button3 - 1) * CursesMouseShift),
 
-        Button3DoubleClicked = Action.DoubleClicked << (((int) Button.Button3 - 1) * CursesMouseShift),
+        Button3DoubleClicked = Action.DoubleClicked << ((Button.Button3 - 1) * CursesMouseShift),
 
-        Button3TripleClicked = Action.TripleClicked << (((int) Button.Button3 - 1) * CursesMouseShift),
+        Button3TripleClicked = Action.TripleClicked << ((Button.Button3 - 1) * CursesMouseShift),
 
-        Button4Released = Action.ButtonReleased << (((int) Button.Button4 - 1) * CursesMouseShift),
+        Button4Released = Action.ButtonReleased << ((Button.Button4 - 1) * CursesMouseShift),
 
-        Button4Pressed = Action.ButtonPressed << (((int) Button.Button4 - 1) * CursesMouseShift),
+        Button4Pressed = Action.ButtonPressed << ((Button.Button4 - 1) * CursesMouseShift),
 
-        Button4Clicked = Action.ButtonClicked << (((int) Button.Button4 - 1) * CursesMouseShift),
+        Button4Clicked = Action.ButtonClicked << ((Button.Button4 - 1) * CursesMouseShift),
 
-        Button4DoubleClicked = Action.DoubleClicked << (((int) Button.Button4 - 1) * CursesMouseShift),
+        Button4DoubleClicked = Action.DoubleClicked << ((Button.Button4 - 1) * CursesMouseShift),
 
-        Button4TripleClicked = Action.TripleClicked << (((int) Button.Button4 - 1) * CursesMouseShift),
+        Button4TripleClicked = Action.TripleClicked << ((Button.Button4 - 1) * CursesMouseShift),
 
-        Ctrl = 1U << (((int) Button.Modifiers - 1) * CursesMouseShift),
-        Shift = 2U << (((int) Button.Modifiers - 1) * CursesMouseShift),
-        Alt = 4U << (((int) Button.Modifiers - 1) * CursesMouseShift),
+        Ctrl = 1 << ((Button.Modifiers - 1) * CursesMouseShift),
+        Shift = 2 << ((Button.Modifiers - 1) * CursesMouseShift),
+        Alt = 4 << ((Button.Modifiers - 1) * CursesMouseShift),
 
-        ReportPosition = 8U << (((int) Button.Modifiers - 1) * CursesMouseShift),
+        ReportPosition = 8 << ((Button.Modifiers - 1) * CursesMouseShift),
         All = ReportPosition - 1
     }
 

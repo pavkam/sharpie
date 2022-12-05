@@ -95,7 +95,7 @@ public sealed class EventPump: IEventPump
         return new KeyEvent(Key.Character, new(keyCode), _curses.key_name(keyCode), ModifierKey.None);
     }
 
-    /// <inheritdoc cref="IEventPump.Listen(Sharpie.IWindow,System.Threading.CancellationToken)"/>
+    /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.IWindow,System.Threading.CancellationToken)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen(IWindow window, CancellationToken cancellationToken)
     {

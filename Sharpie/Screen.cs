@@ -72,7 +72,7 @@ public sealed class Screen: Window, IScreen
         set => throw new NotSupportedException("Cannot resize the screen window.");
     }
 
-    /// <inheritdoc cref="IScreen.SubWindow"/>
+    /// <inheritdoc cref="IWindow.SubWindow"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public override IWindow SubWindow(Rectangle area)
     {

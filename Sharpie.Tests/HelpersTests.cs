@@ -302,7 +302,7 @@ public class HelpersTests
      DataRow(CursesMouseEvent.EventType.Button4Clicked, MouseButton.Button4, MouseButtonState.Clicked),
      DataRow(CursesMouseEvent.EventType.Button4DoubleClicked, MouseButton.Button4, MouseButtonState.DoubleClicked),
      DataRow(CursesMouseEvent.EventType.Button4TripleClicked, MouseButton.Button4, MouseButtonState.TripleClicked)]
-    public void ConvertMouseActionEvent_ConvertsKnownMappings(uint evt, MouseButton expButton,
+    public void ConvertMouseActionEvent_ConvertsKnownMappings(int evt, MouseButton expButton,
         MouseButtonState expState)
     {
         var result = Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) evt);
@@ -310,7 +310,7 @@ public class HelpersTests
         result.state.ShouldBe(expState);
     }
 
-    [TestMethod, DataRow((uint) 0, ModifierKey.None), DataRow(CursesMouseEvent.EventType.Alt, ModifierKey.Alt),
+    [TestMethod, DataRow(0, ModifierKey.None), DataRow(CursesMouseEvent.EventType.Alt, ModifierKey.Alt),
      DataRow(CursesMouseEvent.EventType.Ctrl, ModifierKey.Ctrl),
      DataRow(CursesMouseEvent.EventType.Shift, ModifierKey.Shift),
      DataRow(CursesMouseEvent.EventType.Alt | CursesMouseEvent.EventType.Ctrl, ModifierKey.Alt | ModifierKey.Ctrl),
@@ -319,7 +319,7 @@ public class HelpersTests
      DataRow(CursesMouseEvent.EventType.Ctrl | CursesMouseEvent.EventType.Shift, ModifierKey.Ctrl | ModifierKey.Shift),
      DataRow(CursesMouseEvent.EventType.Alt | CursesMouseEvent.EventType.Ctrl | CursesMouseEvent.EventType.Shift,
          ModifierKey.Alt | ModifierKey.Shift | ModifierKey.Ctrl)]
-    public void ConvertMouseActionEvent_MapsModifiers(uint evt, ModifierKey expMod)
+    public void ConvertMouseActionEvent_MapsModifiers(int evt, ModifierKey expMod)
     {
         var result = Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) evt);
         result.modifierKey.ShouldBe(expMod);
