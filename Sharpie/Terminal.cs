@@ -49,8 +49,10 @@ public sealed class Terminal: ITerminal, IDisposable
     private EventPump _eventPump;
     private int? _initialCaretMode;
     private int? _initialMouseClickDelay;
-    private uint? _initialMouseMask;
+    private int? _initialMouseMask;
     private Screen _screen;
+    private Window? _header;
+    private Window? _footer;
     private SoftLabelKeyManager _softLabelKeyManager;
 
     /// <summary>
@@ -87,8 +89,36 @@ public sealed class Terminal: ITerminal, IDisposable
 
         // Screen setup.
         _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
+        if (Options.AllocateHeader)
+        {
+            curses.ripoffline(1, (handle, _) =>
+            {
+                _header = handle != IntPtr.Zero ? new Window(curses, null, handle) : null;
+                return 0;
+            });
+        }
+
+        if (Options.AllocateFooter)
+        {
+            curses.ripoffline(-1, (handle, _) =>
+            {
+                _footer = handle != IntPtr.Zero ? new Window(curses, null, handle) : null;
+                return 0;
+            });
+        }
+
         _screen = new(curses, this, curses.initscr()
                                           .Check(nameof(curses.initscr), "Failed to create the screen window."));
+
+        if (Options.AllocateHeader && _header == null)
+        {
+            throw new CursesOperationException(nameof(curses.ripoffline), "Failed to allocated header line.");
+        }
+
+        if (Options.AllocateFooter && _footer == null)
+        {
+            throw new CursesOperationException(nameof(curses.ripoffline), "Failed to allocated footer line.");
+        }
 
         _eventPump = new(curses, _screen);
         _colorManager = new(curses, Options.UseColors);
@@ -148,7 +178,7 @@ public sealed class Terminal: ITerminal, IDisposable
                                             .Check(nameof(Curses.mouseinterval), //TODO manual click
                                                 "Failed to set the mouse click interval.");
 
-            Curses.mousemask((uint) CursesMouseEvent.EventType.ReportPosition | (uint) CursesMouseEvent.EventType.All,
+            Curses.mousemask((int) CursesMouseEvent.EventType.ReportPosition | (int) CursesMouseEvent.EventType.All,
                       out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
@@ -230,6 +260,28 @@ public sealed class Terminal: ITerminal, IDisposable
             AssertAlive();
 
             return _screen;
+        }
+    }
+    
+    /// <inheritdoc cref="ITerminal.Header"/>
+    public IWindow? Header  
+    {
+        get
+        {
+            AssertAlive();
+
+            return _header;
+        }
+    }
+    
+    /// <inheritdoc cref="ITerminal.Footer"/>
+    public IWindow? Footer 
+    {
+        get
+        {
+            AssertAlive();
+
+            return _footer;
         }
     }
 

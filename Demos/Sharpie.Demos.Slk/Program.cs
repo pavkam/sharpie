@@ -6,7 +6,8 @@ using Sharpie.Backend;
 
 // Create the main terminal instance and enable 4 * 4 SLK mode,
 using var terminal = new Terminal(NativeCursesProvider.Instance,
-    new(CaretMode: CaretMode.Invisible, SoftLabelKeyMode: SoftLabelKeyMode.FourFour));
+    new(CaretMode: CaretMode.Invisible, UseMouse: false, SoftLabelKeyMode: SoftLabelKeyMode.FourFour, 
+        AllocateHeader: true));
 
 // Configure SLK style.
 terminal.SoftLabelKeys.Style = new()
@@ -24,19 +25,35 @@ foreach (var n in Enum.GetValues<StandardColor>().Where(s => s != StandardColor.
     colors.Add(terminal.Colors.MixColors(n, n));
 }
 
-terminal.SoftLabelKeys.Refresh();
+void DrawHeader()
+{
+    terminal.Header!.CaretPosition = new(0, 0);
+    terminal.Header.WriteText("Press a number from 1 to 8 to change the color.");
+    terminal.Header.DrawHorizontalLine(terminal.Header.Size.Width - terminal.Header.CaretPosition.X);
+    terminal.Header.Refresh(true, false);
+}
+
+DrawHeader();
+terminal.SoftLabelKeys.Refresh(true);
 
 // Run the main loop.
 await terminal.RunAsync(@event =>
 {
-    if (@event is KeyEvent { Key: Key.Character, Char.Value: var k and >= '1' and <= '8' })
+    switch (@event)
     {
-        var color = k - '1';
+        case TerminalResizeEvent:
+            DrawHeader();
+            break;
+        case KeyEvent { Key: Key.Character, Char.Value: var k and >= '1' and <= '8' }:
+        {
+            var color = k - '1';
         
-        terminal.Screen.Background = (new(' '), new() { Attributes = VideoAttribute.None, ColorMixture = colors[color]});
-        terminal.Screen.Refresh();
-        terminal.SoftLabelKeys.Refresh();
+            terminal.Screen.Background = (new(' '), new() { Attributes = VideoAttribute.None, ColorMixture = colors[color]});
+            terminal.Screen.Refresh();
+            terminal.SoftLabelKeys.Refresh();
+            break;
+        }
     }
-    
+
     return Task.CompletedTask;
 });

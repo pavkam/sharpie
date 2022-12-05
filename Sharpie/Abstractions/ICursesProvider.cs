@@ -39,7 +39,7 @@ namespace Sharpie.Abstractions;
 [PublicAPI, SuppressMessage("ReSharper", "InconsistentNaming"), SuppressMessage("ReSharper", "IdentifierTypo")]
 public interface ICursesProvider
 {
-    public delegate bool ripoffline_callback(IntPtr window, int columns);
+    public delegate int ripoffline_callback(IntPtr window, int columns);
 
     int baudrate();
 
@@ -433,7 +433,7 @@ public interface ICursesProvider
 
     int ungetmouse(CursesMouseEvent @event);
 
-    int mousemask(uint newMask, out uint oldMask);
+    int mousemask(int newMask, out int oldMask);
 
     bool wenclose(IntPtr window, int line, int col);
 
