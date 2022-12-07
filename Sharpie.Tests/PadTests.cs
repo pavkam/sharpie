@@ -34,7 +34,7 @@ namespace Sharpie.Tests;
 public class PadTests
 {
     private Mock<ICursesProvider> _cursesMock = null!;
-    private Pad _pad1 = null!;
+    private Pad _pad = null!;
     private Screen _screen = null!;
     private Terminal _terminal = null!;
 
@@ -43,200 +43,210 @@ public class PadTests
     {
         _cursesMock = new();
 
-        _cursesMock.Setup(s => s.getmaxx(new(2)))
-                   .Returns(5);
-
-        _cursesMock.Setup(s => s.getmaxy(new(2)))
-                   .Returns(5);
-
-        _cursesMock.Setup(s => s.getmaxx(new(1)))
-                   .Returns(10);
-
-        _cursesMock.Setup(s => s.getmaxy(new(1)))
-                   .Returns(10);
-
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-
+        
         _terminal = new(_cursesMock.Object, new());
-        _screen = new(_cursesMock.Object, _terminal, new(1));
-        _pad1 = new(_cursesMock.Object, _screen, new(2));
+        _screen = (Screen)_terminal.Screen;
+        _pad = new(_cursesMock.Object, _screen, new(2));
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
 
     [TestMethod]
-    public void Ctor_Throws_IfCursesIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => new Pad(null!, _screen, IntPtr.MaxValue));
-    }
-
-    [TestMethod]
-    public void Ctor_Throws_IfWindowIsNull()
+    public void Ctor_Throws_IfScreenIsNull()
     {
         Should.Throw<ArgumentException>(() => new Pad(_cursesMock.Object, null!, IntPtr.MaxValue));
     }
 
     [TestMethod]
-    public void Ctor_Throws_IfHandleIsZero()
+    public void Screen_IsInitialized()
     {
-        Should.Throw<ArgumentException>(() => new Pad(_cursesMock.Object, _screen, IntPtr.Zero));
+        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
+
+        p.Screen.ShouldBe(_screen);
+    }
+    
+    [TestMethod]
+    public void SubPads_IsEmpty_WhenCreated()
+    {
+        var p = new Pad(_cursesMock.Object, _screen, new(22));
+        p.SubPads.ShouldBeEmpty();
+    }
+    
+    [TestMethod]
+    public void SubPads_ContainsTheChild_WhenPassedAsParent()
+    {
+        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        var sp = new SubPad(_cursesMock.Object, p, IntPtr.MaxValue);
+        p.SubPads.ShouldContain(sp);
     }
 
     [TestMethod]
-    public void Ctor_Throws_IfParentNotPadOrScreen()
+    public void SubPads_DoesNotContainTheChild_WhenChildDestroyed()
     {
-        var w = new Window(_cursesMock.Object, null, new(1));
-        Should.Throw<ArgumentException>(() =>
-            new Pad(_cursesMock.Object, w, IntPtr.Zero));
+        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        var sp = new SubPad(_cursesMock.Object, p, IntPtr.MaxValue);
+        sp.Dispose();
+        
+        p.SubPads.ShouldBeEmpty();
+    }
+    
+    [TestMethod]
+    public void Refresh_Throws_IfTheRectIsOutsideTheBounds()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _pad.Refresh(false, false, new(1, 1, 5, 5), new(0, 0));
+        });
     }
 
     [TestMethod]
-    public void Screen_ProperlyContainsTheScreen()
+    public void Refresh_Throws_IfThePositionIsOutsideTheBounds()
     {
-        _pad1.Screen.ShouldBe(_screen);
-
-        var pad2 = new Pad(_cursesMock.Object, _pad1, IntPtr.MaxValue);
-        pad2.Screen.ShouldBe(_screen);
-    }
-
-    [TestMethod] public void ImmediateRefresh_AlwaysReturnsFalse() { _pad1.ImmediateRefresh.ShouldBe(false); }
-
-    [TestMethod]
-    public void ImmediateRefresh_Throws_WhenSet()
-    {
-        Should.Throw<NotSupportedException>(() => _pad1.ImmediateRefresh = true);
-    }
-
-    [TestMethod]
-    public void Refresh_Throws_Always() { Should.Throw<NotSupportedException>(() => _pad1.Refresh(false, true)); }
-
-    [TestMethod]
-    public void Refresh2_Throws_IfTheRectIsOutsideTheBounds()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => { _pad1.Refresh(false, false, new(1, 1, 5, 5), new(0, 0)); });
-    }
-
-    [TestMethod]
-    public void Refresh2_Throws_IfThePositionIsOutsideTheBounds()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => { _pad1.Refresh(false, false, new(0, 0, 5, 5), new(6, 6)); });
+        Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(false, false, new(0, 0, 5, 5), new(6, 6)); });
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
-    public void Refresh2_SetsEntireScreenRefresh(bool entireScreen)
+    public void Refresh_SetsEntireScreenRefresh(bool entireScreen)
     {
-        _pad1.Refresh(false, entireScreen, new(0, 0, 1, 1), new(0, 0));
+        _pad.Refresh(false, entireScreen, new(0, 0, 1, 1), new(0, 0));
 
-        _cursesMock.Verify(v => v.clearok(_pad1.Handle, entireScreen), Times.Once);
+        _cursesMock.Verify(v => v.clearok(_pad.Handle, entireScreen), Times.Once);
     }
 
     [TestMethod]
-    public void Refresh2_QueuesRefresh()
+    public void Refresh_QueuesRefresh()
     {
-        _pad1.Refresh(true, false, new(0, 1, 2, 3), new(2, 3));
+        _pad.Refresh(true, false, new(0, 1, 2, 3), new(2, 3));
 
-        _cursesMock.Verify(v => v.pnoutrefresh(_pad1.Handle, 1, 0, 3, 2,
+        _cursesMock.Verify(v => v.pnoutrefresh(_pad.Handle, 1, 0, 3, 2,
             6, 4), Times.Once);
     }
 
     [TestMethod]
-    public void Refresh2_RefreshesDirectly()
+    public void Refresh_RefreshesDirectly()
     {
-        _pad1.Refresh(false, false, new(0, 1, 2, 3), new(2, 3));
+        _pad.Refresh(false, false, new(0, 1, 2, 3), new(2, 3));
 
-        _cursesMock.Verify(v => v.prefresh(_pad1.Handle, 1, 0, 3, 2,
+        _cursesMock.Verify(v => v.prefresh(_pad.Handle, 1, 0, 3, 2,
             6, 4), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh2_Throws_IfCursesFailsAtSettingEntireScreenRefresh()
+    public void Refresh_Throws_IfCursesFailsAtSettingEntireScreenRefresh()
     {
         _cursesMock.Setup(s => s.clearok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _pad1.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
+        Should.Throw<CursesOperationException>(() => { _pad.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
               .Operation.ShouldBe("clearok");
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh2_Throws_IfCursesFailsAtQueueingRefresh()
+    public void Refresh_Throws_IfCursesFailsAtQueueingRefresh()
     {
         _cursesMock.Setup(s => s.pnoutrefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _pad1.Refresh(true, false, new(0, 0, 1, 1), new(0, 0)); })
+        Should.Throw<CursesOperationException>(() => { _pad.Refresh(true, false, new(0, 0, 1, 1), new(0, 0)); })
               .Operation.ShouldBe("pnoutrefresh");
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh2_Throws_IfCursesFailsAtRefreshingDirectly()
+    public void Refresh_Throws_IfCursesFailsAtRefreshingDirectly()
     {
         _cursesMock.Setup(s => s.prefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _pad1.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
+        Should.Throw<CursesOperationException>(() => { _pad.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
               .Operation.ShouldBe("prefresh");
-    }
-
-    [TestMethod] public void Location_Get_Throws_Always() { Should.Throw<NotSupportedException>(() => _pad1.Location); }
-
-    [TestMethod]
-    public void Location_Set_Throws_Always()
-    {
-        Should.Throw<NotSupportedException>(() => _pad1.Location = Point.Empty);
     }
     
     [TestMethod]
-    public void SubWindow_Throws_IfAreaOutsideBoundaries()
+    public void SubPad_Throws_IfAreaOutsideBoundaries()
     {
         Should.Throw<ArgumentOutOfRangeException>(() => 
-            _pad1.SubWindow(new(0, 0, _pad1.Size.Width + 1, _pad1.Size.Height + 1)));
+            _pad.SubPad(new(0, 0, _pad.Size.Width + 1, _pad.Size.Height + 1)));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void SubWindow_Throws_IfCursesFails()
+    public void SubPad_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesOperationException>(() => _pad1.SubWindow(new(0, 0, 1, 1)))
+        Should.Throw<CursesOperationException>(() => _pad.SubPad(new(0, 0, 1, 1)))
               .Operation.ShouldBe("subpad");
     }
 
     [TestMethod]
-    public void SubWindow_ReturnsNewPad_IfCursesSucceeds()
+    public void SubPad_ReturnsNewPad_IfCursesSucceeds()
     {
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
-        var sp = _pad1.SubWindow(new(0, 0, 1, 1));
+        var sp = _pad.SubPad(new(0, 0, 1, 1));
         sp.Handle.ShouldBe(new(3));
-        sp.Parent.ShouldBe(_pad1);
-        _pad1.Children.ShouldContain(sp);
+        sp.Pad.ShouldBe(_pad);
+        _pad.SubPads.ShouldContain(sp);
+    }
+    
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void SubPad_PreservesManagedCaret(bool mc)
+    {
+        var p = new Pad(_cursesMock.Object, _screen, new(2)) { ManagedCaret = mc };
+
+        _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>()))
+                   .Returns(new IntPtr(3));
+
+        var sw = p.SubPad(new(0, 0, 1, 1));
+        sw.ManagedCaret.ShouldBe(mc);
     }
     
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Duplicate_Throws_IfCursesFails()
     {
-        Should.Throw<CursesOperationException>(() => _pad1.Duplicate())
+        Should.Throw<CursesOperationException>(() => _pad.Duplicate())
               .Operation.ShouldBe("dupwin");
     }
 
     [TestMethod]
-    public void Duplicate_ReturnsNewPad()
+    public void Duplicate_ReturnsNewPad_IfCursesSucceeds()
     {
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(3));
 
-        var sw = _pad1.Duplicate();
+        var p = _pad.Duplicate();
         
-        sw.Parent.ShouldBe(_pad1.Parent);
-        sw.Handle.ShouldBe(new(3));
-        _pad1.Parent.Children.ShouldContain(sw);
+        p.Screen.ShouldBe(_screen);
+        p.Handle.ShouldBe(new(3));
+        _screen.Pads.ShouldContain(p);
+    }
+    
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void Duplicate_PreservesManagedCaret(bool mc)
+    {
+        var p = new Pad(_cursesMock.Object, _screen, new(3)) { ManagedCaret = mc };
+        
+        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+                   .Returns(new IntPtr(4));
+
+        var sw = p.Duplicate();
+        sw.ManagedCaret.ShouldBe(mc);
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Destroy_RemovesWindowFromParent()
+    {
+        var p = new Pad(_cursesMock.Object, _screen, new(1));
+        p.Destroy();
+        
+        _screen.Windows.ShouldBeEmpty();
     }
 }

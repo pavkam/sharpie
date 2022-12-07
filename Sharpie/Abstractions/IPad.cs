@@ -82,12 +82,12 @@ public interface IPad: ISurface
     /// <returns>A new pad object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
-    new ISubPad SubPad(Rectangle area);
+    ISubPad SubPad(Rectangle area);
 
     /// <summary>
     ///     Duplicates and existing pad, including its attributes.
     /// </summary>
     /// <returns>A new pad object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    new IPad Duplicate();
+    IPad Duplicate();
 }

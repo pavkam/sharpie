@@ -137,16 +137,6 @@ public sealed class Pad: Surface, IPad
         }
     }
 
-    /// <inheritdoc cref="IPad.Duplicate"/>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IPad Duplicate()
-    {
-        var handle = Curses.dupwin(Handle)
-                           .Check(nameof(Curses.dupwin), "Failed to duplicate the pad.");
-
-        return new Pad(Curses, (Screen) Screen, handle);
-    }
-
     /// <inheritdoc cref="IPad.SubPad"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubPad SubPad(Rectangle area)
@@ -162,6 +152,16 @@ public sealed class Pad: Surface, IPad
         return new SubPad(Curses, this, handle) { ManagedCaret = ManagedCaret };
     }
     
+    /// <inheritdoc cref="IPad.Duplicate"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public IPad Duplicate()
+    {
+        var handle = Curses.dupwin(Handle)
+                           .Check(nameof(Curses.dupwin), "Failed to duplicate the pad.");
+
+        return new Pad(Curses, (Screen) Screen, handle);
+    }
+
     /// <inheritdoc cref="Surface.Delete"/>
     protected override void Delete()
     {

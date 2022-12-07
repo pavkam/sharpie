@@ -80,6 +80,9 @@ public class SurfaceTests
 
         _cursesMock.Verify(v => v.nodelay(s.Handle, false), Times.Once);
         _cursesMock.Verify(v => v.scrollok(s.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.keypad(s.Handle, It.IsAny<bool>()), Times.Never);
+        _cursesMock.Verify(v => v.notimeout(s.Handle, It.IsAny<bool>()), Times.Never);
+        _cursesMock.Verify(v => v.syncok(s.Handle, It.IsAny<bool>()), Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]

@@ -34,7 +34,7 @@ namespace Sharpie.Tests;
 public class ScreenTests
 {
     private Mock<ICursesProvider> _cursesMock = null!;
-    private Screen _screen1 = null!;
+    private Screen _screen = null!;
     private Terminal _terminal = null!;
 
     [TestInitialize]
@@ -46,34 +46,10 @@ public class ScreenTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _screen1 = new(_cursesMock.Object, _terminal, new(1));
+        _screen = (Screen)_terminal.Screen;
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
-
-    private void MockLargeArea(IntPtr window)
-    {
-        _cursesMock.Setup(s => s.getmaxx(window))
-                   .Returns(1000);
-
-        _cursesMock.Setup(s => s.getmaxy(window))
-                   .Returns(1000);
-    }
-
-    private void MockSmallArea(IntPtr window)
-    {
-        _cursesMock.Setup(s => s.getmaxx(window))
-                   .Returns(1);
-
-        _cursesMock.Setup(s => s.getmaxy(window))
-                   .Returns(1);
-    }
-
-    [TestMethod]
-    public void Ctor_Throws_IfCursesIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => new Screen(null!, _terminal, new(1)));
-    }
 
     [TestMethod]
     public void Ctor_Throws_IfTerminalIsNull()
@@ -81,85 +57,99 @@ public class ScreenTests
         Should.Throw<ArgumentNullException>(() => new Screen(_cursesMock.Object, null!, new(1)));
     }
 
+    [TestMethod] public void Terminal_IsInitialized() { _screen.Terminal.ShouldBe(_terminal); }
+    
     [TestMethod]
-    public void Ctor_Throws_IfHandleIsZero()
+    public void Windows_IsEmpty_WhenCreated()
     {
-        Should.Throw<ArgumentException>(() => new Screen(_cursesMock.Object, _terminal, IntPtr.Zero));
+        _screen.Windows.ShouldBeEmpty();
     }
-
-    [TestMethod] public void Terminal_IsInitialized() { _screen1.Terminal.ShouldBe(_terminal); }
-
-    [TestMethod] public void Parent_IsNull() { _screen1.Parent.ShouldBeNull(); }
-
-    [TestMethod] public void Location_Get_ReturnsZero_Always() { _screen1.Location.ShouldBe(Point.Empty); }
-
+    
     [TestMethod]
-    public void Location_Set_Throws_Always()
+    public void Windows_ContainsTheChild_WhenPassedAsParent()
     {
-        Should.Throw<NotSupportedException>(() => _screen1.Location = Point.Empty);
-    }
-
-    [TestMethod]
-    public void Size_Get_ReturnsTheSize()
-    {
-        MockLargeArea(new(1));
-        _screen1.Size.ShouldBe(new(1000, 1000));
+        var w = new Window(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        
+        _screen.Windows.ShouldContain(w);
     }
 
     [TestMethod]
-    public void Size_Set_Throws_Always() { Should.Throw<NotSupportedException>(() => _screen1.Size = new(1, 1)); }
+    public void Windows_DoesNotContainTheChild_WhenChildDestroyed()
+    {
+        var w = new Window(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        w.Dispose();
+        
+        _screen.Windows.ShouldBeEmpty();
+    }
+    
+    [TestMethod]
+    public void Pads_IsEmpty_WhenCreated()
+    {
+        _screen.Pads.ShouldBeEmpty();
+    }
+    
+    [TestMethod]
+    public void Pads_ContainsTheChild_WhenPassedAsParent()
+    {
+        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        
+        _screen.Pads.ShouldContain(p);
+    }
 
     [TestMethod]
-    public void SubWindow_Throws_IfAreaOutsideBoundaries()
+    public void Pads_DoesNotContainTheChild_WhenChildDestroyed()
     {
-        MockSmallArea(new(1));
+        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        p.Dispose();
+        
+        _screen.Pads.ShouldBeEmpty();
+    }
 
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.SubWindow(new(0, 0, 2, 2)));
+    [TestMethod]
+    public void Window_Throws_IfAreaOutsideBoundaries()
+    {
+        _cursesMock.MockSmallArea(_screen);
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen.Window(new(0, 0, 2, 2)));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void SubWindow_Throws_IfCursesFails()
+    public void Window_Throws_IfCursesFails()
     {
-        MockLargeArea(new(1));
+        _cursesMock.MockLargeArea(_screen);
 
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesOperationException>(() => _screen1.SubWindow(new(0, 0, 1, 1)))
+        Should.Throw<CursesOperationException>(() => _screen.Window(new(0, 0, 1, 1)))
               .Operation.ShouldBe("newwin");
     }
     
     [TestMethod]
-    public void SubWindow_ReturnsNewWindow_IfCursesSucceeds()
+    public void Window_ReturnsNewWindow_IfCursesSucceeds()
     {
+        _cursesMock.MockLargeArea(_screen);
+        
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
-        MockLargeArea(_screen1.Handle);
         
-        var w = _screen1.SubWindow(new(1, 2, 3, 4));
+        var w = _screen.Window(new(1, 2, 3, 4));
         w.Handle.ShouldBe(new(2));
-        w.Parent.ShouldBe(_screen1);
-        _screen1.Children.ShouldContain(w);
+        w.Screen.ShouldBe(_screen);
+        _screen.Windows.ShouldContain(w);
 
         _cursesMock.Verify(v => v.newwin(4, 3, 2, 1), Times.Once);
     }
     
     [TestMethod]
-    public void Duplicate_Throws_Always()
-    {
-        Should.Throw<InvalidOperationException>(() => _screen1.Duplicate());
-    }
-
-    [TestMethod]
     public void Pad_Throws_IfWidthLessThanOne()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.Pad(new(0, 1)));
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen.Pad(new(0, 1)));
     }
 
     [TestMethod]
     public void Pad_Throws_IfHeightLessThanOne()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen1.Pad(new(1, 0)));
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen.Pad(new(1, 0)));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -168,7 +158,7 @@ public class ScreenTests
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesOperationException>(() => _screen1.Pad(new(1, 1)))
+        Should.Throw<CursesOperationException>(() => _screen.Pad(new(1, 1)))
               .Operation.ShouldBe("newpad");
     }
 
@@ -178,10 +168,10 @@ public class ScreenTests
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
 
-        var w = _screen1.Pad(new(1, 2));
+        var w = _screen.Pad(new(1, 2));
         w.Handle.ShouldBe(new(2));
-        w.Parent.ShouldBe(_screen1);
-        _screen1.Children.ShouldContain(w);
+        w.Screen.ShouldBe(_screen);
+        _screen.Pads.ShouldContain(w);
 
         _cursesMock.Verify(v => v.newpad(2, 1), Times.Once);
     }
@@ -189,9 +179,9 @@ public class ScreenTests
     [TestMethod]
     public void ApplyPendingRefreshes_Throws_IfScreenIsDisposed()
     {
-        _screen1.Dispose();
+        _screen.Dispose();
 
-        Should.Throw<ObjectDisposedException>(() => _screen1.ApplyPendingRefreshes());
+        Should.Throw<ObjectDisposedException>(() => _screen.ApplyPendingRefreshes());
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -200,14 +190,14 @@ public class ScreenTests
         _cursesMock.Setup(s => s.doupdate())
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => _screen1.ApplyPendingRefreshes())
+        Should.Throw<CursesOperationException>(() => _screen.ApplyPendingRefreshes())
               .Operation.ShouldBe("doupdate");
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void ApplyPendingRefreshes_DrawsAll_IfCursesSucceeds()
     {
-        _screen1.ApplyPendingRefreshes();
+        _screen.ApplyPendingRefreshes();
 
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
@@ -215,7 +205,7 @@ public class ScreenTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Dispose_UsesProperCursesDeletion()
     {
-        _screen1.Dispose();
+        _screen.Dispose();
 
         _cursesMock.Verify(v => v.endwin(), Times.Once);
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Never);
@@ -227,7 +217,7 @@ public class ScreenTests
         _cursesMock.Setup(s => s.endwin())
                    .Returns(-1);
 
-        _screen1.Dispose();
-        _screen1.Disposed.ShouldBe(true);
+        _screen.Dispose();
+        _screen.Disposed.ShouldBe(true);
     }
 }

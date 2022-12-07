@@ -51,32 +51,22 @@ public class WindowTests
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
     
-    private void MockLargeArea(ISurface surface)
+    [TestMethod]
+    public void Ctor_Throws_IfScreenIsNull()
     {
-        _cursesMock.Setup(s => s.getmaxx(surface.Handle))
-                   .Returns(1000);
-
-        _cursesMock.Setup(s => s.getmaxy(surface.Handle))
-                   .Returns(1000);
+        Should.Throw<ArgumentException>(() => new Window(_cursesMock.Object, null!, IntPtr.MaxValue));
     }
-
-    private void MockSmallArea(ISurface surface)
-    {
-        _cursesMock.Setup(s => s.getmaxx(surface.Handle))
-                   .Returns(1);
-
-        _cursesMock.Setup(s => s.getmaxy(surface.Handle))
-                   .Returns(1);
-    }
-
+    
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
     {
         var w = new Window(_cursesMock.Object, _screen, new(1));
 
-        _cursesMock.Verify(v => v.keypad(w.Handle, true), Times.Once);
-        _cursesMock.Verify(v => v.notimeout(w.Handle, false), Times.Once);
-        _cursesMock.Verify(v => v.syncok(w.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.nodelay(w.Handle, false), Times.Once);
+        _cursesMock.Verify(v => v.scrollok(w.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.keypad(w.Handle, true), Times.Never);
+        _cursesMock.Verify(v => v.notimeout(w.Handle, false), Times.Never);
+        _cursesMock.Verify(v => v.syncok(w.Handle, true), Times.Never);
     }
 
     [TestMethod]
@@ -118,18 +108,11 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Screen_IsSet()
+    public void Screen_IsInitialized()
     {
         var w = new Window(_cursesMock.Object, _screen, IntPtr.MaxValue);
 
         w.Screen.ShouldBe(_screen);
-    }
-
-    [TestMethod]
-    public void Curses_IsInitialized()
-    {
-        var w = new Window(_cursesMock.Object, _screen, IntPtr.MaxValue);
-        w.Curses.ShouldBe(_cursesMock.Object);
     }
     
     [TestMethod]
@@ -301,10 +284,10 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfOutsideParent()
     {
-        MockSmallArea(_screen);
+        _cursesMock.MockSmallArea(_screen);
         
         var w = new Window(_cursesMock.Object, _screen, new(1));
-        MockSmallArea(w);
+        _cursesMock.MockSmallArea(w);
         
         Should.Throw<ArgumentOutOfRangeException>(() => w.Location = new(6, 6));
     }
@@ -312,13 +295,13 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_UpdatesLocation_IfInsideParent()
     {
-        MockLargeArea(_screen);
+        _cursesMock.MockLargeArea(_screen);
 
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         var w = new Window(_cursesMock.Object, _screen, new(2));
-        MockSmallArea(w);
+        _cursesMock.MockSmallArea(w);
         
         w.Location = new(5, 5);
 
@@ -349,7 +332,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_Throws_IfOutsideParent()
     {
-        MockSmallArea(_screen);
+        _cursesMock.MockSmallArea(_screen);
 
         var w = new Window(_cursesMock.Object, _screen, new(1));
 
@@ -359,7 +342,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_UpdatesSize_IfInsideParent()
     {
-        MockLargeArea(_screen);
+        _cursesMock.MockLargeArea(_screen);
 
         var w = new Window(_cursesMock.Object, _screen, new(1));
 
@@ -515,7 +498,7 @@ public class WindowTests
     public void SubWindow_Throws_IfAreaOutsideBoundaries()
     {
         var w = new Window(_cursesMock.Object, _screen, new(2));
-        MockSmallArea(w);
+        _cursesMock.MockSmallArea(w);
 
         Should.Throw<ArgumentOutOfRangeException>(() => w.SubWindow(new(0, 0, 2, 2)));
     }
@@ -524,7 +507,7 @@ public class WindowTests
     public void SubWindow_Throws_IfCursesFails()
     {
         var w = new Window(_cursesMock.Object, _screen, new(2));
-        MockSmallArea(w);
+        _cursesMock.MockSmallArea(w);
         
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
@@ -538,7 +521,7 @@ public class WindowTests
     public void SubWindow_ReturnsNewWindow_IfCursesSucceeds()
     {
         var w = new Window(_cursesMock.Object, _screen, new(2));
-        MockLargeArea(w);
+        _cursesMock.MockLargeArea(w);
 
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
@@ -554,7 +537,7 @@ public class WindowTests
     public void SubWindow_PreservesManagedCaret(bool mc)
     {
         var w = new Window(_cursesMock.Object, _screen, new(2)) { ManagedCaret = mc };
-        MockLargeArea(w);
+        _cursesMock.MockLargeArea(w);
 
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
@@ -601,5 +584,14 @@ public class WindowTests
 
         var sw = w.Duplicate();
         sw.ManagedCaret.ShouldBe(mc);
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Destroy_RemovesWindowFromParent()
+    {
+        var w = new Window(_cursesMock.Object, _screen, new(1));
+        w.Destroy();
+        
+        _screen.Windows.ShouldBeEmpty();
     }
 }
