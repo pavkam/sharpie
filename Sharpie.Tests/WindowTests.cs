@@ -595,4 +595,25 @@ public class WindowTests
         
         _screen.Windows.ShouldBeEmpty();
     }
+    
+    [TestMethod]
+    public void Destroy_CallsCurses()
+    {
+        var w = new Window(_cursesMock.Object, _screen, new(1));
+        
+        w.Destroy();
+        w.Disposed.ShouldBeTrue();
+        
+        _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Destroy_DestroysChildren()
+    {
+        var w = new Window(_cursesMock.Object, _screen, new(1));
+        var sw = new SubWindow(_cursesMock.Object, w, new(2));
+        
+        w.Destroy();
+        sw.Disposed.ShouldBeTrue();
+    }
 }

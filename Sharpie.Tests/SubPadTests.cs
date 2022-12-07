@@ -249,4 +249,15 @@ public class SubPadTests
         
         _parent.SubPads.ShouldBeEmpty();
     }
+    
+    [TestMethod]
+    public void Destroy_CallsCurses()
+    {
+        var sp = new SubPad(_cursesMock.Object, _parent, new(1));
+        
+        sp.Destroy();
+        sp.Disposed.ShouldBeTrue();
+        
+        _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
+    }
 }

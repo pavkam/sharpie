@@ -132,6 +132,7 @@ public sealed class Screen: Surface, IScreen
         get => Curses.is_immedok(Handle);
         set => Curses.immedok(Handle, value);
     }
+    
     /// <inheritdoc cref="IScreen.Window"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IWindow Window(Rectangle area)

@@ -49,7 +49,7 @@ public sealed class Pad: Surface, IPad
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     internal Pad(ICursesProvider curses, Screen parent, IntPtr handle): base(curses, handle)
     {
-        Screen = parent;
+        Screen = parent ?? throw new ArgumentNullException(nameof(parent));
         
         parent.AddChild(this);
     } 
@@ -114,7 +114,7 @@ public sealed class Pad: Surface, IPad
             throw new ArgumentOutOfRangeException(nameof(rect));
         }
 
-        var destRect = new Rectangle(screenPos.X, screenPos.Y, rect.Right - rect.Left, rect.Bottom - rect.Top);
+        var destRect = rect with { X = screenPos.X, Y = screenPos.Y };
         if (!Screen.IsRectangleWithin(destRect))
         {
             throw new ArgumentOutOfRangeException(nameof(screenPos));
@@ -158,7 +158,7 @@ public sealed class Pad: Surface, IPad
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the pad.");
 
-        return new Pad(Curses, (Screen) Screen, handle);
+        return new Pad(Curses, (Screen) Screen, handle) { ManagedCaret = ManagedCaret };
     }
 
     /// <inheritdoc cref="Surface.Delete"/>

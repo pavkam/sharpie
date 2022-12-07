@@ -60,13 +60,13 @@ public class ScreenTests
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
     {
-        var w = new Window(_cursesMock.Object, _screen, new(1));
+        var w = new Screen(_cursesMock.Object, _terminal, new(1));
 
-        _cursesMock.Verify(v => v.nodelay(w.Handle, false), Times.Never);
-        _cursesMock.Verify(v => v.scrollok(w.Handle, true), Times.Never);
-        _cursesMock.Verify(v => v.keypad(w.Handle, true), Times.Never);
-        _cursesMock.Verify(v => v.notimeout(w.Handle, false), Times.Never);
-        _cursesMock.Verify(v => v.syncok(w.Handle, true), Times.Never);
+        _cursesMock.Verify(v => v.nodelay(w.Handle, false), Times.Once);
+        _cursesMock.Verify(v => v.scrollok(w.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.keypad(w.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.notimeout(w.Handle, false), Times.Once);
+        _cursesMock.Verify(v => v.syncok(w.Handle, true), Times.Once);
     }
     
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -80,6 +80,40 @@ public class ScreenTests
     }
 
     [TestMethod] public void Terminal_IsInitialized() { _screen.Terminal.ShouldBe(_terminal); }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Refresh_Fails_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+        
+        Should.Throw<CursesOperationException>(() => _screen.Refresh())
+              .Operation.ShouldBe("wrefresh");
+    }
+    
+    [TestMethod]
+    public void Refresh_Succeeds_IfCursesSucceeds()
+    {
+        _screen.Refresh();
+        _cursesMock.Verify(v => v.wrefresh(_screen.Handle), Times.Once);
+    }
+
+    [TestMethod]
+    public void ImmediateRefresh_Returns_IfCursesSucceeded()
+    {
+        _cursesMock.Setup(s => s.is_immedok(It.IsAny<IntPtr>()))
+                   .Returns(true);
+        
+        _screen.ImmediateRefresh.ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void ImmediateRefresh_Sets_IfCursesSucceeded()
+    {
+        _screen.ImmediateRefresh = true;
+
+        _cursesMock.Verify(v => v.immedok(_screen.Handle, true), Times.Once);
+    }
     
     [TestMethod]
     public void Windows_IsEmpty_WhenCreated()
@@ -165,7 +199,8 @@ public class ScreenTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void Window_PreservesManagedCaret(bool mc)
     {
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+        _cursesMock.MockLargeArea(_screen);
+        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
 
         _cursesMock.Setup(s => s.is_leaveok(_screen.Handle)).Returns(mc);
@@ -248,22 +283,23 @@ public class ScreenTests
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Dispose_UsesProperCursesDeletion()
+    [TestMethod]
+    public void Destroy_CallsCurses()
     {
-        _screen.Dispose();
+        _screen.Destroy();
 
         _cursesMock.Verify(v => v.endwin(), Times.Once);
-        _cursesMock.Verify(v => v.delwin(new(1)), Times.Never);
+        _cursesMock.Verify(v => v.delwin(new(100)), Times.Once);
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Dispose_Succeeds_EventIfCursesFails()
+    [TestMethod]
+    public void Destroy_DestroysChildren()
     {
-        _cursesMock.Setup(s => s.endwin())
-                   .Returns(-1);
-
-        _screen.Dispose();
-        _screen.Disposed.ShouldBe(true);
+        var p = new Pad(_cursesMock.Object, _screen, new(1));
+        var w = new Window(_cursesMock.Object, _screen, new(1));
+        
+        _screen.Destroy();
+        p.Disposed.ShouldBeTrue();
+        w.Disposed.ShouldBeTrue();
     }
 }

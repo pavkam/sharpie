@@ -396,7 +396,7 @@ public class EventPumpTests
         ((TerminalResizeEvent) @event).Size.ShouldBe(new(20, 10));
 
         _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, 0, 10, 1), Times.Once);
-        _cursesMock.Verify(v => v.clearok(_terminal.Screen.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.clearok(_terminal.Screen.Handle, It.IsAny<bool>()), Times.Never);
         _cursesMock.Verify(v => v.wrefresh(_terminal.Screen.Handle), Times.Once);
     }
 
@@ -425,7 +425,7 @@ public class EventPumpTests
         _cursesMock.Verify(v => v.wtouchln(_window.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
         _cursesMock.Verify(v => v.wtouchln(otherWindow.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
 
-        _cursesMock.Verify(v => v.clearok(_terminal.Screen.Handle, true), Times.Once);
+        _cursesMock.Verify(v => v.clearok(_terminal.Screen.Handle, It.IsAny<bool>()), Times.Never);
         _cursesMock.Verify(v => v.wrefresh(_terminal.Screen.Handle), Times.Once);
     }
 

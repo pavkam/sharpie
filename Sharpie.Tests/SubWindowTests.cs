@@ -271,4 +271,15 @@ public class SubWindowTests
         
         _parent.SubWindows.ShouldBeEmpty();
     }
+    
+    [TestMethod]
+    public void Destroy_CallsCurses()
+    {
+        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        
+        sw.Destroy();
+        sw.Disposed.ShouldBeTrue();
+        
+        _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
+    }
 }

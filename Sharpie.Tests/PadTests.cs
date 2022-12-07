@@ -93,8 +93,67 @@ public class PadTests
     }
     
     [TestMethod]
-    public void Refresh_Throws_IfTheRectIsOutsideTheBounds()
+    public void Size_Set_SetsValue_IfCursesSucceeded()
     {
+        _cursesMock.MockLargeArea(_screen);
+        
+        var w = new Window(_cursesMock.Object, _screen, new(1));
+        w.Size = new(11, 22);
+
+        _cursesMock.Verify(v => v.wresize(new(1), 22, 11), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Size_Set_Throws_IfCursesFails()
+    {
+        _cursesMock.MockLargeArea(_screen);
+
+        var p = new Pad(_cursesMock.Object, _screen, new(1));
+
+        _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesOperationException>(() => p.Size = new(1, 1))
+              .Operation.ShouldBe("wresize");
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Size_Set_Throws_IfOutsideParent()
+    {
+        _cursesMock.MockSmallArea(_screen);
+
+        var p = new Pad(_cursesMock.Object, _screen, new(1));
+
+        Should.Throw<ArgumentOutOfRangeException>(() => p.Size = new(6, 6));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Size_Set_UpdatesSize_IfInsideParent()
+    {
+        _cursesMock.MockLargeArea(_screen);
+
+        var p = new Pad(_cursesMock.Object, _screen, new(1));
+
+        p.Size = new(5, 5);
+
+        _cursesMock.Verify(v => v.wresize(p.Handle, 5, 5), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Refresh_Throws_IfTheRectIsOutsideThePadBounds()
+    {
+        _cursesMock.MockSmallArea(_pad);
+        Should.Throw<ArgumentOutOfRangeException>(() =>
+        {
+            _pad.Refresh(false, false, new(1, 1, 5, 5), new(0, 0));
+        });
+    }
+    
+    [TestMethod]
+    public void Refresh_Throws_IfTheRectIsOutsideTheScreenBounds()
+    {
+        _cursesMock.MockLargeArea(_pad);
+        _cursesMock.MockSmallArea(_screen);
         Should.Throw<ArgumentOutOfRangeException>(() =>
         {
             _pad.Refresh(false, false, new(1, 1, 5, 5), new(0, 0));
@@ -104,12 +163,16 @@ public class PadTests
     [TestMethod]
     public void Refresh_Throws_IfThePositionIsOutsideTheBounds()
     {
+        _cursesMock.MockSmallArea(_pad);
         Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(false, false, new(0, 0, 5, 5), new(6, 6)); });
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
     public void Refresh_SetsEntireScreenRefresh(bool entireScreen)
     {
+        _cursesMock.MockLargeArea(_pad);
+        _cursesMock.MockLargeArea(_screen);
+        
         _pad.Refresh(false, entireScreen, new(0, 0, 1, 1), new(0, 0));
 
         _cursesMock.Verify(v => v.clearok(_pad.Handle, entireScreen), Times.Once);
@@ -118,6 +181,9 @@ public class PadTests
     [TestMethod]
     public void Refresh_QueuesRefresh()
     {
+        _cursesMock.MockLargeArea(_pad);
+        _cursesMock.MockLargeArea(_screen);
+        
         _pad.Refresh(true, false, new(0, 1, 2, 3), new(2, 3));
 
         _cursesMock.Verify(v => v.pnoutrefresh(_pad.Handle, 1, 0, 3, 2,
@@ -127,6 +193,9 @@ public class PadTests
     [TestMethod]
     public void Refresh_RefreshesDirectly()
     {
+        _cursesMock.MockLargeArea(_pad);
+        _cursesMock.MockLargeArea(_screen);
+        
         _pad.Refresh(false, false, new(0, 1, 2, 3), new(2, 3));
 
         _cursesMock.Verify(v => v.prefresh(_pad.Handle, 1, 0, 3, 2,
@@ -136,6 +205,9 @@ public class PadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Throws_IfCursesFailsAtSettingEntireScreenRefresh()
     {
+        _cursesMock.MockLargeArea(_pad);
+        _cursesMock.MockLargeArea(_screen);
+        
         _cursesMock.Setup(s => s.clearok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
@@ -146,6 +218,9 @@ public class PadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Throws_IfCursesFailsAtQueueingRefresh()
     {
+        _cursesMock.MockLargeArea(_pad);
+        _cursesMock.MockLargeArea(_screen);
+        
         _cursesMock.Setup(s => s.pnoutrefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -157,6 +232,9 @@ public class PadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Throws_IfCursesFailsAtRefreshingDirectly()
     {
+        _cursesMock.MockLargeArea(_pad);
+        _cursesMock.MockLargeArea(_screen);
+        
         _cursesMock.Setup(s => s.prefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -168,6 +246,8 @@ public class PadTests
     [TestMethod]
     public void SubPad_Throws_IfAreaOutsideBoundaries()
     {
+        _cursesMock.MockSmallArea(_pad);
+        
         Should.Throw<ArgumentOutOfRangeException>(() => 
             _pad.SubPad(new(0, 0, _pad.Size.Width + 1, _pad.Size.Height + 1)));
     }
@@ -175,6 +255,8 @@ public class PadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void SubPad_Throws_IfCursesFails()
     {
+        _cursesMock.MockLargeArea(_pad);
+        
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
@@ -186,6 +268,8 @@ public class PadTests
     [TestMethod]
     public void SubPad_ReturnsNewPad_IfCursesSucceeds()
     {
+        _cursesMock.MockLargeArea(_pad);
+        
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
@@ -199,14 +283,13 @@ public class PadTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void SubPad_PreservesManagedCaret(bool mc)
     {
-        var p = new Pad(_cursesMock.Object, _screen, new(2));
-
+        _cursesMock.MockLargeArea(_pad);
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
-        _cursesMock.Setup(s => s.is_leaveok(p.Handle)).Returns(mc);
-        var sw = p.SubPad(new(0, 0, 1, 1));
+        _cursesMock.Setup(s => s.is_leaveok(_pad.Handle)).Returns(mc);
+        var sw = _pad.SubPad(new(0, 0, 1, 1));
         
         _cursesMock.Verify(s => s.leaveok(sw.Handle, mc), Times.Once);
     }
@@ -252,5 +335,26 @@ public class PadTests
         p.Destroy();
         
         _screen.Windows.ShouldBeEmpty();
+    }
+    
+    [TestMethod]
+    public void Destroy_CallsCurses()
+    {
+        var w = new Pad(_cursesMock.Object, _screen, new(1));
+        
+        w.Destroy();
+        w.Disposed.ShouldBeTrue();
+        
+        _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Destroy_DestroysChildren()
+    {
+        var w = new Pad(_cursesMock.Object, _screen, new(1));
+        var sw = new SubPad(_cursesMock.Object, w, new(2));
+        
+        w.Destroy();
+        sw.Disposed.ShouldBeTrue();
     }
 }
