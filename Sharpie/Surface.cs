@@ -457,6 +457,11 @@ public class Surface: ISurface, IDisposable
         {
             throw new ArgumentNullException(nameof(surface));
         }
+        
+        if (surface == this)
+        {
+            throw new ArgumentException(nameof(surface));
+        }
 
         switch (strategy)
         {
@@ -480,6 +485,11 @@ public class Surface: ISurface, IDisposable
         if (surface == null)
         {
             throw new ArgumentNullException(nameof(surface));
+        }
+        
+        if (surface == this)
+        {
+            throw new ArgumentException(nameof(surface));
         }
         
         if (!((ISurface)this).IsRectangleWithin(srcRect))

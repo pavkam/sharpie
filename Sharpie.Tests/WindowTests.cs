@@ -64,9 +64,9 @@ public class WindowTests
 
         _cursesMock.Verify(v => v.nodelay(w.Handle, false), Times.Once);
         _cursesMock.Verify(v => v.scrollok(w.Handle, true), Times.Once);
-        _cursesMock.Verify(v => v.keypad(w.Handle, true), Times.Never);
+        _cursesMock.Verify(v => v.keypad(w.Handle, true), Times.Once);
         _cursesMock.Verify(v => v.notimeout(w.Handle, false), Times.Never);
-        _cursesMock.Verify(v => v.syncok(w.Handle, true), Times.Never);
+        _cursesMock.Verify(v => v.syncok(w.Handle, true), Times.Once);
     }
 
     [TestMethod]
@@ -78,19 +78,9 @@ public class WindowTests
         Should.Throw<CursesOperationException>(() => new Window(_cursesMock.Object, _screen, new(1)))
               .Operation.ShouldBe("keypad");
     }
-
+ 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_IfConfigureWindow_FailsInCurses_2()
-    {
-        _cursesMock.Setup(s => s.notimeout(It.IsAny<IntPtr>(), It.IsAny<bool>()))
-                   .Returns(-1);
-
-        Should.Throw<CursesOperationException>(() => new Window(_cursesMock.Object, _screen, new(1)))
-              .Operation.ShouldBe("notimeout");
-    }
-    
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Ctor_Throws_IfConfigureWindow_FailsInCurses_3()
     {
         _cursesMock.Setup(s => s.syncok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
@@ -263,6 +253,8 @@ public class WindowTests
     [TestMethod]
     public void Location_Set_SetsValue_IfCursesSucceeded()
     {
+        _cursesMock.MockLargeArea(_screen);
+        
         var w = new Window(_cursesMock.Object, _screen, new(1));
         w.Location = new(11, 22);
 
@@ -272,6 +264,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfCursesFails()
     {
+        _cursesMock.MockLargeArea(_screen);
         var w = new Window(_cursesMock.Object, _screen, new(1));
 
         _cursesMock.Setup(s => s.mvwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
@@ -311,6 +304,8 @@ public class WindowTests
     [TestMethod]
     public void Size_Set_SetsValue_IfCursesSucceeded()
     {
+        _cursesMock.MockLargeArea(_screen);
+        
         var w = new Window(_cursesMock.Object, _screen, new(1));
         w.Size = new(11, 22);
 
@@ -320,6 +315,8 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_Throws_IfCursesFails()
     {
+        _cursesMock.MockLargeArea(_screen);
+
         var w = new Window(_cursesMock.Object, _screen, new(1));
 
         _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
@@ -536,15 +533,17 @@ public class WindowTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void SubWindow_PreservesManagedCaret(bool mc)
     {
-        var w = new Window(_cursesMock.Object, _screen, new(2)) { ManagedCaret = mc };
+        var w = new Window(_cursesMock.Object, _screen, new(2));
         _cursesMock.MockLargeArea(w);
 
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
+        _cursesMock.Setup(s => s.is_leaveok(w.Handle)).Returns(mc);
+        
         var sw = w.SubWindow(new(0, 0, 1, 1));
-        sw.ManagedCaret.ShouldBe(mc);
+        _cursesMock.Verify(s => s.leaveok(sw.Handle, mc), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -582,8 +581,10 @@ public class WindowTests
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
 
+        _cursesMock.Setup(s => s.is_leaveok(w.Handle)).Returns(mc);
         var sw = w.Duplicate();
-        sw.ManagedCaret.ShouldBe(mc);
+        
+        _cursesMock.Verify(s => s.leaveok(sw.Handle, mc), Times.Once);
     }
     
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]

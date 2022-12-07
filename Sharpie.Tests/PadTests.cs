@@ -199,14 +199,16 @@ public class PadTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void SubPad_PreservesManagedCaret(bool mc)
     {
-        var p = new Pad(_cursesMock.Object, _screen, new(2)) { ManagedCaret = mc };
+        var p = new Pad(_cursesMock.Object, _screen, new(2));
 
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
+        _cursesMock.Setup(s => s.is_leaveok(p.Handle)).Returns(mc);
         var sw = p.SubPad(new(0, 0, 1, 1));
-        sw.ManagedCaret.ShouldBe(mc);
+        
+        _cursesMock.Verify(s => s.leaveok(sw.Handle, mc), Times.Once);
     }
     
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -237,8 +239,10 @@ public class PadTests
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
 
+        _cursesMock.Setup(s => s.is_leaveok(p.Handle)).Returns(mc);
         var sw = p.Duplicate();
-        sw.ManagedCaret.ShouldBe(mc);
+        
+        _cursesMock.Verify(s => s.leaveok(sw.Handle, mc), Times.Once);
     }
     
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]

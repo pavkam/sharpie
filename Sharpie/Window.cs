@@ -49,6 +49,11 @@ public class Window: Surface, IWindow
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     internal Window(ICursesProvider curses, Screen parent, IntPtr handle): base(curses, handle)
     {
+        if (parent == null)
+        {
+            throw new ArgumentNullException(nameof(parent));
+        }
+
         Curses.keypad(Handle, true)
               .Check(nameof(Curses.keypad), "Failed to enable the keypad resolution mode.");
         Curses.syncok(Handle, true)
@@ -129,9 +134,7 @@ public class Window: Surface, IWindow
                 .Check(nameof(Curses.getbegy), "Failed to get window Y coordinate."));
         set
         {
-            var size = Size;
-            var newRect = new Rectangle(value.X, value.Y, value.X + size.Width - 1, value.Y + size.Height - 1);
-            if (!Screen.IsRectangleWithin(newRect))
+            if (!Screen.IsRectangleWithin(new(value, Size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -148,9 +151,7 @@ public class Window: Surface, IWindow
         get => base.Size;
         set
         {
-            var loc = Location;
-            var newRect = new Rectangle(loc.X, loc.Y, loc.X + value.Width - 1, loc.Y + value.Height - 1);
-            if (!Screen.IsRectangleWithin(newRect))
+            if (!Screen.IsRectangleWithin(new(Location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -225,19 +226,21 @@ public class Window: Surface, IWindow
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
 
-        return new Window(Curses, (Screen) Screen, handle);
+        return new Window(Curses, (Screen) Screen, handle) { ManagedCaret = ManagedCaret };
     }
     
     /// <inheritdoc cref="Surface.Delete"/>
     protected override void Delete()
     {
-        var windows = _subWindows.ToArray();
-        foreach (var window in windows)
+        foreach (var window in _subWindows.ToArray())
         {
             window.Destroy();
         }
-
-        ((Screen) Screen).RemoveChild(this);
+        
+        if (Screen is Screen s)
+        {
+            s.RemoveChild(this);
+        }
         
         base.Delete();
     }

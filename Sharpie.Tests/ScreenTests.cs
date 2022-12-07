@@ -57,6 +57,28 @@ public class ScreenTests
         Should.Throw<ArgumentNullException>(() => new Screen(_cursesMock.Object, null!, new(1)));
     }
 
+    [TestMethod]
+    public void Ctor_ConfiguresWindow_InCurses()
+    {
+        var w = new Window(_cursesMock.Object, _screen, new(1));
+
+        _cursesMock.Verify(v => v.nodelay(w.Handle, false), Times.Never);
+        _cursesMock.Verify(v => v.scrollok(w.Handle, true), Times.Never);
+        _cursesMock.Verify(v => v.keypad(w.Handle, true), Times.Never);
+        _cursesMock.Verify(v => v.notimeout(w.Handle, false), Times.Never);
+        _cursesMock.Verify(v => v.syncok(w.Handle, true), Times.Never);
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_IfConfigureWindow_FailsInCurses_1()
+    {
+        _cursesMock.Setup(s => s.notimeout(It.IsAny<IntPtr>(), It.IsAny<bool>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesOperationException>(() => new Screen(_cursesMock.Object, _terminal, new(1)))
+              .Operation.ShouldBe("notimeout");
+    }
+
     [TestMethod] public void Terminal_IsInitialized() { _screen.Terminal.ShouldBe(_terminal); }
     
     [TestMethod]
@@ -140,6 +162,18 @@ public class ScreenTests
         _cursesMock.Verify(v => v.newwin(4, 3, 2, 1), Times.Once);
     }
     
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void Window_PreservesManagedCaret(bool mc)
+    {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(2));
+
+        _cursesMock.Setup(s => s.is_leaveok(_screen.Handle)).Returns(mc);
+        var w = _screen.Window(new(1, 2, 3, 4));
+        
+        _cursesMock.Verify(s => s.leaveok(w.Handle, mc), Times.Once);
+    }
+    
     [TestMethod]
     public void Pad_Throws_IfWidthLessThanOne()
     {
@@ -176,6 +210,18 @@ public class ScreenTests
         _cursesMock.Verify(v => v.newpad(2, 1), Times.Once);
     }
 
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void Pad_PreservesManagedCaret(bool mc)
+    {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(2));
+
+        _cursesMock.Setup(s => s.is_leaveok(_screen.Handle)).Returns(mc);
+        var p = _screen.Pad(new(1, 2));
+        
+        _cursesMock.Verify(s => s.leaveok(p.Handle, mc), Times.Once);
+    }
+    
     [TestMethod]
     public void ApplyPendingRefreshes_Throws_IfScreenIsDisposed()
     {

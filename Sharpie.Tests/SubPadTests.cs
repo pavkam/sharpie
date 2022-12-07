@@ -67,10 +67,10 @@ public class SubPadTests
     [TestMethod]
     public void Location_Get_Returns_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(11);
 
-        _cursesMock.Setup(s => s.getbegy(It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(22);
 
         var sp = new SubPad(_cursesMock.Object, _parent, new(1));
@@ -146,20 +146,19 @@ public class SubPadTests
     {
         _cursesMock.MockLargeArea(_parent);
 
-        _cursesMock.Setup(s => s.initscr())
-                   .Returns(new IntPtr(100));
-
         var sp = new SubPad(_cursesMock.Object, _parent, new(2));
         _cursesMock.MockSmallArea(sp);
         
         sp.Location = new(5, 5);
 
-        _cursesMock.Verify(v => v.mvwin(new(2), 5, 5), Times.Once);
+        _cursesMock.Verify(v => v.mvderwin(new(2), 5, 5), Times.Once);
     }
 
     [TestMethod]
     public void Size_Set_SetsValue_IfCursesSucceeded()
     {
+        _cursesMock.MockLargeArea(_parent);
+        
         var w = new SubPad(_cursesMock.Object, _parent, new(1));
         w.Size = new(11, 22);
 
@@ -169,6 +168,8 @@ public class SubPadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_Throws_IfCursesFails()
     {
+        _cursesMock.MockLargeArea(_parent);
+
         var w = new SubPad(_cursesMock.Object, _parent, new(1));
 
         _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
@@ -232,9 +233,12 @@ public class SubPadTests
         
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
-
-        var sw = sp.Duplicate();
-        sw.ManagedCaret.ShouldBe(mc);
+        
+        _cursesMock.Setup(s => s.is_leaveok(sp.Handle)).Returns(mc);
+        
+        var sp1 = sp.Duplicate();
+        
+        _cursesMock.Verify(s => s.leaveok(sp1.Handle, mc), Times.Once);
     }
     
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]

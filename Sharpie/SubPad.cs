@@ -49,7 +49,7 @@ public sealed class SubPad: Surface, ISubPad
     {
         EnableScrolling = true;
         
-        Pad = parent;
+        Pad = parent ?? throw new ArgumentNullException(nameof(parent));
         parent.AddChild(this);
     }
 
@@ -66,10 +66,7 @@ public sealed class SubPad: Surface, ISubPad
                 .Check(nameof(Curses.getpary), "Failed to get sub-pad Y coordinate."));
         set
         {
-
-            var size = Size;
-            var newRect = new Rectangle(value.X, value.Y, value.X + size.Width - 1, value.Y + size.Height - 1);
-            if (!Pad.IsRectangleWithin(newRect))
+            if (!Pad.IsRectangleWithin(new(value, Size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -87,9 +84,7 @@ public sealed class SubPad: Surface, ISubPad
         get => base.Size;
         set
         {
-            var loc = Location;
-            var newRect = new Rectangle(loc.X, loc.Y, loc.X + value.Width - 1, loc.Y + value.Height - 1);
-            if (!Pad.IsRectangleWithin(newRect))
+            if (!Pad.IsRectangleWithin(new(Location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -106,13 +101,17 @@ public sealed class SubPad: Surface, ISubPad
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the sub-pad.");
 
-        return new SubPad(Curses, (Pad)Pad, handle);
+        return new SubPad(Curses, (Pad) Pad, handle) { ManagedCaret = ManagedCaret };
     }
     
     /// <inheritdoc cref="Surface.Delete"/>
     protected override void Delete()
     {
-        ((Pad)Pad).RemoveChild(this);
+        if (Pad is Pad p)
+        {
+            p.RemoveChild(this);
+        }
+
         base.Delete();
     }
 }

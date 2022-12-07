@@ -88,10 +88,10 @@ public class SubWindowTests
     [TestMethod]
     public void Location_Get_Returns_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(11);
 
-        _cursesMock.Setup(s => s.getbegy(It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(22);
 
         var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
@@ -167,20 +167,19 @@ public class SubWindowTests
     {
         _cursesMock.MockLargeArea(_parent);
 
-        _cursesMock.Setup(s => s.initscr())
-                   .Returns(new IntPtr(100));
-
         var sw = new SubWindow(_cursesMock.Object, _parent, new(2));
         _cursesMock.MockSmallArea(sw);
         
         sw.Location = new(5, 5);
 
-        _cursesMock.Verify(v => v.mvwin(new(2), 5, 5), Times.Once);
+        _cursesMock.Verify(v => v.mvderwin(new(2), 5, 5), Times.Once);
     }
 
     [TestMethod]
     public void Size_Set_SetsValue_IfCursesSucceeded()
     {
+        _cursesMock.MockLargeArea(_parent);
+        
         var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
         sw.Size = new(11, 22);
 
@@ -190,6 +189,8 @@ public class SubWindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_Throws_IfCursesFails()
     {
+        _cursesMock.MockLargeArea(_parent);
+        
         var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
 
         _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
@@ -251,13 +252,15 @@ public class SubWindowTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void Duplicate_PreservesManagedCaret(bool mc)
     {
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(3)) { ManagedCaret = mc };
+        var sw = new SubWindow(_cursesMock.Object, _parent, new(3));
         
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
 
+        _cursesMock.Setup(s => s.is_leaveok(sw.Handle)).Returns(mc);
         var sw1 = sw.Duplicate();
-        sw1.ManagedCaret.ShouldBe(mc);
+        
+        _cursesMock.Verify(s => s.leaveok(sw1.Handle, mc), Times.Once);
     }
     
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]

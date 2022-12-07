@@ -48,9 +48,7 @@ public sealed class SubWindow: Surface, ISubWindow
     internal SubWindow(ICursesProvider curses, Window parent, IntPtr handle): base(
         curses, handle)
     {
-        EnableScrolling = true;
-        
-        Window = parent;
+        Window = parent ?? throw new ArgumentNullException(nameof(parent));
         parent.AddChild(this);
     }
 
@@ -67,9 +65,7 @@ public sealed class SubWindow: Surface, ISubWindow
                 .Check(nameof(Curses.getpary), "Failed to get window Y coordinate."));
         set
         {
-            var size = Size;
-            var newRect = new Rectangle(value.X, value.Y, value.X + size.Width - 1, value.Y + size.Height - 1);
-            if (!Window.IsRectangleWithin(newRect))
+            if (!Window.IsRectangleWithin(new(value, Size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -86,9 +82,7 @@ public sealed class SubWindow: Surface, ISubWindow
         get => base.Size;
         set
         {
-            var loc = Location;
-            var newRect = new Rectangle(loc.X, loc.Y, loc.X + value.Width - 1, loc.Y + value.Height - 1);
-            if (!Window.IsRectangleWithin(newRect))
+            if (!Window.IsRectangleWithin(new(Location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -105,14 +99,17 @@ public sealed class SubWindow: Surface, ISubWindow
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
 
-        return new SubWindow(Curses, (Window) Window, handle);
+        return new SubWindow(Curses, (Window) Window, handle) { ManagedCaret = ManagedCaret };
     }
     
     /// <inheritdoc cref="Surface.Delete"/>
     protected override void Delete()
     {
-        ((Window) Window).RemoveChild(this);
-
+        if (Window is Window w)
+        {
+            w.RemoveChild(this);
+        }
+        
         base.Delete();
     }
 }

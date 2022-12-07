@@ -95,8 +95,7 @@ public sealed class Pad: Surface, IPad
         get => base.Size;
         set
         {
-            var newRect = new Rectangle(0, 0, value.Width - 1, value.Height - 1);
-            if (!Screen.IsRectangleWithin(newRect))
+            if (!Screen.IsRectangleWithin(new(new(0, 0), value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -165,13 +164,15 @@ public sealed class Pad: Surface, IPad
     /// <inheritdoc cref="Surface.Delete"/>
     protected override void Delete()
     {
-        var subPads = _subPads.ToArray();
-        foreach (var subPad in subPads)
+        foreach (var subPad in _subPads.ToArray())
         {
             subPad.Destroy();
         }
 
-        ((Screen) Screen).RemoveChild(this);
+        if (Screen is Screen s)
+        {
+            s.RemoveChild(this);
+        }
         
         base.Delete();
     }
