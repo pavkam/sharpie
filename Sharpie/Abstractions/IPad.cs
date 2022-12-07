@@ -34,8 +34,25 @@ namespace Sharpie.Abstractions;
 ///     Describes the traits specific to the <see cref="Pad"/>.
 /// </summary>
 [PublicAPI]
-public interface IPad: IWindow
+public interface IPad: ISurface
 {
+    /// <summary>
+    ///     The parent screen of this pad.
+    /// </summary>
+    IScreen Screen { get; }
+
+    /// <summary>
+    ///     Gets the sub-pads of this pad.
+    /// </summary>
+    IEnumerable<ISubPad> SubPads { get; }
+   
+    /// <summary>
+    ///     Gets or sets the size of the window.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the bounds.</exception>
+    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    new Size Size { get; set; }
+
     /// <summary>
     ///     Refreshes the pad by synchronizing it to the terminal screen.
     /// </summary>
@@ -65,7 +82,7 @@ public interface IPad: IWindow
     /// <returns>A new pad object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
-    new IPad SubWindow(Rectangle area);
+    new ISubPad SubPad(Rectangle area);
 
     /// <summary>
     ///     Duplicates and existing pad, including its attributes.

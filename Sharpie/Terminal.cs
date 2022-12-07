@@ -51,8 +51,8 @@ public sealed class Terminal: ITerminal, IDisposable
     private int? _initialMouseClickDelay;
     private int? _initialMouseMask;
     private Screen _screen;
-    private Window? _header;
-    private Window? _footer;
+    private ScreenArea? _header;
+    private ScreenArea? _footer;
     private SoftLabelKeyManager _softLabelKeyManager;
 
     /// <summary>
@@ -88,14 +88,18 @@ public sealed class Terminal: ITerminal, IDisposable
         curses.use_env(Options.UseEnvironmentOverrides);
 
         // Screen setup.
+        var managedCaret = Options.CaretMode == CaretMode.Invisible;
         _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
         if (Options.AllocateHeader)
         {
             curses.ripoffline(1, (handle, _) =>
-            {
-                _header = handle != IntPtr.Zero ? new Window(curses, null, handle) : null;
-                return 0;
-            })
+                  {
+                      _header = handle != IntPtr.Zero
+                          ? new ScreenArea(curses, this, handle) { ManagedCaret = managedCaret }
+                          : null;
+
+                      return 0;
+                  })
                   .Check(nameof(curses.ripoffline), "Failed to allocate header line.");
         }
 
@@ -103,14 +107,19 @@ public sealed class Terminal: ITerminal, IDisposable
         {
             curses.ripoffline(-1, (handle, _) =>
                   {
-                      _footer = handle != IntPtr.Zero ? new Window(curses, null, handle) : null;
+                      _footer = handle != IntPtr.Zero
+                          ? new ScreenArea(curses, this, handle) { ManagedCaret = managedCaret }
+                          : null;
+
                       return 0;
                   })
                   .Check(nameof(curses.ripoffline), "Failed to allocate footer line.");
         }
 
-        _screen = new(curses, this, curses.initscr()
-                                          .Check(nameof(curses.initscr), "Failed to create the screen window."));
+        var screenHandle = curses.initscr()
+                                 .Check(nameof(curses.initscr), "Failed to create the screen window.");
+
+        _screen = new(curses, this, screenHandle) { ManagedCaret = Options.CaretMode == CaretMode.Invisible };
 
         if (Options.AllocateHeader && _header == null)
         {
@@ -170,8 +179,6 @@ public sealed class Terminal: ITerminal, IDisposable
         // Caret configuration
         _initialCaretMode = Curses.curs_set((int) Options.CaretMode)
                                   .Check(nameof(Curses.curs_set), "Failed to change the caret mode.");
-
-        _screen.IgnoreHardwareCaret = Options.CaretMode == CaretMode.Invisible;
 
         // Mouse configuration
         if (Options.UseMouse)
@@ -266,7 +273,7 @@ public sealed class Terminal: ITerminal, IDisposable
     }
     
     /// <inheritdoc cref="ITerminal.Header"/>
-    public IWindow? Header  
+    public IScreenArea? Header  
     {
         get
         {
@@ -277,7 +284,7 @@ public sealed class Terminal: ITerminal, IDisposable
     }
     
     /// <inheritdoc cref="ITerminal.Footer"/>
-    public IWindow? Footer 
+    public IScreenArea? Footer 
     {
         get
         {
@@ -345,6 +352,9 @@ public sealed class Terminal: ITerminal, IDisposable
         {
             _screen.Dispose();
         }
+        
+        _footer?.Dispose();
+        _header?.Dispose();
 
         if (_initialMouseMask != null)
         {

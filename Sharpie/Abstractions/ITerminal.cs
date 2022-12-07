@@ -85,16 +85,16 @@ public interface ITerminal
     IScreen Screen { get; }
     
     /// <summary>
-    ///     The header window. Only initialized if <see cref="TerminalOptions.AllocateHeader"/> was set.
+    ///     The header surface. Only initialized if <see cref="TerminalOptions.AllocateHeader"/> was set.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    IWindow? Header { get; }
+    IScreenArea? Header { get; }
     
     /// <summary>
-    ///     The footer window. Only initialized if <see cref="TerminalOptions.AllocateFooter"/> was set.
+    ///     The footer surface. Only initialized if <see cref="TerminalOptions.AllocateFooter"/> was set.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    IWindow? Footer { get; }
+    IScreenArea? Footer { get; }
 
     /// <summary>
     ///     The event pump instance that can be used to read events from the terminal.

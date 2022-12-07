@@ -97,18 +97,18 @@ public sealed class EventPump: IEventPump
 
     /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.IWindow,System.Threading.CancellationToken)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IEnumerable<Event> Listen(IWindow window, CancellationToken cancellationToken)
+    public IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken)
     {
-        if (window == null)
+        if (surface == null)
         {
-            throw new ArgumentNullException(nameof(window));
+            throw new ArgumentNullException(nameof(surface));
         }
 
         var escapeSequence = new List<KeyEvent>();
 
         while (!cancellationToken.IsCancellationRequested)
         {
-            var @event = ReadNextEvent(window.Handle, escapeSequence.Count > 0);
+            var @event = ReadNextEvent(surface.Handle, escapeSequence.Count > 0);
             if (@event is KeyEvent ke)
             {
                 escapeSequence.Add(ke);

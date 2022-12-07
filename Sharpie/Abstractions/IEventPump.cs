@@ -12,19 +12,19 @@ public interface IEventPump
     /// <remarks>
     ///     The enumerable returned by this method only stops waiting when cancellation is requested.
     /// </remarks>
-    /// <param name="window">The window to refresh during event processing.</param>
+    /// <param name="surface">The surface to refresh during event processing.</param>
     /// <param name="cancellationToken">Cancellation token used to interrupt the process.</param>
     /// <returns>The event listening enumerable.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="window"/> is <c>null</c>.</exception>
-    IEnumerable<Event> Listen(IWindow window, CancellationToken cancellationToken);
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="surface"/> is <c>null</c>.</exception>
+    IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
     /// </summary>
-    /// <param name="window">The window to refresh during event processing.</param>
+    /// <param name="surface">The surface to refresh during event processing.</param>
     /// <returns>The event listening enumerable.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="window"/> is <c>null</c>.</exception>
-    IEnumerable<Event> Listen(IWindow window) => Listen(window, CancellationToken.None);
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="surface"/> is <c>null</c>.</exception>
+    IEnumerable<Event> Listen(ISurface surface) => Listen(surface, CancellationToken.None);
 
     /// <summary>
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.

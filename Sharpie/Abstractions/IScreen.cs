@@ -34,22 +34,61 @@ namespace Sharpie.Abstractions;
 ///     Defines the traits that a <see cref="Screen"/> implements.
 /// </summary>
 [PublicAPI]
-public interface IScreen: IWindow
+public interface IScreen: ISurface
 {
     /// <summary>
     ///     The terminal this screen belongs to.
     /// </summary>
     ITerminal Terminal { get; }
+    
+    /// <summary>
+    ///     Gets all child windows on this screen.
+    /// </summary>
+    IEnumerable<IWindow> Windows { get; }
+    
+    /// <summary>
+    ///     Gets all child pads on this screen.
+    /// </summary>
+    IEnumerable<IPad> Pads { get; }
 
+    /// <summary>
+    ///     Refreshes the window by synchronizing it to the terminal with immediate redraw.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    void Refresh();
+
+    /// <summary>
+    ///     Creates a new sub-window in the parent window.
+    /// </summary>
+    /// <param name="area">The area of the window to put the sub-window in.</param>
+    /// <remarks>
+    /// </remarks>
+    /// <returns>A new window object.</returns>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
+    IWindow Window(Rectangle area);
+   
     /// <summary>
     ///     Creates a new pad.
     /// </summary>
     /// <param name="size">The pad size.</param>
-    /// <returns>A new window object.</returns>
+    /// <returns>A new pad object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size" /> is invalid.</exception>
     IPad Pad(Size size);
     
+    /// <summary>
+    ///     Set or get the immediate refresh capability of the screen.
+    /// </summary>
+    /// <remarks>
+    ///     Immediate refresh will redraw the screen on each change.
+    ///     This might be very slow for most use cases.
+    ///     Default is <c>false</c>.
+    /// </remarks>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    bool ImmediateRefresh { get; set; }
+
+
     /// <summary>
     ///     Applies all queued refreshes to the terminal.
     /// </summary>
@@ -63,11 +102,11 @@ public interface IScreen: IWindow
     void ForceInvalidateAndRefresh()
     {
         Invalidate();
-        foreach (var child in Children)
+        foreach (var child in Windows)
         {
             child.Invalidate();
         }
 
-        Refresh(false, true);
+        Refresh();
     }
 }

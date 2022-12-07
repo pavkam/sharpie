@@ -31,69 +31,86 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     Represents pad which is a special type of window.
+///     Represents a Curses pad, which is a special type of off-screen window.
 /// </summary>
 [PublicAPI]
-public sealed class Pad: Window, IPad
+public sealed class Pad: Surface, IPad
 {
-    /// <inheritdoc cref="Window(ICursesProvider, Window, IntPtr)" />
-    /// <exception cref="ArgumentException">The <paramref name="parent" /> is not a valid ancestor.</exception>
-    internal Pad(ICursesProvider curses, Window parent, IntPtr windowHandle): base(curses, parent, windowHandle)
+    private readonly IList<SubPad> _subPads = new List<SubPad>();
+
+    /// <summary>
+    ///     Initializes the pad using the given Curses handle.
+    /// </summary>
+    /// <param name="curses">The Curses backend.</param>
+    /// <param name="parent">The parent screen.</param>
+    /// <param name="handle">The Curses handle.</param>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="curses" /> or <paramref name="parent" /> are <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
+    internal Pad(ICursesProvider curses, Screen parent, IntPtr handle): base(curses, handle)
     {
-        Screen = parent switch
-        {
-            Screen screen => screen,
-            Pad pad => pad.Screen,
-            var _ => throw new ArgumentException("The parent can only be the screen or another pad.", nameof(parent))
-        };
+        Screen = parent;
+        
+        parent.AddChild(this);
+    } 
+
+    /// <inheritdoc cref="IPad.Screen" />
+    public IScreen Screen { get; }
+
+    /// <inheritdoc cref="IWindow.SubWindows"/>
+    public IEnumerable<ISubPad> SubPads => _subPads;
+    
+    /// <summary>
+    /// Registers a sub-pad as a child. This is an internal function.
+    /// </summary>
+    /// <param name="subPad">The sub-pad to register.</param>
+    internal void AddChild(SubPad subPad)
+    {
+        Debug.Assert(subPad != null);
+        Debug.Assert(!subPad.Disposed);
+        Debug.Assert(subPad.Pad == this);
+        Debug.Assert(!_subPads.Contains(subPad));
+
+        _subPads.Add(subPad);
     }
 
     /// <summary>
-    ///     The parent screen of this pad.
+    /// Un-registers a sub-pad as a child. This is an internal function.
     /// </summary>
-    internal IScreen Screen { get; }
-
-    /// <inheritdoc cref="IWindow.Parent"/>
-    public new IWindow Parent => base.Parent!;
-
-    /// <inheritdoc cref="Window.ImmediateRefresh" />
-    /// <remarks>
-    ///     This functionality is disabled in the pads. Any call to set the value to <c>true</c> will
-    ///     fail with error.
-    /// </remarks>
-    /// <exception cref="NotSupportedException">Always throws on write.</exception>
-    public override bool ImmediateRefresh
+    /// <param name="subPad">The sub-pad to un-register.</param>
+    internal void RemoveChild(SubPad subPad)
     {
-        get => false;
-        set => throw new NotSupportedException("Pads cannot have immediate refresh enabled.");
-    }
+        Debug.Assert(subPad != null);
+        Debug.Assert(!subPad.Disposed);
+        Debug.Assert(subPad.Pad == this);
+        Debug.Assert(_subPads.Contains(subPad));
 
-    /// <inheritdoc cref="Window.Location" />
-    /// <remarks>
-    ///     The property will always throw in this implementation as pads do not have a location.
-    /// </remarks>
-    /// <exception cref="NotSupportedException">Always throws.</exception>
-    public override Point Location
+        _subPads.Remove(subPad);
+    }
+    
+    /// <inheritdoc cref="IPad.Size"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public new Size Size
     {
-        get => throw new NotSupportedException("Pads do not have a location.");
-        set => throw new NotSupportedException("Pads do not have a location.");
-    }
+        get => base.Size;
+        set
+        {
+            var newRect = new Rectangle(0, 0, value.Width - 1, value.Height - 1);
+            if (!Screen.IsRectangleWithin(newRect))
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
 
-    /// <inheritdoc cref="IWindow.Refresh(bool,bool)" />
-    /// <remarks>
-    ///     This functionality is disabled in the pads. Use the overloaded version of this method.
-    /// </remarks>
-    /// <exception cref="NotSupportedException">Always throws.</exception>
-    public override void Refresh(bool batch, bool entireScreen)
-    {
-        throw new NotSupportedException("Pads cannot be refreshed in this way.");
+            Curses.wresize(Handle, value.Height, value.Width)
+                  .Check(nameof(Curses.wresize), "Failed to resize the sub-pad.");
+        }
     }
-
+    
     /// <inheritdoc cref="IPad.Refresh(bool,bool,System.Drawing.Rectangle,System.Drawing.Point)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(bool batch, bool entireScreen, Rectangle rect, Point screenPos)
     {
-        if (!((IWindow) this).IsRectangleWithin(rect))
+        if (!((IPad) this).IsRectangleWithin(rect))
         {
             throw new ArgumentOutOfRangeException(nameof(rect));
         }
@@ -122,19 +139,19 @@ public sealed class Pad: Window, IPad
 
     /// <inheritdoc cref="IPad.Duplicate"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public override IPad Duplicate()
+    public IPad Duplicate()
     {
         var handle = Curses.dupwin(Handle)
-                           .Check(nameof(Curses.dupwin), "Failed to duplicate an existing window.");
+                           .Check(nameof(Curses.dupwin), "Failed to duplicate the pad.");
 
-        return new Pad(Curses, (Window)Parent, handle);
+        return new Pad(Curses, (Screen) Screen, handle);
     }
 
-    /// <inheritdoc cref="IPad.SubWindow"/>
+    /// <inheritdoc cref="IPad.SubPad"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public override IPad SubWindow(Rectangle area)
+    public ISubPad SubPad(Rectangle area)
     {
-        if (!((IWindow)this).IsRectangleWithin(area))
+        if (!((IPad)this).IsRectangleWithin(area))
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }
@@ -142,6 +159,20 @@ public sealed class Pad: Window, IPad
         var handle = Curses.subpad(Handle, area.Height, area.Width, area.Top, area.Right)
                            .Check(nameof(Curses.subpad), "Failed to create a new sub-pad.");
 
-        return new Pad(Curses, this, handle);
+        return new SubPad(Curses, this, handle) { ManagedCaret = ManagedCaret };
+    }
+    
+    /// <inheritdoc cref="Surface.Delete"/>
+    protected override void Delete()
+    {
+        var subPads = _subPads.ToArray();
+        foreach (var subPad in subPads)
+        {
+            subPad.Destroy();
+        }
+
+        ((Screen) Screen).RemoveChild(this);
+        
+        base.Delete();
     }
 }

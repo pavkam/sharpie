@@ -35,48 +35,108 @@ namespace Sharpie;
 ///     Only one instance of this class can be active at one time.
 /// </summary>
 [PublicAPI]
-public sealed class Screen: Window, IScreen
+public sealed class Screen: Surface, IScreen
 {
+    private readonly IList<Window> _windows = new List<Window>();
+    private readonly IList<Pad> _pads = new List<Pad>();
+
     /// <summary>
-    ///     Initializes the screen using a window handle. The <paramref name="windowHandle" /> should be
-    ///     a screen and not a regular window.
+    ///     Initializes the pad using the given Curses handle.
     /// </summary>
-    /// <param name="curses">The curses backend.</param>
-    /// <param name="terminal">The owner terminal.</param>
-    /// <param name="windowHandle">The screen handle.</param>
-    internal Screen(ICursesProvider curses, Terminal terminal, IntPtr windowHandle): base(curses, null, windowHandle) =>
+    /// <param name="curses">The Curses backend.</param>
+    /// <param name="terminal">The parent terminal.</param>
+    /// <param name="handle">The Curses handle.</param>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="curses" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
+    internal Screen(ICursesProvider curses, Terminal terminal, IntPtr handle): base(curses,
+        handle)
+    {
         Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
+        
+        Curses.notimeout(Handle, false)
+              .Check(nameof(Curses.notimeout), "Failed to disable no-read-timeout mode.");
+        Curses.keypad(Handle, true)
+              .Check(nameof(Curses.keypad), "Failed to enable the keypad resolution mode.");
+        Curses.syncok(Handle, true)
+              .Check(nameof(Curses.syncok), "Failed to enable auto-sync mode.");
+    }
+    
+    /// <summary>
+    /// Registers a window as a child. This is an internal function.
+    /// </summary>
+    /// <param name="window">The window to register.</param>
+    internal void AddChild(Window window)
+    {
+        Debug.Assert(window != null);
+        Debug.Assert(!window.Disposed);
+        Debug.Assert(window.Screen == this);
+        Debug.Assert(!_windows.Contains(window));
+        
+        _windows.Add(window);
+    }
+    
+    /// <summary>
+    /// Un-registers a window as a child. This is an internal function.
+    /// </summary>
+    /// <param name="window">The window to un-register.</param>
+    internal void RemoveChild(Window window)
+    {
+        Debug.Assert(window != null);
+        Debug.Assert(!window.Disposed);
+        Debug.Assert(window.Screen == this);
+        Debug.Assert(_windows.Contains(window));
+        
+        _windows.Remove(window);
+    }
+    
+    /// <summary>
+    /// Registers a pad as a child. This is an internal function.
+    /// </summary>
+    /// <param name="pad">The pad to register.</param>
+    internal void AddChild(Pad pad)
+    {
+        Debug.Assert(pad != null);
+        Debug.Assert(!pad.Disposed);
+        Debug.Assert(pad.Screen == this);
+        Debug.Assert(!_pads.Contains(pad));
+        
+        _pads.Add(pad);
+    }
+    
+    /// <summary>
+    /// Un-registers a pad as a child. This is an internal function.
+    /// </summary>
+    /// <param name="pad">The pad to un-register.</param>
+    internal void RemoveChild(Pad pad)
+    {
+        Debug.Assert(pad != null);
+        Debug.Assert(!pad.Disposed);
+        Debug.Assert(pad.Screen == this);
+        Debug.Assert(_pads.Contains(pad));
+        
+        _pads.Remove(pad);
+    }
+
+    /// <inheritdoc cref="IScreen.Windows"/>
+    public IEnumerable<IWindow> Windows => _windows;
+    
+    /// <inheritdoc cref="IScreen.Pads"/>
+    public IEnumerable<IPad> Pads => _pads;
 
     /// <inheritdoc cref="IScreen.Terminal"/>
     public ITerminal Terminal { get; }
 
-    /// <inheritdoc cref="Window.Location" />
-    /// <remarks>
-    ///     The setter will always throw in this implementation as moving the main window is not allowed.
-    /// </remarks>
-    /// <exception cref="NotSupportedException">Always throws on the setter.</exception>
-    public override Point Location
+    /// <inheritdoc cref="IScreen.ImmediateRefresh"/>
+    public bool ImmediateRefresh
     {
-        get => base.Location;
-        set => throw new NotSupportedException("Cannot move the screen window.");
+        get => Curses.is_immedok(Handle);
+        set => Curses.immedok(Handle, value);
     }
-
-    /// <inheritdoc cref="Window.Location" />
-    /// <remarks>
-    ///     The setter will always throw in this implementation changing the size of the main window is not allowed.
-    /// </remarks>
-    /// <exception cref="NotSupportedException">Always throws on the setter.</exception>
-    public override Size Size
-    {
-        get => base.Size;
-        set => throw new NotSupportedException("Cannot resize the screen window.");
-    }
-
-    /// <inheritdoc cref="IWindow.SubWindow"/>
+    /// <inheritdoc cref="IScreen.Window"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public override IWindow SubWindow(Rectangle area)
+    public IWindow Window(Rectangle area)
     {
-        if (!((IWindow)this).IsRectangleWithin(area))
+        if (!((IScreen)this).IsRectangleWithin(area))
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }
@@ -84,13 +144,9 @@ public sealed class Screen: Window, IScreen
         var handle = Curses.newwin(area.Height, area.Width, area.Y, area.X)
                            .Check(nameof(Curses.newwin), "Failed to create a new window.");
 
-        return new Window(Curses, this, handle);
+        return new Window(Curses, this, handle) { ManagedCaret = ManagedCaret };
     }
     
-    /// <inheritdoc cref="IWindow.Duplicate"/>
-    /// <exception cref="InvalidOperationException">Cannot duplicate the screen window.</exception>
-    public override IWindow Duplicate() => throw new InvalidOperationException("Cannot duplicate the screen window.");
-
     /// <inheritdoc cref="IScreen.Pad"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IPad Pad(Size size)
@@ -104,9 +160,17 @@ public sealed class Screen: Window, IScreen
         var handle = Curses.newpad(size.Height, size.Width)
                            .Check(nameof(Curses.newpad), "Failed to create a new pad.");
 
-        return new Pad(Curses, this, handle);
+        return new Pad(Curses, this, handle) { ManagedCaret = ManagedCaret };
     }
 
+    /// <inheritdoc cref="IScreen.Refresh"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public void Refresh()
+    {
+        Curses.wrefresh(Handle)
+              .Check(nameof(Curses.wrefresh), "Failed to perform screen refresh.");
+    }
+    
     /// <inheritdoc cref="IScreen.ApplyPendingRefreshes"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ApplyPendingRefreshes()
@@ -116,9 +180,26 @@ public sealed class Screen: Window, IScreen
               .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
     }
 
-    /// <inheritdoc cref="Window.Delete"/>
+    /// <inheritdoc cref="Surface.Delete"/>
     /// <summary>
-    ///     Deletes the screen window and ends the terminal session.
+    ///     Deletes the screen window.
     /// </summary>
-    protected override void Delete() { Curses.endwin(); }
+    protected override void Delete()
+    {
+        foreach (var window in _windows.ToArray())
+        {
+            window.Destroy();
+        }
+        _windows.Clear();
+        
+        foreach (var pad in _pads.ToArray())
+        {
+            pad.Destroy();
+        }
+        _pads.Clear();
+        
+        base.Delete();
+        
+        Curses.endwin();
+    }
 }

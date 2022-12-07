@@ -6,7 +6,7 @@ using Sharpie.Backend;
 
 // Create the main terminal instance and enable 4 * 4 SLK mode,
 using var terminal = new Terminal(NativeCursesProvider.Instance,
-    new(CaretMode: CaretMode.Invisible, UseMouse: false, SoftLabelKeyMode: SoftLabelKeyMode.FourFour, 
+    new(CaretMode: CaretMode.Invisible, UseMouse: true, SoftLabelKeyMode: SoftLabelKeyMode.FourFour, 
         AllocateHeader: true));
 
 // Configure SLK style.
@@ -30,7 +30,7 @@ void DrawHeader()
     terminal.Header!.CaretPosition = new(0, 0);
     terminal.Header.WriteText("Press a number from 1 to 8 to change the color.");
     terminal.Header.DrawHorizontalLine(terminal.Header.Size.Width - terminal.Header.CaretPosition.X);
-    terminal.Header.Refresh(true, false);
+    terminal.Header.Refresh(true);
 }
 
 DrawHeader();
