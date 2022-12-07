@@ -36,14 +36,17 @@ public class ScreenInterfaceTests
     [TestMethod]
     public void ForceInvalidateAndRefresh_CallsInADeepScrub()
     {
-        var w1 = new Mock<IWindow>();
-        var w2 = new Mock<IWindow>();
+        var w = new Mock<IWindow>();
+        var sw = new Mock<ISubWindow>();
+        var p = new Mock<IPad>();
         var scr = new Mock<IScreen>();
 
-        w1.Setup(s => s.Children)
-          .Returns(new[] { w2.Object });
-        scr.Setup(s => s.Children)
-           .Returns(new[] { w1.Object });
+        w.Setup(s => s.SubWindows)
+          .Returns(new[] { sw.Object });
+        scr.Setup(s => s.Windows)
+           .Returns(new[] { w.Object });
+        scr.Setup(s => s.Pads)
+           .Returns(new[] { p.Object });
 
         scr.Setup(s => s.ForceInvalidateAndRefresh())
            .CallBase();
@@ -51,8 +54,9 @@ public class ScreenInterfaceTests
         scr.Object.ForceInvalidateAndRefresh();
         
         scr.Verify(v => v.Invalidate(), Times.Once);
-        scr.Verify(v => v.Refresh(false, true), Times.Once);
-        w1.Verify(v => v.Invalidate(), Times.Once);
-        w2.Verify(v => v.Invalidate(), Times.Never);
+        scr.Verify(v => v.Refresh(), Times.Once);
+        w.Verify(v => v.Invalidate(), Times.Once);
+        sw.Verify(v => v.Invalidate(), Times.Never);
+        p.Verify(v => v.Invalidate(), Times.Never);
     }
 }

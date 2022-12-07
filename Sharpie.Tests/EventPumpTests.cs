@@ -39,7 +39,7 @@ public class EventPumpTests
     private Terminal _terminal = null!;
     private Window _window = null!;
 
-    private Event[] SimulateEvents(int count, IWindow w, params (int result, uint keyCode)[] raw)
+    private Event[] SimulateEvents(int count, ISurface w, params (int result, uint keyCode)[] raw)
     {
         var i = 0;
 
@@ -78,7 +78,7 @@ public class EventPumpTests
         return events.ToArray();
     }
 
-    private Event SimulateEvent(IWindow w, params (int result, uint keyCode)[] raw) =>
+    private Event SimulateEvent(ISurface w, params (int result, uint keyCode)[] raw) =>
         SimulateEvents(1, w, raw)
             .Single();
 
@@ -89,7 +89,7 @@ public class EventPumpTests
                                              .ToArray())
             .Single();
 
-    private Event SimulateEvent(IWindow w, int result, uint keyCode) => SimulateEvent(w, (result, keyCode));
+    private Event SimulateEvent(ISurface w, int result, uint keyCode) => SimulateEvent(w, (result, keyCode));
     private Event SimulateEvent(int result, uint keyCode) => SimulateEvent(_window, result, keyCode);
 
     [TestInitialize]
@@ -372,7 +372,7 @@ public class EventPumpTests
     [TestMethod]
     public void Listen1_GoesDeepWithinChildren_ToApplyPendingRefreshes()
     {
-        var w = new Window(_cursesMock.Object, _window, new(3));
+        var w = new Window(_cursesMock.Object, (Screen)_terminal.Screen, new(3));
 
         SimulateEvents(1, w, (-1, 0), (0, 0));
 
