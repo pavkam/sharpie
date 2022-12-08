@@ -604,6 +604,6 @@ public sealed class Terminal: ITerminal, IDisposable
 
     private sealed class ActionWrapper
     {
-        public Func<Task> Action { get; init; }
+        public Func<Task>? Action;
     }
 }

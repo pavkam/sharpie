@@ -155,6 +155,19 @@ public class TerminalMainLoopTests
     }
     
     [TestMethod]
+    public async Task RunAsync_Resumes_IfStopped()
+    {
+        var ra1 = _terminal.RunAsync(_ => Task.CompletedTask);
+        _terminal.Stop();
+        
+        await ra1;
+        
+        var ra2 = _terminal.RunAsync(_ => Task.CompletedTask);
+        _terminal.Stop();
+        await ra2;
+    }
+    
+    [TestMethod]
     public async Task Delegate_DoesNotEnqueueAction_IfNotRunning()
     {
         var executed = false;
@@ -274,15 +287,21 @@ public class TerminalMainLoopTests
         ch.ShouldNotBe('a');
     }
     
-    [TestMethod]
+    [TestMethod,SuppressMessage("ReSharper", "AccessToModifiedClosure")]
     public async Task Stop_WaitsForThingsToFinish()
     {
-        var ra = _terminal.RunAsync(_ => Task.CompletedTask);
+        var order = "";
+        var ra = _terminal.RunAsync(_ => Task.CompletedTask)
+                          .ContinueWith(t => order += "r");
+        
         _terminal.Stop(true);
+        order += "s";
 
         await ra;
+        order.ShouldBe("sr");
     }
 
+    
     [TestMethod]
     public async Task RunAsync_StopsOnCtrlC()
     {
