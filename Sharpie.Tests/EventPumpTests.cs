@@ -781,4 +781,35 @@ public class EventPumpTests
 
         ((KeyEvent) e[2]).Char.ShouldBe(new('A'));
     }
+    
+    [TestMethod]
+    public void Listen1_ProcessesDelegatesFirst()
+    {
+        _pump.Delegate("hello");
+        _pump.Delegate("world");
+        
+        var events = SimulateEvents(3, _window, (0, 0));
+        events.Length.ShouldBe(3);
+        events[0].ShouldBe(new DelegateEvent("hello"));
+        events[1].ShouldBe(new DelegateEvent("world"));
+        events[2].Type.ShouldBe(EventType.KeyPress);
+    }
+    
+    [TestMethod]
+    public void Delegate_Throws_IfObjectIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _pump.Delegate(null!));
+    }
+    
+    [TestMethod]
+    public void Delegate_EnqueuesObjectForProcessing()
+    {
+        _pump.Delegate("hello");
+        foreach (var e in _pump.Listen(_source.Token))
+        {
+            _source.Cancel();
+
+            e.ShouldBe(new DelegateEvent("hello"));
+        }
+    }
 }

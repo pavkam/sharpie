@@ -37,7 +37,7 @@ public class MouseActionEventTests
         ModifierKey.Alt);
 
     [TestMethod]
-    public void Ctr_InitializesPropertiesCorrectly()
+    public void Ctor_InitializesPropertiesCorrectly()
     {
         _event1.Type.ShouldBe(EventType.MouseAction);
         _event1.Position.ShouldBe(new(1, 2));

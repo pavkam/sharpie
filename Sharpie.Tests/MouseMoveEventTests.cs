@@ -36,7 +36,7 @@ public class MouseMoveEventTests
     private readonly MouseMoveEvent _event1 = new(new(1, 2));
 
     [TestMethod]
-    public void Ctr_InitializesPropertiesCorrectly()
+    public void Ctor_InitializesPropertiesCorrectly()
     {
         _event1.Type.ShouldBe(EventType.MouseMove);
         _event1.Position.ShouldBe(new(1, 2));

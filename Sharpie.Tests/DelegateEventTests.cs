@@ -31,21 +31,25 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Tests;
 
 [TestClass]
-public class TerminalAboutToResizeEventTests
+public class DelegateEventTests
 {
-    private readonly TerminalAboutToResizeEvent _event1 = new();
+    private readonly DelegateEvent _event1 = new("A");
 
     [TestMethod]
     public void Ctor_InitializesPropertiesCorrectly()
     {
-        _event1.Type.ShouldBe(EventType.TerminalAboutToResize);
+        _event1.Type.ShouldBe(EventType.Delegate);
+        _event1.Object.ShouldBe("A");
     }
+
+    [TestMethod]
+    public void Ctor_Throws_IfObjectIsNull() { Should.Throw<ArgumentNullException>(() => new DelegateEvent(null!)); }
 
     [TestMethod]
     public void ToString_ProperlyFormats()
     {
         _event1.ToString()
-               .ShouldBe("Resizing");
+               .ShouldBe("Delegate [A]");
     }
 
     [TestMethod, DataRow(null), DataRow("")]
@@ -56,16 +60,30 @@ public class TerminalAboutToResizeEventTests
     }
 
     [TestMethod]
-    public void Equals_ReturnsTrue_IfSameType()
+    public void Equals_ReturnsFalse_IfObjectDifferent()
     {
-        _event1.Equals(new TerminalAboutToResizeEvent())
+        _event1.Equals(new DelegateEvent("B"))
+               .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsTrue_IfObjectEquals()
+    {
+        _event1.Equals(new DelegateEvent("A"))
                .ShouldBeTrue();
     }
 
     [TestMethod]
-    public void GetHashCode_IsEqual_Always()
+    public void GetHashCode_IsDifferent_IfObjectDifferent()
     {
         _event1.GetHashCode()
-               .ShouldBe(new TerminalAboutToResizeEvent().GetHashCode());
+               .ShouldNotBe(new DelegateEvent("B").GetHashCode());
+    }
+
+    [TestMethod]
+    public void GetHashCode_IsEqual_IfObjectSame()
+    {
+        _event1.GetHashCode()
+               .ShouldBe(new DelegateEvent("A").GetHashCode());
     }
 }

@@ -67,7 +67,7 @@ public enum EventType
     MouseAction,
 
     /// <summary>
-    ///     Delegated data needs to be processed on main thread.
+    ///     Delegated object that needs to be processed on main context.
     /// </summary>
     Delegate
 }

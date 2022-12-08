@@ -36,7 +36,7 @@ public class KeyEventTests
     private readonly KeyEvent _event1 = new(Key.F1, new('a'), "name", ModifierKey.Alt);
 
     [TestMethod]
-    public void Ctr_InitializesPropertiesCorrectly()
+    public void Ctor_InitializesPropertiesCorrectly()
     {
         _event1.Type.ShouldBe(EventType.KeyPress);
         _event1.Key.ShouldBe(Key.F1);

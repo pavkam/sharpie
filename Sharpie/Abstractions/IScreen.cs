@@ -98,7 +98,6 @@ public interface IScreen: ISurface
         foreach (var child in Windows)
         {
             child.Invalidate();
-            child.Refresh(true, false);
         }
 
         Refresh();

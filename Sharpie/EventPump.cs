@@ -1,5 +1,7 @@
 namespace Sharpie;
 
+using System.Collections.Concurrent;
+
 /// <summary>
 ///     The event "pump" class listens to all events from Curses, processes them and passes them along to
 ///     consumers.
@@ -10,6 +12,7 @@ public sealed class EventPump: IEventPump
     private readonly ITerminal _terminal;
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
     private MouseEventResolver? _mouseEventResolver;
+    private ConcurrentQueue<object> _delegatedObjects = new();
 
     /// <summary>
     ///     Creates a new instances of this class.
@@ -40,7 +43,7 @@ public sealed class EventPump: IEventPump
 
     private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)
     {
-        _terminal.Curses.wtimeout(windowHandle, quickWait ? 10 : 100);
+        _terminal.Curses.wtimeout(windowHandle, quickWait ? 10 : 50);
         var result = _terminal.Curses.wget_wch(windowHandle, out var keyCode);
 
         return (result, keyCode);
@@ -48,6 +51,11 @@ public sealed class EventPump: IEventPump
 
     private Event? ReadNextEvent(IntPtr windowHandle, bool quickWait)
     {
+        if (_delegatedObjects.TryDequeue(out var @object))
+        {
+            return new DelegateEvent(@object);
+        }
+
         var (result, keyCode) = ReadNext(windowHandle, quickWait);
         if (result.Failed())
         {
@@ -128,7 +136,7 @@ public sealed class EventPump: IEventPump
                 }
 
                 @event = resolved;
-            } else
+            } else if (@event?.Type != EventType.Delegate)
             {
                 while (escapeSequence.Count > 0)
                 {
@@ -172,7 +180,6 @@ public sealed class EventPump: IEventPump
                 }
             }
 
-            // Flush the event if anything in there.
             if (@event is not null)
             {
                 if (@event.Type == EventType.TerminalResize && !monitorsResizes)
@@ -317,5 +324,20 @@ public sealed class EventPump: IEventPump
 
         resolved = _mouseEventResolver.Process(@event);
         return true;
+    }
+
+    /// <summary>
+    /// Enqueues a delegated object to the queue.
+    /// </summary>
+    /// <param name="object">The object to delegate.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="object" /> is <c>null</c>.</exception>
+    internal void Delegate(object @object)
+    {
+        if (@object == null)
+        {
+            throw new ArgumentNullException(nameof(@object));
+        }
+
+        _delegatedObjects.Enqueue(@object);
     }
 }

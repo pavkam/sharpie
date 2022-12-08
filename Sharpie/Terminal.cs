@@ -30,7 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
-using System.Collections.Concurrent;
 using Nito.AsyncEx;
 
 /// <summary>
@@ -40,11 +39,11 @@ using Nito.AsyncEx;
 [PublicAPI]
 public sealed class Terminal: ITerminal, IDisposable
 {
-    private static bool _terminalInstanceActive;
     private static object _stopSignal = new();
-    
-    private BlockingCollection<object>? _delegateQueue;
-    private ManualResetEventSlim _runCompletedEvent = new(true);
+    private static bool _terminalInstanceActive;
+
+    private object _syncRoot = new();
+    private ManualResetEventSlim? _runCompletedEvent;
     private ColorManager _colorManager;
     private EventPump _eventPump;
     private int? _initialCaretMode;
@@ -339,10 +338,8 @@ public sealed class Terminal: ITerminal, IDisposable
         {
             return;
         }
-        
-        _delegateQueue?.Add(_stopSignal);
-        _runCompletedEvent.Wait();
-        _runCompletedEvent.Dispose();
+
+        CancelRun(true);
         
         if (_screen != null!)
         {
@@ -444,87 +441,66 @@ public sealed class Terminal: ITerminal, IDisposable
 
         return interval;
     }
-    
-    private Task PumpEventsAsync(CancellationToken cancellationToken)
-    {
-        Debug.Assert(_delegateQueue != null);
-        
-        return Task.Run(() =>
-        {
-            foreach (var @event in Events.Listen(cancellationToken))
-            {
-                _delegateQueue.Add(@event, CancellationToken.None);
-            }
-        }, cancellationToken);
-    }
-
-    private Task PumpMessagesAsync(Func<Event, Task> action, CancellationTokenSource cancellationTokenSource,
-        bool stopOnCtrlC)
-    {
-        Debug.Assert(_delegateQueue != null);
-        Debug.Assert(action != null);
-        Debug.Assert(cancellationTokenSource != null);
-
-        return Task.Run(() =>
-        {
-            AsyncContext.Run(async () =>
-            {
-                foreach (var message in _delegateQueue.GetConsumingEnumerable())
-                {
-                        switch (message)
-                        {
-                            case Func<Task> @delegate:
-                                await @delegate();
-                                break;
-                            case not null when message.Equals(_stopSignal):
-                            case KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl }
-                                when stopOnCtrlC:
-                                cancellationTokenSource.Cancel();
-                                break;
-                            case Event @event:
-                                await action(@event);
-                                break;
-                        }
-
-                    if (cancellationTokenSource.Token.IsCancellationRequested)
-                    {
-                        break;
-                    }
-                }
-            });
-        });
-    }
 
     /// <inheritdoc cref="ITerminal.RunAsync"/>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync"/> is already running.</exception>
     [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
-    public async Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true)
+    public Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true)
     {
         if (eventAction == null)
         {
             throw new ArgumentNullException(nameof(eventAction));
         }
 
-        if (_delegateQueue != null)
+        lock (_syncRoot)
         {
-            throw new InvalidOperationException("Event processing already running.");
+            if (_runCompletedEvent != null)
+            {
+                throw new InvalidOperationException($"Another {nameof(RunAsync)} is already running.");
+            }
+
+            _runCompletedEvent = new();
         }
 
         AssertAlive();
-        
-        _delegateQueue = new();
-        _runCompletedEvent.Reset();
-        
-        var cts = new CancellationTokenSource();
-        var eventTask = PumpEventsAsync(cts.Token);
-        var messageTask = PumpMessagesAsync(eventAction, cts, stopOnCtrlC);
 
-        await Task.WhenAll(eventTask, messageTask);
+        return Task.Run(() =>
+        {
+            AsyncContext.Run(async () =>
+            {
+                foreach (var @event in Events.Listen())
+                {
+                    if (stopOnCtrlC &&
+                        @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
+                    {
+                        break;
+                    }
 
-        _delegateQueue.Dispose();
-        _delegateQueue = null;
-        _runCompletedEvent.Set();
+                    if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
+                    {
+                        break;
+                    }
+
+                    if (@event is DelegateEvent { Object: ActionWrapper aw })
+                    {
+                        Debug.Assert(aw.Action != null);
+                        
+                        await aw.Action();
+                    } else
+                    {
+                        await eventAction(@event);
+                    }
+                }
+            });
+
+            Debug.Assert(_runCompletedEvent != null);
+            _runCompletedEvent.Set();
+            lock (_syncRoot)
+            {
+                _runCompletedEvent = null;
+            }
+        });
     }
 
     /// <inheritdoc cref="ITerminal.Delegate"/>
@@ -536,7 +512,11 @@ public sealed class Terminal: ITerminal, IDisposable
         }
 
         AssertAlive();
-        _delegateQueue?.Add(action);
+
+        if (_runCompletedEvent != null)
+        {
+            _eventPump.Delegate(new ActionWrapper { Action = action });
+        }
     }
 
     /// <inheritdoc cref="ITerminal.Delay"/>
@@ -584,17 +564,30 @@ public sealed class Terminal: ITerminal, IDisposable
         return Repeat<DBNull>((t, _) => action(t), intervalMillis, immediate);
     }
 
+    private void CancelRun(bool wait)
+    {
+        if (_runCompletedEvent != null)
+        {
+            lock (_syncRoot)
+            {
+                if (_runCompletedEvent != null)
+                {
+                    _eventPump.Delegate(_stopSignal);
+                    if (wait)
+                    {
+                        _runCompletedEvent.Wait();
+                    }
+                }
+            }
+        }
+    }
+    
     /// <inheritdoc cref="ITerminal.Stop"/>
     /// <param name="wait">If <c>true</c>, waits until running completes.</param>
     public void Stop(bool wait = false)
     {
         AssertAlive();
-
-        _delegateQueue?.Add(_stopSignal);
-        if (wait)
-        {
-            _runCompletedEvent.Wait();
-        }
+        CancelRun(wait);
     }
 
     /// <summary>
@@ -607,5 +600,10 @@ public sealed class Terminal: ITerminal, IDisposable
         public bool Stopped;
         public Timer? Timer;
         public void Stop() { Stopped = true; }
+    }
+
+    private sealed class ActionWrapper
+    {
+        public Func<Task> Action { get; init; }
     }
 }

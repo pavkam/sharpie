@@ -56,7 +56,6 @@ public class ScreenInterfaceTests
         scr.Verify(v => v.Invalidate(), Times.Once);
         scr.Verify(v => v.Refresh(), Times.Once);
         w.Verify(v => v.Invalidate(), Times.Once);
-        w.Verify(v => v.Refresh(true, false), Times.Once);
         sw.Verify(v => v.Invalidate(), Times.Never);
         p.Verify(v => v.Invalidate(), Times.Never);
     }

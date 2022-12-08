@@ -26,46 +26,35 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
-namespace Sharpie.Tests;
+namespace Sharpie;
 
-[TestClass]
-public class TerminalAboutToResizeEventTests
+/// <summary>
+///     Special event that delegates an object to the main application context.
+/// </summary>
+[PublicAPI]
+public sealed class DelegateEvent: Event
 {
-    private readonly TerminalAboutToResizeEvent _event1 = new();
+    /// <summary>
+    ///     Creates a new instance of the class.
+    /// </summary>
+    /// <param name="object">The delegated object.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="object" /> is <c>null</c>.</exception>
+    internal DelegateEvent(object @object): base(EventType.Delegate) => Object = @object ?? throw new ArgumentNullException(nameof(@object));
 
-    [TestMethod]
-    public void Ctor_InitializesPropertiesCorrectly()
-    {
-        _event1.Type.ShouldBe(EventType.TerminalAboutToResize);
-    }
+    /// <summary>
+    ///     The object that is being delegated.
+    /// </summary>
+    public object Object { get; }
 
-    [TestMethod]
-    public void ToString_ProperlyFormats()
-    {
-        _event1.ToString()
-               .ShouldBe("Resizing");
-    }
+    /// <inheritdoc cref="object.ToString" />
+    public override string ToString() => $"Delegate [{Object}]";
 
-    [TestMethod, DataRow(null), DataRow("")]
-    public void Equals_ReturnsFalse_IfNotSameType(object? b)
-    {
-        _event1.Equals(b)
-               .ShouldBeFalse();
-    }
+    /// <inheritdoc cref="object.Equals(object)" />
+    public override bool Equals(object? obj) =>
+        obj is DelegateEvent re && re.Object == Object && obj.GetType() == GetType();
 
-    [TestMethod]
-    public void Equals_ReturnsTrue_IfSameType()
-    {
-        _event1.Equals(new TerminalAboutToResizeEvent())
-               .ShouldBeTrue();
-    }
-
-    [TestMethod]
-    public void GetHashCode_IsEqual_Always()
-    {
-        _event1.GetHashCode()
-               .ShouldBe(new TerminalAboutToResizeEvent().GetHashCode());
-    }
+    /// <inheritdoc cref="object.GetHashCode" />
+    public override int GetHashCode() => Object.GetHashCode();
 }
