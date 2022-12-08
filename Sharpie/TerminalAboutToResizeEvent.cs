@@ -31,43 +31,25 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     Defines the possible event types.
+///     The terminal is about to be resized event.
 /// </summary>
 [PublicAPI]
-public enum EventType
+public sealed class TerminalAboutToResizeEvent: Event
 {
     /// <summary>
-    ///     Undefined event.
+    ///     Creates a new instance of the class.
     /// </summary>
-    Undefined = 0,
+    internal TerminalAboutToResizeEvent(): base(EventType.TerminalAboutToResize)
+    {
+    }
 
-    /// <summary>
-    ///     The terminal has been resized.
-    /// </summary>
-    TerminalResize,
-    
-    /// <summary>
-    ///     The terminal is about to be resized.
-    /// </summary>
-    TerminalAboutToResize,
+    /// <inheritdoc cref="object.ToString" />
+    public override string ToString() => $"Resizing";
 
-    /// <summary>
-    ///     A key has been pressed.
-    /// </summary>
-    KeyPress,
+    /// <inheritdoc cref="object.Equals(object)" />
+    public override bool Equals(object? obj) =>
+        obj is TerminalResizeEvent && obj.GetType() == GetType();
 
-    /// <summary>
-    ///     The mouse has moved.
-    /// </summary>
-    MouseMove,
-
-    /// <summary>
-    ///     The mouse buttons have been used.
-    /// </summary>
-    MouseAction,
-
-    /// <summary>
-    ///     Delegated data needs to be processed on main thread.
-    /// </summary>
-    Delegate
+    /// <inheritdoc cref="object.GetHashCode" />
+    public override int GetHashCode() => 0xF00BA;
 }

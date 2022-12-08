@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using Sharpie;
 using Sharpie.Backend;
 
@@ -36,6 +37,7 @@ void DrawHeader()
 DrawHeader();
 terminal.SoftLabelKeys.Refresh(true);
 
+
 // Run the main loop.
 await terminal.RunAsync(@event =>
 {
@@ -43,6 +45,7 @@ await terminal.RunAsync(@event =>
     {
         case TerminalResizeEvent:
             DrawHeader();
+            terminal.SoftLabelKeys.Refresh(true);
             break;
         case KeyEvent { Key: Key.Character, Char.Value: var k and >= '1' and <= '8' }:
         {

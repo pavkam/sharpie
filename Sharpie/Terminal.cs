@@ -471,21 +471,21 @@ public sealed class Terminal: ITerminal, IDisposable
             {
                 foreach (var message in _delegateQueue.GetConsumingEnumerable())
                 {
-                    switch (message)
-                    {
-                        case Func<Task> @delegate:
-                            await @delegate();
-                            break;
-                        case not null when message.Equals(_stopSignal):
-                        case KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl }
-                            when stopOnCtrlC:
-                            cancellationTokenSource.Cancel();
-                            break;
-                        case Event @event:
-                            await action(@event);
-                            break;
-                    }
-                    
+                        switch (message)
+                        {
+                            case Func<Task> @delegate:
+                                await @delegate();
+                                break;
+                            case not null when message.Equals(_stopSignal):
+                            case KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl }
+                                when stopOnCtrlC:
+                                cancellationTokenSource.Cancel();
+                                break;
+                            case Event @event:
+                                await action(@event);
+                                break;
+                        }
+
                     if (cancellationTokenSource.Token.IsCancellationRequested)
                     {
                         break;

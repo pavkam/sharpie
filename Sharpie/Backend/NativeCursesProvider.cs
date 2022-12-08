@@ -37,13 +37,20 @@ using Abstractions;
 ///     implementation.
 /// </summary>
 [PublicAPI, SuppressMessage("ReSharper", "IdentifierTypo"), ExcludeFromCodeCoverage]
-public sealed class NativeCursesProvider: ICursesProvider
+public sealed class NativeCursesProvider: ICursesProvider, IDisposable
 {
     private const string CursesLibraryName = "ncurses";
     private const string LibCLibraryName = "libc";
 
     private static readonly ICursesProvider? LazyInstance = new NativeCursesProvider().ValidOrNull();
 
+    private int _resizePending;
+    private PosixSignalRegistration? _signalRegistration;
+    
+    private NativeCursesProvider()
+    {
+    }
+    
     /// <summary>
     ///     Returns the instance of the Curses backend.
     /// </summary>
@@ -517,10 +524,29 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     void ICursesProvider.set_unicode_locale()
     {
-        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
         {
-            setlocale(RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? 0 : 6, "");
+            setlocale(6, "");
+        } else if (OperatingSystem.IsMacOS())
+        {
+            setlocale(0, "");
         }
+    }
+    
+    bool ICursesProvider.monitor_pending_resize(Action action, [NotNullWhen(true)] out IDisposable? handle)
+    {
+        if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS() || OperatingSystem.IsFreeBSD())
+        {
+            handle = PosixSignalRegistration.Create(PosixSignal.SIGWINCH, _ =>
+            {
+                action();
+            });
+
+            return true;
+        }
+
+        handle = null;
+        return false;
     }
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -1132,4 +1158,20 @@ public sealed class NativeCursesProvider: ICursesProvider
 
     [DllImport(LibCLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern int setlocale(int cate, string locale);
+
+    public void Dispose()
+    {
+        if (_signalRegistration != null)
+        {
+            _signalRegistration?.Dispose();
+            _signalRegistration = null;
+        }
+        
+        GC.SuppressFinalize(this);
+    }
+
+    ~NativeCursesProvider()
+    {
+        Dispose();
+    }
 }
