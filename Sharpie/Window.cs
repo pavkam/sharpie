@@ -41,26 +41,20 @@ public class Window: Surface, IWindow
     /// <summary>
     ///     Initializes the window using the given Curses handle.
     /// </summary>
-    /// <param name="curses">The Curses backend.</param>
     /// <param name="parent">The parent screen.</param>
     /// <param name="handle">The Curses handle.</param>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="curses" /> or <paramref name="parent" /> are <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
-    internal Window(ICursesProvider curses, Screen parent, IntPtr handle): base(curses, handle)
+    internal Window(Screen parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
     {
-        if (parent == null)
-        {
-            throw new ArgumentNullException(nameof(parent));
-        }
-
         Curses.keypad(Handle, true)
               .Check(nameof(Curses.keypad), "Failed to enable the keypad resolution mode.");
         Curses.syncok(Handle, true)
               .Check(nameof(Curses.syncok), "Failed to enable auto-sync mode.");
         
-        Screen = parent;
-        parent.AddChild(this);
+        Screen = parent!;
+        parent!.AddChild(this);
     }
 
     /// <inheritdoc cref="IWindow.Screen"/>
@@ -216,7 +210,7 @@ public class Window: Surface, IWindow
         var handle = Curses.derwin(Handle, area.Height, area.Width, area.Y, area.X)
                            .Check(nameof(Curses.derwin), "Failed to create a new sub-window.");
 
-        return new SubWindow(Curses, this, handle) { ManagedCaret = ManagedCaret };
+        return new SubWindow(this, handle) { ManagedCaret = ManagedCaret };
     }
 
     /// <inheritdoc cref="IWindow.Duplicate"/>
@@ -226,7 +220,7 @@ public class Window: Surface, IWindow
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
 
-        return new Window(Curses, (Screen) Screen, handle) { ManagedCaret = ManagedCaret };
+        return new Window((Screen) Screen, handle) { ManagedCaret = ManagedCaret };
     }
     
     /// <inheritdoc cref="Surface.Delete"/>

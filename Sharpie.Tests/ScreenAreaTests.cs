@@ -52,13 +52,13 @@ public class ScreenAreaTests
     [TestMethod]
     public void Ctor_Throws_IfTerminalIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => new ScreenArea(_cursesMock.Object, null!, new(1)));
+        Should.Throw<ArgumentNullException>(() => new ScreenArea(null!, new(1)));
     }
 
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
     {
-        var sa = new ScreenArea(_cursesMock.Object, _terminal, new(1));
+        var sa = new ScreenArea(_terminal, new(1));
 
         _cursesMock.Verify(v => v.nodelay(sa.Handle, false), Times.Once);
         _cursesMock.Verify(v => v.scrollok(sa.Handle, true), Times.Once);
@@ -70,7 +70,7 @@ public class ScreenAreaTests
     [TestMethod]
     public void Terminal_IsInitialized()
     {
-        var sa = new ScreenArea(_cursesMock.Object, _terminal, new(1));
+        var sa = new ScreenArea(_terminal, new(1));
         
         sa.Terminal.ShouldBe(_terminal);
     }
@@ -78,7 +78,7 @@ public class ScreenAreaTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails_1()
     {
-        var sa = new ScreenArea(_cursesMock.Object, _terminal, new(1));
+        var sa = new ScreenArea(_terminal, new(1));
         
         _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
@@ -90,7 +90,7 @@ public class ScreenAreaTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails_2()
     {
-        var sa = new ScreenArea(_cursesMock.Object, _terminal, new(1));
+        var sa = new ScreenArea(_terminal, new(1));
         
         _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
@@ -102,7 +102,7 @@ public class ScreenAreaTests
     [TestMethod]
     public void Refresh_Succeeds_IfCursesSucceeds_1()
     {
-        var sa = new ScreenArea(_cursesMock.Object, _terminal, new(1));
+        var sa = new ScreenArea(_terminal, new(1));
         
         sa.Refresh();
         _cursesMock.Verify(v => v.wrefresh(sa.Handle), Times.Once);
@@ -111,7 +111,7 @@ public class ScreenAreaTests
     [TestMethod]
     public void Refresh_Succeeds_IfCursesSucceeds_2()
     {
-        var sa = new ScreenArea(_cursesMock.Object, _terminal, new(1));
+        var sa = new ScreenArea(_terminal, new(1));
         
         sa.Refresh(true);
         _cursesMock.Verify(v => v.wnoutrefresh(sa.Handle), Times.Once);
@@ -120,7 +120,7 @@ public class ScreenAreaTests
     [TestMethod]
     public void ImmediateRefresh_Returns_IfCursesSucceeded()
     {
-        var sa = new ScreenArea(_cursesMock.Object, _terminal, new(1));
+        var sa = new ScreenArea(_terminal, new(1));
         
         _cursesMock.Setup(s => s.is_immedok(It.IsAny<IntPtr>()))
                    .Returns(true);
@@ -131,7 +131,7 @@ public class ScreenAreaTests
     [TestMethod]
     public void ImmediateRefresh_Sets_IfCursesSucceeded()
     {
-        var sa = new ScreenArea(_cursesMock.Object, _terminal, new(1));
+        var sa = new ScreenArea(_terminal, new(1));
         sa.ImmediateRefresh = true;
 
         _cursesMock.Verify(v => v.immedok(sa.Handle, true), Times.Once);
@@ -140,7 +140,7 @@ public class ScreenAreaTests
     [TestMethod]
     public void Destroy_CallsCurses()
     {
-        var sa = new ScreenArea(_cursesMock.Object, _terminal, new(1));
+        var sa = new ScreenArea(_terminal, new(1));
         
         sa.Destroy();
         sa.Disposed.ShouldBeTrue();

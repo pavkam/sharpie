@@ -87,24 +87,18 @@ public interface IScreen: ISurface
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     bool ImmediateRefresh { get; set; }
-
-
-    /// <summary>
-    ///     Applies all queued refreshes to the terminal.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    void ApplyPendingRefreshes();
-
+   
     /// <summary>
     ///     This method invalidates the screen in its entirety and redraws if from scratch.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Screen or some children are no longer usable.</exception>
-    void ForceInvalidateAndRefresh()
+    void FullRefresh()
     {
         Invalidate();
         foreach (var child in Windows)
         {
             child.Invalidate();
+            child.Refresh(true, false);
         }
 
         Refresh();

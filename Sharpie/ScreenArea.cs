@@ -39,14 +39,13 @@ public sealed class ScreenArea: Surface, IScreenArea
     /// <summary>
     ///     Initializes the window using the given Curses handle.
     /// </summary>
-    /// <param name="curses">The Curses backend.</param>
-    /// <param name="terminal">The parent terminal.</param>
+    /// <param name="parent">The parent terminal.</param>
     /// <param name="handle">The Curses handle.</param>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="curses" /> or <paramref name="terminal" /> are <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
-    internal ScreenArea(ICursesProvider curses, Terminal terminal, IntPtr handle): base(curses, handle) => 
-        Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
+    internal ScreenArea(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle) =>
+        Terminal = parent!;
 
     /// <inheritdoc cref="IScreenArea.Terminal"/>
     public ITerminal Terminal { get; }

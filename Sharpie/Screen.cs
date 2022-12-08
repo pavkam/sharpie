@@ -43,15 +43,14 @@ public sealed class Screen: Surface, IScreen
     /// <summary>
     ///     Initializes the pad using the given Curses handle.
     /// </summary>
-    /// <param name="curses">The Curses backend.</param>
-    /// <param name="terminal">The parent terminal.</param>
+    /// <param name="parent">The parent terminal.</param>
     /// <param name="handle">The Curses handle.</param>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="curses" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
-    internal Screen(ICursesProvider curses, Terminal terminal, IntPtr handle): base(curses,
+    internal Screen(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!,
         handle)
     {
-        Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
+        Terminal = parent!;
         
         Curses.notimeout(Handle, false)
               .Check(nameof(Curses.notimeout), "Failed to disable no-read-timeout mode.");
@@ -145,7 +144,7 @@ public sealed class Screen: Surface, IScreen
         var handle = Curses.newwin(area.Height, area.Width, area.Y, area.X)
                            .Check(nameof(Curses.newwin), "Failed to create a new window.");
 
-        return new Window(Curses, this, handle) { ManagedCaret = ManagedCaret };
+        return new Window(this, handle) { ManagedCaret = ManagedCaret };
     }
     
     /// <inheritdoc cref="IScreen.Pad"/>
@@ -161,7 +160,7 @@ public sealed class Screen: Surface, IScreen
         var handle = Curses.newpad(size.Height, size.Width)
                            .Check(nameof(Curses.newpad), "Failed to create a new pad.");
 
-        return new Pad(Curses, this, handle) { ManagedCaret = ManagedCaret };
+        return new Pad(this, handle) { ManagedCaret = ManagedCaret };
     }
 
     /// <inheritdoc cref="IScreen.Refresh"/>
@@ -172,15 +171,6 @@ public sealed class Screen: Surface, IScreen
               .Check(nameof(Curses.wrefresh), "Failed to perform screen refresh.");
     }
     
-    /// <inheritdoc cref="IScreen.ApplyPendingRefreshes"/>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void ApplyPendingRefreshes()
-    {
-        AssertAlive();
-        Curses.doupdate()
-              .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
-    }
-
     /// <inheritdoc cref="Surface.Delete"/>
     /// <summary>
     ///     Deletes the screen window.

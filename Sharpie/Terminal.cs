@@ -95,7 +95,7 @@ public sealed class Terminal: ITerminal, IDisposable
             curses.ripoffline(1, (handle, _) =>
                   {
                       _header = handle != IntPtr.Zero
-                          ? new ScreenArea(curses, this, handle) { ManagedCaret = managedCaret }
+                          ? new ScreenArea(this, handle) { ManagedCaret = managedCaret }
                           : null;
 
                       return 0;
@@ -108,7 +108,7 @@ public sealed class Terminal: ITerminal, IDisposable
             curses.ripoffline(-1, (handle, _) =>
                   {
                       _footer = handle != IntPtr.Zero
-                          ? new ScreenArea(curses, this, handle) { ManagedCaret = managedCaret }
+                          ? new ScreenArea(this, handle) { ManagedCaret = managedCaret }
                           : null;
 
                       return 0;
@@ -119,7 +119,7 @@ public sealed class Terminal: ITerminal, IDisposable
         var screenHandle = curses.initscr()
                                  .Check(nameof(curses.initscr), "Failed to create the screen window.");
 
-        _screen = new(curses, this, screenHandle) { ManagedCaret = Options.CaretMode == CaretMode.Invisible };
+        _screen = new(this, screenHandle) { ManagedCaret = Options.CaretMode == CaretMode.Invisible };
 
         if (Options.AllocateHeader && _header == null)
         {
@@ -131,7 +131,7 @@ public sealed class Terminal: ITerminal, IDisposable
             throw new CursesOperationException(nameof(curses.ripoffline), "Failed to allocated footer line.");
         }
 
-        _eventPump = new(curses, _screen);
+        _eventPump = new(this);
         _colorManager = new(curses, Options.UseColors);
 
         // After screen creation.
@@ -324,14 +324,10 @@ public sealed class Terminal: ITerminal, IDisposable
             ? null
             : new(@char);
 
-    /// <summary>
-    ///     The Curses backend.
-    /// </summary>
-    internal ICursesProvider Curses { get; }
+    /// <inheritdoc cref="ITerminal.Curses"/>
+    public ICursesProvider Curses { get; }
 
-    /// <summary>
-    ///     Checks whether the terminal has been disposed of and is no longer usable.
-    /// </summary>
+    /// <inheritdoc cref="ITerminal.Disposed"/>
     public bool Disposed { get; private set; }
 
     /// <summary>
@@ -401,6 +397,15 @@ public sealed class Terminal: ITerminal, IDisposable
             Curses.beep()
                   .Check(nameof(Curses.beep), "Failed to beep the terminal.");
         }
+    }
+    
+    /// <inheritdoc cref="ITerminal.Update"/>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public void Update()
+    {
+        AssertAlive();
+        Curses.doupdate()
+              .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
     }
 
     /// <summary>

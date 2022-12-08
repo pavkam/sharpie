@@ -37,9 +37,14 @@ namespace Sharpie.Abstractions;
 public interface ITerminal
 {
     /// <summary>
+    ///     The Curses backend.
+    /// </summary>
+    ICursesProvider Curses { get; }
+    
+    /// <summary>
     ///     Checks whether the terminal has been disposed of and is no longer usable.
     /// </summary>
-    public bool Disposed { get; }
+    bool Disposed { get; }
 
     /// <summary>
     ///     Gets the terminal's baud rate.
@@ -134,6 +139,12 @@ public interface ITerminal
     /// <remarks>The actual notification depends on terminal support.</remarks>
     /// <param name="silent">The alert mode.</param>
     void Alert(bool silent);
+
+    /// <summary>
+    ///     Applies all queued refreshes to the terminal.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    void Update();
 
     /// <summary>
     ///     Runs the application main loop and dispatches each event to <paramref name="eventAction" />.

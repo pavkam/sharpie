@@ -34,7 +34,7 @@ namespace Sharpie.Tests;
 public class ScreenInterfaceTests
 {
     [TestMethod]
-    public void ForceInvalidateAndRefresh_CallsInADeepScrub()
+    public void FullRefresh_CallsInADeepScrub()
     {
         var w = new Mock<IWindow>();
         var sw = new Mock<ISubWindow>();
@@ -48,14 +48,15 @@ public class ScreenInterfaceTests
         scr.Setup(s => s.Pads)
            .Returns(new[] { p.Object });
 
-        scr.Setup(s => s.ForceInvalidateAndRefresh())
+        scr.Setup(s => s.FullRefresh())
            .CallBase();
         
-        scr.Object.ForceInvalidateAndRefresh();
+        scr.Object.FullRefresh();
         
         scr.Verify(v => v.Invalidate(), Times.Once);
         scr.Verify(v => v.Refresh(), Times.Once);
         w.Verify(v => v.Invalidate(), Times.Once);
+        w.Verify(v => v.Refresh(true, false), Times.Once);
         sw.Verify(v => v.Invalidate(), Times.Never);
         p.Verify(v => v.Invalidate(), Times.Never);
     }

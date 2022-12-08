@@ -48,7 +48,7 @@ public class PadTests
         
         _terminal = new(_cursesMock.Object, new());
         _screen = (Screen)_terminal.Screen;
-        _pad = new(_cursesMock.Object, _screen, new(2));
+        _pad = new(_screen, new(2));
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -56,13 +56,13 @@ public class PadTests
     [TestMethod]
     public void Ctor_Throws_IfScreenIsNull()
     {
-        Should.Throw<ArgumentException>(() => new Pad(_cursesMock.Object, null!, IntPtr.MaxValue));
+        Should.Throw<ArgumentException>(() => new Pad(null!, IntPtr.MaxValue));
     }
 
     [TestMethod]
     public void Screen_IsInitialized()
     {
-        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        var p = new Pad(_screen, IntPtr.MaxValue);
 
         p.Screen.ShouldBe(_screen);
     }
@@ -70,23 +70,23 @@ public class PadTests
     [TestMethod]
     public void SubPads_IsEmpty_WhenCreated()
     {
-        var p = new Pad(_cursesMock.Object, _screen, new(22));
+        var p = new Pad(_screen, new(22));
         p.SubPads.ShouldBeEmpty();
     }
     
     [TestMethod]
     public void SubPads_ContainsTheChild_WhenPassedAsParent()
     {
-        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
-        var sp = new SubPad(_cursesMock.Object, p, IntPtr.MaxValue);
+        var p = new Pad(_screen, IntPtr.MaxValue);
+        var sp = new SubPad(p, IntPtr.MaxValue);
         p.SubPads.ShouldContain(sp);
     }
 
     [TestMethod]
     public void SubPads_DoesNotContainTheChild_WhenChildDestroyed()
     {
-        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
-        var sp = new SubPad(_cursesMock.Object, p, IntPtr.MaxValue);
+        var p = new Pad(_screen, IntPtr.MaxValue);
+        var sp = new SubPad(p, IntPtr.MaxValue);
         sp.Dispose();
         
         p.SubPads.ShouldBeEmpty();
@@ -97,8 +97,8 @@ public class PadTests
     {
         _cursesMock.MockLargeArea(_screen);
         
-        var w = new Window(_cursesMock.Object, _screen, new(1));
-        w.Size = new(11, 22);
+        var p = new Pad(_screen, new(1));
+        p.Size = new(11, 22);
 
         _cursesMock.Verify(v => v.wresize(new(1), 22, 11), Times.Once);
     }
@@ -108,7 +108,7 @@ public class PadTests
     {
         _cursesMock.MockLargeArea(_screen);
 
-        var p = new Pad(_cursesMock.Object, _screen, new(1));
+        var p = new Pad(_screen, new(1));
 
         _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -122,7 +122,7 @@ public class PadTests
     {
         _cursesMock.MockSmallArea(_screen);
 
-        var p = new Pad(_cursesMock.Object, _screen, new(1));
+        var p = new Pad(_screen, new(1));
 
         Should.Throw<ArgumentOutOfRangeException>(() => p.Size = new(6, 6));
     }
@@ -132,7 +132,7 @@ public class PadTests
     {
         _cursesMock.MockLargeArea(_screen);
 
-        var p = new Pad(_cursesMock.Object, _screen, new(1));
+        var p = new Pad(_screen, new(1));
 
         p.Size = new(5, 5);
 
@@ -317,7 +317,7 @@ public class PadTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void Duplicate_PreservesManagedCaret(bool mc)
     {
-        var p = new Pad(_cursesMock.Object, _screen, new(3)) { ManagedCaret = mc };
+        var p = new Pad(_screen, new(3)) { ManagedCaret = mc };
         
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
@@ -331,7 +331,7 @@ public class PadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Destroy_RemovesWindowFromParent()
     {
-        var p = new Pad(_cursesMock.Object, _screen, new(1));
+        var p = new Pad(_screen, new(1));
         p.Destroy();
         
         _screen.Windows.ShouldBeEmpty();
@@ -340,10 +340,10 @@ public class PadTests
     [TestMethod]
     public void Destroy_CallsCurses()
     {
-        var w = new Pad(_cursesMock.Object, _screen, new(1));
+        var p = new Pad(_screen, new(1));
         
-        w.Destroy();
-        w.Disposed.ShouldBeTrue();
+        p.Destroy();
+        p.Disposed.ShouldBeTrue();
         
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
     }
@@ -351,10 +351,10 @@ public class PadTests
     [TestMethod]
     public void Destroy_DestroysChildren()
     {
-        var w = new Pad(_cursesMock.Object, _screen, new(1));
-        var sw = new SubPad(_cursesMock.Object, w, new(2));
+        var p = new Pad(_screen, new(1));
+        var sp = new SubPad(p, new(2));
         
-        w.Destroy();
-        sw.Disposed.ShouldBeTrue();
+        p.Destroy();
+        sp.Disposed.ShouldBeTrue();
     }
 }

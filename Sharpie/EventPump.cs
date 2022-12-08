@@ -7,25 +7,18 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class EventPump: IEventPump
 {
-    private readonly ICursesProvider _curses;
+    private readonly ITerminal _terminal;
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private readonly IScreen _screen;
     private MouseEventResolver? _mouseEventResolver;
 
     /// <summary>
     ///     Creates a new instances of this class.
     /// </summary>
-    /// <param name="curses">The curses backend.</param>
-    /// <param name="screen">The screen object.</param>
+    /// <param name="terminal">The parent terminal.</param>
     /// <exception cref="ArgumentNullException">
-    ///     Thrown if <paramref name="curses" /> or <paramref name="screen" /> are
-    ///     <c>null</c>.
+    ///     Thrown if <paramref name="terminal" /> is <c>null</c>.
     /// </exception>
-    internal EventPump(ICursesProvider curses, IScreen screen)
-    {
-        _curses = curses ?? throw new ArgumentNullException(nameof(curses));
-        _screen = screen ?? throw new ArgumentNullException(nameof(screen));
-    }
+    internal EventPump(ITerminal terminal) => _terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
 
     /// <summary>
     ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
@@ -47,8 +40,8 @@ public sealed class EventPump: IEventPump
 
     private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)
     {
-        _curses.wtimeout(windowHandle, quickWait ? 10 : 100);
-        var result = _curses.wget_wch(windowHandle, out var keyCode);
+        _terminal.Curses.wtimeout(windowHandle, quickWait ? 10 : 100);
+        var result = _terminal.Curses.wget_wch(windowHandle, out var keyCode);
 
         return (result, keyCode);
     }
@@ -58,7 +51,7 @@ public sealed class EventPump: IEventPump
         var (result, keyCode) = ReadNext(windowHandle, quickWait);
         if (result.Failed())
         {
-            _screen.ApplyPendingRefreshes();
+            _terminal.Update();
             return null;
         }
 
@@ -67,10 +60,10 @@ public sealed class EventPump: IEventPump
             switch (keyCode)
             {
                 case (uint) CursesKey.Resize:
-                    return new TerminalResizeEvent(_screen.Size);
+                    return new TerminalResizeEvent(_terminal.Screen.Size);
                 case (uint) CursesKey.Mouse:
-                    if (_curses.getmouse(out var mouseEvent)
-                               .Failed())
+                    if (_terminal.Curses.getmouse(out var mouseEvent)
+                                 .Failed())
                     {
                         return null;
                     }
@@ -88,11 +81,11 @@ public sealed class EventPump: IEventPump
                         : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
                 default:
                     var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
-                    return new KeyEvent(key, new(ControlCharacter.Null), _curses.key_name(keyCode), keyMod);
+                    return new KeyEvent(key, new(ControlCharacter.Null), _terminal.Curses.key_name(keyCode), keyMod);
             }
         }
 
-        return new KeyEvent(Key.Character, new(keyCode), _curses.key_name(keyCode), ModifierKey.None);
+        return new KeyEvent(Key.Character, new(keyCode), _terminal.Curses.key_name(keyCode), ModifierKey.None);
     }
 
     /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface,System.Threading.CancellationToken)"/>
@@ -170,7 +163,7 @@ public sealed class EventPump: IEventPump
 
                 if (@event.Type == EventType.TerminalResize)
                 {
-                    _screen.ForceInvalidateAndRefresh();
+                    _terminal.Screen.FullRefresh();
                 }
             }
         }
@@ -178,7 +171,7 @@ public sealed class EventPump: IEventPump
 
     /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)"/>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IEnumerable<Event> Listen(CancellationToken cancellationToken) => Listen(_screen, cancellationToken);
+    public IEnumerable<Event> Listen(CancellationToken cancellationToken) => Listen(_terminal.Screen, cancellationToken);
 
     /// <inheritdoc cref="IEventPump.Use"/>
     public void Use(ResolveEscapeSequenceFunc resolver)
@@ -229,7 +222,7 @@ public sealed class EventPump: IEventPump
 
         foreach (var resolver in _keySequenceResolvers)
         {
-            var (resKey, resCount) = resolver(sequence, _curses.key_name);
+            var (resKey, resCount) = resolver(sequence, _terminal.Curses.key_name);
 
             if (resCount >= max && resKey != null && best)
             {

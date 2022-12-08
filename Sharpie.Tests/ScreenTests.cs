@@ -54,13 +54,13 @@ public class ScreenTests
     [TestMethod]
     public void Ctor_Throws_IfTerminalIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => new Screen(_cursesMock.Object, null!, new(1)));
+        Should.Throw<ArgumentNullException>(() => new Screen(null!, new(1)));
     }
 
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
     {
-        var w = new Screen(_cursesMock.Object, _terminal, new(1));
+        var w = new Screen(_terminal, new(1));
 
         _cursesMock.Verify(v => v.nodelay(w.Handle, false), Times.Once);
         _cursesMock.Verify(v => v.scrollok(w.Handle, true), Times.Once);
@@ -75,7 +75,7 @@ public class ScreenTests
         _cursesMock.Setup(s => s.notimeout(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => new Screen(_cursesMock.Object, _terminal, new(1)))
+        Should.Throw<CursesOperationException>(() => new Screen(_terminal, new(1)))
               .Operation.ShouldBe("notimeout");
     }
 
@@ -124,7 +124,7 @@ public class ScreenTests
     [TestMethod]
     public void Windows_ContainsTheChild_WhenPassedAsParent()
     {
-        var w = new Window(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        var w = new Window(_screen, IntPtr.MaxValue);
         
         _screen.Windows.ShouldContain(w);
     }
@@ -132,7 +132,7 @@ public class ScreenTests
     [TestMethod]
     public void Windows_DoesNotContainTheChild_WhenChildDestroyed()
     {
-        var w = new Window(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        var w = new Window(_screen, IntPtr.MaxValue);
         w.Dispose();
         
         _screen.Windows.ShouldBeEmpty();
@@ -147,7 +147,7 @@ public class ScreenTests
     [TestMethod]
     public void Pads_ContainsTheChild_WhenPassedAsParent()
     {
-        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        var p = new Pad(_screen, IntPtr.MaxValue);
         
         _screen.Pads.ShouldContain(p);
     }
@@ -155,7 +155,7 @@ public class ScreenTests
     [TestMethod]
     public void Pads_DoesNotContainTheChild_WhenChildDestroyed()
     {
-        var p = new Pad(_cursesMock.Object, _screen, IntPtr.MaxValue);
+        var p = new Pad(_screen, IntPtr.MaxValue);
         p.Dispose();
         
         _screen.Pads.ShouldBeEmpty();
@@ -256,32 +256,6 @@ public class ScreenTests
         
         _cursesMock.Verify(s => s.leaveok(p.Handle, mc), Times.Once);
     }
-    
-    [TestMethod]
-    public void ApplyPendingRefreshes_Throws_IfScreenIsDisposed()
-    {
-        _screen.Dispose();
-
-        Should.Throw<ObjectDisposedException>(() => _screen.ApplyPendingRefreshes());
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void ApplyPendingRefreshes_Throws_IfCursesFails()
-    {
-        _cursesMock.Setup(s => s.doupdate())
-                   .Returns(-1);
-
-        Should.Throw<CursesOperationException>(() => _screen.ApplyPendingRefreshes())
-              .Operation.ShouldBe("doupdate");
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void ApplyPendingRefreshes_DrawsAll_IfCursesSucceeds()
-    {
-        _screen.ApplyPendingRefreshes();
-
-        _cursesMock.Verify(v => v.doupdate(), Times.Once);
-    }
 
     [TestMethod]
     public void Destroy_CallsCurses()
@@ -295,8 +269,8 @@ public class ScreenTests
     [TestMethod]
     public void Destroy_DestroysChildren()
     {
-        var p = new Pad(_cursesMock.Object, _screen, new(1));
-        var w = new Window(_cursesMock.Object, _screen, new(1));
+        var p = new Pad(_screen, new(1));
+        var w = new Window(_screen, new(1));
         
         _screen.Destroy();
         p.Disposed.ShouldBeTrue();

@@ -46,7 +46,7 @@ public class SubWindowTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _parent = new(_cursesMock.Object, (Screen) _terminal.Screen, new(200));
+        _parent = new((Screen) _terminal.Screen, new(200));
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -54,13 +54,13 @@ public class SubWindowTests
     [TestMethod]
     public void Ctor_Throws_IfScreenIsNull()
     {
-        Should.Throw<ArgumentException>(() => new SubWindow(_cursesMock.Object, null!, IntPtr.MaxValue));
+        Should.Throw<ArgumentException>(() => new SubWindow(null!, IntPtr.MaxValue));
     }
     
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
     {
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        var sw = new SubWindow(_parent, new(1));
 
         _cursesMock.Verify(v => v.nodelay(sw.Handle, false), Times.Once);
         _cursesMock.Verify(v => v.scrollok(sw.Handle, true), Times.Once);
@@ -72,7 +72,7 @@ public class SubWindowTests
     [TestMethod]
     public void Ctor_RegistersItselfIntoParent()
     {
-        var sw = new SubWindow(_cursesMock.Object, _parent, IntPtr.MaxValue);
+        var sw = new SubWindow(_parent, IntPtr.MaxValue);
 
         _parent.SubWindows.ShouldContain(sw);
     }
@@ -80,7 +80,7 @@ public class SubWindowTests
     [TestMethod]
     public void Window_IsInitialized()
     {
-        var sw = new SubWindow(_cursesMock.Object, _parent, IntPtr.MaxValue);
+        var sw = new SubWindow(_parent, IntPtr.MaxValue);
 
         sw.Window.ShouldBe(_parent);
     }
@@ -94,7 +94,7 @@ public class SubWindowTests
         _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(22);
 
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        var sw = new SubWindow(_parent, new(1));
         sw.Location.ShouldBe(new(11, 22));
     }
 
@@ -104,7 +104,7 @@ public class SubWindowTests
         _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(2));
+        var sw = new SubWindow(_parent, new(2));
 
         Should.Throw<CursesOperationException>(() => sw.Location)
               .Operation.ShouldBe("getparx");
@@ -116,7 +116,7 @@ public class SubWindowTests
         _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(2));
+        var sw = new SubWindow(_parent, new(2));
 
         Should.Throw<CursesOperationException>(() => sw.Location)
               .Operation.ShouldBe("getpary");
@@ -127,7 +127,7 @@ public class SubWindowTests
     {
         _cursesMock.MockLargeArea(_parent);
         
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(2));
+        var sw = new SubWindow(_parent, new(2));
         _cursesMock.MockSmallArea(sw);
         
         sw.Location = new(11, 22);
@@ -140,7 +140,7 @@ public class SubWindowTests
     {
         _cursesMock.MockLargeArea(_parent);
        
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(2));
+        var sw = new SubWindow(_parent, new(2));
         _cursesMock.MockSmallArea(sw);
         
         _cursesMock.Setup(s => s.mvderwin(sw.Handle, It.IsAny<int>(), It.IsAny<int>()))
@@ -156,7 +156,7 @@ public class SubWindowTests
     {
         _cursesMock.MockSmallArea(_parent);
         
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        var sw = new SubWindow(_parent, new(1));
         _cursesMock.MockSmallArea(sw);
         
         Should.Throw<ArgumentOutOfRangeException>(() => sw.Location = new(6, 6));
@@ -167,7 +167,7 @@ public class SubWindowTests
     {
         _cursesMock.MockLargeArea(_parent);
 
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(2));
+        var sw = new SubWindow(_parent, new(2));
         _cursesMock.MockSmallArea(sw);
         
         sw.Location = new(5, 5);
@@ -180,7 +180,7 @@ public class SubWindowTests
     {
         _cursesMock.MockLargeArea(_parent);
         
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        var sw = new SubWindow(_parent, new(1));
         sw.Size = new(11, 22);
 
         _cursesMock.Verify(v => v.wresize(sw.Handle, 22, 11), Times.Once);
@@ -191,7 +191,7 @@ public class SubWindowTests
     {
         _cursesMock.MockLargeArea(_parent);
         
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        var sw = new SubWindow(_parent, new(1));
 
         _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -205,7 +205,7 @@ public class SubWindowTests
     {
         _cursesMock.MockSmallArea(_parent);
 
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        var sw = new SubWindow(_parent, new(1));
 
         Should.Throw<ArgumentOutOfRangeException>(() => sw.Size = new(6, 6));
     }
@@ -215,7 +215,7 @@ public class SubWindowTests
     {
         _cursesMock.MockLargeArea(_parent);
 
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        var sw = new SubWindow(_parent, new(1));
 
         sw.Size = new(5, 5);
 
@@ -225,7 +225,7 @@ public class SubWindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Duplicate_Throws_IfCursesFails()
     {
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(3));
+        var sw = new SubWindow(_parent, new(3));
         
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(IntPtr.Zero);
@@ -237,7 +237,7 @@ public class SubWindowTests
     [TestMethod]
     public void Duplicate_ReturnsNewWindow_IfCursesSucceeds()
     {
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(3));
+        var sw = new SubWindow(_parent, new(3));
         
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
@@ -252,7 +252,7 @@ public class SubWindowTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void Duplicate_PreservesManagedCaret(bool mc)
     {
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(3));
+        var sw = new SubWindow(_parent, new(3));
         
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
@@ -266,7 +266,7 @@ public class SubWindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Destroy_RemovesWindowFromParent()
     {
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        var sw = new SubWindow(_parent, new(1));
         sw.Destroy();
         
         _parent.SubWindows.ShouldBeEmpty();
@@ -275,7 +275,7 @@ public class SubWindowTests
     [TestMethod]
     public void Destroy_CallsCurses()
     {
-        var sw = new SubWindow(_cursesMock.Object, _parent, new(1));
+        var sw = new SubWindow(_parent, new(1));
         
         sw.Destroy();
         sw.Disposed.ShouldBeTrue();

@@ -39,18 +39,17 @@ public sealed class SubPad: Surface, ISubPad
     /// <summary>
     ///     Initializes the sub-pad using the given Curses handle.
     /// </summary>
-    /// <param name="curses">The Curses backend.</param>
     /// <param name="parent">The parent pad.</param>
     /// <param name="handle">The Curses handle.</param>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="curses" /> or <paramref name="parent" /> are <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
-    internal SubPad(ICursesProvider curses, Pad parent, IntPtr handle): base(curses, handle)
+    internal SubPad(Pad parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
     {
         EnableScrolling = true;
-        
-        Pad = parent ?? throw new ArgumentNullException(nameof(parent));
-        parent.AddChild(this);
+
+        Pad = parent!;
+        parent!.AddChild(this);
     }
 
     /// <inheritdoc cref="ISubPad.Pad"/>
@@ -101,7 +100,7 @@ public sealed class SubPad: Surface, ISubPad
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the sub-pad.");
 
-        return new SubPad(Curses, (Pad) Pad, handle) { ManagedCaret = ManagedCaret };
+        return new SubPad((Pad) Pad, handle) { ManagedCaret = ManagedCaret };
     }
     
     /// <inheritdoc cref="Surface.Delete"/>

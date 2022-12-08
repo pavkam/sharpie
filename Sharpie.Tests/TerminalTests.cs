@@ -748,6 +748,35 @@ public class TerminalTests
         Should.Throw<CursesOperationException>(() => _terminal.Alert(true))
               .Operation.ShouldBe("flash");
     }
+    
+    [TestMethod]
+    public void Update_Throws_IfScreenIsDisposed()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.Dispose();
+
+        Should.Throw<ObjectDisposedException>(() => _terminal.Update());
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Update_Throws_IfCursesFails()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _cursesMock.Setup(s => s.doupdate())
+                   .Returns(-1);
+
+        Should.Throw<CursesOperationException>(() => _terminal.Update())
+              .Operation.ShouldBe("doupdate");
+    }
+
+    [TestMethod]
+    public void Update_DrawsAll_IfCursesSucceeds()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.Update();
+
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
 
     [TestMethod]
     public void Disposed_ReturnsFalse_IfTerminalIsAlive()

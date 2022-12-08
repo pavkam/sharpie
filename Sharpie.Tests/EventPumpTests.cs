@@ -101,23 +101,17 @@ public class EventPumpTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
-        _pump = new(_cursesMock.Object, _terminal.Screen);
-        _window = new(_cursesMock.Object, (Screen)_terminal.Screen, new(2));
+        _pump = new(_terminal);
+        _window = new((Screen)_terminal.Screen, new(2));
         _source = new();
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
 
     [TestMethod]
-    public void Ctor_Throws_IfCursesIsNull()
+    public void Ctor_Throws_IfTerminalIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => new EventPump(null!, _terminal.Screen));
-    }
-
-    [TestMethod]
-    public void Ctor_Throws_IfScreenIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => new EventPump(_cursesMock.Object, null!));
+        Should.Throw<ArgumentNullException>(() => new EventPump(null!));
     }
 
     [TestMethod]
@@ -372,7 +366,7 @@ public class EventPumpTests
     [TestMethod]
     public void Listen1_GoesDeepWithinChildren_ToApplyPendingRefreshes()
     {
-        var w = new Window(_cursesMock.Object, (Screen)_terminal.Screen, new(3));
+        var w = new Window((Screen)_terminal.Screen, new(3));
 
         SimulateEvents(1, w, (-1, 0), (0, 0));
 
@@ -403,7 +397,7 @@ public class EventPumpTests
     [TestMethod]
     public void Listen1_ProcessesTerminalResizeEvents_InChild()
     {
-        var otherWindow = new Window(_cursesMock.Object, (Screen)_terminal.Screen, new(8));
+        var otherWindow = new Window((Screen)_terminal.Screen, new(8));
 
         _cursesMock.Setup(s => s.getmaxy(_terminal.Screen.Handle))
                    .Returns(10);

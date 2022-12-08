@@ -46,7 +46,7 @@ public class SubPadTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _parent = new(_cursesMock.Object, (Screen)_terminal.Screen, new(1));
+        _parent = new((Screen)_terminal.Screen, new(1));
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -54,13 +54,13 @@ public class SubPadTests
     [TestMethod]
     public void Ctor_Throws_IfScreenIsNull()
     {
-        Should.Throw<ArgumentException>(() => new SubPad(_cursesMock.Object, null!, IntPtr.MaxValue));
+        Should.Throw<ArgumentException>(() => new SubPad(null!, IntPtr.MaxValue));
     }
 
     [TestMethod]
     public void Pad_IsInitialized()
     {
-        var sp = new SubPad(_cursesMock.Object, _parent, IntPtr.MaxValue);
+        var sp = new SubPad(_parent, IntPtr.MaxValue);
         sp.Pad.ShouldBe(_parent);
     }
     
@@ -73,7 +73,7 @@ public class SubPadTests
         _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(22);
 
-        var sp = new SubPad(_cursesMock.Object, _parent, new(1));
+        var sp = new SubPad(_parent, new(1));
         sp.Location.ShouldBe(new(11, 22));
     }
 
@@ -83,7 +83,7 @@ public class SubPadTests
         _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        var sp = new SubPad(_cursesMock.Object, _parent, new(2));
+        var sp = new SubPad(_parent, new(2));
 
         Should.Throw<CursesOperationException>(() => sp.Location)
               .Operation.ShouldBe("getparx");
@@ -95,7 +95,7 @@ public class SubPadTests
         _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        var sp = new SubPad(_cursesMock.Object, _parent, new(2));
+        var sp = new SubPad(_parent, new(2));
 
         Should.Throw<CursesOperationException>(() => sp.Location)
               .Operation.ShouldBe("getpary");
@@ -106,7 +106,7 @@ public class SubPadTests
     {
         _cursesMock.MockLargeArea(_parent);
         
-        var sp = new SubPad(_cursesMock.Object, _parent, new(2));
+        var sp = new SubPad(_parent, new(2));
         _cursesMock.MockSmallArea(sp);
         
         sp.Location = new(11, 22);
@@ -119,7 +119,7 @@ public class SubPadTests
     {
         _cursesMock.MockLargeArea(_parent);
        
-        var sp = new SubPad(_cursesMock.Object, _parent, new(2));
+        var sp = new SubPad(_parent, new(2));
         _cursesMock.MockSmallArea(sp);
         
         _cursesMock.Setup(s => s.mvderwin(sp.Handle, It.IsAny<int>(), It.IsAny<int>()))
@@ -135,7 +135,7 @@ public class SubPadTests
     {
         _cursesMock.MockSmallArea(_parent);
         
-        var sp = new SubPad(_cursesMock.Object, _parent, new(1));
+        var sp = new SubPad(_parent, new(1));
         _cursesMock.MockSmallArea(sp);
         
         Should.Throw<ArgumentOutOfRangeException>(() => sp.Location = new(6, 6));
@@ -146,7 +146,7 @@ public class SubPadTests
     {
         _cursesMock.MockLargeArea(_parent);
 
-        var sp = new SubPad(_cursesMock.Object, _parent, new(2));
+        var sp = new SubPad(_parent, new(2));
         _cursesMock.MockSmallArea(sp);
         
         sp.Location = new(5, 5);
@@ -159,7 +159,7 @@ public class SubPadTests
     {
         _cursesMock.MockLargeArea(_parent);
         
-        var w = new SubPad(_cursesMock.Object, _parent, new(1));
+        var w = new SubPad(_parent, new(1));
         w.Size = new(11, 22);
 
         _cursesMock.Verify(v => v.wresize(w.Handle, 22, 11), Times.Once);
@@ -170,7 +170,7 @@ public class SubPadTests
     {
         _cursesMock.MockLargeArea(_parent);
 
-        var w = new SubPad(_cursesMock.Object, _parent, new(1));
+        var w = new SubPad(_parent, new(1));
 
         _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -184,7 +184,7 @@ public class SubPadTests
     {
         _cursesMock.MockSmallArea(_parent);
 
-        var w = new SubPad(_cursesMock.Object, _parent, new(1));
+        var w = new SubPad(_parent, new(1));
 
         Should.Throw<ArgumentOutOfRangeException>(() => w.Size = new(6, 6));
     }
@@ -194,7 +194,7 @@ public class SubPadTests
     {
         _cursesMock.MockLargeArea(_parent);
 
-        var w = new SubPad(_cursesMock.Object, _parent, new(1));
+        var w = new SubPad(_parent, new(1));
 
         w.Size = new(5, 5);
 
@@ -205,7 +205,7 @@ public class SubPadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Duplicate_Throws_IfCursesFails()
     {
-        var sp = new SubPad(_cursesMock.Object, _parent, new(2));
+        var sp = new SubPad(_parent, new(2));
         
         Should.Throw<CursesOperationException>(() => sp.Duplicate())
               .Operation.ShouldBe("dupwin");
@@ -214,7 +214,7 @@ public class SubPadTests
     [TestMethod]
     public void Duplicate_ReturnsNewPad_IfCursesSucceeds()
     {
-        var sp = new SubPad(_cursesMock.Object, _parent, new(2));
+        var sp = new SubPad(_parent, new(2));
         
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(3));
@@ -229,7 +229,7 @@ public class SubPadTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void Duplicate_PreservesManagedCaret(bool mc)
     {
-        var sp = new SubPad(_cursesMock.Object, _parent, new(3)) { ManagedCaret = mc };
+        var sp = new SubPad(_parent, new(3)) { ManagedCaret = mc };
         
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
@@ -244,7 +244,7 @@ public class SubPadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Destroy_RemovesWindowFromParent()
     {
-        var sp = new SubPad(_cursesMock.Object, _parent, new(1));
+        var sp = new SubPad(_parent, new(1));
         sp.Destroy();
         
         _parent.SubPads.ShouldBeEmpty();
@@ -253,7 +253,7 @@ public class SubPadTests
     [TestMethod]
     public void Destroy_CallsCurses()
     {
-        var sp = new SubPad(_cursesMock.Object, _parent, new(1));
+        var sp = new SubPad(_parent, new(1));
         
         sp.Destroy();
         sp.Disposed.ShouldBeTrue();
