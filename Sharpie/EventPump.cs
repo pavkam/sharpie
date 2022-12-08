@@ -51,7 +51,6 @@ public sealed class EventPump: IEventPump
         var (result, keyCode) = ReadNext(windowHandle, quickWait);
         if (result.Failed())
         {
-            _terminal.Update();
             return null;
         }
 
@@ -97,11 +96,28 @@ public sealed class EventPump: IEventPump
             throw new ArgumentNullException(nameof(surface));
         }
 
+        var hasPendingResize = false;
+        var monitorsResizes = _terminal.Curses.monitor_pending_resize(() =>
+        {
+            hasPendingResize = true;
+        }, out var monitorHandle);
+        
         var escapeSequence = new List<KeyEvent>();
 
         while (!cancellationToken.IsCancellationRequested)
         {
             var @event = ReadNextEvent(surface.Handle, escapeSequence.Count > 0);
+            if (!monitorsResizes && @event == null || hasPendingResize)
+            {
+                if (hasPendingResize)
+                {
+                    @event = new TerminalAboutToResizeEvent();
+                }
+                
+                _terminal.Update();
+                hasPendingResize = false;
+            }
+            
             if (@event is KeyEvent ke)
             {
                 escapeSequence.Add(ke);
@@ -159,6 +175,11 @@ public sealed class EventPump: IEventPump
             // Flush the event if anything in there.
             if (@event is not null)
             {
+                if (@event.Type == EventType.TerminalResize && !monitorsResizes)
+                {
+                    yield return new TerminalAboutToResizeEvent();
+                }
+                
                 yield return @event;
 
                 if (@event.Type == EventType.TerminalResize)
@@ -167,6 +188,8 @@ public sealed class EventPump: IEventPump
                 }
             }
         }
+        
+        monitorHandle?.Dispose();
     }
 
     /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)"/>

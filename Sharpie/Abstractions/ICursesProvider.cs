@@ -444,4 +444,6 @@ public interface ICursesProvider
     void set_title(string title);
 
     void set_unicode_locale();
+
+    bool monitor_pending_resize(Action action, [NotNullWhen(true)] out IDisposable? handle);
 }

@@ -30,6 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
+using Nito.Disposables;
+
 [TestClass]
 public class EventPumpTests
 {
@@ -64,6 +66,7 @@ public class EventPumpTests
                    });
 
         var events = new List<Event>();
+
         foreach (var e in _pump.Listen(w, _source.Token))
         {
             count--;
@@ -357,9 +360,58 @@ public class EventPumpTests
     }
 
     [TestMethod]
-    public void Listen1_ApplyPendingRefreshes_WhenReadFails()
+    public void Listen1_CallsUpdate_WhenNoEventAndNoResizeMonitoring()
     {
         SimulateEvents(1, _window, (-1, 0), (0, 0));
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Listen1_TriesToSetupResizeMonitoring()
+    {
+        var disposed = false;
+        _cursesMock.Setup(s => s.monitor_pending_resize(It.IsAny<Action>(), out It.Ref<IDisposable?>.IsAny))
+                   .Returns((Action action, out IDisposable? handle) =>
+                   {
+                       action.ShouldNotBeNull();
+                       handle = new Disposable(() => { disposed = true; });
+                       return true;
+                   });
+        
+        SimulateEvents(1, _window, (-1, 0), (0, 0));
+        
+        disposed.ShouldBeTrue();
+    }
+    
+    [TestMethod]
+    public void Listen1_DoesNotCallUpdate_WhenNoEventAndMonitoringResize()
+    {
+        _cursesMock.Setup(s => s.monitor_pending_resize(It.IsAny<Action>(), out It.Ref<IDisposable?>.IsAny))
+                   .Returns((Action _, out IDisposable? handle) =>
+                   {
+                       handle = new Disposable(null);
+                       return true;
+                   });
+        
+        var events = SimulateEvents(1, _window, (-1, 0), (0, 0));
+        events[0].Type.ShouldBe(EventType.KeyPress);
+        _cursesMock.Verify(v => v.doupdate(), Times.Never);
+    }
+    
+    [TestMethod]
+    public void Listen1_CallsUpdate_WhenMonitoringResizeTriggers()
+    {
+        _cursesMock.Setup(s => s.monitor_pending_resize(It.IsAny<Action>(), out It.Ref<IDisposable?>.IsAny))
+                   .Returns((Action act, out IDisposable? handle) =>
+                   {
+                       handle = new Disposable(null);
+                       act();
+                       return true;
+                   });
+        
+        var events = SimulateEvents(2, _window, (-1, 0), (-1, 0), (-1, 0), (0, 0));
+        events[0].Type.ShouldBe(EventType.TerminalAboutToResize);
+        events[1].Type.ShouldBe(EventType.KeyPress);
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
@@ -374,7 +426,7 @@ public class EventPumpTests
     }
 
     [TestMethod]
-    public void Listen1_ProcessesTerminalResizeEvents_InScreen()
+    public void Listen1_ProcessesTerminalResizeEvents_InScreen_WithoutMonitoring()
     {
         _window.Dispose();
 
@@ -384,10 +436,13 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.getmaxx(_terminal.Screen.Handle))
                    .Returns(20);
 
-        var @event = SimulateEvent(_terminal.Screen, (int) CursesKey.Yes, (uint) CursesKey.Resize);
-
-        @event.Type.ShouldBe(EventType.TerminalResize);
-        ((TerminalResizeEvent) @event).Size.ShouldBe(new(20, 10));
+        var events = SimulateEvents(2, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
+        
+        events.Length.ShouldBe(2);
+        events[0].Type.ShouldBe(EventType.TerminalAboutToResize);
+        
+        events[1].Type.ShouldBe(EventType.TerminalResize);
+        ((TerminalResizeEvent) events[1]).Size.ShouldBe(new(20, 10));
 
         _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, 0, 10, 1), Times.Once);
         _cursesMock.Verify(v => v.clearok(_terminal.Screen.Handle, It.IsAny<bool>()), Times.Never);
@@ -395,7 +450,7 @@ public class EventPumpTests
     }
 
     [TestMethod]
-    public void Listen1_ProcessesTerminalResizeEvents_InChild()
+    public void Listen1_ProcessesTerminalResizeEvents_InChild_WithoutMonitoring()
     {
         var otherWindow = new Window((Screen)_terminal.Screen, new(8));
 
@@ -411,9 +466,13 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.getmaxy(otherWindow.Handle))
                    .Returns(5);
 
-        var e = SimulateEvent((int) CursesKey.Yes, (uint) CursesKey.Resize);
-        e.Type.ShouldBe(EventType.TerminalResize);
-        ((TerminalResizeEvent) e).Size.ShouldBe(new(20, 10));
+        var events = SimulateEvents(2, otherWindow, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
+        
+        events.Length.ShouldBe(2);
+        events[0].Type.ShouldBe(EventType.TerminalAboutToResize);
+        
+        events[1].Type.ShouldBe(EventType.TerminalResize);
+        ((TerminalResizeEvent) events[1]).Size.ShouldBe(new(20, 10));
 
         _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
         _cursesMock.Verify(v => v.wtouchln(_window.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
@@ -423,6 +482,8 @@ public class EventPumpTests
         _cursesMock.Verify(v => v.wrefresh(_terminal.Screen.Handle), Times.Once);
     }
 
+    
+    
     [TestMethod]
     public void Listen1_SkipsInvalidMouseEvents()
     {
