@@ -109,6 +109,11 @@ public sealed class EventPump: IEventPump
             var @event = ReadNextEvent(surface.Handle, escapeSequence.Count > 0);
             if (!monitorsResizes && @event == null || hasPendingResize)
             {
+                if (hasPendingResize)
+                {
+                    @event = new TerminalAboutToResizeEvent();
+                }
+                
                 _terminal.Update();
                 hasPendingResize = false;
             }

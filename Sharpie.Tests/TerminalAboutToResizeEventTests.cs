@@ -26,30 +26,46 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
-namespace Sharpie;
+namespace Sharpie.Tests;
 
-/// <summary>
-///     The terminal is about to be resized event.
-/// </summary>
-[PublicAPI]
-public sealed class TerminalAboutToResizeEvent: Event
+[TestClass]
+public class TerminalAboutToResizeEventTests
 {
-    /// <summary>
-    ///     Creates a new instance of the class.
-    /// </summary>
-    internal TerminalAboutToResizeEvent(): base(EventType.TerminalAboutToResize)
+    private readonly TerminalAboutToResizeEvent _event1 = new();
+
+    [TestMethod]
+    public void Ctr_InitializesPropertiesCorrectly()
     {
+        _event1.Type.ShouldBe(EventType.TerminalAboutToResize);
     }
 
-    /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"Resizing";
+    [TestMethod]
+    public void ToString_ProperlyFormats()
+    {
+        _event1.ToString()
+               .ShouldBe("Resizing");
+    }
 
-    /// <inheritdoc cref="object.Equals(object)" />
-    public override bool Equals(object? obj) =>
-        obj is TerminalAboutToResizeEvent && obj.GetType() == GetType();
+    [TestMethod, DataRow(null), DataRow("")]
+    public void Equals_ReturnsFalse_IfNotSameType(object? b)
+    {
+        _event1.Equals(b)
+               .ShouldBeFalse();
+    }
 
-    /// <inheritdoc cref="object.GetHashCode" />
-    public override int GetHashCode() => 0xF00BA;
+    [TestMethod]
+    public void Equals_ReturnsTrue_IfSameType()
+    {
+        _event1.Equals(new TerminalAboutToResizeEvent())
+               .ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void GetHashCode_IsEqual_Always()
+    {
+        _event1.GetHashCode()
+               .ShouldBe(new TerminalAboutToResizeEvent().GetHashCode());
+    }
 }
