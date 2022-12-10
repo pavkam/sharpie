@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Bounce", "Dem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Slk", "Demos\Sharpie.Demos.Slk\Sharpie.Demos.Slk.csproj", "{6E0FFEE1-21B5-4B26-B65D-FC4C5457A154}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Refresh", "Demos\Sharpie.Demos.Refresh\Sharpie.Demos.Refresh.csproj", "{C5E6AEF6-E39C-4ADE-A684-55B901D9871B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,10 +40,15 @@ Global
 		{6E0FFEE1-21B5-4B26-B65D-FC4C5457A154}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E0FFEE1-21B5-4B26-B65D-FC4C5457A154}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E0FFEE1-21B5-4B26-B65D-FC4C5457A154}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5E6AEF6-E39C-4ADE-A684-55B901D9871B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5E6AEF6-E39C-4ADE-A684-55B901D9871B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5E6AEF6-E39C-4ADE-A684-55B901D9871B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5E6AEF6-E39C-4ADE-A684-55B901D9871B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8F82A851-2053-4079-82D2-5BA2C1987AF2} = {D93C7AAD-B597-44E4-B05B-81A52F0D5E9B}
 		{68997860-DF84-4DFF-9B24-5F5B531B994A} = {D93C7AAD-B597-44E4-B05B-81A52F0D5E9B}
 		{6E0FFEE1-21B5-4B26-B65D-FC4C5457A154} = {D93C7AAD-B597-44E4-B05B-81A52F0D5E9B}
+		{C5E6AEF6-E39C-4ADE-A684-55B901D9871B} = {D93C7AAD-B597-44E4-B05B-81A52F0D5E9B}
 	EndGlobalSection
 EndGlobal

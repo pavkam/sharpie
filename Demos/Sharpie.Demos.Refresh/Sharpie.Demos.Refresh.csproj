@@ -5,7 +5,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyName>sharpie-demos-bounce</AssemblyName>
+        <AssemblyName>sharpie-demos-refresh</AssemblyName>
         <LangVersion>11</LangVersion>
         <IsPackable>false</IsPackable>
         <Title>A Curses-based terminal manipulation library.</Title>
@@ -20,6 +20,8 @@
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <Authors>Alexandru Ciobanu</Authors>
+        <Company>sharpie-demos-refresh</Company>
+        <Product>sharpie-demos-refresh</Product>
     </PropertyGroup>
 
     <ItemGroup>
