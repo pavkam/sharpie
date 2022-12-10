@@ -41,6 +41,107 @@ public sealed class EventPump: IEventPump
         }
     }
 
+    private IEnumerable<Event> Listen(IntPtr handle, CancellationToken cancellationToken)
+    {
+        Debug.Assert(handle != IntPtr.Zero);
+
+        var hasPendingResize = false;
+        var monitorsResizes =
+            _terminal.Curses.monitor_pending_resize(() => { hasPendingResize = true; }, out var monitorHandle);
+
+        var escapeSequence = new List<KeyEvent>();
+
+        try
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var @event = ReadNextEvent(handle, escapeSequence.Count > 0);
+                if (!monitorsResizes && @event == null || hasPendingResize)
+                {
+                    if (hasPendingResize)
+                    {
+                        @event = new TerminalAboutToResizeEvent();
+                    }
+
+                    _terminal.Update();
+                    hasPendingResize = false;
+                }
+
+                if (@event is KeyEvent ke)
+                {
+                    escapeSequence.Add(ke);
+                    var count = TryResolveKeySequence(escapeSequence, false, out var resolved);
+                    if (resolved != null)
+                    {
+                        escapeSequence.RemoveRange(0, count);
+                    }
+
+                    @event = resolved;
+                } else if (@event?.Type != EventType.Delegate)
+                {
+                    while (escapeSequence.Count > 0)
+                    {
+                        var count = TryResolveKeySequence(escapeSequence, true, out var resolved);
+                        Debug.Assert(count > 0);
+                        Debug.Assert(resolved != null);
+
+                        escapeSequence.RemoveRange(0, count);
+                        yield return resolved;
+                    }
+
+                    // Process/resolve mouse events.
+                    switch (@event)
+                    {
+                        case MouseMoveEvent mme:
+                        {
+                            if (TryResolveMouseEvent(mme, out var l))
+                            {
+                                @event = null;
+                                foreach (var oe in l)
+                                {
+                                    yield return oe;
+                                }
+                            }
+
+                            break;
+                        }
+                        case MouseActionEvent mae:
+                        {
+                            if (TryResolveMouseEvent(mae, out var l))
+                            {
+                                @event = null;
+                                foreach (var oe in l)
+                                {
+                                    yield return oe;
+                                }
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                if (@event is not null)
+                {
+                    if (@event.Type == EventType.TerminalResize && !monitorsResizes)
+                    {
+                        yield return new TerminalAboutToResizeEvent();
+                    }
+
+                    yield return @event;
+
+                    if (@event.Type == EventType.TerminalResize)
+                    {
+                        _terminal.Screen.FullRefresh();
+                    }
+                }
+            }
+        } finally
+        {
+            monitorHandle?.Dispose();
+        }
+    }
+
     /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface,System.Threading.CancellationToken)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken)
@@ -50,104 +151,28 @@ public sealed class EventPump: IEventPump
             throw new ArgumentNullException(nameof(surface));
         }
 
-        var hasPendingResize = false;
-        var monitorsResizes =
-            _terminal.Curses.monitor_pending_resize(() => { hasPendingResize = true; }, out var monitorHandle);
-
-        var escapeSequence = new List<KeyEvent>();
-
-        while (!cancellationToken.IsCancellationRequested)
-        {
-            var @event = ReadNextEvent(surface.Handle, escapeSequence.Count > 0);
-            if (!monitorsResizes && @event == null || hasPendingResize)
-            {
-                if (hasPendingResize)
-                {
-                    @event = new TerminalAboutToResizeEvent();
-                }
-
-                _terminal.Update();
-                hasPendingResize = false;
-            }
-
-            if (@event is KeyEvent ke)
-            {
-                escapeSequence.Add(ke);
-                var count = TryResolveKeySequence(escapeSequence, false, out var resolved);
-                if (resolved != null)
-                {
-                    escapeSequence.RemoveRange(0, count);
-                }
-
-                @event = resolved;
-            } else if (@event?.Type != EventType.Delegate)
-            {
-                while (escapeSequence.Count > 0)
-                {
-                    var count = TryResolveKeySequence(escapeSequence, true, out var resolved);
-                    Debug.Assert(count > 0);
-                    Debug.Assert(resolved != null);
-
-                    escapeSequence.RemoveRange(0, count);
-                    yield return resolved;
-                }
-
-                // Process/resolve mouse events.
-                switch (@event)
-                {
-                    case MouseMoveEvent mme:
-                    {
-                        if (TryResolveMouseEvent(mme, out var l))
-                        {
-                            @event = null;
-                            foreach (var oe in l)
-                            {
-                                yield return oe;
-                            }
-                        }
-
-                        break;
-                    }
-                    case MouseActionEvent mae:
-                    {
-                        if (TryResolveMouseEvent(mae, out var l))
-                        {
-                            @event = null;
-                            foreach (var oe in l)
-                            {
-                                yield return oe;
-                            }
-                        }
-
-                        break;
-                    }
-                }
-            }
-
-            if (@event is not null)
-            {
-                if (@event.Type == EventType.TerminalResize && !monitorsResizes)
-                {
-                    yield return new TerminalAboutToResizeEvent();
-                }
-
-                yield return @event;
-
-                if (@event.Type == EventType.TerminalResize)
-                {
-                    _terminal.Screen.FullRefresh();
-                }
-            }
-        }
-
-        monitorHandle?.Dispose();
+        return Listen(surface.Handle, cancellationToken);
     }
 
     /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IEnumerable<Event> Listen(CancellationToken cancellationToken) =>
-        Listen(_terminal.Screen, cancellationToken);
-
+    public IEnumerable<Event> Listen(CancellationToken cancellationToken)
+    {
+        var padHandle = _terminal.Curses.newpad(1, 1)
+                           .Check(nameof(_terminal.Curses.newpad), "Failed to create dummy listen pad.");
+        
+        try
+        {
+            foreach (var e in Listen(padHandle, cancellationToken))
+            {
+                yield return e;
+            }
+        } finally
+        {
+            _terminal.Curses.delwin(padHandle).Check(nameof(_terminal.Curses.delwin), "Failed to remove the dummy listen pad.");
+        }
+    }
+    
     /// <inheritdoc cref="IEventPump.Use" />
     public void Use(ResolveEscapeSequenceFunc resolver)
     {

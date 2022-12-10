@@ -311,12 +311,50 @@ public class EventPumpTests
     }
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen3_CallsCurses_ForScreen()
+    public void Listen2_CreatesDummyPad()
     {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(10));
+        
         _pump.Listen(CancellationToken.None)
              .First();
 
-        _cursesMock.Verify(s => s.wget_wch(_terminal.Screen.Handle, out It.Ref<uint>.IsAny), Times.Once);
+        _cursesMock.Verify(v => v.newpad(1, 1), Times.Once);
+    }
+
+    [TestMethod]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Listen2_Throws_IfFailedToCreateDummyPad()
+    {
+        Should.Throw<CursesOperationException>(() => _pump.Listen(CancellationToken.None)
+                                                          .First())
+              .Operation.ShouldBe("newpad");
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen2_DestroysDummyPad_EvenIfExceptionThrown()
+    {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(10));
+        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                   .Throws<InvalidProgramException>();
+
+        Should.Throw<InvalidProgramException>(() => _pump.Listen(CancellationToken.None)
+                                                         .First());
+
+        _cursesMock.Verify(v => v.delwin(new(10)), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen2_CallsCurses_ForDummyPad()
+    {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(10));
+        
+        _pump.Listen(CancellationToken.None)
+             .First();
+
+        _cursesMock.Verify(s => s.wget_wch(new(10), out It.Ref<uint>.IsAny), Times.Once);
     }
 
     [TestMethod]
@@ -377,6 +415,24 @@ public class EventPumpTests
 
         SimulateEvents(1, _window, (-1, 0), (0, 0));
 
+        disposed.ShouldBeTrue();
+    }
+    
+    [TestMethod]
+    public void Listen1_DisposesMonitoringEventIfExceptionHappened()
+    {
+        var disposed = false;
+        _cursesMock.Setup(s => s.monitor_pending_resize(It.IsAny<Action>(), out It.Ref<IDisposable?>.IsAny))
+                   .Returns((Action _, out IDisposable? handle) =>
+                   {
+                       handle = new Disposable(() => { disposed = true; });
+                       return true;
+                   });
+
+        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                   .Throws<InvalidProgramException>();
+
+        Should.Throw<InvalidProgramException>(() => _pump.Listen(_window, _source.Token).ToArray());
         disposed.ShouldBeTrue();
     }
 
@@ -816,6 +872,10 @@ public class EventPumpTests
     public void Delegate_EnqueuesObjectForProcessing()
     {
         _pump.Delegate("hello");
+
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(1));
+        
         foreach (var e in _pump.Listen(_source.Token))
         {
             _source.Cancel();

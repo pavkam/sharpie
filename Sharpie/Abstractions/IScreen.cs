@@ -95,11 +95,11 @@ public interface IScreen: ISurface
     void FullRefresh()
     {
         Invalidate();
+        Refresh();
         foreach (var child in Windows)
         {
             child.Invalidate();
+            child.Refresh();
         }
-
-        Refresh();
     }
 }

@@ -432,37 +432,42 @@ public sealed class Terminal: ITerminal, IDisposable
         {
             AsyncContext.Run(async () =>
             {
-                foreach (var @event in Events.Listen())
+                try
                 {
-                    if (stopOnCtrlC &&
-                        @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
+                    foreach (var @event in Events.Listen())
                     {
-                        break;
+                        if (stopOnCtrlC &&
+                            @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
+                        {
+                            break;
+                        }
+
+                        if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
+                        {
+                            break;
+                        }
+
+                        if (@event is DelegateEvent { Object: ActionWrapper aw })
+                        {
+                            Debug.Assert(aw.Action != null);
+
+                            await aw.Action();
+                        } else
+                        {
+                            await eventAction(@event);
+                        }
                     }
-
-                    if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
+                } finally
+                {
+                    Debug.Assert(_runCompletedEvent != null);
+                    _runCompletedEvent.Set();
+                    lock (_syncRoot)
                     {
-                        break;
-                    }
-
-                    if (@event is DelegateEvent { Object: ActionWrapper aw })
-                    {
-                        Debug.Assert(aw.Action != null);
-
-                        await aw.Action();
-                    } else
-                    {
-                        await eventAction(@event);
+                        _runCompletedEvent = null;
                     }
                 }
-            });
 
-            Debug.Assert(_runCompletedEvent != null);
-            _runCompletedEvent.Set();
-            lock (_syncRoot)
-            {
-                _runCompletedEvent = null;
-            }
+            });
         });
     }
 

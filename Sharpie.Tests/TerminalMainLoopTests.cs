@@ -42,6 +42,8 @@ public class TerminalMainLoopTests
         _cursesMock = new();
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(1));
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(10));
 
         _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
                    .Returns((IntPtr _, out uint kc) =>
@@ -144,6 +146,15 @@ public class TerminalMainLoopTests
 
         _terminal.Stop();
         await ra1;
+    }
+    
+    [TestMethod]
+    public async Task RunAsync_Throws_IfInternalError()
+    {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(IntPtr.Zero);
+        
+        await Should.ThrowAsync<CursesOperationException>(async () => await _terminal.RunAsync(_ => Task.CompletedTask));
     }
 
     [TestMethod]
@@ -285,7 +296,7 @@ public class TerminalMainLoopTests
     {
         var order = "";
         var ra = _terminal.RunAsync(_ => Task.CompletedTask)
-                          .ContinueWith(t => order += "r");
+                          .ContinueWith(_ => order += "r");
 
         _terminal.Stop(true);
         order += "s";
