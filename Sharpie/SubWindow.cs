@@ -44,17 +44,16 @@ public sealed class SubWindow: Surface, ISubWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
-    internal SubWindow(Window parent, IntPtr handle): base(
-        parent != null! ? parent.Curses : null!, handle)
+    internal SubWindow(Window parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
     {
         Window = parent!;
         parent!.AddChild(this);
     }
 
-    /// <inheritdoc cref="ISubWindow.Window"/>
+    /// <inheritdoc cref="ISubWindow.Window" />
     public IWindow Window { get; }
 
-    /// <inheritdoc cref="ISubWindow.Location"/>
+    /// <inheritdoc cref="ISubWindow.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location
     {
@@ -74,7 +73,7 @@ public sealed class SubWindow: Surface, ISubWindow
         }
     }
 
-    /// <inheritdoc cref="ISubWindow.Size"/>
+    /// <inheritdoc cref="ISubWindow.Size" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public new Size Size
     {
@@ -91,7 +90,7 @@ public sealed class SubWindow: Surface, ISubWindow
         }
     }
 
-    /// <inheritdoc cref="ISubWindow.Duplicate"/>
+    /// <inheritdoc cref="ISubWindow.Duplicate" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow Duplicate()
     {
@@ -100,15 +99,15 @@ public sealed class SubWindow: Surface, ISubWindow
 
         return new SubWindow((Window) Window, handle) { ManagedCaret = ManagedCaret };
     }
-    
-    /// <inheritdoc cref="Surface.Delete"/>
+
+    /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
         if (Window is Window w)
         {
             w.RemoveChild(this);
         }
-        
+
         base.Delete();
     }
 }

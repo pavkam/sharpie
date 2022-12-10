@@ -41,18 +41,18 @@ public sealed class Terminal: ITerminal, IDisposable
 {
     private static object _stopSignal = new();
     private static bool _terminalInstanceActive;
-
-    private object _syncRoot = new();
-    private ManualResetEventSlim? _runCompletedEvent;
     private ColorManager _colorManager;
     private EventPump _eventPump;
+    private ScreenArea? _footer;
+    private ScreenArea? _header;
     private int? _initialCaretMode;
     private int? _initialMouseClickDelay;
     private int? _initialMouseMask;
+    private ManualResetEventSlim? _runCompletedEvent;
     private Screen _screen;
-    private ScreenArea? _header;
-    private ScreenArea? _footer;
     private SoftLabelKeyManager _softLabelKeyManager;
+
+    private object _syncRoot = new();
 
     /// <summary>
     ///     Creates a new instance
@@ -217,117 +217,10 @@ public sealed class Terminal: ITerminal, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ITerminal.BaudRate"/>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public int BaudRate =>
-        Curses.baudrate()
-              .Check(nameof(Curses.baudrate), "Failed to obtain the baud rate of the terminal.");
-
-    /// <inheritdoc cref="ITerminal.Colors"/>
-    public IColorManager Colors
-    {
-        get
-        {
-            AssertAlive();
-            return _colorManager;
-        }
-    }
-
-    /// <inheritdoc cref="ITerminal.SoftLabelKeys"/>
-    public ISoftLabelKeyManager SoftLabelKeys
-    {
-        get
-        {
-            AssertAlive();
-            return _softLabelKeyManager;
-        }
-    }
-
     /// <summary>
     ///     Gets the options that are used by this terminal instance.
     /// </summary>
     public TerminalOptions Options { get; }
-
-    /// <inheritdoc cref="ITerminal.Name"/>
-    public string? Name => Curses.termname();
-
-    /// <inheritdoc cref="ITerminal.Description"/>
-    public string? Description => Curses.longname();
-
-    /// <inheritdoc cref="ITerminal.CursesVersion"/>
-    public string? CursesVersion => Curses.curses_version();
-
-    /// <inheritdoc cref="ITerminal.SupportedAttributes"/>
-    public VideoAttribute SupportedAttributes => (VideoAttribute) Curses.term_attrs();
-
-    /// <inheritdoc cref="ITerminal.Screen"/>
-    public IScreen Screen
-    {
-        get
-        {
-            AssertAlive();
-
-            return _screen;
-        }
-    }
-    
-    /// <inheritdoc cref="ITerminal.Header"/>
-    public IScreenArea? Header  
-    {
-        get
-        {
-            AssertAlive();
-
-            return _header;
-        }
-    }
-    
-    /// <inheritdoc cref="ITerminal.Footer"/>
-    public IScreenArea? Footer 
-    {
-        get
-        {
-            AssertAlive();
-
-            return _footer;
-        }
-    }
-
-    /// <inheritdoc cref="ITerminal.Events"/>
-    public IEventPump Events
-    {
-        get
-        {
-            AssertAlive();
-            return _eventPump;
-        }
-    }
-
-    /// <inheritdoc cref="ITerminal.HasHardwareLineEditor"/>
-    public bool HasHardwareLineEditor => Curses.has_il();
-
-    /// <inheritdoc cref="ITerminal.HasHardwareCharEditor"/>
-    public bool HasHardwareCharEditor => Curses.has_ic();
-
-    /// <inheritdoc cref="ITerminal.CurrentKillChar"/>
-    public Rune? CurrentKillChar =>
-        Curses.killwchar(out var @char)
-              .Failed()
-            ? null
-            : new(@char);
-
-    /// <inheritdoc cref="ITerminal.CurrentEraseChar"/>
-    public Rune? CurrentEraseChar =>
-        Curses.erasewchar(out var @char)
-              .Failed()
-            ? null
-            : new(@char);
-
-    /// <inheritdoc cref="ITerminal.Curses"/>
-    public ICursesProvider Curses { get; }
-
-    /// <inheritdoc cref="ITerminal.Disposed"/>
-    public bool Disposed { get; private set; }
 
     /// <summary>
     ///     Disposes the current terminal instance.
@@ -340,12 +233,12 @@ public sealed class Terminal: ITerminal, IDisposable
         }
 
         CancelRun(true);
-        
+
         if (_screen != null!)
         {
             _screen.Dispose();
         }
-        
+
         _footer?.Dispose();
         _header?.Dispose();
 
@@ -369,7 +262,114 @@ public sealed class Terminal: ITerminal, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    /// <inheritdoc cref="ITerminal.SetTitle"/>
+    /// <inheritdoc cref="ITerminal.BaudRate" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public int BaudRate =>
+        Curses.baudrate()
+              .Check(nameof(Curses.baudrate), "Failed to obtain the baud rate of the terminal.");
+
+    /// <inheritdoc cref="ITerminal.Colors" />
+    public IColorManager Colors
+    {
+        get
+        {
+            AssertAlive();
+            return _colorManager;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.SoftLabelKeys" />
+    public ISoftLabelKeyManager SoftLabelKeys
+    {
+        get
+        {
+            AssertAlive();
+            return _softLabelKeyManager;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.Name" />
+    public string? Name => Curses.termname();
+
+    /// <inheritdoc cref="ITerminal.Description" />
+    public string? Description => Curses.longname();
+
+    /// <inheritdoc cref="ITerminal.CursesVersion" />
+    public string? CursesVersion => Curses.curses_version();
+
+    /// <inheritdoc cref="ITerminal.SupportedAttributes" />
+    public VideoAttribute SupportedAttributes => (VideoAttribute) Curses.term_attrs();
+
+    /// <inheritdoc cref="ITerminal.Screen" />
+    public IScreen Screen
+    {
+        get
+        {
+            AssertAlive();
+
+            return _screen;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.Header" />
+    public IScreenArea? Header
+    {
+        get
+        {
+            AssertAlive();
+
+            return _header;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.Footer" />
+    public IScreenArea? Footer
+    {
+        get
+        {
+            AssertAlive();
+
+            return _footer;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.Events" />
+    public IEventPump Events
+    {
+        get
+        {
+            AssertAlive();
+            return _eventPump;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.HasHardwareLineEditor" />
+    public bool HasHardwareLineEditor => Curses.has_il();
+
+    /// <inheritdoc cref="ITerminal.HasHardwareCharEditor" />
+    public bool HasHardwareCharEditor => Curses.has_ic();
+
+    /// <inheritdoc cref="ITerminal.CurrentKillChar" />
+    public Rune? CurrentKillChar =>
+        Curses.killwchar(out var @char)
+              .Failed()
+            ? null
+            : new(@char);
+
+    /// <inheritdoc cref="ITerminal.CurrentEraseChar" />
+    public Rune? CurrentEraseChar =>
+        Curses.erasewchar(out var @char)
+              .Failed()
+            ? null
+            : new(@char);
+
+    /// <inheritdoc cref="ITerminal.Curses" />
+    public ICursesProvider Curses { get; }
+
+    /// <inheritdoc cref="ITerminal.Disposed" />
+    public bool Disposed { get; private set; }
+
+    /// <inheritdoc cref="ITerminal.SetTitle" />
     /// <param name="title">The title of the terminal.</param>
     public void SetTitle(string title)
     {
@@ -381,7 +381,7 @@ public sealed class Terminal: ITerminal, IDisposable
         Curses.set_title(title);
     }
 
-    /// <inheritdoc cref="ITerminal.Alert"/>
+    /// <inheritdoc cref="ITerminal.Alert" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Alert(bool silent)
     {
@@ -395,8 +395,8 @@ public sealed class Terminal: ITerminal, IDisposable
                   .Check(nameof(Curses.beep), "Failed to beep the terminal.");
         }
     }
-    
-    /// <inheritdoc cref="ITerminal.Update"/>
+
+    /// <inheritdoc cref="ITerminal.Update" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Update()
     {
@@ -405,46 +405,9 @@ public sealed class Terminal: ITerminal, IDisposable
               .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
     }
 
-    /// <summary>
-    ///     Validates that the terminal is not disposed.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The terminal has been disposed of and is no longer usable.</exception>
-    private void AssertAlive()
-    {
-        if (Disposed)
-        {
-            throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
-        }
-    }
-
-    private Interval NewInterval<TState>(Func<Terminal, TState?, Task> action, int dueMillis, int periodMillis,
-        TState? initialState)
-    {
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
-
-        var interval = new Interval();
-
-        interval.Timer = new(i =>
-        {
-            Debug.Assert(i is Interval);
-            if (((Interval) i).Stopped || Disposed)
-            {
-                ((Interval) i).Timer?.Dispose();
-            } else
-            {
-                Delegate(() => action(this, initialState));
-            }
-        }, interval, dueMillis, periodMillis);
-
-        return interval;
-    }
-
-    /// <inheritdoc cref="ITerminal.RunAsync"/>
+    /// <inheritdoc cref="ITerminal.RunAsync" />
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync"/> is already running.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync" /> is already running.</exception>
     [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
     public Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true)
     {
@@ -485,7 +448,7 @@ public sealed class Terminal: ITerminal, IDisposable
                     if (@event is DelegateEvent { Object: ActionWrapper aw })
                     {
                         Debug.Assert(aw.Action != null);
-                        
+
                         await aw.Action();
                     } else
                     {
@@ -503,7 +466,7 @@ public sealed class Terminal: ITerminal, IDisposable
         });
     }
 
-    /// <inheritdoc cref="ITerminal.Delegate"/>
+    /// <inheritdoc cref="ITerminal.Delegate" />
     public void Delegate(Func<Task> action)
     {
         if (action == null)
@@ -519,7 +482,7 @@ public sealed class Terminal: ITerminal, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ITerminal.Delay"/>
+    /// <inheritdoc cref="ITerminal.Delay" />
     public IInterval Delay<TState>(Func<Terminal, TState?, Task> action, int delayMillis, TState? state)
     {
         if (delayMillis < 0)
@@ -530,7 +493,7 @@ public sealed class Terminal: ITerminal, IDisposable
         return NewInterval(action, delayMillis, Timeout.Infinite, state);
     }
 
-    /// <inheritdoc cref="ITerminal.Delay"/>
+    /// <inheritdoc cref="ITerminal.Delay" />
     public IInterval Delay(Func<Terminal, Task> action, int delayMillis)
     {
         if (action == null)
@@ -541,7 +504,7 @@ public sealed class Terminal: ITerminal, IDisposable
         return Delay((t, _) => action(t), delayMillis, DBNull.Value);
     }
 
-    /// <inheritdoc cref="ITerminal.Repeat"/>
+    /// <inheritdoc cref="ITerminal.Repeat" />
     public IInterval Repeat<TState>(Func<Terminal, TState?, Task> action, int intervalMillis, bool immediate = false,
         TState? state = default)
     {
@@ -553,7 +516,7 @@ public sealed class Terminal: ITerminal, IDisposable
         return NewInterval(action, immediate ? 0 : intervalMillis, intervalMillis, state);
     }
 
-    /// <inheritdoc cref="ITerminal.Repeat"/>
+    /// <inheritdoc cref="ITerminal.Repeat" />
     public IInterval Repeat(Func<Terminal, Task> action, int intervalMillis, bool immediate = false)
     {
         if (action == null)
@@ -562,6 +525,51 @@ public sealed class Terminal: ITerminal, IDisposable
         }
 
         return Repeat<DBNull>((t, _) => action(t), intervalMillis, immediate);
+    }
+
+    /// <inheritdoc cref="ITerminal.Stop" />
+    /// <param name="wait">If <c>true</c>, waits until running completes.</param>
+    public void Stop(bool wait = false)
+    {
+        AssertAlive();
+        CancelRun(wait);
+    }
+
+    /// <summary>
+    ///     Validates that the terminal is not disposed.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The terminal has been disposed of and is no longer usable.</exception>
+    private void AssertAlive()
+    {
+        if (Disposed)
+        {
+            throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
+        }
+    }
+
+    private Interval NewInterval<TState>(Func<Terminal, TState?, Task> action, int dueMillis, int periodMillis,
+        TState? initialState)
+    {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+        var interval = new Interval();
+
+        interval.Timer = new(i =>
+        {
+            Debug.Assert(i is Interval);
+            if (((Interval) i).Stopped || Disposed)
+            {
+                ((Interval) i).Timer?.Dispose();
+            } else
+            {
+                Delegate(() => action(this, initialState));
+            }
+        }, interval, dueMillis, periodMillis);
+
+        return interval;
     }
 
     private void CancelRun(bool wait)
@@ -580,14 +588,6 @@ public sealed class Terminal: ITerminal, IDisposable
                 }
             }
         }
-    }
-    
-    /// <inheritdoc cref="ITerminal.Stop"/>
-    /// <param name="wait">If <c>true</c>, waits until running completes.</param>
-    public void Stop(bool wait = false)
-    {
-        AssertAlive();
-        CancelRun(wait);
     }
 
     /// <summary>

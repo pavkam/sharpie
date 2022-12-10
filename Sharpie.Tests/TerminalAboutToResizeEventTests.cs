@@ -36,10 +36,7 @@ public class TerminalAboutToResizeEventTests
     private readonly TerminalAboutToResizeEvent _event1 = new();
 
     [TestMethod]
-    public void Ctor_InitializesPropertiesCorrectly()
-    {
-        _event1.Type.ShouldBe(EventType.TerminalAboutToResize);
-    }
+    public void Ctor_InitializesPropertiesCorrectly() { _event1.Type.ShouldBe(EventType.TerminalAboutToResize); }
 
     [TestMethod]
     public void ToString_ProperlyFormats()

@@ -58,10 +58,10 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         }
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.Enabled"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Enabled" />
     public bool Enabled => _mode != SoftLabelKeyMode.Disabled;
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.LabelCount"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.LabelCount" />
     public int LabelCount
     {
         get
@@ -71,7 +71,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         }
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.Style"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Style" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Style Style
     {
@@ -95,7 +95,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         }
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.ColorMixture"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.ColorMixture" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ColorMixture ColorMixture
     {
@@ -109,15 +109,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         }
     }
 
-    private void AssertEnabled()
-    {
-        if (_mode == SoftLabelKeyMode.Disabled)
-        {
-            throw new NotSupportedException("The soft key labels were not configured during terminal initialization.");
-        }
-    }
-
-    /// <inheritdoc cref="ISoftLabelKeyManager.SetLabel"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.SetLabel" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void SetLabel(int index, string title, SoftLabelKeyAlignment align)
     {
@@ -137,7 +129,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
                .Check(nameof(_curses.slk_set), "Failed to set the soft label.");
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.EnableAttributes"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.EnableAttributes" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
@@ -147,7 +139,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
                .Check(nameof(_curses.slk_attr_on), "Failed to configure the soft label key attributes.");
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.DisableAttributes"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.DisableAttributes" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
@@ -157,7 +149,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
                .Check(nameof(_curses.slk_attr_off), "Failed to configure the soft label key attributes.");
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.Clear"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Clear" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Clear()
     {
@@ -166,7 +158,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
                .Check(nameof(_curses.slk_clear), "Failed to clear the soft label keys.");
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.Restore"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Restore" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Restore()
     {
@@ -175,7 +167,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
                .Check(nameof(_curses.slk_restore), "Failed to restore the soft label keys.");
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.Invalidate"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Invalidate" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Invalidate()
     {
@@ -184,7 +176,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
                .Check(nameof(_curses.slk_touch), "Failed to mark soft label keys as dirty.");
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.Refresh"/>
+    /// <inheritdoc cref="ISoftLabelKeyManager.Refresh" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(bool batch)
     {
@@ -198,6 +190,14 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         {
             _curses.slk_refresh()
                    .Check(nameof(_curses.slk_refresh), "Failed to perform soft label key refresh.");
+        }
+    }
+
+    private void AssertEnabled()
+    {
+        if (_mode == SoftLabelKeyMode.Disabled)
+        {
+            throw new NotSupportedException("The soft key labels were not configured during terminal initialization.");
         }
     }
 }

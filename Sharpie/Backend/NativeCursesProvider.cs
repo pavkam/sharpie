@@ -30,7 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma warning disable CS1591
 namespace Sharpie.Backend;
-using Abstractions;
 
 /// <summary>
 ///     Interface provides access to the Curses functionality. Use the <see cref="System" /> property to access the actual
@@ -46,11 +45,9 @@ public sealed class NativeCursesProvider: ICursesProvider, IDisposable
 
     private int _resizePending;
     private PosixSignalRegistration? _signalRegistration;
-    
-    private NativeCursesProvider()
-    {
-    }
-    
+
+    private NativeCursesProvider() { }
+
     /// <summary>
     ///     Returns the instance of the Curses backend.
     /// </summary>
@@ -504,7 +501,7 @@ public sealed class NativeCursesProvider: ICursesProvider, IDisposable
             {
                 csi = "\x1b[?1000h";
             }
-            
+
             // Force enable mouse reporting. Curses doesn't always want to do that.
             Console.Out.Write(csi);
             Console.Out.Flush();
@@ -532,21 +529,29 @@ public sealed class NativeCursesProvider: ICursesProvider, IDisposable
             setlocale(0, "");
         }
     }
-    
+
     bool ICursesProvider.monitor_pending_resize(Action action, [NotNullWhen(true)] out IDisposable? handle)
     {
         if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS() || OperatingSystem.IsFreeBSD())
         {
-            handle = PosixSignalRegistration.Create(PosixSignal.SIGWINCH, _ =>
-            {
-                action();
-            });
+            handle = PosixSignalRegistration.Create(PosixSignal.SIGWINCH, _ => { action(); });
 
             return true;
         }
 
         handle = null;
         return false;
+    }
+
+    public void Dispose()
+    {
+        if (_signalRegistration != null)
+        {
+            _signalRegistration?.Dispose();
+            _signalRegistration = null;
+        }
+
+        GC.SuppressFinalize(this);
     }
 
     [DllImport(CursesLibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -1159,19 +1164,5 @@ public sealed class NativeCursesProvider: ICursesProvider, IDisposable
     [DllImport(LibCLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern int setlocale(int cate, string locale);
 
-    public void Dispose()
-    {
-        if (_signalRegistration != null)
-        {
-            _signalRegistration?.Dispose();
-            _signalRegistration = null;
-        }
-        
-        GC.SuppressFinalize(this);
-    }
-
-    ~NativeCursesProvider()
-    {
-        Dispose();
-    }
+    ~NativeCursesProvider() { Dispose(); }
 }

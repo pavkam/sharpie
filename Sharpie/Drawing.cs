@@ -1,7 +1,5 @@
 namespace Sharpie;
 
-using Abstractions;
-
 /// <summary>
 ///     A general-purpose drawing surface that can be latter applied on a <see cref="Sharpie.Abstractions.IDrawSurface" />.
 ///     Supports multiple types of drawing operations most commonly used in terminal apps.
@@ -559,8 +557,45 @@ public sealed class Drawing: IDrawable
         _cells = new Cell[size.Width, size.Height];
     }
 
-    /// <inheritdoc cref="IDrawable.Size"/>
+    /// <inheritdoc cref="IDrawable.Size" />
     public Size Size { get; }
+
+    /// <inheritdoc cref="IDrawable.DrawTo" />
+    public void DrawTo(IDrawSurface destination, Rectangle srcArea, Point destLocation)
+    {
+        if (destination == null)
+        {
+            throw new ArgumentNullException(nameof(destination));
+        }
+
+        Validate(srcArea);
+
+        if (srcArea.Width == 0 || srcArea.Height == 0)
+        {
+            return;
+        }
+
+        var destArea = srcArea with { X = destLocation.X, Y = destLocation.Y };
+        if (!destination.CoversArea(destArea))
+        {
+            throw new ArgumentOutOfRangeException(nameof(destLocation));
+        }
+
+        for (var x = srcArea.X; x < srcArea.Right; x++)
+        {
+            for (var y = srcArea.Y; y < srcArea.Bottom; y++)
+            {
+                if (_cells[x, y]
+                    .Rune.Value !=
+                    0)
+                {
+                    destination.DrawCell(new(x + destLocation.X, y + destLocation.Y), _cells[x, y]
+                        .Rune, _cells[x, y]
+                        .Style);
+                }
+            }
+        }
+    }
 
     private void SetCell(int x, int y, Rune rune, Style style)
     {
@@ -971,43 +1006,6 @@ public sealed class Drawing: IDrawable
         };
 
         SetCell(x / 2, y / 2, quad, textStyle);
-    }
-
-    /// <inheritdoc cref="IDrawable.DrawTo"/>
-    public void DrawTo(IDrawSurface destination, Rectangle srcArea, Point destLocation)
-    {
-        if (destination == null)
-        {
-            throw new ArgumentNullException(nameof(destination));
-        }
-
-        Validate(srcArea);
-
-        if (srcArea.Width == 0 || srcArea.Height == 0)
-        {
-            return;
-        }
-
-        var destArea = srcArea with { X = destLocation.X, Y = destLocation.Y };
-        if (!destination.CoversArea(destArea))
-        {
-            throw new ArgumentOutOfRangeException(nameof(destLocation));
-        }
-
-        for (var x = srcArea.X; x < srcArea.Right; x++)
-        {
-            for (var y = srcArea.Y; y < srcArea.Bottom; y++)
-            {
-                if (_cells[x, y]
-                    .Rune.Value !=
-                    0)
-                {
-                    destination.DrawCell(new(x + destLocation.X, y + destLocation.Y), _cells[x, y]
-                        .Rune, _cells[x, y]
-                        .Style);
-                }
-            }
-        }
     }
 
     [Flags]

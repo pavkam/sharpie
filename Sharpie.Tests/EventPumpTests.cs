@@ -105,17 +105,14 @@ public class EventPumpTests
 
         _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
         _pump = new(_terminal);
-        _window = new((Screen)_terminal.Screen, new(2));
+        _window = new((Screen) _terminal.Screen, new(2));
         _source = new();
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
 
     [TestMethod]
-    public void Ctor_Throws_IfTerminalIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => new EventPump(null!));
-    }
+    public void Ctor_Throws_IfTerminalIsNull() { Should.Throw<ArgumentNullException>(() => new EventPump(null!)); }
 
     [TestMethod]
     public void Use_RegistersResolver()
@@ -365,7 +362,7 @@ public class EventPumpTests
         SimulateEvents(1, _window, (-1, 0), (0, 0));
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
-    
+
     [TestMethod]
     public void Listen1_TriesToSetupResizeMonitoring()
     {
@@ -377,12 +374,12 @@ public class EventPumpTests
                        handle = new Disposable(() => { disposed = true; });
                        return true;
                    });
-        
+
         SimulateEvents(1, _window, (-1, 0), (0, 0));
-        
+
         disposed.ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void Listen1_DoesNotCallUpdate_WhenNoEventAndMonitoringResize()
     {
@@ -392,12 +389,14 @@ public class EventPumpTests
                        handle = new Disposable(null);
                        return true;
                    });
-        
+
         var events = SimulateEvents(1, _window, (-1, 0), (0, 0));
-        events[0].Type.ShouldBe(EventType.KeyPress);
+        events[0]
+            .Type.ShouldBe(EventType.KeyPress);
+
         _cursesMock.Verify(v => v.doupdate(), Times.Never);
     }
-    
+
     [TestMethod]
     public void Listen1_CallsUpdate_WhenMonitoringResizeTriggers()
     {
@@ -408,17 +407,23 @@ public class EventPumpTests
                        act();
                        return true;
                    });
-        
-        var events = SimulateEvents(2, _window, (-1, 0), (-1, 0), (-1, 0), (0, 0));
-        events[0].Type.ShouldBe(EventType.TerminalAboutToResize);
-        events[1].Type.ShouldBe(EventType.KeyPress);
+
+        var events = SimulateEvents(2, _window, (-1, 0), (-1, 0), (-1, 0),
+            (0, 0));
+
+        events[0]
+            .Type.ShouldBe(EventType.TerminalAboutToResize);
+
+        events[1]
+            .Type.ShouldBe(EventType.KeyPress);
+
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
     [TestMethod]
     public void Listen1_GoesDeepWithinChildren_ToApplyPendingRefreshes()
     {
-        var w = new Window((Screen)_terminal.Screen, new(3));
+        var w = new Window((Screen) _terminal.Screen, new(3));
 
         SimulateEvents(1, w, (-1, 0), (0, 0));
 
@@ -437,11 +442,14 @@ public class EventPumpTests
                    .Returns(20);
 
         var events = SimulateEvents(2, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
-        
+
         events.Length.ShouldBe(2);
-        events[0].Type.ShouldBe(EventType.TerminalAboutToResize);
-        
-        events[1].Type.ShouldBe(EventType.TerminalResize);
+        events[0]
+            .Type.ShouldBe(EventType.TerminalAboutToResize);
+
+        events[1]
+            .Type.ShouldBe(EventType.TerminalResize);
+
         ((TerminalResizeEvent) events[1]).Size.ShouldBe(new(20, 10));
 
         _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, 0, 10, 1), Times.Once);
@@ -452,7 +460,7 @@ public class EventPumpTests
     [TestMethod]
     public void Listen1_ProcessesTerminalResizeEvents_InChild_WithoutMonitoring()
     {
-        var otherWindow = new Window((Screen)_terminal.Screen, new(8));
+        var otherWindow = new Window((Screen) _terminal.Screen, new(8));
 
         _cursesMock.Setup(s => s.getmaxy(_terminal.Screen.Handle))
                    .Returns(10);
@@ -467,11 +475,14 @@ public class EventPumpTests
                    .Returns(5);
 
         var events = SimulateEvents(2, otherWindow, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
-        
+
         events.Length.ShouldBe(2);
-        events[0].Type.ShouldBe(EventType.TerminalAboutToResize);
-        
-        events[1].Type.ShouldBe(EventType.TerminalResize);
+        events[0]
+            .Type.ShouldBe(EventType.TerminalAboutToResize);
+
+        events[1]
+            .Type.ShouldBe(EventType.TerminalResize);
+
         ((TerminalResizeEvent) events[1]).Size.ShouldBe(new(20, 10));
 
         _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
@@ -482,8 +493,6 @@ public class EventPumpTests
         _cursesMock.Verify(v => v.wrefresh(_terminal.Screen.Handle), Times.Once);
     }
 
-    
-    
     [TestMethod]
     public void Listen1_SkipsInvalidMouseEvents()
     {
@@ -781,26 +790,28 @@ public class EventPumpTests
 
         ((KeyEvent) e[2]).Char.ShouldBe(new('A'));
     }
-    
+
     [TestMethod]
     public void Listen1_ProcessesDelegatesFirst()
     {
         _pump.Delegate("hello");
         _pump.Delegate("world");
-        
+
         var events = SimulateEvents(3, _window, (0, 0));
         events.Length.ShouldBe(3);
-        events[0].ShouldBe(new DelegateEvent("hello"));
-        events[1].ShouldBe(new DelegateEvent("world"));
-        events[2].Type.ShouldBe(EventType.KeyPress);
+        events[0]
+            .ShouldBe(new DelegateEvent("hello"));
+
+        events[1]
+            .ShouldBe(new DelegateEvent("world"));
+
+        events[2]
+            .Type.ShouldBe(EventType.KeyPress);
     }
-    
+
     [TestMethod]
-    public void Delegate_Throws_IfObjectIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _pump.Delegate(null!));
-    }
-    
+    public void Delegate_Throws_IfObjectIsNull() { Should.Throw<ArgumentNullException>(() => _pump.Delegate(null!)); }
+
     [TestMethod]
     public void Delegate_EnqueuesObjectForProcessing()
     {

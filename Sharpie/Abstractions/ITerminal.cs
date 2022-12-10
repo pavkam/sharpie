@@ -31,7 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///    Defines the traits needed to implement a terminal. The only existing implementation of this interface is <see cref="Terminal"/> class.
+///     Defines the traits needed to implement a terminal. The only existing implementation of this interface is
+///     <see cref="Terminal" /> class.
 /// </summary>
 [PublicAPI]
 public interface ITerminal
@@ -40,7 +41,7 @@ public interface ITerminal
     ///     The Curses backend.
     /// </summary>
     ICursesProvider Curses { get; }
-    
+
     /// <summary>
     ///     Checks whether the terminal has been disposed of and is no longer usable.
     /// </summary>
@@ -62,7 +63,7 @@ public interface ITerminal
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     ISoftLabelKeyManager SoftLabelKeys { get; }
-    
+
     /// <summary>
     ///     Returns the name of the terminal.
     /// </summary>
@@ -88,15 +89,15 @@ public interface ITerminal
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     IScreen Screen { get; }
-    
+
     /// <summary>
-    ///     The header surface. Only initialized if <see cref="TerminalOptions.AllocateHeader"/> was set.
+    ///     The header surface. Only initialized if <see cref="TerminalOptions.AllocateHeader" /> was set.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     IScreenArea? Header { get; }
-    
+
     /// <summary>
-    ///     The footer surface. Only initialized if <see cref="TerminalOptions.AllocateFooter"/> was set.
+    ///     The footer surface. Only initialized if <see cref="TerminalOptions.AllocateFooter" /> was set.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     IScreenArea? Footer { get; }
@@ -152,7 +153,7 @@ public interface ITerminal
     /// <param name="eventAction">The method to accept the events.</param>
     /// <param name="stopOnCtrlC">Set to <c>true</c> if CTRL+C should interrupt the main loop.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync"/> is already running.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync" /> is already running.</exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true);
 
@@ -208,7 +209,7 @@ public interface ITerminal
     IInterval Repeat(Func<Terminal, Task> action, int intervalMillis, bool immediate = false);
 
     /// <summary>
-    /// Enqueues a stop signal for the <see cref="RunAsync"/> method.
+    ///     Enqueues a stop signal for the <see cref="RunAsync" /> method.
     /// </summary>
     /// <param name="wait">If <c>true</c>, waits until running completes.</param>
     void Stop(bool wait = false);

@@ -42,7 +42,7 @@ public class WindowInterfaceTests
     {
         _windowMock.Setup(s => s.Refresh())
                    .CallBase();
-        
+
         _windowMock.Object.Refresh();
         _windowMock.Verify(v => v.Refresh(false, false), Times.Once);
     }

@@ -52,10 +52,10 @@ public sealed class SubPad: Surface, ISubPad
         parent!.AddChild(this);
     }
 
-    /// <inheritdoc cref="ISubPad.Pad"/>
+    /// <inheritdoc cref="ISubPad.Pad" />
     public IPad Pad { get; }
 
-    /// <inheritdoc cref="ISubPad.Location"/>
+    /// <inheritdoc cref="ISubPad.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location
     {
@@ -72,11 +72,10 @@ public sealed class SubPad: Surface, ISubPad
 
             Curses.mvderwin(Handle, value.Y, value.X)
                   .Check(nameof(Curses.mvderwin), "Failed to move sub-pad to new coordinates.");
-
         }
     }
 
-    /// <inheritdoc cref="ISubPad.Size"/>
+    /// <inheritdoc cref="ISubPad.Size" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public new Size Size
     {
@@ -93,7 +92,7 @@ public sealed class SubPad: Surface, ISubPad
         }
     }
 
-    /// <inheritdoc cref="ISubPad.Duplicate"/>
+    /// <inheritdoc cref="ISubPad.Duplicate" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubPad Duplicate()
     {
@@ -102,8 +101,8 @@ public sealed class SubPad: Surface, ISubPad
 
         return new SubPad((Pad) Pad, handle) { ManagedCaret = ManagedCaret };
     }
-    
-    /// <inheritdoc cref="Surface.Delete"/>
+
+    /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
         if (Pad is Pad p)

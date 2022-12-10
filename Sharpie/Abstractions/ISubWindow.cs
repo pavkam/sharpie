@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Defines the traits implemented by the <see cref="SubWindow"/> class.
+///     Defines the traits implemented by the <see cref="SubWindow" /> class.
 /// </summary>
 [PublicAPI]
 public interface ISubWindow: ISurface

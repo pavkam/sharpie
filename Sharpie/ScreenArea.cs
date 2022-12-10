@@ -47,17 +47,17 @@ public sealed class ScreenArea: Surface, IScreenArea
     internal ScreenArea(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle) =>
         Terminal = parent!;
 
-    /// <inheritdoc cref="IScreenArea.Terminal"/>
+    /// <inheritdoc cref="IScreenArea.Terminal" />
     public ITerminal Terminal { get; }
 
-    /// <inheritdoc cref="IScreenArea.ImmediateRefresh"/>
+    /// <inheritdoc cref="IScreenArea.ImmediateRefresh" />
     public bool ImmediateRefresh
     {
         get => Curses.is_immedok(Handle);
         set => Curses.immedok(Handle, value);
     }
 
-    /// <inheritdoc cref="IScreenArea.Refresh"/>
+    /// <inheritdoc cref="IScreenArea.Refresh" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(bool batch = false)
     {

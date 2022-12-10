@@ -71,7 +71,7 @@ public class ScreenAreaTests
     public void Terminal_IsInitialized()
     {
         var sa = new ScreenArea(_terminal, new(1));
-        
+
         sa.Terminal.ShouldBe(_terminal);
     }
 
@@ -79,52 +79,52 @@ public class ScreenAreaTests
     public void Refresh_Fails_IfCursesFails_1()
     {
         var sa = new ScreenArea(_terminal, new(1));
-        
+
         _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
-        
+
         Should.Throw<CursesOperationException>(() => sa.Refresh())
               .Operation.ShouldBe("wrefresh");
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails_2()
     {
         var sa = new ScreenArea(_terminal, new(1));
-        
+
         _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
-        
+
         Should.Throw<CursesOperationException>(() => sa.Refresh(true))
               .Operation.ShouldBe("wnoutrefresh");
     }
-    
+
     [TestMethod]
     public void Refresh_Succeeds_IfCursesSucceeds_1()
     {
         var sa = new ScreenArea(_terminal, new(1));
-        
+
         sa.Refresh();
         _cursesMock.Verify(v => v.wrefresh(sa.Handle), Times.Once);
     }
-    
+
     [TestMethod]
     public void Refresh_Succeeds_IfCursesSucceeds_2()
     {
         var sa = new ScreenArea(_terminal, new(1));
-        
+
         sa.Refresh(true);
         _cursesMock.Verify(v => v.wnoutrefresh(sa.Handle), Times.Once);
     }
-    
+
     [TestMethod]
     public void ImmediateRefresh_Returns_IfCursesSucceeded()
     {
         var sa = new ScreenArea(_terminal, new(1));
-        
+
         _cursesMock.Setup(s => s.is_immedok(It.IsAny<IntPtr>()))
                    .Returns(true);
-        
+
         sa.ImmediateRefresh.ShouldBeTrue();
     }
 
@@ -136,15 +136,15 @@ public class ScreenAreaTests
 
         _cursesMock.Verify(v => v.immedok(sa.Handle, true), Times.Once);
     }
-    
+
     [TestMethod]
     public void Destroy_CallsCurses()
     {
         var sa = new ScreenArea(_terminal, new(1));
-        
+
         sa.Destroy();
         sa.Disposed.ShouldBeTrue();
-        
+
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
     }
 }

@@ -26,7 +26,5 @@ namespace Sharpie;
 public record TerminalOptions(bool UseColors = true, bool EchoInput = false, bool UseInputBuffering = false,
     bool UseMouse = true, int? MouseClickInterval = null, bool SuppressControlKeys = true,
     CaretMode CaretMode = CaretMode.Visible, bool ManualFlush = false,
-    SoftLabelKeyMode SoftLabelKeyMode = SoftLabelKeyMode.Disabled,
-    bool AllocateHeader = false, bool AllocateFooter = false,
-    bool UseEnvironmentOverrides = true,
-    bool UseStandardKeySequenceResolvers = true);
+    SoftLabelKeyMode SoftLabelKeyMode = SoftLabelKeyMode.Disabled, bool AllocateHeader = false,
+    bool AllocateFooter = false, bool UseEnvironmentOverrides = true, bool UseStandardKeySequenceResolvers = true);

@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Defines the traits implemented by the <see cref="ScreenArea"/> class.
+///     Defines the traits implemented by the <see cref="ScreenArea" /> class.
 /// </summary>
 [PublicAPI]
 public interface IScreenArea: ISurface
@@ -51,7 +51,7 @@ public interface IScreenArea: ISurface
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Screen area is no longer usable.</exception>
     bool ImmediateRefresh { get; set; }
-    
+
     /// <summary>
     ///     Refreshes the screen area by synchronizing it to the terminal.
     /// </summary>

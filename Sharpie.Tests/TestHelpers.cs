@@ -20,7 +20,7 @@ internal static class TestHelpers
     {
         Debug.Assert(cursesMock != null);
         Debug.Assert(surface != null);
-        
+
         cursesMock.Setup(s => s.getmaxx(surface.Handle))
                   .Returns(1);
 

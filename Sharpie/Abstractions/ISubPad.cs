@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Describes the traits specific to the <see cref="SubPad"/>.
+///     Describes the traits specific to the <see cref="SubPad" />.
 /// </summary>
 [PublicAPI]
 public interface ISubPad: ISurface

@@ -43,7 +43,7 @@ public class PadInterfaceTests
         var a = new Rectangle(1, 2, 3, 4);
         var l = new Point(5, 6);
         p.Object.Refresh(a, l);
-        
+
         p.Verify(v => v.Refresh(false, false, a, l), Times.Once);
     }
 }

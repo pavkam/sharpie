@@ -40,8 +40,9 @@ public class EventPumpInterfaceTests
         var w = new Mock<IWindow>();
         p.Setup(s => s.Listen(It.IsAny<IWindow>()))
          .CallBase();
-        
-        p.Object.Listen(w.Object).ShouldBeEmpty();
+
+        p.Object.Listen(w.Object)
+         .ShouldBeEmpty();
 
         p.Verify(s => s.Listen(w.Object, CancellationToken.None), Times.Once);
     }
@@ -52,8 +53,9 @@ public class EventPumpInterfaceTests
         var p = new Mock<IEventPump>();
         p.Setup(s => s.Listen())
          .CallBase();
-        
-        p.Object.Listen().ShouldBeEmpty();
+
+        p.Object.Listen()
+         .ShouldBeEmpty();
 
         p.Verify(s => s.Listen(CancellationToken.None), Times.Once);
     }

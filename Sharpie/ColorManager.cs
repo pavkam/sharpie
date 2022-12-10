@@ -62,16 +62,16 @@ public sealed class ColorManager: IColorManager
         }
     }
 
-    /// <inheritdoc cref="IColorManager.Enabled"/>
+    /// <inheritdoc cref="IColorManager.Enabled" />
     public bool Enabled { get; }
 
-    /// <inheritdoc cref="IColorManager.ColorsAreSupported"/>
+    /// <inheritdoc cref="IColorManager.ColorsAreSupported" />
     public bool ColorsAreSupported => _curses.has_colors();
 
-    /// <inheritdoc cref="IColorManager.CanRedefineColors"/>
+    /// <inheritdoc cref="IColorManager.CanRedefineColors" />
     public bool CanRedefineColors => _curses.can_change_color();
 
-    /// <inheritdoc cref="IColorManager.MixColors(short, short)"/>
+    /// <inheritdoc cref="IColorManager.MixColors(short, short)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ColorMixture MixColors(short fgColor, short bgColor)
     {
@@ -84,7 +84,7 @@ public sealed class ColorManager: IColorManager
         return mixture;
     }
 
-    /// <inheritdoc cref="IColorManager.RemixColors(Sharpie.ColorMixture, short, short)"/>
+    /// <inheritdoc cref="IColorManager.RemixColors(Sharpie.ColorMixture, short, short)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixColors(ColorMixture mixture, short fgColor, short bgColor)
     {
@@ -92,7 +92,7 @@ public sealed class ColorManager: IColorManager
                .Check(nameof(_curses.init_pair), "Failed to redefine an existing color mixture.");
     }
 
-    /// <inheritdoc cref="IColorManager.RemixDefaultColors(short, short)"/>
+    /// <inheritdoc cref="IColorManager.RemixDefaultColors(short, short)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixDefaultColors(short fgColor, short bgColor)
     {
@@ -100,7 +100,7 @@ public sealed class ColorManager: IColorManager
                .Check(nameof(_curses.assume_default_colors), "Failed to redefine the default color mixture.");
     }
 
-    /// <inheritdoc cref="IColorManager.UnMixColors"/>
+    /// <inheritdoc cref="IColorManager.UnMixColors" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (short fgColor, short bgColor) UnMixColors(ColorMixture mixture)
     {
@@ -110,7 +110,7 @@ public sealed class ColorManager: IColorManager
         return (fgColor, bgColor);
     }
 
-    /// <inheritdoc cref="IColorManager.RedefineColor(short, short, short, short)"/>
+    /// <inheritdoc cref="IColorManager.RedefineColor(short, short, short, short)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RedefineColor(short color, short red, short green, short blue)
     {
@@ -138,7 +138,7 @@ public sealed class ColorManager: IColorManager
                .Check(nameof(_curses.init_color), "Failed to redefine a terminal color.");
     }
 
-    /// <inheritdoc cref="IColorManager.BreakdownColor(short)"/>
+    /// <inheritdoc cref="IColorManager.BreakdownColor(short)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (short red, short green, short blue) BreakdownColor(short color)
     {

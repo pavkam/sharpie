@@ -34,9 +34,9 @@ namespace Sharpie.Tests;
 public class WindowTests
 {
     private Mock<ICursesProvider> _cursesMock = null!;
-    private Terminal _terminal = null!;
     private Screen _screen = null!;
-  
+    private Terminal _terminal = null!;
+
     [TestInitialize]
     public void TestInitialize()
     {
@@ -50,13 +50,13 @@ public class WindowTests
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
-    
+
     [TestMethod]
     public void Ctor_Throws_IfScreenIsNull()
     {
         Should.Throw<ArgumentException>(() => new Window(null!, IntPtr.MaxValue));
     }
-    
+
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
     {
@@ -78,7 +78,7 @@ public class WindowTests
         Should.Throw<CursesOperationException>(() => new Window(_screen, new(1)))
               .Operation.ShouldBe("keypad");
     }
- 
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_IfConfigureWindow_FailsInCurses_2()
     {
@@ -88,7 +88,7 @@ public class WindowTests
         Should.Throw<CursesOperationException>(() => new Window(_screen, new(1)))
               .Operation.ShouldBe("syncok");
     }
-    
+
     [TestMethod]
     public void Ctor_RegistersItselfIntoParent()
     {
@@ -104,14 +104,14 @@ public class WindowTests
 
         w.Screen.ShouldBe(_screen);
     }
-    
+
     [TestMethod]
     public void SubWindows_IsEmpty_WhenCreated()
     {
         var w = new Window(_screen, new(22));
         w.SubWindows.ShouldBeEmpty();
     }
-    
+
     [TestMethod]
     public void SubWindows_ContainsTheChild_WhenPassedAsParent()
     {
@@ -126,10 +126,10 @@ public class WindowTests
         var w = new Window(_screen, IntPtr.MaxValue);
         var sw = new SubWindow(w, IntPtr.MaxValue);
         sw.Dispose();
-        
+
         w.SubWindows.ShouldBeEmpty();
     }
-    
+
     [TestMethod]
     public void UseHardwareLineEdit_Get_Returns_IfCursesSucceeded()
     {
@@ -254,13 +254,13 @@ public class WindowTests
     public void Location_Set_SetsValue_IfCursesSucceeded()
     {
         _cursesMock.MockLargeArea(_screen);
-        
+
         var w = new Window(_screen, new(1));
         w.Location = new(11, 22);
 
         _cursesMock.Verify(v => v.mvwin(new(1), 22, 11), Times.Once);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfCursesFails()
     {
@@ -278,10 +278,10 @@ public class WindowTests
     public void Location_Set_Throws_IfOutsideParent()
     {
         _cursesMock.MockSmallArea(_screen);
-        
+
         var w = new Window(_screen, new(1));
         _cursesMock.MockSmallArea(w);
-        
+
         Should.Throw<ArgumentOutOfRangeException>(() => w.Location = new(6, 6));
     }
 
@@ -295,17 +295,17 @@ public class WindowTests
 
         var w = new Window(_screen, new(2));
         _cursesMock.MockSmallArea(w);
-        
+
         w.Location = new(5, 5);
 
         _cursesMock.Verify(v => v.mvwin(new(2), 5, 5), Times.Once);
     }
-    
+
     [TestMethod]
     public void Size_Set_SetsValue_IfCursesSucceeded()
     {
         _cursesMock.MockLargeArea(_screen);
-        
+
         var w = new Window(_screen, new(1));
         w.Size = new(11, 22);
 
@@ -505,7 +505,7 @@ public class WindowTests
     {
         var w = new Window(_screen, new(2));
         _cursesMock.MockSmallArea(w);
-        
+
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
@@ -529,7 +529,7 @@ public class WindowTests
         sw.Window.ShouldBe(w);
         w.SubWindows.ShouldContain(sw);
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void SubWindow_PreservesManagedCaret(bool mc)
     {
@@ -540,8 +540,9 @@ public class WindowTests
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
-        _cursesMock.Setup(s => s.is_leaveok(w.Handle)).Returns(mc);
-        
+        _cursesMock.Setup(s => s.is_leaveok(w.Handle))
+                   .Returns(mc);
+
         var sw = w.SubWindow(new(0, 0, 1, 1));
         _cursesMock.Verify(s => s.leaveok(sw.Handle, mc), Times.Once);
     }
@@ -550,7 +551,7 @@ public class WindowTests
     public void Duplicate_Throws_IfCursesFails()
     {
         var w = new Window(_screen, new(3));
-        
+
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(IntPtr.Zero);
 
@@ -562,57 +563,59 @@ public class WindowTests
     public void Duplicate_ReturnsNewWindow_IfCursesSucceeds()
     {
         var w = new Window(_screen, new(3));
-        
+
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
 
         var sw = w.Duplicate();
-        
+
         sw.Handle.ShouldBe(new(4));
         sw.Screen.ShouldBe(_screen);
         _screen.Windows.ShouldContain(sw);
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void Duplicate_PreservesManagedCaret(bool mc)
     {
         var w = new Window(_screen, new(3)) { ManagedCaret = mc };
-        
+
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
 
-        _cursesMock.Setup(s => s.is_leaveok(w.Handle)).Returns(mc);
+        _cursesMock.Setup(s => s.is_leaveok(w.Handle))
+                   .Returns(mc);
+
         var sw = w.Duplicate();
-        
+
         _cursesMock.Verify(s => s.leaveok(sw.Handle, mc), Times.Once);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Destroy_RemovesWindowFromParent()
     {
         var w = new Window(_screen, new(1));
         w.Destroy();
-        
+
         _screen.Windows.ShouldBeEmpty();
     }
-    
+
     [TestMethod]
     public void Destroy_CallsCurses()
     {
         var w = new Window(_screen, new(1));
-        
+
         w.Destroy();
         w.Disposed.ShouldBeTrue();
-        
+
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
     }
-    
+
     [TestMethod]
     public void Destroy_DestroysChildren()
     {
         var w = new Window(_screen, new(1));
         var sw = new SubWindow(w, new(2));
-        
+
         w.Destroy();
         sw.Disposed.ShouldBeTrue();
     }

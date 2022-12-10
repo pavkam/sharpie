@@ -39,16 +39,13 @@ public sealed class TerminalAboutToResizeEvent: Event
     /// <summary>
     ///     Creates a new instance of the class.
     /// </summary>
-    internal TerminalAboutToResizeEvent(): base(EventType.TerminalAboutToResize)
-    {
-    }
+    internal TerminalAboutToResizeEvent(): base(EventType.TerminalAboutToResize) { }
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"Resizing";
+    public override string ToString() => "Resizing";
 
     /// <inheritdoc cref="object.Equals(object)" />
-    public override bool Equals(object? obj) =>
-        obj is TerminalAboutToResizeEvent && obj.GetType() == GetType();
+    public override bool Equals(object? obj) => obj is TerminalAboutToResizeEvent && obj.GetType() == GetType();
 
     /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => 0xF00BA;

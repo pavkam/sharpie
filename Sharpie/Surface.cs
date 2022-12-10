@@ -57,7 +57,7 @@ public class Surface: ISurface, IDisposable
         _handle = handle;
 
         EnableScrolling = true;
-        
+
         Curses.nodelay(Handle, false)
               .Check(nameof(Curses.nodelay), "Failed to disable read-delay mode.");
     }
@@ -67,7 +67,16 @@ public class Surface: ISurface, IDisposable
     /// </summary>
     protected internal ICursesProvider Curses { get; }
 
-    /// <inheritdoc cref="ISurface.Handle"/>
+    /// <summary>
+    ///     Disposes the current instance.
+    /// </summary>
+    public void Dispose()
+    {
+        Destroy();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <inheritdoc cref="ISurface.Handle" />
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     public IntPtr Handle
     {
@@ -77,16 +86,18 @@ public class Surface: ISurface, IDisposable
             return _handle;
         }
     }
-    
-    /// <inheritdoc cref="ISurface.ManagedCaret"/>
+
+    /// <inheritdoc cref="ISurface.ManagedCaret" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public bool ManagedCaret
     {
         get => Curses.is_leaveok(Handle);
-        set => Curses.leaveok(Handle, value).Check(nameof(Curses.leaveok), "Failed to change the caret manage mode.");
+        set =>
+            Curses.leaveok(Handle, value)
+                  .Check(nameof(Curses.leaveok), "Failed to change the caret manage mode.");
     }
 
-    /// <inheritdoc cref="ISurface.EnableScrolling"/>
+    /// <inheritdoc cref="ISurface.EnableScrolling" />
     public bool EnableScrolling
     {
         get => Curses.is_scrollok(Handle);
@@ -95,10 +106,10 @@ public class Surface: ISurface, IDisposable
                   .Check(nameof(Curses.scrollok), "Failed to change the scrolling mode.");
     }
 
-    /// <inheritdoc cref="ISurface.Disposed"/>
+    /// <inheritdoc cref="ISurface.Disposed" />
     public bool Disposed => _handle == IntPtr.Zero;
 
-    /// <inheritdoc cref="ISurface.Style"/>
+    /// <inheritdoc cref="ISurface.Style" />
     public Style Style
     {
         get
@@ -113,7 +124,7 @@ public class Surface: ISurface, IDisposable
                   .Check(nameof(Curses.wattr_set), "Failed to set the surface style.");
     }
 
-    /// <inheritdoc cref="ISurface.ColorMixture"/>
+    /// <inheritdoc cref="ISurface.ColorMixture" />
     public ColorMixture ColorMixture
     {
         get => Style.ColorMixture;
@@ -122,7 +133,7 @@ public class Surface: ISurface, IDisposable
                   .Check(nameof(Curses.wcolor_set), "Failed to set the surface color mixture.");
     }
 
-    /// <inheritdoc cref="ISurface.Background"/>
+    /// <inheritdoc cref="ISurface.Background" />
     public (Rune @char, Style style) Background
     {
         get
@@ -136,14 +147,14 @@ public class Surface: ISurface, IDisposable
             Curses.wbkgrnd(Handle, Curses.ToComplexChar(value.@char, value.style))
                   .Check(nameof(Curses.wbkgrnd), "Failed to set the surface background.");
     }
-    
-    /// <inheritdoc cref="ISurface.Size"/>
+
+    /// <inheritdoc cref="ISurface.Size" />
     public Size Size =>
         new(Curses.getmaxx(Handle)
                   .Check(nameof(Curses.getmaxx), "Failed to get surface width."), Curses.getmaxy(Handle)
             .Check(nameof(Curses.getmaxy), "Failed to get surface height."));
 
-    /// <inheritdoc cref="ISurface.CaretPosition"/>
+    /// <inheritdoc cref="ISurface.CaretPosition" />
     public Point CaretPosition
     {
         get =>
@@ -152,7 +163,7 @@ public class Surface: ISurface, IDisposable
                 .Check(nameof(Curses.getcury), "Failed to get caret Y position."));
         set
         {
-            if (!((ISurface)this).IsPointWithin(value))
+            if (!((ISurface) this).IsPointWithin(value))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -162,7 +173,7 @@ public class Surface: ISurface, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ISurface.Invalidated"/>
+    /// <inheritdoc cref="ISurface.Invalidated" />
     public bool Invalidated => Curses.is_wintouched(Handle);
 
     /// <inheritdoc cref="IDrawSurface.DrawCell" />
@@ -178,21 +189,9 @@ public class Surface: ISurface, IDisposable
 
     /// <inheritdoc cref="IDrawSurface.CoversArea" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    bool IDrawSurface.CoversArea(Rectangle area) => ((ISurface)this).IsRectangleWithin(area);
+    bool IDrawSurface.CoversArea(Rectangle area) => ((ISurface) this).IsRectangleWithin(area);
 
-    /// <summary>
-    ///     Asserts that the surface is not disposed.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">The surface has been disposed.</exception>
-    protected internal void AssertAlive()
-    {
-        if (Disposed)
-        {
-            throw new ObjectDisposedException("The surface has been disposed and is no longer usable.");
-        }
-    }
-
-    /// <inheritdoc cref="ISurface.EnableAttributes"/>
+    /// <inheritdoc cref="ISurface.EnableAttributes" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
@@ -200,7 +199,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wattr_on), "Failed to enable surface attributes.");
     }
 
-    /// <inheritdoc cref="ISurface.DisableAttributes"/>
+    /// <inheritdoc cref="ISurface.DisableAttributes" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
@@ -208,7 +207,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wattr_off), "Failed to disable surface attributes.");
     }
 
-    /// <inheritdoc cref="ISurface.ScrollUp"/>
+    /// <inheritdoc cref="ISurface.ScrollUp" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ScrollUp(int lines)
     {
@@ -226,7 +225,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wscrl), "Failed to scroll the contents of the surface up.");
     }
 
-    /// <inheritdoc cref="ISurface.ScrollDown"/>
+    /// <inheritdoc cref="ISurface.ScrollDown" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ScrollDown(int lines)
     {
@@ -244,7 +243,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wscrl), "Failed to scroll the contents of the surface down.");
     }
 
-    /// <inheritdoc cref="ISurface.InsertEmptyLines"/>
+    /// <inheritdoc cref="ISurface.InsertEmptyLines" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void InsertEmptyLines(int lines)
     {
@@ -257,7 +256,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.winsdelln), "Failed to insert blank lines into the surface.");
     }
 
-    /// <inheritdoc cref="ISurface.DeleteLines"/>
+    /// <inheritdoc cref="ISurface.DeleteLines" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DeleteLines(int lines)
     {
@@ -270,7 +269,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.winsdelln), "Failed to delete lines from the surface.");
     }
 
-    /// <inheritdoc cref="ISurface.ChangeTextStyle"/>
+    /// <inheritdoc cref="ISurface.ChangeTextStyle" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ChangeTextStyle(int width, Style style)
     {
@@ -283,7 +282,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wchgat), "Failed to change style of characters in the surface.");
     }
 
-    /// <inheritdoc cref="ISurface.WriteText(string,Sharpie.Style)"/>
+    /// <inheritdoc cref="ISurface.WriteText(string,Sharpie.Style)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void WriteText(string str, Style style)
     {
@@ -304,7 +303,7 @@ public class Surface: ISurface, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ISurface.DrawVerticalLine(int,System.Text.Rune,Sharpie.Style)"/>
+    /// <inheritdoc cref="ISurface.DrawVerticalLine(int,System.Text.Rune,Sharpie.Style)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawVerticalLine(int length, Rune @char, Style style)
     {
@@ -317,7 +316,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wvline_set), "Failed to draw a vertical line.");
     }
 
-    /// <inheritdoc cref="ISurface.DrawVerticalLine(int)"/>
+    /// <inheritdoc cref="ISurface.DrawVerticalLine(int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawVerticalLine(int length)
     {
@@ -330,7 +329,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wvline), "Failed to draw a vertical line.");
     }
 
-    /// <inheritdoc cref="ISurface.DrawHorizontalLine(int,System.Text.Rune,Sharpie.Style)"/>
+    /// <inheritdoc cref="ISurface.DrawHorizontalLine(int,System.Text.Rune,Sharpie.Style)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawHorizontalLine(int length, Rune @char, Style style)
     {
@@ -343,7 +342,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.whline_set), "Failed to draw a horizontal line.");
     }
 
-    /// <inheritdoc cref="ISurface.DrawHorizontalLine(int)"/>
+    /// <inheritdoc cref="ISurface.DrawHorizontalLine(int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawHorizontalLine(int length)
     {
@@ -356,7 +355,8 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.whline), "Failed to draw a horizontal line.");
     }
 
-    /// <inheritdoc cref="ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)"/>
+    /// <inheritdoc
+    ///     cref="ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawBorder(Rune leftSideChar, Rune rightSideChar, Rune topSideChar, Rune bottomSideChar,
         Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar,
@@ -376,7 +376,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wborder_set), "Failed to draw a surface border.");
     }
 
-    /// <inheritdoc cref="ISurface.DrawBorder()"/>
+    /// <inheritdoc cref="ISurface.DrawBorder()" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawBorder()
     {
@@ -385,7 +385,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wborder), "Failed to draw a surface border.");
     }
 
-    /// <inheritdoc cref="ISurface.RemoveText"/>
+    /// <inheritdoc cref="ISurface.RemoveText" />
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     public void RemoveText(int count)
     {
@@ -406,7 +406,7 @@ public class Surface: ISurface, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ISurface.RemoveText"/>
+    /// <inheritdoc cref="ISurface.RemoveText" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (Rune @char, Style style)[] GetText(int count)
     {
@@ -425,7 +425,7 @@ public class Surface: ISurface, IDisposable
                   .ToArray();
     }
 
-    /// <inheritdoc cref="ISurface.Clear"/>
+    /// <inheritdoc cref="ISurface.Clear" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Clear(ClearStrategy strategy = ClearStrategy.Full)
     {
@@ -449,7 +449,7 @@ public class Surface: ISurface, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ISurface.Replace(Sharpie.Abstractions.ISurface, Sharpie.ReplaceStrategy)"/>
+    /// <inheritdoc cref="ISurface.Replace(Sharpie.Abstractions.ISurface, Sharpie.ReplaceStrategy)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void Replace(ISurface surface, ReplaceStrategy strategy)
     {
@@ -457,7 +457,7 @@ public class Surface: ISurface, IDisposable
         {
             throw new ArgumentNullException(nameof(surface));
         }
-        
+
         if (surface == this)
         {
             throw new ArgumentException(nameof(surface));
@@ -478,7 +478,8 @@ public class Surface: ISurface, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ISurface.Replace(Sharpie.Abstractions.ISurface, System.Drawing.Rectangle, System.Drawing.Point, Sharpie.ReplaceStrategy)"/>
+    /// <inheritdoc
+    ///     cref="ISurface.Replace(Sharpie.Abstractions.ISurface, System.Drawing.Rectangle, System.Drawing.Point, Sharpie.ReplaceStrategy)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Replace(ISurface surface, Rectangle srcRect, Point destPos, ReplaceStrategy strategy)
     {
@@ -486,13 +487,13 @@ public class Surface: ISurface, IDisposable
         {
             throw new ArgumentNullException(nameof(surface));
         }
-        
+
         if (surface == this)
         {
             throw new ArgumentException(nameof(surface));
         }
-        
-        if (!((ISurface)this).IsRectangleWithin(srcRect))
+
+        if (!((ISurface) this).IsRectangleWithin(srcRect))
         {
             throw new ArgumentOutOfRangeException(nameof(srcRect));
         }
@@ -508,7 +509,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.copywin), "Failed to copy the surface contents.");
     }
 
-    /// <inheritdoc cref="ISurface.Invalidate(int, int)"/>
+    /// <inheritdoc cref="ISurface.Invalidate(int, int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Invalidate(int y, int count)
     {
@@ -526,7 +527,7 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wtouchln), "Failed to mark lines as dirty.");
     }
 
-    /// <inheritdoc cref="ISurface.LineInvalidated"/>
+    /// <inheritdoc cref="ISurface.LineInvalidated" />
     public bool LineInvalidated(int y)
     {
         if (y < 0 || y >= Size.Height)
@@ -537,12 +538,24 @@ public class Surface: ISurface, IDisposable
         return Curses.is_linetouched(Handle, y);
     }
 
-    /// <inheritdoc cref="ISurface.Destroy"/>
+    /// <inheritdoc cref="ISurface.Destroy" />
     public void Destroy()
     {
         if (!Disposed)
         {
             Delete();
+        }
+    }
+
+    /// <summary>
+    ///     Asserts that the surface is not disposed.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The surface has been disposed.</exception>
+    protected internal void AssertAlive()
+    {
+        if (Disposed)
+        {
+            throw new ObjectDisposedException("The surface has been disposed and is no longer usable.");
         }
     }
 
@@ -554,15 +567,6 @@ public class Surface: ISurface, IDisposable
         Debug.Assert(_handle != IntPtr.Zero);
         Curses.delwin(_handle);
         _handle = IntPtr.Zero;
-    }
-    
-    /// <summary>
-    ///     Disposes the current instance.
-    /// </summary>
-    public void Dispose()
-    {
-        Destroy();
-        GC.SuppressFinalize(this);
     }
 
     /// <summary>

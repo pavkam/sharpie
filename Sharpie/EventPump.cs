@@ -9,10 +9,10 @@ using System.Collections.Concurrent;
 [PublicAPI]
 public sealed class EventPump: IEventPump
 {
-    private readonly ITerminal _terminal;
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private MouseEventResolver? _mouseEventResolver;
+    private readonly ITerminal _terminal;
     private ConcurrentQueue<object> _delegatedObjects = new();
+    private MouseEventResolver? _mouseEventResolver;
 
     /// <summary>
     ///     Creates a new instances of this class.
@@ -41,61 +41,7 @@ public sealed class EventPump: IEventPump
         }
     }
 
-    private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)
-    {
-        _terminal.Curses.wtimeout(windowHandle, quickWait ? 10 : 50);
-        var result = _terminal.Curses.wget_wch(windowHandle, out var keyCode);
-
-        return (result, keyCode);
-    }
-
-    private Event? ReadNextEvent(IntPtr windowHandle, bool quickWait)
-    {
-        if (_delegatedObjects.TryDequeue(out var @object))
-        {
-            return new DelegateEvent(@object);
-        }
-
-        var (result, keyCode) = ReadNext(windowHandle, quickWait);
-        if (result.Failed())
-        {
-            return null;
-        }
-
-        if (result == (int) CursesKey.Yes)
-        {
-            switch (keyCode)
-            {
-                case (uint) CursesKey.Resize:
-                    return new TerminalResizeEvent(_terminal.Screen.Size);
-                case (uint) CursesKey.Mouse:
-                    if (_terminal.Curses.getmouse(out var mouseEvent)
-                                 .Failed())
-                    {
-                        return null;
-                    }
-
-                    if (mouseEvent.buttonState == (uint) CursesMouseEvent.EventType.ReportPosition)
-                    {
-                        return new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
-                    }
-
-                    var (button, state, mouseMod) =
-                        Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) mouseEvent.buttonState);
-
-                    return button == 0
-                        ? null
-                        : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
-                default:
-                    var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
-                    return new KeyEvent(key, new(ControlCharacter.Null), _terminal.Curses.key_name(keyCode), keyMod);
-            }
-        }
-
-        return new KeyEvent(Key.Character, new(keyCode), _terminal.Curses.key_name(keyCode), ModifierKey.None);
-    }
-
-    /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface,System.Threading.CancellationToken)"/>
+    /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface,System.Threading.CancellationToken)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken)
     {
@@ -105,11 +51,9 @@ public sealed class EventPump: IEventPump
         }
 
         var hasPendingResize = false;
-        var monitorsResizes = _terminal.Curses.monitor_pending_resize(() =>
-        {
-            hasPendingResize = true;
-        }, out var monitorHandle);
-        
+        var monitorsResizes =
+            _terminal.Curses.monitor_pending_resize(() => { hasPendingResize = true; }, out var monitorHandle);
+
         var escapeSequence = new List<KeyEvent>();
 
         while (!cancellationToken.IsCancellationRequested)
@@ -121,11 +65,11 @@ public sealed class EventPump: IEventPump
                 {
                     @event = new TerminalAboutToResizeEvent();
                 }
-                
+
                 _terminal.Update();
                 hasPendingResize = false;
             }
-            
+
             if (@event is KeyEvent ke)
             {
                 escapeSequence.Add(ke);
@@ -186,7 +130,7 @@ public sealed class EventPump: IEventPump
                 {
                     yield return new TerminalAboutToResizeEvent();
                 }
-                
+
                 yield return @event;
 
                 if (@event.Type == EventType.TerminalResize)
@@ -195,15 +139,16 @@ public sealed class EventPump: IEventPump
                 }
             }
         }
-        
+
         monitorHandle?.Dispose();
     }
 
-    /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)"/>
+    /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IEnumerable<Event> Listen(CancellationToken cancellationToken) => Listen(_terminal.Screen, cancellationToken);
+    public IEnumerable<Event> Listen(CancellationToken cancellationToken) =>
+        Listen(_terminal.Screen, cancellationToken);
 
-    /// <inheritdoc cref="IEventPump.Use"/>
+    /// <inheritdoc cref="IEventPump.Use" />
     public void Use(ResolveEscapeSequenceFunc resolver)
     {
         if (resolver == null)
@@ -217,7 +162,7 @@ public sealed class EventPump: IEventPump
         }
     }
 
-    /// <inheritdoc cref="IEventPump.Uses"/>
+    /// <inheritdoc cref="IEventPump.Uses" />
     public bool Uses(ResolveEscapeSequenceFunc resolver)
     {
         if (resolver == null)
@@ -226,6 +171,60 @@ public sealed class EventPump: IEventPump
         }
 
         return _keySequenceResolvers.Contains(resolver);
+    }
+
+    private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)
+    {
+        _terminal.Curses.wtimeout(windowHandle, quickWait ? 10 : 50);
+        var result = _terminal.Curses.wget_wch(windowHandle, out var keyCode);
+
+        return (result, keyCode);
+    }
+
+    private Event? ReadNextEvent(IntPtr windowHandle, bool quickWait)
+    {
+        if (_delegatedObjects.TryDequeue(out var @object))
+        {
+            return new DelegateEvent(@object);
+        }
+
+        var (result, keyCode) = ReadNext(windowHandle, quickWait);
+        if (result.Failed())
+        {
+            return null;
+        }
+
+        if (result == (int) CursesKey.Yes)
+        {
+            switch (keyCode)
+            {
+                case (uint) CursesKey.Resize:
+                    return new TerminalResizeEvent(_terminal.Screen.Size);
+                case (uint) CursesKey.Mouse:
+                    if (_terminal.Curses.getmouse(out var mouseEvent)
+                                 .Failed())
+                    {
+                        return null;
+                    }
+
+                    if (mouseEvent.buttonState == (uint) CursesMouseEvent.EventType.ReportPosition)
+                    {
+                        return new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
+                    }
+
+                    var (button, state, mouseMod) =
+                        Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) mouseEvent.buttonState);
+
+                    return button == 0
+                        ? null
+                        : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
+                default:
+                    var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
+                    return new KeyEvent(key, new(ControlCharacter.Null), _terminal.Curses.key_name(keyCode), keyMod);
+            }
+        }
+
+        return new KeyEvent(Key.Character, new(keyCode), _terminal.Curses.key_name(keyCode), ModifierKey.None);
     }
 
     /// <summary>
@@ -327,7 +326,7 @@ public sealed class EventPump: IEventPump
     }
 
     /// <summary>
-    /// Enqueues a delegated object to the queue.
+    ///     Enqueues a delegated object to the queue.
     /// </summary>
     /// <param name="object">The object to delegate.</param>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="object" /> is <c>null</c>.</exception>

@@ -42,17 +42,19 @@ public class ScreenInterfaceTests
         var scr = new Mock<IScreen>();
 
         w.Setup(s => s.SubWindows)
-          .Returns(new[] { sw.Object });
+         .Returns(new[] { sw.Object });
+
         scr.Setup(s => s.Windows)
            .Returns(new[] { w.Object });
+
         scr.Setup(s => s.Pads)
            .Returns(new[] { p.Object });
 
         scr.Setup(s => s.FullRefresh())
            .CallBase();
-        
+
         scr.Object.FullRefresh();
-        
+
         scr.Verify(v => v.Invalidate(), Times.Once);
         scr.Verify(v => v.Refresh(), Times.Once);
         w.Verify(v => v.Invalidate(), Times.Once);

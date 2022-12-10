@@ -1507,36 +1507,36 @@ public class SurfaceTests
         ((IDrawSurface) s).CoversArea(new(0, 0, 5, 5))
                           .ShouldBeFalse();
     }
-    
+
     [TestMethod]
     public void Destroy_CallsCurses()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        
+
         s.Destroy();
         s.Disposed.ShouldBeTrue();
-        
+
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
     }
-    
+
     [TestMethod]
     public void Destroy_Succeeds_EventIfCursesFails()
     {
         var sw = new Surface(_cursesMock.Object, new(1));
         _cursesMock.Setup(s => s.delwin(It.IsAny<IntPtr>()))
                    .Returns(-1);
-  
+
         sw.Destroy();
         sw.Disposed.ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void Dispose_CallsCurses()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        
+
         s.Dispose();
-        
+
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
     }
 }

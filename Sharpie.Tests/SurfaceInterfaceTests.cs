@@ -41,25 +41,29 @@ public class SurfaceInterfaceTests
     public void IsPointWithin_ReturnsTrue_IfPointInside()
     {
         _surfaceMock.Setup(s => s.IsPointWithin(It.IsAny<Point>()))
-                   .CallBase();
-        
+                    .CallBase();
+
         _surfaceMock.Setup(s => s.Size)
-                   .Returns(new Size(1, 1));
-            
-        _surfaceMock.Object.IsPointWithin(new(0, 0)).ShouldBeTrue();
+                    .Returns(new Size(1, 1));
+
+        _surfaceMock.Object.IsPointWithin(new(0, 0))
+                    .ShouldBeTrue();
+
         _surfaceMock.Verify(v => v.Size, Times.Once);
     }
-    
+
     [TestMethod]
     public void IsPointWithin_ReturnsFalse_IfPointNotInside()
     {
         _surfaceMock.Setup(s => s.IsPointWithin(It.IsAny<Point>()))
-                   .CallBase();
-        
+                    .CallBase();
+
         _surfaceMock.Setup(s => s.Size)
-                   .Returns(new Size(1, 1));
-            
-        _surfaceMock.Object.IsPointWithin(new(1, 1)).ShouldBeFalse();
+                    .Returns(new Size(1, 1));
+
+        _surfaceMock.Object.IsPointWithin(new(1, 1))
+                    .ShouldBeFalse();
+
         _surfaceMock.Verify(v => v.Size, Times.Once);
     }
 
@@ -67,12 +71,14 @@ public class SurfaceInterfaceTests
     public void IsRectangleWithin_ReturnsTrue_IfInside()
     {
         _surfaceMock.Setup(s => s.IsRectangleWithin(It.IsAny<Rectangle>()))
-                   .CallBase();
-        
-        _surfaceMock.Setup(s => s.IsPointWithin(It.IsAny<Point>()))
-                   .Returns(true);
+                    .CallBase();
 
-        _surfaceMock.Object.IsRectangleWithin(new(2, 2, 2, 2)).ShouldBeTrue();
+        _surfaceMock.Setup(s => s.IsPointWithin(It.IsAny<Point>()))
+                    .Returns(true);
+
+        _surfaceMock.Object.IsRectangleWithin(new(2, 2, 2, 2))
+                    .ShouldBeTrue();
+
         _surfaceMock.Verify(v => v.IsPointWithin(It.IsAny<Point>()), Times.Exactly(2));
     }
 
@@ -80,14 +86,17 @@ public class SurfaceInterfaceTests
     public void IsRectangleWithin_ReturnsFalse_IfNotInside()
     {
         _surfaceMock.Setup(s => s.IsRectangleWithin(It.IsAny<Rectangle>()))
-                   .CallBase();
+                    .CallBase();
 
         _surfaceMock.Setup(s => s.IsPointWithin(new(2, 2)))
-                   .Returns(true);
+                    .Returns(true);
+
         _surfaceMock.Setup(s => s.IsPointWithin(new(3, 5)))
-                   .Returns(false);
-        
-        _surfaceMock.Object.IsRectangleWithin(new(2, 2, 3, 5)).ShouldBeFalse();
+                    .Returns(false);
+
+        _surfaceMock.Object.IsRectangleWithin(new(2, 2, 3, 5))
+                    .ShouldBeFalse();
+
         _surfaceMock.Verify(v => v.IsPointWithin(It.IsAny<Point>()), Times.Exactly(2));
     }
 
@@ -95,8 +104,8 @@ public class SurfaceInterfaceTests
     public void WriteText_CallsActualImplementation()
     {
         _surfaceMock.Setup(s => s.WriteText(It.IsAny<string>()))
-                   .CallBase();
-        
+                    .CallBase();
+
         _surfaceMock.Object.WriteText("12345");
         _surfaceMock.Verify(v => v.WriteText("12345", It.Is<Style>(s => s == Style.Default)), Times.Once);
     }
@@ -105,18 +114,17 @@ public class SurfaceInterfaceTests
     public void Draw1_Throws_IfDrawingIsNull()
     {
         _surfaceMock.Setup(s => s.Draw(It.IsAny<Point>(), It.IsAny<Rectangle>(), It.IsAny<IDrawable>()))
-                   .CallBase();
-        
-        Should.Throw<ArgumentNullException>(
-            () => _surfaceMock.Object.Draw(new(0, 0), new(0, 0, 1, 1), null!));
+                    .CallBase();
+
+        Should.Throw<ArgumentNullException>(() => _surfaceMock.Object.Draw(new(0, 0), new(0, 0, 1, 1), null!));
     }
 
     [TestMethod]
     public void Draw1_CallsDrawing_DrawTo_ToDraw()
     {
         _surfaceMock.Setup(s => s.Draw(It.IsAny<Point>(), It.IsAny<Rectangle>(), It.IsAny<IDrawable>()))
-                   .CallBase();
-        
+                    .CallBase();
+
         var drawingMock = new Mock<IDrawable>();
 
         var area = new Rectangle(1, 2, 100, 200);
@@ -131,8 +139,8 @@ public class SurfaceInterfaceTests
     public void Draw2_CallsDrawing_DrawTo_ToDraw()
     {
         _surfaceMock.Setup(s => s.Draw(It.IsAny<Point>(), It.IsAny<IDrawable>()))
-                   .CallBase();
-        
+                    .CallBase();
+
         var drawingMock = new Mock<IDrawable>();
         drawingMock.Setup(s => s.Size)
                    .Returns(new Size(100, 200));
@@ -149,11 +157,11 @@ public class SurfaceInterfaceTests
     public void Invalidate_CallsActualImplementation()
     {
         _surfaceMock.Setup(s => s.Invalidate())
-                   .CallBase();
-        
+                    .CallBase();
+
         _surfaceMock.Setup(s => s.Size)
-                   .Returns(new Size(10, 20));
-        
+                    .Returns(new Size(10, 20));
+
         _surfaceMock.Object.Invalidate();
         _surfaceMock.Verify(v => v.Invalidate(0, 20), Times.Once);
     }

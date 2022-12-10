@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Defines the traits implemented by the <see cref="Window"/> class.
+///     Defines the traits implemented by the <see cref="Window" /> class.
 /// </summary>
 [PublicAPI]
 public interface IWindow: ISurface
@@ -45,7 +45,7 @@ public interface IWindow: ISurface
     ///     Lists of children of this object.
     /// </summary>
     IEnumerable<ISubWindow> SubWindows { get; }
-    
+
     /// <summary>
     ///     Enables or disables the use of hardware line insert/delete handling fpr this window.
     /// </summary>
@@ -92,7 +92,7 @@ public interface IWindow: ISurface
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
     bool ImmediateRefresh { get; set; }
-    
+
     /// <summary>
     ///     Refreshes the window by synchronizing it to the terminal.
     /// </summary>

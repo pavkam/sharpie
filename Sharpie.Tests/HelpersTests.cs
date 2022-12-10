@@ -302,8 +302,7 @@ public class HelpersTests
      DataRow(CursesMouseEvent.EventType.Button4Clicked, MouseButton.Button4, MouseButtonState.Clicked),
      DataRow(CursesMouseEvent.EventType.Button4DoubleClicked, MouseButton.Button4, MouseButtonState.DoubleClicked),
      DataRow(CursesMouseEvent.EventType.Button4TripleClicked, MouseButton.Button4, MouseButtonState.TripleClicked)]
-    public void ConvertMouseActionEvent_ConvertsKnownMappings(int evt, MouseButton expButton,
-        MouseButtonState expState)
+    public void ConvertMouseActionEvent_ConvertsKnownMappings(int evt, MouseButton expButton, MouseButtonState expState)
     {
         var result = Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) evt);
         result.button.ShouldBe(expButton);

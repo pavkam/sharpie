@@ -60,14 +60,14 @@ public class TerminalMainLoopTests
     {
         Should.Throw<ArgumentNullException>(() => _terminal.Delegate(null!));
     }
-    
+
     [TestMethod]
     public void Delegate_Throws_IfTerminalDisposed()
     {
         _terminal.Dispose();
         Should.Throw<ObjectDisposedException>(() => _terminal.Delegate(() => Task.CompletedTask));
     }
-    
+
     [TestMethod]
     public void Stop_Throws_IfTerminalDisposed()
     {
@@ -76,41 +76,36 @@ public class TerminalMainLoopTests
     }
 
     [TestMethod]
-    public void Delay1_Throws_IfActionIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _terminal.Delay(null!, 1));
-    }
-    
+    public void Delay1_Throws_IfActionIsNull() { Should.Throw<ArgumentNullException>(() => _terminal.Delay(null!, 1)); }
+
     [TestMethod]
     public void Delay1_Throws_IfDelayIsNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => 
-            _terminal.Delay((_, _) => Task.CompletedTask, -1, "state"));
+        Should.Throw<ArgumentOutOfRangeException>(() => _terminal.Delay((_, _) => Task.CompletedTask, -1, "state"));
     }
-    
+
     [TestMethod]
     public void Delay2_Throws_IfActionIsNull()
     {
         Should.Throw<ArgumentNullException>(() => _terminal.Delay(null!, 1, "state"));
     }
-    
+
     [TestMethod]
     public void Delay2_Throws_IfDelayIsNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => 
-            _terminal.Delay((_, _) => Task.CompletedTask, -1, false));
+        Should.Throw<ArgumentOutOfRangeException>(() => _terminal.Delay((_, _) => Task.CompletedTask, -1, false));
     }
-    
+
     [TestMethod]
     public void Repeat1_Throws_IfActionIsNull()
     {
         Should.Throw<ArgumentNullException>(() => _terminal.Repeat(null!, 1));
     }
-    
+
     [TestMethod]
     public void Repeat1_Throws_IfDelayIsNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => 
+        Should.Throw<ArgumentOutOfRangeException>(() =>
             _terminal.Repeat((_, _) => Task.CompletedTask, -1, false, "state"));
     }
 
@@ -119,54 +114,51 @@ public class TerminalMainLoopTests
     {
         Should.Throw<ArgumentNullException>(() => _terminal.Repeat(null!, 1));
     }
-    
+
     [TestMethod]
     public void Repeat2_Throws_IfDelayIsNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => 
+        Should.Throw<ArgumentOutOfRangeException>(() =>
             _terminal.Repeat((_, _) => Task.CompletedTask, -1, false, "state"));
     }
-    
+
     [TestMethod]
     public void RunAsync_Throws_IfActionIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => 
-            _terminal.RunAsync(null!, false));
+        Should.Throw<ArgumentNullException>(() => _terminal.RunAsync(null!, false));
     }
-    
+
     [TestMethod]
     public void RunAsync_Throws_IfTerminalDisposed()
     {
         _terminal.Dispose();
-        Should.Throw<ObjectDisposedException>(() => 
-            _terminal.RunAsync(_ => Task.CompletedTask, false));
+        Should.Throw<ObjectDisposedException>(() => _terminal.RunAsync(_ => Task.CompletedTask, false));
     }
-    
+
     [TestMethod]
     public async Task RunAsync_Throws_IfAnotherRunsAlready()
     {
         var ra1 = _terminal.RunAsync(_ => Task.CompletedTask);
-        
-        Should.Throw<InvalidOperationException>(() => 
-            _terminal.RunAsync(_ => Task.CompletedTask));
-        
+
+        Should.Throw<InvalidOperationException>(() => _terminal.RunAsync(_ => Task.CompletedTask));
+
         _terminal.Stop();
         await ra1;
     }
-    
+
     [TestMethod]
     public async Task RunAsync_Resumes_IfStopped()
     {
         var ra1 = _terminal.RunAsync(_ => Task.CompletedTask);
         _terminal.Stop();
-        
+
         await ra1;
-        
+
         var ra2 = _terminal.RunAsync(_ => Task.CompletedTask);
         _terminal.Stop();
         await ra2;
     }
-    
+
     [TestMethod]
     public async Task Delegate_DoesNotEnqueueAction_IfNotRunning()
     {
@@ -176,41 +168,42 @@ public class TerminalMainLoopTests
             executed = true;
             return Task.CompletedTask;
         });
-        
+
         var ra = _terminal.RunAsync(_ => Task.CompletedTask);
-        
+
         _terminal.Stop();
-        
+
         await ra;
-        
+
         executed.ShouldBeFalse();
     }
-    
+
     [TestMethod]
     public async Task Stop_DoesNotEnqueueAction_IfNotRunning()
     {
         _terminal.Stop();
-        
+
         var ra = _terminal.RunAsync(_ => Task.CompletedTask);
-        
+
         var executed = false;
         _terminal.Delegate(() =>
         {
             executed = true;
             return Task.CompletedTask;
         });
+
         _terminal.Stop();
-        
+
         await ra;
-        
+
         executed.ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public async Task Delegate_EnqueuesAction()
     {
         var ra = _terminal.RunAsync(_ => Task.CompletedTask);
-        
+
         var finished = false;
         _terminal.Delegate(() =>
         {
@@ -220,22 +213,22 @@ public class TerminalMainLoopTests
         });
 
         await ra;
-        
+
         finished.ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public async Task RunAsync_ExecutesDelegatedActionsInSequence()
     {
-        var ra =  _terminal.RunAsync(_ => Task.CompletedTask);
-        
+        var ra = _terminal.RunAsync(_ => Task.CompletedTask);
+
         var seq = "";
         _terminal.Delegate(() =>
         {
             seq += "1";
             return Task.CompletedTask;
         });
-        
+
         _terminal.Delegate(() =>
         {
             seq += "2";
@@ -244,10 +237,10 @@ public class TerminalMainLoopTests
         });
 
         await ra;
-        
+
         seq.ShouldBe("12");
     }
-    
+
     [TestMethod]
     public async Task RunAsync_ReadsEventsFromPump()
     {
@@ -257,11 +250,11 @@ public class TerminalMainLoopTests
                        kc = 'A';
                        return 0;
                    });
-        
+
         await _terminal.RunAsync(e =>
         {
             (e is KeyEvent { Key: Key.Character, Char.Value: 'A' }).ShouldBeTrue();
-            
+
             _terminal.Stop();
             return Task.CompletedTask;
         });
@@ -277,23 +270,23 @@ public class TerminalMainLoopTests
                        kc = ch++;
                        return 0;
                    });
-        
+
         await _terminal.RunAsync(_ =>
         {
             _terminal.Stop();
             return Task.CompletedTask;
         });
-        
+
         ch.ShouldNotBe('a');
     }
-    
-    [TestMethod,SuppressMessage("ReSharper", "AccessToModifiedClosure")]
+
+    [TestMethod, SuppressMessage("ReSharper", "AccessToModifiedClosure")]
     public async Task Stop_WaitsForThingsToFinish()
     {
         var order = "";
         var ra = _terminal.RunAsync(_ => Task.CompletedTask)
                           .ContinueWith(t => order += "r");
-        
+
         _terminal.Stop(true);
         order += "s";
 
@@ -301,7 +294,6 @@ public class TerminalMainLoopTests
         order.ShouldBe("sr");
     }
 
-    
     [TestMethod]
     public async Task RunAsync_StopsOnCtrlC()
     {
@@ -316,11 +308,11 @@ public class TerminalMainLoopTests
         await _terminal.RunAsync(_ =>
         {
             reached = true;
-            
+
             _terminal.Stop();
             return Task.CompletedTask;
         });
-        
+
         reached.ShouldBeFalse();
     }
 
@@ -339,12 +331,12 @@ public class TerminalMainLoopTests
         }, 100, "state");
 
         d.ShouldNotBeNull();
-        
+
         await _terminal.RunAsync(_ => Task.CompletedTask);
-        
+
         finished.ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public async Task Delay1_CanBeCancelledThroughReturnedInterval()
     {
@@ -354,7 +346,7 @@ public class TerminalMainLoopTests
             executed = true;
             return Task.CompletedTask;
         }, 50);
-        
+
         d.Stop();
 
         var stopTask = Task.Run(async () =>
@@ -362,10 +354,10 @@ public class TerminalMainLoopTests
             await Task.Delay(100);
             _terminal.Stop();
         });
-        
+
         await _terminal.RunAsync(_ => Task.CompletedTask);
         await stopTask;
-        
+
         executed.ShouldBeFalse();
     }
 
@@ -373,9 +365,9 @@ public class TerminalMainLoopTests
     public async Task Delay2_EnqueuesAndExecutesTimerOnce()
     {
         var ra = _terminal.RunAsync(_ => Task.CompletedTask);
-        
+
         var finished = false;
-        _terminal.Delay((t) =>
+        _terminal.Delay(t =>
         {
             finished = true;
             t.Stop();
@@ -383,10 +375,10 @@ public class TerminalMainLoopTests
         }, 10);
 
         await ra;
-        
+
         finished.ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public async Task Repeat1_EnqueuesAndExecutesTimerMultipleTimes()
     {
@@ -407,9 +399,9 @@ public class TerminalMainLoopTests
         }, 10, false, "state");
 
         d.ShouldNotBeNull();
-        
+
         await _terminal.RunAsync(_ => Task.CompletedTask);
-        
+
         cycles.ShouldBe(10);
     }
 
@@ -422,7 +414,7 @@ public class TerminalMainLoopTests
             executed++;
             return Task.CompletedTask;
         }, 50);
-        
+
         var stopTask = Task.Run(async () =>
         {
             await Task.Delay(100);
@@ -430,18 +422,18 @@ public class TerminalMainLoopTests
             await Task.Delay(100);
             _terminal.Stop();
         });
-        
+
         await _terminal.RunAsync(_ => Task.CompletedTask);
         await stopTask;
-        
+
         executed.ShouldBeInRange(1, 3);
     }
-    
+
     [TestMethod]
     public async Task Dispose_CancelsTheRunning_AndKillsTimers()
     {
         var ra = _terminal.RunAsync(_ => Task.CompletedTask);
-        
+
         var executed = 0;
         _terminal.Repeat(_ =>
         {
@@ -450,16 +442,16 @@ public class TerminalMainLoopTests
         }, 10);
 
         await Task.Delay(100)
-            .ContinueWith(_ => _terminal.Dispose());
-        
+                  .ContinueWith(_ => _terminal.Dispose());
+
         await ra;
-        
+
         await Task.Delay(50)
                   .ContinueWith(_ => _terminal.Dispose());
-        
+
         executed.ShouldBeInRange(8, 11);
     }
-    
+
     [TestMethod]
     public async Task RunAsync_ResumesTimersAcrossRuns()
     {
@@ -469,12 +461,12 @@ public class TerminalMainLoopTests
             executed++;
             return Task.CompletedTask;
         }, 10);
-        
+
         var ra = _terminal.RunAsync(_ => Task.CompletedTask);
         await Task.Delay(100);
         _terminal.Stop();
         await ra;
-        
+
         ra = _terminal.RunAsync(_ => Task.CompletedTask);
         await Task.Delay(100);
         _terminal.Stop();

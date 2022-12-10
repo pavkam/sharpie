@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Describes the traits specific to the <see cref="Pad"/>.
+///     Describes the traits specific to the <see cref="Pad" />.
 /// </summary>
 [PublicAPI]
 public interface IPad: ISurface
@@ -45,7 +45,7 @@ public interface IPad: ISurface
     ///     Gets the sub-pads of this pad.
     /// </summary>
     IEnumerable<ISubPad> SubPads { get; }
-   
+
     /// <summary>
     ///     Gets or sets the size of the window.
     /// </summary>
@@ -61,7 +61,10 @@ public interface IPad: ISurface
     /// <param name="rect">The rectangle of the pad to place onto the screen.</param>
     /// <param name="screenPos">The point on the screen to place that rectangle.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="rect"/> or <paramref name="screenPos"/> are out of bounds.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     Thrown if <paramref name="rect" /> or <paramref name="screenPos" /> are
+    ///     out of bounds.
+    /// </exception>
     void Refresh(bool batch, bool entireScreen, Rectangle rect, Point screenPos);
 
     /// <summary>
@@ -70,9 +73,12 @@ public interface IPad: ISurface
     /// <param name="rect">The rectangle of the pad to place onto the screen.</param>
     /// <param name="screenPos">The point on the screen to place that rectangle.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="rect"/> or <paramref name="screenPos"/> are out of bounds.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     Thrown if <paramref name="rect" /> or <paramref name="screenPos" /> are
+    ///     out of bounds.
+    /// </exception>
     void Refresh(Rectangle rect, Point screenPos) => Refresh(false, false, rect, screenPos);
-    
+
     /// <summary>
     ///     Creates a new sub-pad in the parent pad.
     /// </summary>

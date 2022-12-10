@@ -50,48 +50,21 @@ public class Window: Surface, IWindow
     {
         Curses.keypad(Handle, true)
               .Check(nameof(Curses.keypad), "Failed to enable the keypad resolution mode.");
+
         Curses.syncok(Handle, true)
               .Check(nameof(Curses.syncok), "Failed to enable auto-sync mode.");
-        
+
         Screen = parent!;
         parent!.AddChild(this);
     }
 
-    /// <inheritdoc cref="IWindow.Screen"/>
+    /// <inheritdoc cref="IWindow.Screen" />
     public IScreen Screen { get; }
 
-    /// <summary>
-    /// Registers a sub-window as a child. This is an internal function.
-    /// </summary>
-    /// <param name="subWindow">The sub-window to register.</param>
-    internal void AddChild(SubWindow subWindow)
-    {
-        Debug.Assert(subWindow != null);
-        Debug.Assert(!subWindow.Disposed);
-        Debug.Assert(subWindow.Window == this);
-        Debug.Assert(!_subWindows.Contains(subWindow));
-
-        _subWindows.Add(subWindow);
-    }
-
-    /// <summary>
-    /// Un-registers a sub-window as a child. This is an internal function.
-    /// </summary>
-    /// <param name="subWindow">The sub-window to un-register.</param>
-    internal void RemoveChild(SubWindow subWindow)
-    {
-        Debug.Assert(subWindow != null);
-        Debug.Assert(!subWindow.Disposed);
-        Debug.Assert(subWindow.Window == this);
-        Debug.Assert(_subWindows.Contains(subWindow));
-
-        _subWindows.Remove(subWindow);
-    }
-
-    /// <inheritdoc cref="IWindow.SubWindows"/>
+    /// <inheritdoc cref="IWindow.SubWindows" />
     public IEnumerable<ISubWindow> SubWindows => _subWindows;
 
-    /// <inheritdoc cref="IWindow.UseHardwareLineEdit"/>
+    /// <inheritdoc cref="IWindow.UseHardwareLineEdit" />
     public bool UseHardwareLineEdit
     {
         get => Curses.is_idlok(Handle);
@@ -105,7 +78,7 @@ public class Window: Surface, IWindow
         }
     }
 
-    /// <inheritdoc cref="IWindow.UseHardwareCharEdit"/>
+    /// <inheritdoc cref="IWindow.UseHardwareCharEdit" />
     public bool UseHardwareCharEdit
     {
         get => Curses.is_idcok(Handle);
@@ -118,7 +91,7 @@ public class Window: Surface, IWindow
         }
     }
 
-    /// <inheritdoc cref="IWindow.Location"/>
+    /// <inheritdoc cref="IWindow.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location
     {
@@ -138,7 +111,7 @@ public class Window: Surface, IWindow
         }
     }
 
-    /// <inheritdoc cref="IWindow.Size"/>
+    /// <inheritdoc cref="IWindow.Size" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public new Size Size
     {
@@ -155,14 +128,14 @@ public class Window: Surface, IWindow
         }
     }
 
-    /// <inheritdoc cref="IWindow.ImmediateRefresh"/>
+    /// <inheritdoc cref="IWindow.ImmediateRefresh" />
     public bool ImmediateRefresh
     {
         get => Curses.is_immedok(Handle);
         set => Curses.immedok(Handle, value);
     }
 
-    /// <inheritdoc cref="IWindow.Refresh(bool, bool)"/>
+    /// <inheritdoc cref="IWindow.Refresh(bool, bool)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(bool batch, bool entireScreen)
     {
@@ -180,7 +153,7 @@ public class Window: Surface, IWindow
         }
     }
 
-    /// <inheritdoc cref="IWindow.Refresh(int, int)"/>
+    /// <inheritdoc cref="IWindow.Refresh(int, int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(int y, int count)
     {
@@ -198,7 +171,7 @@ public class Window: Surface, IWindow
               .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
     }
 
-    /// <inheritdoc cref="IWindow.SubWindow"/>
+    /// <inheritdoc cref="IWindow.SubWindow" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow SubWindow(Rectangle area)
     {
@@ -213,7 +186,7 @@ public class Window: Surface, IWindow
         return new SubWindow(this, handle) { ManagedCaret = ManagedCaret };
     }
 
-    /// <inheritdoc cref="IWindow.Duplicate"/>
+    /// <inheritdoc cref="IWindow.Duplicate" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IWindow Duplicate()
     {
@@ -222,20 +195,48 @@ public class Window: Surface, IWindow
 
         return new Window((Screen) Screen, handle) { ManagedCaret = ManagedCaret };
     }
-    
-    /// <inheritdoc cref="Surface.Delete"/>
+
+    /// <summary>
+    ///     Registers a sub-window as a child. This is an internal function.
+    /// </summary>
+    /// <param name="subWindow">The sub-window to register.</param>
+    internal void AddChild(SubWindow subWindow)
+    {
+        Debug.Assert(subWindow != null);
+        Debug.Assert(!subWindow.Disposed);
+        Debug.Assert(subWindow.Window == this);
+        Debug.Assert(!_subWindows.Contains(subWindow));
+
+        _subWindows.Add(subWindow);
+    }
+
+    /// <summary>
+    ///     Un-registers a sub-window as a child. This is an internal function.
+    /// </summary>
+    /// <param name="subWindow">The sub-window to un-register.</param>
+    internal void RemoveChild(SubWindow subWindow)
+    {
+        Debug.Assert(subWindow != null);
+        Debug.Assert(!subWindow.Disposed);
+        Debug.Assert(subWindow.Window == this);
+        Debug.Assert(_subWindows.Contains(subWindow));
+
+        _subWindows.Remove(subWindow);
+    }
+
+    /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
         foreach (var window in _subWindows.ToArray())
         {
             window.Destroy();
         }
-        
+
         if (Screen is Screen s)
         {
             s.RemoveChild(this);
         }
-        
+
         base.Delete();
     }
 }

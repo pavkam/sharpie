@@ -45,7 +45,7 @@ public enum EventType
     ///     The terminal has been resized.
     /// </summary>
     TerminalResize,
-    
+
     /// <summary>
     ///     The terminal is about to be resized.
     /// </summary>

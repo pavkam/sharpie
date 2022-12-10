@@ -46,7 +46,7 @@ public class SubPadTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _parent = new((Screen)_terminal.Screen, new(1));
+        _parent = new((Screen) _terminal.Screen, new(1));
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -63,7 +63,7 @@ public class SubPadTests
         var sp = new SubPad(_parent, IntPtr.MaxValue);
         sp.Pad.ShouldBe(_parent);
     }
-    
+
     [TestMethod]
     public void Location_Get_Returns_IfCursesSucceeded()
     {
@@ -100,28 +100,28 @@ public class SubPadTests
         Should.Throw<CursesOperationException>(() => sp.Location)
               .Operation.ShouldBe("getpary");
     }
-    
+
     [TestMethod]
     public void Location_Set_SetsValue_IfCursesSucceeded()
     {
         _cursesMock.MockLargeArea(_parent);
-        
+
         var sp = new SubPad(_parent, new(2));
         _cursesMock.MockSmallArea(sp);
-        
+
         sp.Location = new(11, 22);
 
         _cursesMock.Verify(v => v.mvderwin(sp.Handle, 22, 11), Times.Once);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfCursesFails()
     {
         _cursesMock.MockLargeArea(_parent);
-       
+
         var sp = new SubPad(_parent, new(2));
         _cursesMock.MockSmallArea(sp);
-        
+
         _cursesMock.Setup(s => s.mvderwin(sp.Handle, It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
@@ -129,15 +129,15 @@ public class SubPadTests
         Should.Throw<CursesOperationException>(() => sp.Location = new(1, 1))
               .Operation.ShouldBe("mvderwin");
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfOutsideParent()
     {
         _cursesMock.MockSmallArea(_parent);
-        
+
         var sp = new SubPad(_parent, new(1));
         _cursesMock.MockSmallArea(sp);
-        
+
         Should.Throw<ArgumentOutOfRangeException>(() => sp.Location = new(6, 6));
     }
 
@@ -148,7 +148,7 @@ public class SubPadTests
 
         var sp = new SubPad(_parent, new(2));
         _cursesMock.MockSmallArea(sp);
-        
+
         sp.Location = new(5, 5);
 
         _cursesMock.Verify(v => v.mvderwin(new(2), 5, 5), Times.Once);
@@ -158,7 +158,7 @@ public class SubPadTests
     public void Size_Set_SetsValue_IfCursesSucceeded()
     {
         _cursesMock.MockLargeArea(_parent);
-        
+
         var w = new SubPad(_parent, new(1));
         w.Size = new(11, 22);
 
@@ -200,13 +200,12 @@ public class SubPadTests
 
         _cursesMock.Verify(v => v.wresize(w.Handle, 5, 5), Times.Once);
     }
-    
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Duplicate_Throws_IfCursesFails()
     {
         var sp = new SubPad(_parent, new(2));
-        
+
         Should.Throw<CursesOperationException>(() => sp.Duplicate())
               .Operation.ShouldBe("dupwin");
     }
@@ -215,49 +214,50 @@ public class SubPadTests
     public void Duplicate_ReturnsNewPad_IfCursesSucceeds()
     {
         var sp = new SubPad(_parent, new(2));
-        
+
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(3));
 
         var sp1 = sp.Duplicate();
-        
+
         sp1.Pad.ShouldBe(_parent);
         sp1.Handle.ShouldBe(new(3));
         _parent.SubPads.ShouldContain(sp1);
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void Duplicate_PreservesManagedCaret(bool mc)
     {
         var sp = new SubPad(_parent, new(3)) { ManagedCaret = mc };
-        
+
         _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
-        
-        _cursesMock.Setup(s => s.is_leaveok(sp.Handle)).Returns(mc);
-        
+
+        _cursesMock.Setup(s => s.is_leaveok(sp.Handle))
+                   .Returns(mc);
+
         var sp1 = sp.Duplicate();
-        
+
         _cursesMock.Verify(s => s.leaveok(sp1.Handle, mc), Times.Once);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Destroy_RemovesWindowFromParent()
     {
         var sp = new SubPad(_parent, new(1));
         sp.Destroy();
-        
+
         _parent.SubPads.ShouldBeEmpty();
     }
-    
+
     [TestMethod]
     public void Destroy_CallsCurses()
     {
         var sp = new SubPad(_parent, new(1));
-        
+
         sp.Destroy();
         sp.Disposed.ShouldBeTrue();
-        
+
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
     }
 }

@@ -49,45 +49,17 @@ public sealed class Pad: Surface, IPad
     internal Pad(Screen parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
     {
         Screen = parent!;
-        
+
         parent!.AddChild(this);
-    } 
+    }
 
     /// <inheritdoc cref="IPad.Screen" />
     public IScreen Screen { get; }
 
-    /// <inheritdoc cref="IWindow.SubWindows"/>
+    /// <inheritdoc cref="IWindow.SubWindows" />
     public IEnumerable<ISubPad> SubPads => _subPads;
-    
-    /// <summary>
-    /// Registers a sub-pad as a child. This is an internal function.
-    /// </summary>
-    /// <param name="subPad">The sub-pad to register.</param>
-    internal void AddChild(SubPad subPad)
-    {
-        Debug.Assert(subPad != null);
-        Debug.Assert(!subPad.Disposed);
-        Debug.Assert(subPad.Pad == this);
-        Debug.Assert(!_subPads.Contains(subPad));
 
-        _subPads.Add(subPad);
-    }
-
-    /// <summary>
-    /// Un-registers a sub-pad as a child. This is an internal function.
-    /// </summary>
-    /// <param name="subPad">The sub-pad to un-register.</param>
-    internal void RemoveChild(SubPad subPad)
-    {
-        Debug.Assert(subPad != null);
-        Debug.Assert(!subPad.Disposed);
-        Debug.Assert(subPad.Pad == this);
-        Debug.Assert(_subPads.Contains(subPad));
-
-        _subPads.Remove(subPad);
-    }
-    
-    /// <inheritdoc cref="IPad.Size"/>
+    /// <inheritdoc cref="IPad.Size" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public new Size Size
     {
@@ -103,7 +75,7 @@ public sealed class Pad: Surface, IPad
                   .Check(nameof(Curses.wresize), "Failed to resize the sub-pad.");
         }
     }
-    
+
     /// <inheritdoc cref="IPad.Refresh(bool,bool,System.Drawing.Rectangle,System.Drawing.Point)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(bool batch, bool entireScreen, Rectangle rect, Point screenPos)
@@ -135,11 +107,11 @@ public sealed class Pad: Surface, IPad
         }
     }
 
-    /// <inheritdoc cref="IPad.SubPad"/>
+    /// <inheritdoc cref="IPad.SubPad" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubPad SubPad(Rectangle area)
     {
-        if (!((IPad)this).IsRectangleWithin(area))
+        if (!((IPad) this).IsRectangleWithin(area))
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }
@@ -149,8 +121,8 @@ public sealed class Pad: Surface, IPad
 
         return new SubPad(this, handle) { ManagedCaret = ManagedCaret };
     }
-    
-    /// <inheritdoc cref="IPad.Duplicate"/>
+
+    /// <inheritdoc cref="IPad.Duplicate" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IPad Duplicate()
     {
@@ -160,7 +132,35 @@ public sealed class Pad: Surface, IPad
         return new Pad((Screen) Screen, handle) { ManagedCaret = ManagedCaret };
     }
 
-    /// <inheritdoc cref="Surface.Delete"/>
+    /// <summary>
+    ///     Registers a sub-pad as a child. This is an internal function.
+    /// </summary>
+    /// <param name="subPad">The sub-pad to register.</param>
+    internal void AddChild(SubPad subPad)
+    {
+        Debug.Assert(subPad != null);
+        Debug.Assert(!subPad.Disposed);
+        Debug.Assert(subPad.Pad == this);
+        Debug.Assert(!_subPads.Contains(subPad));
+
+        _subPads.Add(subPad);
+    }
+
+    /// <summary>
+    ///     Un-registers a sub-pad as a child. This is an internal function.
+    /// </summary>
+    /// <param name="subPad">The sub-pad to un-register.</param>
+    internal void RemoveChild(SubPad subPad)
+    {
+        Debug.Assert(subPad != null);
+        Debug.Assert(!subPad.Disposed);
+        Debug.Assert(subPad.Pad == this);
+        Debug.Assert(_subPads.Contains(subPad));
+
+        _subPads.Remove(subPad);
+    }
+
+    /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
         foreach (var subPad in _subPads.ToArray())
@@ -172,7 +172,7 @@ public sealed class Pad: Surface, IPad
         {
             s.RemoveChild(this);
         }
-        
+
         base.Delete();
     }
 }

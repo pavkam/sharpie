@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Defines the traits needed to implement <see cref="ColorManager"/>.
+///     Defines the traits needed to implement <see cref="ColorManager" />.
 /// </summary>
 [PublicAPI]
 public interface IColorManager

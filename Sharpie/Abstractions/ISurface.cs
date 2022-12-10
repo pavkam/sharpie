@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Defines the base traits required for <see cref="Window"/>, <see cref="Screen"/> and <see cref="Pad"/> classes.
+///     Defines the base traits required for <see cref="Window" />, <see cref="Screen" /> and <see cref="Pad" /> classes.
 /// </summary>
 [PublicAPI]
 public interface ISurface: IDrawSurface
@@ -53,7 +53,7 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     bool EnableScrolling { get; set; }
-    
+
     /// <summary>
     ///     Gets or sets the style of the surface.
     /// </summary>
@@ -71,7 +71,7 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     (Rune @char, Style style) Background { get; set; }
-    
+
     /// <summary>
     ///     Gets the size of the surface.
     /// </summary>
@@ -92,7 +92,12 @@ public interface ISurface: IDrawSurface
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     bool Invalidated { get; }
 
-   
+    /// <summary>
+    ///     Controls whether the caret is managed by the application and should not be managed by the hardware.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    bool ManagedCaret { get; set; }
+
     /// <summary>
     ///     Enables specified attributes and keep the others untouched.
     /// </summary>
@@ -363,12 +368,6 @@ public interface ISurface: IDrawSurface
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y" /> is outside the bounds.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     bool LineInvalidated(int y);
-
-    /// <summary>
-    /// Controls whether the caret is managed by the application and should not be managed by the hardware.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    bool ManagedCaret { get; set; }
 
     /// <summary>
     ///     Removes the surface form the parent, destroys all children and itself.

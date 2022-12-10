@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Defines the traits that a <see cref="Screen"/> implements.
+///     Defines the traits that a <see cref="Screen" /> implements.
 /// </summary>
 [PublicAPI]
 public interface IScreen: ISurface
@@ -40,16 +40,27 @@ public interface IScreen: ISurface
     ///     The terminal this screen belongs to.
     /// </summary>
     ITerminal Terminal { get; }
-    
+
     /// <summary>
     ///     Gets all child windows on this screen.
     /// </summary>
     IEnumerable<IWindow> Windows { get; }
-    
+
     /// <summary>
     ///     Gets all child pads on this screen.
     /// </summary>
     IEnumerable<IPad> Pads { get; }
+
+    /// <summary>
+    ///     Set or get the immediate refresh capability of the screen.
+    /// </summary>
+    /// <remarks>
+    ///     Immediate refresh will redraw the screen on each change.
+    ///     This might be very slow for most use cases.
+    ///     Default is <c>false</c>.
+    /// </remarks>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    bool ImmediateRefresh { get; set; }
 
     /// <summary>
     ///     Refreshes the window by synchronizing it to the terminal with immediate redraw.
@@ -67,7 +78,7 @@ public interface IScreen: ISurface
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
     IWindow Window(Rectangle area);
-   
+
     /// <summary>
     ///     Creates a new pad.
     /// </summary>
@@ -76,18 +87,7 @@ public interface IScreen: ISurface
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size" /> is invalid.</exception>
     IPad Pad(Size size);
-    
-    /// <summary>
-    ///     Set or get the immediate refresh capability of the screen.
-    /// </summary>
-    /// <remarks>
-    ///     Immediate refresh will redraw the screen on each change.
-    ///     This might be very slow for most use cases.
-    ///     Default is <c>false</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    bool ImmediateRefresh { get; set; }
-   
+
     /// <summary>
     ///     This method invalidates the screen in its entirety and redraws if from scratch.
     /// </summary>

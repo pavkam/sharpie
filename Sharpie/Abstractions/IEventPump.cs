@@ -1,7 +1,7 @@
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Defines the traits needed to implement <see cref="EventPump"/>.
+///     Defines the traits needed to implement <see cref="EventPump" />.
 /// </summary>
 [PublicAPI]
 public interface IEventPump
@@ -15,7 +15,7 @@ public interface IEventPump
     /// <param name="surface">The surface to refresh during event processing.</param>
     /// <param name="cancellationToken">Cancellation token used to interrupt the process.</param>
     /// <returns>The event listening enumerable.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="surface"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="surface" /> is <c>null</c>.</exception>
     IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken);
 
     /// <summary>
@@ -23,7 +23,7 @@ public interface IEventPump
     /// </summary>
     /// <param name="surface">The surface to refresh during event processing.</param>
     /// <returns>The event listening enumerable.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="surface"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="surface" /> is <c>null</c>.</exception>
     IEnumerable<Event> Listen(ISurface surface) => Listen(surface, CancellationToken.None);
 
     /// <summary>

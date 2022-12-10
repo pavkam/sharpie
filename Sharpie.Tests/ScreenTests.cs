@@ -46,16 +46,13 @@ public class ScreenTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _screen = (Screen)_terminal.Screen;
+        _screen = (Screen) _terminal.Screen;
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
 
     [TestMethod]
-    public void Ctor_Throws_IfTerminalIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => new Screen(null!, new(1)));
-    }
+    public void Ctor_Throws_IfTerminalIsNull() { Should.Throw<ArgumentNullException>(() => new Screen(null!, new(1))); }
 
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
@@ -68,7 +65,7 @@ public class ScreenTests
         _cursesMock.Verify(v => v.notimeout(w.Handle, false), Times.Once);
         _cursesMock.Verify(v => v.syncok(w.Handle, true), Times.Once);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_IfConfigureWindow_FailsInCurses_1()
     {
@@ -80,17 +77,17 @@ public class ScreenTests
     }
 
     [TestMethod] public void Terminal_IsInitialized() { _screen.Terminal.ShouldBe(_terminal); }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails()
     {
         _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
-        
+
         Should.Throw<CursesOperationException>(() => _screen.Refresh())
               .Operation.ShouldBe("wrefresh");
     }
-    
+
     [TestMethod]
     public void Refresh_Succeeds_IfCursesSucceeds()
     {
@@ -103,7 +100,7 @@ public class ScreenTests
     {
         _cursesMock.Setup(s => s.is_immedok(It.IsAny<IntPtr>()))
                    .Returns(true);
-        
+
         _screen.ImmediateRefresh.ShouldBeTrue();
     }
 
@@ -114,18 +111,14 @@ public class ScreenTests
 
         _cursesMock.Verify(v => v.immedok(_screen.Handle, true), Times.Once);
     }
-    
-    [TestMethod]
-    public void Windows_IsEmpty_WhenCreated()
-    {
-        _screen.Windows.ShouldBeEmpty();
-    }
-    
+
+    [TestMethod] public void Windows_IsEmpty_WhenCreated() { _screen.Windows.ShouldBeEmpty(); }
+
     [TestMethod]
     public void Windows_ContainsTheChild_WhenPassedAsParent()
     {
         var w = new Window(_screen, IntPtr.MaxValue);
-        
+
         _screen.Windows.ShouldContain(w);
     }
 
@@ -134,21 +127,17 @@ public class ScreenTests
     {
         var w = new Window(_screen, IntPtr.MaxValue);
         w.Dispose();
-        
+
         _screen.Windows.ShouldBeEmpty();
     }
-    
-    [TestMethod]
-    public void Pads_IsEmpty_WhenCreated()
-    {
-        _screen.Pads.ShouldBeEmpty();
-    }
-    
+
+    [TestMethod] public void Pads_IsEmpty_WhenCreated() { _screen.Pads.ShouldBeEmpty(); }
+
     [TestMethod]
     public void Pads_ContainsTheChild_WhenPassedAsParent()
     {
         var p = new Pad(_screen, IntPtr.MaxValue);
-        
+
         _screen.Pads.ShouldContain(p);
     }
 
@@ -157,7 +146,7 @@ public class ScreenTests
     {
         var p = new Pad(_screen, IntPtr.MaxValue);
         p.Dispose();
-        
+
         _screen.Pads.ShouldBeEmpty();
     }
 
@@ -179,15 +168,15 @@ public class ScreenTests
         Should.Throw<CursesOperationException>(() => _screen.Window(new(0, 0, 1, 1)))
               .Operation.ShouldBe("newwin");
     }
-    
+
     [TestMethod]
     public void Window_ReturnsNewWindow_IfCursesSucceeds()
     {
         _cursesMock.MockLargeArea(_screen);
-        
+
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
-        
+
         var w = _screen.Window(new(1, 2, 3, 4));
         w.Handle.ShouldBe(new(2));
         w.Screen.ShouldBe(_screen);
@@ -195,7 +184,7 @@ public class ScreenTests
 
         _cursesMock.Verify(v => v.newwin(4, 3, 2, 1), Times.Once);
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void Window_PreservesManagedCaret(bool mc)
     {
@@ -203,12 +192,14 @@ public class ScreenTests
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
 
-        _cursesMock.Setup(s => s.is_leaveok(_screen.Handle)).Returns(mc);
+        _cursesMock.Setup(s => s.is_leaveok(_screen.Handle))
+                   .Returns(mc);
+
         var w = _screen.Window(new(1, 2, 3, 4));
-        
+
         _cursesMock.Verify(s => s.leaveok(w.Handle, mc), Times.Once);
     }
-    
+
     [TestMethod]
     public void Pad_Throws_IfWidthLessThanOne()
     {
@@ -251,9 +242,11 @@ public class ScreenTests
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
 
-        _cursesMock.Setup(s => s.is_leaveok(_screen.Handle)).Returns(mc);
+        _cursesMock.Setup(s => s.is_leaveok(_screen.Handle))
+                   .Returns(mc);
+
         var p = _screen.Pad(new(1, 2));
-        
+
         _cursesMock.Verify(s => s.leaveok(p.Handle, mc), Times.Once);
     }
 
@@ -271,7 +264,7 @@ public class ScreenTests
     {
         var p = new Pad(_screen, new(1));
         var w = new Window(_screen, new(1));
-        
+
         _screen.Destroy();
         p.Disposed.ShouldBeTrue();
         w.Disposed.ShouldBeTrue();
