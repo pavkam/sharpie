@@ -437,9 +437,10 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <summary>
-    /// Attempts tp update the terminal.
+    /// Attempts to update the terminal.
     /// </summary>
     /// <returns><c>true</c> if the attempt was successful. <c>false</c> otherwise.</returns>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     internal bool TryUpdate()
     {
         lock (_syncRoot)
@@ -457,11 +458,11 @@ public sealed class Terminal: ITerminal, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ITerminal.RunAsync" />
+    /// <inheritdoc cref="ITerminal.Run" />
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync" /> is already running.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if another <see cref="Run" /> is already running.</exception>
     [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
-    public Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true)
+    public void Run(Func<ITerminal, Event, Task> eventAction, bool stopOnCtrlC = true)
     {
         if (eventAction == null)
         {
@@ -472,7 +473,7 @@ public sealed class Terminal: ITerminal, IDisposable
         {
             if (_runCompletedEvent != null)
             {
-                throw new InvalidOperationException($"Another {nameof(RunAsync)} is already running.");
+                throw new InvalidOperationException($"Another {nameof(Run)} is already running.");
             }
 
             _runCompletedEvent = new();
@@ -480,46 +481,43 @@ public sealed class Terminal: ITerminal, IDisposable
 
         AssertAlive();
 
-        return Task.Run(() =>
+        AsyncContext.Run(async () =>
         {
-            AsyncContext.Run(async () =>
+            try
             {
-                try
+                foreach (var @event in Events.Listen())
                 {
-                    foreach (var @event in Events.Listen())
+                    if (stopOnCtrlC &&
+                        @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
                     {
-                        if (stopOnCtrlC &&
-                            @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
-                        {
-                            break;
-                        }
-
-                        if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
-                        {
-                            break;
-                        }
-
-                        if (@event is DelegateEvent { Object: ActionWrapper aw })
-                        {
-                            Debug.Assert(aw.Action != null);
-
-                            await aw.Action();
-                        } else
-                        {
-                            await eventAction(@event);
-                        }
+                        break;
                     }
-                } finally
-                {
-                    Debug.Assert(_runCompletedEvent != null);
-                    _runCompletedEvent.Set();
-                    lock (_syncRoot)
+
+                    if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
                     {
-                        _runCompletedEvent = null;
+                        break;
+                    }
+
+                    if (@event is DelegateEvent { Object: ActionWrapper aw })
+                    {
+                        Debug.Assert(aw.Action != null);
+
+                        await aw.Action();
+                    } else
+                    {
+                        await eventAction(this, @event);
                     }
                 }
+            } finally
+            {
+                Debug.Assert(_runCompletedEvent != null);
+                _runCompletedEvent.Set();
+                lock (_syncRoot)
+                {
+                    _runCompletedEvent = null;
+                }
+            }
 
-            });
         });
     }
 

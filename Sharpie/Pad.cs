@@ -81,29 +81,29 @@ public sealed class Pad: Surface, IPad
 
     /// <inheritdoc cref="IPad.Refresh(System.Drawing.Rectangle,System.Drawing.Point)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh(Rectangle rect, Point screenPos)
+    public void Refresh(Rectangle srcArea, Point destLocation)
     {
-        if (!((IPad) this).IsRectangleWithin(rect))
+        if (!((IPad) this).IsRectangleWithin(srcArea))
         {
-            throw new ArgumentOutOfRangeException(nameof(rect));
+            throw new ArgumentOutOfRangeException(nameof(srcArea));
         }
 
-        var destRect = rect with { X = screenPos.X, Y = screenPos.Y };
+        var destRect = srcArea with { X = destLocation.X, Y = destLocation.Y };
         if (!Screen.IsRectangleWithin(destRect))
         {
-            throw new ArgumentOutOfRangeException(nameof(screenPos));
+            throw new ArgumentOutOfRangeException(nameof(destLocation));
         }
 
         ((Terminal) Screen.Terminal).WithinBatch(batch =>
         {
             if (batch)
             {
-                Curses.pnoutrefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
+                Curses.pnoutrefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
                           destRect.Bottom, destRect.Right)
                       .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
             } else
             {
-                Curses.prefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
+                Curses.prefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
                           destRect.Bottom, destRect.Right)
                       .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
             }

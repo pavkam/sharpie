@@ -83,6 +83,7 @@ public class SubWindowTests
         var sw = new SubWindow(_parent, IntPtr.MaxValue);
 
         sw.Window.ShouldBe(_parent);
+        ((ISubWindow)sw).Window.ShouldBe(_parent);
     }
 
     [TestMethod]

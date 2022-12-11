@@ -73,10 +73,12 @@ public class TerminalSurfaceTests
         var sa = new TerminalSurface(_terminal, new(1));
 
         sa.Terminal.ShouldBe(_terminal);
+        ((ITerminalSurface)sa).Terminal.ShouldBe(_terminal);
     }
 
+    
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh_Fails_IfCursesFails_1()
+    public void Refresh1_Fails_IfCursesFails_NoBatch()
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
@@ -88,19 +90,22 @@ public class TerminalSurfaceTests
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh_Fails_IfCursesFails_2()
+    public void Refresh1_Fails_IfCursesFails_InBatch()
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
         _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => sa.Refresh(true))
-              .Operation.ShouldBe("wnoutrefresh");
+        using (_terminal.BatchUpdates())
+        {
+            Should.Throw<CursesOperationException>(() => sa.Refresh())
+                  .Operation.ShouldBe("wnoutrefresh");
+        }
     }
 
     [TestMethod]
-    public void Refresh_Succeeds_IfCursesSucceeds_1()
+    public void Refresh1_Succeeds_IfCursesSucceeds_NoBatch()
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
@@ -109,14 +114,90 @@ public class TerminalSurfaceTests
     }
 
     [TestMethod]
-    public void Refresh_Succeeds_IfCursesSucceeds_2()
+    public void Refresh1_Succeeds_IfCursesSucceeds_InBatch()
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
-        sa.Refresh(true);
+        using (_terminal.BatchUpdates())
+        {
+            sa.Refresh();
+        }
+        
         _cursesMock.Verify(v => v.wnoutrefresh(sa.Handle), Times.Once);
     }
 
+    [TestMethod]
+    public void Refresh2_Throws_IfYIsNegative()
+    {
+        var sa = new TerminalSurface(_terminal, new(1));
+        
+        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+                   .Returns(10);
+       
+        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(-1, 1));
+    }
+
+    [TestMethod]
+    public void Refresh2_Throws_IfYIsOutsideBounds()
+    {
+        var sa = new TerminalSurface(_terminal, new(1));
+        
+        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+                   .Returns(10);
+
+        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(10, 1));
+    }
+
+    [TestMethod]
+    public void Refresh2_Throws_IfCountIsLessThanOne()
+    {
+        var sa = new TerminalSurface(_terminal, new(1));
+        
+        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+                   .Returns(10);
+
+        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(0, 0));
+    }
+
+    [TestMethod]
+    public void Refresh2_Throws_IfCountGreaterThanBounds()
+    {
+        var sa = new TerminalSurface(_terminal, new(1));
+        
+        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+                   .Returns(10);
+
+        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(1, 10));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Refresh2_Throws_IfCursesFails()
+    {
+        var sa = new TerminalSurface(_terminal, new(1));
+        
+        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+                   .Returns(10);
+
+        _cursesMock.Setup(s => s.wredrawln(sa.Handle, It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesOperationException>(() => sa.Refresh(1, 1))
+              .Operation.ShouldBe("wredrawln");
+    }
+
+    [TestMethod]
+    public void Refresh2_Succeeds_IfCursesSucceeds()
+    {
+        var sa = new TerminalSurface(_terminal, new(1));
+        
+        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+                   .Returns(10);
+
+        Should.NotThrow(() => sa.Refresh(1, 9));
+    }
+    
+    
+    
     [TestMethod]
     public void ImmediateRefresh_Returns_IfCursesSucceeded()
     {
@@ -136,7 +217,27 @@ public class TerminalSurfaceTests
 
         _cursesMock.Verify(v => v.immedok(sa.Handle, true), Times.Once);
     }
+    
+    [TestMethod]
+    public void Critical_Returns_IfCursesSucceeded()
+    {
+        var sa = new TerminalSurface(_terminal, new(1));
 
+        _cursesMock.Setup(s => s.is_cleared(It.IsAny<IntPtr>()))
+                   .Returns(true);
+
+        sa.Critical.ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public void Critical_Sets_IfCursesSucceeded()
+    {
+        var sa = new TerminalSurface(_terminal, new(1));
+        sa.Critical = true;
+
+        _cursesMock.Verify(v => v.clearok(sa.Handle, true), Times.Once);
+    }
+    
     [TestMethod]
     public void Destroy_CallsCurses()
     {

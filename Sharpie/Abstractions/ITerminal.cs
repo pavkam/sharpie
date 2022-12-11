@@ -153,9 +153,9 @@ public interface ITerminal
     /// <param name="eventAction">The method to accept the events.</param>
     /// <param name="stopOnCtrlC">Set to <c>true</c> if CTRL+C should interrupt the main loop.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if another <see cref="RunAsync" /> is already running.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if another <see cref="Run" /> is already running.</exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    Task RunAsync(Func<Event, Task> eventAction, bool stopOnCtrlC = true);
+    void Run(Func<ITerminal, Event, Task> eventAction, bool stopOnCtrlC = true);
 
     /// <summary>
     ///     Delegates an action to be executed on the main thread.

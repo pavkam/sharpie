@@ -66,4 +66,13 @@ public interface ITerminalSurface: ISurface
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     void Refresh();
+    
+    /// <summary>
+    ///      Redraws the given lines of the window to the terminal.
+    /// </summary>
+    /// <param name="y">The starting line to refresh.</param>
+    /// <param name="count">The number of lines to refresh.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The combination of lines and count exceed the window boundary.</exception>
+    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    void Refresh(int y, int count);
 }

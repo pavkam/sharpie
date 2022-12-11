@@ -55,7 +55,7 @@ var w = terminal.Screen.Window(new(0, 0, 10, 10));
 w.Refresh();
 
 // Run the main loop.
-await terminal.RunAsync(@event =>
+terminal.Run((_, @event) =>
 {
     switch (@event)
     {

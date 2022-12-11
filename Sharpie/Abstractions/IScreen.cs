@@ -47,23 +47,6 @@ public interface IScreen: ITerminalSurface
     IEnumerable<IPad> Pads { get; }
 
     /// <summary>
-    ///     Set or get the immediate refresh capability of the screen.
-    /// </summary>
-    /// <remarks>
-    ///     Immediate refresh will redraw the screen on each change.
-    ///     This might be very slow for most use cases.
-    ///     Default is <c>false</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    bool ImmediateRefresh { get; set; }
-
-    /// <summary>
-    ///     Redraws all the dirty lines of the screen to the terminal.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    void Refresh();
-
-    /// <summary>
     ///     Creates a new sub-window in the parent window.
     /// </summary>
     /// <param name="area">The area of the window to put the sub-window in.</param>
@@ -82,19 +65,4 @@ public interface IScreen: ITerminalSurface
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size" /> is invalid.</exception>
     IPad Pad(Size size);
-
-    /// <summary>
-    ///     This method invalidates the screen in its entirety and redraws if from scratch.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">Screen or some children are no longer usable.</exception>
-    void FullRefresh()
-    {
-        Invalidate();
-        Refresh();
-        foreach (var child in Windows)
-        {
-            child.Invalidate();
-            child.Refresh();
-        }
-    }
 }

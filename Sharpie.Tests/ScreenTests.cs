@@ -95,23 +95,6 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wrefresh(_screen.Handle), Times.Once);
     }
 
-    [TestMethod]
-    public void ImmediateRefresh_Returns_IfCursesSucceeded()
-    {
-        _cursesMock.Setup(s => s.is_immedok(It.IsAny<IntPtr>()))
-                   .Returns(true);
-
-        _screen.ImmediateRefresh.ShouldBeTrue();
-    }
-
-    [TestMethod]
-    public void ImmediateRefresh_Sets_IfCursesSucceeded()
-    {
-        _screen.ImmediateRefresh = true;
-
-        _cursesMock.Verify(v => v.immedok(_screen.Handle, true), Times.Once);
-    }
-
     [TestMethod] public void Windows_IsEmpty_WhenCreated() { _screen.Windows.ShouldBeEmpty(); }
 
     [TestMethod]

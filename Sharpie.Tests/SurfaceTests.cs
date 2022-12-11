@@ -472,13 +472,13 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void Invalidated_Returns_IfCursesSucceeded()
+    public void Dirty_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.is_wintouched(It.IsAny<IntPtr>()))
                    .Returns(true);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        s.Invalidated.ShouldBeTrue();
+        s.Dirty.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -919,27 +919,27 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void LineInvalidated_Throws_IfLineIsNegative()
+    public void LineDirty_Throws_IfLineIsNegative()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.LineInvalidated(-1));
+        Should.Throw<ArgumentOutOfRangeException>(() => s.LineDirty(-1));
     }
 
     [TestMethod]
-    public void LineInvalidated_Throws_IfYIsOutsideBounds()
+    public void LineDirty_Throws_IfYIsOutsideBounds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.LineInvalidated(10));
+        Should.Throw<ArgumentOutOfRangeException>(() => s.LineDirty(10));
     }
 
     [TestMethod]
-    public void LineInvalidated_Succeeds_IfCursesSucceeds()
+    public void LineDirty_Succeeds_IfCursesSucceeds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
@@ -948,52 +948,52 @@ public class SurfaceTests
                    .Returns(true);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        s.LineInvalidated(1)
+        s.LineDirty(1)
          .ShouldBeTrue();
     }
 
     [TestMethod]
-    public void Invalidate2_Throws_IfYIsNegative()
+    public void MarkDirty2_Throws_IfYIsNegative()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.Invalidate(-1, 1));
+        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(-1, 1));
     }
 
     [TestMethod]
-    public void Invalidate2_Throws_IfYIsOutsideBounds()
+    public void MarkDirty2_Throws_IfYIsOutsideBounds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.Invalidate(10, 1));
+        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(10, 1));
     }
 
     [TestMethod]
-    public void Invalidate2_Throws_IfCountIsLessThanOne()
+    public void MarkDirty2_Throws_IfCountIsLessThanOne()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.Invalidate(0, 0));
+        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(0, 0));
     }
 
     [TestMethod]
-    public void Invalidate2_Throws_IfCountGreaterThanBounds()
+    public void MarkDirty2_Throws_IfCountGreaterThanBounds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.Invalidate(1, 10));
+        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(1, 10));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Invalidate2_Throws_IfCursesFails()
+    public void MarkDirty2_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
@@ -1002,18 +1002,18 @@ public class SurfaceTests
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<CursesOperationException>(() => s.Invalidate(1, 1))
+        Should.Throw<CursesOperationException>(() => s.MarkDirty(1, 1))
               .Operation.ShouldBe("wtouchln");
     }
 
     [TestMethod]
-    public void Invalidate2_Succeeds_IfCursesSucceeds()
+    public void MarkDirty2_Succeeds_IfCursesSucceeds()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.NotThrow(() => s.Invalidate(1, 9));
+        Should.NotThrow(() => s.MarkDirty(1, 9));
     }
 
     [TestMethod]

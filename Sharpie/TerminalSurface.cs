@@ -61,15 +61,16 @@ public class TerminalSurface: Surface, ITerminalSurface
     }
     
     /// <inheritdoc cref="ITerminalSurface.Critical" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public bool Critical
     {
         get => Curses.is_cleared(Handle);
         set => Curses.clearok(Handle, value);
     }
 
-    /// <inheritdoc cref="ITerminalSurface.Refresh" />
+    /// <inheritdoc cref="ITerminalSurface.Refresh()" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh()
+    public virtual void Refresh()
     {
         Terminal.WithinBatch(batch =>
         {
@@ -83,5 +84,23 @@ public class TerminalSurface: Surface, ITerminalSurface
                       .Check(nameof(Curses.wrefresh), "Failed to perform window refresh.");
             }
         });
+    }
+    
+    /// <inheritdoc cref="IWindow.Refresh(int, int)" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public void Refresh(int y, int count)
+    {
+        if (y < 0 || y >= Size.Height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(y));
+        }
+
+        if (count < 1 || y + count - 1 >= Size.Height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count));
+        }
+
+        Curses.wredrawln(Handle, y, count)
+              .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
     }
 }

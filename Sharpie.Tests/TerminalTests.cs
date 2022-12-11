@@ -746,32 +746,91 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void Update_Throws_IfScreenIsDisposed()
+    public void BatchUpdates_UpdatesScreenWhenObjectIsDisposed()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        using (_terminal.BatchUpdates())
+        {
+        }
+
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+    
+    [TestMethod]
+    public void BatchUpdates_IsReentrant()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        using (_terminal.BatchUpdates())
+        {
+            using (_terminal.BatchUpdates())
+            {
+            }
+        }
+
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+    
+    [TestMethod]
+    public void WithinBatch_CallsTheActionWithFalseIfNotBatched()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.WithinBatch(batch =>
+        {
+            batch.ShouldBe(true);
+        });
+    }
+    
+    [TestMethod]
+    public void WithinBatch_CallsTheActionWithTrueIfBatched()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        using (_terminal.BatchUpdates())
+        {
+            _terminal.WithinBatch(batch =>
+            {
+                batch.ShouldBe(true);
+            });
+        }
+    }
+    
+    [TestMethod]
+    public void TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        _terminal.TryUpdate().ShouldBeTrue();
+        
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+
+    [TestMethod]
+    public void TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+        using (_terminal.BatchUpdates())
+        {
+            _terminal.TryUpdate().ShouldBeFalse();
+            _cursesMock.Verify(v => v.doupdate(), Times.Never);
+        }
+    }
+    
+    [TestMethod]
+    public void TryUpdate_Throws_IfTerminalIsDisposed()
     {
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.Dispose();
 
-        Should.Throw<ObjectDisposedException>(() => _terminal.Update());
+        Should.Throw<ObjectDisposedException>(() => _terminal.TryUpdate());
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Update_Throws_IfCursesFails()
+    public void TryUpdate_Throws_IfCursesFails()
     {
         _terminal = new(_cursesMock.Object, _settings);
         _cursesMock.Setup(s => s.doupdate())
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => _terminal.Update())
+        Should.Throw<CursesOperationException>(() => _terminal.TryUpdate())
               .Operation.ShouldBe("doupdate");
-    }
-
-    [TestMethod]
-    public void Update_DrawsAll_IfCursesSucceeds()
-    {
-        _terminal = new(_cursesMock.Object, _settings);
-        _terminal.Update();
-
-        _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
     [TestMethod]

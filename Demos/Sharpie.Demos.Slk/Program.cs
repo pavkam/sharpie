@@ -67,25 +67,24 @@ void DrawHeader()
 DrawHeader();
 terminal.SoftLabelKeys.Refresh(true);
 
-
 // Run the main loop.
-await terminal.RunAsync(@event =>
+terminal.Run((t, @event) =>
 {
     switch (@event)
     {
         case TerminalResizeEvent:
             DrawHeader();
-            terminal.SoftLabelKeys.Refresh(true);
+            t.SoftLabelKeys.Refresh(true);
             break;
         case KeyEvent { Key: Key.Character, Char.Value: var k and >= '1' and <= '8' }:
         {
             var color = k - '1';
 
-            terminal.Screen.Background = (new(' '),
+            t.Screen.Background = (new(' '),
                 new() { Attributes = VideoAttribute.None, ColorMixture = colors[color] });
 
-            terminal.Screen.Refresh();
-            terminal.SoftLabelKeys.Refresh();
+            t.Screen.Refresh();
+            t.SoftLabelKeys.Refresh();
             break;
         }
     }

@@ -59,7 +59,10 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.Screen" />
-    public IScreen Screen { get; }
+    IScreen IWindow.Screen => Screen;
+    
+    /// <inheritdoc cref="IWindow.Screen" />
+    public Screen Screen { get; }
 
     /// <inheritdoc cref="IWindow.SubWindows" />
     public IEnumerable<ISubWindow> SubWindows => _subWindows;
@@ -101,7 +104,7 @@ public sealed class Window: TerminalSurface, IWindow
                 .Check(nameof(Curses.getbegy), "Failed to get window Y coordinate."));
         set
         {
-            if (!Screen.IsRectangleWithin(new(value, Size)))
+            if (!((IScreen)Screen).IsRectangleWithin(new(value, Size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -118,7 +121,7 @@ public sealed class Window: TerminalSurface, IWindow
         get => base.Size;
         set
         {
-            if (!Screen.IsRectangleWithin(new(Location, value)))
+            if (!((IScreen)Screen).IsRectangleWithin(new(Location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -127,25 +130,7 @@ public sealed class Window: TerminalSurface, IWindow
                   .Check(nameof(Curses.wresize), "Failed to resize the window.");
         }
     }
-
-    /// <inheritdoc cref="IWindow.Refresh(int, int)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh(int y, int count)
-    {
-        if (y < 0 || y >= Size.Height)
-        {
-            throw new ArgumentOutOfRangeException(nameof(y));
-        }
-
-        if (count < 1 || y + count - 1 >= Size.Height)
-        {
-            throw new ArgumentOutOfRangeException(nameof(count));
-        }
-
-        Curses.wredrawln(Handle, y, count)
-              .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
-    }
-
+    
     /// <inheritdoc cref="IWindow.SubWindow" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow SubWindow(Rectangle area)

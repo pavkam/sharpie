@@ -62,6 +62,7 @@ public class PadTests
         var p = new Pad(_screen, IntPtr.MaxValue);
 
         p.Screen.ShouldBe(_screen);
+        ((IPad)p).Screen.ShouldBe(_screen);
     }
 
     [TestMethod]
@@ -159,44 +160,34 @@ public class PadTests
     }
 
     [TestMethod]
-    public void Refresh_QueuesRefresh()
+    public void Refresh_CallsCurses_InBatch()
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockLargeArea(_screen);
 
-        _pad.Refresh(true, false, new(0, 1, 2, 3), new(2, 3));
+        using (_terminal.BatchUpdates())
+        {
+            _pad.Refresh(new(0, 1, 2, 3), new(2, 3));
+        }
 
         _cursesMock.Verify(v => v.pnoutrefresh(_pad.Handle, 1, 0, 3, 2,
             6, 4), Times.Once);
     }
 
     [TestMethod]
-    public void Refresh_RefreshesDirectly()
+    public void Refresh_CallsCurses_NoBatch()
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockLargeArea(_screen);
 
-        _pad.Refresh(false, false, new(0, 1, 2, 3), new(2, 3));
+        _pad.Refresh(new(0, 1, 2, 3), new(2, 3));
 
         _cursesMock.Verify(v => v.prefresh(_pad.Handle, 1, 0, 3, 2,
             6, 4), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh_Throws_IfCursesFailsAtSettingEntireScreenRefresh()
-    {
-        _cursesMock.MockLargeArea(_pad);
-        _cursesMock.MockLargeArea(_screen);
-
-        _cursesMock.Setup(s => s.clearok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
-                   .Returns(-1);
-
-        Should.Throw<CursesOperationException>(() => { _pad.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
-              .Operation.ShouldBe("clearok");
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh_Throws_IfCursesFailsAtQueueingRefresh()
+    public void Refresh_Throws_IfCursesFails_InBatch()
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockLargeArea(_screen);
@@ -205,12 +196,15 @@ public class PadTests
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _pad.Refresh(true, false, new(0, 0, 1, 1), new(0, 0)); })
-              .Operation.ShouldBe("pnoutrefresh");
+        using (_terminal.BatchUpdates())
+        {
+            Should.Throw<CursesOperationException>(() => { _pad.Refresh(new(0, 0, 1, 1), new(0, 0)); })
+                  .Operation.ShouldBe("pnoutrefresh");
+        }
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh_Throws_IfCursesFailsAtRefreshingDirectly()
+    public void Refresh_Throws_IfCursesFails_NoBatch()
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockLargeArea(_screen);
@@ -219,7 +213,7 @@ public class PadTests
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _pad.Refresh(false, false, new(0, 0, 1, 1), new(0, 0)); })
+        Should.Throw<CursesOperationException>(() => { _pad.Refresh(new(0, 0, 1, 1), new(0, 0)); })
               .Operation.ShouldBe("prefresh");
     }
 

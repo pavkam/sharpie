@@ -154,15 +154,15 @@ public class SurfaceInterfaceTests
     }
 
     [TestMethod]
-    public void Invalidate_CallsActualImplementation()
+    public void MarkDirty_CallsActualImplementation()
     {
-        _surfaceMock.Setup(s => s.Invalidate())
+        _surfaceMock.Setup(s => s.MarkDirty())
                     .CallBase();
 
         _surfaceMock.Setup(s => s.Size)
                     .Returns(new Size(10, 20));
 
-        _surfaceMock.Object.Invalidate();
-        _surfaceMock.Verify(v => v.Invalidate(0, 20), Times.Once);
+        _surfaceMock.Object.MarkDirty();
+        _surfaceMock.Verify(v => v.MarkDirty(0, 20), Times.Once);
     }
 }

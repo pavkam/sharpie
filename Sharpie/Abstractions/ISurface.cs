@@ -90,7 +90,7 @@ public interface ISurface: IDrawSurface
     ///     to the console.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    bool Invalidated { get; }
+    bool Dirty { get; }
 
     /// <summary>
     ///     Controls whether the caret is managed by the application and should not be managed by the hardware.
@@ -292,22 +292,22 @@ public interface ISurface: IDrawSurface
     void Replace(ISurface surface, Rectangle srcRect, Point destPos, ReplaceStrategy strategy);
 
     /// <summary>
-    ///     Invalidates a number of lines within the surface.
+    ///     Marks a number of lines within the surface as <see cref="Dirty"/>.
     /// </summary>
     /// <param name="y">The line to start with.</param>
-    /// <param name="count">The count of lines to invalidate.</param>
+    /// <param name="count">The count of lines to mark dirty.</param>
     /// <exception cref="ArgumentOutOfRangeException">
     ///     The <paramref name="y" /> and <paramref name="count" /> combination is
     ///     out of bounds.
     /// </exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    void Invalidate(int y, int count);
+    void MarkDirty(int y, int count);
 
     /// <summary>
-    ///     Invalidates the contents of the entire surface.
+    ///     Marks the entire contents of the surface as <see cref="Dirty"/>.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    void Invalidate() { Invalidate(0, Size.Height); }
+    void MarkDirty() { MarkDirty(0, Size.Height); }
 
     /// <summary>
     ///     Checks if a given point fits within the current surface.
@@ -367,7 +367,7 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y" /> is outside the bounds.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    bool LineInvalidated(int y);
+    bool LineDirty(int y);
 
     /// <summary>
     ///     Removes the surface form the parent, destroys all children and itself.

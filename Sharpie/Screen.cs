@@ -65,6 +65,27 @@ public sealed class Screen: TerminalSurface, IScreen
     /// <inheritdoc cref="IScreen.Pads" />
     public IEnumerable<IPad> Pads => _pads;
 
+    /// <inheritdoc cref="TerminalSurface.Refresh" />
+    public override void Refresh()
+    {
+        base.Refresh();
+        foreach (var child in Windows)
+        {
+            child.Refresh();
+        }
+    }
+    
+    /// <inheritdoc cref="Surface.MarkDirty(int, int)" />
+    public override void MarkDirty(int y, int count)
+    {
+        // TODO: only mark the shared lines as dirty.
+        base.MarkDirty(y, count);
+        foreach (var child in Windows)
+        {
+            child.MarkDirty();
+        }
+    }
+    
     /// <inheritdoc cref="IScreen.Window" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IWindow Window(Rectangle area)

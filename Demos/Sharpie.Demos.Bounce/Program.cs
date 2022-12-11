@@ -106,4 +106,4 @@ terminal.Repeat(t =>
 }, 50);
 
 // Run the main loop.
-await terminal.RunAsync(_ => Task.FromResult(true));
+terminal.Run((_, _) => Task.FromResult(true));

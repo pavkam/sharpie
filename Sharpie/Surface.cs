@@ -173,9 +173,20 @@ public class Surface: ISurface, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ISurface.Invalidated" />
-    public bool Invalidated => Curses.is_wintouched(Handle);
+    /// <inheritdoc cref="ISurface.Dirty" />
+    public bool Dirty => Curses.is_wintouched(Handle);
 
+    /// <inheritdoc cref="ISurface.LineDirty" />
+    public bool LineDirty(int y)
+    {
+        if (y < 0 || y >= Size.Height)
+        {
+            throw new ArgumentOutOfRangeException(nameof(y));
+        }
+
+        return Curses.is_linetouched(Handle, y);
+    }
+    
     /// <inheritdoc cref="IDrawSurface.DrawCell" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     void IDrawSurface.DrawCell(Point location, Rune rune, Style textStyle)
@@ -509,9 +520,9 @@ public class Surface: ISurface, IDisposable
               .Check(nameof(Curses.copywin), "Failed to copy the surface contents.");
     }
 
-    /// <inheritdoc cref="ISurface.Invalidate(int, int)" />
+    /// <inheritdoc cref="ISurface.MarkDirty(int, int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Invalidate(int y, int count)
+    public virtual void MarkDirty(int y, int count)
     {
         if (y < 0 || y >= Size.Height)
         {
@@ -525,17 +536,6 @@ public class Surface: ISurface, IDisposable
 
         Curses.wtouchln(Handle, y, count, 1)
               .Check(nameof(Curses.wtouchln), "Failed to mark lines as dirty.");
-    }
-
-    /// <inheritdoc cref="ISurface.LineInvalidated" />
-    public bool LineInvalidated(int y)
-    {
-        if (y < 0 || y >= Size.Height)
-        {
-            throw new ArgumentOutOfRangeException(nameof(y));
-        }
-
-        return Curses.is_linetouched(Handle, y);
     }
 
     /// <inheritdoc cref="ISurface.Destroy" />

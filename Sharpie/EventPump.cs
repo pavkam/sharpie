@@ -134,7 +134,8 @@ public sealed class EventPump: IEventPump
 
                     if (@event.Type == EventType.TerminalResize)
                     {
-                        _terminal.Screen.FullRefresh();
+                        _terminal.Screen.MarkDirty();
+                        _terminal.Screen.Refresh();
                     }
                 }
             }
