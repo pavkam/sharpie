@@ -59,7 +59,30 @@ public class TerminalMainLoopTests
 
     private Task RunAsync()
     {
-        return Task.Run(() => _terminal.Run((_, _) => Task.CompletedTask));
+        var one = true;
+        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                   .Returns((IntPtr _, out uint ch) =>
+                   {
+                       ch = 0;
+                       if (one)
+                       {
+                           one = false;
+                           return -1;
+                       }
+
+                       return 0;
+                   });
+        
+        var startedEvent = new ManualResetEvent(false);
+        var ra = Task.Run(() => _terminal.Run((_, e) =>
+        {
+            startedEvent.Set();
+            return Task.CompletedTask;
+        }));
+       
+        startedEvent.WaitOne();
+
+        return ra;
     }
     
     [TestMethod]

@@ -400,6 +400,16 @@ public class EventPumpTests
         SimulateEvents(1, _window, (-1, 0), (0, 0));
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
+    
+    [TestMethod]
+    public void Listen1_DoesNotCallUpdate_IfBatchOpen()
+    {
+        using (_terminal.BatchUpdates())
+        {
+            SimulateEvents(1, _window, (-1, 0), (0, 0));
+            _cursesMock.Verify(v => v.doupdate(), Times.Never);
+        }
+    }
 
     [TestMethod]
     public void Listen1_TriesToSetupResizeMonitoring()

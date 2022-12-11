@@ -75,7 +75,6 @@ public class TerminalSurfaceTests
         sa.Terminal.ShouldBe(_terminal);
         ((ITerminalSurface)sa).Terminal.ShouldBe(_terminal);
     }
-
     
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh1_Fails_IfCursesFails_NoBatch()
@@ -195,8 +194,6 @@ public class TerminalSurfaceTests
 
         Should.NotThrow(() => sa.Refresh(1, 9));
     }
-    
-    
     
     [TestMethod]
     public void ImmediateRefresh_Returns_IfCursesSucceeded()

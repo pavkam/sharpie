@@ -776,7 +776,7 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.WithinBatch(batch =>
         {
-            batch.ShouldBe(true);
+            batch.ShouldBeFalse();
         });
     }
     
@@ -788,7 +788,7 @@ public class TerminalTests
         {
             _terminal.WithinBatch(batch =>
             {
-                batch.ShouldBe(true);
+                batch.ShouldBeTrue();
             });
         }
     }

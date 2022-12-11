@@ -443,6 +443,7 @@ public sealed class Terminal: ITerminal, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     internal bool TryUpdate()
     {
+        AssertAlive();
         lock (_syncRoot)
         {
             Debug.Assert(_batchUpdateLocks >= 0);
