@@ -78,15 +78,15 @@ public sealed class Screen: TerminalSurface, IScreen
     /// <inheritdoc cref="Surface.MarkDirty(int, int)" />
     public override void MarkDirty(int y, int count)
     {
-        // TODO: only mark the shared lines as dirty.
         base.MarkDirty(y, count);
         foreach (var child in Windows)
         {
-            var (iy, ic) = Helpers.IntersectSegments(y, count, child.Location.Y, child.Size.Height);
+            var ly = child.Location.Y;
+            var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
 
             if (iy > -1 && ic > 0)
             {
-                child.MarkDirty(iy, ic);
+                child.MarkDirty(iy - ly, ic);
             }
         }
     }
