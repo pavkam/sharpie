@@ -59,10 +59,10 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.Screen" />
-    IScreen IWindow.Screen => Screen;
-    
-    /// <inheritdoc cref="IWindow.Screen" />
     public Screen Screen { get; }
+
+    /// <inheritdoc cref="IWindow.Screen" />
+    IScreen IWindow.Screen => Screen;
 
     /// <inheritdoc cref="IWindow.SubWindows" />
     public IEnumerable<ISubWindow> SubWindows => _subWindows;
@@ -104,7 +104,7 @@ public sealed class Window: TerminalSurface, IWindow
                 .Check(nameof(Curses.getbegy), "Failed to get window Y coordinate."));
         set
         {
-            if (!((IScreen)Screen).IsRectangleWithin(new(value, Size)))
+            if (!((IScreen) Screen).IsRectangleWithin(new(value, Size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -121,7 +121,7 @@ public sealed class Window: TerminalSurface, IWindow
         get => base.Size;
         set
         {
-            if (!((IScreen)Screen).IsRectangleWithin(new(Location, value)))
+            if (!((IScreen) Screen).IsRectangleWithin(new(Location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -130,7 +130,7 @@ public sealed class Window: TerminalSurface, IWindow
                   .Check(nameof(Curses.wresize), "Failed to resize the window.");
         }
     }
-    
+
     /// <inheritdoc cref="IWindow.SubWindow" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow SubWindow(Rectangle area)
@@ -153,7 +153,7 @@ public sealed class Window: TerminalSurface, IWindow
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
 
-        return new Window((Screen) Screen, handle) { ManagedCaret = ManagedCaret };
+        return new Window(Screen, handle) { ManagedCaret = ManagedCaret };
     }
 
     /// <summary>

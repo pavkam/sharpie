@@ -48,10 +48,10 @@ public class TerminalSurface: Surface, ITerminalSurface
         Terminal = parent!;
 
     /// <inheritdoc cref="IScreen.Terminal" />
-    ITerminal ITerminalSurface.Terminal => Terminal;
+    public Terminal Terminal { get; }
 
     /// <inheritdoc cref="IScreen.Terminal" />
-    public Terminal Terminal { get; }
+    ITerminal ITerminalSurface.Terminal => Terminal;
 
     /// <inheritdoc cref="ITerminalSurface.ImmediateRefresh" />
     public bool ImmediateRefresh
@@ -59,7 +59,7 @@ public class TerminalSurface: Surface, ITerminalSurface
         get => Curses.is_immedok(Handle);
         set => Curses.immedok(Handle, value);
     }
-    
+
     /// <inheritdoc cref="ITerminalSurface.Critical" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public bool Critical
@@ -85,7 +85,7 @@ public class TerminalSurface: Surface, ITerminalSurface
             }
         });
     }
-    
+
     /// <inheritdoc cref="IWindow.Refresh(int, int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void Refresh(int y, int count)

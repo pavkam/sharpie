@@ -292,7 +292,7 @@ public interface ISurface: IDrawSurface
     void Replace(ISurface surface, Rectangle srcRect, Point destPos, ReplaceStrategy strategy);
 
     /// <summary>
-    ///     Marks a number of lines within the surface as <see cref="Dirty"/>.
+    ///     Marks a number of lines within the surface as <see cref="Dirty" />.
     /// </summary>
     /// <param name="y">The line to start with.</param>
     /// <param name="count">The count of lines to mark dirty.</param>
@@ -304,7 +304,7 @@ public interface ISurface: IDrawSurface
     void MarkDirty(int y, int count);
 
     /// <summary>
-    ///     Marks the entire contents of the surface as <see cref="Dirty"/>.
+    ///     Marks the entire contents of the surface as <see cref="Dirty" />.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     void MarkDirty() { MarkDirty(0, Size.Height); }

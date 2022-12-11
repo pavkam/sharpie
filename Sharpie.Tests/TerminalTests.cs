@@ -755,7 +755,7 @@ public class TerminalTests
 
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
-    
+
     [TestMethod]
     public void BatchUpdates_IsReentrant()
     {
@@ -769,36 +769,31 @@ public class TerminalTests
 
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
-    
+
     [TestMethod]
     public void WithinBatch_CallsTheActionWithFalseIfNotBatched()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        _terminal.WithinBatch(batch =>
-        {
-            batch.ShouldBeFalse();
-        });
+        _terminal.WithinBatch(batch => { batch.ShouldBeFalse(); });
     }
-    
+
     [TestMethod]
     public void WithinBatch_CallsTheActionWithTrueIfBatched()
     {
         _terminal = new(_cursesMock.Object, _settings);
         using (_terminal.BatchUpdates())
         {
-            _terminal.WithinBatch(batch =>
-            {
-                batch.ShouldBeTrue();
-            });
+            _terminal.WithinBatch(batch => { batch.ShouldBeTrue(); });
         }
     }
-    
+
     [TestMethod]
     public void TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        _terminal.TryUpdate().ShouldBeTrue();
-        
+        _terminal.TryUpdate()
+                 .ShouldBeTrue();
+
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
@@ -808,11 +803,13 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, _settings);
         using (_terminal.BatchUpdates())
         {
-            _terminal.TryUpdate().ShouldBeFalse();
+            _terminal.TryUpdate()
+                     .ShouldBeFalse();
+
             _cursesMock.Verify(v => v.doupdate(), Times.Never);
         }
     }
-    
+
     [TestMethod]
     public void TryUpdate_Throws_IfTerminalIsDisposed()
     {

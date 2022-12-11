@@ -61,9 +61,9 @@ public class SubPadTests
     public void Pad_IsInitialized()
     {
         var sp = new SubPad(_parent, IntPtr.MaxValue);
-        
+
         sp.Pad.ShouldBe(_parent);
-        ((ISubPad)sp).Pad.ShouldBe(_parent);
+        ((ISubPad) sp).Pad.ShouldBe(_parent);
     }
 
     [TestMethod]

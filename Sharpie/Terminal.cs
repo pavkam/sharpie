@@ -42,6 +42,7 @@ public sealed class Terminal: ITerminal, IDisposable
 {
     private static object _stopSignal = new();
     private static bool _terminalInstanceActive;
+    private int _batchUpdateLocks;
     private ColorManager _colorManager;
     private EventPump _eventPump;
     private TerminalSurface? _footer;
@@ -52,8 +53,7 @@ public sealed class Terminal: ITerminal, IDisposable
     private ManualResetEventSlim? _runCompletedEvent;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-    private int _batchUpdateLocks;
-    
+
     private object _syncRoot = new();
 
     /// <summary>
@@ -399,7 +399,7 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <summary>
-    /// Creates a batch update lock.
+    ///     Creates a batch update lock.
     /// </summary>
     /// <returns>A disposable object that need to be disposed to release the batch update lock.</returns>
     public IDisposable BatchUpdates()
@@ -419,43 +419,6 @@ public sealed class Terminal: ITerminal, IDisposable
                     }
                 }
             });
-        }
-    }
-    
-    /// <summary>
-    /// Executes a given <paramref name="action"/> within the context of a batch.
-    /// </summary>
-    /// <param name="action">The action to execute.</param>
-    internal void WithinBatch(Action<bool> action)
-    {
-        Debug.Assert(action != null);
-
-        lock (_syncRoot)
-        {
-            action(_batchUpdateLocks > 0);
-        }
-    }
-
-    /// <summary>
-    /// Attempts to update the terminal.
-    /// </summary>
-    /// <returns><c>true</c> if the attempt was successful. <c>false</c> otherwise.</returns>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    internal bool TryUpdate()
-    {
-        AssertAlive();
-        lock (_syncRoot)
-        {
-            Debug.Assert(_batchUpdateLocks >= 0);
-            if (_batchUpdateLocks == 0)
-            {
-                Curses.doupdate()
-                      .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
-
-                return true;
-            }
-
-            return false;
         }
     }
 
@@ -518,7 +481,6 @@ public sealed class Terminal: ITerminal, IDisposable
                     _runCompletedEvent = null;
                 }
             }
-
         });
     }
 
@@ -589,6 +551,43 @@ public sealed class Terminal: ITerminal, IDisposable
     {
         AssertAlive();
         CancelRun(wait);
+    }
+
+    /// <summary>
+    ///     Executes a given <paramref name="action" /> within the context of a batch.
+    /// </summary>
+    /// <param name="action">The action to execute.</param>
+    internal void WithinBatch(Action<bool> action)
+    {
+        Debug.Assert(action != null);
+
+        lock (_syncRoot)
+        {
+            action(_batchUpdateLocks > 0);
+        }
+    }
+
+    /// <summary>
+    ///     Attempts to update the terminal.
+    /// </summary>
+    /// <returns><c>true</c> if the attempt was successful. <c>false</c> otherwise.</returns>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    internal bool TryUpdate()
+    {
+        AssertAlive();
+        lock (_syncRoot)
+        {
+            Debug.Assert(_batchUpdateLocks >= 0);
+            if (_batchUpdateLocks == 0)
+            {
+                Curses.doupdate()
+                      .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
+
+                return true;
+            }
+
+            return false;
+        }
     }
 
     /// <summary>

@@ -11,17 +11,17 @@ internal static class TestHelpers
 
         cursesMock.Setup(s => s.getbegy(surface.Handle))
                   .Returns(area.Top);
-        
+
         cursesMock.Setup(s => s.getbegx(surface.Handle))
                   .Returns(area.Left);
-                  
+
         cursesMock.Setup(s => s.getmaxx(surface.Handle))
                   .Returns(area.Width);
 
         cursesMock.Setup(s => s.getmaxy(surface.Handle))
                   .Returns(area.Height);
     }
-    
+
     public static void MockLargeArea(this Mock<ICursesProvider> cursesMock, ISurface surface)
     {
         Debug.Assert(cursesMock != null);

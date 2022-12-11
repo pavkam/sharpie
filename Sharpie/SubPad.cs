@@ -53,10 +53,10 @@ public sealed class SubPad: Surface, ISubPad
     }
 
     /// <inheritdoc cref="ISubPad.Pad" />
-    IPad ISubPad.Pad => Pad;
+    public IPad Pad { get; }
 
     /// <inheritdoc cref="ISubPad.Pad" />
-    public IPad Pad { get; }
+    IPad ISubPad.Pad => Pad;
 
     /// <inheritdoc cref="ISubPad.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>

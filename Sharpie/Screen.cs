@@ -106,7 +106,7 @@ public sealed class Screen: TerminalSurface, IScreen
             }
         }
     }
-    
+
     /// <inheritdoc cref="IScreen.Window" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IWindow Window(Rectangle area)

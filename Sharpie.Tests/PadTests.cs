@@ -62,7 +62,7 @@ public class PadTests
         var p = new Pad(_screen, IntPtr.MaxValue);
 
         p.Screen.ShouldBe(_screen);
-        ((IPad)p).Screen.ShouldBe(_screen);
+        ((IPad) p).Screen.ShouldBe(_screen);
     }
 
     [TestMethod]

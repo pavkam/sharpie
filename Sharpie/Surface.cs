@@ -186,7 +186,7 @@ public class Surface: ISurface, IDisposable
 
         return Curses.is_linetouched(Handle, y);
     }
-    
+
     /// <inheritdoc cref="IDrawSurface.DrawCell" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     void IDrawSurface.DrawCell(Point location, Rune rune, Style textStyle)

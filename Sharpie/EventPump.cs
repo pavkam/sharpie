@@ -41,6 +41,63 @@ public sealed class EventPump: IEventPump
         }
     }
 
+    /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface,System.Threading.CancellationToken)" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken)
+    {
+        if (surface == null)
+        {
+            throw new ArgumentNullException(nameof(surface));
+        }
+
+        return Listen(surface.Handle, cancellationToken);
+    }
+
+    /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public IEnumerable<Event> Listen(CancellationToken cancellationToken)
+    {
+        var padHandle = _terminal.Curses.newpad(1, 1)
+                                 .Check(nameof(_terminal.Curses.newpad), "Failed to create dummy listen pad.");
+
+        try
+        {
+            foreach (var e in Listen(padHandle, cancellationToken))
+            {
+                yield return e;
+            }
+        } finally
+        {
+            _terminal.Curses.delwin(padHandle)
+                     .Check(nameof(_terminal.Curses.delwin), "Failed to remove the dummy listen pad.");
+        }
+    }
+
+    /// <inheritdoc cref="IEventPump.Use" />
+    public void Use(ResolveEscapeSequenceFunc resolver)
+    {
+        if (resolver == null)
+        {
+            throw new ArgumentNullException(nameof(resolver));
+        }
+
+        if (!Uses(resolver))
+        {
+            _keySequenceResolvers.Add(resolver);
+        }
+    }
+
+    /// <inheritdoc cref="IEventPump.Uses" />
+    public bool Uses(ResolveEscapeSequenceFunc resolver)
+    {
+        if (resolver == null)
+        {
+            throw new ArgumentNullException(nameof(resolver));
+        }
+
+        return _keySequenceResolvers.Contains(resolver);
+    }
+
     private IEnumerable<Event> Listen(IntPtr handle, CancellationToken cancellationToken)
     {
         Debug.Assert(handle != IntPtr.Zero);
@@ -143,62 +200,6 @@ public sealed class EventPump: IEventPump
         {
             monitorHandle?.Dispose();
         }
-    }
-
-    /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface,System.Threading.CancellationToken)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken)
-    {
-        if (surface == null)
-        {
-            throw new ArgumentNullException(nameof(surface));
-        }
-
-        return Listen(surface.Handle, cancellationToken);
-    }
-
-    /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IEnumerable<Event> Listen(CancellationToken cancellationToken)
-    {
-        var padHandle = _terminal.Curses.newpad(1, 1)
-                           .Check(nameof(_terminal.Curses.newpad), "Failed to create dummy listen pad.");
-        
-        try
-        {
-            foreach (var e in Listen(padHandle, cancellationToken))
-            {
-                yield return e;
-            }
-        } finally
-        {
-            _terminal.Curses.delwin(padHandle).Check(nameof(_terminal.Curses.delwin), "Failed to remove the dummy listen pad.");
-        }
-    }
-    
-    /// <inheritdoc cref="IEventPump.Use" />
-    public void Use(ResolveEscapeSequenceFunc resolver)
-    {
-        if (resolver == null)
-        {
-            throw new ArgumentNullException(nameof(resolver));
-        }
-
-        if (!Uses(resolver))
-        {
-            _keySequenceResolvers.Add(resolver);
-        }
-    }
-
-    /// <inheritdoc cref="IEventPump.Uses" />
-    public bool Uses(ResolveEscapeSequenceFunc resolver)
-    {
-        if (resolver == null)
-        {
-            throw new ArgumentNullException(nameof(resolver));
-        }
-
-        return _keySequenceResolvers.Contains(resolver);
     }
 
     private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)

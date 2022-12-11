@@ -80,8 +80,7 @@ terminal.Run((t, @event) =>
         {
             var color = k - '1';
 
-            t.Screen.Background = (new(' '),
-                new() { Attributes = VideoAttribute.None, ColorMixture = colors[color] });
+            t.Screen.Background = (new(' '), new() { Attributes = VideoAttribute.None, ColorMixture = colors[color] });
 
             t.Screen.Refresh();
             t.SoftLabelKeys.Refresh();

@@ -315,27 +315,27 @@ public class EventPumpTests
     {
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
-        
+
         _pump.Listen(CancellationToken.None)
              .First();
 
         _cursesMock.Verify(v => v.newpad(1, 1), Times.Once);
     }
 
-    [TestMethod]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Listen2_Throws_IfFailedToCreateDummyPad()
     {
         Should.Throw<CursesOperationException>(() => _pump.Listen(CancellationToken.None)
                                                           .First())
               .Operation.ShouldBe("newpad");
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen2_DestroysDummyPad_EvenIfExceptionThrown()
     {
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
+
         _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
                    .Throws<InvalidProgramException>();
 
@@ -350,7 +350,7 @@ public class EventPumpTests
     {
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
-        
+
         _pump.Listen(CancellationToken.None)
              .First();
 
@@ -400,7 +400,7 @@ public class EventPumpTests
         SimulateEvents(1, _window, (-1, 0), (0, 0));
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
-    
+
     [TestMethod]
     public void Listen1_DoesNotCallUpdate_IfBatchOpen()
     {
@@ -427,7 +427,7 @@ public class EventPumpTests
 
         disposed.ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void Listen1_DisposesMonitoringEventIfExceptionHappened()
     {
@@ -442,7 +442,9 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
                    .Throws<InvalidProgramException>();
 
-        Should.Throw<InvalidProgramException>(() => _pump.Listen(_window, _source.Token).ToArray());
+        Should.Throw<InvalidProgramException>(() => _pump.Listen(_window, _source.Token)
+                                                         .ToArray());
+
         disposed.ShouldBeTrue();
     }
 
@@ -885,7 +887,7 @@ public class EventPumpTests
 
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(1));
-        
+
         foreach (var e in _pump.Listen(_source.Token))
         {
             _source.Cancel();

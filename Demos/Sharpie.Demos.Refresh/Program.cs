@@ -34,8 +34,7 @@ using Sharpie.Backend;
 
 [assembly: ExcludeFromCodeCoverage]
 
-using var terminal = new Terminal(NativeCursesProvider.Instance,
-    new(CaretMode: CaretMode.Invisible));
+using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: CaretMode.Invisible));
 
 terminal.Screen.Background = (new(' '),
     new()
@@ -46,12 +45,13 @@ terminal.Screen.Background = (new(' '),
 
 terminal.Screen.Refresh();
 var w = terminal.Screen.Window(new(0, 0, 10, 10));
-    w.Background = (new('a'),
+w.Background = (new('a'),
     new()
     {
         Attributes = VideoAttribute.None,
         ColorMixture = terminal.Colors.MixColors(StandardColor.Default, StandardColor.Magenta)
     });
+
 w.Refresh();
 
 // Run the main loop.

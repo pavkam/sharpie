@@ -74,7 +74,7 @@ public interface IPad: ISurface
     ///     Thrown if <paramref name="destLocation" /> is out of bounds.
     /// </exception>
     void Refresh(Point destLocation) => Refresh(new(new(0, 0), Size), destLocation);
-    
+
     /// <summary>
     ///     Creates a new sub-pad in the parent pad.
     /// </summary>

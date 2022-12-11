@@ -232,7 +232,7 @@ public class ScreenTests
 
         _cursesMock.Verify(s => s.leaveok(p.Handle, mc), Times.Once);
     }
-    
+
     [TestMethod]
     public void Refresh_RefreshesAllWindows_NoBatch()
     {
@@ -240,12 +240,12 @@ public class ScreenTests
         var w2 = new Window(_screen, new(2));
 
         _screen.Refresh();
-        
+
         _cursesMock.Verify(v => v.wrefresh(_screen.Handle));
         _cursesMock.Verify(v => v.wrefresh(w1.Handle));
         _cursesMock.Verify(v => v.wrefresh(w2.Handle));
     }
-    
+
     [TestMethod]
     public void Refresh_RefreshesAllWindows_InBatch()
     {
@@ -262,25 +262,26 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wnoutrefresh(w2.Handle));
         _cursesMock.Verify(v => v.doupdate());
     }
-    
+
     [TestMethod]
     public void MarkDirty_PropagatesOnChildren()
     {
         var w1 = new Window(_screen, new(1));
         var w2 = new Window(_screen, new(2));
         var w3 = new Window(_screen, new(3));
-        
+
         _cursesMock.MockLargeArea(_screen);
         _cursesMock.MockArea(w1, new(0, 0, 100, 100));
         _cursesMock.MockArea(w2, new(100, 110, 50, 50));
         _cursesMock.MockArea(w3, new(300, 200, 100, 100));
-        
+
         _screen.MarkDirty(75, 50);
-        
+
         _cursesMock.Verify(v => v.wtouchln(_screen.Handle, 75, 50, 1), Times.Once);
         _cursesMock.Verify(v => v.wtouchln(w1.Handle, 75, 25, 1), Times.Once);
         _cursesMock.Verify(v => v.wtouchln(w2.Handle, 0, 15, 1), Times.Once);
-        _cursesMock.Verify(v => v.wtouchln(w3.Handle, It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never());
+        _cursesMock.Verify(v => v.wtouchln(w3.Handle, It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
+            Times.Never());
     }
 
     [TestMethod]
@@ -289,21 +290,20 @@ public class ScreenTests
         var w1 = new Window(_screen, new(1));
         var w2 = new Window(_screen, new(2));
         var w3 = new Window(_screen, new(3));
-        
+
         _cursesMock.MockLargeArea(_screen);
         _cursesMock.MockArea(w1, new(0, 0, 100, 100));
         _cursesMock.MockArea(w2, new(100, 110, 50, 50));
         _cursesMock.MockArea(w3, new(300, 200, 100, 100));
-        
+
         _screen.Refresh(75, 50);
-        
+
         _cursesMock.Verify(v => v.wredrawln(_screen.Handle, 75, 50), Times.Once);
         _cursesMock.Verify(v => v.wredrawln(w1.Handle, 75, 25), Times.Once);
         _cursesMock.Verify(v => v.wredrawln(w2.Handle, 0, 15), Times.Once);
         _cursesMock.Verify(v => v.wredrawln(w3.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never());
     }
 
-    
     [TestMethod]
     public void Destroy_CallsCurses()
     {

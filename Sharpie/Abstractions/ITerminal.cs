@@ -142,7 +142,7 @@ public interface ITerminal
     void Alert(bool silent);
 
     /// <summary>
-    /// Creates a batch update lock. All refreshes are batched together until the batch is disposed.
+    ///     Creates a batch update lock. All refreshes are batched together until the batch is disposed.
     /// </summary>
     /// <returns>A disposable object that need to be disposed to release the batch update lock.</returns>
     IDisposable BatchUpdates();

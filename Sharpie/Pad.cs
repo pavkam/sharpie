@@ -54,10 +54,10 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Screen" />
-    IScreen IPad.Screen => Screen;
-    
-    /// <inheritdoc cref="IPad.Screen" />
     public IScreen Screen { get; }
+
+    /// <inheritdoc cref="IPad.Screen" />
+    IScreen IPad.Screen => Screen;
 
     /// <inheritdoc cref="IWindow.SubWindows" />
     public IEnumerable<ISubPad> SubPads => _subPads;

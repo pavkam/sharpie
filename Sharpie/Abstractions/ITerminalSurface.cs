@@ -60,15 +60,15 @@ public interface ITerminalSurface: ISurface
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     bool Critical { get; set; }
-    
+
     /// <summary>
     ///     Redraws all the invalidated lines of the surface to the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     void Refresh();
-    
+
     /// <summary>
-    ///      Redraws the given lines of the window to the terminal.
+    ///     Redraws the given lines of the window to the terminal.
     /// </summary>
     /// <param name="y">The starting line to refresh.</param>
     /// <param name="count">The number of lines to refresh.</param>

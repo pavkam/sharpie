@@ -42,6 +42,7 @@ public class TerminalMainLoopTests
         _cursesMock = new();
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(1));
+
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
 
@@ -72,19 +73,19 @@ public class TerminalMainLoopTests
 
                        return 0;
                    });
-        
+
         var startedEvent = new ManualResetEvent(false);
         var ra = Task.Run(() => _terminal.Run((_, e) =>
         {
             startedEvent.Set();
             return Task.CompletedTask;
         }));
-       
+
         startedEvent.WaitOne();
 
         return ra;
     }
-    
+
     [TestMethod]
     public void Delegate_Throws_IfActionIsNull()
     {
@@ -153,10 +154,7 @@ public class TerminalMainLoopTests
     }
 
     [TestMethod]
-    public void Run_Throws_IfActionIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _terminal.Run(null!, false));
-    }
+    public void Run_Throws_IfActionIsNull() { Should.Throw<ArgumentNullException>(() => _terminal.Run(null!, false)); }
 
     [TestMethod]
     public void Run_Throws_IfTerminalDisposed()
@@ -175,13 +173,13 @@ public class TerminalMainLoopTests
         _terminal.Stop();
         await ra1;
     }
-    
+
     [TestMethod]
     public void Run_Throws_IfInternalError()
     {
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
-        
+
         Should.Throw<CursesOperationException>(() => _terminal.Run((_, _) => Task.CompletedTask));
     }
 
@@ -311,7 +309,7 @@ public class TerminalMainLoopTests
                        return 0;
                    });
 
-        _terminal.Run((_,_) =>
+        _terminal.Run((_, _) =>
         {
             _terminal.Stop();
             return Task.CompletedTask;
@@ -325,7 +323,7 @@ public class TerminalMainLoopTests
     {
         var order = "";
         var ra = RunAsync()
-                          .ContinueWith(_ => order += "r");
+            .ContinueWith(_ => order += "r");
 
         _terminal.Stop(true);
         order += "s";
@@ -345,7 +343,7 @@ public class TerminalMainLoopTests
                    });
 
         var reached = false;
-        _terminal.Run((_,_) =>
+        _terminal.Run((_, _) =>
         {
             reached = true;
 

@@ -73,9 +73,9 @@ public class TerminalSurfaceTests
         var sa = new TerminalSurface(_terminal, new(1));
 
         sa.Terminal.ShouldBe(_terminal);
-        ((ITerminalSurface)sa).Terminal.ShouldBe(_terminal);
+        ((ITerminalSurface) sa).Terminal.ShouldBe(_terminal);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh1_Fails_IfCursesFails_NoBatch()
     {
@@ -121,7 +121,7 @@ public class TerminalSurfaceTests
         {
             sa.Refresh();
         }
-        
+
         _cursesMock.Verify(v => v.wnoutrefresh(sa.Handle), Times.Once);
     }
 
@@ -129,10 +129,10 @@ public class TerminalSurfaceTests
     public void Refresh2_Throws_IfYIsNegative()
     {
         var sa = new TerminalSurface(_terminal, new(1));
-        
+
         _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
-       
+
         Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(-1, 1));
     }
 
@@ -140,7 +140,7 @@ public class TerminalSurfaceTests
     public void Refresh2_Throws_IfYIsOutsideBounds()
     {
         var sa = new TerminalSurface(_terminal, new(1));
-        
+
         _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
 
@@ -151,7 +151,7 @@ public class TerminalSurfaceTests
     public void Refresh2_Throws_IfCountIsLessThanOne()
     {
         var sa = new TerminalSurface(_terminal, new(1));
-        
+
         _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
 
@@ -162,7 +162,7 @@ public class TerminalSurfaceTests
     public void Refresh2_Throws_IfCountGreaterThanBounds()
     {
         var sa = new TerminalSurface(_terminal, new(1));
-        
+
         _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
 
@@ -173,7 +173,7 @@ public class TerminalSurfaceTests
     public void Refresh2_Throws_IfCursesFails()
     {
         var sa = new TerminalSurface(_terminal, new(1));
-        
+
         _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
 
@@ -188,13 +188,13 @@ public class TerminalSurfaceTests
     public void Refresh2_Succeeds_IfCursesSucceeds()
     {
         var sa = new TerminalSurface(_terminal, new(1));
-        
+
         _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
 
         Should.NotThrow(() => sa.Refresh(1, 9));
     }
-    
+
     [TestMethod]
     public void ImmediateRefresh_Returns_IfCursesSucceeded()
     {
@@ -214,7 +214,7 @@ public class TerminalSurfaceTests
 
         _cursesMock.Verify(v => v.immedok(sa.Handle, true), Times.Once);
     }
-    
+
     [TestMethod]
     public void Critical_Returns_IfCursesSucceeded()
     {
@@ -234,7 +234,7 @@ public class TerminalSurfaceTests
 
         _cursesMock.Verify(v => v.clearok(sa.Handle, true), Times.Once);
     }
-    
+
     [TestMethod]
     public void Destroy_CallsCurses()
     {

@@ -420,12 +420,15 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Enumerates a given interval using 1/2s.
+    ///     Enumerates a given interval using 1/2s.
     /// </summary>
     /// <param name="start">The start of the interval.</param>
     /// <param name="count">The length of the interval.</param>
     /// <returns>An enumerable that returns the halves.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="start"/> or <paramref name="count"/> are out of bounds.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     Thrown if <paramref name="start" /> or <paramref name="count" /> are out
+    ///     of bounds.
+    /// </exception>
     internal static IEnumerable<(int coord, bool start)> EnumerateInHalves(float start, float count)
     {
         if (start < 0)
@@ -451,7 +454,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Calculates the intersection between two segments.
+    ///     Calculates the intersection between two segments.
     /// </summary>
     /// <param name="seg1Start">The start of the first segment.</param>
     /// <param name="seg1Len">The length of the first segment.</param>
