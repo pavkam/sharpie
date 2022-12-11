@@ -140,7 +140,7 @@ public class PadTests
     public void Refresh_Throws_IfTheRectIsOutsideThePadBounds()
     {
         _cursesMock.MockSmallArea(_pad);
-        Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(false, false, new(1, 1, 5, 5), new(0, 0)); });
+        Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(new(1, 1, 5, 5), new(0, 0)); });
     }
 
     [TestMethod]
@@ -148,25 +148,14 @@ public class PadTests
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockSmallArea(_screen);
-        Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(false, false, new(1, 1, 5, 5), new(0, 0)); });
+        Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(new(1, 1, 5, 5), new(0, 0)); });
     }
 
     [TestMethod]
     public void Refresh_Throws_IfThePositionIsOutsideTheBounds()
     {
         _cursesMock.MockSmallArea(_pad);
-        Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(false, false, new(0, 0, 5, 5), new(6, 6)); });
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void Refresh_SetsEntireScreenRefresh(bool entireScreen)
-    {
-        _cursesMock.MockLargeArea(_pad);
-        _cursesMock.MockLargeArea(_screen);
-
-        _pad.Refresh(false, entireScreen, new(0, 0, 1, 1), new(0, 0));
-
-        _cursesMock.Verify(v => v.clearok(_pad.Handle, entireScreen), Times.Once);
+        Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(new(0, 0, 5, 5), new(6, 6)); });
     }
 
     [TestMethod]

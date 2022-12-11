@@ -304,7 +304,7 @@ public interface ISurface: IDrawSurface
     void Invalidate(int y, int count);
 
     /// <summary>
-    ///     Invalidates the contents of the surface thus forcing a redraw next time.
+    ///     Invalidates the contents of the entire surface.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     void Invalidate() { Invalidate(0, Size.Height); }

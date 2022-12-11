@@ -36,14 +36,17 @@ public class PadInterfaceTests
     [TestMethod]
     public void Refresh2_CallsTheActualImplementation()
     {
+        var sz = new Size(11, 22);
         var p = new Mock<IPad>();
-        p.Setup(s => s.Refresh(It.IsAny<Rectangle>(), It.IsAny<Point>()))
+        p.Setup(s => s.Size)
+         .Returns(sz);
+
+        p.Setup(s => s.Refresh(It.IsAny<Point>()))
          .CallBase();
 
-        var a = new Rectangle(1, 2, 3, 4);
         var l = new Point(5, 6);
-        p.Object.Refresh(a, l);
+        p.Object.Refresh(l);
 
-        p.Verify(v => v.Refresh(false, false, a, l), Times.Once);
+        p.Verify(v => v.Refresh(new(new(0, 0), sz), l), Times.Once);
     }
 }

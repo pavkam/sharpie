@@ -45,15 +45,24 @@ public interface ITerminalSurface: ISurface
     ///     Set or get the immediate refresh capability of the surface.
     /// </summary>
     /// <remarks>
-    ///     Immediate refresh will redraw the surface on each change.
-    ///     This might be very slow for most use cases.
-    ///     Default is <c>false</c>.
+    ///     Immediate refresh will make the surface redraw affected areas on each change.
+    ///     This might be very slow for most use cases so the default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     bool ImmediateRefresh { get; set; }
 
     /// <summary>
-    ///     Redraws all the dirty lines of the surface to the terminal.
+    ///     Set or get the flag indicating that the surface is critical and, thus, should
+    ///     trigger the entire terminal to update on refresh.
+    /// </summary>
+    /// <remarks>
+    ///     This setting might result in excessive refreshes so the default is <c>false</c>.
+    /// </remarks>
+    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    bool Critical { get; set; }
+    
+    /// <summary>
+    ///     Redraws all the invalidated lines of the surface to the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     void Refresh();

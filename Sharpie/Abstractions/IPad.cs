@@ -66,6 +66,16 @@ public interface IPad: ISurface
     void Refresh(Rectangle srcArea, Point destLocation);
 
     /// <summary>
+    ///     Redraws an area of the screen with the contents of the pad.
+    /// </summary>
+    /// <param name="destLocation">The point on the screen to place that rectangle.</param>
+    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     Thrown if <paramref name="destLocation" /> is out of bounds.
+    /// </exception>
+    void Refresh(Point destLocation) => Refresh(new(new(0, 0), Size), destLocation);
+    
+    /// <summary>
     ///     Creates a new sub-pad in the parent pad.
     /// </summary>
     /// <param name="area">The area of the pad to put the sub-pad in.</param>

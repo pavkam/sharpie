@@ -83,23 +83,6 @@ public interface IWindow: ITerminalSurface
     new Size Size { get; set; }
 
     /// <summary>
-    ///     Set or get the immediate refresh capability of the window.
-    /// </summary>
-    /// <remarks>
-    ///     Immediate refresh will redraw the window on each change.
-    ///     This might be very slow for most use cases.
-    ///     Default is <c>false</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
-    bool ImmediateRefresh { get; set; }
-
-    /// <summary>
-    ///     Redraws all the dirty lines of the window to the terminal.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
-    void Refresh();
-
-    /// <summary>
     ///      Redraws the given lines of the window to the terminal.
     /// </summary>
     /// <param name="y">The starting line to refresh.</param>

@@ -59,6 +59,13 @@ public class TerminalSurface: Surface, ITerminalSurface
         get => Curses.is_immedok(Handle);
         set => Curses.immedok(Handle, value);
     }
+    
+    /// <inheritdoc cref="ITerminalSurface.Critical" />
+    public bool Critical
+    {
+        get => Curses.is_cleared(Handle);
+        set => Curses.clearok(Handle, value);
+    }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
