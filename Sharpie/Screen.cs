@@ -91,6 +91,22 @@ public sealed class Screen: TerminalSurface, IScreen
         }
     }
 
+    /// <inheritdoc cref="Surface.MarkDirty(int, int)" />
+    public override void Refresh(int y, int count)
+    {
+        base.Refresh(y, count);
+        foreach (var child in Windows)
+        {
+            var ly = child.Location.Y;
+            var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
+
+            if (iy > -1 && ic > 0)
+            {
+                child.Refresh(iy - ly, ic);
+            }
+        }
+    }
+    
     /// <inheritdoc cref="IScreen.Window" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IWindow Window(Rectangle area)

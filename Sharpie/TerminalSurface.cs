@@ -88,7 +88,7 @@ public class TerminalSurface: Surface, ITerminalSurface
     
     /// <inheritdoc cref="IWindow.Refresh(int, int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh(int y, int count)
+    public virtual void Refresh(int y, int count)
     {
         if (y < 0 || y >= Size.Height)
         {
