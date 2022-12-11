@@ -34,13 +34,8 @@ namespace Sharpie.Abstractions;
 ///     Defines the traits that a <see cref="Screen" /> implements.
 /// </summary>
 [PublicAPI]
-public interface IScreen: ISurface
+public interface IScreen: ITerminalSurface
 {
-    /// <summary>
-    ///     The terminal this screen belongs to.
-    /// </summary>
-    ITerminal Terminal { get; }
-
     /// <summary>
     ///     Gets all child windows on this screen.
     /// </summary>
@@ -63,9 +58,9 @@ public interface IScreen: ISurface
     bool ImmediateRefresh { get; set; }
 
     /// <summary>
-    ///     Refreshes the window by synchronizing it to the terminal with immediate redraw.
+    ///     Redraws all the dirty lines of the screen to the terminal.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     void Refresh();
 
     /// <summary>

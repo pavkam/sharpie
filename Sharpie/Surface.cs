@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     Represents a surface and contains all it's functionality.
+///     Represents a surface and contains all its functionality.
 /// </summary>
 [PublicAPI]
 public class Surface: ISurface, IDisposable

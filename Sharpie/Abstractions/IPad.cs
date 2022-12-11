@@ -54,30 +54,16 @@ public interface IPad: ISurface
     new Size Size { get; set; }
 
     /// <summary>
-    ///     Refreshes the pad by synchronizing it to the terminal screen.
+    ///     Redraws an area of the screen with the contents of the pad.
     /// </summary>
-    /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
-    /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>
-    /// <param name="rect">The rectangle of the pad to place onto the screen.</param>
-    /// <param name="screenPos">The point on the screen to place that rectangle.</param>
+    /// <param name="srcArea">The rectangle of the pad to place onto the screen.</param>
+    /// <param name="destLocation">The point on the screen to place that rectangle.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    ///     Thrown if <paramref name="rect" /> or <paramref name="screenPos" /> are
+    ///     Thrown if <paramref name="srcArea" /> or <paramref name="destLocation" /> are
     ///     out of bounds.
     /// </exception>
-    void Refresh(bool batch, bool entireScreen, Rectangle rect, Point screenPos);
-
-    /// <summary>
-    ///     Refreshes the pad by synchronizing it to the terminal screen with immediate redraw.
-    /// </summary>
-    /// <param name="rect">The rectangle of the pad to place onto the screen.</param>
-    /// <param name="screenPos">The point on the screen to place that rectangle.</param>
-    /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     Thrown if <paramref name="rect" /> or <paramref name="screenPos" /> are
-    ///     out of bounds.
-    /// </exception>
-    void Refresh(Rectangle rect, Point screenPos) => Refresh(false, false, rect, screenPos);
+    void Refresh(Rectangle srcArea, Point destLocation);
 
     /// <summary>
     ///     Creates a new sub-pad in the parent pad.

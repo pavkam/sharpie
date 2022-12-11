@@ -54,6 +54,9 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Screen" />
+    IScreen IPad.Screen => Screen;
+    
+    /// <inheritdoc cref="IPad.Screen" />
     public IScreen Screen { get; }
 
     /// <inheritdoc cref="IWindow.SubWindows" />
@@ -76,9 +79,9 @@ public sealed class Pad: Surface, IPad
         }
     }
 
-    /// <inheritdoc cref="IPad.Refresh(bool,bool,System.Drawing.Rectangle,System.Drawing.Point)" />
+    /// <inheritdoc cref="IPad.Refresh(System.Drawing.Rectangle,System.Drawing.Point)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh(bool batch, bool entireScreen, Rectangle rect, Point screenPos)
+    public void Refresh(Rectangle rect, Point screenPos)
     {
         if (!((IPad) this).IsRectangleWithin(rect))
         {
@@ -91,20 +94,20 @@ public sealed class Pad: Surface, IPad
             throw new ArgumentOutOfRangeException(nameof(screenPos));
         }
 
-        Curses.clearok(Handle, entireScreen)
-              .Check(nameof(Terminal.Curses.clearok), "Failed to configure pad refresh.");
-
-        if (batch)
+        ((Terminal) Screen.Terminal).WithinBatch(batch =>
         {
-            Curses.pnoutrefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
-                      destRect.Bottom, destRect.Right)
-                  .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
-        } else
-        {
-            Curses.prefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
-                      destRect.Bottom, destRect.Right)
-                  .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
-        }
+            if (batch)
+            {
+                Curses.pnoutrefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
+                          destRect.Bottom, destRect.Right)
+                      .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
+            } else
+            {
+                Curses.prefresh(Handle, rect.Top, rect.Left, destRect.Top, destRect.Left,
+                          destRect.Bottom, destRect.Right)
+                      .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
+            }
+        });
     }
 
     /// <inheritdoc cref="IPad.SubPad" />

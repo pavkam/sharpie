@@ -34,7 +34,7 @@ namespace Sharpie.Abstractions;
 ///     Defines the traits implemented by the <see cref="Window" /> class.
 /// </summary>
 [PublicAPI]
-public interface IWindow: ISurface
+public interface IWindow: ITerminalSurface
 {
     /// <summary>
     ///     The parent screen of this window.
@@ -94,21 +94,13 @@ public interface IWindow: ISurface
     bool ImmediateRefresh { get; set; }
 
     /// <summary>
-    ///     Refreshes the window by synchronizing it to the terminal.
-    /// </summary>
-    /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
-    /// <param name="entireScreen">If <c>true</c>, when this refresh happens, the entire screen is redrawn.</param>
-    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
-    void Refresh(bool batch, bool entireScreen);
-
-    /// <summary>
-    ///     Refreshes the window by synchronizing it to the terminal with immediate redraw.
+    ///     Redraws all the dirty lines of the window to the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
-    void Refresh() => Refresh(false, false);
+    void Refresh();
 
     /// <summary>
-    ///     Refreshes a number of lines within the window.
+    ///      Redraws the given lines of the window to the terminal.
     /// </summary>
     /// <param name="y">The starting line to refresh.</param>
     /// <param name="count">The number of lines to refresh.</param>

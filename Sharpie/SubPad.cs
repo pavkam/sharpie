@@ -53,6 +53,9 @@ public sealed class SubPad: Surface, ISubPad
     }
 
     /// <inheritdoc cref="ISubPad.Pad" />
+    IPad ISubPad.Pad => Pad;
+
+    /// <inheritdoc cref="ISubPad.Pad" />
     public IPad Pad { get; }
 
     /// <inheritdoc cref="ISubPad.Location" />

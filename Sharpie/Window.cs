@@ -34,7 +34,7 @@ namespace Sharpie;
 ///     Represents a Curses window and contains all it's functionality.
 /// </summary>
 [PublicAPI]
-public class Window: Surface, IWindow
+public sealed class Window: TerminalSurface, IWindow
 {
     private readonly IList<SubWindow> _subWindows = new List<SubWindow>();
 
@@ -46,7 +46,7 @@ public class Window: Surface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
-    internal Window(Screen parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
+    internal Window(Screen parent, IntPtr handle): base(parent != null! ? parent.Terminal : null!, handle)
     {
         Curses.keypad(Handle, true)
               .Check(nameof(Curses.keypad), "Failed to enable the keypad resolution mode.");
@@ -125,31 +125,6 @@ public class Window: Surface, IWindow
 
             Curses.wresize(Handle, value.Height, value.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the window.");
-        }
-    }
-
-    /// <inheritdoc cref="IWindow.ImmediateRefresh" />
-    public bool ImmediateRefresh
-    {
-        get => Curses.is_immedok(Handle);
-        set => Curses.immedok(Handle, value);
-    }
-
-    /// <inheritdoc cref="IWindow.Refresh(bool, bool)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh(bool batch, bool entireScreen)
-    {
-        Curses.clearok(Handle, entireScreen)
-              .Check(nameof(Curses.clearok), "Failed to configure the refresh mode.");
-
-        if (batch)
-        {
-            Curses.wnoutrefresh(Handle)
-                  .Check(nameof(Curses.wnoutrefresh), "Failed to queue window refresh.");
-        } else
-        {
-            Curses.wrefresh(Handle)
-                  .Check(nameof(Curses.wrefresh), "Failed to perform window refresh.");
         }
     }
 

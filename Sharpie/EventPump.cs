@@ -10,7 +10,7 @@ using System.Collections.Concurrent;
 public sealed class EventPump: IEventPump
 {
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private readonly ITerminal _terminal;
+    private readonly Terminal _terminal;
     private ConcurrentQueue<object> _delegatedObjects = new();
     private MouseEventResolver? _mouseEventResolver;
 
@@ -21,7 +21,7 @@ public sealed class EventPump: IEventPump
     /// <exception cref="ArgumentNullException">
     ///     Thrown if <paramref name="terminal" /> is <c>null</c>.
     /// </exception>
-    internal EventPump(ITerminal terminal) => _terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
+    internal EventPump(Terminal terminal) => _terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
 
     /// <summary>
     ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
@@ -63,8 +63,10 @@ public sealed class EventPump: IEventPump
                         @event = new TerminalAboutToResizeEvent();
                     }
 
-                    _terminal.Update();
-                    hasPendingResize = false;
+                    if (_terminal.TryUpdate())
+                    {
+                        hasPendingResize = false;
+                    }
                 }
 
                 if (@event is KeyEvent ke)

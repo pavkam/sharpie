@@ -94,13 +94,13 @@ public interface ITerminal
     ///     The header surface. Only initialized if <see cref="TerminalOptions.AllocateHeader" /> was set.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    IScreenArea? Header { get; }
+    ITerminalSurface? Header { get; }
 
     /// <summary>
     ///     The footer surface. Only initialized if <see cref="TerminalOptions.AllocateFooter" /> was set.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    IScreenArea? Footer { get; }
+    ITerminalSurface? Footer { get; }
 
     /// <summary>
     ///     The event pump instance that can be used to read events from the terminal.
@@ -142,10 +142,10 @@ public interface ITerminal
     void Alert(bool silent);
 
     /// <summary>
-    ///     Applies all queued refreshes to the terminal.
+    /// Creates a batch update lock. All refreshes are batched together until the batch is disposed.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
-    void Update();
+    /// <returns>A disposable object that need to be disposed to release the batch update lock.</returns>
+    IDisposable BatchUpdates();
 
     /// <summary>
     ///     Runs the application main loop and dispatches each event to <paramref name="eventAction" />.

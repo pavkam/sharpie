@@ -51,6 +51,9 @@ public sealed class SubWindow: Surface, ISubWindow
     }
 
     /// <inheritdoc cref="ISubWindow.Window" />
+    IWindow ISubWindow.Window => Window;
+    
+    /// <inheritdoc cref="ISubWindow.Window" />
     public IWindow Window { get; }
 
     /// <inheritdoc cref="ISubWindow.Location" />

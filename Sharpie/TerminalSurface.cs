@@ -31,44 +31,50 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     Represents a Curses window and contains all it's functionality.
+///     Represents a screen-bound surface and contains all its functionality.
 /// </summary>
 [PublicAPI]
-public sealed class ScreenArea: Surface, IScreenArea
+public class TerminalSurface: Surface, ITerminalSurface
 {
     /// <summary>
-    ///     Initializes the window using the given Curses handle.
+    ///     Initializes the surface using a Curses handle.
     /// </summary>
     /// <param name="parent">The parent terminal.</param>
-    /// <param name="handle">The Curses handle.</param>
+    /// <param name="handle">The surface handle.</param>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
-    internal ScreenArea(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle) =>
+    internal TerminalSurface(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle) =>
         Terminal = parent!;
 
-    /// <inheritdoc cref="IScreenArea.Terminal" />
-    public ITerminal Terminal { get; }
+    /// <inheritdoc cref="IScreen.Terminal" />
+    ITerminal ITerminalSurface.Terminal => Terminal;
 
-    /// <inheritdoc cref="IScreenArea.ImmediateRefresh" />
+    /// <inheritdoc cref="IScreen.Terminal" />
+    public Terminal Terminal { get; }
+
+    /// <inheritdoc cref="ITerminalSurface.ImmediateRefresh" />
     public bool ImmediateRefresh
     {
         get => Curses.is_immedok(Handle);
         set => Curses.immedok(Handle, value);
     }
 
-    /// <inheritdoc cref="IScreenArea.Refresh" />
+    /// <inheritdoc cref="ITerminalSurface.Refresh" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh(bool batch = false)
+    public void Refresh()
     {
-        if (batch)
+        Terminal.WithinBatch(batch =>
         {
-            Curses.wnoutrefresh(Handle)
-                  .Check(nameof(Curses.wnoutrefresh), "Failed to queue window refresh.");
-        } else
-        {
-            Curses.wrefresh(Handle)
-                  .Check(nameof(Curses.wrefresh), "Failed to perform window refresh.");
-        }
+            if (batch)
+            {
+                Curses.wnoutrefresh(Handle)
+                      .Check(nameof(Curses.wnoutrefresh), "Failed to queue window refresh.");
+            } else
+            {
+                Curses.wrefresh(Handle)
+                      .Check(nameof(Curses.wrefresh), "Failed to perform window refresh.");
+            }
+        });
     }
 }

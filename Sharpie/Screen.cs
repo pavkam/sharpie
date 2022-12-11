@@ -35,7 +35,7 @@ namespace Sharpie;
 ///     Only one instance of this class can be active at one time.
 /// </summary>
 [PublicAPI]
-public sealed class Screen: Surface, IScreen
+public sealed class Screen: TerminalSurface, IScreen
 {
     private readonly IList<Pad> _pads = new List<Pad>();
     private readonly IList<Window> _windows = new List<Window>();
@@ -47,10 +47,8 @@ public sealed class Screen: Surface, IScreen
     /// <param name="handle">The Curses handle.</param>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
-    internal Screen(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
+    internal Screen(Terminal parent, IntPtr handle): base(parent, handle)
     {
-        Terminal = parent!;
-
         Curses.notimeout(Handle, false)
               .Check(nameof(Curses.notimeout), "Failed to disable no-read-timeout mode.");
 
@@ -66,16 +64,6 @@ public sealed class Screen: Surface, IScreen
 
     /// <inheritdoc cref="IScreen.Pads" />
     public IEnumerable<IPad> Pads => _pads;
-
-    /// <inheritdoc cref="IScreen.Terminal" />
-    public ITerminal Terminal { get; }
-
-    /// <inheritdoc cref="IScreen.ImmediateRefresh" />
-    public bool ImmediateRefresh
-    {
-        get => Curses.is_immedok(Handle);
-        set => Curses.immedok(Handle, value);
-    }
 
     /// <inheritdoc cref="IScreen.Window" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
@@ -106,14 +94,6 @@ public sealed class Screen: Surface, IScreen
                            .Check(nameof(Curses.newpad), "Failed to create a new pad.");
 
         return new Pad(this, handle) { ManagedCaret = ManagedCaret };
-    }
-
-    /// <inheritdoc cref="IScreen.Refresh" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh()
-    {
-        Curses.wrefresh(Handle)
-              .Check(nameof(Curses.wrefresh), "Failed to perform screen refresh.");
     }
 
     /// <summary>

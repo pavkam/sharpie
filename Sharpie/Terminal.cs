@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 using Nito.AsyncEx;
+using Nito.Disposables;
 
 /// <summary>
 ///     This class allows the developer to interact with the terminal and its settings. This is the main
@@ -43,15 +44,16 @@ public sealed class Terminal: ITerminal, IDisposable
     private static bool _terminalInstanceActive;
     private ColorManager _colorManager;
     private EventPump _eventPump;
-    private ScreenArea? _footer;
-    private ScreenArea? _header;
+    private TerminalSurface? _footer;
+    private TerminalSurface? _header;
     private int? _initialCaretMode;
     private int? _initialMouseClickDelay;
     private int? _initialMouseMask;
     private ManualResetEventSlim? _runCompletedEvent;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-
+    private int _batchUpdateLocks;
+    
     private object _syncRoot = new();
 
     /// <summary>
@@ -94,7 +96,7 @@ public sealed class Terminal: ITerminal, IDisposable
             curses.ripoffline(1, (handle, _) =>
                   {
                       _header = handle != IntPtr.Zero
-                          ? new ScreenArea(this, handle) { ManagedCaret = managedCaret }
+                          ? new TerminalSurface(this, handle) { ManagedCaret = managedCaret }
                           : null;
 
                       return 0;
@@ -107,7 +109,7 @@ public sealed class Terminal: ITerminal, IDisposable
             curses.ripoffline(-1, (handle, _) =>
                   {
                       _footer = handle != IntPtr.Zero
-                          ? new ScreenArea(this, handle) { ManagedCaret = managedCaret }
+                          ? new TerminalSurface(this, handle) { ManagedCaret = managedCaret }
                           : null;
 
                       return 0;
@@ -312,7 +314,7 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <inheritdoc cref="ITerminal.Header" />
-    public IScreenArea? Header
+    public ITerminalSurface? Header
     {
         get
         {
@@ -323,7 +325,7 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <inheritdoc cref="ITerminal.Footer" />
-    public IScreenArea? Footer
+    public ITerminalSurface? Footer
     {
         get
         {
@@ -396,13 +398,63 @@ public sealed class Terminal: ITerminal, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ITerminal.Update" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Update()
+    /// <summary>
+    /// Creates a batch update lock.
+    /// </summary>
+    /// <returns>A disposable object that need to be disposed to release the batch update lock.</returns>
+    public IDisposable BatchUpdates()
     {
-        AssertAlive();
-        Curses.doupdate()
-              .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
+        lock (_syncRoot)
+        {
+            _batchUpdateLocks++;
+            return new Disposable(() =>
+            {
+                Debug.Assert(_batchUpdateLocks > 0);
+                if (--_batchUpdateLocks == 0)
+                {
+                    if (!Disposed)
+                    {
+                        Curses.doupdate()
+                              .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
+                    }
+                }
+            });
+        }
+    }
+    
+    /// <summary>
+    /// Executes a given <paramref name="action"/> within the context of a batch.
+    /// </summary>
+    /// <param name="action">The action to execute.</param>
+    internal void WithinBatch(Action<bool> action)
+    {
+        Debug.Assert(action != null);
+
+        lock (_syncRoot)
+        {
+            action(_batchUpdateLocks > 0);
+        }
+    }
+
+    /// <summary>
+    /// Attempts tp update the terminal.
+    /// </summary>
+    /// <returns><c>true</c> if the attempt was successful. <c>false</c> otherwise.</returns>
+    internal bool TryUpdate()
+    {
+        lock (_syncRoot)
+        {
+            Debug.Assert(_batchUpdateLocks >= 0);
+            if (_batchUpdateLocks == 0)
+            {
+                Curses.doupdate()
+                      .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
+
+                return true;
+            }
+
+            return false;
+        }
     }
 
     /// <inheritdoc cref="ITerminal.RunAsync" />

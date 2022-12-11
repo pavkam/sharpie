@@ -61,7 +61,7 @@ void DrawHeader()
     terminal.Header!.CaretPosition = new(0, 0);
     terminal.Header.WriteText("Press a number from 1 to 8 to change the color.");
     terminal.Header.DrawHorizontalLine(terminal.Header.Size.Width - terminal.Header.CaretPosition.X);
-    terminal.Header.Refresh(true);
+    terminal.Header.Refresh();
 }
 
 DrawHeader();

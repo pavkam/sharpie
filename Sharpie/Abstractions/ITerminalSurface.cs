@@ -31,31 +31,30 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Defines the traits implemented by the <see cref="ScreenArea" /> class.
+///     Defines the base traits required for <see cref="TerminalSurface" /> class.
 /// </summary>
 [PublicAPI]
-public interface IScreenArea: ISurface
+public interface ITerminalSurface: ISurface
 {
     /// <summary>
-    ///     The parent terminal of this screen area.
+    ///     The terminal this surface belongs to.
     /// </summary>
     ITerminal Terminal { get; }
 
     /// <summary>
-    ///     Set or get the immediate refresh capability of the screen area.
+    ///     Set or get the immediate refresh capability of the surface.
     /// </summary>
     /// <remarks>
-    ///     Immediate refresh will redraw the screen area on each change.
+    ///     Immediate refresh will redraw the surface on each change.
     ///     This might be very slow for most use cases.
     ///     Default is <c>false</c>.
     /// </remarks>
-    /// <exception cref="ObjectDisposedException">Screen area is no longer usable.</exception>
+    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     bool ImmediateRefresh { get; set; }
 
     /// <summary>
-    ///     Refreshes the screen area by synchronizing it to the terminal.
+    ///     Redraws all the dirty lines of the surface to the terminal.
     /// </summary>
-    /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
-    /// <exception cref="ObjectDisposedException">Screen area is no longer usable.</exception>
-    void Refresh(bool batch = false);
+    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    void Refresh();
 }
