@@ -419,6 +419,13 @@ public static class Helpers
         return (button, state, modifierKey);
     }
 
+    /// <summary>
+    /// Enumerates a given interval using 1/2s.
+    /// </summary>
+    /// <param name="start">The start of the interval.</param>
+    /// <param name="count">The length of the interval.</param>
+    /// <returns>An enumerable that returns the halves.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="start"/> or <paramref name="count"/> are out of bounds.</exception>
     internal static IEnumerable<(int coord, bool start)> EnumerateInHalves(float start, float count)
     {
         if (start < 0)
@@ -441,5 +448,40 @@ public static class Helpers
             yield return (allHalves / 2, allHalves % 2 == 0);
             allHalves++;
         }
+    }
+
+    /// <summary>
+    /// Calculates the intersection between two segments.
+    /// </summary>
+    /// <param name="seg1Start">The start of the first segment.</param>
+    /// <param name="seg1Len">The length of the first segment.</param>
+    /// <param name="seg2Start">The start of the second segment.</param>
+    /// <param name="seg2Len">The length of the second segment.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    internal static (int start, int count) IntersectSegments(int seg1Start, int seg1Len, int seg2Start, int seg2Len)
+    {
+        if (seg1Len < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(seg1Len));
+        }
+
+        if (seg2Len < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(seg2Len));
+        }
+
+        var seg1End = seg1Start + seg1Len - 1;
+        var seg2End = seg2Start + seg2Len - 1;
+
+        if (seg1End < seg2Start || seg2End < seg1Start)
+        {
+            return (-1, 0);
+        }
+
+        var intStart = Math.Max(seg1Start, seg2Start);
+        var intEnd = Math.Min(seg1End, seg2End);
+
+        return (intStart, intEnd - intStart + 1);
     }
 }

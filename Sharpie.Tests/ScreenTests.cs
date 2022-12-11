@@ -232,7 +232,37 @@ public class ScreenTests
 
         _cursesMock.Verify(s => s.leaveok(p.Handle, mc), Times.Once);
     }
+    
+    [TestMethod]
+    public void Refresh_RefreshesAllWindows_NoBatch()
+    {
+        var w1 = new Window(_screen, new(1));
+        var w2 = new Window(_screen, new(1));
 
+        _screen.Refresh();
+        
+        _cursesMock.Verify(v => v.wrefresh(_screen.Handle));
+        _cursesMock.Verify(v => v.wrefresh(w1.Handle));
+        _cursesMock.Verify(v => v.wrefresh(w2.Handle));
+    }
+    
+    [TestMethod]
+    public void Refresh_RefreshesAllWindows_InBatch()
+    {
+        var w1 = new Window(_screen, new(1));
+        var w2 = new Window(_screen, new(1));
+
+        using (_terminal.BatchUpdates())
+        {
+            _screen.Refresh();
+        }
+
+        _cursesMock.Verify(v => v.wnoutrefresh(_screen.Handle));
+        _cursesMock.Verify(v => v.wnoutrefresh(w1.Handle));
+        _cursesMock.Verify(v => v.wnoutrefresh(w2.Handle));
+        _cursesMock.Verify(v => v.doupdate());
+    }
+    
     [TestMethod]
     public void Destroy_CallsCurses()
     {

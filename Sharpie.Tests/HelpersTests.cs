@@ -465,4 +465,34 @@ public class HelpersTests
         r[1]
             .ShouldBe((2, true));
     }
+    
+    [TestMethod]
+    public void IntersectSegments_Throws_IfLength1IsLessThanZero()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, -1, 0, 1));
+    }
+
+    [TestMethod]
+    public void IntersectSegments_Throws_IfLength2IsLessThanZero()
+    {
+        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, 1, 0, -1));
+    }
+    
+    [TestMethod,
+        DataRow(0, 0, 0, 5, -1, 0),
+        DataRow(0, 5, 0, 0, -1, 0),
+        DataRow(0, 5, 6, 5, -1, 0),
+        DataRow(0, 5, -10, 5, -1, 0),
+        DataRow(-10, 20, 0, 5, 0, 5),
+        DataRow(0, 10, -10, 11, 0, 1),
+        DataRow(0, 1, 0, 5, 0, 1),
+        DataRow(0, 10, 0, 5, 0, 5),
+    ]
+    public void IntersectSegments_CalculatesTheProperLength(int s1, int c1, int s2, int c2, int si, int sc)
+    {
+        var (rs, rc) = Helpers.IntersectSegments(s1, c1, s2, c2);
+        
+        rs.ShouldBe(si);
+        rc.ShouldBe(sc);
+    }
 }

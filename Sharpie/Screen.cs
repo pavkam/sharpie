@@ -65,7 +65,7 @@ public sealed class Screen: TerminalSurface, IScreen
     /// <inheritdoc cref="IScreen.Pads" />
     public IEnumerable<IPad> Pads => _pads;
 
-    /// <inheritdoc cref="TerminalSurface.Refresh" />
+    /// <inheritdoc cref="TerminalSurface.Refresh()" />
     public override void Refresh()
     {
         base.Refresh();
@@ -74,7 +74,7 @@ public sealed class Screen: TerminalSurface, IScreen
             child.Refresh();
         }
     }
-    
+
     /// <inheritdoc cref="Surface.MarkDirty(int, int)" />
     public override void MarkDirty(int y, int count)
     {
@@ -82,10 +82,15 @@ public sealed class Screen: TerminalSurface, IScreen
         base.MarkDirty(y, count);
         foreach (var child in Windows)
         {
-            child.MarkDirty();
+            var (iy, ic) = Helpers.IntersectSegments(y, count, child.Location.Y, child.Size.Height);
+
+            if (iy > -1 && ic > 0)
+            {
+                child.MarkDirty(iy, ic);
+            }
         }
     }
-    
+
     /// <inheritdoc cref="IScreen.Window" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IWindow Window(Rectangle area)
