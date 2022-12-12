@@ -448,6 +448,249 @@ public class WindowTests
         _cursesMock.Verify(s => s.leaveok(sw.Handle, mc), Times.Once);
     }
 
+    [TestMethod,
+    DataRow(5,6, 10, 11, 9, 8, 4, 2, true),
+    DataRow(0,0, 5, 6, 2, 2, 2, 2, true),
+    DataRow(0,0, 5, 6, 0, 0, 2, 2, false),
+    DataRow(0,0, 5, 6, 100, 100, 0, 0, false)
+    ]
+    public void Refresh1_RecalculatesTheSizeAsExpected(int x, int y, int width, int height, int scrWidth, int scrHeight, int expWidth, int expHeight, bool call)
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(x, y, width, height));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(_screen, new(0, 0, scrWidth, scrHeight));
+
+        w.Refresh();
+
+        if (call)
+        {
+            _cursesMock.Verify(v => v.wresize(w.Handle, expHeight, expWidth), Times.Once);
+        } else
+        {
+            _cursesMock.Verify(v => v.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+    }
+    
+    [TestMethod]
+    public void Refresh1_DoesNotThrow_IfCursesFails_1()
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(0, 0, 10, 10));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(_screen, new(0, 0, 5, 5));
+
+        _cursesMock.Setup(s => s.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.NotThrow(() => w.Refresh());
+    }
+    
+    [TestMethod,
+     DataRow(0,0, 8, 8, true),
+     DataRow(5,5, 15, 15, true),
+     DataRow(5,5, 5, 5, false),
+    ]
+    public void Refresh1_RecalculatesTheLocationAsExpected(int x, int y, int newX, int newY, bool call)
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(x, y, 10, 10));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(h, new(newX, newY, 10, 10));
+        
+        w.Refresh();
+
+        if (call)
+        {
+            _cursesMock.Verify(v => v.mvwin(w.Handle, x, y), Times.Once);
+        } else
+        {
+            _cursesMock.Verify(v => v.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+    }
+    
+    [TestMethod]
+    public void Refresh1_DoesNotThrow_IfCursesFails_2()
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(5, 5, 10, 10));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(h, new(6, 6, 4, 4));
+        
+        w.Refresh();
+
+        _cursesMock.Setup(s => s.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.NotThrow(() => w.Refresh());
+    }
+    
+    [TestMethod,
+     DataRow(5,6, 10, 11, 9, 8, 4, 2, true),
+     DataRow(0,0, 5, 6, 2, 2, 2, 2, true),
+     DataRow(0,0, 5, 6, 0, 0, 2, 2, false),
+     DataRow(0,0, 5, 6, 100, 100, 0, 0, false)
+    ]
+    public void MarkDirty_RecalculatesTheSizeAsExpected(int x, int y, int width, int height, int scrWidth, int scrHeight, int expWidth, int expHeight, bool call)
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(x, y, width, height));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(_screen, new(0, 0, scrWidth, scrHeight));
+
+        w.MarkDirty(0, 1);
+
+        if (call)
+        {
+            _cursesMock.Verify(v => v.wresize(w.Handle, expHeight, expWidth), Times.Once);
+        } else
+        {
+            _cursesMock.Verify(v => v.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+    }
+
+    [TestMethod,
+     DataRow(0,0, 8, 8, true),
+     DataRow(5,5, 15, 15, true),
+     DataRow(5,5, 5, 5, false),
+    ]
+    public void MarkDirty_RecalculatesTheLocationAsExpected(int x, int y, int newX, int newY, bool call)
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(x, y, 10, 10));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(h, new(newX, newY, 10, 10));
+        
+        w.MarkDirty(0, 1);
+
+        if (call)
+        {
+            _cursesMock.Verify(v => v.mvwin(w.Handle, x, y), Times.Once);
+        } else
+        {
+            _cursesMock.Verify(v => v.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+    }
+    
+    [TestMethod]
+    public void MarkDirty_DoesNotThrow_IfCursesFails_1()
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(0, 0, 10, 10));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(_screen, new(0, 0, 5, 5));
+
+        _cursesMock.Setup(s => s.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.NotThrow(() => w.MarkDirty(0, 1));
+    }
+
+    [TestMethod]
+    public void MarkDirty_DoesNotThrow_IfCursesFails_2()
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(5, 5, 10, 10));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(h, new(6, 6, 4, 4));
+        
+        w.MarkDirty(0, 1);
+
+        _cursesMock.Setup(s => s.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.NotThrow(() => w.Refresh());
+    }
+
+    [TestMethod,
+     DataRow(5,6, 10, 11, 9, 8, 4, 2, true),
+     DataRow(0,0, 5, 6, 2, 2, 2, 2, true),
+     DataRow(0,0, 5, 6, 0, 0, 2, 2, false),
+     DataRow(0,0, 5, 6, 100, 100, 0, 0, false)
+    ]
+    public void Refresh2_RecalculatesTheSizeAsExpected(int x, int y, int width, int height, int scrWidth, int scrHeight, int expWidth, int expHeight, bool call)
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(x, y, width, height));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(_screen, new(0, 0, scrWidth, scrHeight));
+
+        w.Refresh(0, 1);
+
+        if (call)
+        {
+            _cursesMock.Verify(v => v.wresize(w.Handle, expHeight, expWidth), Times.Once);
+        } else
+        {
+            _cursesMock.Verify(v => v.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+    }
+
+    [TestMethod,
+     DataRow(0,0, 8, 8, true),
+     DataRow(5,5, 15, 15, true),
+     DataRow(5,5, 5, 5, false),
+    ]
+    public void Refresh2_RecalculatesTheLocationAsExpected(int x, int y, int newX, int newY, bool call)
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(x, y, 10, 10));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(h, new(newX, newY, 10, 10));
+        
+        w.Refresh(0, 1);
+
+        if (call)
+        {
+            _cursesMock.Verify(v => v.mvwin(w.Handle, x, y), Times.Once);
+        } else
+        {
+            _cursesMock.Verify(v => v.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+    }
+    
+    [TestMethod]
+    public void Refresh2_DoesNotThrow_IfCursesFails_1()
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(0, 0, 10, 10));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(_screen, new(0, 0, 5, 5));
+
+        _cursesMock.Setup(s => s.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.NotThrow(() => w.Refresh(0, 1));
+    }
+    
+    [TestMethod]
+    public void Refresh2_DoesNotThrow_IfCursesFails_2()
+    {
+        var h = new IntPtr(1);
+        _cursesMock.MockArea(h, new(5, 5, 10, 10));
+        var w = new Window(_screen, h);
+        
+        _cursesMock.MockArea(h, new(6, 6, 4, 4));
+        
+        w.Refresh(0, 1);
+
+        _cursesMock.Setup(s => s.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(-1);
+
+        Should.NotThrow(() => w.Refresh());
+    }
+    
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Destroy_RemovesWindowFromParent()
     {

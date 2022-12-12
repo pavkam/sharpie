@@ -4,22 +4,29 @@ using System.Diagnostics;
 
 internal static class TestHelpers
 {
-    public static void MockArea(this Mock<ICursesProvider> cursesMock, IWindow surface, Rectangle area)
+    public static void MockArea(this Mock<ICursesProvider> cursesMock, IntPtr handle, Rectangle area)
+    {
+        Debug.Assert(cursesMock != null);
+   
+        cursesMock.Setup(s => s.getbegy(handle))
+                  .Returns(area.Top);
+
+        cursesMock.Setup(s => s.getbegx(handle))
+                  .Returns(area.Left);
+
+        cursesMock.Setup(s => s.getmaxx(handle))
+                  .Returns(area.Width);
+
+        cursesMock.Setup(s => s.getmaxy(handle))
+                  .Returns(area.Height);
+    }
+    
+    public static void MockArea(this Mock<ICursesProvider> cursesMock, ISurface surface, Rectangle area)
     {
         Debug.Assert(cursesMock != null);
         Debug.Assert(surface != null);
 
-        cursesMock.Setup(s => s.getbegy(surface.Handle))
-                  .Returns(area.Top);
-
-        cursesMock.Setup(s => s.getbegx(surface.Handle))
-                  .Returns(area.Left);
-
-        cursesMock.Setup(s => s.getmaxx(surface.Handle))
-                  .Returns(area.Width);
-
-        cursesMock.Setup(s => s.getmaxy(surface.Handle))
-                  .Returns(area.Height);
+        MockArea(cursesMock, surface.Handle, area);
     }
 
     public static void MockLargeArea(this Mock<ICursesProvider> cursesMock, ISurface surface)
