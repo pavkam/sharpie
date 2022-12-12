@@ -60,8 +60,14 @@ public sealed class Screen: TerminalSurface, IScreen
     }
 
     /// <inheritdoc cref="IScreen.Windows" />
-    public IEnumerable<IWindow> Windows => _windows;
+    IEnumerable<IWindow> IScreen.Windows => _windows;
 
+    /// <inheritdoc cref="IScreen.Windows" />
+    public IEnumerable<Window> Windows => _windows;
+    
+    /// <inheritdoc cref="IScreen.Pads" />
+    IEnumerable<IPad> IScreen.Pads => _pads;
+    
     /// <inheritdoc cref="IScreen.Pads" />
     public IEnumerable<IPad> Pads => _pads;
 

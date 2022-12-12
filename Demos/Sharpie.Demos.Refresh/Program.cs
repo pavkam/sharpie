@@ -44,7 +44,7 @@ terminal.Screen.Background = (new(' '),
     });
 
 terminal.Screen.Refresh();
-var w = terminal.Screen.Window(new(0, 0, 10, 10));
+var w = terminal.Screen.Window(new(2, 2, 10, 10));
 w.Background = (new('a'),
     new()
     {

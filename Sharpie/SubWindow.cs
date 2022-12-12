@@ -51,7 +51,7 @@ public sealed class SubWindow: Surface, ISubWindow
     }
 
     /// <inheritdoc cref="ISubWindow.Window" />
-    public IWindow Window { get; }
+    public Window Window { get; }
 
     /// <inheritdoc cref="ISubWindow.Window" />
     IWindow ISubWindow.Window => Window;
@@ -66,7 +66,7 @@ public sealed class SubWindow: Surface, ISubWindow
                 .Check(nameof(Curses.getpary), "Failed to get window Y coordinate."));
         set
         {
-            if (!Window.IsRectangleWithin(new(value, Size)))
+            if (!((IWindow)Window).IsRectangleWithin(new(value, Size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -83,7 +83,7 @@ public sealed class SubWindow: Surface, ISubWindow
         get => base.Size;
         set
         {
-            if (!Window.IsRectangleWithin(new(Location, value)))
+            if (!((IWindow)Window).IsRectangleWithin(new(Location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -100,15 +100,15 @@ public sealed class SubWindow: Surface, ISubWindow
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
 
-        return new SubWindow((Window) Window, handle) { ManagedCaret = ManagedCaret };
+        return new SubWindow(Window, handle) { ManagedCaret = ManagedCaret };
     }
 
     /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
-        if (Window is Window w)
+        if (Window != null!)
         {
-            w.RemoveChild(this);
+            Window.RemoveChild(this);
         }
 
         base.Delete();

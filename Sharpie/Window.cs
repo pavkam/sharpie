@@ -37,7 +37,8 @@ namespace Sharpie;
 public sealed class Window: TerminalSurface, IWindow
 {
     private readonly IList<SubWindow> _subWindows = new List<SubWindow>();
-
+    private Rectangle _explicitArea;
+    
     /// <summary>
     ///     Initializes the window using the given Curses handle.
     /// </summary>
@@ -56,6 +57,8 @@ public sealed class Window: TerminalSurface, IWindow
 
         Screen = parent!;
         parent!.AddChild(this);
+
+        _explicitArea = new(Location, Size);
     }
 
     /// <inheritdoc cref="IWindow.Screen" />
@@ -104,13 +107,16 @@ public sealed class Window: TerminalSurface, IWindow
                 .Check(nameof(Curses.getbegy), "Failed to get window Y coordinate."));
         set
         {
-            if (!((IScreen) Screen).IsRectangleWithin(new(value, Size)))
+            var size = Size;
+            if (!((IScreen) Screen).IsRectangleWithin(new(value, size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
             Curses.mvwin(Handle, value.Y, value.X)
                   .Check(nameof(Curses.mvwin), "Failed to move window to new coordinates.");
+            
+            _explicitArea = new(value, size);
         }
     }
 
@@ -121,16 +127,60 @@ public sealed class Window: TerminalSurface, IWindow
         get => base.Size;
         set
         {
-            if (!((IScreen) Screen).IsRectangleWithin(new(Location, value)))
+            var location = Location;
+            if (!((IScreen) Screen).IsRectangleWithin(new(location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
             Curses.wresize(Handle, value.Height, value.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the window.");
+            
+            _explicitArea = new(location, value);
         }
     }
 
+    private void AdjustToExplicitArea()
+    {
+        var screenSize = Screen.Size;
+        var size = Size;
+        var location = Location;
+
+        var w = Math.Min(screenSize.Width - _explicitArea.X, _explicitArea.Width);
+        var h = Math.Min(screenSize.Height - _explicitArea.Y, _explicitArea.Height);
+
+        if ((w != size.Width || h != size.Height) && w > 0 && h > 0)
+        {
+            Curses.wresize(Handle, h, w);
+        }
+
+        if (location.X > _explicitArea.X || location.Y > _explicitArea.Y)
+        {
+            Curses.mvwin(Handle, _explicitArea.Y, _explicitArea.X);
+        }
+    }
+
+    /// <inheritdoc cref="TerminalSurface.Refresh()" />
+    public override void Refresh()
+    {
+        AdjustToExplicitArea();
+        base.Refresh();
+    }
+    
+    /// <inheritdoc cref="TerminalSurface.Refresh(int, int)" />
+    public override void Refresh(int y, int count)
+    {
+        AdjustToExplicitArea();
+        base.Refresh(y, count);
+    }
+
+    /// <inheritdoc cref="TerminalSurface.MarkDirty(int, int)" />
+    public override void MarkDirty(int y, int count)
+    {
+        AdjustToExplicitArea();
+        base.MarkDirty(y, count);
+    }
+    
     /// <inheritdoc cref="IWindow.SubWindow" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow SubWindow(Rectangle area)
@@ -192,9 +242,9 @@ public sealed class Window: TerminalSurface, IWindow
             window.Destroy();
         }
 
-        if (Screen is Screen s)
+        if (Screen != null!)
         {
-            s.RemoveChild(this);
+            Screen.RemoveChild(this);
         }
 
         base.Delete();

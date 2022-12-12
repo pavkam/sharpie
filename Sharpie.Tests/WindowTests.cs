@@ -230,10 +230,10 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_Throws_IfCursesFails_1()
     {
-        _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
-                   .Returns(-1);
-
         var w = new Window(_screen, new(1));
+        
+        _cursesMock.Setup(s => s.getbegx(w.Handle))
+                   .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => w.Location)
               .Operation.ShouldBe("getbegx");
@@ -242,10 +242,10 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_Throws_IfCursesFails_2()
     {
-        _cursesMock.Setup(s => s.getbegy(It.IsAny<IntPtr>()))
-                   .Returns(-1);
-
         var w = new Window(_screen, new(1));
+        
+        _cursesMock.Setup(s => s.getbegy(w.Handle))
+                   .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => w.Location)
               .Operation.ShouldBe("getbegy");

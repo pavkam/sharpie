@@ -54,7 +54,7 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Screen" />
-    public IScreen Screen { get; }
+    public Screen Screen { get; }
 
     /// <inheritdoc cref="IPad.Screen" />
     IScreen IPad.Screen => Screen;
@@ -69,7 +69,7 @@ public sealed class Pad: Surface, IPad
         get => base.Size;
         set
         {
-            if (!Screen.IsRectangleWithin(new(new(0, 0), value)))
+            if (!((IScreen) Screen).IsRectangleWithin(new(new(0, 0), value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -89,12 +89,12 @@ public sealed class Pad: Surface, IPad
         }
 
         var destRect = srcArea with { X = destLocation.X, Y = destLocation.Y };
-        if (!Screen.IsRectangleWithin(destRect))
+        if (!((IScreen) Screen).IsRectangleWithin(destRect))
         {
             throw new ArgumentOutOfRangeException(nameof(destLocation));
         }
 
-        ((Terminal) Screen.Terminal).WithinBatch(batch =>
+        Screen.Terminal.WithinBatch(batch =>
         {
             if (batch)
             {
@@ -132,7 +132,7 @@ public sealed class Pad: Surface, IPad
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the pad.");
 
-        return new Pad((Screen) Screen, handle) { ManagedCaret = ManagedCaret };
+        return new Pad(Screen, handle) { ManagedCaret = ManagedCaret };
     }
 
     /// <summary>
@@ -171,9 +171,9 @@ public sealed class Pad: Surface, IPad
             subPad.Destroy();
         }
 
-        if (Screen is Screen s)
+        if (Screen != null!)
         {
-            s.RemoveChild(this);
+            Screen.RemoveChild(this);
         }
 
         base.Delete();
