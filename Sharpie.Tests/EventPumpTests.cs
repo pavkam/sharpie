@@ -105,7 +105,7 @@ public class EventPumpTests
 
         _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
         _pump = new(_terminal);
-        _window = new((Screen) _terminal.Screen, new(2));
+        _window = new(_terminal.Screen, new(2));
         _source = new();
     }
 
@@ -491,13 +491,30 @@ public class EventPumpTests
     [TestMethod]
     public void Listen1_GoesDeepWithinChildren_ToApplyPendingRefreshes()
     {
-        var w = new Window((Screen) _terminal.Screen, new(3));
+        var w = new Window(_terminal.Screen, new(3));
 
         SimulateEvents(1, w, (-1, 0), (0, 0));
 
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
+    
+    [TestMethod]
+    public void Listen1_AdjustsWindowsToExplicitArea()
+    {
+        var h1 = new IntPtr(1);
+        _cursesMock.MockArea(h1, new(0, 0, 5, 5));
+        var w1 = new Window(_terminal.Screen, h1);
+        
+        var h2 = new IntPtr(2);
+        _cursesMock.MockArea(h2, new(1, 1, 3, 3));
+        var w2 = new Window(_terminal.Screen, h2);
+        _cursesMock.MockArea(_terminal.Screen, new(0, 0, 2, 2));
 
+        SimulateEvents(1, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
+
+        _cursesMock.Verify(v => v.wresize(w1.Handle, 2, 2), Times.Once);
+        _cursesMock.Verify(v => v.wresize(w2.Handle, 1, 1), Times.Once);
+    }
     [TestMethod]
     public void Listen1_ProcessesTerminalResizeEvents_InScreen_WithoutMonitoring()
     {
@@ -528,7 +545,7 @@ public class EventPumpTests
     [TestMethod]
     public void Listen1_ProcessesTerminalResizeEvents_InChild_WithoutMonitoring()
     {
-        var otherWindow = new Window((Screen) _terminal.Screen, new(8));
+        var otherWindow = new Window(_terminal.Screen, new(8));
 
         _cursesMock.Setup(s => s.getmaxy(_terminal.Screen.Handle))
                    .Returns(10);

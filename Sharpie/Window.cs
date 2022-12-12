@@ -140,27 +140,6 @@ public sealed class Window: TerminalSurface, IWindow
         }
     }
 
-    /// <inheritdoc cref="TerminalSurface.Refresh()" />
-    public override void Refresh()
-    {
-        AdjustToExplicitArea();
-        base.Refresh();
-    }
-
-    /// <inheritdoc cref="TerminalSurface.Refresh(int, int)" />
-    public override void Refresh(int y, int count)
-    {
-        AdjustToExplicitArea();
-        base.Refresh(y, count);
-    }
-
-    /// <inheritdoc cref="TerminalSurface.MarkDirty(int, int)" />
-    public override void MarkDirty(int y, int count)
-    {
-        AdjustToExplicitArea();
-        base.MarkDirty(y, count);
-    }
-
     /// <inheritdoc cref="IWindow.SubWindow" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow SubWindow(Rectangle area)
@@ -186,7 +165,10 @@ public sealed class Window: TerminalSurface, IWindow
         return new Window(Screen, handle) { ManagedCaret = ManagedCaret };
     }
 
-    private void AdjustToExplicitArea()
+    /// <summary>
+    /// Adjusts the window's area to be as close (or equal) to its explicit area.
+    /// </summary>
+    internal void AdjustToExplicitArea()
     {
         var screenSize = Screen.Size;
         var size = Size;

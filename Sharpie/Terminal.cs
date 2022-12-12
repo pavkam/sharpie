@@ -303,7 +303,7 @@ public sealed class Terminal: ITerminal, IDisposable
     public VideoAttribute SupportedAttributes => (VideoAttribute) Curses.term_attrs();
 
     /// <inheritdoc cref="ITerminal.Screen" />
-    public IScreen Screen
+    public Screen Screen
     {
         get
         {
@@ -313,8 +313,14 @@ public sealed class Terminal: ITerminal, IDisposable
         }
     }
 
+    /// <inheritdoc cref="ITerminal.Screen" />
+    IScreen ITerminal.Screen => Screen;
+
     /// <inheritdoc cref="ITerminal.Header" />
-    public ITerminalSurface? Header
+    ITerminalSurface? ITerminal.Header => Header;
+    
+    /// <inheritdoc cref="ITerminal.Header" />
+    public TerminalSurface? Header
     {
         get
         {
@@ -325,7 +331,10 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <inheritdoc cref="ITerminal.Footer" />
-    public ITerminalSurface? Footer
+    ITerminalSurface? ITerminal.Footer => Footer;
+    
+    /// <inheritdoc cref="ITerminal.Footer" />
+    public TerminalSurface? Footer
     {
         get
         {
@@ -335,6 +344,9 @@ public sealed class Terminal: ITerminal, IDisposable
         }
     }
 
+    /// <inheritdoc cref="ITerminal.Events" />
+    IEventPump ITerminal.Events => Events;
+ 
     /// <inheritdoc cref="ITerminal.Events" />
     public IEventPump Events
     {

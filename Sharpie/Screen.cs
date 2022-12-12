@@ -199,6 +199,17 @@ public sealed class Screen: TerminalSurface, IScreen
 
         _pads.Remove(pad);
     }
+    
+    /// <summary>
+    /// Adjusts the area of all the windows in the screen.
+    /// </summary>
+    internal void AdjustChildrenToExplicitArea()
+    {
+        foreach (var window in _windows.ToArray())
+        {
+            window.AdjustToExplicitArea();
+        }
+    }
 
     /// <inheritdoc cref="Surface.Delete" />
     /// <summary>

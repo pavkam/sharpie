@@ -182,16 +182,23 @@ public sealed class EventPump: IEventPump
 
                 if (@event is not null)
                 {
-                    if (@event.Type == EventType.TerminalResize && !monitorsResizes)
+                    var isResize = @event.Type == EventType.TerminalResize;
+                    
+                    if (isResize)
                     {
-                        yield return new TerminalAboutToResizeEvent();
+                        if (!monitorsResizes)
+                        {
+                            yield return new TerminalAboutToResizeEvent();
+                        }
+                        
+                        _terminal.Screen.AdjustChildrenToExplicitArea();
                     }
 
                     yield return @event;
 
-                    if (@event.Type == EventType.TerminalResize)
+                    if (isResize)
                     {
-                        _terminal.Screen.MarkDirty();
+                        ((ITerminal)_terminal).Screen.MarkDirty();
                         _terminal.Screen.Refresh();
                     }
                 }

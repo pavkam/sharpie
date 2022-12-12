@@ -95,7 +95,12 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wrefresh(_screen.Handle), Times.Once);
     }
 
-    [TestMethod] public void Windows_IsEmpty_WhenCreated() { _screen.Windows.ShouldBeEmpty(); }
+    [TestMethod]
+    public void Windows_IsEmpty_WhenCreated()
+    {
+        _screen.Windows.ShouldBeEmpty();
+        ((IScreen)_screen).Windows.ShouldBe(_screen.Windows);
+    }
 
     [TestMethod]
     public void Windows_ContainsTheChild_WhenPassedAsParent()
@@ -114,7 +119,12 @@ public class ScreenTests
         _screen.Windows.ShouldBeEmpty();
     }
 
-    [TestMethod] public void Pads_IsEmpty_WhenCreated() { _screen.Pads.ShouldBeEmpty(); }
+    [TestMethod]
+    public void Pads_IsEmpty_WhenCreated()
+    {
+        _screen.Pads.ShouldBeEmpty();
+        ((IScreen)_screen).Pads.ShouldBe(_screen.Pads);
+    }
 
     [TestMethod]
     public void Pads_ContainsTheChild_WhenPassedAsParent()
@@ -322,5 +332,23 @@ public class ScreenTests
         _screen.Destroy();
         p.Disposed.ShouldBeTrue();
         w.Disposed.ShouldBeTrue();
+    }
+      
+    [TestMethod]
+    public void AdjustToExplicitArea_AdjustsEachChild()
+    {
+        var h1 = new IntPtr(1);
+        _cursesMock.MockArea(h1, new(0, 0, 5, 5));
+        var w1 = new Window(_screen, h1);
+        var h2 = new IntPtr(2);
+        _cursesMock.MockArea(h2, new(1, 1, 3, 3));
+        var w2 = new Window(_screen, h2);
+        
+        _cursesMock.MockArea(_screen, new(0, 0, 2, 2));
+
+        _screen.AdjustChildrenToExplicitArea();
+
+        _cursesMock.Verify(v => v.wresize(w1.Handle, 2, 2), Times.Once);
+        _cursesMock.Verify(v => v.wresize(w2.Handle, 1, 1), Times.Once);
     }
 }

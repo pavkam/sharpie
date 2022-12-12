@@ -195,10 +195,10 @@ public class TerminalTests
                    });
 
         _terminal = new(_cursesMock.Object, new(AllocateHeader: true));
-
-
+        
         _terminal.Header.ShouldNotBeNull();
         _terminal.Header!.Handle.ShouldBe(new(100));
+        ((ITerminal)_terminal).Header.ShouldBe(_terminal.Header);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -235,6 +235,7 @@ public class TerminalTests
 
         _terminal.Footer.ShouldNotBeNull();
         _terminal.Footer!.Handle.ShouldBe(new(100));
+        ((ITerminal)_terminal).Footer.ShouldBe(_terminal.Footer);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -537,6 +538,7 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.Events.ShouldNotBeNull();
+        ((ITerminal)_terminal).Events.ShouldBe(_terminal.Events);
     }
 
     [TestMethod]
