@@ -195,14 +195,17 @@ public sealed class Window: TerminalSurface, IWindow
         var w = Math.Min(screenSize.Width - _explicitArea.X, _explicitArea.Width);
         var h = Math.Min(screenSize.Height - _explicitArea.Y, _explicitArea.Height);
 
-        if ((w != size.Width || h != size.Height) && w > 0 && h > 0)
+        if (w != size.Width || h != size.Height)
         {
             Curses.wresize(Handle, h, w);
         }
 
-        if (location.X > _explicitArea.X || location.Y > _explicitArea.Y)
+        var x = Math.Min(location.X, _explicitArea.X);
+        var y = Math.Min(location.Y, _explicitArea.Y);
+        
+        if (location.X != x || location.Y != y)
         {
-            Curses.mvwin(Handle, _explicitArea.Y, _explicitArea.X);
+           Curses.mvwin(Handle, y, x);
         }
     }
 

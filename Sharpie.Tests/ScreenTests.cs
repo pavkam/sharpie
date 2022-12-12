@@ -77,7 +77,7 @@ public class ScreenTests
     }
 
     [TestMethod] public void Terminal_IsInitialized() { _screen.Terminal.ShouldBe(_terminal); }
-
+    
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails()
     {

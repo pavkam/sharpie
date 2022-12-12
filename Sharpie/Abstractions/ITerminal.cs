@@ -209,7 +209,7 @@ public interface ITerminal
     IInterval Repeat(Func<Terminal, Task> action, int intervalMillis, bool immediate = false);
 
     /// <summary>
-    ///     Enqueues a stop signal for the <see cref="RunAsync" /> method.
+    ///     Enqueues a stop signal for the <see cref="Run" /> method.
     /// </summary>
     /// <param name="wait">If <c>true</c>, waits until running completes.</param>
     void Stop(bool wait = false);

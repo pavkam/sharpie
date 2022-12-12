@@ -43,7 +43,6 @@ public sealed class NativeCursesProvider: ICursesProvider, IDisposable
 
     private static readonly ICursesProvider? LazyInstance = new NativeCursesProvider().ValidOrNull();
 
-    private int _resizePending;
     private PosixSignalRegistration? _signalRegistration;
 
     private NativeCursesProvider() { }

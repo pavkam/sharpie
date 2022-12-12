@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Bounce", "Dem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Slk", "Demos\Sharpie.Demos.Slk\Sharpie.Demos.Slk.csproj", "{6E0FFEE1-21B5-4B26-B65D-FC4C5457A154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Refresh", "Demos\Sharpie.Demos.Refresh\Sharpie.Demos.Refresh.csproj", "{C5E6AEF6-E39C-4ADE-A684-55B901D9871B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpie.Demos.Windows", "Demos\Sharpie.Demos.Windows\Sharpie.Demos.Windows.csproj", "{C5E6AEF6-E39C-4ADE-A684-55B901D9871B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

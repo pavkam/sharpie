@@ -72,7 +72,7 @@ public interface ITerminalSurface: ISurface
     /// </summary>
     /// <param name="y">The starting line to refresh.</param>
     /// <param name="count">The number of lines to refresh.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The combination of lines and count exceed the window boundary.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="y"/> or <paramref name="count"/> are negative.</exception>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
     void Refresh(int y, int count);
 }

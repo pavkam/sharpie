@@ -47,10 +47,10 @@ public class TerminalSurface: Surface, ITerminalSurface
     internal TerminalSurface(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle) =>
         Terminal = parent!;
 
-    /// <inheritdoc cref="IScreen.Terminal" />
+    /// <inheritdoc cref="ITerminalSurface.Terminal" />
     public Terminal Terminal { get; }
 
-    /// <inheritdoc cref="IScreen.Terminal" />
+    /// <inheritdoc cref="ITerminalSurface.Terminal" />
     ITerminal ITerminalSurface.Terminal => Terminal;
 
     /// <inheritdoc cref="ITerminalSurface.ImmediateRefresh" />
@@ -86,21 +86,26 @@ public class TerminalSurface: Surface, ITerminalSurface
         });
     }
 
-    /// <inheritdoc cref="IWindow.Refresh(int, int)" />
+    /// <inheritdoc cref="ITerminalSurface.Refresh(int, int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void Refresh(int y, int count)
     {
-        if (y < 0 || y >= Size.Height)
+        if (y < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(y));
         }
-
-        if (count < 1 || y + count - 1 >= Size.Height)
+        
+        if (count < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
-        Curses.wredrawln(Handle, y, count)
-              .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
+        var (actY, actCount) = Helpers.IntersectSegments(y, count, 0, Size.Height);
+
+        if (actY > -1 && actCount > 0)
+        {
+            Curses.wredrawln(Handle, actY, actCount)
+                  .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
+        }
     }
 }

@@ -297,8 +297,7 @@ public interface ISurface: IDrawSurface
     /// <param name="y">The line to start with.</param>
     /// <param name="count">The count of lines to mark dirty.</param>
     /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="y" /> and <paramref name="count" /> combination is
-    ///     out of bounds.
+    ///     The <paramref name="y" /> or <paramref name="count" /> are negative.
     /// </exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     void MarkDirty(int y, int count);

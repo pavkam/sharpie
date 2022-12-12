@@ -22,10 +22,11 @@
         <Authors>Alexandru Ciobanu</Authors>
         <Company>sharpie-demos-refresh</Company>
         <Product>sharpie-demos-refresh</Product>
+        <RootNamespace>Sharpie.Demos.Refresh</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Sharpie\Sharpie.csproj"/>
+        <ProjectReference Include="..\..\Sharpie\Sharpie.csproj" />
     </ItemGroup>
 
 </Project>

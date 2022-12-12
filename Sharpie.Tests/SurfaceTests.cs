@@ -961,35 +961,38 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(-1, 1));
     }
-
+    
     [TestMethod]
-    public void MarkDirty2_Throws_IfYIsOutsideBounds()
+    public void MarkDirty2_Throws_IfCountIsNegative()
     {
         _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
                    .Returns(10);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(10, 1));
+        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(0, -1));
     }
 
     [TestMethod]
-    public void MarkDirty2_Throws_IfCountIsLessThanOne()
+    public void MarkDirty2_AdjustsYAndCountToMatchActualHeight()
     {
-        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
+        var sw = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.Setup(s => s.getmaxy(sw.Handle))
                    .Returns(10);
 
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(0, 0));
+        sw.MarkDirty(4, 10);
+
+        _cursesMock.Verify(v => v.wtouchln(sw.Handle, 4, 6, 1), Times.Once);
     }
-
+    
     [TestMethod]
-    public void MarkDirty2_Throws_IfCountGreaterThanBounds()
+    public void MarkDirty2_DoesNotDoAnythingIfNotInBounds()
     {
-        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
+        var sw = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.Setup(s => s.getmaxy(sw.Handle))
                    .Returns(10);
 
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(1, 10));
+        sw.MarkDirty(14, 5);
+        _cursesMock.Verify(v => v.wtouchln(sw.Handle, It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]

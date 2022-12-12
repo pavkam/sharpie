@@ -137,36 +137,38 @@ public class TerminalSurfaceTests
     }
 
     [TestMethod]
-    public void Refresh2_Throws_IfYIsOutsideBounds()
+    public void Refresh2_Throws_IfCountIsNegative()
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
         _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
 
-        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(10, 1));
+        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(0, -1));
+    }
+    
+    [TestMethod]
+    public void Refresh2_AdjustsYAndCountToMatchActualHeight()
+    {
+        var sw = new TerminalSurface(_terminal, new(1));
+        _cursesMock.Setup(s => s.getmaxy(sw.Handle))
+                   .Returns(10);
+
+        sw.Refresh(4, 10);
+
+        _cursesMock.Verify(v => v.wredrawln(sw.Handle, 4, 6), Times.Once);
     }
 
+    
     [TestMethod]
-    public void Refresh2_Throws_IfCountIsLessThanOne()
+    public void Refresh2_DoesNotDoAnythingIfNotInBounds()
     {
-        var sa = new TerminalSurface(_terminal, new(1));
-
-        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+        var sw = new TerminalSurface(_terminal, new(1));
+        _cursesMock.Setup(s => s.getmaxy(sw.Handle))
                    .Returns(10);
 
-        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(0, 0));
-    }
-
-    [TestMethod]
-    public void Refresh2_Throws_IfCountGreaterThanBounds()
-    {
-        var sa = new TerminalSurface(_terminal, new(1));
-
-        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
-                   .Returns(10);
-
-        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(1, 10));
+        sw.Refresh(14, 5);
+        _cursesMock.Verify(v => v.wredrawln(sw.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]

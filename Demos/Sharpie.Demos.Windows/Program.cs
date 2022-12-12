@@ -33,35 +33,35 @@ using Sharpie;
 using Sharpie.Backend;
 
 [assembly: ExcludeFromCodeCoverage]
+using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: CaretMode.Visible));
 
-using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: CaretMode.Invisible));
+var rnd = new Random();
 
-terminal.Screen.Background = (new(' '),
-    new()
-    {
-        Attributes = VideoAttribute.None,
-        ColorMixture = terminal.Colors.MixColors(StandardColor.Default, StandardColor.Cyan)
-    });
+void MakeWindow(StandardColor color)
+{
+    var x = rnd.Next(0, terminal.Screen.Size.Width - 1);
+    var y = rnd.Next(0, terminal.Screen.Size.Height - 1);
+    var w = rnd.Next(1, terminal.Screen.Size.Width - x);
+    var h = rnd.Next(1, terminal.Screen.Size.Height - y);
+
+    var win = terminal.Screen.Window(new(x, y, w, h));
+    win.Background = (new(' '),
+        new()
+        {
+            Attributes = VideoAttribute.None,
+            ColorMixture = terminal.Colors.MixColors(StandardColor.Default, color)
+        });
+}
+
+MakeWindow(StandardColor.Red);
+MakeWindow(StandardColor.Green);
+MakeWindow(StandardColor.Yellow);
+MakeWindow(StandardColor.Blue);
+MakeWindow(StandardColor.Magenta);
+MakeWindow(StandardColor.Cyan);
+MakeWindow(StandardColor.White);
 
 terminal.Screen.Refresh();
-var w = terminal.Screen.Window(new(2, 2, 10, 10));
-w.Background = (new('a'),
-    new()
-    {
-        Attributes = VideoAttribute.None,
-        ColorMixture = terminal.Colors.MixColors(StandardColor.Default, StandardColor.Magenta)
-    });
-
-w.Refresh();
 
 // Run the main loop.
-terminal.Run((_, @event) =>
-{
-    switch (@event)
-    {
-        case TerminalResizeEvent:
-            break;
-    }
-
-    return Task.CompletedTask;
-});
+terminal.Run((_, _) =>Task.CompletedTask);

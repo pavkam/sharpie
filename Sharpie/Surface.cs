@@ -524,18 +524,23 @@ public class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void MarkDirty(int y, int count)
     {
-        if (y < 0 || y >= Size.Height)
+        if (y < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(y));
         }
-
-        if (count <= 0 || y + count - 1 >= Size.Height)
+        
+        if (count < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
-        Curses.wtouchln(Handle, y, count, 1)
-              .Check(nameof(Curses.wtouchln), "Failed to mark lines as dirty.");
+        var (actY, actCount) = Helpers.IntersectSegments(y, count, 0, Size.Height);
+
+        if (actY > -1 && actCount > 0)
+        {
+            Curses.wtouchln(Handle, actY, actCount, 1)
+                  .Check(nameof(Curses.wtouchln), "Failed to mark lines as dirty.");
+        }
     }
 
     /// <inheritdoc cref="ISurface.Destroy" />
