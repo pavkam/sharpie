@@ -231,7 +231,7 @@ public class WindowTests
     public void Location_Get_Throws_IfCursesFails_1()
     {
         var w = new Window(_screen, new(1));
-        
+
         _cursesMock.Setup(s => s.getbegx(w.Handle))
                    .Returns(-1);
 
@@ -243,7 +243,7 @@ public class WindowTests
     public void Location_Get_Throws_IfCursesFails_2()
     {
         var w = new Window(_screen, new(1));
-        
+
         _cursesMock.Setup(s => s.getbegy(w.Handle))
                    .Returns(-1);
 

@@ -68,7 +68,7 @@ public sealed class SubPad: Surface, ISubPad
                 .Check(nameof(Curses.getpary), "Failed to get sub-pad Y coordinate."));
         set
         {
-            if (!((IPad)Pad).IsRectangleWithin(new(value, Size)))
+            if (!((IPad) Pad).IsRectangleWithin(new(value, Size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -85,7 +85,7 @@ public sealed class SubPad: Surface, ISubPad
         get => base.Size;
         set
         {
-            if (!((IPad)Pad).IsRectangleWithin(new(Location, value)))
+            if (!((IPad) Pad).IsRectangleWithin(new(Location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }

@@ -38,7 +38,7 @@ public sealed class Window: TerminalSurface, IWindow
 {
     private readonly IList<SubWindow> _subWindows = new List<SubWindow>();
     private Rectangle _explicitArea;
-    
+
     /// <summary>
     ///     Initializes the window using the given Curses handle.
     /// </summary>
@@ -115,7 +115,7 @@ public sealed class Window: TerminalSurface, IWindow
 
             Curses.mvwin(Handle, value.Y, value.X)
                   .Check(nameof(Curses.mvwin), "Failed to move window to new coordinates.");
-            
+
             _explicitArea = new(value, size);
         }
     }
@@ -135,28 +135,8 @@ public sealed class Window: TerminalSurface, IWindow
 
             Curses.wresize(Handle, value.Height, value.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the window.");
-            
+
             _explicitArea = new(location, value);
-        }
-    }
-
-    private void AdjustToExplicitArea()
-    {
-        var screenSize = Screen.Size;
-        var size = Size;
-        var location = Location;
-
-        var w = Math.Min(screenSize.Width - _explicitArea.X, _explicitArea.Width);
-        var h = Math.Min(screenSize.Height - _explicitArea.Y, _explicitArea.Height);
-
-        if ((w != size.Width || h != size.Height) && w > 0 && h > 0)
-        {
-            Curses.wresize(Handle, h, w);
-        }
-
-        if (location.X > _explicitArea.X || location.Y > _explicitArea.Y)
-        {
-            Curses.mvwin(Handle, _explicitArea.Y, _explicitArea.X);
         }
     }
 
@@ -166,7 +146,7 @@ public sealed class Window: TerminalSurface, IWindow
         AdjustToExplicitArea();
         base.Refresh();
     }
-    
+
     /// <inheritdoc cref="TerminalSurface.Refresh(int, int)" />
     public override void Refresh(int y, int count)
     {
@@ -180,7 +160,7 @@ public sealed class Window: TerminalSurface, IWindow
         AdjustToExplicitArea();
         base.MarkDirty(y, count);
     }
-    
+
     /// <inheritdoc cref="IWindow.SubWindow" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow SubWindow(Rectangle area)
@@ -204,6 +184,26 @@ public sealed class Window: TerminalSurface, IWindow
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
 
         return new Window(Screen, handle) { ManagedCaret = ManagedCaret };
+    }
+
+    private void AdjustToExplicitArea()
+    {
+        var screenSize = Screen.Size;
+        var size = Size;
+        var location = Location;
+
+        var w = Math.Min(screenSize.Width - _explicitArea.X, _explicitArea.Width);
+        var h = Math.Min(screenSize.Height - _explicitArea.Y, _explicitArea.Height);
+
+        if ((w != size.Width || h != size.Height) && w > 0 && h > 0)
+        {
+            Curses.wresize(Handle, h, w);
+        }
+
+        if (location.X > _explicitArea.X || location.Y > _explicitArea.Y)
+        {
+            Curses.mvwin(Handle, _explicitArea.Y, _explicitArea.X);
+        }
     }
 
     /// <summary>
