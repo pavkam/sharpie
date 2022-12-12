@@ -110,6 +110,10 @@ public sealed class Pad: Surface, IPad
         });
     }
 
+    /// <inheritdoc cref="IPad.Refresh(System.Drawing.Point)" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public void Refresh(Point destLocation) => Refresh(new(new(0, 0), Size), destLocation);
+    
     /// <inheritdoc cref="IPad.SubPad" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubPad SubPad(Rectangle area)

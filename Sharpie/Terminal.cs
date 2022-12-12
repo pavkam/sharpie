@@ -90,7 +90,7 @@ public sealed class Terminal: ITerminal, IDisposable
 
         // Screen setup.
         var managedCaret = Options.CaretMode == CaretMode.Invisible;
-        _softLabelKeyManager = new(curses, Options.SoftLabelKeyMode);
+        _softLabelKeyManager = new(this, Options.SoftLabelKeyMode);
         if (Options.AllocateHeader)
         {
             curses.ripoffline(1, (handle, _) =>
@@ -133,7 +133,7 @@ public sealed class Terminal: ITerminal, IDisposable
         }
 
         _eventPump = new(this);
-        _colorManager = new(curses, Options.UseColors);
+        _colorManager = new(this, Options.UseColors);
 
         // After screen creation.
         curses.intrflush(IntPtr.Zero, Options.ManualFlush)
@@ -271,7 +271,10 @@ public sealed class Terminal: ITerminal, IDisposable
               .Check(nameof(Curses.baudrate), "Failed to obtain the baud rate of the terminal.");
 
     /// <inheritdoc cref="ITerminal.Colors" />
-    public IColorManager Colors
+    IColorManager ITerminal.Colors => Colors;
+    
+    /// <inheritdoc cref="ITerminal.Colors" />
+    public ColorManager Colors
     {
         get
         {
@@ -281,7 +284,10 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <inheritdoc cref="ITerminal.SoftLabelKeys" />
-    public ISoftLabelKeyManager SoftLabelKeys
+    ISoftLabelKeyManager ITerminal.SoftLabelKeys => SoftLabelKeys;
+  
+    /// <inheritdoc cref="ITerminal.SoftLabelKeys" />
+    public SoftLabelKeyManager SoftLabelKeys
     {
         get
         {

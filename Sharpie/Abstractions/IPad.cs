@@ -73,7 +73,7 @@ public interface IPad: ISurface
     /// <exception cref="ArgumentOutOfRangeException">
     ///     Thrown if <paramref name="destLocation" /> is out of bounds.
     /// </exception>
-    void Refresh(Point destLocation) => Refresh(new(new(0, 0), Size), destLocation);
+    void Refresh(Point destLocation);
 
     /// <summary>
     ///     Creates a new sub-pad in the parent pad.

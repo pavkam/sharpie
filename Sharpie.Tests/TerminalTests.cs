@@ -125,6 +125,7 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, new(enabled));
 
         _terminal.Colors.Enabled.ShouldBe(enabled);
+        ((ITerminal)_terminal).Colors.ShouldBe( _terminal.Colors);
     }
 
     [TestMethod, DataRow(SoftLabelKeyMode.Disabled), DataRow(SoftLabelKeyMode.ThreeTwoThree)]
@@ -133,6 +134,7 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, new(SoftLabelKeyMode: mode));
 
         _terminal.SoftLabelKeys.Enabled.ShouldBe(mode != SoftLabelKeyMode.Disabled);
+        ((ITerminal)_terminal).SoftLabelKeys.ShouldBe(_terminal.SoftLabelKeys);
     }
 
     [TestMethod, DataRow(true), DataRow(false)]

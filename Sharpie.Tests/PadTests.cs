@@ -138,14 +138,14 @@ public class PadTests
     }
 
     [TestMethod]
-    public void Refresh_Throws_IfTheRectIsOutsideThePadBounds()
+    public void Refresh1_Throws_IfTheRectIsOutsideThePadBounds()
     {
         _cursesMock.MockSmallArea(_pad);
         Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(new(1, 1, 5, 5), new(0, 0)); });
     }
 
     [TestMethod]
-    public void Refresh_Throws_IfTheRectIsOutsideTheScreenBounds()
+    public void Refresh1_Throws_IfTheRectIsOutsideTheScreenBounds()
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockSmallArea(_screen);
@@ -153,14 +153,14 @@ public class PadTests
     }
 
     [TestMethod]
-    public void Refresh_Throws_IfThePositionIsOutsideTheBounds()
+    public void Refresh1_Throws_IfThePositionIsOutsideTheBounds()
     {
         _cursesMock.MockSmallArea(_pad);
         Should.Throw<ArgumentOutOfRangeException>(() => { _pad.Refresh(new(0, 0, 5, 5), new(6, 6)); });
     }
 
     [TestMethod]
-    public void Refresh_CallsCurses_InBatch()
+    public void Refresh1_CallsCurses_InBatch()
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockLargeArea(_screen);
@@ -175,7 +175,7 @@ public class PadTests
     }
 
     [TestMethod]
-    public void Refresh_CallsCurses_NoBatch()
+    public void Refresh1_CallsCurses_NoBatch()
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockLargeArea(_screen);
@@ -186,8 +186,34 @@ public class PadTests
             6, 4), Times.Once);
     }
 
+    [TestMethod]
+    public void Refresh2_Calls_Refresh1_InBatch()
+    {
+        _cursesMock.MockLargeArea(_screen);
+        _cursesMock.MockArea(_pad, new(0, 0, 5, 6));
+
+        using (_terminal.BatchUpdates())
+        {
+            _pad.Refresh(new(2, 3));
+        }
+
+        _cursesMock.Verify(v => v.pnoutrefresh(_pad.Handle, 0, 0, 3, 2,
+            9, 7), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Refresh2_Calls_Refresh1_NoBatch()
+    {
+        _cursesMock.MockLargeArea(_screen);
+        _cursesMock.MockArea(_pad, new(0, 0, 5, 6));
+        _pad.Refresh(new(2, 3));
+
+        _cursesMock.Verify(v => v.prefresh(_pad.Handle, 0, 0, 3, 2,
+            9, 7), Times.Once);
+    }
+    
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh_Throws_IfCursesFails_InBatch()
+    public void Refresh1_Throws_IfCursesFails_InBatch()
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockLargeArea(_screen);
@@ -204,7 +230,7 @@ public class PadTests
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Refresh_Throws_IfCursesFails_NoBatch()
+    public void Refresh1_Throws_IfCursesFails_NoBatch()
     {
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockLargeArea(_screen);

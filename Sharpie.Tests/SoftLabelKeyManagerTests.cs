@@ -36,15 +36,24 @@ public class SoftLabelKeyManagerTests
     private Mock<ICursesProvider> _cursesMock = null!;
     private SoftLabelKeyManager _mgr1 = null!;
     private SoftLabelKeyManager _mgr2 = null!;
-
+    private Terminal _terminal = null!;
+    
     [TestInitialize]
     public void TestInitialize()
     {
         _cursesMock = new();
-        _mgr1 = new(_cursesMock.Object, SoftLabelKeyMode.ThreeTwoThree);
-        _mgr2 = new(_cursesMock.Object, SoftLabelKeyMode.Disabled);
+        _cursesMock.Setup(s => s.initscr())
+                   .Returns(new IntPtr(100));
+        
+        _terminal = new(_cursesMock.Object, new());
+        
+        _mgr1 = new(_terminal, SoftLabelKeyMode.ThreeTwoThree);
+        _mgr2 = new(_terminal, SoftLabelKeyMode.Disabled);
     }
+  
 
+    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
+    
     [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
     public void Ctor_Throws_IfCursesIsNull()
@@ -52,11 +61,18 @@ public class SoftLabelKeyManagerTests
         Should.Throw<ArgumentNullException>(() => { new SoftLabelKeyManager(null!, SoftLabelKeyMode.FourFour); });
     }
 
+    [TestMethod]
+    public void Terminal_IsInitialized()
+    {
+        _mgr1.Terminal.ShouldBe(_terminal);
+        ((ISoftLabelKeyManager)_mgr1).Terminal.ShouldBe(_terminal);
+    }
+    
     [TestMethod, DataRow(SoftLabelKeyMode.FourFour, 8), DataRow(SoftLabelKeyMode.FourFourFour, 12),
      DataRow(SoftLabelKeyMode.ThreeTwoThree, 8), DataRow(SoftLabelKeyMode.FourFourFourWithIndex, 12)]
     public void LabelCount_ReturnsTheCorrectNumberBasedOnMode(SoftLabelKeyMode mode, int expected)
     {
-        var mgr = new SoftLabelKeyManager(_cursesMock.Object, mode);
+        var mgr = new SoftLabelKeyManager(_terminal, mode);
         mgr.LabelCount.ShouldBe(expected);
     }
 
@@ -338,62 +354,67 @@ public class SoftLabelKeyManagerTests
     }
 
     [TestMethod]
-    public void Invalidate_Throws_IfNotEnabled() { Should.Throw<NotSupportedException>(() => { _mgr2.Invalidate(); }); }
+    public void MarkDirty_Throws_IfNotEnabled() { Should.Throw<NotSupportedException>(() => { _mgr2.MarkDirty(); }); }
 
     [TestMethod]
-    public void Invalidate_Throws_IfCursesFails()
+    public void MarkDirty_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.slk_touch())
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _mgr1.Invalidate(); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.MarkDirty(); })
               .Operation.ShouldBe("slk_touch");
     }
 
     [TestMethod]
-    public void Invalidate_Succeeds_IfCursesSucceeds()
+    public void MarkDirty_Succeeds_IfCursesSucceeds()
     {
-        _mgr1.Invalidate();
+        _mgr1.MarkDirty();
 
         _cursesMock.Verify(v => v.slk_touch(), Times.Once);
     }
 
     [TestMethod]
-    public void Refresh_Throws_IfNotEnabled() { Should.Throw<NotSupportedException>(() => { _mgr2.Refresh(false); }); }
+    public void Refresh_Throws_IfNotEnabled() { Should.Throw<NotSupportedException>(() => { _mgr2.Refresh(); }); }
 
     [TestMethod]
-    public void Refresh_Throws_IfCursesFails_ForQueue()
-    {
-        _cursesMock.Setup(s => s.slk_noutrefresh())
-                   .Returns(-1);
-
-        Should.Throw<CursesOperationException>(() => { _mgr1.Refresh(true); })
-              .Operation.ShouldBe("slk_noutrefresh");
-    }
-
-    [TestMethod]
-    public void Refresh_Throws_IfCursesFails_ForBatch()
+    public void Refresh_Throws_IfCursesFails_NoQueue()
     {
         _cursesMock.Setup(s => s.slk_refresh())
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _mgr1.Refresh(false); })
+        Should.Throw<CursesOperationException>(() => { _mgr1.Refresh(); })
               .Operation.ShouldBe("slk_refresh");
     }
 
-    [TestMethod]
-    public void Refresh_Succeeds_IfCursesSucceeds_ForBatch()
+    [TestMethod,SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Refresh_Throws_IfCursesFails_InBatch()
     {
-        _mgr1.Refresh(true);
+        _cursesMock.Setup(s => s.slk_noutrefresh())
+                   .Returns(-1);
+
+        using (_terminal.BatchUpdates())
+        {
+            Should.Throw<CursesOperationException>(() => { _mgr1.Refresh(); })
+                  .Operation.ShouldBe("slk_noutrefresh");
+        }
+    }
+
+    [TestMethod]
+    public void Refresh_Succeeds_IfCursesSucceeds_InBatch()
+    {
+        using (_terminal.BatchUpdates())
+        {
+            _mgr1.Refresh();
+        }
 
         _cursesMock.Verify(v => v.slk_noutrefresh(), Times.Once);
     }
 
     [TestMethod]
-    public void Refresh_Succeeds_IfCursesSucceeds()
+    public void Refresh_Succeeds_IfCursesSucceeds_NoBatch()
     {
-        _mgr1.Refresh(false);
-
+        _mgr1.Refresh();
         _cursesMock.Verify(v => v.slk_refresh(), Times.Once);
     }
 }

@@ -65,7 +65,7 @@ void DrawHeader()
 }
 
 DrawHeader();
-terminal.SoftLabelKeys.Refresh(true);
+terminal.SoftLabelKeys.Refresh();
 
 // Run the main loop.
 terminal.Run((t, @event) =>
@@ -74,7 +74,7 @@ terminal.Run((t, @event) =>
     {
         case TerminalResizeEvent:
             DrawHeader();
-            t.SoftLabelKeys.Refresh(true);
+            t.SoftLabelKeys.Refresh();
             break;
         case KeyEvent { Key: Key.Character, Char.Value: var k and >= '1' and <= '8' }:
         {

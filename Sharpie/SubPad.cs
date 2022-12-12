@@ -58,6 +58,12 @@ public sealed class SubPad: Surface, ISubPad
     /// <inheritdoc cref="ISubPad.Pad" />
     IPad ISubPad.Pad => Pad;
 
+    /// <summary>
+    ///     Returns the value of <see cref="Location"/>.
+    /// </summary>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    protected internal override Point Origin => Location;
+    
     /// <inheritdoc cref="ISubPad.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location

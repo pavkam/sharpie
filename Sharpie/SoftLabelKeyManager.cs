@@ -36,28 +36,33 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
 {
-    private readonly ICursesProvider _curses;
     private readonly SoftLabelKeyMode _mode;
 
     /// <summary>
     ///     Creates a new instance of this class.
     /// </summary>
-    /// <param name="curses">The curses backend.</param>
+    /// <param name="terminal">The parent terminal.</param>
     /// <param name="mode">The mode of the manager.</param>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    /// <exception cref="ArgumentNullException">The <paramref name="curses" /> is <c>null</c>.</exception>
-    internal SoftLabelKeyManager(ICursesProvider curses, SoftLabelKeyMode mode)
+    /// <exception cref="ArgumentNullException">The <paramref name="terminal" /> is <c>null</c>.</exception>
+    internal SoftLabelKeyManager(Terminal terminal, SoftLabelKeyMode mode)
     {
-        _curses = curses ?? throw new ArgumentNullException(nameof(curses));
+        Terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
         _mode = mode;
 
         if (mode != SoftLabelKeyMode.Disabled)
         {
-            _curses.slk_init((int) mode)
-                   .Check(nameof(_curses.slk_init), "Failed to initialize soft label keys.");
+            terminal.Curses.slk_init((int) mode)
+                    .Check(nameof(terminal.Curses.slk_init), "Failed to initialize soft label keys.");
         }
     }
 
+    /// <inheritdoc cref="ISoftLabelKeyManager.Terminal" />
+    ITerminal ISoftLabelKeyManager.Terminal => Terminal;
+    
+    /// <inheritdoc cref="ISoftLabelKeyManager.Terminal" />
+    public Terminal Terminal { get; }
+    
     /// <inheritdoc cref="ISoftLabelKeyManager.Enabled" />
     public bool Enabled => _mode != SoftLabelKeyMode.Disabled;
 
@@ -79,19 +84,19 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         {
             AssertEnabled();
 
-            var attrsAndColors = _curses.slk_attr()
-                                        .Check(nameof(_curses.slk_attr),
+            var attrsAndColors = Terminal.Curses.slk_attr()
+                                        .Check(nameof(Terminal.Curses.slk_attr),
                                             "Failed to get the soft label key attributes.");
 
-            var colorPair = (short) _curses.COLOR_PAIR((uint) attrsAndColors);
+            var colorPair = (short) Terminal.Curses.COLOR_PAIR((uint) attrsAndColors);
             return new() { Attributes = (VideoAttribute) attrsAndColors, ColorMixture = new() { Handle = colorPair } };
         }
         set
         {
             AssertEnabled();
 
-            _curses.slk_attr_set((uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
-                   .Check(nameof(_curses.slk_attr_set), "Failed to configure the soft label key attributes.");
+            Terminal.Curses.slk_attr_set((uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
+                   .Check(nameof(Terminal.Curses.slk_attr_set), "Failed to configure the soft label key attributes.");
         }
     }
 
@@ -104,8 +109,8 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         {
             AssertEnabled();
 
-            _curses.slk_color(value.Handle)
-                   .Check(nameof(_curses.slk_color), "Failed to configure the soft label key colors.");
+            Terminal.Curses.slk_color(value.Handle)
+                   .Check(nameof(Terminal.Curses.slk_color), "Failed to configure the soft label key colors.");
         }
     }
 
@@ -125,8 +130,8 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
 
         AssertEnabled();
 
-        _curses.slk_set(index + 1, title, (int) align)
-               .Check(nameof(_curses.slk_set), "Failed to set the soft label.");
+        Terminal.Curses.slk_set(index + 1, title, (int) align)
+               .Check(nameof(Terminal.Curses.slk_set), "Failed to set the soft label.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.EnableAttributes" />
@@ -135,8 +140,8 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     {
         AssertEnabled();
 
-        _curses.slk_attr_on((uint) attributes, IntPtr.Zero)
-               .Check(nameof(_curses.slk_attr_on), "Failed to configure the soft label key attributes.");
+        Terminal.Curses.slk_attr_on((uint) attributes, IntPtr.Zero)
+               .Check(nameof(Terminal.Curses.slk_attr_on), "Failed to configure the soft label key attributes.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.DisableAttributes" />
@@ -145,8 +150,8 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     {
         AssertEnabled();
 
-        _curses.slk_attr_off((uint) attributes, IntPtr.Zero)
-               .Check(nameof(_curses.slk_attr_off), "Failed to configure the soft label key attributes.");
+        Terminal.Curses.slk_attr_off((uint) attributes, IntPtr.Zero)
+               .Check(nameof(Terminal.Curses.slk_attr_off), "Failed to configure the soft label key attributes.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Clear" />
@@ -154,8 +159,8 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     public void Clear()
     {
         AssertEnabled();
-        _curses.slk_clear()
-               .Check(nameof(_curses.slk_clear), "Failed to clear the soft label keys.");
+        Terminal.Curses.slk_clear()
+               .Check(nameof(Terminal.Curses.slk_clear), "Failed to clear the soft label keys.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Restore" />
@@ -163,34 +168,37 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     public void Restore()
     {
         AssertEnabled();
-        _curses.slk_restore()
-               .Check(nameof(_curses.slk_restore), "Failed to restore the soft label keys.");
+        Terminal.Curses.slk_restore()
+               .Check(nameof(Terminal.Curses.slk_restore), "Failed to restore the soft label keys.");
     }
 
-    /// <inheritdoc cref="ISoftLabelKeyManager.Invalidate" />
+    /// <inheritdoc cref="ISoftLabelKeyManager.MarkDirty" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Invalidate()
+    public void MarkDirty()
     {
         AssertEnabled();
-        _curses.slk_touch()
-               .Check(nameof(_curses.slk_touch), "Failed to mark soft label keys as dirty.");
+        Terminal.Curses.slk_touch()
+               .Check(nameof(Terminal.Curses.slk_touch), "Failed to mark soft label keys as dirty.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Refresh" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh(bool batch)
+    public void Refresh()
     {
         AssertEnabled();
 
-        if (batch)
+        Terminal.WithinBatch(batch =>
         {
-            _curses.slk_noutrefresh()
-                   .Check(nameof(_curses.slk_noutrefresh), "Failed to queue soft label key refresh.");
-        } else
-        {
-            _curses.slk_refresh()
-                   .Check(nameof(_curses.slk_refresh), "Failed to perform soft label key refresh.");
-        }
+            if (batch)
+            {
+                Terminal.Curses.slk_noutrefresh()
+                        .Check(nameof(Terminal.Curses.slk_noutrefresh), "Failed to queue soft label key refresh.");
+            } else
+            {
+                Terminal.Curses.slk_refresh()
+                        .Check(nameof(Terminal.Curses.slk_refresh), "Failed to perform soft label key refresh.");
+            }
+        });
     }
 
     private void AssertEnabled()

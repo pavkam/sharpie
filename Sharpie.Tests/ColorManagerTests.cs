@@ -33,22 +33,30 @@ namespace Sharpie.Tests;
 [TestClass]
 public class ColorManagerTests
 {
-    private IColorManager _colorManager = null!;
+    private ColorManager _colorManager = null!;
     private Mock<ICursesProvider> _cursesMock = null!;
-
+    private Terminal _terminal = null!;
+    
     [TestInitialize]
     public void TestInitialize()
     {
         _cursesMock = new();
+        _cursesMock.Setup(s => s.initscr())
+                   .Returns(new IntPtr(100));
+
         _cursesMock.Setup(s => s.has_colors())
                    .Returns(true);
 
         _cursesMock.Setup(s => s.can_change_color())
                    .Returns(true);
-
-        _colorManager = new ColorManager(_cursesMock.Object, true);
+        
+        _terminal = new(_cursesMock.Object, new());
+        _colorManager = _terminal.Colors;
     }
 
+    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
+
+    
     [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
     public void Ctor_Throws_IfCursesIsNull()
@@ -62,14 +70,14 @@ public class ColorManagerTests
         _cursesMock.Setup(s => s.has_colors())
                    .Returns(true);
 
-        var mgr = new ColorManager(_cursesMock.Object, true);
+        var mgr = new ColorManager(_terminal, true);
         mgr.Enabled.ShouldBeTrue();
     }
 
     [TestMethod]
     public void Ctor_DoesNotEnableColors_WhenSupported()
     {
-        var mgr = new ColorManager(_cursesMock.Object, false);
+        var mgr = new ColorManager(_terminal, false);
         mgr.Enabled.ShouldBeFalse();
     }
 
@@ -79,7 +87,7 @@ public class ColorManagerTests
         _cursesMock.Setup(s => s.has_colors())
                    .Returns(false);
 
-        var mgr = new ColorManager(_cursesMock.Object, true);
+        var mgr = new ColorManager(_terminal, true);
         mgr.Enabled.ShouldBeFalse();
     }
 
@@ -91,6 +99,13 @@ public class ColorManagerTests
 
         _colorManager.ColorsAreSupported.ShouldBe(value);
         _cursesMock.Verify(v => v.has_colors(), Times.Exactly(2));
+    }
+    
+    [TestMethod]
+    public void Terminal_IsInitialized()
+    {
+      _colorManager.Terminal.ShouldBe(_terminal);
+      ((IColorManager)_colorManager).Terminal.ShouldBe(_terminal);
     }
 
     [TestMethod, DataRow(true), DataRow(false)]

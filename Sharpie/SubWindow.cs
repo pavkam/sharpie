@@ -56,6 +56,12 @@ public sealed class SubWindow: Surface, ISubWindow
     /// <inheritdoc cref="ISubWindow.Window" />
     IWindow ISubWindow.Window => Window;
 
+    /// <summary>
+    ///     Returns the value of <see cref="Location"/>.
+    /// </summary>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    protected internal override Point Origin => Location;
+    
     /// <inheritdoc cref="ISubWindow.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location

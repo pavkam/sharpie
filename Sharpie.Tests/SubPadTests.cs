@@ -202,6 +202,19 @@ public class SubPadTests
 
         _cursesMock.Verify(v => v.wresize(w.Handle, 5, 5), Times.Once);
     }
+    
+    [TestMethod]
+    public void Origin_Calls_Location()
+    {
+        var sp = new SubPad(_parent, new(1));
+        
+        _cursesMock.Setup(s => s.getparx(sp.Handle))
+                   .Returns(11);
+        _cursesMock.Setup(s => s.getpary(sp.Handle))
+                   .Returns(22);
+
+        sp.Origin.ShouldBe(new(11, 22));
+    }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Duplicate_Throws_IfCursesFails()

@@ -37,6 +37,11 @@ namespace Sharpie.Abstractions;
 public interface ISoftLabelKeyManager
 {
     /// <summary>
+    ///     The terminal this manager belongs to.
+    /// </summary>
+    ITerminal Terminal { get; }
+
+    /// <summary>
     ///     Specifies if the manager is enabled.
     /// </summary>
     bool Enabled { get; }
@@ -107,17 +112,16 @@ public interface ISoftLabelKeyManager
     void Restore();
 
     /// <summary>
-    ///     Invalidates the soft key labels. They will be queued for refresh the next time <see cref="Refresh" /> is called.
+    ///     Marks the the soft key labels as dirty, and thus, eligible for refresh.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
-    void Invalidate();
+    void MarkDirty();
 
     /// <summary>
     ///     Refreshes the soft label keys.
     /// </summary>
-    /// <param name="batch">If <c>true</c>, refresh is queued until the next screen update.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
-    void Refresh(bool batch = false);
+    void Refresh();
 }

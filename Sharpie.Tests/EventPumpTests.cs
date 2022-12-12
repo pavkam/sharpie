@@ -115,6 +115,13 @@ public class EventPumpTests
     public void Ctor_Throws_IfTerminalIsNull() { Should.Throw<ArgumentNullException>(() => new EventPump(null!)); }
 
     [TestMethod]
+    public void Terminal_IsInitialized()
+    {
+       _pump.Terminal.ShouldBe(_terminal);
+       ((IEventPump)_pump).Terminal.ShouldBe(_terminal);
+    }
+
+    [TestMethod]
     public void Use_RegistersResolver()
     {
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
@@ -308,53 +315,6 @@ public class EventPumpTests
              .First();
 
         _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen2_CreatesDummyPad()
-    {
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(new IntPtr(10));
-
-        _pump.Listen(CancellationToken.None)
-             .First();
-
-        _cursesMock.Verify(v => v.newpad(1, 1), Times.Once);
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Listen2_Throws_IfFailedToCreateDummyPad()
-    {
-        Should.Throw<CursesOperationException>(() => _pump.Listen(CancellationToken.None)
-                                                          .First())
-              .Operation.ShouldBe("newpad");
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen2_DestroysDummyPad_EvenIfExceptionThrown()
-    {
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(new IntPtr(10));
-
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Throws<InvalidProgramException>();
-
-        Should.Throw<InvalidProgramException>(() => _pump.Listen(CancellationToken.None)
-                                                         .First());
-
-        _cursesMock.Verify(v => v.delwin(new(10)), Times.Once);
-    }
-
-    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen2_CallsCurses_ForDummyPad()
-    {
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
-                   .Returns(new IntPtr(10));
-
-        _pump.Listen(CancellationToken.None)
-             .First();
-
-        _cursesMock.Verify(s => s.wget_wch(new(10), out It.Ref<uint>.IsAny), Times.Once);
     }
 
     [TestMethod]
@@ -893,7 +853,75 @@ public class EventPumpTests
         events[2]
             .Type.ShouldBe(EventType.KeyPress);
     }
+    
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen2_CreatesDummyPad()
+    {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(10));
 
+        _pump.Listen(CancellationToken.None)
+             .First();
+
+        _cursesMock.Verify(v => v.newpad(1, 1), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Listen2_Throws_IfFailedToCreateDummyPad()
+    {
+        Should.Throw<CursesOperationException>(() => _pump.Listen(CancellationToken.None)
+                                                          .First())
+              .Operation.ShouldBe("newpad");
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen2_DestroysDummyPad_EvenIfExceptionThrown()
+    {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(10));
+
+        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                   .Throws<InvalidProgramException>();
+
+        Should.Throw<InvalidProgramException>(() => _pump.Listen(CancellationToken.None)
+                                                         .First());
+
+        _cursesMock.Verify(v => v.delwin(new(10)), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen2_CallsCurses_ForDummyPad()
+    {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(10));
+
+        _pump.Listen(CancellationToken.None)
+             .First();
+
+        _cursesMock.Verify(s => s.wget_wch(new(10), out It.Ref<uint>.IsAny), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen3_Calls_Listen1()
+    {
+        _pump.Listen(_window)
+             .First();
+
+        _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    public void Listen3_Calls_Listen2()
+    {
+        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(10));
+
+        _pump.Listen()
+             .First();
+
+        _cursesMock.Verify(s => s.wget_wch(new(10), out It.Ref<uint>.IsAny), Times.Once);
+    }
+    
     [TestMethod]
     public void Delegate_Throws_IfObjectIsNull() { Should.Throw<ArgumentNullException>(() => _pump.Delegate(null!)); }
 

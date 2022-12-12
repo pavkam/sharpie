@@ -46,7 +46,7 @@ public class WindowTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _screen = (Screen) _terminal.Screen;
+        _screen = _terminal.Screen;
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -349,6 +349,19 @@ public class WindowTests
         _cursesMock.Verify(v => v.wresize(w.Handle, 5, 5), Times.Once);
     }
 
+    [TestMethod]
+    public void Origin_Calls_Location()
+    {
+        var w = new Window(_screen, new(1));
+        
+        _cursesMock.Setup(s => s.getbegx(w.Handle))
+                   .Returns(11);
+        _cursesMock.Setup(s => s.getbegy(w.Handle))
+                   .Returns(22);
+
+        w.Origin.ShouldBe(new(11, 22));
+    }
+    
     [TestMethod]
     public void SubWindow_Throws_IfAreaOutsideBoundaries()
     {

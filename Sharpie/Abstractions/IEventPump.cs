@@ -7,6 +7,11 @@ namespace Sharpie.Abstractions;
 public interface IEventPump
 {
     /// <summary>
+    ///     The terminal this pump belongs to.
+    /// </summary>
+    ITerminal Terminal { get; }
+    
+    /// <summary>
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
     /// </summary>
     /// <remarks>
@@ -24,7 +29,7 @@ public interface IEventPump
     /// <param name="surface">The surface to refresh during event processing.</param>
     /// <returns>The event listening enumerable.</returns>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="surface" /> is <c>null</c>.</exception>
-    IEnumerable<Event> Listen(ISurface surface) => Listen(surface, CancellationToken.None);
+    IEnumerable<Event> Listen(ISurface surface);
 
     /// <summary>
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
@@ -40,7 +45,7 @@ public interface IEventPump
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
     /// </summary>
     /// <returns>The event listening enumerable.</returns>
-    IEnumerable<Event> Listen() => Listen(CancellationToken.None);
+    IEnumerable<Event> Listen();
 
     /// <summary>
     ///     Registers a key sequence resolver into the input pipeline.

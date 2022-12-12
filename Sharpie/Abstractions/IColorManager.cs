@@ -37,6 +37,11 @@ namespace Sharpie.Abstractions;
 public interface IColorManager
 {
     /// <summary>
+    ///     The terminal this manager belongs to.
+    /// </summary>
+    ITerminal Terminal { get; }
+    
+    /// <summary>
     ///     Specifies whether the colors are enabled.
     /// </summary>
     bool Enabled { get; }
@@ -66,7 +71,7 @@ public interface IColorManager
     /// <param name="bgColor">The background color.</param>
     /// <exception cref="InvalidOperationException">The maximum number of pairs has been exhausted.</exception>
     /// <returns>A new color mixture.</returns>
-    ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor) => MixColors((short) fgColor, (short) bgColor);
+    ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor);
 
     /// <summary>
     ///     Redefines an existing color pair with the given colors.
@@ -82,8 +87,7 @@ public interface IColorManager
     /// <param name="mixture">The color mixture to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    void RemixColors(ColorMixture mixture, StandardColor fgColor, StandardColor bgColor) =>
-        RemixColors(mixture, (short) fgColor, (short) bgColor);
+    void RemixColors(ColorMixture mixture, StandardColor fgColor, StandardColor bgColor);
 
     /// <summary>
     ///     Redefines the default colors of the terminal.
@@ -97,8 +101,7 @@ public interface IColorManager
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    void RemixDefaultColors(StandardColor fgColor, StandardColor bgColor) =>
-        RemixDefaultColors((short) fgColor, (short) bgColor);
+    void RemixDefaultColors(StandardColor fgColor, StandardColor bgColor);
 
     /// <summary>
     ///     Extracts the colors of a color mixture.
@@ -134,8 +137,7 @@ public interface IColorManager
     /// </remarks>
     /// <exception cref="ArgumentOutOfRangeException">If any of the three components is greater than 1000.</exception>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    void RedefineColor(StandardColor color, short red, short green, short blue) =>
-        RedefineColor((short) color, red, green, blue);
+    void RedefineColor(StandardColor color, short red, short green, short blue);
 
     /// <summary>
     ///     Extracts the RBG attributes from a color.
@@ -157,5 +159,5 @@ public interface IColorManager
     ///     <see cref="CanRedefineColors" />
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    (short red, short green, short blue) BreakdownColor(StandardColor color) => BreakdownColor((short) color);
+    (short red, short green, short blue) BreakdownColor(StandardColor color);
 }

@@ -175,18 +175,15 @@ public interface ISurface: IDrawSurface
     /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     void WriteText(string str, Style style);
-
+    
     /// <summary>
     ///     Writes a text at the caret position at the current surface and advances the caret.
     /// </summary>
-    /// <remarks>
-    ///     This method uses default style.
-    /// </remarks>
     /// <param name="str">The text to write.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    void WriteText(string str) => WriteText(str, Style.Default);
-
+    void WriteText(string str);
+    
     /// <summary>
     ///     Draws a vertical line from the current caret position downwards.
     /// </summary>
@@ -306,27 +303,21 @@ public interface ISurface: IDrawSurface
     ///     Marks the entire contents of the surface as <see cref="Dirty" />.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    void MarkDirty() { MarkDirty(0, Size.Height); }
+    void MarkDirty();
 
     /// <summary>
     ///     Checks if a given point fits within the current surface.
     /// </summary>
     /// <returns>The result of the check.</returns>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    bool IsPointWithin(Point point)
-    {
-        var size = Size;
-        return point.X >= 0 && point.Y >= 0 && point.X < size.Width && point.Y < size.Height;
-    }
+    bool IsPointWithin(Point point);
 
     /// <summary>
     ///     Checks if a given rectangle fits within the current surface.
     /// </summary>
     /// <returns>The result of the check.</returns>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    bool IsRectangleWithin(Rectangle rect) =>
-        IsPointWithin(new(rect.Left, rect.Top)) &&
-        IsPointWithin(new(rect.Left + rect.Width - 1, rect.Top + rect.Height - 1));
+    bool IsRectangleWithin(Rectangle rect);
 
     /// <summary>
     ///     Draws a given <paramref name="drawable" /> to the surface.
@@ -340,15 +331,7 @@ public interface ISurface: IDrawSurface
     ///     out of bounds.
     /// </exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    void Draw(Point location, Rectangle area, IDrawable drawable)
-    {
-        if (drawable == null)
-        {
-            throw new ArgumentNullException(nameof(drawable));
-        }
-
-        drawable.DrawTo(this, area, location);
-    }
+    void Draw(Point location, Rectangle area, IDrawable drawable);
 
     /// <summary>
     ///     Draws a given <paramref name="drawable" /> to the surface.
@@ -358,8 +341,7 @@ public interface ISurface: IDrawSurface
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawable" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location" /> is out of bounds.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    void Draw(Point location, IDrawable drawable) =>
-        Draw(location, new(0, 0, drawable.Size.Width, drawable.Size.Height), drawable);
+    void Draw(Point location, IDrawable drawable);
 
     /// <summary>
     ///     Checks if the line at <paramref name="y" /> is dirty.

@@ -222,6 +222,19 @@ public class SubWindowTests
 
         _cursesMock.Verify(v => v.wresize(sw.Handle, 5, 5), Times.Once);
     }
+    
+    [TestMethod]
+    public void Origin_Calls_Location()
+    {
+        var sw = new SubWindow(_parent, new(1));
+        
+        _cursesMock.Setup(s => s.getparx(sw.Handle))
+                   .Returns(11);
+        _cursesMock.Setup(s => s.getpary(sw.Handle))
+                   .Returns(22);
+
+        sw.Origin.ShouldBe(new(11, 22));
+    }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Duplicate_Throws_IfCursesFails()

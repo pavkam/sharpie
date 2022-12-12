@@ -97,6 +97,12 @@ public sealed class Window: TerminalSurface, IWindow
         }
     }
 
+    /// <summary>
+    ///     Returns the value of <see cref="Location"/>.
+    /// </summary>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    protected internal override Point Origin => Location;
+
     /// <inheritdoc cref="IWindow.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location

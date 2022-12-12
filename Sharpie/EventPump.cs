@@ -10,19 +10,24 @@ using System.Collections.Concurrent;
 public sealed class EventPump: IEventPump
 {
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private readonly Terminal _terminal;
     private ConcurrentQueue<object> _delegatedObjects = new();
     private MouseEventResolver? _mouseEventResolver;
 
     /// <summary>
     ///     Creates a new instances of this class.
     /// </summary>
-    /// <param name="terminal">The parent terminal.</param>
+    /// <param name="parent">The parent terminal.</param>
     /// <exception cref="ArgumentNullException">
-    ///     Thrown if <paramref name="terminal" /> is <c>null</c>.
+    ///     Thrown if <paramref name="parent" /> is <c>null</c>.
     /// </exception>
-    internal EventPump(Terminal terminal) => _terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
+    internal EventPump(Terminal parent) => Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
 
+    /// <inheritdoc cref="IColorManager.Terminal" />
+    ITerminal IEventPump.Terminal => Terminal;
+    
+    /// <inheritdoc cref="IColorManager.Terminal" />
+    public Terminal Terminal { get; }
+    
     /// <summary>
     ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
     ///     This is an internal property and initialized by the terminal.
@@ -52,13 +57,17 @@ public sealed class EventPump: IEventPump
 
         return Listen(surface.Handle, cancellationToken);
     }
+    
+    /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface)" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public IEnumerable<Event> Listen(ISurface surface) => Listen(surface, CancellationToken.None);
 
     /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen(CancellationToken cancellationToken)
     {
-        var padHandle = _terminal.Curses.newpad(1, 1)
-                                 .Check(nameof(_terminal.Curses.newpad), "Failed to create dummy listen pad.");
+        var padHandle = Terminal.Curses.newpad(1, 1)
+                                 .Check(nameof(Terminal.Curses.newpad), "Failed to create dummy listen pad.");
 
         try
         {
@@ -68,10 +77,14 @@ public sealed class EventPump: IEventPump
             }
         } finally
         {
-            _terminal.Curses.delwin(padHandle)
-                     .Check(nameof(_terminal.Curses.delwin), "Failed to remove the dummy listen pad.");
+            Terminal.Curses.delwin(padHandle)
+                     .Check(nameof(Terminal.Curses.delwin), "Failed to remove the dummy listen pad.");
         }
     }
+    
+    /// <inheritdoc cref="IEventPump.Listen()" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public IEnumerable<Event> Listen() => Listen(CancellationToken.None);
 
     /// <inheritdoc cref="IEventPump.Use" />
     public void Use(ResolveEscapeSequenceFunc resolver)
@@ -104,7 +117,7 @@ public sealed class EventPump: IEventPump
 
         var hasPendingResize = false;
         var monitorsResizes =
-            _terminal.Curses.monitor_pending_resize(() => { hasPendingResize = true; }, out var monitorHandle);
+            Terminal.Curses.monitor_pending_resize(() => { hasPendingResize = true; }, out var monitorHandle);
 
         var escapeSequence = new List<KeyEvent>();
 
@@ -120,7 +133,7 @@ public sealed class EventPump: IEventPump
                         @event = new TerminalAboutToResizeEvent();
                     }
 
-                    if (_terminal.TryUpdate())
+                    if (Terminal.TryUpdate())
                     {
                         hasPendingResize = false;
                     }
@@ -191,15 +204,15 @@ public sealed class EventPump: IEventPump
                             yield return new TerminalAboutToResizeEvent();
                         }
                         
-                        _terminal.Screen.AdjustChildrenToExplicitArea();
+                        Terminal.Screen.AdjustChildrenToExplicitArea();
                     }
 
                     yield return @event;
 
                     if (isResize)
                     {
-                        ((ITerminal)_terminal).Screen.MarkDirty();
-                        _terminal.Screen.Refresh();
+                        ((ITerminal)Terminal).Screen.MarkDirty();
+                        Terminal.Screen.Refresh();
                     }
                 }
             }
@@ -211,8 +224,8 @@ public sealed class EventPump: IEventPump
 
     private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)
     {
-        _terminal.Curses.wtimeout(windowHandle, quickWait ? 10 : 50);
-        var result = _terminal.Curses.wget_wch(windowHandle, out var keyCode);
+        Terminal.Curses.wtimeout(windowHandle, quickWait ? 10 : 50);
+        var result = Terminal.Curses.wget_wch(windowHandle, out var keyCode);
 
         return (result, keyCode);
     }
@@ -235,9 +248,9 @@ public sealed class EventPump: IEventPump
             switch (keyCode)
             {
                 case (uint) CursesKey.Resize:
-                    return new TerminalResizeEvent(_terminal.Screen.Size);
+                    return new TerminalResizeEvent(Terminal.Screen.Size);
                 case (uint) CursesKey.Mouse:
-                    if (_terminal.Curses.getmouse(out var mouseEvent)
+                    if (Terminal.Curses.getmouse(out var mouseEvent)
                                  .Failed())
                     {
                         return null;
@@ -256,11 +269,11 @@ public sealed class EventPump: IEventPump
                         : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
                 default:
                     var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
-                    return new KeyEvent(key, new(ControlCharacter.Null), _terminal.Curses.key_name(keyCode), keyMod);
+                    return new KeyEvent(key, new(ControlCharacter.Null), Terminal.Curses.key_name(keyCode), keyMod);
             }
         }
 
-        return new KeyEvent(Key.Character, new(keyCode), _terminal.Curses.key_name(keyCode), ModifierKey.None);
+        return new KeyEvent(Key.Character, new(keyCode), Terminal.Curses.key_name(keyCode), ModifierKey.None);
     }
 
     /// <summary>
@@ -287,7 +300,7 @@ public sealed class EventPump: IEventPump
 
         foreach (var resolver in _keySequenceResolvers)
         {
-            var (resKey, resCount) = resolver(sequence, _terminal.Curses.key_name);
+            var (resKey, resCount) = resolver(sequence, Terminal.Curses.key_name);
 
             if (resCount >= max && resKey != null && best)
             {
