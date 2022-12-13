@@ -96,7 +96,7 @@ public class TerminalSurfaceTests
         _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             Should.Throw<CursesOperationException>(() => sa.Refresh())
                   .Operation.ShouldBe("wnoutrefresh");
@@ -117,7 +117,7 @@ public class TerminalSurfaceTests
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             sa.Refresh();
         }

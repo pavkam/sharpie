@@ -750,10 +750,10 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void BatchUpdates_UpdatesScreenWhenObjectIsDisposed()
+    public void AtomicRefresh_UpdatesScreenWhenObjectIsDisposed()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
         }
 
@@ -761,12 +761,12 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void BatchUpdates_IsReentrant()
+    public void AtomicRefresh_IsReentrant()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
-            using (_terminal.BatchUpdates())
+            using (_terminal.AtomicRefresh())
             {
             }
         }
@@ -785,7 +785,7 @@ public class TerminalTests
     public void WithinBatch_CallsTheActionWithTrueIfBatched()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             _terminal.WithinBatch(batch => { batch.ShouldBeTrue(); });
         }
@@ -805,7 +805,7 @@ public class TerminalTests
     public void TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             _terminal.TryUpdate()
                      .ShouldBeFalse();

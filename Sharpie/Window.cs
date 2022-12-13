@@ -151,10 +151,13 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public override void Refresh()
     {
-        using (Terminal.BatchUpdates())
+        if (_visible)
         {
-            base.Refresh();
-            Screen.RefreshUp(this);
+            using (Terminal.AtomicRefresh())
+            {
+                base.Refresh();
+                Screen.RefreshUp(this);
+            }
         }
     }
 
@@ -162,10 +165,13 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public override void Refresh(int y, int count)
     {
-        using (Terminal.BatchUpdates())
+        if (_visible)
         {
-            base.Refresh(y, count);
-            Screen.RefreshUp(this);
+            using (Terminal.AtomicRefresh())
+            {
+                base.Refresh(y, count);
+                Screen.RefreshUp(this);
+            }
         }
     }
 
@@ -173,7 +179,7 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void SendToBack()
     {
-        using (Terminal.BatchUpdates())
+        using (Terminal.AtomicRefresh())
         {
             Screen.SendToBack(this);
         }
@@ -183,7 +189,7 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void BringToFront()
     {
-        using (Terminal.BatchUpdates())
+        using (Terminal.AtomicRefresh())
         {
             Screen.BringToFront(this);
         }
@@ -199,7 +205,7 @@ public sealed class Window: TerminalSurface, IWindow
             if (value != _visible)
             {
                 _visible = value;
-                using (Terminal.BatchUpdates())
+                using (Terminal.AtomicRefresh())
                 {
                     Screen.ChangeVisibility(this, value);
                 }

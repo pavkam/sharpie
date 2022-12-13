@@ -525,7 +525,7 @@ public class HelpersTests
         _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        using (terminal.BatchUpdates())
+        using (terminal.AtomicRefresh())
         {
             Should.Throw<CursesOperationException>(() => terminal.Refresh(sa))
                   .Operation.ShouldBe("wnoutrefresh");
@@ -554,7 +554,7 @@ public class HelpersTests
         using var terminal = new Terminal(_cursesMock.Object, new());
         var sa = new TerminalSurface(terminal, new(1));
 
-        using (terminal.BatchUpdates())
+        using (terminal.AtomicRefresh())
         {
             terminal.Refresh(sa);
         }

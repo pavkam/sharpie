@@ -145,7 +145,7 @@ public interface ITerminal
     ///     Creates a batch update lock. All refreshes are batched together until the batch is disposed.
     /// </summary>
     /// <returns>A disposable object that need to be disposed to release the batch update lock.</returns>
-    IDisposable BatchUpdates();
+    IDisposable AtomicRefresh();
 
     /// <summary>
     ///     Runs the application main loop and dispatches each event to <paramref name="eventAction" />.

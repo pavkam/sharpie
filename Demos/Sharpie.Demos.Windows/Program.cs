@@ -59,7 +59,7 @@ void MakeWindow()
     c++;
 }
 
-for (var x = 0; x < 50; x++)
+for (var x = 0; x < 10; x++)
 {
     MakeWindow();
 }
@@ -68,9 +68,24 @@ terminal.Screen.Refresh();
 
 terminal.Repeat(t =>
 {
+    var op = rnd.Next(4);
     var x = rnd.Next(0, t.Screen.Windows.Count());
-    t.Screen.Windows.ElementAt(x)
-     .SendToBack();
+    var win = t.Screen.Windows.ElementAt(x);
+    switch (op)
+    {
+        case 0: 
+            win.SendToBack();
+            break;
+        case 1: 
+            win.BringToFront();
+            break;
+        case 2: 
+            win.Visible = true;
+            break;
+        case 3: 
+            win.Visible = false;
+            break;
+    }
 
     return Task.CompletedTask;
 }, 1000);

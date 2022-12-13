@@ -165,7 +165,7 @@ public class PadTests
         _cursesMock.MockLargeArea(_pad);
         _cursesMock.MockLargeArea(_screen);
 
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             _pad.Refresh(new(0, 1, 2, 3), new(2, 3));
         }
@@ -192,7 +192,7 @@ public class PadTests
         _cursesMock.MockLargeArea(_screen);
         _cursesMock.MockArea(_pad, new(0, 0, 5, 6));
 
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             _pad.Refresh(new(2, 3));
         }
@@ -222,7 +222,7 @@ public class PadTests
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             Should.Throw<CursesOperationException>(() => { _pad.Refresh(new(0, 0, 1, 1), new(0, 0)); })
                   .Operation.ShouldBe("pnoutrefresh");

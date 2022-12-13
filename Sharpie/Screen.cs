@@ -272,6 +272,11 @@ public sealed class Screen: TerminalSurface, IScreen
             {
                 var up = _windows[j];
 
+                if (!up.Visible)
+                {
+                    continue;
+                }
+
                 var a2 = new Rectangle(up.Location, up.Size);
                 if (a1.IntersectsWith(a2))
                 {
@@ -333,8 +338,11 @@ public sealed class Screen: TerminalSurface, IScreen
             }
         }
 
-        window.MarkDirty();
-        window.Refresh();
+        if (window.Visible)
+        {
+            window.MarkDirty();
+            window.Refresh();
+        }
     }
 
     /// <summary>
@@ -361,7 +369,10 @@ public sealed class Screen: TerminalSurface, IScreen
             }
         }
 
-        RefreshUp(window);
+        if (window.Visible)
+        {
+            RefreshUp(window);
+        }
     }
 
     /// <summary>

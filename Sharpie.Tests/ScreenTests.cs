@@ -264,7 +264,7 @@ public class ScreenTests
         var w1 = new Window(_screen, new(1));
         var w2 = new Window(_screen, new(2));
 
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             _screen.Refresh();
         }

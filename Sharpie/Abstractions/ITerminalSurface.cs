@@ -62,7 +62,7 @@ public interface ITerminalSurface: ISurface
     bool Critical { get; set; }
 
     /// <summary>
-    ///     Redraws all the dirty lines of the surface to the terminal. If <see cref="ITerminal.BatchUpdates" /> is active,
+    ///     Redraws all the dirty lines of the surface to the terminal. If <see cref="ITerminal.AtomicRefresh" /> is active,
     ///     all refreshes are batched together until the lock is released.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>

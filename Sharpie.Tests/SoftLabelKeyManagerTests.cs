@@ -392,7 +392,7 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Setup(s => s.slk_noutrefresh())
                    .Returns(-1);
 
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             Should.Throw<CursesOperationException>(() => { _mgr1.Refresh(); })
                   .Operation.ShouldBe("slk_noutrefresh");
@@ -402,7 +402,7 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void Refresh_Succeeds_IfCursesSucceeds_InBatch()
     {
-        using (_terminal.BatchUpdates())
+        using (_terminal.AtomicRefresh())
         {
             _mgr1.Refresh();
         }

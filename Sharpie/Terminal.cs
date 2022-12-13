@@ -420,7 +420,7 @@ public sealed class Terminal: ITerminal, IDisposable
     ///     Creates a batch update lock.
     /// </summary>
     /// <returns>A disposable object that need to be disposed to release the batch update lock.</returns>
-    public IDisposable BatchUpdates()
+    public IDisposable AtomicRefresh()
     {
         lock (_syncRoot)
         {
