@@ -167,10 +167,22 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.SendToBack" />
-    public void SendToBack() { Screen.SendToBack(this); }
+    public void SendToBack()
+    {
+        using (Terminal.BatchUpdates())
+        {
+            Screen.SendToBack(this);
+        }
+    }
 
     /// <inheritdoc cref="IWindow.BringToFront" />
-    public void BringToFront() { Screen.BringToFront(this); }
+    public void BringToFront()
+    {
+        using (Terminal.BatchUpdates())
+        {
+            Screen.BringToFront(this);
+        }
+    }
 
     /// <inheritdoc cref="IWindow.SubWindow" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>

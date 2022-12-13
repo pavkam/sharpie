@@ -93,10 +93,9 @@ public class WindowTests
     public void Ctor_RegistersItselfIntoParent()
     {
         var w = new Window(_screen, IntPtr.MaxValue);
-
         _screen.Windows.ShouldContain(w);
     }
-
+    
     [TestMethod]
     public void Screen_IsInitialized()
     {
@@ -569,5 +568,139 @@ public class WindowTests
                    .Returns(-1);
 
         Should.NotThrow(() => w.AdjustToExplicitArea());
+    }
+    
+    [TestMethod]
+    public void BringToFront_RefreshesWindow_IfNotInFront()
+    {
+        var w1 = new Window(_screen, new(1));
+        var w2 = new Window(_screen, new(2));
+
+        w1.BringToFront();
+        
+        _cursesMock.Verify(v => v.wnoutrefresh(w1.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(It.IsAny<IntPtr>()), Times.Once);
+        _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+        
+        w2.BringToFront();
+        
+        _cursesMock.Verify(v => v.wnoutrefresh(w2.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(It.IsAny<IntPtr>()), Times.Exactly(2));
+        _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Exactly(2));
+    }
+    
+    [TestMethod]
+    public void BringToFront_DoesNotRefreshWindow_IfInFront()
+    {
+        var w = new Window(_screen, new(1));
+
+        w.BringToFront();
+        
+        _cursesMock.Verify(v => v.wnoutrefresh(It.IsAny<IntPtr>()), Times.Never);
+        _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+    
+    [TestMethod]
+    public void SendToBack_TouchesAndRefreshesAffectedWindowsAbove_IfNotInBack()
+    {
+        var w1 = new Window(_screen, new(1));
+        _cursesMock.MockArea(w1, new(0, 0, 10, 10));
+        
+        var w2 = new Window(_screen, new(2));
+        _cursesMock.MockArea(w2, new(5, 5, 10, 10));
+        
+        var w3 = new Window(_screen, new(3));
+        _cursesMock.MockArea(w3, new(11, 11, 10, 10));
+        
+        var w4 = new Window(_screen, new(4));
+        _cursesMock.MockArea(w4, new(50, 50, 10, 10));
+
+        w2.SendToBack();
+        
+        _cursesMock.Verify(v => v.wnoutrefresh(w1.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(w2.Handle), Times.Never);
+        _cursesMock.Verify(v => v.wnoutrefresh(w3.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(w4.Handle), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+    
+    [TestMethod]
+    public void SendToBack_DoesNotTouchWindowsThatDontIntersect()
+    {
+        var w1 = new Window(_screen, new(1));
+        _cursesMock.MockArea(w1, new(0, 0, 10, 10));
+        
+        var w2 = new Window(_screen, new(2));
+        _cursesMock.MockArea(w2, new(50, 50, 10, 10));
+        
+        w2.SendToBack();
+        
+        _cursesMock.Verify(v => v.wnoutrefresh(w1.Handle), Times.Never);
+        _cursesMock.Verify(v => v.wnoutrefresh(w2.Handle), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+    
+    [TestMethod]
+    public void SendToBack_DoesNotDoAnything_IfInBack()
+    {
+        var w = new Window(_screen, new(1));
+
+        w.SendToBack();
+        
+        _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        _cursesMock.Verify(v => v.wnoutrefresh(It.IsAny<IntPtr>()), Times.Never);
+        _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+    
+    [TestMethod]
+    public void Refresh1_TouchesAndRefreshesAffectedWindowAndAbove()
+    {
+        var w1 = new Window(_screen, new(1));
+        _cursesMock.MockArea(w1, new(0, 0, 10, 10));
+        
+        var w2 = new Window(_screen, new(2));
+        _cursesMock.MockArea(w2, new(5, 5, 10, 10));
+        
+        var w3 = new Window(_screen, new(3));
+        _cursesMock.MockArea(w3, new(11, 11, 10, 10));
+        
+        var w4 = new Window(_screen, new(4));
+        _cursesMock.MockArea(w4, new(50, 50, 10, 10));
+
+        w2.Refresh();
+        
+        _cursesMock.Verify(v => v.wnoutrefresh(w1.Handle), Times.Never);
+        _cursesMock.Verify(v => v.wnoutrefresh(w2.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(w3.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(w4.Handle), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
+    }
+
+    [TestMethod]
+    public void Refresh2_TouchesAndRefreshesAffectedWindowAndAbove()
+    {
+        var w1 = new Window(_screen, new(1));
+        _cursesMock.MockArea(w1, new(0, 0, 10, 10));
+        
+        var w2 = new Window(_screen, new(2));
+        _cursesMock.MockArea(w2, new(5, 5, 10, 10));
+        
+        var w3 = new Window(_screen, new(3));
+        _cursesMock.MockArea(w3, new(11, 11, 10, 10));
+        
+        var w4 = new Window(_screen, new(4));
+        _cursesMock.MockArea(w4, new(50, 50, 10, 10));
+
+        w2.Refresh(0, 1);
+        
+        _cursesMock.Verify(v => v.wnoutrefresh(w1.Handle), Times.Never);
+        _cursesMock.Verify(v => v.wredrawln(w2.Handle, 0, 1), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(w3.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(w4.Handle), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 }

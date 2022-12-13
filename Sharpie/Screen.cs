@@ -79,12 +79,9 @@ public sealed class Screen: TerminalSurface, IScreen
 
         lock (_syncRoot)
         {
-            using (Terminal.BatchUpdates())
+            foreach (var child in _windows)
             {
-                foreach (var child in _windows)
-                {
-                    child.Refresh();
-                }
+                Terminal.Refresh(child);
             }
         }
     }
@@ -121,7 +118,8 @@ public sealed class Screen: TerminalSurface, IScreen
 
                 if (iy > -1 && ic > 0)
                 {
-                    child.Refresh(iy - ly, ic);
+                    Curses.wredrawln(child.Handle, iy - ly, ic)
+                          .Check(nameof(Curses.wredrawln), "Failed to perform line refresh of child.");
                 }
             }
         }
@@ -251,6 +249,8 @@ public sealed class Screen: TerminalSurface, IScreen
                 if (a1.IntersectsWith(a2))
                 {
                     up.MarkDirty();
+                    Terminal.Refresh(up);
+                    
                     RefreshUp(up);
                 }
             }
@@ -275,6 +275,9 @@ public sealed class Screen: TerminalSurface, IScreen
             {
                 _windows.RemoveAt(i);
                 _windows.Add(window);
+            } else
+            {
+                return;
             }
         }
 
@@ -300,13 +303,13 @@ public sealed class Screen: TerminalSurface, IScreen
             {
                 _windows.RemoveAt(i);
                 _windows.Insert(0, window);
+            } else
+            {
+                return;
             }
         }
 
-        using (Terminal.BatchUpdates())
-        {
-            RefreshUp(window);
-        }
+        RefreshUp(window);
     }
 
     /// <summary>
@@ -331,7 +334,7 @@ public sealed class Screen: TerminalSurface, IScreen
     {
         lock (_syncRoot)
         {
-            foreach (var window in _windows)
+            foreach (var window in _windows.ToArray())
             {
                 window.Destroy();
             }

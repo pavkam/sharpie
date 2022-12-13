@@ -495,4 +495,71 @@ public class HelpersTests
         rs.ShouldBe(si);
         rc.ShouldBe(sc);
     }
+    
+    
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Refresh_Fails_IfCursesFails_NoBatch()
+    {
+        _cursesMock.Setup(s => s.initscr())
+                   .Returns(new IntPtr(100));
+        
+        using var terminal = new Terminal(_cursesMock.Object, new());
+        using var sa = new TerminalSurface(terminal, new(1));
+
+        _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        Should.Throw<CursesOperationException>(() => terminal.Refresh(sa))
+              .Operation.ShouldBe("wrefresh");
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Refresh_Fails_IfCursesFails_InBatch()
+    {
+        _cursesMock.Setup(s => s.initscr())
+                   .Returns(new IntPtr(100));
+        
+        using var terminal = new Terminal(_cursesMock.Object, new());
+        using var sa = new TerminalSurface(terminal, new(1));
+
+        _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
+                   .Returns(-1);
+
+        using (terminal.BatchUpdates())
+        {
+            Should.Throw<CursesOperationException>(() => terminal.Refresh(sa))
+                  .Operation.ShouldBe("wnoutrefresh");
+        }
+    }
+
+    [TestMethod]
+    public void Refresh_Succeeds_IfCursesSucceeds_NoBatch()
+    {
+        _cursesMock.Setup(s => s.initscr())
+                   .Returns(new IntPtr(100));
+        
+        using var terminal = new Terminal(_cursesMock.Object, new());
+        var sa = new TerminalSurface(terminal, new(1));
+
+        terminal.Refresh(sa);
+        _cursesMock.Verify(v => v.wrefresh(sa.Handle), Times.Once);
+    }
+
+    [TestMethod]
+    public void Refresh_Succeeds_IfCursesSucceeds_InBatch()
+    {
+        _cursesMock.Setup(s => s.initscr())
+                   .Returns(new IntPtr(100));
+        
+        using var terminal = new Terminal(_cursesMock.Object, new());
+        var sa = new TerminalSurface(terminal, new(1));
+
+        using (terminal.BatchUpdates())
+        {
+            terminal.Refresh(sa);
+        }
+
+        _cursesMock.Verify(v => v.wnoutrefresh(sa.Handle), Times.Once);
+    }
+
 }

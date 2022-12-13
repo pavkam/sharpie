@@ -30,6 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
+using System.ComponentModel;
+
 /// <summary>
 ///     Internal helper routines.
 /// </summary>
@@ -486,5 +488,24 @@ public static class Helpers
         var intEnd = Math.Min(seg1End, seg2End);
 
         return (intStart, intEnd - intStart + 1);
+    }
+
+    internal static void Refresh(this Terminal t, ISurface s)
+    {
+        Debug.Assert(t != null);
+        Debug.Assert(s != null);
+        
+        t.WithinBatch(batch =>
+        {
+            if (batch)
+            {
+                t.Curses.wnoutrefresh(s.Handle)
+                      .Check(nameof(t.Curses.wnoutrefresh), "Failed to queue window refresh.");
+            } else
+            {
+                t.Curses.wrefresh(s.Handle)
+                 .Check(nameof(t.Curses.wrefresh), "Failed to perform window refresh.");
+            }
+        });
     }
 }

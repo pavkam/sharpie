@@ -72,18 +72,7 @@ public class TerminalSurface: Surface, ITerminalSurface
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void Refresh()
     {
-        Terminal.WithinBatch(batch =>
-        {
-            if (batch)
-            {
-                Curses.wnoutrefresh(Handle)
-                      .Check(nameof(Curses.wnoutrefresh), "Failed to queue window refresh.");
-            } else
-            {
-                Curses.wrefresh(Handle)
-                      .Check(nameof(Curses.wrefresh), "Failed to perform window refresh.");
-            }
-        });
+        Terminal.Refresh(this);
     }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh(int, int)" />
