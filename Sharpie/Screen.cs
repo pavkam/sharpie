@@ -61,16 +61,34 @@ public sealed class Screen: TerminalSurface, IScreen
     }
 
     /// <inheritdoc cref="IScreen.Windows" />
-    public IEnumerable<Window> Windows => _windows;
+    public IEnumerable<Window> Windows
+    {
+        get
+        {
+            lock (_syncRoot)
+            {
+                return _windows.ToArray();
+            }
+        }
+    }
 
     /// <inheritdoc cref="IScreen.Pads" />
-    public IEnumerable<IPad> Pads => _pads;
+    public IEnumerable<IPad> Pads 
+    {
+        get
+        {
+            lock (_syncRoot)
+            {
+                return _pads.ToArray();
+            }
+        }
+    }
 
     /// <inheritdoc cref="IScreen.Windows" />
-    IEnumerable<IWindow> IScreen.Windows => _windows;
-
+    IEnumerable<IWindow> IScreen.Windows => Windows;
+    
     /// <inheritdoc cref="IScreen.Pads" />
-    IEnumerable<IPad> IScreen.Pads => _pads;
+    IEnumerable<IPad> IScreen.Pads => Pads;
 
     /// <inheritdoc cref="TerminalSurface.Refresh()" />
     public override void Refresh()
@@ -81,7 +99,10 @@ public sealed class Screen: TerminalSurface, IScreen
         {
             foreach (var child in _windows)
             {
-                Terminal.Refresh(child);
+                if (child.Visible)
+                {
+                    Terminal.Refresh(child);
+                }
             }
         }
     }
@@ -92,14 +113,17 @@ public sealed class Screen: TerminalSurface, IScreen
         base.MarkDirty(y, count);
         lock (_syncRoot)
         {
-            foreach (var child in Windows)
+            foreach (var child in _windows)
             {
-                var ly = child.Location.Y;
-                var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
-
-                if (iy > -1 && ic > 0)
+                if (child.Visible)
                 {
-                    child.MarkDirty(iy - ly, ic);
+                    var ly = child.Location.Y;
+                    var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
+
+                    if (iy > -1 && ic > 0)
+                    {
+                        child.MarkDirty(iy - ly, ic);
+                    }
                 }
             }
         }
@@ -111,15 +135,18 @@ public sealed class Screen: TerminalSurface, IScreen
         base.Refresh(y, count);
         lock (_syncRoot)
         {
-            foreach (var child in Windows)
+            foreach (var child in _windows)
             {
-                var ly = child.Location.Y;
-                var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
-
-                if (iy > -1 && ic > 0)
+                if (child.Visible)
                 {
-                    Curses.wredrawln(child.Handle, iy - ly, ic)
-                          .Check(nameof(Curses.wredrawln), "Failed to perform line refresh of child.");
+                    var ly = child.Location.Y;
+                    var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
+
+                    if (iy > -1 && ic > 0)
+                    {
+                        Curses.wredrawln(child.Handle, iy - ly, ic)
+                              .Check(nameof(Curses.wredrawln), "Failed to perform line refresh of child.");
+                    }
                 }
             }
         }
@@ -257,6 +284,31 @@ public sealed class Screen: TerminalSurface, IScreen
         }
     }
 
+    /// <summary>
+    /// Changes the visibility of a window by redrawing the affected portions of the screen.
+    /// </summary>
+    /// <param name="window">The window.</param>
+    /// <param name="visible">Visibility argument.</param>
+    internal void ChangeVisibility(Window window, bool visible)
+    {
+        Debug.Assert(window != null);
+        Debug.Assert(!window.Disposed);
+        Debug.Assert(window.Screen == this);
+        Debug.Assert(_windows.Contains(window));
+
+        if (visible)
+        {
+            window.MarkDirty();
+            Terminal.Refresh(window);
+            
+            RefreshUp(window);
+        } else
+        {
+            MarkDirty();
+            Refresh();
+        }
+    }
+    
     /// <summary>
     ///     Brings the <paramref name="window" /> to the front of the stack.
     /// </summary>

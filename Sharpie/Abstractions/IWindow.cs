@@ -69,6 +69,12 @@ public interface IWindow: ITerminalSurface
     bool UseHardwareCharEdit { get; set; }
 
     /// <summary>
+    ///     Gets or sets the value indicating if the window is visible.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    bool Visible { get; set; }
+    
+    /// <summary>
     ///     Gets or sets the location of the window within its parent.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the parent's bounds.</exception>

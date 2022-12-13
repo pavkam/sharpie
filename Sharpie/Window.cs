@@ -38,6 +38,7 @@ public sealed class Window: TerminalSurface, IWindow
 {
     private readonly IList<SubWindow> _subWindows = new List<SubWindow>();
     private Rectangle _explicitArea;
+    private bool _visible = true;
 
     /// <summary>
     ///     Initializes the window using the given Curses handle.
@@ -147,6 +148,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="TerminalSurface.Refresh()" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public override void Refresh()
     {
         using (Terminal.BatchUpdates())
@@ -157,6 +159,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="TerminalSurface.Refresh(int, int)" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public override void Refresh(int y, int count)
     {
         using (Terminal.BatchUpdates())
@@ -167,6 +170,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.SendToBack" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void SendToBack()
     {
         using (Terminal.BatchUpdates())
@@ -176,11 +180,30 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.BringToFront" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void BringToFront()
     {
         using (Terminal.BatchUpdates())
         {
             Screen.BringToFront(this);
+        }
+    }
+
+    /// <inheritdoc cref="IWindow.Visible" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public bool Visible
+    {
+        get => _visible;
+        set
+        {
+            if (value != _visible)
+            {
+                _visible = value;
+                using (Terminal.BatchUpdates())
+                {
+                    Screen.ChangeVisibility(this, value);
+                }
+            }
         }
     }
 
