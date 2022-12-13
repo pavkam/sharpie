@@ -64,6 +64,12 @@ public sealed class Window: TerminalSurface, IWindow
     /// <inheritdoc cref="IWindow.Screen" />
     public Screen Screen { get; }
 
+    /// <summary>
+    ///     Returns the value of <see cref="Location" />.
+    /// </summary>
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    protected internal override Point Origin => Location;
+
     /// <inheritdoc cref="IWindow.Screen" />
     IScreen IWindow.Screen => Screen;
 
@@ -97,12 +103,6 @@ public sealed class Window: TerminalSurface, IWindow
         }
     }
 
-    /// <summary>
-    ///     Returns the value of <see cref="Location"/>.
-    /// </summary>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    protected internal override Point Origin => Location;
-
     /// <inheritdoc cref="IWindow.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location
@@ -114,7 +114,7 @@ public sealed class Window: TerminalSurface, IWindow
         set
         {
             var size = Size;
-            if (!(Screen).IsRectangleWithin(new(value, size)))
+            if (!Screen.IsRectangleWithin(new(value, size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -134,7 +134,7 @@ public sealed class Window: TerminalSurface, IWindow
         set
         {
             var location = Location;
-            if (!(Screen).IsRectangleWithin(new(location, value)))
+            if (!Screen.IsRectangleWithin(new(location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -167,17 +167,11 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.SendToBack" />
-    public void SendToBack()
-    {
-        Screen.SendToBack(this);
-    }
+    public void SendToBack() { Screen.SendToBack(this); }
 
     /// <inheritdoc cref="IWindow.BringToFront" />
-    public void BringToFront()
-    {
-        Screen.BringToFront(this);
-    }
-    
+    public void BringToFront() { Screen.BringToFront(this); }
+
     /// <inheritdoc cref="IWindow.SubWindow" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow SubWindow(Rectangle area)
@@ -204,7 +198,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <summary>
-    /// Adjusts the window's area to be as close (or equal) to its explicit area.
+    ///     Adjusts the window's area to be as close (or equal) to its explicit area.
     /// </summary>
     internal void AdjustToExplicitArea()
     {
@@ -222,10 +216,10 @@ public sealed class Window: TerminalSurface, IWindow
 
         var x = Math.Min(location.X, _explicitArea.X);
         var y = Math.Min(location.Y, _explicitArea.Y);
-        
+
         if (location.X != x || location.Y != y)
         {
-           Curses.mvwin(Handle, y, x);
+            Curses.mvwin(Handle, y, x);
         }
     }
 

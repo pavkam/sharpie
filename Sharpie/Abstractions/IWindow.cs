@@ -83,12 +83,12 @@ public interface IWindow: ITerminalSurface
     new Size Size { get; set; }
 
     /// <summary>
-    /// Send the window to the back of the Z-order.
+    ///     Send the window to the back of the Z-order.
     /// </summary>
     void SendToBack();
-    
+
     /// <summary>
-    /// Send the window to the front of the Z-order.
+    ///     Send the window to the front of the Z-order.
     /// </summary>
     void BringToFront();
 

@@ -37,23 +37,22 @@ public class SoftLabelKeyManagerTests
     private SoftLabelKeyManager _mgr1 = null!;
     private SoftLabelKeyManager _mgr2 = null!;
     private Terminal _terminal = null!;
-    
+
     [TestInitialize]
     public void TestInitialize()
     {
         _cursesMock = new();
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-        
+
         _terminal = new(_cursesMock.Object, new());
-        
+
         _mgr1 = new(_terminal, SoftLabelKeyMode.ThreeTwoThree);
         _mgr2 = new(_terminal, SoftLabelKeyMode.Disabled);
     }
-  
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
     public void Ctor_Throws_IfCursesIsNull()
@@ -65,9 +64,9 @@ public class SoftLabelKeyManagerTests
     public void Terminal_IsInitialized()
     {
         _mgr1.Terminal.ShouldBe(_terminal);
-        ((ISoftLabelKeyManager)_mgr1).Terminal.ShouldBe(_terminal);
+        ((ISoftLabelKeyManager) _mgr1).Terminal.ShouldBe(_terminal);
     }
-    
+
     [TestMethod, DataRow(SoftLabelKeyMode.FourFour, 8), DataRow(SoftLabelKeyMode.FourFourFour, 12),
      DataRow(SoftLabelKeyMode.ThreeTwoThree, 8), DataRow(SoftLabelKeyMode.FourFourFourWithIndex, 12)]
     public void LabelCount_ReturnsTheCorrectNumberBasedOnMode(SoftLabelKeyMode mode, int expected)
@@ -387,7 +386,7 @@ public class SoftLabelKeyManagerTests
               .Operation.ShouldBe("slk_refresh");
     }
 
-    [TestMethod,SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Throws_IfCursesFails_InBatch()
     {
         _cursesMock.Setup(s => s.slk_noutrefresh())

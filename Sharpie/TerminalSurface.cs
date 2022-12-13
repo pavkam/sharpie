@@ -94,7 +94,7 @@ public class TerminalSurface: Surface, ITerminalSurface
         {
             throw new ArgumentOutOfRangeException(nameof(y));
         }
-        
+
         if (count < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(count));

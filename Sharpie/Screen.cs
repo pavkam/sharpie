@@ -37,8 +37,8 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class Screen: TerminalSurface, IScreen
 {
-    private readonly object _syncRoot = new();
     private readonly IList<Pad> _pads = new List<Pad>();
+    private readonly object _syncRoot = new();
     private readonly IList<Window> _windows = new List<Window>();
 
     /// <summary>
@@ -227,8 +227,8 @@ public sealed class Screen: TerminalSurface, IScreen
     }
 
     /// <summary>
-    /// Marks all the windows on top of <paramref name="window"/> as dirty and refreshes them;
-    /// And then proceeds to do the same for each touched window.
+    ///     Marks all the windows on top of <paramref name="window" /> as dirty and refreshes them;
+    ///     And then proceeds to do the same for each touched window.
     /// </summary>
     /// <param name="window">The window to start with.</param>
     internal void RefreshUp(Window window)
@@ -237,16 +237,16 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(!window.Disposed);
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
-        
+
         var a1 = new Rectangle(window.Location, window.Size);
-        
+
         lock (_syncRoot)
         {
             var i = _windows.IndexOf(window);
             for (var j = i + 1; j < _windows.Count; j++)
             {
                 var up = _windows[j];
-                
+
                 var a2 = new Rectangle(up.Location, up.Size);
                 if (a1.IntersectsWith(a2))
                 {
@@ -258,7 +258,7 @@ public sealed class Screen: TerminalSurface, IScreen
     }
 
     /// <summary>
-    /// Brings the <paramref name="window"/> to the front of the stack.
+    ///     Brings the <paramref name="window" /> to the front of the stack.
     /// </summary>
     /// <param name="window">The window to bring.</param>
     internal void BringToFront(Window window)
@@ -277,13 +277,13 @@ public sealed class Screen: TerminalSurface, IScreen
                 _windows.Add(window);
             }
         }
-        
+
         window.MarkDirty();
         window.Refresh();
     }
 
     /// <summary>
-    /// Sends the <paramref name="window"/> to the back of the stack.
+    ///     Sends the <paramref name="window" /> to the back of the stack.
     /// </summary>
     /// <param name="window">The window to send.</param>
     internal void SendToBack(Window window)
@@ -292,7 +292,7 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(!window.Disposed);
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
-        
+
         lock (_syncRoot)
         {
             var i = _windows.IndexOf(window);
@@ -308,9 +308,9 @@ public sealed class Screen: TerminalSurface, IScreen
             RefreshUp(window);
         }
     }
-    
+
     /// <summary>
-    /// Adjusts the area of all the windows in the screen.
+    ///     Adjusts the area of all the windows in the screen.
     /// </summary>
     internal void AdjustChildrenToExplicitArea()
     {

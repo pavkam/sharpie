@@ -53,15 +53,15 @@ public sealed class SubWindow: Surface, ISubWindow
     /// <inheritdoc cref="ISubWindow.Window" />
     public Window Window { get; }
 
-    /// <inheritdoc cref="ISubWindow.Window" />
-    IWindow ISubWindow.Window => Window;
-
     /// <summary>
-    ///     Returns the value of <see cref="Location"/>.
+    ///     Returns the value of <see cref="Location" />.
     /// </summary>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     protected internal override Point Origin => Location;
-    
+
+    /// <inheritdoc cref="ISubWindow.Window" />
+    IWindow ISubWindow.Window => Window;
+
     /// <inheritdoc cref="ISubWindow.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location
@@ -72,7 +72,7 @@ public sealed class SubWindow: Surface, ISubWindow
                 .Check(nameof(Curses.getpary), "Failed to get window Y coordinate."));
         set
         {
-            if (!(Window).IsRectangleWithin(new(value, Size)))
+            if (!Window.IsRectangleWithin(new(value, Size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -89,7 +89,7 @@ public sealed class SubWindow: Surface, ISubWindow
         get => base.Size;
         set
         {
-            if (!(Window).IsRectangleWithin(new(Location, value)))
+            if (!Window.IsRectangleWithin(new(Location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }

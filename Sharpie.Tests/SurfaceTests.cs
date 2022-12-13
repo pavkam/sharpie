@@ -958,7 +958,7 @@ public class SurfaceTests
         s.LineDirty(1)
          .ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void MarkDirty1_Throws_IfYIsNegative()
     {
@@ -968,7 +968,7 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(-1, 1));
     }
-    
+
     [TestMethod]
     public void MarkDirty1_Throws_IfCountIsNegative()
     {
@@ -990,7 +990,7 @@ public class SurfaceTests
 
         _cursesMock.Verify(v => v.wtouchln(sw.Handle, 4, 6, 1), Times.Once);
     }
-    
+
     [TestMethod]
     public void MarkDirty1_DoesNotDoAnythingIfNotInBounds()
     {
@@ -1024,7 +1024,7 @@ public class SurfaceTests
 
         var s = new Surface(_cursesMock.Object, new(1));
         Should.NotThrow(() => s.MarkDirty(1, 9));
-        
+
         _cursesMock.Verify(v => v.wtouchln(s.Handle, 1, 9, 1));
     }
 
@@ -1036,10 +1036,10 @@ public class SurfaceTests
 
         var s = new Surface(_cursesMock.Object, new(1));
         Should.NotThrow(() => s.MarkDirty());
-        
+
         _cursesMock.Verify(v => v.wtouchln(s.Handle, 0, 99, 1));
     }
-    
+
     [TestMethod]
     public void Clear_AsksCurses_1()
     {
@@ -1135,7 +1135,7 @@ public class SurfaceTests
         Should.Throw<CursesOperationException>(() => s.WriteText("12345", Style.Default))
               .Operation.ShouldBe("wadd_wch");
     }
-    
+
     [TestMethod]
     public void WriteText2_Calls_WriteText1()
     {
@@ -1525,10 +1525,10 @@ public class SurfaceTests
     public void Draw1_Throws_IfDrawingIsNull()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        
+
         Should.Throw<ArgumentNullException>(() => s.Draw(new(0, 0), new(0, 0, 1, 1), null!));
     }
-    
+
     [TestMethod]
     public void Draw1_CallsDrawing_DrawTo_ToDraw()
     {
@@ -1549,10 +1549,10 @@ public class SurfaceTests
         var drawingMock = new Mock<IDrawable>();
         drawingMock.Setup(s => s.Size)
                    .Returns(new Size(100, 200));
-        
+
         var location = new Point(10, 20);
         var area = new Rectangle(0, 0, 100, 200);
-        
+
         var s = new Surface(_cursesMock.Object, new(1));
         s.Draw(location, drawingMock.Object);
 
@@ -1569,44 +1569,38 @@ public class SurfaceTests
                           .ShouldBeTrue();
     }
 
-    [TestMethod, 
-     DataRow(0, 0, true),
-     DataRow(-1, 0, false),
-     DataRow(9, 19, true),
-     DataRow(10, 9, false)
-    ]
+    [TestMethod, DataRow(0, 0, true), DataRow(-1, 0, false), DataRow(9, 19, true), DataRow(10, 9, false)]
     public void IsPointWithin_Checks_IfPointInside(int x, int y, bool exp)
     {
         var sw = new Surface(_cursesMock.Object, new(1));
 
         _cursesMock.Setup(s => s.getmaxx(sw.Handle))
                    .Returns(10);
+
         _cursesMock.Setup(s => s.getmaxy(sw.Handle))
                    .Returns(20);
-        
-        sw.IsPointWithin(new(x, y)).ShouldBe(exp);
+
+        sw.IsPointWithin(new(x, y))
+          .ShouldBe(exp);
     }
 
-    [TestMethod, 
-     DataRow(0, 0, 2, 2, true),
-     DataRow(1, 2, 2, 2, true),
-     DataRow(11, 12, -2, -2, false),
-     DataRow(12, 16, 3, 3, false),
-     DataRow(5, 5, 10, 10, false),
-     DataRow(0, 0, 10, 10, true),
-    ]
-    public void IsRectangleWithin_Checks_IfAreaInside(int x, int y, int w, int h, bool exp)
+    [TestMethod, DataRow(0, 0, 2, 2, true), DataRow(1, 2, 2, 2, true), DataRow(11, 12, -2, -2, false),
+     DataRow(12, 16, 3, 3, false), DataRow(5, 5, 10, 10, false), DataRow(0, 0, 10, 10, true)]
+    public void IsRectangleWithin_Checks_IfAreaInside(int x, int y, int w, int h,
+        bool exp)
     {
         var sw = new Surface(_cursesMock.Object, new(1));
 
         _cursesMock.Setup(s => s.getmaxx(sw.Handle))
                    .Returns(10);
+
         _cursesMock.Setup(s => s.getmaxy(sw.Handle))
                    .Returns(10);
-        
-        sw.IsRectangleWithin(new(x, y, w, h)).ShouldBe(exp);
+
+        sw.IsRectangleWithin(new(x, y, w, h))
+          .ShouldBe(exp);
     }
-    
+
     [TestMethod]
     public void CoversArea_ReturnsFalse_IfNotInside()
     {

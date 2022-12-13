@@ -36,7 +36,7 @@ public class ColorManagerTests
     private ColorManager _colorManager = null!;
     private Mock<ICursesProvider> _cursesMock = null!;
     private Terminal _terminal = null!;
-    
+
     [TestInitialize]
     public void TestInitialize()
     {
@@ -49,14 +49,13 @@ public class ColorManagerTests
 
         _cursesMock.Setup(s => s.can_change_color())
                    .Returns(true);
-        
+
         _terminal = new(_cursesMock.Object, new());
         _colorManager = _terminal.Colors;
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
 
-    
     [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
     public void Ctor_Throws_IfCursesIsNull()
@@ -100,12 +99,12 @@ public class ColorManagerTests
         _colorManager.ColorsAreSupported.ShouldBe(value);
         _cursesMock.Verify(v => v.has_colors(), Times.Exactly(2));
     }
-    
+
     [TestMethod]
     public void Terminal_IsInitialized()
     {
-      _colorManager.Terminal.ShouldBe(_terminal);
-      ((IColorManager)_colorManager).Terminal.ShouldBe(_terminal);
+        _colorManager.Terminal.ShouldBe(_terminal);
+        ((IColorManager) _colorManager).Terminal.ShouldBe(_terminal);
     }
 
     [TestMethod, DataRow(true), DataRow(false)]

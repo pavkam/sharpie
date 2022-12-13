@@ -38,6 +38,7 @@ using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: 
 var rnd = new Random();
 
 short c = 100;
+
 void MakeWindow()
 {
     var x = rnd.Next(0, terminal.Screen.Size.Width);
@@ -46,13 +47,13 @@ void MakeWindow()
     var h = rnd.Next(1, terminal.Screen.Size.Height - y);
 
     var win = terminal.Screen.Window(new(x, y, w, h));
-    
-    
+
+
     win.Background = (new(' '),
         new()
         {
             Attributes = VideoAttribute.None,
-            ColorMixture = terminal.Colors.MixColors((short)StandardColor.Default, c)
+            ColorMixture = terminal.Colors.MixColors((short) StandardColor.Default, c)
         });
 
     c++;
@@ -68,10 +69,11 @@ terminal.Screen.Refresh();
 terminal.Repeat(t =>
 {
     var x = rnd.Next(0, t.Screen.Windows.Count());
-    t.Screen.Windows.ElementAt(x).SendToBack();
-  
+    t.Screen.Windows.ElementAt(x)
+     .SendToBack();
+
     return Task.CompletedTask;
 }, 1000);
 
 // Run the main loop.
-terminal.Run((_, _) =>Task.CompletedTask);
+terminal.Run((_, _) => Task.CompletedTask);

@@ -175,7 +175,7 @@ public interface ISurface: IDrawSurface
     /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     void WriteText(string str, Style style);
-    
+
     /// <summary>
     ///     Writes a text at the caret position at the current surface and advances the caret.
     /// </summary>
@@ -183,7 +183,7 @@ public interface ISurface: IDrawSurface
     /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     void WriteText(string str);
-    
+
     /// <summary>
     ///     Draws a vertical line from the current caret position downwards.
     /// </summary>

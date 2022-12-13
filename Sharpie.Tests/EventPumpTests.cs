@@ -117,8 +117,8 @@ public class EventPumpTests
     [TestMethod]
     public void Terminal_IsInitialized()
     {
-       _pump.Terminal.ShouldBe(_terminal);
-       ((IEventPump)_pump).Terminal.ShouldBe(_terminal);
+        _pump.Terminal.ShouldBe(_terminal);
+        ((IEventPump) _pump).Terminal.ShouldBe(_terminal);
     }
 
     [TestMethod]
@@ -457,14 +457,14 @@ public class EventPumpTests
 
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
-    
+
     [TestMethod]
     public void Listen1_AdjustsWindowsToExplicitArea()
     {
         var h1 = new IntPtr(1);
         _cursesMock.MockArea(h1, new(0, 0, 5, 5));
         var w1 = new Window(_terminal.Screen, h1);
-        
+
         var h2 = new IntPtr(2);
         _cursesMock.MockArea(h2, new(1, 1, 3, 3));
         var w2 = new Window(_terminal.Screen, h2);
@@ -475,6 +475,7 @@ public class EventPumpTests
         _cursesMock.Verify(v => v.wresize(w1.Handle, 2, 2), Times.Once);
         _cursesMock.Verify(v => v.wresize(w2.Handle, 1, 1), Times.Once);
     }
+
     [TestMethod]
     public void Listen1_ProcessesTerminalResizeEvents_InScreen_WithoutMonitoring()
     {
@@ -853,7 +854,7 @@ public class EventPumpTests
         events[2]
             .Type.ShouldBe(EventType.KeyPress);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen2_CreatesDummyPad()
     {
@@ -921,7 +922,7 @@ public class EventPumpTests
 
         _cursesMock.Verify(s => s.wget_wch(new(10), out It.Ref<uint>.IsAny), Times.Once);
     }
-    
+
     [TestMethod]
     public void Delegate_Throws_IfObjectIsNull() { Should.Throw<ArgumentNullException>(() => _pump.Delegate(null!)); }
 

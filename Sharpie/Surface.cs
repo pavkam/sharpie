@@ -68,6 +68,12 @@ public class Surface: ISurface, IDisposable
     protected internal ICursesProvider Curses { get; }
 
     /// <summary>
+    ///     Returns the origin of the surface (location within a potential parent). This
+    ///     implementation always returns <c>(0, 0)</c>.
+    /// </summary>
+    protected internal virtual Point Origin => Point.Empty;
+
+    /// <summary>
     ///     Disposes the current instance.
     /// </summary>
     public void Dispose()
@@ -154,12 +160,6 @@ public class Surface: ISurface, IDisposable
                   .Check(nameof(Curses.getmaxx), "Failed to get surface width."), Curses.getmaxy(Handle)
             .Check(nameof(Curses.getmaxy), "Failed to get surface height."));
 
-    /// <summary>
-    /// Returns the origin of the surface (location within a potential parent). This
-    /// implementation always returns <c>(0, 0)</c>.
-    /// </summary>
-    protected internal virtual Point Origin => Point.Empty;
-    
     /// <inheritdoc cref="ISurface.CaretPosition" />
     public Point CaretPosition
     {
@@ -323,7 +323,7 @@ public class Surface: ISurface, IDisposable
     /// <inheritdoc cref="ISurface.WriteText(string)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void WriteText(string str) => WriteText(str, Style.Default);
-    
+
     /// <inheritdoc cref="ISurface.DrawVerticalLine(int,System.Text.Rune,Sharpie.Style)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawVerticalLine(int length, Rune @char, Style style)
@@ -538,7 +538,7 @@ public class Surface: ISurface, IDisposable
         {
             throw new ArgumentOutOfRangeException(nameof(y));
         }
-        
+
         if (count < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(count));
@@ -555,8 +555,8 @@ public class Surface: ISurface, IDisposable
 
     /// <inheritdoc cref="ISurface.MarkDirty()" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void MarkDirty() =>  MarkDirty(0, Size.Height);
-    
+    public void MarkDirty() => MarkDirty(0, Size.Height);
+
     /// <inheritdoc cref="ISurface.IsPointWithin" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public bool IsPointWithin(Point point)
@@ -569,9 +569,8 @@ public class Surface: ISurface, IDisposable
     /// <inheritdoc cref="ISurface.IsRectangleWithin" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public bool IsRectangleWithin(Rectangle rect) =>
-        IsPointWithin(new(rect.Left, rect.Top)) &&
-        IsPointWithin(new(rect.Right - 1, rect.Bottom - 1));
-    
+        IsPointWithin(new(rect.Left, rect.Top)) && IsPointWithin(new(rect.Right - 1, rect.Bottom - 1));
+
     /// <inheritdoc cref="ISurface.Draw(Point, Rectangle, IDrawable)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Draw(Point location, Rectangle area, IDrawable drawable)
@@ -588,7 +587,7 @@ public class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Draw(Point location, IDrawable drawable) =>
         Draw(location, new(0, 0, drawable.Size.Width, drawable.Size.Height), drawable);
-    
+
     /// <inheritdoc cref="ISurface.Destroy" />
     public void Destroy()
     {

@@ -46,7 +46,7 @@ public class SubWindowTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _parent = new((Screen) _terminal.Screen, new(200));
+        _parent = new(_terminal.Screen, new(200));
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -222,14 +222,15 @@ public class SubWindowTests
 
         _cursesMock.Verify(v => v.wresize(sw.Handle, 5, 5), Times.Once);
     }
-    
+
     [TestMethod]
     public void Origin_Calls_Location()
     {
         var sw = new SubWindow(_parent, new(1));
-        
+
         _cursesMock.Setup(s => s.getparx(sw.Handle))
                    .Returns(11);
+
         _cursesMock.Setup(s => s.getpary(sw.Handle))
                    .Returns(22);
 

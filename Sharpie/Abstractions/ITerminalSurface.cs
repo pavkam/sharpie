@@ -62,7 +62,7 @@ public interface ITerminalSurface: ISurface
     bool Critical { get; set; }
 
     /// <summary>
-    ///     Redraws all the dirty lines of the surface to the terminal. If <see cref="ITerminal.BatchUpdates"/> is active,
+    ///     Redraws all the dirty lines of the surface to the terminal. If <see cref="ITerminal.BatchUpdates" /> is active,
     ///     all refreshes are batched together until the lock is released.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
@@ -73,7 +73,10 @@ public interface ITerminalSurface: ISurface
     /// </summary>
     /// <param name="y">The starting line to refresh.</param>
     /// <param name="count">The number of lines to refresh.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="y"/> or <paramref name="count"/> are negative.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     Thrown if <paramref name="y" /> or <paramref name="count" /> are
+    ///     negative.
+    /// </exception>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
     void Refresh(int y, int count);
 }

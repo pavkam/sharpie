@@ -7,7 +7,7 @@ internal static class TestHelpers
     public static void MockArea(this Mock<ICursesProvider> cursesMock, IntPtr handle, Rectangle area)
     {
         Debug.Assert(cursesMock != null);
-   
+
         cursesMock.Setup(s => s.getbegy(handle))
                   .Returns(area.Top);
 
@@ -20,7 +20,7 @@ internal static class TestHelpers
         cursesMock.Setup(s => s.getmaxy(handle))
                   .Returns(area.Height);
     }
-    
+
     public static void MockArea(this Mock<ICursesProvider> cursesMock, ISurface surface, Rectangle area)
     {
         Debug.Assert(cursesMock != null);

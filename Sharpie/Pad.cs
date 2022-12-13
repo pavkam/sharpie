@@ -69,7 +69,7 @@ public sealed class Pad: Surface, IPad
         get => base.Size;
         set
         {
-            if (!(Screen).IsRectangleWithin(new(new(0, 0), value)))
+            if (!Screen.IsRectangleWithin(new(new(0, 0), value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -113,7 +113,7 @@ public sealed class Pad: Surface, IPad
     /// <inheritdoc cref="IPad.Refresh(System.Drawing.Point)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(Point destLocation) => Refresh(new(new(0, 0), Size), destLocation);
-    
+
     /// <inheritdoc cref="IPad.SubPad" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubPad SubPad(Rectangle area)

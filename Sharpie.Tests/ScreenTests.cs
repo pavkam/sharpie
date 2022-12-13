@@ -46,7 +46,7 @@ public class ScreenTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _screen = (Screen) _terminal.Screen;
+        _screen = _terminal.Screen;
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -77,7 +77,7 @@ public class ScreenTests
     }
 
     [TestMethod] public void Terminal_IsInitialized() { _screen.Terminal.ShouldBe(_terminal); }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails()
     {
@@ -99,7 +99,7 @@ public class ScreenTests
     public void Windows_IsEmpty_WhenCreated()
     {
         _screen.Windows.ShouldBeEmpty();
-        ((IScreen)_screen).Windows.ShouldBe(_screen.Windows);
+        ((IScreen) _screen).Windows.ShouldBe(_screen.Windows);
     }
 
     [TestMethod]
@@ -123,7 +123,7 @@ public class ScreenTests
     public void Pads_IsEmpty_WhenCreated()
     {
         _screen.Pads.ShouldBeEmpty();
-        ((IScreen)_screen).Pads.ShouldBe(_screen.Pads);
+        ((IScreen) _screen).Pads.ShouldBe(_screen.Pads);
     }
 
     [TestMethod]
@@ -333,7 +333,7 @@ public class ScreenTests
         p.Disposed.ShouldBeTrue();
         w.Disposed.ShouldBeTrue();
     }
-      
+
     [TestMethod]
     public void AdjustToExplicitArea_AdjustsEachChild()
     {
@@ -343,7 +343,7 @@ public class ScreenTests
         var h2 = new IntPtr(2);
         _cursesMock.MockArea(h2, new(1, 1, 3, 3));
         var w2 = new Window(_screen, h2);
-        
+
         _cursesMock.MockArea(_screen, new(0, 0, 2, 2));
 
         _screen.AdjustChildrenToExplicitArea();

@@ -10,7 +10,7 @@ public interface IEventPump
     ///     The terminal this pump belongs to.
     /// </summary>
     ITerminal Terminal { get; }
-    
+
     /// <summary>
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
     /// </summary>

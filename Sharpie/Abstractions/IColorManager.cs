@@ -40,7 +40,7 @@ public interface IColorManager
     ///     The terminal this manager belongs to.
     /// </summary>
     ITerminal Terminal { get; }
-    
+
     /// <summary>
     ///     Specifies whether the colors are enabled.
     /// </summary>

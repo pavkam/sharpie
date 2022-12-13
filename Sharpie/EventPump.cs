@@ -23,11 +23,8 @@ public sealed class EventPump: IEventPump
     internal EventPump(Terminal parent) => Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
 
     /// <inheritdoc cref="IColorManager.Terminal" />
-    ITerminal IEventPump.Terminal => Terminal;
-    
-    /// <inheritdoc cref="IColorManager.Terminal" />
     public Terminal Terminal { get; }
-    
+
     /// <summary>
     ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
     ///     This is an internal property and initialized by the terminal.
@@ -46,6 +43,9 @@ public sealed class EventPump: IEventPump
         }
     }
 
+    /// <inheritdoc cref="IColorManager.Terminal" />
+    ITerminal IEventPump.Terminal => Terminal;
+
     /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface,System.Threading.CancellationToken)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken)
@@ -57,7 +57,7 @@ public sealed class EventPump: IEventPump
 
         return Listen(surface.Handle, cancellationToken);
     }
-    
+
     /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen(ISurface surface) => Listen(surface, CancellationToken.None);
@@ -67,7 +67,7 @@ public sealed class EventPump: IEventPump
     public IEnumerable<Event> Listen(CancellationToken cancellationToken)
     {
         var padHandle = Terminal.Curses.newpad(1, 1)
-                                 .Check(nameof(Terminal.Curses.newpad), "Failed to create dummy listen pad.");
+                                .Check(nameof(Terminal.Curses.newpad), "Failed to create dummy listen pad.");
 
         try
         {
@@ -78,10 +78,10 @@ public sealed class EventPump: IEventPump
         } finally
         {
             Terminal.Curses.delwin(padHandle)
-                     .Check(nameof(Terminal.Curses.delwin), "Failed to remove the dummy listen pad.");
+                    .Check(nameof(Terminal.Curses.delwin), "Failed to remove the dummy listen pad.");
         }
     }
-    
+
     /// <inheritdoc cref="IEventPump.Listen()" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen() => Listen(CancellationToken.None);
@@ -196,14 +196,14 @@ public sealed class EventPump: IEventPump
                 if (@event is not null)
                 {
                     var isResize = @event.Type == EventType.TerminalResize;
-                    
+
                     if (isResize)
                     {
                         if (!monitorsResizes)
                         {
                             yield return new TerminalAboutToResizeEvent();
                         }
-                        
+
                         Terminal.Screen.AdjustChildrenToExplicitArea();
                     }
 
@@ -211,7 +211,7 @@ public sealed class EventPump: IEventPump
 
                     if (isResize)
                     {
-                        ((ITerminal)Terminal).Screen.MarkDirty();
+                        ((ITerminal) Terminal).Screen.MarkDirty();
                         Terminal.Screen.Refresh();
                     }
                 }
@@ -251,7 +251,7 @@ public sealed class EventPump: IEventPump
                     return new TerminalResizeEvent(Terminal.Screen.Size);
                 case (uint) CursesKey.Mouse:
                     if (Terminal.Curses.getmouse(out var mouseEvent)
-                                 .Failed())
+                                .Failed())
                     {
                         return null;
                     }

@@ -146,7 +146,7 @@ public class TerminalSurfaceTests
 
         Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(0, -1));
     }
-    
+
     [TestMethod]
     public void Refresh2_AdjustsYAndCountToMatchActualHeight()
     {
@@ -159,7 +159,6 @@ public class TerminalSurfaceTests
         _cursesMock.Verify(v => v.wredrawln(sw.Handle, 4, 6), Times.Once);
     }
 
-    
     [TestMethod]
     public void Refresh2_DoesNotDoAnythingIfNotInBounds()
     {

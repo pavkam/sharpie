@@ -224,6 +224,69 @@ public sealed class Terminal: ITerminal, IDisposable
     /// </summary>
     public TerminalOptions Options { get; }
 
+    /// <inheritdoc cref="ITerminal.Colors" />
+    public ColorManager Colors
+    {
+        get
+        {
+            AssertAlive();
+            return _colorManager;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.SoftLabelKeys" />
+    public SoftLabelKeyManager SoftLabelKeys
+    {
+        get
+        {
+            AssertAlive();
+            return _softLabelKeyManager;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.Screen" />
+    public Screen Screen
+    {
+        get
+        {
+            AssertAlive();
+
+            return _screen;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.Header" />
+    public TerminalSurface? Header
+    {
+        get
+        {
+            AssertAlive();
+
+            return _header;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.Footer" />
+    public TerminalSurface? Footer
+    {
+        get
+        {
+            AssertAlive();
+
+            return _footer;
+        }
+    }
+
+    /// <inheritdoc cref="ITerminal.Events" />
+    public IEventPump Events
+    {
+        get
+        {
+            AssertAlive();
+            return _eventPump;
+        }
+    }
+
     /// <summary>
     ///     Disposes the current terminal instance.
     /// </summary>
@@ -272,29 +335,9 @@ public sealed class Terminal: ITerminal, IDisposable
 
     /// <inheritdoc cref="ITerminal.Colors" />
     IColorManager ITerminal.Colors => Colors;
-    
-    /// <inheritdoc cref="ITerminal.Colors" />
-    public ColorManager Colors
-    {
-        get
-        {
-            AssertAlive();
-            return _colorManager;
-        }
-    }
 
     /// <inheritdoc cref="ITerminal.SoftLabelKeys" />
     ISoftLabelKeyManager ITerminal.SoftLabelKeys => SoftLabelKeys;
-  
-    /// <inheritdoc cref="ITerminal.SoftLabelKeys" />
-    public SoftLabelKeyManager SoftLabelKeys
-    {
-        get
-        {
-            AssertAlive();
-            return _softLabelKeyManager;
-        }
-    }
 
     /// <inheritdoc cref="ITerminal.Name" />
     public string? Name => Curses.termname();
@@ -309,59 +352,16 @@ public sealed class Terminal: ITerminal, IDisposable
     public VideoAttribute SupportedAttributes => (VideoAttribute) Curses.term_attrs();
 
     /// <inheritdoc cref="ITerminal.Screen" />
-    public Screen Screen
-    {
-        get
-        {
-            AssertAlive();
-
-            return _screen;
-        }
-    }
-
-    /// <inheritdoc cref="ITerminal.Screen" />
     IScreen ITerminal.Screen => Screen;
 
     /// <inheritdoc cref="ITerminal.Header" />
     ITerminalSurface? ITerminal.Header => Header;
-    
-    /// <inheritdoc cref="ITerminal.Header" />
-    public TerminalSurface? Header
-    {
-        get
-        {
-            AssertAlive();
-
-            return _header;
-        }
-    }
 
     /// <inheritdoc cref="ITerminal.Footer" />
     ITerminalSurface? ITerminal.Footer => Footer;
-    
-    /// <inheritdoc cref="ITerminal.Footer" />
-    public TerminalSurface? Footer
-    {
-        get
-        {
-            AssertAlive();
-
-            return _footer;
-        }
-    }
 
     /// <inheritdoc cref="ITerminal.Events" />
     IEventPump ITerminal.Events => Events;
- 
-    /// <inheritdoc cref="ITerminal.Events" />
-    public IEventPump Events
-    {
-        get
-        {
-            AssertAlive();
-            return _eventPump;
-        }
-    }
 
     /// <inheritdoc cref="ITerminal.HasHardwareLineEditor" />
     public bool HasHardwareLineEditor => Curses.has_il();

@@ -47,7 +47,7 @@ public class PadTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _screen = (Screen) _terminal.Screen;
+        _screen = _terminal.Screen;
         _pad = new(_screen, new(2));
     }
 
@@ -200,7 +200,7 @@ public class PadTests
         _cursesMock.Verify(v => v.pnoutrefresh(_pad.Handle, 0, 0, 3, 2,
             9, 7), Times.Once);
     }
-    
+
     [TestMethod]
     public void Refresh2_Calls_Refresh1_NoBatch()
     {
@@ -211,7 +211,7 @@ public class PadTests
         _cursesMock.Verify(v => v.prefresh(_pad.Handle, 0, 0, 3, 2,
             9, 7), Times.Once);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh1_Throws_IfCursesFails_InBatch()
     {

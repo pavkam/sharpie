@@ -46,7 +46,7 @@ public class SubPadTests
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
-        _parent = new((Screen) _terminal.Screen, new(1));
+        _parent = new(_terminal.Screen, new(1));
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -202,14 +202,15 @@ public class SubPadTests
 
         _cursesMock.Verify(v => v.wresize(w.Handle, 5, 5), Times.Once);
     }
-    
+
     [TestMethod]
     public void Origin_Calls_Location()
     {
         var sp = new SubPad(_parent, new(1));
-        
+
         _cursesMock.Setup(s => s.getparx(sp.Handle))
                    .Returns(11);
+
         _cursesMock.Setup(s => s.getpary(sp.Handle))
                    .Returns(22);
 
