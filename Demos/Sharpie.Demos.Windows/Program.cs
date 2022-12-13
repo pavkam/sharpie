@@ -37,31 +37,41 @@ using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: 
 
 var rnd = new Random();
 
-void MakeWindow(StandardColor color)
+short c = 100;
+void MakeWindow()
 {
-    var x = rnd.Next(0, terminal.Screen.Size.Width - 1);
-    var y = rnd.Next(0, terminal.Screen.Size.Height - 1);
+    var x = rnd.Next(0, terminal.Screen.Size.Width);
+    var y = rnd.Next(0, terminal.Screen.Size.Height);
     var w = rnd.Next(1, terminal.Screen.Size.Width - x);
     var h = rnd.Next(1, terminal.Screen.Size.Height - y);
 
     var win = terminal.Screen.Window(new(x, y, w, h));
+    
+    
     win.Background = (new(' '),
         new()
         {
             Attributes = VideoAttribute.None,
-            ColorMixture = terminal.Colors.MixColors(StandardColor.Default, color)
+            ColorMixture = terminal.Colors.MixColors((short)StandardColor.Default, c)
         });
+
+    c++;
 }
 
-MakeWindow(StandardColor.Red);
-MakeWindow(StandardColor.Green);
-MakeWindow(StandardColor.Yellow);
-MakeWindow(StandardColor.Blue);
-MakeWindow(StandardColor.Magenta);
-MakeWindow(StandardColor.Cyan);
-MakeWindow(StandardColor.White);
+for (var x = 0; x < 50; x++)
+{
+    MakeWindow();
+}
 
 terminal.Screen.Refresh();
+
+terminal.Repeat(t =>
+{
+    var x = rnd.Next(0, t.Screen.Windows.Count());
+    t.Screen.Windows.ElementAt(x).SendToBack();
+  
+    return Task.CompletedTask;
+}, 1000);
 
 // Run the main loop.
 terminal.Run((_, _) =>Task.CompletedTask);

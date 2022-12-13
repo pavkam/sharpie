@@ -114,7 +114,7 @@ public sealed class Window: TerminalSurface, IWindow
         set
         {
             var size = Size;
-            if (!((IScreen) Screen).IsRectangleWithin(new(value, size)))
+            if (!(Screen).IsRectangleWithin(new(value, size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -134,7 +134,7 @@ public sealed class Window: TerminalSurface, IWindow
         set
         {
             var location = Location;
-            if (!((IScreen) Screen).IsRectangleWithin(new(location, value)))
+            if (!(Screen).IsRectangleWithin(new(location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -146,11 +146,43 @@ public sealed class Window: TerminalSurface, IWindow
         }
     }
 
+    /// <inheritdoc cref="TerminalSurface.Refresh()" />
+    public override void Refresh()
+    {
+        using (Terminal.BatchUpdates())
+        {
+            base.Refresh();
+            Screen.RefreshUp(this);
+        }
+    }
+
+    /// <inheritdoc cref="TerminalSurface.Refresh(int, int)" />
+    public override void Refresh(int y, int count)
+    {
+        using (Terminal.BatchUpdates())
+        {
+            base.Refresh(y, count);
+            Screen.RefreshUp(this);
+        }
+    }
+
+    /// <inheritdoc cref="IWindow.SendToBack" />
+    public void SendToBack()
+    {
+        Screen.SendToBack(this);
+    }
+
+    /// <inheritdoc cref="IWindow.BringToFront" />
+    public void BringToFront()
+    {
+        Screen.BringToFront(this);
+    }
+    
     /// <inheritdoc cref="IWindow.SubWindow" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow SubWindow(Rectangle area)
     {
-        if (!((IWindow) this).IsRectangleWithin(area))
+        if (!IsRectangleWithin(area))
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }

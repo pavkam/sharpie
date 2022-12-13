@@ -72,7 +72,7 @@ public sealed class SubWindow: Surface, ISubWindow
                 .Check(nameof(Curses.getpary), "Failed to get window Y coordinate."));
         set
         {
-            if (!((IWindow) Window).IsRectangleWithin(new(value, Size)))
+            if (!(Window).IsRectangleWithin(new(value, Size)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -89,7 +89,7 @@ public sealed class SubWindow: Surface, ISubWindow
         get => base.Size;
         set
         {
-            if (!((IWindow) Window).IsRectangleWithin(new(Location, value)))
+            if (!(Window).IsRectangleWithin(new(Location, value)))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }

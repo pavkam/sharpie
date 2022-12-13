@@ -37,6 +37,7 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class Screen: TerminalSurface, IScreen
 {
+    private readonly object _syncRoot = new();
     private readonly IList<Pad> _pads = new List<Pad>();
     private readonly IList<Window> _windows = new List<Window>();
 
@@ -75,9 +76,16 @@ public sealed class Screen: TerminalSurface, IScreen
     public override void Refresh()
     {
         base.Refresh();
-        foreach (var child in Windows)
+
+        lock (_syncRoot)
         {
-            child.Refresh();
+            using (Terminal.BatchUpdates())
+            {
+                foreach (var child in _windows)
+                {
+                    child.Refresh();
+                }
+            }
         }
     }
 
@@ -85,14 +93,17 @@ public sealed class Screen: TerminalSurface, IScreen
     public override void MarkDirty(int y, int count)
     {
         base.MarkDirty(y, count);
-        foreach (var child in Windows)
+        lock (_syncRoot)
         {
-            var ly = child.Location.Y;
-            var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
-
-            if (iy > -1 && ic > 0)
+            foreach (var child in Windows)
             {
-                child.MarkDirty(iy - ly, ic);
+                var ly = child.Location.Y;
+                var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
+
+                if (iy > -1 && ic > 0)
+                {
+                    child.MarkDirty(iy - ly, ic);
+                }
             }
         }
     }
@@ -101,14 +112,17 @@ public sealed class Screen: TerminalSurface, IScreen
     public override void Refresh(int y, int count)
     {
         base.Refresh(y, count);
-        foreach (var child in Windows)
+        lock (_syncRoot)
         {
-            var ly = child.Location.Y;
-            var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
-
-            if (iy > -1 && ic > 0)
+            foreach (var child in Windows)
             {
-                child.Refresh(iy - ly, ic);
+                var ly = child.Location.Y;
+                var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
+
+                if (iy > -1 && ic > 0)
+                {
+                    child.Refresh(iy - ly, ic);
+                }
             }
         }
     }
@@ -117,7 +131,7 @@ public sealed class Screen: TerminalSurface, IScreen
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IWindow Window(Rectangle area)
     {
-        if (!((IScreen) this).IsRectangleWithin(area))
+        if (!IsRectangleWithin(area))
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }
@@ -155,7 +169,10 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(!_windows.Contains(window));
 
-        _windows.Add(window);
+        lock (_syncRoot)
+        {
+            _windows.Add(window);
+        }
     }
 
     /// <summary>
@@ -169,7 +186,10 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
 
-        _windows.Remove(window);
+        lock (_syncRoot)
+        {
+            _windows.Remove(window);
+        }
     }
 
     /// <summary>
@@ -183,7 +203,10 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(pad.Screen == this);
         Debug.Assert(!_pads.Contains(pad));
 
-        _pads.Add(pad);
+        lock (_syncRoot)
+        {
+            _pads.Add(pad);
+        }
     }
 
     /// <summary>
@@ -197,7 +220,93 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(pad.Screen == this);
         Debug.Assert(_pads.Contains(pad));
 
-        _pads.Remove(pad);
+        lock (_syncRoot)
+        {
+            _pads.Remove(pad);
+        }
+    }
+
+    /// <summary>
+    /// Marks all the windows on top of <paramref name="window"/> as dirty and refreshes them;
+    /// And then proceeds to do the same for each touched window.
+    /// </summary>
+    /// <param name="window">The window to start with.</param>
+    internal void RefreshUp(Window window)
+    {
+        Debug.Assert(window != null);
+        Debug.Assert(!window.Disposed);
+        Debug.Assert(window.Screen == this);
+        Debug.Assert(_windows.Contains(window));
+        
+        var a1 = new Rectangle(window.Location, window.Size);
+        
+        lock (_syncRoot)
+        {
+            var i = _windows.IndexOf(window);
+            for (var j = i + 1; j < _windows.Count; j++)
+            {
+                var up = _windows[j];
+                
+                var a2 = new Rectangle(up.Location, up.Size);
+                if (a1.IntersectsWith(a2))
+                {
+                    up.MarkDirty();
+                    RefreshUp(up);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Brings the <paramref name="window"/> to the front of the stack.
+    /// </summary>
+    /// <param name="window">The window to bring.</param>
+    internal void BringToFront(Window window)
+    {
+        Debug.Assert(window != null);
+        Debug.Assert(!window.Disposed);
+        Debug.Assert(window.Screen == this);
+        Debug.Assert(_windows.Contains(window));
+
+        lock (_syncRoot)
+        {
+            var i = _windows.IndexOf(window);
+            if (i < _windows.Count - 1)
+            {
+                _windows.RemoveAt(i);
+                _windows.Add(window);
+            }
+        }
+        
+        window.MarkDirty();
+        window.Refresh();
+    }
+
+    /// <summary>
+    /// Sends the <paramref name="window"/> to the back of the stack.
+    /// </summary>
+    /// <param name="window">The window to send.</param>
+    internal void SendToBack(Window window)
+    {
+        Debug.Assert(window != null);
+        Debug.Assert(!window.Disposed);
+        Debug.Assert(window.Screen == this);
+        Debug.Assert(_windows.Contains(window));
+        
+        lock (_syncRoot)
+        {
+            var i = _windows.IndexOf(window);
+            if (i > 0)
+            {
+                _windows.RemoveAt(i);
+                _windows.Insert(0, window);
+            }
+        }
+
+        using (Terminal.BatchUpdates())
+        {
+            RefreshUp(window);
+        }
     }
     
     /// <summary>
@@ -205,9 +314,12 @@ public sealed class Screen: TerminalSurface, IScreen
     /// </summary>
     internal void AdjustChildrenToExplicitArea()
     {
-        foreach (var window in _windows.ToArray())
+        lock (_syncRoot)
         {
-            window.AdjustToExplicitArea();
+            foreach (var window in _windows.ToArray())
+            {
+                window.AdjustToExplicitArea();
+            }
         }
     }
 
@@ -217,19 +329,21 @@ public sealed class Screen: TerminalSurface, IScreen
     /// </summary>
     protected override void Delete()
     {
-        foreach (var window in _windows.ToArray())
+        lock (_syncRoot)
         {
-            window.Destroy();
+            foreach (var window in _windows)
+            {
+                window.Destroy();
+            }
+
+            foreach (var pad in _pads.ToArray())
+            {
+                pad.Destroy();
+            }
+
+            _pads.Clear();
+            _windows.Clear();
         }
-
-        _windows.Clear();
-
-        foreach (var pad in _pads.ToArray())
-        {
-            pad.Destroy();
-        }
-
-        _pads.Clear();
 
         base.Delete();
 
