@@ -7,17 +7,35 @@
 ![Downloads](https://img.shields.io/nuget/dt/Sharpie-Curses)
 
 # Sharpie
-**Sharpie** is a terminal manipulation library based on Curses and targeting .NET 6 (dotnet core).
+**Sharpie** is a terminal manipulation library based on NCurses and targeting .NET 6 (dotnet core) and above.
 
 # Reasons
-There are a few libraries out there that already offer bindings to *NCurses*. One of the more popular one is [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui); and others such as [dotnet-curses](https://github.com/MV10/dotnet-curses) also exist.
+There are a number of libraries out there that already offer bindings to *NCurses*. One of the more popular one is [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui); and others such as [dotnet-curses](https://github.com/MV10/dotnet-curses) also exist.
 
 So why another one? The are many reasons, but the most important ones are:
-1. There is no .NET, object-oriented version of pure Curses,
+1. There is no .NET, object-oriented version of NCurses bindings,
 2. Existing versions are old, or are targeting old versions of .NET which do not benefit from numerous advances in the .NET platform,
-3. No other library exposes all of curses functionality,
+3. No other library exposes most of Curses functionality,
 4. Testing is either very limited or completely non-existent.
 5. And finally -- **because I wanted to dabble in Curses**.
+
+# Features
+Almost all of Curses functionality is exposed through **Sharpie**. What follows is a list of suppoerted features:
+1. `Terminal` allows interfacing with terminal functionality exposed by Curses,
+2. `Screen` abstracts away the screen handling,
+3. `Pad` abstracts away the off-screen windows (known as pads),
+4. `SubPad` and `SubWindow` carves out areas of their respective parents for easy management,
+5. `EventPump` allows developers to listen for Curses events such as key presses, mouse moves and resizes,
+6. `ColorManager` abstracts away the management of colors,
+7. Even `SoftLabelKeys` are supported (though antiquated),
+
+In addition to wrapping NCurses, this library also adds numerous quality-of-life improvements such as:
+1. Management of overlapping `Window`s within a `Screen`,
+2. Proper `Window` resizing and placement during terminal resizing events,
+3. Automatic `Screen` refresh management and support for _atomic_ refreshes,
+4. Supports `SynchronizationContext`-type execution,
+5. Supports protected/synchronized or raw access to all classes,
+6. And other small additions here and there...
 
 # How To
 What follows is a small example of how to use the library:
