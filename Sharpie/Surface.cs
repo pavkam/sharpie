@@ -34,7 +34,7 @@ namespace Sharpie;
 ///     Represents a surface and contains all its functionality.
 /// </summary>
 [PublicAPI]
-public class Surface: ISurface, IDisposable
+public abstract class Surface: ISurface, IDisposable
 {
     private IntPtr _handle;
 
@@ -57,8 +57,8 @@ public class Surface: ISurface, IDisposable
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
         _handle = handle;
 
-        Scrollable = true;
-
+        Curses.scrollok(Handle, true)
+              .Check(nameof(Curses.scrollok), "Failed to change the scrolling mode.");
         Curses.nodelay(Handle, false)
               .Check(nameof(Curses.nodelay), "Failed to disable read-delay mode.");
     }
@@ -78,9 +78,7 @@ public class Surface: ISurface, IDisposable
     /// Asserts that executing thread is bound to the correct synchronization context.
     /// </summary>
     /// <exception cref="CursesSynchronizationException">Thrown if current thread is not bound to the correct context.</exception>
-    protected internal virtual void AssertSynchronized()
-    {
-    }
+    protected internal abstract void AssertSynchronized();
     
     /// <summary>
     ///     Disposes the current instance.
@@ -170,14 +168,19 @@ public class Surface: ISurface, IDisposable
         get
         {
             AssertSynchronized(); 
+            
             Curses.wgetbkgrnd(Handle, out var @char)
                   .Check(nameof(Curses.wgetbkgrnd), "Failed to get the surface background.");
 
             return Curses.FromComplexChar(@char);
         }
-        set =>
+        set
+        {
+            AssertSynchronized(); 
+            
             Curses.wbkgrnd(Handle, Curses.ToComplexChar(value.@char, value.style))
                   .Check(nameof(Curses.wbkgrnd), "Failed to set the surface background.");
+        }
     }
 
     /// <inheritdoc cref="ISurface.Size" />

@@ -33,6 +33,15 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SurfaceTests
 {
+    private sealed class Surface: Sharpie.Surface
+    {
+        public Surface(ICursesProvider curses, IntPtr handle): base(curses, handle)
+        {
+        }
+
+        protected internal override void AssertSynchronized() {}
+    }
+    
     private Mock<ICursesProvider> _cursesMock = null!;
 
     [TestInitialize]

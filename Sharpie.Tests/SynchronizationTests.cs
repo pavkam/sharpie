@@ -33,6 +33,18 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SynchronizationTests
 {
+    private sealed class Surface: Sharpie.Surface
+    {
+        private readonly Terminal _terminal;
+
+        public Surface(Terminal terminal, IntPtr handle): base(terminal.Curses, handle) => _terminal = terminal;
+
+        protected internal override void AssertSynchronized()
+        {
+            _terminal.AssertSynchronized();
+        }
+    }
+    
     private Mock<ICursesProvider> _cursesMock = null!;
     private Terminal _terminal = null!;
     private Surface _surface = null!;
@@ -50,13 +62,14 @@ public class SynchronizationTests
                    .Returns(new IntPtr(1));
 
         _terminal = new(_cursesMock.Object, new(SoftLabelKeyMode: SoftLabelKeyMode.FourFour));
-        _surface = new(_cursesMock.Object, new (2));
+        _surface = new(_terminal, new (2));
         _pad = new(_terminal.Screen, new (3));
         _window = new(_terminal.Screen, new (4));
         _subPad = new(_pad, new (5));
         _subWindow = new(_window, new (6));
         _terminalSurface = new(_terminal, new(7));
 
+        _cursesMock.MockArea(_surface, new(0, 0, 2, 2));
         _cursesMock.Setup(s => s.newpad(1, 1))
                    .Returns(new IntPtr(100));
         _cursesMock.Setup(s => s.has_colors())
@@ -86,7 +99,7 @@ public class SynchronizationTests
                    });
 
         var startedEvent = new ManualResetEvent(false);
-        Task.Run(() => _terminal.Run((_, e) =>
+        Task.Run(() => _terminal.Run((_, _) =>
         {
             startedEvent.Set();
             return Task.CompletedTask;
@@ -690,25 +703,25 @@ public class SynchronizationTests
     [TestMethod]
     public void Surface_DrawVerticalLine1()
     {
-        Check(() => _surface.DrawVerticalLine(0, new('A'), Style.Default));
+        Check(() => _surface.DrawVerticalLine(1, new('A'), Style.Default));
     }
 
     [TestMethod]
     public void Surface_DrawVerticalLine2()
     {
-        Check(() => _surface.DrawVerticalLine(0));
+        Check(() => _surface.DrawVerticalLine(1));
     }
     
     [TestMethod]
     public void Surface_DrawHorizontalLine1()
     {
-        Check(() => _surface.DrawHorizontalLine(0, new('A'), Style.Default));
+        Check(() => _surface.DrawHorizontalLine(1, new('A'), Style.Default));
     }
 
     [TestMethod]
     public void Surface_DrawHorizontalLine2()
     {
-        Check(() => _surface.DrawHorizontalLine(0));
+        Check(() => _surface.DrawHorizontalLine(1));
     }
 
     [TestMethod]
@@ -727,13 +740,13 @@ public class SynchronizationTests
     [TestMethod]
     public void Surface_RemoveText()
     {
-        Check(() => _surface.RemoveText(0));
+        Check(() => _surface.RemoveText(1));
     }
 
     [TestMethod]
     public void Surface_GetText()
     {
-        Check(() => _surface.GetText(0));
+        Check(() => _surface.GetText(1));
     }
     
     [TestMethod]
@@ -745,13 +758,13 @@ public class SynchronizationTests
     [TestMethod]
     public void Surface_Replace1()
     {
-        Check(() => _surface.Replace(_surface, ReplaceStrategy.Overlay));
+        Check(() => _surface.Replace(_terminalSurface, ReplaceStrategy.Overlay));
     }
     
     [TestMethod]
     public void Surface_Replace2()
     {
-        Check(() => _surface.Replace(_surface, new(0, 0, 1, 1), Point.Empty,  ReplaceStrategy.Overlay));
+        Check(() => _surface.Replace(_terminalSurface, new(0, 0, 1, 1), Point.Empty,  ReplaceStrategy.Overlay));
     }
      
     [TestMethod]
