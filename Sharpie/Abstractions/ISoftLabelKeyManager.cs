@@ -57,6 +57,8 @@ public interface ISoftLabelKeyManager
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     Style Style { get; set; }
 
     /// <summary>
@@ -64,6 +66,8 @@ public interface ISoftLabelKeyManager
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     ColorMixture ColorMixture { get; set; }
 
     /// <summary>
@@ -79,6 +83,8 @@ public interface ISoftLabelKeyManager
     /// </exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void SetLabel(int index, string title, SoftLabelKeyAlignment align);
 
     /// <summary>
@@ -87,6 +93,8 @@ public interface ISoftLabelKeyManager
     /// <param name="attributes">The attributes to enable.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void EnableAttributes(VideoAttribute attributes);
 
     /// <summary>
@@ -95,6 +103,8 @@ public interface ISoftLabelKeyManager
     /// <param name="attributes">The attributes to disable.</param>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void DisableAttributes(VideoAttribute attributes);
 
     /// <summary>
@@ -102,6 +112,8 @@ public interface ISoftLabelKeyManager
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Clear();
 
     /// <summary>
@@ -109,6 +121,8 @@ public interface ISoftLabelKeyManager
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Restore();
 
     /// <summary>
@@ -116,6 +130,8 @@ public interface ISoftLabelKeyManager
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void MarkDirty();
 
     /// <summary>
@@ -123,5 +139,7 @@ public interface ISoftLabelKeyManager
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal or the current window have been disposed.</exception>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Refresh();
 }

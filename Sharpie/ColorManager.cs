@@ -45,6 +45,7 @@ public sealed class ColorManager: IColorManager
     /// <param name="enabled">Specifies whether colors are enabled.</param>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="parent" /> is <c>null</c>.</exception>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal ColorManager(Terminal parent, bool enabled)
     {
         Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
@@ -77,10 +78,17 @@ public sealed class ColorManager: IColorManager
     /// <inheritdoc cref="IColorManager.CanRedefineColors" />
     public bool CanRedefineColors => Terminal.Curses.can_change_color();
 
+    private void AssertSynchronized()
+    {
+        Terminal.AssertSynchronized();
+    }
+    
     /// <inheritdoc cref="IColorManager.MixColors(short, short)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ColorMixture MixColors(short fgColor, short bgColor)
     {
+        AssertSynchronized();
+        
         Terminal.Curses.init_pair(_nextPairHandle, fgColor, bgColor)
                 .Check(nameof(Terminal.Curses.init_pair), "Failed to create a new color mixture.");
 
@@ -99,6 +107,8 @@ public sealed class ColorManager: IColorManager
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixColors(ColorMixture mixture, short fgColor, short bgColor)
     {
+        AssertSynchronized();
+        
         Terminal.Curses.init_pair(mixture.Handle, fgColor, bgColor)
                 .Check(nameof(Terminal.Curses.init_pair), "Failed to redefine an existing color mixture.");
     }
@@ -112,6 +122,8 @@ public sealed class ColorManager: IColorManager
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void RemixDefaultColors(short fgColor, short bgColor)
     {
+        AssertSynchronized();
+        
         Terminal.Curses.assume_default_colors(fgColor, bgColor)
                 .Check(nameof(Terminal.Curses.assume_default_colors), "Failed to redefine the default color mixture.");
     }
@@ -125,6 +137,8 @@ public sealed class ColorManager: IColorManager
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (short fgColor, short bgColor) UnMixColors(ColorMixture mixture)
     {
+        AssertSynchronized();
+        
         Terminal.Curses.pair_content(mixture.Handle, out var fgColor, out var bgColor)
                 .Check(nameof(Terminal.Curses.pair_content), "Failed to extract colors from the color mixture.");
 
@@ -140,22 +154,10 @@ public sealed class ColorManager: IColorManager
             throw new NotSupportedException("The terminal does not support error redefinition.");
         }
 
-        if (red > 1000)
-        {
-            red = 1000;
-        }
+        AssertSynchronized();
 
-        if (green > 1000)
-        {
-            green = 1000;
-        }
-
-        if (blue > 1000)
-        {
-            blue = 1000;
-        }
-
-        Terminal.Curses.init_color(color, red, green, blue)
+        const short maxColor = 1000;
+        Terminal.Curses.init_color(color, Math.Min(red, maxColor), Math.Min(green, maxColor), Math.Min(blue, maxColor))
                 .Check(nameof(Terminal.Curses.init_color), "Failed to redefine a terminal color.");
     }
 
@@ -173,6 +175,8 @@ public sealed class ColorManager: IColorManager
             throw new NotSupportedException("The terminal does not support error redefinition.");
         }
 
+        AssertSynchronized();
+        
         Terminal.Curses.color_content(color, out var red, out var green, out var blue)
                 .Check(nameof(Terminal.Curses.color_content),
                     "Failed to extract RGB information from a terminal color.");

@@ -293,7 +293,7 @@ public class TerminalTests
     public void Ctor_PreparesUseMouse_ByAskingCurses(bool enabled)
     {
         _terminal = new(_cursesMock.Object, new(UseMouse: enabled, MouseClickInterval: 999));
-        ((EventPump) _terminal.Events).UseInternalMouseEventResolver.ShouldBeFalse();
+        _terminal.Events.UseInternalMouseEventResolver.ShouldBeFalse();
 
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
@@ -310,7 +310,7 @@ public class TerminalTests
         _terminal = new(_cursesMock.Object, new(UseMouse: true, MouseClickInterval: null));
         _cursesMock.Verify(v => v.mouseinterval(0), Times.Once);
 
-        ((EventPump) _terminal.Events).UseInternalMouseEventResolver.ShouldBeTrue();
+        _terminal.Events.UseInternalMouseEventResolver.ShouldBeTrue();
     }
 
     [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -775,20 +775,20 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void WithinBatch_CallsTheActionWithFalseIfNotBatched()
+    public void AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        _terminal.WithinBatch(batch => { batch.ShouldBeFalse(); });
-    }
-
-    [TestMethod]
-    public void WithinBatch_CallsTheActionWithTrueIfBatched()
-    {
-        _terminal = new(_cursesMock.Object, _settings);
+        
+        _terminal.AtomicRefreshOpen.ShouldBeFalse();
         using (_terminal.AtomicRefresh())
         {
-            _terminal.WithinBatch(batch => { batch.ShouldBeTrue(); });
+            using (_terminal.AtomicRefresh())
+            {
+                _terminal.AtomicRefreshOpen.ShouldBeTrue();
+            }
+            _terminal.AtomicRefreshOpen.ShouldBeTrue();
         }
+        _terminal.AtomicRefreshOpen.ShouldBeFalse();
     }
 
     [TestMethod]

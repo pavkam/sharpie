@@ -38,8 +38,9 @@ namespace Sharpie;
 public sealed class Screen: TerminalSurface, IScreen
 {
     private readonly IList<Pad> _pads = new List<Pad>();
-    private readonly object _syncRoot = new();
+    private IReadOnlyList<Pad> _roPads = new List<Pad>();
     private readonly IList<Window> _windows = new List<Window>();
+    private IReadOnlyList<Window> _roWindows = new List<Window>();
 
     /// <summary>
     ///     Initializes the pad using the given Curses handle.
@@ -48,6 +49,7 @@ public sealed class Screen: TerminalSurface, IScreen
     /// <param name="handle">The Curses handle.</param>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal Screen(Terminal parent, IntPtr handle): base(parent, handle)
     {
         Curses.notimeout(Handle, false)
@@ -65,28 +67,28 @@ public sealed class Screen: TerminalSurface, IScreen
     {
         get
         {
-            lock (_syncRoot)
-            {
-                return _windows.ToArray();
-            }
+           AssertAlive();
+           AssertSynchronized();
+           
+           return _roWindows;
         }
     }
 
     /// <inheritdoc cref="IScreen.Pads" />
-    public IEnumerable<IPad> Pads 
+    public IEnumerable<IPad> Pads
     {
         get
         {
-            lock (_syncRoot)
-            {
-                return _pads.ToArray();
-            }
+            AssertAlive();
+            AssertSynchronized();
+            
+            return _roPads;
         }
     }
 
     /// <inheritdoc cref="IScreen.Windows" />
     IEnumerable<IWindow> IScreen.Windows => Windows;
-    
+
     /// <inheritdoc cref="IScreen.Pads" />
     IEnumerable<IPad> IScreen.Pads => Pads;
 
@@ -95,14 +97,11 @@ public sealed class Screen: TerminalSurface, IScreen
     {
         base.Refresh();
 
-        lock (_syncRoot)
+        foreach (var child in _roWindows)
         {
-            foreach (var child in _windows)
+            if (child.Visible)
             {
-                if (child.Visible)
-                {
-                    Terminal.Refresh(child);
-                }
+                Terminal.Refresh(child);
             }
         }
     }
@@ -111,19 +110,16 @@ public sealed class Screen: TerminalSurface, IScreen
     public override void MarkDirty(int y, int count)
     {
         base.MarkDirty(y, count);
-        lock (_syncRoot)
+        foreach (var child in _roWindows)
         {
-            foreach (var child in _windows)
+            if (child.Visible)
             {
-                if (child.Visible)
-                {
-                    var ly = child.Location.Y;
-                    var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
+                var ly = child.Location.Y;
+                var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
 
-                    if (iy > -1 && ic > 0)
-                    {
-                        child.MarkDirty(iy - ly, ic);
-                    }
+                if (iy > -1 && ic > 0)
+                {
+                    child.MarkDirty(iy - ly, ic);
                 }
             }
         }
@@ -133,20 +129,17 @@ public sealed class Screen: TerminalSurface, IScreen
     public override void Refresh(int y, int count)
     {
         base.Refresh(y, count);
-        lock (_syncRoot)
+        foreach (var child in _roWindows)
         {
-            foreach (var child in _windows)
+            if (child.Visible)
             {
-                if (child.Visible)
-                {
-                    var ly = child.Location.Y;
-                    var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
+                var ly = child.Location.Y;
+                var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
 
-                    if (iy > -1 && ic > 0)
-                    {
-                        Curses.wredrawln(child.Handle, iy - ly, ic)
-                              .Check(nameof(Curses.wredrawln), "Failed to perform line refresh of child.");
-                    }
+                if (iy > -1 && ic > 0)
+                {
+                    Curses.wredrawln(child.Handle, iy - ly, ic)
+                          .Check(nameof(Curses.wredrawln), "Failed to perform line refresh of child.");
                 }
             }
         }
@@ -177,6 +170,8 @@ public sealed class Screen: TerminalSurface, IScreen
         }
 
         AssertAlive();
+        AssertSynchronized();
+        
         var handle = Curses.newpad(size.Height, size.Width)
                            .Check(nameof(Curses.newpad), "Failed to create a new pad.");
 
@@ -187,6 +182,7 @@ public sealed class Screen: TerminalSurface, IScreen
     ///     Registers a window as a child. This is an internal function.
     /// </summary>
     /// <param name="window">The window to register.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void AddChild(Window window)
     {
         Debug.Assert(window != null);
@@ -194,16 +190,15 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(!_windows.Contains(window));
 
-        lock (_syncRoot)
-        {
-            _windows.Add(window);
-        }
+        _windows.Add(window);
+        _roWindows = _windows.ToArray();
     }
 
     /// <summary>
     ///     Un-registers a window as a child. This is an internal function.
     /// </summary>
     /// <param name="window">The window to un-register.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void RemoveChild(Window window)
     {
         Debug.Assert(window != null);
@@ -211,16 +206,15 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
 
-        lock (_syncRoot)
-        {
-            _windows.Remove(window);
-        }
+        _windows.Remove(window);
+        _roWindows = _windows.ToArray();
     }
 
     /// <summary>
     ///     Registers a pad as a child. This is an internal function.
     /// </summary>
     /// <param name="pad">The pad to register.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void AddChild(Pad pad)
     {
         Debug.Assert(pad != null);
@@ -228,16 +222,15 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(pad.Screen == this);
         Debug.Assert(!_pads.Contains(pad));
 
-        lock (_syncRoot)
-        {
-            _pads.Add(pad);
-        }
+        _pads.Add(pad);
+        _roPads = _pads.ToArray();
     }
 
     /// <summary>
     ///     Un-registers a pad as a child. This is an internal function.
     /// </summary>
     /// <param name="pad">The pad to un-register.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void RemoveChild(Pad pad)
     {
         Debug.Assert(pad != null);
@@ -245,10 +238,8 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(pad.Screen == this);
         Debug.Assert(_pads.Contains(pad));
 
-        lock (_syncRoot)
-        {
-            _pads.Remove(pad);
-        }
+        _pads.Remove(pad);
+        _roPads = _pads.ToArray();
     }
 
     /// <summary>
@@ -256,6 +247,7 @@ public sealed class Screen: TerminalSurface, IScreen
     ///     And then proceeds to do the same for each touched window.
     /// </summary>
     /// <param name="window">The window to start with.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void RefreshUp(Window window)
     {
         Debug.Assert(window != null);
@@ -265,35 +257,33 @@ public sealed class Screen: TerminalSurface, IScreen
 
         var a1 = new Rectangle(window.Location, window.Size);
 
-        lock (_syncRoot)
+        var i = _windows.IndexOf(window);
+        for (var j = i + 1; j < _windows.Count; j++)
         {
-            var i = _windows.IndexOf(window);
-            for (var j = i + 1; j < _windows.Count; j++)
+            var up = _windows[j];
+
+            if (!up.Visible)
             {
-                var up = _windows[j];
+                continue;
+            }
 
-                if (!up.Visible)
-                {
-                    continue;
-                }
+            var a2 = new Rectangle(up.Location, up.Size);
+            if (a1.IntersectsWith(a2))
+            {
+                up.MarkDirty();
+                Terminal.Refresh(up);
 
-                var a2 = new Rectangle(up.Location, up.Size);
-                if (a1.IntersectsWith(a2))
-                {
-                    up.MarkDirty();
-                    Terminal.Refresh(up);
-                    
-                    RefreshUp(up);
-                }
+                RefreshUp(up);
             }
         }
     }
 
     /// <summary>
-    /// Changes the visibility of a window by redrawing the affected portions of the screen.
+    ///     Changes the visibility of a window by redrawing the affected portions of the screen.
     /// </summary>
     /// <param name="window">The window.</param>
     /// <param name="visible">Visibility argument.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void ChangeVisibility(Window window, bool visible)
     {
         Debug.Assert(window != null);
@@ -305,7 +295,7 @@ public sealed class Screen: TerminalSurface, IScreen
         {
             window.MarkDirty();
             Terminal.Refresh(window);
-            
+
             RefreshUp(window);
         } else
         {
@@ -313,11 +303,12 @@ public sealed class Screen: TerminalSurface, IScreen
             Refresh();
         }
     }
-    
+
     /// <summary>
     ///     Brings the <paramref name="window" /> to the front of the stack.
     /// </summary>
     /// <param name="window">The window to bring.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void BringToFront(Window window)
     {
         Debug.Assert(window != null);
@@ -325,17 +316,16 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
 
-        lock (_syncRoot)
+        var i = _windows.IndexOf(window);
+        if (i < _windows.Count - 1)
         {
-            var i = _windows.IndexOf(window);
-            if (i < _windows.Count - 1)
-            {
-                _windows.RemoveAt(i);
-                _windows.Add(window);
-            } else
-            {
-                return;
-            }
+            _windows.RemoveAt(i);
+            _windows.Add(window);
+            
+            _roWindows = _windows.ToArray();
+        } else
+        {
+            return;
         }
 
         if (window.Visible)
@@ -349,6 +339,7 @@ public sealed class Screen: TerminalSurface, IScreen
     ///     Sends the <paramref name="window" /> to the back of the stack.
     /// </summary>
     /// <param name="window">The window to send.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void SendToBack(Window window)
     {
         Debug.Assert(window != null);
@@ -356,17 +347,16 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
 
-        lock (_syncRoot)
+        var i = _windows.IndexOf(window);
+        if (i > 0)
         {
-            var i = _windows.IndexOf(window);
-            if (i > 0)
-            {
-                _windows.RemoveAt(i);
-                _windows.Insert(0, window);
-            } else
-            {
-                return;
-            }
+            _windows.RemoveAt(i);
+            _windows.Insert(0, window);
+
+            _roWindows = _windows.ToArray();
+        } else
+        {
+            return;
         }
 
         if (window.Visible)
@@ -378,14 +368,12 @@ public sealed class Screen: TerminalSurface, IScreen
     /// <summary>
     ///     Adjusts the area of all the windows in the screen.
     /// </summary>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void AdjustChildrenToExplicitArea()
     {
-        lock (_syncRoot)
+        foreach (var window in _roWindows)
         {
-            foreach (var window in _windows.ToArray())
-            {
-                window.AdjustToExplicitArea();
-            }
+            window.AdjustToExplicitArea();
         }
     }
 
@@ -395,24 +383,19 @@ public sealed class Screen: TerminalSurface, IScreen
     /// </summary>
     protected override void Delete()
     {
-        lock (_syncRoot)
+        AssertSynchronized();
+        
+        foreach (var window in _roWindows)
         {
-            foreach (var window in _windows.ToArray())
-            {
-                window.Destroy();
-            }
+            window.Destroy();
+        }
 
-            foreach (var pad in _pads.ToArray())
-            {
-                pad.Destroy();
-            }
-
-            _pads.Clear();
-            _windows.Clear();
+        foreach (var pad in _roPads)
+        {
+            pad.Destroy();
         }
 
         base.Delete();
-
         Curses.endwin();
     }
 }

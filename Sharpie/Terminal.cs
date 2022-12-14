@@ -53,9 +53,8 @@ public sealed class Terminal: ITerminal, IDisposable
     private ManualResetEventSlim? _runCompletedEvent;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-
-    private object _syncRoot = new();
-
+    private SynchronizationContext? _boundSynchronizationContext;
+    
     /// <summary>
     ///     Creates a new instance
     ///     of the terminal.
@@ -250,7 +249,6 @@ public sealed class Terminal: ITerminal, IDisposable
         get
         {
             AssertAlive();
-
             return _screen;
         }
     }
@@ -261,7 +259,6 @@ public sealed class Terminal: ITerminal, IDisposable
         get
         {
             AssertAlive();
-
             return _header;
         }
     }
@@ -272,13 +269,12 @@ public sealed class Terminal: ITerminal, IDisposable
         get
         {
             AssertAlive();
-
             return _footer;
         }
     }
 
     /// <inheritdoc cref="ITerminal.Events" />
-    public IEventPump Events
+    public EventPump Events
     {
         get
         {
@@ -390,7 +386,6 @@ public sealed class Terminal: ITerminal, IDisposable
     public bool Disposed { get; private set; }
 
     /// <inheritdoc cref="ITerminal.SetTitle" />
-    /// <param name="title">The title of the terminal.</param>
     public void SetTitle(string title)
     {
         if (title == null)
@@ -398,6 +393,7 @@ public sealed class Terminal: ITerminal, IDisposable
             throw new ArgumentNullException(nameof(title));
         }
 
+        AssertSynchronized();
         Curses.set_title(title);
     }
 
@@ -405,6 +401,8 @@ public sealed class Terminal: ITerminal, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Alert(bool silent)
     {
+        AssertSynchronized();
+        
         if (silent)
         {
             Curses.flash()
@@ -422,22 +420,21 @@ public sealed class Terminal: ITerminal, IDisposable
     /// <returns>A disposable object that need to be disposed to release the batch update lock.</returns>
     public IDisposable AtomicRefresh()
     {
-        lock (_syncRoot)
+        AssertSynchronized();
+        
+        Interlocked.Increment(ref _batchUpdateLocks);
+        return new Disposable(() =>
         {
-            _batchUpdateLocks++;
-            return new Disposable(() =>
+            Debug.Assert(_batchUpdateLocks > 0);
+            if (Interlocked.Decrement(ref _batchUpdateLocks) == 0)
             {
-                Debug.Assert(_batchUpdateLocks > 0);
-                if (--_batchUpdateLocks == 0)
+                if (!Disposed)
                 {
-                    if (!Disposed)
-                    {
-                        Curses.doupdate()
-                              .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
-                    }
+                    Curses.doupdate()
+                          .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
                 }
-            });
-        }
+            }
+        });
     }
 
     /// <inheritdoc cref="ITerminal.Run" />
@@ -451,22 +448,20 @@ public sealed class Terminal: ITerminal, IDisposable
             throw new ArgumentNullException(nameof(eventAction));
         }
 
-        lock (_syncRoot)
-        {
-            if (_runCompletedEvent != null)
-            {
-                throw new InvalidOperationException($"Another {nameof(Run)} is already running.");
-            }
-
-            _runCompletedEvent = new();
-        }
-
         AssertAlive();
 
-        AsyncContext.Run(async () =>
+        if (_runCompletedEvent != null)
         {
-            try
+            throw new InvalidOperationException($"Another {nameof(Run)} is already running.");
+        }
+
+        _runCompletedEvent = new();
+
+        try
+        {
+            AsyncContext.Run(async () =>
             {
+                _boundSynchronizationContext = SynchronizationContext.Current;
                 foreach (var @event in Events.Listen())
                 {
                     if (stopOnCtrlC &&
@@ -490,16 +485,16 @@ public sealed class Terminal: ITerminal, IDisposable
                         await eventAction(this, @event);
                     }
                 }
-            } finally
-            {
-                Debug.Assert(_runCompletedEvent != null);
-                _runCompletedEvent.Set();
-                lock (_syncRoot)
-                {
-                    _runCompletedEvent = null;
-                }
-            }
-        });
+
+            });
+        } finally
+        {
+            Debug.Assert(_runCompletedEvent != null);
+            
+            _runCompletedEvent.Set();
+            _runCompletedEvent = null;
+            _boundSynchronizationContext = null;
+        }
     }
 
     /// <inheritdoc cref="ITerminal.Delegate" />
@@ -572,18 +567,9 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <summary>
-    ///     Executes a given <paramref name="action" /> within the context of a batch.
+    /// Specifies whether an atomic refresh has been initiated by <see cref="AtomicRefresh"/>.
     /// </summary>
-    /// <param name="action">The action to execute.</param>
-    internal void WithinBatch(Action<bool> action)
-    {
-        Debug.Assert(action != null);
-
-        lock (_syncRoot)
-        {
-            action(_batchUpdateLocks > 0);
-        }
-    }
+    internal bool AtomicRefreshOpen => _batchUpdateLocks > 0;
 
     /// <summary>
     ///     Attempts to update the terminal.
@@ -593,19 +579,18 @@ public sealed class Terminal: ITerminal, IDisposable
     internal bool TryUpdate()
     {
         AssertAlive();
-        lock (_syncRoot)
+        AssertSynchronized();
+        
+        Debug.Assert(_batchUpdateLocks >= 0);
+        if (_batchUpdateLocks == 0)
         {
-            Debug.Assert(_batchUpdateLocks >= 0);
-            if (_batchUpdateLocks == 0)
-            {
-                Curses.doupdate()
-                      .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
+            Curses.doupdate()
+                  .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
 
-                return true;
-            }
-
-            return false;
+            return true;
         }
+
+        return false;
     }
 
     /// <summary>
@@ -617,6 +602,18 @@ public sealed class Terminal: ITerminal, IDisposable
         if (Disposed)
         {
             throw new ObjectDisposedException("The terminal has been disposed and no further operations are allowed.");
+        }
+    }
+
+    /// <summary>
+    /// Asserts that executing thread is bound to the correct synchronization context. Does nothing if <see cref="Run"/> not executing.
+    /// </summary>
+    /// <exception cref="CursesSynchronizationException">Thrown if current thread is not bound to the correct context.</exception>
+    internal void AssertSynchronized()
+    {
+        if (_boundSynchronizationContext != null && SynchronizationContext.Current != _boundSynchronizationContext)
+        {
+            throw new CursesSynchronizationException();
         }
     }
 
@@ -647,18 +644,13 @@ public sealed class Terminal: ITerminal, IDisposable
 
     private void CancelRun(bool wait)
     {
-        if (_runCompletedEvent != null)
+        var rce = _runCompletedEvent;
+        if (rce != null)
         {
-            lock (_syncRoot)
+            _eventPump.Delegate(_stopSignal);
+            if (wait)
             {
-                if (_runCompletedEvent != null)
-                {
-                    _eventPump.Delegate(_stopSignal);
-                    if (wait)
-                    {
-                        _runCompletedEvent.Wait();
-                    }
-                }
+                rce.Wait();
             }
         }
     }

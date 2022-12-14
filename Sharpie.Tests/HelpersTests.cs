@@ -495,14 +495,13 @@ public class HelpersTests
         rs.ShouldBe(si);
         rc.ShouldBe(sc);
     }
-    
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails_NoBatch()
     {
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-        
+
         using var terminal = new Terminal(_cursesMock.Object, new());
         using var sa = new TerminalSurface(terminal, new(1));
 
@@ -518,7 +517,7 @@ public class HelpersTests
     {
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-        
+
         using var terminal = new Terminal(_cursesMock.Object, new());
         using var sa = new TerminalSurface(terminal, new(1));
 
@@ -537,7 +536,7 @@ public class HelpersTests
     {
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-        
+
         using var terminal = new Terminal(_cursesMock.Object, new());
         var sa = new TerminalSurface(terminal, new(1));
 
@@ -550,7 +549,7 @@ public class HelpersTests
     {
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
-        
+
         using var terminal = new Terminal(_cursesMock.Object, new());
         var sa = new TerminalSurface(terminal, new(1));
 
@@ -561,5 +560,4 @@ public class HelpersTests
 
         _cursesMock.Verify(v => v.wnoutrefresh(sa.Handle), Times.Once);
     }
-
 }

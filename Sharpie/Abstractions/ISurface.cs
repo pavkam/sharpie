@@ -52,30 +52,40 @@ public interface ISurface: IDrawSurface
     ///     needs a new line.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    bool EnableScrolling { get; set; }
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
+    bool Scrollable { get; set; }
 
     /// <summary>
     ///     Gets or sets the style of the surface.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     Style Style { get; set; }
 
     /// <summary>
     ///     Gets or sets the color mixture of the surface.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     ColorMixture ColorMixture { get; set; }
 
     /// <summary>
     ///     Gets or sets the surface background.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     (Rune @char, Style style) Background { get; set; }
 
     /// <summary>
     ///     Gets the size of the surface.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     Size Size { get; }
 
     /// <summary>
@@ -83,6 +93,8 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the surface bounds.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     Point CaretPosition { get; set; }
 
     /// <summary>
@@ -90,12 +102,16 @@ public interface ISurface: IDrawSurface
     ///     to the console.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool Dirty { get; }
 
     /// <summary>
     ///     Controls whether the caret is managed by the application and should not be managed by the hardware.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool ManagedCaret { get; set; }
 
     /// <summary>
@@ -103,6 +119,8 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <param name="attributes">The attributes to enable.</param>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void EnableAttributes(VideoAttribute attributes);
 
     /// <summary>
@@ -110,6 +128,8 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <param name="attributes">The attributes to disable.</param>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void DisableAttributes(VideoAttribute attributes);
 
     /// <summary>
@@ -120,8 +140,10 @@ public interface ISurface: IDrawSurface
     ///     The <paramref name="lines" /> is less than one or greater than the size
     ///     of the surface.
     /// </exception>
-    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling" /> is <c>false</c>.</exception>
+    /// <exception cref="NotSupportedException">The <see cref="Scrollable" /> is <c>false</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void ScrollUp(int lines);
 
     /// <summary>
@@ -132,8 +154,10 @@ public interface ISurface: IDrawSurface
     ///     The <paramref name="lines" /> is less than one or greater than the size
     ///     of the surface.
     /// </exception>
-    /// <exception cref="NotSupportedException">The <see cref="EnableScrolling" /> is <c>false</c>.</exception>
+    /// <exception cref="NotSupportedException">The <see cref="Scrollable" /> is <c>false</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void ScrollDown(int lines);
 
     /// <summary>
@@ -145,6 +169,8 @@ public interface ISurface: IDrawSurface
     ///     of the surface.
     /// </exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void InsertEmptyLines(int lines);
 
     /// <summary>
@@ -156,6 +182,8 @@ public interface ISurface: IDrawSurface
     ///     of the surface.
     /// </exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void DeleteLines(int lines);
 
     /// <summary>
@@ -165,6 +193,8 @@ public interface ISurface: IDrawSurface
     /// <param name="style">The applied style.</param>
     /// <exception cref="ArgumentException">The <paramref name="width" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void ChangeTextStyle(int width, Style style);
 
     /// <summary>
@@ -174,6 +204,8 @@ public interface ISurface: IDrawSurface
     /// <param name="style">The style of the text.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void WriteText(string str, Style style);
 
     /// <summary>
@@ -182,6 +214,8 @@ public interface ISurface: IDrawSurface
     /// <param name="str">The text to write.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void WriteText(string str);
 
     /// <summary>
@@ -192,6 +226,8 @@ public interface ISurface: IDrawSurface
     /// <param name="style">The style to use.</param>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void DrawVerticalLine(int length, Rune @char, Style style);
 
     /// <summary>
@@ -200,6 +236,8 @@ public interface ISurface: IDrawSurface
     /// <param name="length">The length of the line.</param>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void DrawVerticalLine(int length);
 
     /// <summary>
@@ -210,6 +248,8 @@ public interface ISurface: IDrawSurface
     /// <param name="length">The length of the line.</param>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void DrawHorizontalLine(int length, Rune @char, Style style);
 
     /// <summary>
@@ -218,6 +258,8 @@ public interface ISurface: IDrawSurface
     /// <param name="length">The length of the line.</param>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void DrawHorizontalLine(int length);
 
     /// <summary>
@@ -233,6 +275,8 @@ public interface ISurface: IDrawSurface
     /// <param name="bottomSideChar">The bottom-side character.</param>
     /// <param name="style">The style to use.</param>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void DrawBorder(Rune leftSideChar, Rune rightSideChar, Rune topSideChar, Rune bottomSideChar,
         Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar,
         Style style);
@@ -241,6 +285,8 @@ public interface ISurface: IDrawSurface
     ///     Draws a border around the surface's edges using standard characters.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void DrawBorder();
 
     /// <summary>
@@ -249,6 +295,8 @@ public interface ISurface: IDrawSurface
     /// <param name="count">The number of characters to remove.</param>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void RemoveText(int count);
 
     /// <summary>
@@ -257,6 +305,8 @@ public interface ISurface: IDrawSurface
     /// <param name="count">The number of characters to get.</param>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     (Rune @char, Style style)[] GetText(int count);
 
     /// <summary>
@@ -264,6 +314,8 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <param name="strategy">The strategy to use.</param>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Clear(ClearStrategy strategy = ClearStrategy.Full);
 
     /// <summary>
@@ -274,6 +326,8 @@ public interface ISurface: IDrawSurface
     /// <exception cref="ArgumentNullException">The <paramref name="surface" /> is null.</exception>
     /// <exception cref="ArgumentException">The contents of <paramref name="surface" /> cannot be replaced.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Replace(ISurface surface, ReplaceStrategy strategy);
 
     /// <summary>
@@ -286,6 +340,8 @@ public interface ISurface: IDrawSurface
     /// <exception cref="ArgumentNullException">The <paramref name="surface" /> is null.</exception>
     /// <exception cref="ArgumentException">The contents of <paramref name="surface" /> cannot be replaced.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Replace(ISurface surface, Rectangle srcRect, Point destPos, ReplaceStrategy strategy);
 
     /// <summary>
@@ -297,12 +353,16 @@ public interface ISurface: IDrawSurface
     ///     The <paramref name="y" /> or <paramref name="count" /> are negative.
     /// </exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void MarkDirty(int y, int count);
 
     /// <summary>
     ///     Marks the entire contents of the surface as <see cref="Dirty" />.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void MarkDirty();
 
     /// <summary>
@@ -310,6 +370,8 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <returns>The result of the check.</returns>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool IsPointWithin(Point point);
 
     /// <summary>
@@ -317,6 +379,8 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <returns>The result of the check.</returns>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool IsRectangleWithin(Rectangle rect);
 
     /// <summary>
@@ -331,6 +395,8 @@ public interface ISurface: IDrawSurface
     ///     out of bounds.
     /// </exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Draw(Point location, Rectangle area, IDrawable drawable);
 
     /// <summary>
@@ -341,6 +407,8 @@ public interface ISurface: IDrawSurface
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="drawable" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="location" /> is out of bounds.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Draw(Point location, IDrawable drawable);
 
     /// <summary>
@@ -348,10 +416,14 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y" /> is outside the bounds.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool LineDirty(int y);
 
     /// <summary>
     ///     Removes the surface form the parent, destroys all children and itself.
     /// </summary>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Destroy();
 }

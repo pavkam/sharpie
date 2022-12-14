@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie;
 
-using System.ComponentModel;
-
 /// <summary>
 ///     Internal helper routines.
 /// </summary>
@@ -462,7 +460,7 @@ public static class Helpers
     /// <param name="seg1Len">The length of the first segment.</param>
     /// <param name="seg2Start">The start of the second segment.</param>
     /// <param name="seg2Len">The length of the second segment.</param>
-    /// <returns></returns>
+    /// <returns>A tuple containing the intersection.</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     internal static (int start, int count) IntersectSegments(int seg1Start, int seg1Len, int seg2Start, int seg2Len)
     {
@@ -494,18 +492,15 @@ public static class Helpers
     {
         Debug.Assert(t != null);
         Debug.Assert(s != null);
-        
-        t.WithinBatch(batch =>
+
+        if (t.AtomicRefreshOpen)
         {
-            if (batch)
-            {
-                t.Curses.wnoutrefresh(s.Handle)
-                      .Check(nameof(t.Curses.wnoutrefresh), "Failed to queue window refresh.");
-            } else
-            {
-                t.Curses.wrefresh(s.Handle)
-                 .Check(nameof(t.Curses.wrefresh), "Failed to perform window refresh.");
-            }
-        });
+            t.Curses.wnoutrefresh(s.Handle)
+             .Check(nameof(t.Curses.wnoutrefresh), "Failed to queue window refresh.");
+        } else
+        {
+            t.Curses.wrefresh(s.Handle)
+             .Check(nameof(t.Curses.wrefresh), "Failed to perform window refresh.");
+        }
     }
 }

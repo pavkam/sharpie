@@ -73,6 +73,15 @@ public class PadTests
     }
 
     [TestMethod]
+    public void SubPads_Throws_IfPadIsDestroyed()
+    {
+        var p = new Pad(_screen, new(22));
+        p.Destroy();
+
+        Should.Throw<ObjectDisposedException>(() => p.SubPads.ToArray());
+    }
+    
+    [TestMethod]
     public void SubPads_ContainsTheChild_WhenPassedAsParent()
     {
         var p = new Pad(_screen, IntPtr.MaxValue);

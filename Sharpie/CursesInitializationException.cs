@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     A generic Curses exception.
+///     Exception thrown if Curses failed to initialize.
 /// </summary>
 [PublicAPI]
 public sealed class CursesInitializationException: CursesException

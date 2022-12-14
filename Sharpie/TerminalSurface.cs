@@ -44,6 +44,7 @@ public class TerminalSurface: Surface, ITerminalSurface
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal TerminalSurface(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle) =>
         Terminal = parent!;
 
@@ -53,27 +54,37 @@ public class TerminalSurface: Surface, ITerminalSurface
     /// <inheritdoc cref="ITerminalSurface.Terminal" />
     ITerminal ITerminalSurface.Terminal => Terminal;
 
+    /// <inheritdoc cref="Surface.AssertSynchronized" />
+    protected internal override void AssertSynchronized()
+    {
+        if (Terminal != null!)
+        {
+            Terminal.AssertSynchronized();
+        }
+    }
+
     /// <inheritdoc cref="ITerminalSurface.ImmediateRefresh" />
     public bool ImmediateRefresh
     {
-        get => Curses.is_immedok(Handle);
-        set => Curses.immedok(Handle, value);
+        get { AssertSynchronized();
+            return Curses.is_immedok(Handle); }
+        set { AssertSynchronized();
+            Curses.immedok(Handle, value); }
     }
 
     /// <inheritdoc cref="ITerminalSurface.Critical" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public bool Critical
     {
-        get => Curses.is_cleared(Handle);
-        set => Curses.clearok(Handle, value);
+        get { AssertSynchronized();
+            return Curses.is_cleared(Handle); }
+        set { AssertSynchronized();
+            Curses.clearok(Handle, value); }
     }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh()" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public virtual void Refresh()
-    {
-        Terminal.Refresh(this);
-    }
+    public virtual void Refresh() { AssertSynchronized();Terminal.Refresh(this); }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh(int, int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>

@@ -46,8 +46,6 @@ public sealed class SubPad: Surface, ISubPad
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     internal SubPad(Pad parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
     {
-        EnableScrolling = true;
-
         Pad = parent!;
         parent!.AddChild(this);
     }
@@ -61,6 +59,15 @@ public sealed class SubPad: Surface, ISubPad
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     protected internal override Point Origin => Location;
 
+    /// <inheritdoc cref="Surface.AssertSynchronized" />
+    protected internal override void AssertSynchronized()
+    {
+        if (Pad != null!)
+        {
+            Pad.AssertSynchronized();
+        }
+    }
+    
     /// <inheritdoc cref="ISubPad.Pad" />
     IPad ISubPad.Pad => Pad;
 
@@ -68,10 +75,15 @@ public sealed class SubPad: Surface, ISubPad
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location
     {
-        get =>
-            new(Curses.getparx(Handle)
-                      .Check(nameof(Curses.getparx), "Failed to get sub-pad X coordinate."), Curses.getpary(Handle)
+        get
+        {
+            AssertSynchronized();
+            
+            return new(Curses.getparx(Handle)
+                             .Check(nameof(Curses.getparx), "Failed to get sub-pad X coordinate."), Curses
+                .getpary(Handle)
                 .Check(nameof(Curses.getpary), "Failed to get sub-pad Y coordinate."));
+        }
         set
         {
             if (!Pad.IsRectangleWithin(new(value, Size)))
@@ -105,6 +117,8 @@ public sealed class SubPad: Surface, ISubPad
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubPad Duplicate()
     {
+        AssertSynchronized();
+        
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the sub-pad.");
 
@@ -114,6 +128,8 @@ public sealed class SubPad: Surface, ISubPad
     /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
+        AssertSynchronized();
+        
         if (Pad != null!)
         {
             Pad.RemoveChild(this);

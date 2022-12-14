@@ -145,33 +145,33 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void EnableScrolling_Get_Returns_IfCursesSucceeded()
+    public void Scrollable_Get_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.is_scrollok(It.IsAny<IntPtr>()))
                    .Returns(true);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        s.EnableScrolling.ShouldBeTrue();
+        s.Scrollable.ShouldBeTrue();
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
-    public void EnableScrolling_Set_SetsValue_IfCursesSucceeded(bool enabled)
+    public void Scrollable_Set_SetsValue_IfCursesSucceeded(bool enabled)
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        s.EnableScrolling = enabled;
+        s.Scrollable = enabled;
 
         _cursesMock.Verify(v => v.scrollok(new(1), enabled), Times.AtMost(2));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void EnableScrolling_Throws_IfCursesFails()
+    public void Scrollable_Throws_IfCursesFails()
     {
         var sw = new Surface(_cursesMock.Object, new(1));
 
         _cursesMock.Setup(s => s.scrollok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => sw.EnableScrolling = false)
+        Should.Throw<CursesOperationException>(() => sw.Scrollable = false)
               .Operation.ShouldBe("scrollok");
     }
 

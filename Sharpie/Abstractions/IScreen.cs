@@ -39,11 +39,17 @@ public interface IScreen: ITerminalSurface
     /// <summary>
     ///     Gets all child windows on this screen.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     IEnumerable<IWindow> Windows { get; }
 
     /// <summary>
     ///     Gets all child pads on this screen.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     IEnumerable<IPad> Pads { get; }
 
     /// <summary>
@@ -55,6 +61,8 @@ public interface IScreen: ITerminalSurface
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     IWindow Window(Rectangle area);
 
     /// <summary>
@@ -64,5 +72,7 @@ public interface IScreen: ITerminalSurface
     /// <returns>A new pad object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="size" /> is invalid.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     IPad Pad(Size size);
 }

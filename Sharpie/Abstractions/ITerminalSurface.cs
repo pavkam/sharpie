@@ -49,6 +49,8 @@ public interface ITerminalSurface: ISurface
     ///     This might be very slow for most use cases so the default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool ImmediateRefresh { get; set; }
 
     /// <summary>
@@ -59,6 +61,8 @@ public interface ITerminalSurface: ISurface
     ///     This setting might result in excessive refreshes so the default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool Critical { get; set; }
 
     /// <summary>
@@ -66,6 +70,8 @@ public interface ITerminalSurface: ISurface
     ///     all refreshes are batched together until the lock is released.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Refresh();
 
     /// <summary>
@@ -78,5 +84,7 @@ public interface ITerminalSurface: ISurface
     ///     negative.
     /// </exception>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Refresh(int y, int count);
 }

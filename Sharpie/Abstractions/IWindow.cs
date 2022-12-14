@@ -44,6 +44,9 @@ public interface IWindow: ITerminalSurface
     /// <summary>
     ///     Lists of children of this object.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     IEnumerable<ISubWindow> SubWindows { get; }
 
     /// <summary>
@@ -55,6 +58,8 @@ public interface IWindow: ITerminalSurface
     ///     Default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool UseHardwareLineEdit { get; set; }
 
     /// <summary>
@@ -66,19 +71,25 @@ public interface IWindow: ITerminalSurface
     ///     Default is <c>true</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool UseHardwareCharEdit { get; set; }
 
     /// <summary>
     ///     Gets or sets the value indicating if the window is visible.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     bool Visible { get; set; }
-    
+
     /// <summary>
     ///     Gets or sets the location of the window within its parent.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the parent's bounds.</exception>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     Point Location { get; set; }
 
     /// <summary>
@@ -86,16 +97,22 @@ public interface IWindow: ITerminalSurface
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the bounds.</exception>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     new Size Size { get; set; }
 
     /// <summary>
     ///     Send the window to the back of the Z-order.
     /// </summary>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void SendToBack();
 
     /// <summary>
     ///     Send the window to the front of the Z-order.
     /// </summary>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void BringToFront();
 
     /// <summary>
@@ -107,6 +124,8 @@ public interface IWindow: ITerminalSurface
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     ISubWindow SubWindow(Rectangle area);
 
     /// <summary>
@@ -114,5 +133,7 @@ public interface IWindow: ITerminalSurface
     /// </summary>
     /// <returns>A new window object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     IWindow Duplicate();
 }

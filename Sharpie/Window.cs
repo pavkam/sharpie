@@ -37,6 +37,7 @@ namespace Sharpie;
 public sealed class Window: TerminalSurface, IWindow
 {
     private readonly IList<SubWindow> _subWindows = new List<SubWindow>();
+    private IReadOnlyList<SubWindow> _roSubWindows = Array.Empty<SubWindow>();
     private Rectangle _explicitArea;
     private bool _visible = true;
 
@@ -48,6 +49,7 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal Window(Screen parent, IntPtr handle): base(parent != null! ? parent.Terminal : null!, handle)
     {
         Curses.keypad(Handle, true)
@@ -75,14 +77,28 @@ public sealed class Window: TerminalSurface, IWindow
     IScreen IWindow.Screen => Screen;
 
     /// <inheritdoc cref="IWindow.SubWindows" />
-    public IEnumerable<ISubWindow> SubWindows => _subWindows;
+    public IEnumerable<ISubWindow> SubWindows
+    {
+        get
+        {
+            AssertAlive();
+            AssertSynchronized();
+            
+            return _roSubWindows;
+        }
+    }
 
     /// <inheritdoc cref="IWindow.UseHardwareLineEdit" />
     public bool UseHardwareLineEdit
     {
-        get => Curses.is_idlok(Handle);
+        get
+        {
+            AssertSynchronized();
+            return Curses.is_idlok(Handle);
+        }
         set
         {
+            AssertSynchronized();
             if (Curses.has_il())
             {
                 Curses.idlok(Handle, value)
@@ -94,9 +110,14 @@ public sealed class Window: TerminalSurface, IWindow
     /// <inheritdoc cref="IWindow.UseHardwareCharEdit" />
     public bool UseHardwareCharEdit
     {
-        get => Curses.is_idcok(Handle);
+        get
+        {
+            AssertSynchronized();
+            return Curses.is_idcok(Handle);
+        }
         set
         {
+            AssertSynchronized();
             if (Curses.has_ic())
             {
                 Curses.idcok(Handle, value);
@@ -108,10 +129,13 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location
     {
-        get =>
-            new(Curses.getbegx(Handle)
+        get
+        {
+            AssertSynchronized();
+            return new(Curses.getbegx(Handle)
                       .Check(nameof(Curses.getbegx), "Failed to get window X coordinate."), Curses.getbegy(Handle)
                 .Check(nameof(Curses.getbegy), "Failed to get window Y coordinate."));
+        }
         set
         {
             var size = Size;
@@ -151,6 +175,8 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public override void Refresh()
     {
+        AssertSynchronized();
+
         if (_visible)
         {
             using (Terminal.AtomicRefresh())
@@ -165,6 +191,8 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public override void Refresh(int y, int count)
     {
+        AssertSynchronized();
+        
         if (_visible)
         {
             using (Terminal.AtomicRefresh())
@@ -179,6 +207,8 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void SendToBack()
     {
+        AssertSynchronized();
+        
         using (Terminal.AtomicRefresh())
         {
             Screen.SendToBack(this);
@@ -189,6 +219,8 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void BringToFront()
     {
+        AssertSynchronized();
+        
         using (Terminal.AtomicRefresh())
         {
             Screen.BringToFront(this);
@@ -199,9 +231,15 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public bool Visible
     {
-        get => _visible;
+        get {      
+            AssertSynchronized();
+            
+            return _visible; 
+        }
         set
         {
+            AssertSynchronized();
+            
             if (value != _visible)
             {
                 _visible = value;
@@ -232,6 +270,8 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IWindow Duplicate()
     {
+        AssertSynchronized();
+        
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
 
@@ -243,6 +283,8 @@ public sealed class Window: TerminalSurface, IWindow
     /// </summary>
     internal void AdjustToExplicitArea()
     {
+        AssertSynchronized();
+        
         var screenSize = Screen.Size;
         var size = Size;
         var location = Location;
@@ -268,34 +310,40 @@ public sealed class Window: TerminalSurface, IWindow
     ///     Registers a sub-window as a child. This is an internal function.
     /// </summary>
     /// <param name="subWindow">The sub-window to register.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void AddChild(SubWindow subWindow)
     {
         Debug.Assert(subWindow != null);
         Debug.Assert(!subWindow.Disposed);
         Debug.Assert(subWindow.Window == this);
-        Debug.Assert(!_subWindows.Contains(subWindow));
+        Debug.Assert(!_roSubWindows.Contains(subWindow));
 
         _subWindows.Add(subWindow);
+        _roSubWindows = _subWindows.ToArray();
     }
 
     /// <summary>
     ///     Un-registers a sub-window as a child. This is an internal function.
     /// </summary>
     /// <param name="subWindow">The sub-window to un-register.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void RemoveChild(SubWindow subWindow)
     {
         Debug.Assert(subWindow != null);
         Debug.Assert(!subWindow.Disposed);
         Debug.Assert(subWindow.Window == this);
-        Debug.Assert(_subWindows.Contains(subWindow));
+        Debug.Assert(_roSubWindows.Contains(subWindow));
 
         _subWindows.Remove(subWindow);
+        _roSubWindows = _subWindows.ToArray();
     }
 
     /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
-        foreach (var window in _subWindows.ToArray())
+        AssertSynchronized();
+        
+        foreach (var window in _roSubWindows)
         {
             window.Destroy();
         }

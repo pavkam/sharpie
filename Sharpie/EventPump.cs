@@ -20,10 +20,16 @@ public sealed class EventPump: IEventPump
     /// <exception cref="ArgumentNullException">
     ///     Thrown if <paramref name="parent" /> is <c>null</c>.
     /// </exception>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal EventPump(Terminal parent) => Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
 
     /// <inheritdoc cref="IColorManager.Terminal" />
     public Terminal Terminal { get; }
+
+    private void AssertSynchronized()
+    {
+        Terminal.AssertSynchronized();
+    }
 
     /// <summary>
     ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
@@ -93,6 +99,8 @@ public sealed class EventPump: IEventPump
         {
             throw new ArgumentNullException(nameof(resolver));
         }
+        
+        AssertSynchronized();
 
         if (!Uses(resolver))
         {
@@ -108,6 +116,8 @@ public sealed class EventPump: IEventPump
             throw new ArgumentNullException(nameof(resolver));
         }
 
+        AssertSynchronized();
+        
         return _keySequenceResolvers.Contains(resolver);
     }
 
@@ -115,6 +125,8 @@ public sealed class EventPump: IEventPump
     {
         Debug.Assert(handle != IntPtr.Zero);
 
+        AssertSynchronized();
+        
         var hasPendingResize = false;
         var monitorsResizes =
             Terminal.Curses.monitor_pending_resize(() => { hasPendingResize = true; }, out var monitorHandle);

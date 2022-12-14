@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2022, Alexandru Ciobanu
 All rights reserved.
 
@@ -26,69 +26,17 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
-using System.Diagnostics.CodeAnalysis;
-using Sharpie;
-using Sharpie.Backend;
+namespace Sharpie.Tests;
 
-[assembly: ExcludeFromCodeCoverage]
-using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: CaretMode.Visible));
-
-var rnd = new Random();
-
-short c = 100;
-
-void MakeWindow()
+[TestClass]
+public class CursesSynchronizationExceptionTests
 {
-    var x = rnd.Next(0, terminal.Screen.Size.Width);
-    var y = rnd.Next(0, terminal.Screen.Size.Height);
-    var w = rnd.Next(1, terminal.Screen.Size.Width - x);
-    var h = rnd.Next(1, terminal.Screen.Size.Height - y);
-
-    var win = terminal.Screen.Window(new(x, y, w, h));
-
-
-    win.Background = (new(' '),
-        new()
-        {
-            Attributes = VideoAttribute.None,
-            ColorMixture = terminal.Colors.MixColors((short) StandardColor.Default, c)
-        });
-
-    c++;
-}
-
-for (var x = 0; x < 10; x++)
-{
-    MakeWindow();
-}
-
-terminal.Screen.Refresh();
-
-terminal.Repeat(t =>
-{
-    var op = rnd.Next(4);
-    var x = rnd.Next(0, t.Screen.Windows.Count());
-    var win = t.Screen.Windows.ElementAt(x);
-    switch (op)
+    [TestMethod]
+    public void HasTheCorrectMessage()
     {
-        case 0:
-            win.SendToBack();
-            break;
-        case 1:
-            win.BringToFront();
-            break;
-        case 2:
-            win.Visible = true;
-            break;
-        case 3:
-            win.Visible = false;
-            break;
+        var ex = new CursesSynchronizationException();
+        ex.Message.ShouldBe("Operation cannot be performed outside the main synchronization context or thread.");
     }
-
-    return Task.CompletedTask;
-}, 1000);
-
-// Run the main loop.
-terminal.Run((_, _) => Task.CompletedTask);
+}

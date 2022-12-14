@@ -44,6 +44,8 @@ public interface IPad: ISurface
     /// <summary>
     ///     Gets the sub-pads of this pad.
     /// </summary>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     IEnumerable<ISubPad> SubPads { get; }
 
     /// <summary>
@@ -51,6 +53,8 @@ public interface IPad: ISurface
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the bounds.</exception>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     new Size Size { get; set; }
 
     /// <summary>
@@ -63,6 +67,8 @@ public interface IPad: ISurface
     ///     Thrown if <paramref name="srcArea" /> or <paramref name="destLocation" /> are
     ///     out of bounds.
     /// </exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Refresh(Rectangle srcArea, Point destLocation);
 
     /// <summary>
@@ -73,6 +79,8 @@ public interface IPad: ISurface
     /// <exception cref="ArgumentOutOfRangeException">
     ///     Thrown if <paramref name="destLocation" /> is out of bounds.
     /// </exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     void Refresh(Point destLocation);
 
     /// <summary>
@@ -84,6 +92,8 @@ public interface IPad: ISurface
     /// <returns>A new pad object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="area" /> is outside the bounds of the parent.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     ISubPad SubPad(Rectangle area);
 
     /// <summary>
@@ -91,5 +101,7 @@ public interface IPad: ISurface
     /// </summary>
     /// <returns>A new pad object.</returns>
     /// <exception cref="ObjectDisposedException">Screen is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     IPad Duplicate();
 }

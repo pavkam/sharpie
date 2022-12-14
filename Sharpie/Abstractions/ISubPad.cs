@@ -46,6 +46,8 @@ public interface ISubPad: ISurface
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the parent's bounds.</exception>
     /// <exception cref="ObjectDisposedException">Sub-pad is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     Point Location { get; set; }
 
     /// <summary>
@@ -53,6 +55,8 @@ public interface ISubPad: ISurface
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The <paramref name="value" /> is outside the bounds.</exception>
     /// <exception cref="ObjectDisposedException">Sub-pad is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     new Size Size { get; set; }
 
     /// <summary>
@@ -60,5 +64,7 @@ public interface ISubPad: ISurface
     /// </summary>
     /// <returns>A new sub-pad object.</returns>
     /// <exception cref="ObjectDisposedException">Sub-pad is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <remarks>This operation is not thread safe.</remarks>
     ISubPad Duplicate();
 }

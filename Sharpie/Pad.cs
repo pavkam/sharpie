@@ -37,7 +37,8 @@ namespace Sharpie;
 public sealed class Pad: Surface, IPad
 {
     private readonly IList<SubPad> _subPads = new List<SubPad>();
-
+    private IReadOnlyList<SubPad> _roSubPads = Array.Empty<SubPad>();
+    
     /// <summary>
     ///     Initializes the pad using the given Curses handle.
     /// </summary>
@@ -46,6 +47,7 @@ public sealed class Pad: Surface, IPad
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal Pad(Screen parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
     {
         Screen = parent!;
@@ -59,8 +61,26 @@ public sealed class Pad: Surface, IPad
     /// <inheritdoc cref="IPad.Screen" />
     IScreen IPad.Screen => Screen;
 
-    /// <inheritdoc cref="IWindow.SubWindows" />
-    public IEnumerable<ISubPad> SubPads => _subPads;
+    /// <inheritdoc cref="Surface.AssertSynchronized" />
+    protected internal override void AssertSynchronized()
+    {
+        if (Screen != null!)
+        {
+            Screen.AssertSynchronized();
+        }
+    }
+    
+    /// <inheritdoc cref="IPad.SubPads" />
+    public IEnumerable<ISubPad> SubPads
+    {
+        get
+        {
+            AssertAlive();
+            AssertSynchronized();
+            
+            return _roSubPads;
+        }
+    }
 
     /// <inheritdoc cref="IPad.Size" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
@@ -73,7 +93,9 @@ public sealed class Pad: Surface, IPad
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
-
+            
+            AssertSynchronized();
+            
             Curses.wresize(Handle, value.Height, value.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the sub-pad.");
         }
@@ -94,20 +116,19 @@ public sealed class Pad: Surface, IPad
             throw new ArgumentOutOfRangeException(nameof(destLocation));
         }
 
-        Screen.Terminal.WithinBatch(batch =>
+        AssertSynchronized();
+        
+        if (Screen.Terminal.AtomicRefreshOpen)
         {
-            if (batch)
-            {
-                Curses.pnoutrefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
-                          destRect.Bottom, destRect.Right)
-                      .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
-            } else
-            {
-                Curses.prefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
-                          destRect.Bottom, destRect.Right)
-                      .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
-            }
-        });
+            Curses.pnoutrefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
+                      destRect.Bottom, destRect.Right)
+                  .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
+        } else
+        {
+            Curses.prefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
+                      destRect.Bottom, destRect.Right)
+                  .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
+        }
     }
 
     /// <inheritdoc cref="IPad.Refresh(System.Drawing.Point)" />
@@ -123,6 +144,8 @@ public sealed class Pad: Surface, IPad
             throw new ArgumentOutOfRangeException(nameof(area));
         }
 
+        AssertSynchronized();
+        
         var handle = Curses.subpad(Handle, area.Height, area.Width, area.Top, area.Right)
                            .Check(nameof(Curses.subpad), "Failed to create a new sub-pad.");
 
@@ -136,6 +159,8 @@ public sealed class Pad: Surface, IPad
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the pad.");
 
+        AssertSynchronized();
+        
         return new Pad(Screen, handle) { ManagedCaret = ManagedCaret };
     }
 
@@ -143,34 +168,40 @@ public sealed class Pad: Surface, IPad
     ///     Registers a sub-pad as a child. This is an internal function.
     /// </summary>
     /// <param name="subPad">The sub-pad to register.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void AddChild(SubPad subPad)
     {
         Debug.Assert(subPad != null);
         Debug.Assert(!subPad.Disposed);
         Debug.Assert(subPad.Pad == this);
-        Debug.Assert(!_subPads.Contains(subPad));
+        Debug.Assert(!_roSubPads.Contains(subPad));
 
         _subPads.Add(subPad);
+        _roSubPads = _subPads.ToArray();
     }
 
     /// <summary>
     ///     Un-registers a sub-pad as a child. This is an internal function.
     /// </summary>
     /// <param name="subPad">The sub-pad to un-register.</param>
+    /// <remarks>This method is not thread-safe.</remarks>
     internal void RemoveChild(SubPad subPad)
     {
         Debug.Assert(subPad != null);
         Debug.Assert(!subPad.Disposed);
         Debug.Assert(subPad.Pad == this);
-        Debug.Assert(_subPads.Contains(subPad));
+        Debug.Assert(_roSubPads.Contains(subPad));
 
         _subPads.Remove(subPad);
+        _roSubPads = _subPads.ToArray();
     }
 
     /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
-        foreach (var subPad in _subPads.ToArray())
+        AssertSynchronized();
+        
+        foreach (var subPad in _roSubPads)
         {
             subPad.Destroy();
         }

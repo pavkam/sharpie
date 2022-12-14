@@ -127,6 +127,22 @@ public class ScreenTests
     }
 
     [TestMethod]
+    public void Pads_Throws_IfScreenIsDestroyed()
+    {
+        _screen.Destroy();
+
+        Should.Throw<ObjectDisposedException>(() => _screen.Pads.ToArray());
+    }
+    
+    [TestMethod]
+    public void Windows_Throws_IfScreenIsDestroyed()
+    {
+        _screen.Destroy();
+
+        Should.Throw<ObjectDisposedException>(() => _screen.Windows.ToArray());
+    }
+    
+    [TestMethod]
     public void Pads_ContainsTheChild_WhenPassedAsParent()
     {
         var p = new Pad(_screen, IntPtr.MaxValue);
@@ -254,7 +270,7 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wrefresh(_screen.Handle), Times.Once);
         _cursesMock.Verify(v => v.wrefresh(w1.Handle), Times.Once);
         _cursesMock.Verify(v => v.wrefresh(w2.Handle), Times.Once);
-        
+
         _cursesMock.Verify(v => v.doupdate(), Times.Never);
     }
 
@@ -314,7 +330,7 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wredrawln(w1.Handle, 75, 25), Times.Once);
         _cursesMock.Verify(v => v.wredrawln(w2.Handle, 0, 15), Times.Once);
         _cursesMock.Verify(v => v.wredrawln(w3.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
-        
+
         _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
         _cursesMock.Verify(v => v.doupdate(), Times.Never);
     }
