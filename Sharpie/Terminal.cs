@@ -490,10 +490,11 @@ public sealed class Terminal: ITerminal, IDisposable
         } finally
         {
             Debug.Assert(_runCompletedEvent != null);
+            Debug.Assert(_boundSynchronizationContext != null);
             
+            _boundSynchronizationContext = null;
             _runCompletedEvent.Set();
             _runCompletedEvent = null;
-            _boundSynchronizationContext = null;
         }
     }
 
