@@ -322,15 +322,10 @@ public class TerminalMainLoopTests
     [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "AccessToModifiedClosure")]
     public async Task Stop_WaitsForThingsToFinish()
     {
-        var order = "";
-        var ra = RunAsync()
-            .ContinueWith(_ => order += "r");
-
+        var ra = RunAsync();
         _terminal.Stop(true);
-        order += "s";
 
-        await ra;
-        order.ShouldBe("sr");
+        await Should.NotThrowAsync(ra);
     }
 
     [TestMethod, Timeout(Timeout)]
