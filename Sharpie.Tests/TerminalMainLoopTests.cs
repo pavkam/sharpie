@@ -491,38 +491,23 @@ public class TerminalMainLoopTests
     }
 
     [TestMethod]
-    public async Task Run_ResumesTimersAcrossRuns()
+    public void Run_ResumesTimersAcrossRuns()
     {
-        var executed1 = 0;
-        var executed2 = 0;
-
-        var f = true;
+        var m = new ManualResetEvent(false);
+        
         _terminal.Repeat(_ =>
         {
-            if (f)
-            {
-                executed1++;
-            } else
-            {
-                executed2++;
-            }
-
+            m.Set();
             return Task.CompletedTask;
         }, 10);
 
-        var ra = RunAsync();
-        await Task.Delay(100);
-        _terminal.Stop();
-        await ra;
+        RunAsync();
+        m.WaitOne();
+        _terminal.Stop(true);
 
-        f = false;
-        
-        ra = RunAsync();
-        await Task.Delay(100);
-        _terminal.Stop();
-        await ra;
-
-        executed1.ShouldBeGreaterThan(0);
-        executed2.ShouldBeGreaterThan(0);
+        m.Reset();
+        RunAsync();
+        m.WaitOne();
+        _terminal.Stop(true);
     }
 }
