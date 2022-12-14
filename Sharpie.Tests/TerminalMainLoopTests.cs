@@ -493,10 +493,20 @@ public class TerminalMainLoopTests
     [TestMethod]
     public async Task Run_ResumesTimersAcrossRuns()
     {
-        var executed = 0;
+        var executed1 = 0;
+        var executed2 = 0;
+
+        var f = true;
         _terminal.Repeat(_ =>
         {
-            executed++;
+            if (f)
+            {
+                executed1++;
+            } else
+            {
+                executed2++;
+            }
+
             return Task.CompletedTask;
         }, 10);
 
@@ -505,11 +515,14 @@ public class TerminalMainLoopTests
         _terminal.Stop();
         await ra;
 
+        f = false;
+        
         ra = RunAsync();
         await Task.Delay(100);
         _terminal.Stop();
         await ra;
 
-        executed.ShouldBeInRange(18, 21);
+        executed1.ShouldBeGreaterThan(0);
+        executed2.ShouldBeGreaterThan(0);
     }
 }
