@@ -8,6 +8,7 @@
 
 # Sharpie
 **Sharpie** is a terminal manipulation library based on NCurses and targeting .NET 6 (dotnet core) and above.
+
 ![Demo](media/demo-2.gif)
 
 # Reasons
