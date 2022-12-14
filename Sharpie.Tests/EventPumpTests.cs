@@ -900,6 +900,7 @@ public class EventPumpTests
              .First();
 
         _cursesMock.Verify(v => v.newpad(1, 1), Times.Once);
+        _cursesMock.Verify(v => v.keypad(new IntPtr(10), true), Times.Once);
     }
 
     [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "StringLiteralTypo")]

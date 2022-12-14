@@ -75,6 +75,9 @@ public sealed class EventPump: IEventPump
         var padHandle = Terminal.Curses.newpad(1, 1)
                                 .Check(nameof(Terminal.Curses.newpad), "Failed to create dummy listen pad.");
 
+        Terminal.Curses.keypad(padHandle, true)
+                .Check(nameof(Terminal.Curses.keypad), "Failed to configure dummy listen pad.");
+        
         try
         {
             foreach (var e in Listen(padHandle, cancellationToken))
