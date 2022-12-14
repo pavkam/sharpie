@@ -135,6 +135,8 @@ public sealed class EventPump: IEventPump
 
         try
         {
+            yield return new StartEvent();
+            
             while (!cancellationToken.IsCancellationRequested)
             {
                 var @event = ReadNextEvent(handle, escapeSequence.Count > 0);
@@ -228,6 +230,8 @@ public sealed class EventPump: IEventPump
                     }
                 }
             }
+            
+            yield return new StopEvent();
         } finally
         {
             monitorHandle?.Dispose();

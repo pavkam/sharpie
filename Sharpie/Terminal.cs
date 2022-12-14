@@ -462,20 +462,19 @@ public sealed class Terminal: ITerminal, IDisposable
             AsyncContext.Run(async () =>
             {
                 _boundSynchronizationContext = SynchronizationContext.Current;
-                foreach (var @event in Events.Listen())
+                var cts = new CancellationTokenSource();
+                foreach (var @event in Events.Listen(cts.Token))
                 {
                     if (stopOnCtrlC &&
                         @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
                     {
-                        break;
+                        cts.Cancel();
                     }
-
-                    if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
+                    else if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
                     {
-                        break;
+                        cts.Cancel();
                     }
-
-                    if (@event is DelegateEvent { Object: ActionWrapper aw })
+                    else if (@event is DelegateEvent { Object: ActionWrapper aw })
                     {
                         Debug.Assert(aw.Action != null);
 
@@ -485,7 +484,6 @@ public sealed class Terminal: ITerminal, IDisposable
                         await eventAction(this, @event);
                     }
                 }
-
             });
         } finally
         {

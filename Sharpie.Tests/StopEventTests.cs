@@ -26,59 +26,43 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
-namespace Sharpie;
+namespace Sharpie.Tests;
 
-/// <summary>
-///     Defines the possible event types.
-/// </summary>
-[PublicAPI]
-public enum EventType
+[TestClass]
+public class StopEventTests
 {
-    /// <summary>
-    ///     Undefined event.
-    /// </summary>
-    Undefined = 0,
-    
-    /// <summary>
-    ///     The listening process has been started.
-    /// </summary>
-    Start,
-    
-    /// <summary>
-    ///     The listening process has been stopped.
-    /// </summary>
-    Stop,
-    
-    /// <summary>
-    ///     The terminal has been resized.
-    /// </summary>
-    TerminalResize,
+    private readonly StopEvent _event1 = new();
 
-    /// <summary>
-    ///     The terminal is about to be resized.
-    /// </summary>
-    TerminalAboutToResize,
+    [TestMethod]
+    public void Ctor_InitializesPropertiesCorrectly() { _event1.Type.ShouldBe(EventType.Stop); }
 
-    /// <summary>
-    ///     A key has been pressed.
-    /// </summary>
-    KeyPress,
+    [TestMethod]
+    public void ToString_ProperlyFormats()
+    {
+        _event1.ToString()
+               .ShouldBe("Stopped");
+    }
 
-    /// <summary>
-    ///     The mouse has moved.
-    /// </summary>
-    MouseMove,
+    [TestMethod, DataRow(null), DataRow("")]
+    public void Equals_ReturnsFalse_IfNotSameType(object? b)
+    {
+        _event1.Equals(b)
+               .ShouldBeFalse();
+    }
 
-    /// <summary>
-    ///     The mouse buttons have been used.
-    /// </summary>
-    MouseAction,
+    [TestMethod]
+    public void Equals_ReturnsTrue_IfSameType()
+    {
+        _event1.Equals(new StopEvent())
+               .ShouldBeTrue();
+    }
 
-    /// <summary>
-    ///     Delegated object that needs to be processed on main context.
-    /// </summary>
-    Delegate,
-    
+    [TestMethod]
+    public void GetHashCode_IsEqual_Always()
+    {
+        _event1.GetHashCode()
+               .ShouldBe(new StopEvent().GetHashCode());
+    }
 }

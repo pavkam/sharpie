@@ -31,54 +31,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     Defines the possible event types.
+///     Generated automatically when <see cref="EventPump"/> stops listening for events.
 /// </summary>
 [PublicAPI]
-public enum EventType
+public sealed class StopEvent: Event
 {
     /// <summary>
-    ///     Undefined event.
+    ///     Creates a new instance of the class.
     /// </summary>
-    Undefined = 0,
-    
-    /// <summary>
-    ///     The listening process has been started.
-    /// </summary>
-    Start,
-    
-    /// <summary>
-    ///     The listening process has been stopped.
-    /// </summary>
-    Stop,
-    
-    /// <summary>
-    ///     The terminal has been resized.
-    /// </summary>
-    TerminalResize,
+    internal StopEvent(): base(EventType.Stop) { }
 
-    /// <summary>
-    ///     The terminal is about to be resized.
-    /// </summary>
-    TerminalAboutToResize,
+    /// <inheritdoc cref="object.ToString" />
+    public override string ToString() => "Stopped";
 
-    /// <summary>
-    ///     A key has been pressed.
-    /// </summary>
-    KeyPress,
+    /// <inheritdoc cref="object.Equals(object)" />
+    public override bool Equals(object? obj) => obj is StopEvent && obj.GetType() == GetType();
 
-    /// <summary>
-    ///     The mouse has moved.
-    /// </summary>
-    MouseMove,
-
-    /// <summary>
-    ///     The mouse buttons have been used.
-    /// </summary>
-    MouseAction,
-
-    /// <summary>
-    ///     Delegated object that needs to be processed on main context.
-    /// </summary>
-    Delegate,
-    
+    /// <inheritdoc cref="object.GetHashCode" />
+    public override int GetHashCode() => 0xF00BD;
 }
