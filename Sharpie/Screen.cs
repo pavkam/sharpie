@@ -38,8 +38,8 @@ namespace Sharpie;
 public sealed class Screen: TerminalSurface, IScreen
 {
     private readonly IList<Pad> _pads = new List<Pad>();
-    private IReadOnlyList<Pad> _roPads = new List<Pad>();
     private readonly IList<Window> _windows = new List<Window>();
+    private IReadOnlyList<Pad> _roPads = new List<Pad>();
     private IReadOnlyList<Window> _roWindows = new List<Window>();
 
     /// <summary>
@@ -67,10 +67,10 @@ public sealed class Screen: TerminalSurface, IScreen
     {
         get
         {
-           AssertAlive();
-           AssertSynchronized();
-           
-           return _roWindows;
+            AssertAlive();
+            AssertSynchronized();
+
+            return _roWindows;
         }
     }
 
@@ -81,7 +81,7 @@ public sealed class Screen: TerminalSurface, IScreen
         {
             AssertAlive();
             AssertSynchronized();
-            
+
             return _roPads;
         }
     }
@@ -171,7 +171,7 @@ public sealed class Screen: TerminalSurface, IScreen
 
         AssertAlive();
         AssertSynchronized();
-        
+
         var handle = Curses.newpad(size.Height, size.Width)
                            .Check(nameof(Curses.newpad), "Failed to create a new pad.");
 
@@ -321,7 +321,7 @@ public sealed class Screen: TerminalSurface, IScreen
         {
             _windows.RemoveAt(i);
             _windows.Add(window);
-            
+
             _roWindows = _windows.ToArray();
         } else
         {
@@ -384,7 +384,7 @@ public sealed class Screen: TerminalSurface, IScreen
     protected override void Delete()
     {
         AssertSynchronized();
-        
+
         foreach (var window in _roWindows)
         {
             window.Destroy();

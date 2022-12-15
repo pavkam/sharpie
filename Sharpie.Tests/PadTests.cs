@@ -80,7 +80,7 @@ public class PadTests
 
         Should.Throw<ObjectDisposedException>(() => p.SubPads.ToArray());
     }
-    
+
     [TestMethod]
     public void SubPads_ContainsTheChild_WhenPassedAsParent()
     {

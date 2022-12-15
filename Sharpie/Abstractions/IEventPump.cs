@@ -18,7 +18,10 @@ public interface IEventPump
     /// <param name="cancellationToken">Cancellation token used to interrupt the process.</param>
     /// <returns>The event listening enumerable.</returns>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="surface" /> is <c>null</c>.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken);
 
@@ -28,7 +31,10 @@ public interface IEventPump
     /// <param name="surface">The surface to refresh during event processing.</param>
     /// <returns>The event listening enumerable.</returns>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="surface" /> is <c>null</c>.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     IEnumerable<Event> Listen(ISurface surface);
 
@@ -37,7 +43,10 @@ public interface IEventPump
     /// </summary>
     /// <param name="cancellationToken">Cancellation token used to interrupt the process.</param>
     /// <returns>The event listening enumerable.</returns>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     IEnumerable<Event> Listen(CancellationToken cancellationToken);
 
@@ -45,7 +54,10 @@ public interface IEventPump
     ///     Gets an enumerable that is used to get enumerate events from Curses as they are generated.
     /// </summary>
     /// <returns>The event listening enumerable.</returns>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     IEnumerable<Event> Listen();
 
@@ -54,7 +66,10 @@ public interface IEventPump
     /// </summary>
     /// <param name="resolver">The resolver to register.</param>
     /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver" /> is <c>null</c>.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void Use(ResolveEscapeSequenceFunc resolver);
 
@@ -64,7 +79,10 @@ public interface IEventPump
     /// <param name="resolver">The resolver to check.</param>
     /// <returns><c>true</c> if the resolver is registered; <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">Thrown is <paramref name="resolver" /> is <c>null</c>.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     bool Uses(ResolveEscapeSequenceFunc resolver);
 }

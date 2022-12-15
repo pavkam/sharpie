@@ -37,7 +37,8 @@ using Sharpie.Demos.Snake;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance.
-using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: CaretMode.Invisible, UseMouse: false, AllocateHeader: true));
+using var terminal = new Terminal(NativeCursesProvider.Instance,
+    new(CaretMode: CaretMode.Invisible, UseMouse: false, AllocateHeader: true));
 
 // Configure the header.
 terminal.Header!.Background = (new(' '),

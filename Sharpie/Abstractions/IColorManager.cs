@@ -62,7 +62,10 @@ public interface IColorManager
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <returns>A new color mixture.</returns>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     ColorMixture MixColors(short fgColor, short bgColor);
 
@@ -72,7 +75,10 @@ public interface IColorManager
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
     /// <returns>A new color mixture.</returns>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor);
 
@@ -82,7 +88,10 @@ public interface IColorManager
     /// <param name="mixture">The color mixture to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void RemixColors(ColorMixture mixture, short fgColor, short bgColor);
 
@@ -92,7 +101,10 @@ public interface IColorManager
     /// <param name="mixture">The color mixture to redefine.</param>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void RemixColors(ColorMixture mixture, StandardColor fgColor, StandardColor bgColor);
 
@@ -101,7 +113,10 @@ public interface IColorManager
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void RemixDefaultColors(short fgColor, short bgColor);
 
@@ -110,7 +125,10 @@ public interface IColorManager
     /// </summary>
     /// <param name="fgColor">The foreground color.</param>
     /// <param name="bgColor">The background color.</param>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void RemixDefaultColors(StandardColor fgColor, StandardColor bgColor);
 
@@ -119,7 +137,10 @@ public interface IColorManager
     /// </summary>
     /// <param name="mixture">The color mixture to get the colors from.</param>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     (short fgColor, short bgColor) UnMixColors(ColorMixture mixture);
 
@@ -135,7 +156,10 @@ public interface IColorManager
     ///     <see cref="CanRedefineColors" />. This operation is not thread safe.
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     void RedefineColor(short color, short red, short green, short blue);
 
     /// <summary>
@@ -151,7 +175,10 @@ public interface IColorManager
     /// </remarks>
     /// <exception cref="ArgumentOutOfRangeException">If any of the three components is greater than 1000.</exception>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     void RedefineColor(StandardColor color, short red, short green, short blue);
 
     /// <summary>
@@ -163,7 +190,10 @@ public interface IColorManager
     ///     <see cref="CanRedefineColors" />. This operation is not thread safe.
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     (short red, short green, short blue) BreakdownColor(short color);
 
     /// <summary>
@@ -175,6 +205,9 @@ public interface IColorManager
     ///     <see cref="CanRedefineColors" />. This operation is not thread safe.
     /// </remarks>
     /// <exception cref="NotSupportedException">If the terminal does not support redefining colors.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     (short red, short green, short blue) BreakdownColor(StandardColor color);
 }

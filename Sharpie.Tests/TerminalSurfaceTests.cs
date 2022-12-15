@@ -186,6 +186,20 @@ public class TerminalSurfaceTests
     }
 
     [TestMethod]
+    public void Refresh2_Throws_IfWithinBatch()
+    {
+        var sa = new TerminalSurface(_terminal, new(1));
+
+        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+                   .Returns(10);
+
+        using (_terminal.AtomicRefresh())
+        {
+            Should.Throw<InvalidOperationException>(() => sa.Refresh(1, 1));
+        }
+    }
+
+    [TestMethod]
     public void Refresh2_Succeeds_IfCursesSucceeds()
     {
         var sa = new TerminalSurface(_terminal, new(1));
@@ -214,26 +228,6 @@ public class TerminalSurfaceTests
         sa.ImmediateRefresh = true;
 
         _cursesMock.Verify(v => v.immedok(sa.Handle, true), Times.Once);
-    }
-
-    [TestMethod]
-    public void Critical_Returns_IfCursesSucceeded()
-    {
-        var sa = new TerminalSurface(_terminal, new(1));
-
-        _cursesMock.Setup(s => s.is_cleared(It.IsAny<IntPtr>()))
-                   .Returns(true);
-
-        sa.Critical.ShouldBeTrue();
-    }
-
-    [TestMethod]
-    public void Critical_Sets_IfCursesSucceeded()
-    {
-        var sa = new TerminalSurface(_terminal, new(1));
-        sa.Critical = true;
-
-        _cursesMock.Verify(v => v.clearok(sa.Handle, true), Times.Once);
     }
 
     [TestMethod]

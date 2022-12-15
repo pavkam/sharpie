@@ -132,7 +132,10 @@ public interface ITerminal
     ///     Sets the terminal title.
     /// </summary>
     /// <param name="title">The title of the terminal.</param>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void SetTitle(string title);
 
@@ -141,7 +144,10 @@ public interface ITerminal
     /// </summary>
     /// <remarks>The actual notification depends on terminal support.</remarks>
     /// <param name="silent">The alert mode.</param>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void Alert(bool silent);
 
@@ -149,7 +155,10 @@ public interface ITerminal
     ///     Creates a batch update lock. All refreshes are batched together until the batch is disposed.
     /// </summary>
     /// <returns>A disposable object that need to be disposed to release the batch update lock.</returns>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     IDisposable AtomicRefresh();
 
@@ -161,7 +170,10 @@ public interface ITerminal
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="eventAction" /> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">Thrown if another <see cref="Run" /> is already running.</exception>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void Run(Func<ITerminal, Event, Task> eventAction, bool stopOnCtrlC = true);
 

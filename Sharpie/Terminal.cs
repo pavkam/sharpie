@@ -43,6 +43,7 @@ public sealed class Terminal: ITerminal, IDisposable
     private static object _stopSignal = new();
     private static bool _terminalInstanceActive;
     private int _batchUpdateLocks;
+    private SynchronizationContext? _boundSynchronizationContext;
     private ColorManager _colorManager;
     private EventPump _eventPump;
     private TerminalSurface? _footer;
@@ -53,8 +54,7 @@ public sealed class Terminal: ITerminal, IDisposable
     private ManualResetEventSlim? _runCompletedEvent;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
-    private SynchronizationContext? _boundSynchronizationContext;
-    
+
     /// <summary>
     ///     Creates a new instance
     ///     of the terminal.
@@ -284,6 +284,11 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <summary>
+    ///     Specifies whether an atomic refresh has been initiated by <see cref="AtomicRefresh" />.
+    /// </summary>
+    internal bool AtomicRefreshOpen => _batchUpdateLocks > 0;
+
+    /// <summary>
     ///     Disposes the current terminal instance.
     /// </summary>
     public void Dispose()
@@ -402,7 +407,7 @@ public sealed class Terminal: ITerminal, IDisposable
     public void Alert(bool silent)
     {
         AssertSynchronized();
-        
+
         if (silent)
         {
             Curses.flash()
@@ -421,7 +426,7 @@ public sealed class Terminal: ITerminal, IDisposable
     public IDisposable AtomicRefresh()
     {
         AssertSynchronized();
-        
+
         Interlocked.Increment(ref _batchUpdateLocks);
         return new Disposable(() =>
         {
@@ -469,12 +474,10 @@ public sealed class Terminal: ITerminal, IDisposable
                         @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
                     {
                         cts.Cancel();
-                    }
-                    else if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
+                    } else if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
                     {
                         cts.Cancel();
-                    }
-                    else if (@event is DelegateEvent { Object: ActionWrapper aw })
+                    } else if (@event is DelegateEvent { Object: ActionWrapper aw })
                     {
                         Debug.Assert(aw.Action != null);
 
@@ -489,7 +492,7 @@ public sealed class Terminal: ITerminal, IDisposable
         {
             Debug.Assert(_runCompletedEvent != null);
             Debug.Assert(_boundSynchronizationContext != null);
-            
+
             _boundSynchronizationContext = null;
             _runCompletedEvent.Set();
             _runCompletedEvent = null;
@@ -566,11 +569,6 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <summary>
-    /// Specifies whether an atomic refresh has been initiated by <see cref="AtomicRefresh"/>.
-    /// </summary>
-    internal bool AtomicRefreshOpen => _batchUpdateLocks > 0;
-
-    /// <summary>
     ///     Attempts to update the terminal.
     /// </summary>
     /// <returns><c>true</c> if the attempt was successful. <c>false</c> otherwise.</returns>
@@ -579,7 +577,7 @@ public sealed class Terminal: ITerminal, IDisposable
     {
         AssertAlive();
         AssertSynchronized();
-        
+
         Debug.Assert(_batchUpdateLocks >= 0);
         if (_batchUpdateLocks == 0)
         {
@@ -605,7 +603,8 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <summary>
-    /// Asserts that executing thread is bound to the correct synchronization context. Does nothing if <see cref="Run"/> not executing.
+    ///     Asserts that executing thread is bound to the correct synchronization context. Does nothing if <see cref="Run" />
+    ///     not executing.
     /// </summary>
     /// <exception cref="CursesSynchronizationException">Thrown if current thread is not bound to the correct context.</exception>
     internal void AssertSynchronized()

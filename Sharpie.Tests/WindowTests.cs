@@ -119,7 +119,7 @@ public class WindowTests
         var w = new Window(_screen, new(22));
         w.SubWindows.ShouldBeEmpty();
     }
-    
+
     [TestMethod]
     public void SubWindows_Throws_IfWindowIsDestroyed()
     {

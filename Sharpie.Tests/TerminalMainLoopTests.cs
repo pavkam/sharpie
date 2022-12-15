@@ -34,7 +34,7 @@ namespace Sharpie.Tests;
 public class TerminalMainLoopTests
 {
     private const int Timeout = 1000;
-        
+
     private Mock<ICursesProvider> _cursesMock = null!;
     private Terminal _terminal = null!;
 
@@ -289,7 +289,7 @@ public class TerminalMainLoopTests
 
             return Task.CompletedTask;
         });
-        
+
         (events[0] is StartEvent).ShouldBeTrue();
         (events[1] is KeyEvent { Key: Key.Character, Char.Value: 'A' }).ShouldBeTrue();
         (events[2] is StopEvent).ShouldBeTrue();
@@ -465,30 +465,27 @@ public class TerminalMainLoopTests
     public async Task Dispose_CancelsTheRunning_AndKillsTimers()
     {
         var ra = RunAsync();
-
-        var executed = 0;
+        var count = Timer.ActiveCount;
+        var tickedEvent = new ManualResetEvent(false);
         _terminal.Repeat(_ =>
         {
-            executed++;
+            tickedEvent.Set();
             return Task.CompletedTask;
         }, 10);
 
-        await Task.Delay(100)
-                  .ContinueWith(_ => _terminal.Dispose());
-
+        tickedEvent.WaitOne();
+        _terminal.Dispose();
         await ra;
 
-        await Task.Delay(50)
-                  .ContinueWith(_ => _terminal.Dispose());
-
-        executed.ShouldBeInRange(8, 11);
+        await Task.Delay(500);
+        Timer.ActiveCount.ShouldBe(count);
     }
 
     [TestMethod, Timeout(Timeout)]
     public void Run_ResumesTimersAcrossRuns()
     {
         var m = new ManualResetEvent(false);
-        
+
         _terminal.Repeat(_ =>
         {
             m.Set();

@@ -63,11 +63,6 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     /// <inheritdoc cref="ISoftLabelKeyManager.Terminal" />
     ITerminal ISoftLabelKeyManager.Terminal => Terminal;
 
-    private void AssertSynchronized()
-    {
-        Terminal.AssertSynchronized();
-    }
-    
     /// <inheritdoc cref="ISoftLabelKeyManager.Enabled" />
     public bool Enabled => _mode != SoftLabelKeyMode.Disabled;
 
@@ -101,7 +96,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         {
             AssertEnabled();
             AssertSynchronized();
-            
+
             Terminal.Curses.slk_attr_set((uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
                     .Check(nameof(Terminal.Curses.slk_attr_set), "Failed to configure the soft label key attributes.");
         }
@@ -116,7 +111,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         {
             AssertEnabled();
             AssertSynchronized();
-            
+
             Terminal.Curses.slk_color(value.Handle)
                     .Check(nameof(Terminal.Curses.slk_color), "Failed to configure the soft label key colors.");
         }
@@ -138,7 +133,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
 
         AssertEnabled();
         AssertSynchronized();
-        
+
         Terminal.Curses.slk_set(index + 1, title, (int) align)
                 .Check(nameof(Terminal.Curses.slk_set), "Failed to set the soft label.");
     }
@@ -149,7 +144,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     {
         AssertEnabled();
         AssertSynchronized();
-        
+
         Terminal.Curses.slk_attr_on((uint) attributes, IntPtr.Zero)
                 .Check(nameof(Terminal.Curses.slk_attr_on), "Failed to configure the soft label key attributes.");
     }
@@ -160,7 +155,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     {
         AssertEnabled();
         AssertSynchronized();
-        
+
         Terminal.Curses.slk_attr_off((uint) attributes, IntPtr.Zero)
                 .Check(nameof(Terminal.Curses.slk_attr_off), "Failed to configure the soft label key attributes.");
     }
@@ -171,7 +166,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     {
         AssertEnabled();
         AssertSynchronized();
-        
+
         Terminal.Curses.slk_clear()
                 .Check(nameof(Terminal.Curses.slk_clear), "Failed to clear the soft label keys.");
     }
@@ -182,7 +177,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     {
         AssertEnabled();
         AssertSynchronized();
-        
+
         Terminal.Curses.slk_restore()
                 .Check(nameof(Terminal.Curses.slk_restore), "Failed to restore the soft label keys.");
     }
@@ -193,7 +188,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     {
         AssertEnabled();
         AssertSynchronized();
-        
+
         Terminal.Curses.slk_touch()
                 .Check(nameof(Terminal.Curses.slk_touch), "Failed to mark soft label keys as dirty.");
     }
@@ -204,7 +199,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     {
         AssertEnabled();
         AssertSynchronized();
-        
+
         if (Terminal.AtomicRefreshOpen)
         {
             Terminal.Curses.slk_noutrefresh()
@@ -215,6 +210,8 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
                     .Check(nameof(Terminal.Curses.slk_refresh), "Failed to perform soft label key refresh.");
         }
     }
+
+    private void AssertSynchronized() { Terminal.AssertSynchronized(); }
 
     private void AssertEnabled()
     {
