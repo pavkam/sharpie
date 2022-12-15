@@ -39,33 +39,56 @@ var rnd = new Random();
 
 short c = 100;
 
-var win1 = terminal.Screen.Window(new(1, 1, 10, 10));
-win1.Background = (new(' '),
-    new()
-    {
-        Attributes = VideoAttribute.None,
-        ColorMixture = terminal.Colors.MixColors(StandardColor.Default, StandardColor.Red)
-    });
+void MakeWindow()
+{
+    var x = rnd.Next(0, terminal.Screen.Size.Width);
+    var y = rnd.Next(0, terminal.Screen.Size.Height);
+    var w = rnd.Next(1, terminal.Screen.Size.Width - x);
+    var h = rnd.Next(1, terminal.Screen.Size.Height - y);
 
-var win2 = terminal.Screen.Window(new(5, 5, 10, 10));
-win2.Background = (new(' '),
-    new()
-    {
-        Attributes = VideoAttribute.None,
-        ColorMixture = terminal.Colors.MixColors(StandardColor.Default, StandardColor.Blue)
-    });
+    var win = terminal.Screen.Window(new(x, y, w, h));
 
-win1.WriteText("Hello World");
 
-//win1.Refresh();
-//win2.Refresh();
+    win.Background = (new(' '),
+        new()
+        {
+            Attributes = VideoAttribute.None,
+            ColorMixture = terminal.Colors.MixColors((short) StandardColor.Default, c)
+        });
 
-NativeCursesProvider.Instance.wrefresh(win1.Handle);
-NativeCursesProvider.Instance.clearok(win2.Handle, true);
-NativeCursesProvider.Instance.wrefresh(win2.Handle);
+    c++;
+}
 
+for (var x = 0; x < 10; x++)
+{
+    MakeWindow();
+}
 
 terminal.Screen.Refresh();
+
+terminal.Repeat(t =>
+{
+    var op = rnd.Next(4);
+    var x = rnd.Next(0, t.Screen.Windows.Count());
+    var win = t.Screen.Windows.ElementAt(x);
+    switch (op)
+    {
+        case 0:
+            win.SendToBack();
+            break;
+        case 1:
+            win.BringToFront();
+            break;
+        case 2:
+            win.Visible = true;
+            break;
+        case 3:
+            win.Visible = false;
+            break;
+    }
+
+    return Task.CompletedTask;
+}, 1000);
 
 // Run the main loop.
 terminal.Run((_, _) => Task.CompletedTask);
