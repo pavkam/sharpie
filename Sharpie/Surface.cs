@@ -59,6 +59,7 @@ public abstract class Surface: ISurface, IDisposable
 
         Curses.scrollok(Handle, true)
               .Check(nameof(Curses.scrollok), "Failed to change the scrolling mode.");
+
         Curses.nodelay(Handle, false)
               .Check(nameof(Curses.nodelay), "Failed to disable read-delay mode.");
     }
@@ -74,12 +75,6 @@ public abstract class Surface: ISurface, IDisposable
     /// </summary>
     protected internal virtual Point Origin => Point.Empty;
 
-    /// <summary>
-    /// Asserts that executing thread is bound to the correct synchronization context.
-    /// </summary>
-    /// <exception cref="CursesSynchronizationException">Thrown if current thread is not bound to the correct context.</exception>
-    protected internal abstract void AssertSynchronized();
-    
     /// <summary>
     ///     Disposes the current instance.
     /// </summary>
@@ -107,10 +102,12 @@ public abstract class Surface: ISurface, IDisposable
     {
         get
         {
-            AssertSynchronized(); return Curses.is_leaveok(Handle); }
+            AssertSynchronized();
+            return Curses.is_leaveok(Handle);
+        }
         set
         {
-            AssertSynchronized(); 
+            AssertSynchronized();
             Curses.leaveok(Handle, value)
                   .Check(nameof(Curses.leaveok), "Failed to change the caret manage mode.");
         }
@@ -119,11 +116,16 @@ public abstract class Surface: ISurface, IDisposable
     /// <inheritdoc cref="ISurface.Scrollable" />
     public bool Scrollable
     {
-        get {  AssertSynchronized(); return Curses.is_scrollok(Handle); }
+        get
+        {
+            AssertSynchronized();
+            return Curses.is_scrollok(Handle);
+        }
         set
         {
-            AssertSynchronized(); Curses.scrollok(Handle, value)
-                                        .Check(nameof(Curses.scrollok), "Failed to change the scrolling mode.");
+            AssertSynchronized();
+            Curses.scrollok(Handle, value)
+                  .Check(nameof(Curses.scrollok), "Failed to change the scrolling mode.");
         }
     }
 
@@ -135,8 +137,8 @@ public abstract class Surface: ISurface, IDisposable
     {
         get
         {
-            AssertSynchronized(); 
-            
+            AssertSynchronized();
+
             Curses.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero)
                   .Check(nameof(Curses.wattr_get), "Failed to get the surface style.");
 
@@ -144,9 +146,9 @@ public abstract class Surface: ISurface, IDisposable
         }
         set
         {
-            AssertSynchronized(); 
+            AssertSynchronized();
             Curses.wattr_set(Handle, (uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
-                                        .Check(nameof(Curses.wattr_set), "Failed to set the surface style.");
+                  .Check(nameof(Curses.wattr_set), "Failed to set the surface style.");
         }
     }
 
@@ -156,7 +158,7 @@ public abstract class Surface: ISurface, IDisposable
         get => Style.ColorMixture;
         set
         {
-            AssertSynchronized(); 
+            AssertSynchronized();
             Curses.wcolor_set(Handle, value.Handle, IntPtr.Zero)
                   .Check(nameof(Curses.wcolor_set), "Failed to set the surface color mixture.");
         }
@@ -167,8 +169,8 @@ public abstract class Surface: ISurface, IDisposable
     {
         get
         {
-            AssertSynchronized(); 
-            
+            AssertSynchronized();
+
             Curses.wgetbkgrnd(Handle, out var @char)
                   .Check(nameof(Curses.wgetbkgrnd), "Failed to get the surface background.");
 
@@ -176,8 +178,8 @@ public abstract class Surface: ISurface, IDisposable
         }
         set
         {
-            AssertSynchronized(); 
-            
+            AssertSynchronized();
+
             Curses.wbkgrnd(Handle, Curses.ToComplexChar(value.@char, value.style))
                   .Check(nameof(Curses.wbkgrnd), "Failed to set the surface background.");
         }
@@ -188,7 +190,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         get
         {
-            AssertSynchronized(); 
+            AssertSynchronized();
             return new(Curses.getmaxx(Handle)
                              .Check(nameof(Curses.getmaxx), "Failed to get surface width."), Curses.getmaxy(Handle)
                 .Check(nameof(Curses.getmaxy), "Failed to get surface height."));
@@ -200,7 +202,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         get
         {
-            AssertSynchronized(); 
+            AssertSynchronized();
             return new(Curses.getcurx(Handle)
                              .Check(nameof(Curses.getcurx), "Failed to get caret X position."), Curses.getcury(Handle)
                 .Check(nameof(Curses.getcury), "Failed to get caret Y position."));
@@ -220,7 +222,11 @@ public abstract class Surface: ISurface, IDisposable
     /// <inheritdoc cref="ISurface.Dirty" />
     public bool Dirty
     {
-        get {  AssertSynchronized(); return Curses.is_wintouched(Handle); }
+        get
+        {
+            AssertSynchronized();
+            return Curses.is_wintouched(Handle);
+        }
     }
 
     /// <inheritdoc cref="ISurface.LineDirty" />
@@ -238,8 +244,8 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     void IDrawSurface.DrawCell(Point location, Rune rune, Style textStyle)
     {
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         Curses.wmove(Handle, location.Y, location.X)
               .Check(nameof(Curses.wmove), "Failed to move the caret to the given coordinates.");
 
@@ -255,8 +261,8 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         Curses.wattr_on(Handle, (uint) attributes, IntPtr.Zero)
               .Check(nameof(Curses.wattr_on), "Failed to enable surface attributes.");
     }
@@ -265,8 +271,8 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         Curses.wattr_off(Handle, (uint) attributes, IntPtr.Zero)
               .Check(nameof(Curses.wattr_off), "Failed to disable surface attributes.");
     }
@@ -315,8 +321,8 @@ public abstract class Surface: ISurface, IDisposable
         {
             throw new ArgumentOutOfRangeException(nameof(lines));
         }
-        
-        AssertSynchronized(); 
+
+        AssertSynchronized();
 
         Curses.winsdelln(Handle, lines)
               .Check(nameof(Curses.winsdelln), "Failed to insert blank lines into the surface.");
@@ -330,8 +336,8 @@ public abstract class Surface: ISurface, IDisposable
         {
             throw new ArgumentOutOfRangeException(nameof(lines));
         }
-        
-        AssertSynchronized(); 
+
+        AssertSynchronized();
 
         Curses.winsdelln(Handle, -lines)
               .Check(nameof(Curses.winsdelln), "Failed to delete lines from the surface.");
@@ -346,8 +352,8 @@ public abstract class Surface: ISurface, IDisposable
             throw new ArgumentOutOfRangeException(nameof(width), "The length should be greater than zero.");
         }
 
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         Curses.wchgat(Handle, width, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
               .Check(nameof(Curses.wchgat), "Failed to change style of characters in the surface.");
     }
@@ -365,8 +371,8 @@ public abstract class Surface: ISurface, IDisposable
         {
             return;
         }
-        
-        AssertSynchronized(); 
+
+        AssertSynchronized();
 
         foreach (var rune in str.EnumerateRunes())
         {
@@ -387,8 +393,8 @@ public abstract class Surface: ISurface, IDisposable
         {
             throw new ArgumentOutOfRangeException(nameof(length));
         }
-        
-        AssertSynchronized(); 
+
+        AssertSynchronized();
 
         Curses.wvline_set(Handle, Curses.ToComplexChar(@char, style), length)
               .Check(nameof(Curses.wvline_set), "Failed to draw a vertical line.");
@@ -403,8 +409,8 @@ public abstract class Surface: ISurface, IDisposable
             throw new ArgumentOutOfRangeException(nameof(length));
         }
 
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         Curses.wvline(Handle, 0, length)
               .Check(nameof(Curses.wvline), "Failed to draw a vertical line.");
     }
@@ -418,8 +424,8 @@ public abstract class Surface: ISurface, IDisposable
             throw new ArgumentOutOfRangeException(nameof(length));
         }
 
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         Curses.whline_set(Handle, Curses.ToComplexChar(@char, style), length)
               .Check(nameof(Curses.whline_set), "Failed to draw a horizontal line.");
     }
@@ -433,8 +439,8 @@ public abstract class Surface: ISurface, IDisposable
             throw new ArgumentOutOfRangeException(nameof(length));
         }
 
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         Curses.whline(Handle, 0, length)
               .Check(nameof(Curses.whline), "Failed to draw a horizontal line.");
     }
@@ -446,8 +452,8 @@ public abstract class Surface: ISurface, IDisposable
         Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar,
         Style style)
     {
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         var leftSide = Curses.ToComplexChar(leftSideChar, style);
         var rightSide = Curses.ToComplexChar(rightSideChar, style);
         var topSide = Curses.ToComplexChar(topSideChar, style);
@@ -466,8 +472,8 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void DrawBorder()
     {
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         Curses.wborder(Handle, 0, 0, 0, 0,
                   0, 0, 0, 0)
               .Check(nameof(Curses.wborder), "Failed to draw a surface border.");
@@ -482,8 +488,8 @@ public abstract class Surface: ISurface, IDisposable
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         while (count > 0)
         {
             if (Curses.wdelch(Handle)
@@ -505,8 +511,8 @@ public abstract class Surface: ISurface, IDisposable
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         count = Math.Min(count, Size.Width - CaretPosition.X);
         var arr = new CursesComplexChar[count];
 
@@ -521,8 +527,8 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Clear(ClearStrategy strategy = ClearStrategy.Full)
     {
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         switch (strategy)
         {
             case ClearStrategy.Full:
@@ -557,8 +563,8 @@ public abstract class Surface: ISurface, IDisposable
             throw new ArgumentException(nameof(surface));
         }
 
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         switch (strategy)
         {
             case ReplaceStrategy.Overlay:
@@ -655,8 +661,8 @@ public abstract class Surface: ISurface, IDisposable
             throw new ArgumentNullException(nameof(drawable));
         }
 
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         drawable.DrawTo(this, area, location);
     }
 
@@ -675,6 +681,12 @@ public abstract class Surface: ISurface, IDisposable
     }
 
     /// <summary>
+    ///     Asserts that executing thread is bound to the correct synchronization context.
+    /// </summary>
+    /// <exception cref="CursesSynchronizationException">Thrown if current thread is not bound to the correct context.</exception>
+    protected internal abstract void AssertSynchronized();
+
+    /// <summary>
     ///     Asserts that the surface is not disposed.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The surface has been disposed.</exception>
@@ -691,10 +703,10 @@ public abstract class Surface: ISurface, IDisposable
     /// </summary>
     protected virtual void Delete()
     {
-        AssertSynchronized(); 
-        
+        AssertSynchronized();
+
         Debug.Assert(_handle != IntPtr.Zero);
-        
+
         Curses.delwin(_handle);
         _handle = IntPtr.Zero;
     }

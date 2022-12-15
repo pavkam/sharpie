@@ -36,7 +36,7 @@ using Nito.Disposables;
 public class EventPumpTests
 {
     private const int Timeout = 1000;
-    
+
     private Mock<ICursesProvider> _cursesMock = null!;
     private EventPump _pump = null!;
     private CancellationTokenSource _source = null!;
@@ -75,7 +75,7 @@ public class EventPumpTests
             {
                 continue;
             }
-            
+
             count--;
             if (count == 0)
             {
@@ -327,9 +327,11 @@ public class EventPumpTests
     [TestMethod, Timeout(Timeout)]
     public void Listen1_EmitsStart()
     {
-        _pump.Listen(_window, CancellationToken.None).First().ShouldBe(new StartEvent());
+        _pump.Listen(_window, CancellationToken.None)
+             .First()
+             .ShouldBe(new StartEvent());
     }
-    
+
     [TestMethod, Timeout(Timeout)]
     public void Listen1_EmitsStop()
     {
@@ -348,7 +350,7 @@ public class EventPumpTests
             _source.Cancel();
         }
     }
-    
+
     [TestMethod, Timeout(Timeout)]
     public void Listen1_KeepsReadingUntilCancelled()
     {
@@ -900,7 +902,7 @@ public class EventPumpTests
              .First();
 
         _cursesMock.Verify(v => v.newpad(1, 1), Times.Once);
-        _cursesMock.Verify(v => v.keypad(new IntPtr(10), true), Times.Once);
+        _cursesMock.Verify(v => v.keypad(new(10), true), Times.Once);
     }
 
     [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -970,7 +972,8 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(1));
 
-        foreach (var e in _pump.Listen(_source.Token).Where(e => e.Type != EventType.Start && e.Type != EventType.Stop))
+        foreach (var e in _pump.Listen(_source.Token)
+                               .Where(e => e.Type != EventType.Start && e.Type != EventType.Stop))
         {
             _source.Cancel();
 

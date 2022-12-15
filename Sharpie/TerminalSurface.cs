@@ -54,37 +54,28 @@ public class TerminalSurface: Surface, ITerminalSurface
     /// <inheritdoc cref="ITerminalSurface.Terminal" />
     ITerminal ITerminalSurface.Terminal => Terminal;
 
-    /// <inheritdoc cref="Surface.AssertSynchronized" />
-    protected internal override void AssertSynchronized()
-    {
-        if (Terminal != null!)
-        {
-            Terminal.AssertSynchronized();
-        }
-    }
-
     /// <inheritdoc cref="ITerminalSurface.ImmediateRefresh" />
     public bool ImmediateRefresh
     {
-        get { AssertSynchronized();
-            return Curses.is_immedok(Handle); }
-        set { AssertSynchronized();
-            Curses.immedok(Handle, value); }
-    }
-
-    /// <inheritdoc cref="ITerminalSurface.Critical" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public bool Critical
-    {
-        get { AssertSynchronized();
-            return Curses.is_cleared(Handle); }
-        set { AssertSynchronized();
-            Curses.clearok(Handle, value); }
+        get
+        {
+            AssertSynchronized();
+            return Curses.is_immedok(Handle);
+        }
+        set
+        {
+            AssertSynchronized();
+            Curses.immedok(Handle, value);
+        }
     }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh()" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public virtual void Refresh() { AssertSynchronized();Terminal.Refresh(this); }
+    public virtual void Refresh()
+    {
+        AssertSynchronized();
+        Terminal.Refresh(this);
+    }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh(int, int)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
@@ -100,12 +91,26 @@ public class TerminalSurface: Surface, ITerminalSurface
             throw new ArgumentOutOfRangeException(nameof(count));
         }
 
+        if (Terminal.AtomicRefreshOpen)
+        {
+            throw new InvalidOperationException("Cannot perform a line based refresh within an atomic refresh block.");
+        }
+
         var (actY, actCount) = Helpers.IntersectSegments(y, count, 0, Size.Height);
 
         if (actY > -1 && actCount > 0)
         {
             Curses.wredrawln(Handle, actY, actCount)
                   .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
+        }
+    }
+
+    /// <inheritdoc cref="Surface.AssertSynchronized" />
+    protected internal override void AssertSynchronized()
+    {
+        if (Terminal != null!)
+        {
+            Terminal.AssertSynchronized();
         }
     }
 }

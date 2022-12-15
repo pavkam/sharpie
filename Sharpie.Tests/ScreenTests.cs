@@ -133,7 +133,7 @@ public class ScreenTests
 
         Should.Throw<ObjectDisposedException>(() => _screen.Pads.ToArray());
     }
-    
+
     [TestMethod]
     public void Windows_Throws_IfScreenIsDestroyed()
     {
@@ -141,7 +141,7 @@ public class ScreenTests
 
         Should.Throw<ObjectDisposedException>(() => _screen.Windows.ToArray());
     }
-    
+
     [TestMethod]
     public void Pads_ContainsTheChild_WhenPassedAsParent()
     {

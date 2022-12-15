@@ -778,7 +778,7 @@ public class TerminalTests
     public void AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks()
     {
         _terminal = new(_cursesMock.Object, _settings);
-        
+
         _terminal.AtomicRefreshOpen.ShouldBeFalse();
         using (_terminal.AtomicRefresh())
         {
@@ -786,8 +786,10 @@ public class TerminalTests
             {
                 _terminal.AtomicRefreshOpen.ShouldBeTrue();
             }
+
             _terminal.AtomicRefreshOpen.ShouldBeTrue();
         }
+
         _terminal.AtomicRefreshOpen.ShouldBeFalse();
     }
 

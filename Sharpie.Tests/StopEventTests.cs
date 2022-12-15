@@ -35,8 +35,7 @@ public class StopEventTests
 {
     private readonly StopEvent _event1 = new();
 
-    [TestMethod]
-    public void Ctor_InitializesPropertiesCorrectly() { _event1.Type.ShouldBe(EventType.Stop); }
+    [TestMethod] public void Ctor_InitializesPropertiesCorrectly() { _event1.Type.ShouldBe(EventType.Stop); }
 
     [TestMethod]
     public void ToString_ProperlyFormats()

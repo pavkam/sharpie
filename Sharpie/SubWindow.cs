@@ -63,15 +63,6 @@ public sealed class SubWindow: Surface, ISubWindow
     /// <inheritdoc cref="ISubWindow.Window" />
     IWindow ISubWindow.Window => Window;
 
-    /// <inheritdoc cref="Surface.AssertSynchronized" />
-    protected internal override void AssertSynchronized()
-    {
-        if (Window != null!)
-        {
-            Window.AssertSynchronized();
-        }
-    }
-    
     /// <inheritdoc cref="ISubWindow.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location
@@ -79,7 +70,7 @@ public sealed class SubWindow: Surface, ISubWindow
         get
         {
             AssertSynchronized();
-            
+
             return new(Curses.getparx(Handle)
                              .Check(nameof(Curses.getparx), "Failed to get window X coordinate."), Curses
                 .getpary(Handle)
@@ -119,18 +110,27 @@ public sealed class SubWindow: Surface, ISubWindow
     public ISubWindow Duplicate()
     {
         AssertSynchronized();
-        
+
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
 
         return new SubWindow(Window, handle) { ManagedCaret = ManagedCaret };
     }
 
+    /// <inheritdoc cref="Surface.AssertSynchronized" />
+    protected internal override void AssertSynchronized()
+    {
+        if (Window != null!)
+        {
+            Window.AssertSynchronized();
+        }
+    }
+
     /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
         AssertSynchronized();
-        
+
         if (Window != null!)
         {
             Window.RemoveChild(this);

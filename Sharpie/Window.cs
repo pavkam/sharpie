@@ -37,8 +37,8 @@ namespace Sharpie;
 public sealed class Window: TerminalSurface, IWindow
 {
     private readonly IList<SubWindow> _subWindows = new List<SubWindow>();
-    private IReadOnlyList<SubWindow> _roSubWindows = Array.Empty<SubWindow>();
     private Rectangle _explicitArea;
+    private IReadOnlyList<SubWindow> _roSubWindows = Array.Empty<SubWindow>();
     private bool _visible = true;
 
     /// <summary>
@@ -83,7 +83,7 @@ public sealed class Window: TerminalSurface, IWindow
         {
             AssertAlive();
             AssertSynchronized();
-            
+
             return _roSubWindows;
         }
     }
@@ -133,7 +133,8 @@ public sealed class Window: TerminalSurface, IWindow
         {
             AssertSynchronized();
             return new(Curses.getbegx(Handle)
-                      .Check(nameof(Curses.getbegx), "Failed to get window X coordinate."), Curses.getbegy(Handle)
+                             .Check(nameof(Curses.getbegx), "Failed to get window X coordinate."), Curses
+                .getbegy(Handle)
                 .Check(nameof(Curses.getbegy), "Failed to get window Y coordinate."));
         }
         set
@@ -192,12 +193,13 @@ public sealed class Window: TerminalSurface, IWindow
     public override void Refresh(int y, int count)
     {
         AssertSynchronized();
-        
+
         if (_visible)
         {
+            base.Refresh(y, count);
+
             using (Terminal.AtomicRefresh())
             {
-                base.Refresh(y, count);
                 Screen.RefreshUp(this);
             }
         }
@@ -208,7 +210,7 @@ public sealed class Window: TerminalSurface, IWindow
     public void SendToBack()
     {
         AssertSynchronized();
-        
+
         using (Terminal.AtomicRefresh())
         {
             Screen.SendToBack(this);
@@ -220,7 +222,7 @@ public sealed class Window: TerminalSurface, IWindow
     public void BringToFront()
     {
         AssertSynchronized();
-        
+
         using (Terminal.AtomicRefresh())
         {
             Screen.BringToFront(this);
@@ -231,15 +233,16 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public bool Visible
     {
-        get {      
+        get
+        {
             AssertSynchronized();
-            
-            return _visible; 
+
+            return _visible;
         }
         set
         {
             AssertSynchronized();
-            
+
             if (value != _visible)
             {
                 _visible = value;
@@ -271,7 +274,7 @@ public sealed class Window: TerminalSurface, IWindow
     public IWindow Duplicate()
     {
         AssertSynchronized();
-        
+
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the window.");
 
@@ -284,7 +287,7 @@ public sealed class Window: TerminalSurface, IWindow
     internal void AdjustToExplicitArea()
     {
         AssertSynchronized();
-        
+
         var screenSize = Screen.Size;
         var size = Size;
         var location = Location;
@@ -342,7 +345,7 @@ public sealed class Window: TerminalSurface, IWindow
     protected override void Delete()
     {
         AssertSynchronized();
-        
+
         foreach (var window in _roSubWindows)
         {
             window.Destroy();

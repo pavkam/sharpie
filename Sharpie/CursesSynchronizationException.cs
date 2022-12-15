@@ -37,5 +37,8 @@ namespace Sharpie;
 public sealed class CursesSynchronizationException: CursesException
 {
     /// <inheritdoc cref="CursesException" />
-    internal CursesSynchronizationException(): base("Operation cannot be performed outside the main synchronization context or thread.") { }
+    internal CursesSynchronizationException(): base(
+        "Operation cannot be performed outside the main synchronization context or thread.")
+    {
+    }
 }

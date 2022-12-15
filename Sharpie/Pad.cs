@@ -38,7 +38,7 @@ public sealed class Pad: Surface, IPad
 {
     private readonly IList<SubPad> _subPads = new List<SubPad>();
     private IReadOnlyList<SubPad> _roSubPads = Array.Empty<SubPad>();
-    
+
     /// <summary>
     ///     Initializes the pad using the given Curses handle.
     /// </summary>
@@ -61,15 +61,6 @@ public sealed class Pad: Surface, IPad
     /// <inheritdoc cref="IPad.Screen" />
     IScreen IPad.Screen => Screen;
 
-    /// <inheritdoc cref="Surface.AssertSynchronized" />
-    protected internal override void AssertSynchronized()
-    {
-        if (Screen != null!)
-        {
-            Screen.AssertSynchronized();
-        }
-    }
-    
     /// <inheritdoc cref="IPad.SubPads" />
     public IEnumerable<ISubPad> SubPads
     {
@@ -77,7 +68,7 @@ public sealed class Pad: Surface, IPad
         {
             AssertAlive();
             AssertSynchronized();
-            
+
             return _roSubPads;
         }
     }
@@ -93,9 +84,9 @@ public sealed class Pad: Surface, IPad
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
-            
+
             AssertSynchronized();
-            
+
             Curses.wresize(Handle, value.Height, value.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the sub-pad.");
         }
@@ -117,7 +108,7 @@ public sealed class Pad: Surface, IPad
         }
 
         AssertSynchronized();
-        
+
         if (Screen.Terminal.AtomicRefreshOpen)
         {
             Curses.pnoutrefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
@@ -145,7 +136,7 @@ public sealed class Pad: Surface, IPad
         }
 
         AssertSynchronized();
-        
+
         var handle = Curses.subpad(Handle, area.Height, area.Width, area.Top, area.Right)
                            .Check(nameof(Curses.subpad), "Failed to create a new sub-pad.");
 
@@ -160,8 +151,17 @@ public sealed class Pad: Surface, IPad
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the pad.");
 
         AssertSynchronized();
-        
+
         return new Pad(Screen, handle) { ManagedCaret = ManagedCaret };
+    }
+
+    /// <inheritdoc cref="Surface.AssertSynchronized" />
+    protected internal override void AssertSynchronized()
+    {
+        if (Screen != null!)
+        {
+            Screen.AssertSynchronized();
+        }
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ public sealed class Pad: Surface, IPad
     protected override void Delete()
     {
         AssertSynchronized();
-        
+
         foreach (var subPad in _roSubPads)
         {
             subPad.Destroy();

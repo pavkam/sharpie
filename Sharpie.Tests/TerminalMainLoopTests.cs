@@ -34,7 +34,7 @@ namespace Sharpie.Tests;
 public class TerminalMainLoopTests
 {
     private const int Timeout = 1000;
-        
+
     private Mock<ICursesProvider> _cursesMock = null!;
     private Terminal _terminal = null!;
 
@@ -289,7 +289,7 @@ public class TerminalMainLoopTests
 
             return Task.CompletedTask;
         });
-        
+
         (events[0] is StartEvent).ShouldBeTrue();
         (events[1] is KeyEvent { Key: Key.Character, Char.Value: 'A' }).ShouldBeTrue();
         (events[2] is StopEvent).ShouldBeTrue();
@@ -488,7 +488,7 @@ public class TerminalMainLoopTests
     public void Run_ResumesTimersAcrossRuns()
     {
         var m = new ManualResetEvent(false);
-        
+
         _terminal.Repeat(_ =>
         {
             m.Set();

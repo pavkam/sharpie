@@ -59,15 +59,6 @@ public sealed class SubPad: Surface, ISubPad
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     protected internal override Point Origin => Location;
 
-    /// <inheritdoc cref="Surface.AssertSynchronized" />
-    protected internal override void AssertSynchronized()
-    {
-        if (Pad != null!)
-        {
-            Pad.AssertSynchronized();
-        }
-    }
-    
     /// <inheritdoc cref="ISubPad.Pad" />
     IPad ISubPad.Pad => Pad;
 
@@ -78,7 +69,7 @@ public sealed class SubPad: Surface, ISubPad
         get
         {
             AssertSynchronized();
-            
+
             return new(Curses.getparx(Handle)
                              .Check(nameof(Curses.getparx), "Failed to get sub-pad X coordinate."), Curses
                 .getpary(Handle)
@@ -118,18 +109,27 @@ public sealed class SubPad: Surface, ISubPad
     public ISubPad Duplicate()
     {
         AssertSynchronized();
-        
+
         var handle = Curses.dupwin(Handle)
                            .Check(nameof(Curses.dupwin), "Failed to duplicate the sub-pad.");
 
         return new SubPad(Pad, handle) { ManagedCaret = ManagedCaret };
     }
 
+    /// <inheritdoc cref="Surface.AssertSynchronized" />
+    protected internal override void AssertSynchronized()
+    {
+        if (Pad != null!)
+        {
+            Pad.AssertSynchronized();
+        }
+    }
+
     /// <inheritdoc cref="Surface.Delete" />
     protected override void Delete()
     {
         AssertSynchronized();
-        
+
         if (Pad != null!)
         {
             Pad.RemoveChild(this);

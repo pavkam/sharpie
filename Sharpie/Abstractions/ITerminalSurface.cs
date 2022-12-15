@@ -49,28 +49,22 @@ public interface ITerminalSurface: ISurface
     ///     This might be very slow for most use cases so the default is <c>false</c>.
     /// </remarks>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     bool ImmediateRefresh { get; set; }
-
-    /// <summary>
-    ///     Set or get the flag indicating that the surface is critical and, thus, should
-    ///     trigger the entire terminal to update on refresh.
-    /// </summary>
-    /// <remarks>
-    ///     This setting might result in excessive refreshes so the default is <c>false</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
-    /// <remarks>This operation is not thread safe.</remarks>
-    bool Critical { get; set; }
 
     /// <summary>
     ///     Redraws all the dirty lines of the surface to the terminal. If <see cref="ITerminal.AtomicRefresh" /> is active,
     ///     all refreshes are batched together until the lock is released.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void Refresh();
 
@@ -83,8 +77,12 @@ public interface ITerminalSurface: ISurface
     ///     Thrown if <paramref name="y" /> or <paramref name="count" /> are
     ///     negative.
     /// </exception>
+    /// <exception cref="InvalidOperationException">Thrown if an atomic refresh is in progress.</exception>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
-    /// <exception cref="CursesSynchronizationException">Thrown if this operation was expected to run on the main thread/context but wasn't.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void Refresh(int y, int count);
 }

@@ -40,17 +40,17 @@ public enum EventType
     ///     Undefined event.
     /// </summary>
     Undefined = 0,
-    
+
     /// <summary>
     ///     The listening process has been started.
     /// </summary>
     Start,
-    
+
     /// <summary>
     ///     The listening process has been stopped.
     /// </summary>
     Stop,
-    
+
     /// <summary>
     ///     The terminal has been resized.
     /// </summary>
@@ -79,6 +79,5 @@ public enum EventType
     /// <summary>
     ///     Delegated object that needs to be processed on main context.
     /// </summary>
-    Delegate,
-    
+    Delegate
 }

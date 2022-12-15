@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie;
 
 /// <summary>
-///     Generated automatically when <see cref="EventPump"/> stops listening for events.
+///     Generated automatically when <see cref="EventPump" /> stops listening for events.
 /// </summary>
 [PublicAPI]
 public sealed class StopEvent: Event

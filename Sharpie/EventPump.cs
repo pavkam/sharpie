@@ -26,11 +26,6 @@ public sealed class EventPump: IEventPump
     /// <inheritdoc cref="IColorManager.Terminal" />
     public Terminal Terminal { get; }
 
-    private void AssertSynchronized()
-    {
-        Terminal.AssertSynchronized();
-    }
-
     /// <summary>
     ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
     ///     This is an internal property and initialized by the terminal.
@@ -77,7 +72,7 @@ public sealed class EventPump: IEventPump
 
         Terminal.Curses.keypad(padHandle, true)
                 .Check(nameof(Terminal.Curses.keypad), "Failed to configure dummy listen pad.");
-        
+
         try
         {
             foreach (var e in Listen(padHandle, cancellationToken))
@@ -102,7 +97,7 @@ public sealed class EventPump: IEventPump
         {
             throw new ArgumentNullException(nameof(resolver));
         }
-        
+
         AssertSynchronized();
 
         if (!Uses(resolver))
@@ -120,16 +115,18 @@ public sealed class EventPump: IEventPump
         }
 
         AssertSynchronized();
-        
+
         return _keySequenceResolvers.Contains(resolver);
     }
+
+    private void AssertSynchronized() { Terminal.AssertSynchronized(); }
 
     private IEnumerable<Event> Listen(IntPtr handle, CancellationToken cancellationToken)
     {
         Debug.Assert(handle != IntPtr.Zero);
 
         AssertSynchronized();
-        
+
         var hasPendingResize = false;
         var monitorsResizes =
             Terminal.Curses.monitor_pending_resize(() => { hasPendingResize = true; }, out var monitorHandle);
@@ -139,7 +136,7 @@ public sealed class EventPump: IEventPump
         try
         {
             yield return new StartEvent();
-            
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 var @event = ReadNextEvent(handle, escapeSequence.Count > 0);
@@ -228,12 +225,12 @@ public sealed class EventPump: IEventPump
 
                     if (isResize)
                     {
-                        ((ITerminal) Terminal).Screen.MarkDirty();
+                        Terminal.Screen.MarkDirty();
                         Terminal.Screen.Refresh();
                     }
                 }
             }
-            
+
             yield return new StopEvent();
         } finally
         {

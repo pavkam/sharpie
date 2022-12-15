@@ -78,17 +78,12 @@ public sealed class ColorManager: IColorManager
     /// <inheritdoc cref="IColorManager.CanRedefineColors" />
     public bool CanRedefineColors => Terminal.Curses.can_change_color();
 
-    private void AssertSynchronized()
-    {
-        Terminal.AssertSynchronized();
-    }
-    
     /// <inheritdoc cref="IColorManager.MixColors(short, short)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ColorMixture MixColors(short fgColor, short bgColor)
     {
         AssertSynchronized();
-        
+
         Terminal.Curses.init_pair(_nextPairHandle, fgColor, bgColor)
                 .Check(nameof(Terminal.Curses.init_pair), "Failed to create a new color mixture.");
 
@@ -108,7 +103,7 @@ public sealed class ColorManager: IColorManager
     public void RemixColors(ColorMixture mixture, short fgColor, short bgColor)
     {
         AssertSynchronized();
-        
+
         Terminal.Curses.init_pair(mixture.Handle, fgColor, bgColor)
                 .Check(nameof(Terminal.Curses.init_pair), "Failed to redefine an existing color mixture.");
     }
@@ -123,7 +118,7 @@ public sealed class ColorManager: IColorManager
     public void RemixDefaultColors(short fgColor, short bgColor)
     {
         AssertSynchronized();
-        
+
         Terminal.Curses.assume_default_colors(fgColor, bgColor)
                 .Check(nameof(Terminal.Curses.assume_default_colors), "Failed to redefine the default color mixture.");
     }
@@ -138,7 +133,7 @@ public sealed class ColorManager: IColorManager
     public (short fgColor, short bgColor) UnMixColors(ColorMixture mixture)
     {
         AssertSynchronized();
-        
+
         Terminal.Curses.pair_content(mixture.Handle, out var fgColor, out var bgColor)
                 .Check(nameof(Terminal.Curses.pair_content), "Failed to extract colors from the color mixture.");
 
@@ -176,7 +171,7 @@ public sealed class ColorManager: IColorManager
         }
 
         AssertSynchronized();
-        
+
         Terminal.Curses.color_content(color, out var red, out var green, out var blue)
                 .Check(nameof(Terminal.Curses.color_content),
                     "Failed to extract RGB information from a terminal color.");
@@ -187,4 +182,6 @@ public sealed class ColorManager: IColorManager
     /// <inheritdoc cref="IColorManager.BreakdownColor(StandardColor)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (short red, short green, short blue) BreakdownColor(StandardColor color) => BreakdownColor((short) color);
+
+    private void AssertSynchronized() { Terminal.AssertSynchronized(); }
 }
