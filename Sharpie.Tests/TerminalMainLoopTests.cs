@@ -465,23 +465,20 @@ public class TerminalMainLoopTests
     public async Task Dispose_CancelsTheRunning_AndKillsTimers()
     {
         var ra = RunAsync();
-
-        var executed = 0;
+        var count = Timer.ActiveCount;
+        var tickedEvent = new ManualResetEvent(false);
         _terminal.Repeat(_ =>
         {
-            executed++;
+            tickedEvent.Set();
             return Task.CompletedTask;
         }, 10);
 
-        await Task.Delay(100)
-                  .ContinueWith(_ => _terminal.Dispose());
-
+        tickedEvent.WaitOne();
+        _terminal.Dispose();
         await ra;
 
-        await Task.Delay(50)
-                  .ContinueWith(_ => _terminal.Dispose());
-
-        executed.ShouldBeInRange(8, 11);
+        await Task.Delay(500);
+        Timer.ActiveCount.ShouldBe(count);
     }
 
     [TestMethod, Timeout(Timeout)]
