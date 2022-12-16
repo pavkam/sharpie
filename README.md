@@ -45,7 +45,7 @@ What follows is a small example of how to use the library:
 ```csharp
 
 // Create the terminal instance without any non-standard settings.
-using var terminal = new Terminal(NativeCursesProvider.Instance, new());
+using var terminal = new Terminal(NativeCursesProvider.Instance, new(ManagedWindows: true));
 
 // Set the main screen attributes for text and drawings.
 terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, StandardColor.Blue);
