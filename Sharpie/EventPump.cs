@@ -223,10 +223,13 @@ public sealed class EventPump: IEventPump
 
                     yield return @event;
 
-                    if (isResize)
+                    if (isResize && Terminal.Screen.ManagedWindows)
                     {
-                        Terminal.Screen.MarkDirty();
-                        Terminal.Screen.Refresh();
+                        using (Terminal.AtomicRefresh())
+                        {
+                            Terminal.Screen.MarkDirty();
+                            Terminal.Screen.Refresh();
+                        }
                     }
                 }
             }

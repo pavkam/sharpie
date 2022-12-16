@@ -46,6 +46,7 @@ public class TerminalOptionsTests
         s.SuppressControlKeys.ShouldBeTrue();
         s.CaretMode.ShouldBe(CaretMode.Visible);
         s.ManualFlush.ShouldBeFalse();
+        s.ManagedWindows.ShouldBeFalse();
         s.SoftLabelKeyMode.ShouldBe(SoftLabelKeyMode.Disabled);
         s.AllocateFooter.ShouldBeFalse();
         s.AllocateHeader.ShouldBeFalse();

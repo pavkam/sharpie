@@ -30,6 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
+using JetBrains.Annotations;
+
 [TestClass]
 public class WindowTests
 {
@@ -37,6 +39,9 @@ public class WindowTests
     private Screen _screen = null!;
     private Terminal _terminal = null!;
 
+    [UsedImplicitly]
+    public TestContext TestContext { get; set; } = null!;
+    
     [TestInitialize]
     public void TestInitialize()
     {
@@ -45,8 +50,9 @@ public class WindowTests
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
-        _terminal = new(_cursesMock.Object, new());
+        _terminal = new(_cursesMock.Object, new(ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
         _screen = _terminal.Screen;
+
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -97,7 +103,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Visible_IsTrueByDefault()
+    public void Visible_WhenManaged_IsTrueByDefault()
     {
         var w = new Window(_screen, IntPtr.MaxValue);
 
@@ -586,9 +592,17 @@ public class WindowTests
 
         Should.NotThrow(() => w.AdjustToExplicitArea());
     }
-
+    
     [TestMethod]
-    public void BringToFront_RefreshesWindow_IfNotInFront()
+    public void BringToFront_WhenUnmanaged_Throws()
+    {
+        var w = new Window(_screen, new(1));
+
+        Should.Throw<InvalidOperationException>(() => w.BringToFront());
+    }
+    
+    [TestMethod]
+    public void BringToFront_WhenManaged_RefreshesWindow_IfNotInFront()
     {
         var w1 = new Window(_screen, new(1));
         var w2 = new Window(_screen, new(2));
@@ -609,7 +623,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void BringToFront_DoesNotRefreshWindow_IfInFront()
+    public void BringToFront_WhenManaged_DoesNotRefreshWindow_IfInFront()
     {
         var w = new Window(_screen, new(1));
 
@@ -621,7 +635,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void BringToFront_DoesNotUpdate_IfInvisible()
+    public void BringToFront_WhenManaged_DoesNotUpdate_IfInvisible()
     {
         var w1 = new Window(_screen, new(1));
         w1.Visible = false;
@@ -634,7 +648,15 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void SendToBack_TouchesAndRefreshesAffectedWindowsAbove_IfNotInBack()
+    public void SendToBack_WhenUnmanaged_Throws()
+    {
+        var w = new Window(_screen, new(1));
+
+        Should.Throw<InvalidOperationException>(() => w.SendToBack());
+    }
+
+    [TestMethod]
+    public void SendToBack_WhenManaged_TouchesAndRefreshesAffectedWindowsAbove_IfNotInBack()
     {
         var w1 = new Window(_screen, new(1));
         _cursesMock.MockArea(w1, new(0, 0, 10, 10));
@@ -658,7 +680,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void SendToBack_DoesNotTouchWindowsThatDontIntersect()
+    public void SendToBack_WhenManaged_DoesNotTouchWindowsThatDontIntersect()
     {
         var w1 = new Window(_screen, new(1));
         _cursesMock.MockArea(w1, new(0, 0, 10, 10));
@@ -674,7 +696,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void SendToBack_DoesNotDoAnything_IfInBack()
+    public void SendToBack_WhenManaged_WhenManaged_DoesNotDoAnything_IfInBack()
     {
         var w = new Window(_screen, new(1));
 
@@ -689,7 +711,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void SendToBack_DoesNotUpdate_IfInvisible()
+    public void SendToBack_WhenManaged_DoesNotUpdate_IfInvisible()
     {
         _cursesMock.MockLargeArea(_screen);
 
@@ -708,7 +730,25 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Refresh1_TouchesAndRefreshesAffectedWindowAndAbove()
+    public void Refresh1_WhenUnmanaged_OnlyUpdatesWindow()
+    {
+        var w1 = new Window(_screen, new(1));
+        _cursesMock.MockArea(w1, new(0, 0, 10, 10));
+        
+        var w2 = new Window(_screen, new(4));
+        _cursesMock.MockArea(w2, new(0, 0, 5, 5));
+
+        w1.Refresh();
+
+        _cursesMock.Verify(v => v.wtouchln(w1.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Never);
+        _cursesMock.Verify(v => v.wtouchln(w2.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Never);
+        _cursesMock.Verify(v => v.wrefresh(w1.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wrefresh(w2.Handle), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Never);
+    }
+    
+    [TestMethod]
+    public void Refresh1_WhenManaged_TouchesAndRefreshesAffectedWindowAndAbove()
     {
         var w1 = new Window(_screen, new(1));
         _cursesMock.MockArea(w1, new(0, 0, 10, 10));
@@ -737,7 +777,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Refresh1_DoesNotTouchInvisibleWindowsAbove()
+    public void Refresh1_WhenManaged_DoesNotTouchInvisibleWindowsAbove()
     {
         var w1 = new Window(_screen, new(1));
         _cursesMock.MockArea(w1, new(0, 0, 10, 10));
@@ -766,7 +806,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Refresh1_DoesNothing_IfNotVisible()
+    public void Refresh1_WhenManaged_DoesNothing_IfNotVisible()
     {
         var w1 = new Window(_screen, new(1));
         w1.Visible = false;
@@ -778,7 +818,24 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Refresh2_TouchesAndRefreshesAffectedWindowAndAbove()
+    public void Refresh2_WhenUnmanaged_OnlyRedrawsAffectedLinesOfWindow()
+    {
+        var w1 = new Window(_screen, new(1));
+        _cursesMock.MockArea(w1, new(0, 0, 10, 10));
+        var w2 = new Window(_screen, new(4));
+        _cursesMock.MockArea(w2, new(0, 0, 5, 5));
+
+        w1.Refresh(0, 10);
+
+        _cursesMock.Verify(v => v.wrefresh(w1.Handle), Times.Never);
+        _cursesMock.Verify(v => v.wrefresh(w2.Handle), Times.Never);
+        _cursesMock.Verify(v => v.wredrawln(w1.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        _cursesMock.Verify(v => v.wredrawln(w2.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Never);
+    }
+    
+    [TestMethod]
+    public void Refresh2_WhenManaged_TouchesAndRefreshesAffectedWindowAndAbove()
     {
         var w1 = new Window(_screen, new(1));
         _cursesMock.MockArea(w1, new(0, 0, 10, 10));
@@ -802,7 +859,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Refresh2_DoesNothing_IfNotVisible()
+    public void Refresh2_WhenManaged_DoesNothing_IfNotVisible()
     {
         var w1 = new Window(_screen, new(1));
         w1.Visible = false;
@@ -812,9 +869,24 @@ public class WindowTests
         _cursesMock.Verify(v => v.wredrawln(w1.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
+    
+    [TestMethod]
+    public void Visible_Set_WhenUnmanaged_Throws()
+    {
+        var w = new Window(_screen, new(1));
+        Should.Throw<InvalidOperationException>(() => w.Visible = false);
+    }
+    
+    [TestMethod]
+    public void Visible_Get_WhenUnmanaged_Throws()
+    {
+        var w = new Window(_screen, IntPtr.MaxValue);
+
+        Should.Throw<InvalidOperationException>(() => w.Visible.ToString());
+    }
 
     [TestMethod]
-    public void Visible_SetToTrue_DoesNothingIfAlreadyTrue()
+    public void Visible_WhenManaged_SetToTrue_DoesNothingIfAlreadyTrue()
     {
         var w = new Window(_screen, IntPtr.MaxValue);
         w.Visible = true;
@@ -825,7 +897,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Visible_SetToFalse_HidesTheWindow()
+    public void Visible_WhenManaged_SetToFalse_HidesTheWindow()
     {
         _cursesMock.MockLargeArea(_screen);
 
@@ -857,7 +929,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Visible_SetToFalse_DoesNothingIfAlreadyFalse()
+    public void Visible_WhenManaged_SetToFalse_DoesNothingIfAlreadyFalse()
     {
         var w = new Window(_screen, IntPtr.MaxValue);
         w.Visible = false;
@@ -870,7 +942,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Visible_SetToTrue_ShowsTheWindow()
+    public void Visible_WhenManaged_SetToTrue_ShowsTheWindow()
     {
         _cursesMock.MockLargeArea(_screen);
 
@@ -903,7 +975,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void Visible_Set_SkipsOtherInvisibleWindows()
+    public void Visible_WhenManaged_Set_SkipsOtherInvisibleWindows()
     {
         _cursesMock.MockLargeArea(_screen);
 

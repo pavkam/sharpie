@@ -656,6 +656,7 @@ public sealed class Terminal: ITerminal, IDisposable
     /// <summary>
     ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     ~Terminal() { Dispose(); }
 
     private sealed class Interval: IInterval

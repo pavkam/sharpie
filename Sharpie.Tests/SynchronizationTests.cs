@@ -42,6 +42,9 @@ public class SynchronizationTests
     private TerminalSurface _terminalSurface = null!;
     private Window _window = null!;
 
+    [UsedImplicitly]
+    public TestContext TestContext { get; set; } = null!;
+    
     [TestInitialize]
     public void TestInitialize()
     {
@@ -49,7 +52,7 @@ public class SynchronizationTests
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(1));
 
-        _terminal = new(_cursesMock.Object, new(SoftLabelKeyMode: SoftLabelKeyMode.FourFour));
+        _terminal = new(_cursesMock.Object, new(SoftLabelKeyMode: SoftLabelKeyMode.FourFour, ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
         _surface = new(_terminal, new(2));
         _pad = new(_terminal.Screen, new(3));
         _window = new(_terminal.Screen, new(4));
@@ -286,13 +289,28 @@ public class SynchronizationTests
     [TestMethod] public void Window_UseHardwareCharEdit_Set() { Check(() => _window.UseHardwareCharEdit = true); }
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Window_Visible_Get() { Check(() => _window.Visible.ToString()); }
+    public void Window_WhenManaged_Visible_Get()
+    {
+        Check(() => _window.Visible.ToString());
+    }
 
-    [TestMethod] public void Window_Visible_Set() { Check(() => _window.Visible = true); }
+    [TestMethod]
+    public void Window_WhenManaged_Visible_Set()
+    {
+        Check(() => _window.Visible = true);
+    }
 
-    [TestMethod] public void Window_SendToBack() { Check(() => _window.SendToBack()); }
+    [TestMethod]
+    public void Window_WhenManaged_SendToBack()
+    {
+        Check(() => _window.SendToBack());
+    }
 
-    [TestMethod] public void Window_BringToFront() { Check(() => _window.BringToFront()); }
+    [TestMethod]
+    public void Window_WhenManaged_BringToFront()
+    {
+        Check(() => _window.BringToFront());
+    }
 
     [TestMethod] public void Window_AdjustToExplicitArea() { Check(() => _window.AdjustToExplicitArea()); }
 

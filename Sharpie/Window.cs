@@ -64,6 +64,14 @@ public sealed class Window: TerminalSurface, IWindow
         _explicitArea = new(Location, Size);
     }
 
+    private void AssertManagedWindows()
+    {
+        if (!Screen.ManagedWindows)
+        {
+            throw new InvalidOperationException("This operation is only available when windows are managed.");
+        }
+    }
+    
     /// <inheritdoc cref="IWindow.Screen" />
     public Screen Screen { get; }
 
@@ -178,13 +186,19 @@ public sealed class Window: TerminalSurface, IWindow
     {
         AssertSynchronized();
 
-        if (_visible)
+        if (Screen.ManagedWindows)
         {
-            using (Terminal.AtomicRefresh())
+            if (_visible)
             {
-                base.Refresh();
-                Screen.RefreshUp(this);
+                using (Terminal.AtomicRefresh())
+                {
+                    base.Refresh();
+                    Screen.RefreshUp(this);
+                }
             }
+        } else
+        {
+            base.Refresh();
         }
     }
 
@@ -194,14 +208,20 @@ public sealed class Window: TerminalSurface, IWindow
     {
         AssertSynchronized();
 
-        if (_visible)
+        if (Screen.ManagedWindows)
+        {
+            if (_visible)
+            {
+                base.Refresh(y, count);
+
+                using (Terminal.AtomicRefresh())
+                {
+                    Screen.RefreshUp(this);
+                }
+            }
+        } else
         {
             base.Refresh(y, count);
-
-            using (Terminal.AtomicRefresh())
-            {
-                Screen.RefreshUp(this);
-            }
         }
     }
 
@@ -209,6 +229,7 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void SendToBack()
     {
+        AssertManagedWindows();
         AssertSynchronized();
 
         using (Terminal.AtomicRefresh())
@@ -221,6 +242,7 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void BringToFront()
     {
+        AssertManagedWindows();
         AssertSynchronized();
 
         using (Terminal.AtomicRefresh())
@@ -235,12 +257,14 @@ public sealed class Window: TerminalSurface, IWindow
     {
         get
         {
+            AssertManagedWindows();
             AssertSynchronized();
 
             return _visible;
         }
         set
         {
+            AssertManagedWindows();
             AssertSynchronized();
 
             if (value != _visible)
