@@ -129,3 +129,4 @@ public class StyleTests
         Assert.IsFalse(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture } != _style);
     }
 }
+

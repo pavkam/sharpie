@@ -60,3 +60,4 @@ public static class ControlCharacter
     /// </summary>
     public const char Whitespace = ' ';
 }
+

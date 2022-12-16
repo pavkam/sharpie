@@ -30,18 +30,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
-
-
 [TestClass]
 public class ScreenTests
 {
     private Mock<ICursesProvider> _cursesMock = null!;
     private Screen _screen = null!;
     private Terminal _terminal = null!;
-    
-    [UsedImplicitly]
-    public TestContext TestContext { get; set; } = null!;
-    
+
+    [UsedImplicitly] public TestContext TestContext { get; set; } = null!;
+
     [TestInitialize]
     public void TestInitialize()
     {
@@ -81,17 +78,9 @@ public class ScreenTests
               .Operation.ShouldBe("notimeout");
     }
 
-    [TestMethod]
-    public void ManagedWindows_WhenManaged_IsTrue()
-    {
-        _terminal.Screen.ManagedWindows.ShouldBeTrue();
-    }
-    
-    [TestMethod]
-    public void ManagedWindows_WhenUnmanaged_IsFalse()
-    {
-        _terminal.Screen.ManagedWindows.ShouldBeFalse();
-    }
+    [TestMethod] public void ManagedWindows_WhenManaged_IsTrue() { _terminal.Screen.ManagedWindows.ShouldBeTrue(); }
+
+    [TestMethod] public void ManagedWindows_WhenUnmanaged_IsFalse() { _terminal.Screen.ManagedWindows.ShouldBeFalse(); }
 
     [TestMethod] public void Terminal_IsInitialized() { _screen.Terminal.ShouldBe(_terminal); }
 
@@ -283,11 +272,13 @@ public class ScreenTests
 
         _cursesMock.MockArea(_screen, new(0, 0, 100, 100));
         _cursesMock.MockArea(w, new(0, 0, 100, 100));
-        
+
         _screen.MarkDirty(1, 50);
-        
+
         _cursesMock.Verify(v => v.wtouchln(_screen.Handle, 1, 50, 1), Times.Once);
-        _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
+            Times.Once);
+
         _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
         _cursesMock.Verify(v => v.doupdate(), Times.Never);
     }
@@ -312,7 +303,7 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wtouchln(w3.Handle, It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
             Times.Never());
     }
-    
+
     [TestMethod]
     public void Refresh1_WhenManaged_RefreshesAllWindows_NoBatch()
     {
@@ -344,7 +335,7 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wnoutrefresh(w2.Handle));
         _cursesMock.Verify(v => v.doupdate());
     }
-    
+
     [TestMethod]
     public void Refresh2_WhenUnmanaged_OnlyRefreshesTheScreen()
     {
@@ -360,7 +351,7 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
         _cursesMock.Verify(v => v.doupdate(), Times.Never);
     }
-    
+
     [TestMethod]
     public void Refresh2_WhenManaged_PropagatesOnChildren()
     {
@@ -422,3 +413,4 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wresize(w2.Handle, 1, 1), Times.Once);
     }
 }
+

@@ -71,3 +71,4 @@ public struct ColorMixture
     /// <returns>The result of the check.</returns>
     public static bool operator !=(ColorMixture left, ColorMixture right) => !(left == right);
 }
+

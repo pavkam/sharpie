@@ -1052,3 +1052,4 @@ public sealed class Drawing: IDrawable
         public LineSideAndStyle? Line => Special < 0 ? (LineSideAndStyle) (-Special) : null;
     }
 }
+

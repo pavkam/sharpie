@@ -54,3 +54,4 @@ public class TerminalOptionsTests
         s.UseStandardKeySequenceResolvers.ShouldBeTrue();
     }
 }
+

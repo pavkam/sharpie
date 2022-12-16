@@ -51,3 +51,4 @@ public enum SoftLabelKeyAlignment
     /// </summary>
     Right = 2
 }
+

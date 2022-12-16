@@ -241,3 +241,4 @@ public class TerminalSurfaceTests
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
     }
 }
+

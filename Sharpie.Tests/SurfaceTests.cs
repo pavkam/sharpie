@@ -1650,3 +1650,4 @@ public class SurfaceTests
         protected internal override void AssertSynchronized() { }
     }
 }
+

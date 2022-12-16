@@ -87,3 +87,4 @@ public class DelegateEventTests
                .ShouldBe(new DelegateEvent("A").GetHashCode());
     }
 }
+

@@ -86,17 +86,17 @@ public sealed class Screen: TerminalSurface, IScreen
         }
     }
 
+    /// <summary>
+    ///     Specifies whether window refresh and overlapping is being managed by the screen.
+    /// </summary>
+    internal bool ManagedWindows => Terminal.Options.ManagedWindows;
+
     /// <inheritdoc cref="IScreen.Windows" />
     IEnumerable<IWindow> IScreen.Windows => Windows;
 
     /// <inheritdoc cref="IScreen.Pads" />
     IEnumerable<IPad> IScreen.Pads => Pads;
 
-    /// <summary>
-    /// Specifies whether window refresh and overlapping is being managed by the screen.
-    /// </summary>
-    internal bool ManagedWindows => Terminal.Options.ManagedWindows;
-    
     /// <inheritdoc cref="TerminalSurface.Refresh()" />
     public override void Refresh()
     {
@@ -307,7 +307,7 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
         Debug.Assert(ManagedWindows);
-        
+
         if (visible)
         {
             window.MarkDirty();
@@ -333,7 +333,7 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
         Debug.Assert(ManagedWindows);
-        
+
         var i = _windows.IndexOf(window);
         if (i < _windows.Count - 1)
         {
@@ -365,7 +365,7 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
         Debug.Assert(ManagedWindows);
-        
+
         var i = _windows.IndexOf(window);
         if (i > 0)
         {
@@ -418,3 +418,4 @@ public sealed class Screen: TerminalSurface, IScreen
         Curses.endwin();
     }
 }
+

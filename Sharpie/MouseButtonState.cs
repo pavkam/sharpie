@@ -61,3 +61,4 @@ public enum MouseButtonState: uint
     /// </summary>
     TripleClicked
 }
+

@@ -40,3 +40,4 @@ public class CursesSynchronizationExceptionTests
         ex.Message.ShouldBe("Operation cannot be performed outside the main synchronization context or thread.");
     }
 }
+

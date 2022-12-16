@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
-using JetBrains.Annotations;
-
 [TestClass]
 public class WindowTests
 {
@@ -39,9 +37,8 @@ public class WindowTests
     private Screen _screen = null!;
     private Terminal _terminal = null!;
 
-    [UsedImplicitly]
-    public TestContext TestContext { get; set; } = null!;
-    
+    [UsedImplicitly] public TestContext TestContext { get; set; } = null!;
+
     [TestInitialize]
     public void TestInitialize()
     {
@@ -52,7 +49,6 @@ public class WindowTests
 
         _terminal = new(_cursesMock.Object, new(ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
         _screen = _terminal.Screen;
-
     }
 
     [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
@@ -592,7 +588,7 @@ public class WindowTests
 
         Should.NotThrow(() => w.AdjustToExplicitArea());
     }
-    
+
     [TestMethod]
     public void BringToFront_WhenUnmanaged_Throws()
     {
@@ -600,7 +596,7 @@ public class WindowTests
 
         Should.Throw<InvalidOperationException>(() => w.BringToFront());
     }
-    
+
     [TestMethod]
     public void BringToFront_WhenManaged_RefreshesWindow_IfNotInFront()
     {
@@ -734,7 +730,7 @@ public class WindowTests
     {
         var w1 = new Window(_screen, new(1));
         _cursesMock.MockArea(w1, new(0, 0, 10, 10));
-        
+
         var w2 = new Window(_screen, new(4));
         _cursesMock.MockArea(w2, new(0, 0, 5, 5));
 
@@ -746,7 +742,7 @@ public class WindowTests
         _cursesMock.Verify(v => v.wrefresh(w2.Handle), Times.Never);
         _cursesMock.Verify(v => v.doupdate(), Times.Never);
     }
-    
+
     [TestMethod]
     public void Refresh1_WhenManaged_TouchesAndRefreshesAffectedWindowAndAbove()
     {
@@ -833,7 +829,7 @@ public class WindowTests
         _cursesMock.Verify(v => v.wredrawln(w2.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         _cursesMock.Verify(v => v.doupdate(), Times.Never);
     }
-    
+
     [TestMethod]
     public void Refresh2_WhenManaged_TouchesAndRefreshesAffectedWindowAndAbove()
     {
@@ -869,14 +865,14 @@ public class WindowTests
         _cursesMock.Verify(v => v.wredrawln(w1.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
-    
+
     [TestMethod]
     public void Visible_Set_WhenUnmanaged_Throws()
     {
         var w = new Window(_screen, new(1));
         Should.Throw<InvalidOperationException>(() => w.Visible = false);
     }
-    
+
     [TestMethod]
     public void Visible_Get_WhenUnmanaged_Throws()
     {
@@ -1002,3 +998,4 @@ public class WindowTests
         _cursesMock.Verify(v => v.doupdate(), Times.Exactly(2));
     }
 }
+

@@ -170,3 +170,4 @@ public interface ISoftLabelKeyManager
     /// <remarks>This operation is not thread safe.</remarks>
     void Refresh();
 }
+

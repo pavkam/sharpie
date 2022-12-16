@@ -109,3 +109,4 @@ public class ColorMixtureTests
         Assert.IsFalse(new ColorMixture { Handle = 0 } != ColorMixture.Default);
     }
 }
+

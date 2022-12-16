@@ -44,3 +44,4 @@ public struct CursesComplexChar
     [MarshalAs(UnmanagedType.U4)] private readonly uint char3;
     [MarshalAs(UnmanagedType.U4)] private readonly uint char4;
 }
+

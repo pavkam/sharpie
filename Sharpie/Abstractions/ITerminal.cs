@@ -234,3 +234,4 @@ public interface ITerminal
     /// <param name="wait">If <c>true</c>, waits until running completes.</param>
     void Stop(bool wait = false);
 }
+

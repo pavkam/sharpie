@@ -123,3 +123,4 @@ public interface IPad: ISurface
     /// <remarks>This operation is not thread safe.</remarks>
     IPad Duplicate();
 }
+

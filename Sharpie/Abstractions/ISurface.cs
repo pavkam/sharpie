@@ -535,3 +535,4 @@ public interface ISurface: IDrawSurface
     /// <remarks>This operation is not thread safe.</remarks>
     void Destroy();
 }
+

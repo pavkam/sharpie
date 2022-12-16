@@ -671,3 +671,4 @@ public sealed class Terminal: ITerminal, IDisposable
         public Func<Task>? Action;
     }
 }
+

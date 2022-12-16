@@ -61,3 +61,4 @@ public enum MouseButton: uint
     /// </summary>
     Button5
 }
+

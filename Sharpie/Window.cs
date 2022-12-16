@@ -64,14 +64,6 @@ public sealed class Window: TerminalSurface, IWindow
         _explicitArea = new(Location, Size);
     }
 
-    private void AssertManagedWindows()
-    {
-        if (!Screen.ManagedWindows)
-        {
-            throw new InvalidOperationException("This operation is only available when windows are managed.");
-        }
-    }
-    
     /// <inheritdoc cref="IWindow.Screen" />
     public Screen Screen { get; }
 
@@ -305,6 +297,14 @@ public sealed class Window: TerminalSurface, IWindow
         return new Window(Screen, handle) { ManagedCaret = ManagedCaret };
     }
 
+    private void AssertManagedWindows()
+    {
+        if (!Screen.ManagedWindows)
+        {
+            throw new InvalidOperationException("This operation is only available when windows are managed.");
+        }
+    }
+
     /// <summary>
     ///     Adjusts the window's area to be as close (or equal) to its explicit area.
     /// </summary>
@@ -383,3 +383,4 @@ public sealed class Window: TerminalSurface, IWindow
         base.Delete();
     }
 }
+

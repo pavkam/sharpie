@@ -77,3 +77,4 @@ public interface ISubWindow: ISurface
     /// <remarks>This operation is not thread safe.</remarks>
     ISubWindow Duplicate();
 }
+

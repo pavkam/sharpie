@@ -47,3 +47,4 @@ public class CursesExceptionTests
         ex.Message.ShouldBe("message");
     }
 }
+

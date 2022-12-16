@@ -661,3 +661,4 @@ public class DrawingTests
         });
     }
 }
+

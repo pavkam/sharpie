@@ -185,3 +185,4 @@ public sealed class ColorManager: IColorManager
 
     private void AssertSynchronized() { Terminal.AssertSynchronized(); }
 }
+

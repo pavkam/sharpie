@@ -371,3 +371,4 @@ public class PadTests
         sp.Disposed.ShouldBeTrue();
     }
 }
+

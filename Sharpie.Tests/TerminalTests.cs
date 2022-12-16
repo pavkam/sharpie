@@ -525,7 +525,7 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, _settings);
         _terminal.Screen.ShouldNotBeNull();
-        ((ITerminal)_terminal).Screen.ShouldBe(_terminal.Screen);
+        ((ITerminal) _terminal).Screen.ShouldBe(_terminal.Screen);
     }
 
     [TestMethod]
@@ -925,3 +925,4 @@ public class TerminalTests
         _cursesMock.Verify(v => v.set_title("title"), Times.Once);
     }
 }
+

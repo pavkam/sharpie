@@ -132,3 +132,4 @@ internal sealed class MouseEventResolver
         return new[] { @event };
     }
 }
+

@@ -417,3 +417,4 @@ public class SoftLabelKeyManagerTests
         _cursesMock.Verify(v => v.slk_refresh(), Times.Once);
     }
 }
+

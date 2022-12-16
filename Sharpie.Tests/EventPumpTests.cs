@@ -42,9 +42,9 @@ public class EventPumpTests
     private CancellationTokenSource _source = null!;
     private Terminal _terminal = null!;
     private Window _window = null!;
-    [UsedImplicitly]
-    public TestContext TestContext { get; set; } = null!;
-    
+
+    [UsedImplicitly] public TestContext TestContext { get; set; } = null!;
+
     private Event[] SimulateEvents(int count, ISurface w, params (int result, uint keyCode)[] raw)
     {
         var i = 0;
@@ -112,7 +112,10 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
-        _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false, ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
+        _terminal = new(_cursesMock.Object,
+            new(UseStandardKeySequenceResolvers: false,
+                ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
+
         _pump = new(_terminal);
         _window = new(_terminal.Screen, new(2));
         _source = new();
@@ -533,6 +536,7 @@ public class EventPumpTests
 
         _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
             Times.Never);
+
         _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
         _cursesMock.Verify(v => v.wnoutrefresh(It.IsAny<IntPtr>()), Times.Never);
     }
@@ -957,3 +961,4 @@ public class EventPumpTests
         }
     }
 }
+

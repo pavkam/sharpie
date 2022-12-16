@@ -20,3 +20,4 @@ public interface IDrawSurface
     /// <returns>The result of the check.</returns>
     bool CoversArea(Rectangle area);
 }
+

@@ -716,3 +716,4 @@ public abstract class Surface: ISurface, IDisposable
     /// </summary>
     ~Surface() { Destroy(); }
 }
+

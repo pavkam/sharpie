@@ -61,3 +61,4 @@ public class CursesOperationExceptionTests
         ex.Message.ShouldBe("The call to operation failed: text");
     }
 }
+

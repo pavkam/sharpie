@@ -121,3 +121,4 @@ public enum VideoAttribute: uint
     /// </summary>
     Italic = VerticalHighlight << 1
 }
+

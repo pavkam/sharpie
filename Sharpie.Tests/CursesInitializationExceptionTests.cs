@@ -40,3 +40,4 @@ public class CursesInitializationExceptionTests
         ex.Message.ShouldBe("Failed to load or initialize the Curses library.");
     }
 }
+
