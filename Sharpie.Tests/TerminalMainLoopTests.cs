@@ -478,7 +478,7 @@ public class TerminalMainLoopTests
         await ra;
 
         await Task.Delay(500);
-        Timer.ActiveCount.ShouldBe(count);
+        Timer.ActiveCount.ShouldBeLessThanOrEqualTo(count);
     }
 
     [TestMethod, Timeout(Timeout)]

@@ -42,7 +42,9 @@ public class EventPumpTests
     private CancellationTokenSource _source = null!;
     private Terminal _terminal = null!;
     private Window _window = null!;
-
+    [UsedImplicitly]
+    public TestContext TestContext { get; set; } = null!;
+    
     private Event[] SimulateEvents(int count, ISurface w, params (int result, uint keyCode)[] raw)
     {
         var i = 0;
@@ -110,7 +112,7 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
-        _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false));
+        _terminal = new(_cursesMock.Object, new(UseStandardKeySequenceResolvers: false, ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
         _pump = new(_terminal);
         _window = new(_terminal.Screen, new(2));
         _source = new();
@@ -514,66 +516,40 @@ public class EventPumpTests
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_ProcessesTerminalResizeEvents_InScreen_WithoutMonitoring()
+    public void Listen1_ReturnsTerminalResizeEvents()
     {
-        _window.Dispose();
-
-        _cursesMock.Setup(s => s.getmaxy(_terminal.Screen.Handle))
-                   .Returns(10);
-
-        _cursesMock.Setup(s => s.getmaxx(_terminal.Screen.Handle))
-                   .Returns(20);
+        _cursesMock.MockArea(_terminal.Screen, new(0, 0, 20, 10));
 
         var events = SimulateEvents(2, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
-
-        events.Length.ShouldBe(2);
-        events[0]
-            .Type.ShouldBe(EventType.TerminalAboutToResize);
-
-        events[1]
-            .Type.ShouldBe(EventType.TerminalResize);
-
-        ((TerminalResizeEvent) events[1]).Size.ShouldBe(new(20, 10));
-
-        _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, 0, 10, 1), Times.Once);
-        _cursesMock.Verify(v => v.clearok(_terminal.Screen.Handle, It.IsAny<bool>()), Times.Never);
-        _cursesMock.Verify(v => v.wrefresh(_terminal.Screen.Handle), Times.Once);
+        events.ShouldBe(new Event[] { new TerminalAboutToResizeEvent(), new TerminalResizeEvent(new(20, 10)) });
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_ProcessesTerminalResizeEvents_InChild_WithoutMonitoring()
+    public void Listen1_WhenUnmanaged_OnResize_DoesNotUpdateTheScreen()
     {
-        var otherWindow = new Window(_terminal.Screen, new(8));
+        _cursesMock.MockArea(_terminal.Screen, new(0, 0, 20, 10));
 
-        _cursesMock.Setup(s => s.getmaxy(_terminal.Screen.Handle))
-                   .Returns(10);
+        SimulateEvents(2, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
 
-        _cursesMock.Setup(s => s.getmaxx(_terminal.Screen.Handle))
-                   .Returns(20);
+        _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
+            Times.Never);
+        _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
+        _cursesMock.Verify(v => v.wnoutrefresh(It.IsAny<IntPtr>()), Times.Never);
+    }
 
-        _cursesMock.Setup(s => s.getmaxy(_window.Handle))
-                   .Returns(5);
+    [TestMethod, Timeout(Timeout)]
+    public void Listen1_WhenManaged_OnResize_UpdatesTheScreenAndWindow()
+    {
+        _cursesMock.MockArea(_terminal.Screen, new(0, 0, 20, 10));
+        _cursesMock.MockArea(_window, new(0, 0, 5, 5));
 
-        _cursesMock.Setup(s => s.getmaxy(otherWindow.Handle))
-                   .Returns(5);
-
-        var events = SimulateEvents(2, otherWindow, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
-
-        events.Length.ShouldBe(2);
-        events[0]
-            .Type.ShouldBe(EventType.TerminalAboutToResize);
-
-        events[1]
-            .Type.ShouldBe(EventType.TerminalResize);
-
-        ((TerminalResizeEvent) events[1]).Size.ShouldBe(new(20, 10));
+        SimulateEvents(2, _window, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
 
         _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
         _cursesMock.Verify(v => v.wtouchln(_window.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
-        _cursesMock.Verify(v => v.wtouchln(otherWindow.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
-
-        _cursesMock.Verify(v => v.clearok(_terminal.Screen.Handle, It.IsAny<bool>()), Times.Never);
-        _cursesMock.Verify(v => v.wrefresh(_terminal.Screen.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(_terminal.Screen.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wnoutrefresh(_window.Handle), Times.Once);
+        _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
     [TestMethod, Timeout(Timeout)]

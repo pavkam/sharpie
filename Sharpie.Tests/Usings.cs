@@ -36,5 +36,6 @@ global using System.Text;
 global using System.Drawing;
 global using Sharpie.Abstractions;
 global using Sharpie.Backend;
+global using JetBrains.Annotations;
 
 [assembly: ExcludeFromCodeCoverage]

@@ -43,12 +43,16 @@ terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, St
 // Draw a border on the screen.
 terminal.Screen.DrawBorder();
 
-// Force a refresh so that all drawings will be actually pushed to teh screen.
-terminal.Screen.Refresh();
-
 // Create a child window within the terminal to operate within.
 // The other cells contain the border so we don't want to overwrite those.
 var subWindow = terminal.Screen.Window(new(1, 1, terminal.Screen.Size.Width - 2, terminal.Screen.Size.Height - 2));
+
+// Force a refresh so that all drawings will be actually pushed to teh screen.
+using (terminal.AtomicRefresh())
+{
+    terminal.Screen.Refresh();
+    subWindow.Refresh();
+}
 
 // Process all events coming from the terminal.
 foreach (var @event in terminal.Events.Listen(subWindow))
@@ -63,6 +67,12 @@ foreach (var @event in terminal.Events.Listen(subWindow))
     {
         subWindow.Size = new(re.Size.Width - 2, re.Size.Height - 2);
         terminal.Screen.DrawBorder();
+
+        using (terminal.AtomicRefresh())
+        {
+            terminal.Screen.Refresh();
+            subWindow.Refresh();
+        }
     }
 
     // If the user pressed CTRL+C, break the loop.

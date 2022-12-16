@@ -92,16 +92,24 @@ public sealed class Screen: TerminalSurface, IScreen
     /// <inheritdoc cref="IScreen.Pads" />
     IEnumerable<IPad> IScreen.Pads => Pads;
 
+    /// <summary>
+    /// Specifies whether window refresh and overlapping is being managed by the screen.
+    /// </summary>
+    internal bool ManagedWindows => Terminal.Options.ManagedWindows;
+    
     /// <inheritdoc cref="TerminalSurface.Refresh()" />
     public override void Refresh()
     {
         base.Refresh();
 
-        foreach (var child in _roWindows)
+        if (ManagedWindows)
         {
-            if (child.Visible)
+            foreach (var child in _roWindows)
             {
-                Terminal.Refresh(child);
+                if (child.Visible)
+                {
+                    Terminal.Refresh(child);
+                }
             }
         }
     }
@@ -110,16 +118,20 @@ public sealed class Screen: TerminalSurface, IScreen
     public override void MarkDirty(int y, int count)
     {
         base.MarkDirty(y, count);
-        foreach (var child in _roWindows)
-        {
-            if (child.Visible)
-            {
-                var ly = child.Location.Y;
-                var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
 
-                if (iy > -1 && ic > 0)
+        if (ManagedWindows)
+        {
+            foreach (var child in _roWindows)
+            {
+                if (child.Visible)
                 {
-                    child.MarkDirty(iy - ly, ic);
+                    var ly = child.Location.Y;
+                    var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
+
+                    if (iy > -1 && ic > 0)
+                    {
+                        child.MarkDirty(iy - ly, ic);
+                    }
                 }
             }
         }
@@ -129,17 +141,20 @@ public sealed class Screen: TerminalSurface, IScreen
     public override void Refresh(int y, int count)
     {
         base.Refresh(y, count);
-        foreach (var child in _roWindows)
+        if (ManagedWindows)
         {
-            if (child.Visible)
+            foreach (var child in _roWindows)
             {
-                var ly = child.Location.Y;
-                var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
-
-                if (iy > -1 && ic > 0)
+                if (child.Visible)
                 {
-                    Curses.wredrawln(child.Handle, iy - ly, ic)
-                          .Check(nameof(Curses.wredrawln), "Failed to perform line refresh of child.");
+                    var ly = child.Location.Y;
+                    var (iy, ic) = Helpers.IntersectSegments(y, count, ly, child.Size.Height);
+
+                    if (iy > -1 && ic > 0)
+                    {
+                        Curses.wredrawln(child.Handle, iy - ly, ic)
+                              .Check(nameof(Curses.wredrawln), "Failed to perform line refresh of child.");
+                    }
                 }
             }
         }
@@ -254,6 +269,7 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(!window.Disposed);
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
+        Debug.Assert(ManagedWindows);
 
         var a1 = new Rectangle(window.Location, window.Size);
 
@@ -290,7 +306,8 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(!window.Disposed);
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
-
+        Debug.Assert(ManagedWindows);
+        
         if (visible)
         {
             window.MarkDirty();
@@ -315,7 +332,8 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(!window.Disposed);
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
-
+        Debug.Assert(ManagedWindows);
+        
         var i = _windows.IndexOf(window);
         if (i < _windows.Count - 1)
         {
@@ -346,7 +364,8 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(!window.Disposed);
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
-
+        Debug.Assert(ManagedWindows);
+        
         var i = _windows.IndexOf(window);
         if (i > 0)
         {

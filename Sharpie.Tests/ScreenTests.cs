@@ -30,13 +30,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
+
+
 [TestClass]
 public class ScreenTests
 {
     private Mock<ICursesProvider> _cursesMock = null!;
     private Screen _screen = null!;
     private Terminal _terminal = null!;
-
+    
+    [UsedImplicitly]
+    public TestContext TestContext { get; set; } = null!;
+    
     [TestInitialize]
     public void TestInitialize()
     {
@@ -45,7 +50,7 @@ public class ScreenTests
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
-        _terminal = new(_cursesMock.Object, new());
+        _terminal = new(_cursesMock.Object, new(ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
         _screen = _terminal.Screen;
     }
 
@@ -74,6 +79,18 @@ public class ScreenTests
 
         Should.Throw<CursesOperationException>(() => new Screen(_terminal, new(1)))
               .Operation.ShouldBe("notimeout");
+    }
+
+    [TestMethod]
+    public void ManagedWindows_WhenManaged_IsTrue()
+    {
+        _terminal.Screen.ManagedWindows.ShouldBeTrue();
+    }
+    
+    [TestMethod]
+    public void ManagedWindows_WhenUnmanaged_IsFalse()
+    {
+        _terminal.Screen.ManagedWindows.ShouldBeFalse();
     }
 
     [TestMethod] public void Terminal_IsInitialized() { _screen.Terminal.ShouldBe(_terminal); }
@@ -260,39 +277,23 @@ public class ScreenTests
     }
 
     [TestMethod]
-    public void Refresh_RefreshesAllWindows_NoBatch()
+    public void MarkDirty_WhenUnmanaged_OnlyMarksScreenAsDirty()
     {
-        var w1 = new Window(_screen, new(1));
-        var w2 = new Window(_screen, new(2));
+        var w = new Window(_screen, new(1));
 
-        _screen.Refresh();
-
-        _cursesMock.Verify(v => v.wrefresh(_screen.Handle), Times.Once);
-        _cursesMock.Verify(v => v.wrefresh(w1.Handle), Times.Once);
-        _cursesMock.Verify(v => v.wrefresh(w2.Handle), Times.Once);
-
+        _cursesMock.MockArea(_screen, new(0, 0, 100, 100));
+        _cursesMock.MockArea(w, new(0, 0, 100, 100));
+        
+        _screen.MarkDirty(1, 50);
+        
+        _cursesMock.Verify(v => v.wtouchln(_screen.Handle, 1, 50, 1), Times.Once);
+        _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
         _cursesMock.Verify(v => v.doupdate(), Times.Never);
     }
 
     [TestMethod]
-    public void Refresh_RefreshesAllWindows_InBatch()
-    {
-        var w1 = new Window(_screen, new(1));
-        var w2 = new Window(_screen, new(2));
-
-        using (_terminal.AtomicRefresh())
-        {
-            _screen.Refresh();
-        }
-
-        _cursesMock.Verify(v => v.wnoutrefresh(_screen.Handle));
-        _cursesMock.Verify(v => v.wnoutrefresh(w1.Handle));
-        _cursesMock.Verify(v => v.wnoutrefresh(w2.Handle));
-        _cursesMock.Verify(v => v.doupdate());
-    }
-
-    [TestMethod]
-    public void MarkDirty_PropagatesOnChildren()
+    public void MarkDirty_WhenManaged_PropagatesOnChildren()
     {
         var w1 = new Window(_screen, new(1));
         var w2 = new Window(_screen, new(2));
@@ -311,9 +312,57 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wtouchln(w3.Handle, It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
             Times.Never());
     }
+    
+    [TestMethod]
+    public void Refresh1_WhenManaged_RefreshesAllWindows_NoBatch()
+    {
+        var w1 = new Window(_screen, new(1));
+        var w2 = new Window(_screen, new(2));
+
+        _screen.Refresh();
+
+        _cursesMock.Verify(v => v.wrefresh(_screen.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wrefresh(w1.Handle), Times.Once);
+        _cursesMock.Verify(v => v.wrefresh(w2.Handle), Times.Once);
+
+        _cursesMock.Verify(v => v.doupdate(), Times.Never);
+    }
 
     [TestMethod]
-    public void Refresh_PropagatesOnChildren()
+    public void Refresh1_WhenManaged_RefreshesAllWindows_InBatch()
+    {
+        var w1 = new Window(_screen, new(1));
+        var w2 = new Window(_screen, new(2));
+
+        using (_terminal.AtomicRefresh())
+        {
+            _screen.Refresh();
+        }
+
+        _cursesMock.Verify(v => v.wnoutrefresh(_screen.Handle));
+        _cursesMock.Verify(v => v.wnoutrefresh(w1.Handle));
+        _cursesMock.Verify(v => v.wnoutrefresh(w2.Handle));
+        _cursesMock.Verify(v => v.doupdate());
+    }
+    
+    [TestMethod]
+    public void Refresh2_WhenUnmanaged_OnlyRefreshesTheScreen()
+    {
+        var w = new Window(_screen, new(1));
+
+        _cursesMock.MockArea(_screen, new(0, 0, 100, 100));
+        _cursesMock.MockArea(w, new(0, 0, 100, 100));
+
+        _screen.Refresh(1, 50);
+
+        _cursesMock.Verify(v => v.wredrawln(_screen.Handle, 1, 50), Times.Once);
+        _cursesMock.Verify(v => v.wredrawln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
+        _cursesMock.Verify(v => v.doupdate(), Times.Never);
+    }
+    
+    [TestMethod]
+    public void Refresh2_WhenManaged_PropagatesOnChildren()
     {
         var w1 = new Window(_screen, new(1));
         var w2 = new Window(_screen, new(2));
