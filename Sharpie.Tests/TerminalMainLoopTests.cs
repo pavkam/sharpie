@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class TerminalMainLoopTests
 {
-    private const int Timeout = 1000;
+    private const int Timeout = 10000;
 
     private Mock<ICursesProvider> _cursesMock = null!;
     private Terminal _terminal = null!;
