@@ -109,4 +109,3 @@ public sealed class KeyEvent: Event
     /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => HashCode.Combine(Char, Key, Modifiers, Name, Type);
 }
-

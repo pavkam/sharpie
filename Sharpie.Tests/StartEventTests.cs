@@ -65,4 +65,3 @@ public class StartEventTests
                .ShouldBe(new StartEvent().GetHashCode());
     }
 }
-

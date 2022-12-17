@@ -277,4 +277,3 @@ public class SubPadTests
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
     }
 }
-

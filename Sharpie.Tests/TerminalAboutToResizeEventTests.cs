@@ -66,4 +66,3 @@ public class TerminalAboutToResizeEventTests
                .ShouldBe(new TerminalAboutToResizeEvent().GetHashCode());
     }
 }
-

@@ -61,4 +61,3 @@ public enum SoftLabelKeyMode
     /// </summary>
     FourFourFourWithIndex = 3
 }
-

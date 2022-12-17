@@ -55,4 +55,3 @@ public sealed class CursesOperationException: CursesException
     /// </summary>
     public string Operation { get; }
 }
-

@@ -81,4 +81,3 @@ public enum EventType
     /// </summary>
     Delegate
 }
-

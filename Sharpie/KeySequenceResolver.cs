@@ -266,4 +266,3 @@ public static class KeySequenceResolver
         return (new(key, new(ControlCharacter.Null), nameFunc((uint) rawKey), mods), 4);
     }
 }
-

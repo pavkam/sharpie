@@ -998,4 +998,3 @@ public class WindowTests
         _cursesMock.Verify(v => v.doupdate(), Times.Exactly(2));
     }
 }
-

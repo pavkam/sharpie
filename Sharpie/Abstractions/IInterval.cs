@@ -11,4 +11,3 @@ public interface IInterval
     /// </summary>
     void Stop();
 }
-

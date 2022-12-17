@@ -31,37 +31,31 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Tests;
 
 [TestClass]
-public class StopEventTests
+public class AsciiGlyphTests
 {
-    private readonly StopEvent _event1 = new();
-
-    [TestMethod] public void Ctor_InitializesPropertiesCorrectly() { _event1.Type.ShouldBe(EventType.Stop); }
+    private readonly Style _style1 = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 99 } };
 
     [TestMethod]
-    public void ToString_ProperlyFormats()
+    public void Size_Returns_4By4()
     {
-        _event1.ToString()
-               .ShouldBe("Stopped");
-    }
-
-    [TestMethod, DataRow(null), DataRow("")]
-    public void Equals_ReturnsFalse_IfNotSameType(object? b)
-    {
-        _event1.Equals(b)
-               .ShouldBeFalse();
+        var glyph = new AsciiGlyph((byte) 'A', _style1);
+        glyph.Size.ShouldBe(new(4, 4));
     }
 
     [TestMethod]
-    public void Equals_ReturnsTrue_IfSameType()
+    public void DrawTo_DrawsTheExpectedGlyph()
     {
-        _event1.Equals(new StopEvent())
-               .ShouldBeTrue();
-    }
+        var glyph = new AsciiGlyph((byte) 'A', _style1);
+        var contents = glyph.GetContents();
 
-    [TestMethod]
-    public void GetHashCode_IsEqual_Always()
-    {
-        _event1.GetHashCode()
-               .ShouldBe(new StopEvent().GetHashCode());
+        var cols = new[,]
+        {
+            { (new('▗'), _style1), (new('█'), _style1), (new('█'), _style1), (new('▀'), _style1) },
+            { (new('█'), _style1), (new(' '), _style1), (new('▀'), _style1), (new(' '), _style1) },
+            { (new('▖'), _style1), (new('█'), _style1), (new('█'), _style1), (new('▀'), _style1) },
+            { (new(' '), _style1), (new(' '), _style1), (new(' '), _style1), (new Rune(' '), _style1) }
+        };
+
+        contents.ShouldBe(cols);
     }
 }

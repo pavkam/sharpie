@@ -86,4 +86,3 @@ public interface ITerminalSurface: ISurface
     /// <remarks>This operation is not thread safe.</remarks>
     void Refresh(int y, int count);
 }
-

@@ -177,4 +177,3 @@ public class KeyEventTests
                .ShouldBe(new KeyEvent(_event1.Key, _event1.Char, _event1.Name, _event1.Modifiers).GetHashCode());
     }
 }
-

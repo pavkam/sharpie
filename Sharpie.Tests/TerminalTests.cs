@@ -925,4 +925,3 @@ public class TerminalTests
         _cursesMock.Verify(v => v.set_title("title"), Times.Once);
     }
 }
-

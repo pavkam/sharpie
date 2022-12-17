@@ -211,4 +211,3 @@ public interface IColorManager
     /// </exception>
     (short red, short green, short blue) BreakdownColor(StandardColor color);
 }
-

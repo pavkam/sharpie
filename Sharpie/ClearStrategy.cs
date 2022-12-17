@@ -51,4 +51,3 @@ public enum ClearStrategy
     /// </summary>
     LineFromCaret
 }
-

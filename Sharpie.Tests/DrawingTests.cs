@@ -39,23 +39,6 @@ public class DrawingTests
     private Drawing _drawing3X3 = null!;
     private Mock<IDrawSurface> _drawSurfaceMock = null!;
 
-    private static (Rune, Style)[,] ContentsOf(Drawing drawing)
-    {
-        var mock = new Mock<IDrawSurface>();
-        mock.Setup(s => s.CoversArea(It.IsAny<Rectangle>()))
-            .Returns(true);
-
-        var collector = new (Rune, Style)[drawing.Size.Width, drawing.Size.Height];
-        mock.Setup(s => s.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()))
-            .Callback<Point, Rune, Style>((location, rune, textStyle) =>
-            {
-                collector[location.X, location.Y] = (rune, textStyle);
-            });
-
-        drawing.DrawTo(mock.Object, new(0, 0, drawing.Size.Width, drawing.Size.Height), new(0, 0));
-        return collector;
-    }
-
     [TestInitialize]
     public void TestInitialize()
     {
@@ -159,8 +142,8 @@ public class DrawingTests
     public void Glyph1_DrawsGlyph()
     {
         _drawing1X1.Glyph(new(0, 0), new('Z'), _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('Z'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('Z'), _style1));
     }
 
     [TestMethod]
@@ -169,8 +152,8 @@ public class DrawingTests
         for (var ch = 0; ch <= ControlCharacter.Escape; ch++)
         {
             _drawing1X1.Glyph(new(0, 0), new(ch), _style1);
-            ContentsOf(_drawing1X1)[0, 0]
-                .ShouldBe((new(' '), _style1));
+            _drawing1X1.GetContents()[0, 0]
+                       .ShouldBe((new(' '), _style1));
         }
     }
 
@@ -187,8 +170,8 @@ public class DrawingTests
     public void Glyph2_DrawsGlyph()
     {
         _drawing1X1.Glyph(new(0, 0), Drawing.CheckGlyphStyle.Diamond, Drawing.FillStyle.Black, _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('◇'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('◇'), _style1));
     }
 
     [TestMethod]
@@ -207,8 +190,8 @@ public class DrawingTests
         _drawing1X1.Glyph(new(0, 0), Drawing.TriangleGlyphStyle.Down, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black,
             _style1);
 
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('▽'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('▽'), _style1));
     }
 
     [TestMethod, DataRow(-1), DataRow(9)]
@@ -224,8 +207,8 @@ public class DrawingTests
     public void Glyph4_DrawsGlyph()
     {
         _drawing1X1.Glyph(new(0, 0), Drawing.GradientGlyphStyle.LeftToRight, 8, _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('█'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('█'), _style1));
     }
 
     [TestMethod, DataRow(-1F, 0F), DataRow(2F, 0F), DataRow(2.1F, 0F), DataRow(0F, -1F), DataRow(0F, 2F),
@@ -254,7 +237,7 @@ public class DrawingTests
     public void Fill1_FillsArea()
     {
         _drawing2X2.Fill(new(0, 0, 2, 1), new Rune('A'), _style1);
-        var c = ContentsOf(_drawing2X2);
+        var c = _drawing2X2.GetContents();
         c[0, 0]
             .ShouldBe((new('A'), _style1));
 
@@ -272,7 +255,7 @@ public class DrawingTests
     public void Fill1_FillsNothing_IfAreaIsEmpty()
     {
         _drawing2X2.Fill(new(0, 0, 2, 0), new Rune('A'), _style1);
-        var c = ContentsOf(_drawing2X2);
+        var c = _drawing2X2.GetContents();
         c[0, 0]
             .Item1.ShouldBe(new(0));
 
@@ -299,7 +282,7 @@ public class DrawingTests
     public void Fill2_FillsArea()
     {
         _drawing2X2.Fill(new(0, 0, 2, 1), Drawing.ShadeGlyphStyle.Dark, _style1);
-        var c = ContentsOf(_drawing2X2);
+        var c = _drawing2X2.GetContents();
         c[0, 0]
             .ShouldBe((new('▓'), _style1));
 
@@ -329,8 +312,8 @@ public class DrawingTests
     public void Text_DoesNothingIfTextIsEmpty()
     {
         _drawing1X1.Text(new(0, 0), "", _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .Item1.ShouldBe(new(0));
+        _drawing1X1.GetContents()[0, 0]
+                   .Item1.ShouldBe(new(0));
     }
 
     [TestMethod]
@@ -340,15 +323,15 @@ public class DrawingTests
         Rune.TryGetRuneAt(emoji, 0, out var rune);
 
         _drawing1X1.Text(new(0, 0), emoji, _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((rune, _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((rune, _style1));
     }
 
     [TestMethod]
     public void Text_TextThatFits_Horizontal()
     {
         _drawing2X2.Text(new(0, 0), "text", _style1);
-        var c = ContentsOf(_drawing2X2);
+        var c = _drawing2X2.GetContents();
         c[0, 0]
             .ShouldBe((new('t'), _style1));
 
@@ -366,7 +349,7 @@ public class DrawingTests
     public void Text_TextThatFits_Vertical()
     {
         _drawing2X2.Text(new(0, 0), "text", _style1, Drawing.Orientation.Vertical);
-        var c = ContentsOf(_drawing2X2);
+        var c = _drawing2X2.GetContents();
         c[0, 0]
             .ShouldBe((new('t'), _style1));
 
@@ -390,28 +373,28 @@ public class DrawingTests
     public void Point_DrawsSinglePoint(float x, float y, char c)
     {
         _drawing1X1.Point(new(x, y), _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new(c), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new(c), _style1));
     }
 
     [TestMethod]
     public void Point_CombinesPoints()
     {
         _drawing1X1.Point(new(0, 0), _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('▘'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('▘'), _style1));
 
         _drawing1X1.Point(new(0.6F, 0), _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('▀'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('▀'), _style1));
 
         _drawing1X1.Point(new(0.6F, 0.9F), _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('▜'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('▜'), _style1));
 
         _drawing1X1.Point(new(0.2F, 0.5F), _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('█'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('█'), _style1));
     }
 
     [TestMethod]
@@ -424,7 +407,7 @@ public class DrawingTests
     public void Rectangle_DrawsRectangle()
     {
         _drawing2X2.Rectangle(new(0.5F, 0.5F, 1.2F, 1.4F), _style1);
-        var c = ContentsOf(_drawing2X2);
+        var c = _drawing2X2.GetContents();
         c[0, 0]
             .ShouldBe((new('▗'), _style1));
 
@@ -451,15 +434,15 @@ public class DrawingTests
     public void Box_DrawsCross_When1X1()
     {
         _drawing1X1.Box(new(0, 0, 1, 1), Drawing.LineStyle.Double, _style1);
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('╔'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('╔'), _style1));
     }
 
     [TestMethod]
     public void Box_DrawsBox_When2X1()
     {
         _drawing2X2.Box(new(0, 0, 2, 1), Drawing.LineStyle.Double, _style1);
-        var c = ContentsOf(_drawing2X2);
+        var c = _drawing2X2.GetContents();
         c[0, 0]
             .ShouldBe((new('╔'), _style1));
 
@@ -477,7 +460,7 @@ public class DrawingTests
     public void Box_DrawsBox_When1X2()
     {
         _drawing2X2.Box(new(0, 0, 1, 2), Drawing.LineStyle.Double, _style1);
-        var c = ContentsOf(_drawing2X2);
+        var c = _drawing2X2.GetContents();
         c[0, 0]
             .ShouldBe((new('╔'), _style1));
 
@@ -495,7 +478,7 @@ public class DrawingTests
     public void Box_DrawsBox_When2X2()
     {
         _drawing2X2.Box(new(0, 0, 2, 2), Drawing.LineStyle.Double, _style1);
-        var c = ContentsOf(_drawing2X2);
+        var c = _drawing2X2.GetContents();
         c[0, 0]
             .ShouldBe((new('╔'), _style1));
 
@@ -513,7 +496,7 @@ public class DrawingTests
     public void Box_DrawsBox_When3X3()
     {
         _drawing3X3.Box(new(0, 0, 3, 3), Drawing.LineStyle.Double, _style1);
-        var c = ContentsOf(_drawing3X3);
+        var c = _drawing3X3.GetContents();
         c[0, 0]
             .ShouldBe((new('╔'), _style1));
 
@@ -562,8 +545,8 @@ public class DrawingTests
     {
         _drawing1X1.Line(new(0, y), 0.5F, Drawing.Orientation.Horizontal, Drawing.LineStyle.Light, _style1);
 
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('╴'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('╴'), _style1));
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -571,8 +554,8 @@ public class DrawingTests
     {
         _drawing1X1.Line(new(0.5F, y), 0.5F, Drawing.Orientation.Horizontal, Drawing.LineStyle.Light, _style1);
 
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('╶'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('╶'), _style1));
     }
 
     [TestMethod, DataRow(Drawing.LineStyle.Light, '─'), DataRow(Drawing.LineStyle.Heavy, '━'),
@@ -582,8 +565,8 @@ public class DrawingTests
     {
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Horizontal, style, _style1);
 
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new(exp), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new(exp), _style1));
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -591,8 +574,8 @@ public class DrawingTests
     {
         _drawing1X1.Line(new(x, 0), 0.5F, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
 
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('╵'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('╵'), _style1));
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -600,8 +583,8 @@ public class DrawingTests
     {
         _drawing1X1.Line(new(x, 0.5F), 0.5F, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
 
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('╷'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('╷'), _style1));
     }
 
     [TestMethod, DataRow(Drawing.LineStyle.Light, '│'), DataRow(Drawing.LineStyle.Heavy, '┃'),
@@ -611,8 +594,8 @@ public class DrawingTests
     {
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Vertical, style, _style1);
 
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new(exp), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new(exp), _style1));
     }
 
     [TestMethod]
@@ -638,8 +621,8 @@ public class DrawingTests
     {
         _drawing1X1.Line(new(0, 0), 0.4F, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
 
-        ContentsOf(_drawing1X1)[0, 0]
-            .Item1.ShouldBe(new(0));
+        _drawing1X1.GetContents()[0, 0]
+                   .Item1.ShouldBe(new(0));
     }
 
     [TestMethod]
@@ -648,8 +631,8 @@ public class DrawingTests
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Horizontal, Drawing.LineStyle.Double, _style1);
 
-        ContentsOf(_drawing1X1)[0, 0]
-            .ShouldBe((new('╪'), _style1));
+        _drawing1X1.GetContents()[0, 0]
+                   .ShouldBe((new('╪'), _style1));
     }
 
     [TestMethod, DataRow(Drawing.Orientation.Horizontal), DataRow(Drawing.Orientation.Vertical)]
@@ -661,4 +644,5 @@ public class DrawingTests
         });
     }
 }
+
 

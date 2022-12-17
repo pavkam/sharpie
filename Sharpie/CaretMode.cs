@@ -51,4 +51,3 @@ public enum CaretMode
     /// </summary>
     VeryVisible = 2
 }
-

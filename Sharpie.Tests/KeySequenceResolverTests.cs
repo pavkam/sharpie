@@ -278,4 +278,3 @@ public class KeySequenceResolverTests
         key.ShouldBeNull();
     }
 }
-

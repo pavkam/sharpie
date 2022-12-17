@@ -84,4 +84,3 @@ public class MouseMoveEventTests
                .ShouldBe(new MouseMoveEvent(new(1, 2)).GetHashCode());
     }
 }
-

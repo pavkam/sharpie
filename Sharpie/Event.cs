@@ -56,4 +56,3 @@ public class Event
     /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => Type.GetHashCode();
 }
-

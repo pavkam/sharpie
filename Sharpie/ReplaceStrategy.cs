@@ -48,4 +48,3 @@ public enum ReplaceStrategy
     /// </summary>
     Overlay
 }
-

@@ -447,4 +447,3 @@ public interface ICursesProvider
 
     bool monitor_pending_resize(Action action, [NotNullWhen(true)] out IDisposable? handle);
 }
-

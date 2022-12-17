@@ -173,4 +173,3 @@ public class MouseEventResolverTests
                 ModifierKey.Ctrl));
     }
 }
-

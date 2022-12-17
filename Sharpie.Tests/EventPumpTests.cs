@@ -961,4 +961,3 @@ public class EventPumpTests
         }
     }
 }
-

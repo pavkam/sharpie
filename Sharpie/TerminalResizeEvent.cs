@@ -57,4 +57,3 @@ public sealed class TerminalResizeEvent: Event
     /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => Size.GetHashCode();
 }
-
