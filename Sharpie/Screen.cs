@@ -418,4 +418,3 @@ public sealed class Screen: TerminalSurface, IScreen
         Curses.endwin();
     }
 }
-

@@ -167,4 +167,3 @@ public interface IWindow: ITerminalSurface
     /// <remarks>This operation is not thread safe.</remarks>
     IWindow Duplicate();
 }
-

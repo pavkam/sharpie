@@ -383,4 +383,3 @@ public sealed class Window: TerminalSurface, IWindow
         base.Delete();
     }
 }
-

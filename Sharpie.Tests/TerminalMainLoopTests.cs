@@ -502,4 +502,3 @@ public class TerminalMainLoopTests
         _terminal.Stop(true);
     }
 }
-

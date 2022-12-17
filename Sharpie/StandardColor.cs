@@ -81,4 +81,3 @@ public enum StandardColor: short
     /// </summary>
     White = 7
 }
-

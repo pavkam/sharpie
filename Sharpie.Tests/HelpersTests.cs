@@ -561,4 +561,3 @@ public class HelpersTests
         _cursesMock.Verify(v => v.wnoutrefresh(sa.Handle), Times.Once);
     }
 }
-

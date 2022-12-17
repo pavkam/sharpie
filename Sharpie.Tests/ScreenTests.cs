@@ -413,4 +413,3 @@ public class ScreenTests
         _cursesMock.Verify(v => v.wresize(w2.Handle, 1, 1), Times.Once);
     }
 }
-

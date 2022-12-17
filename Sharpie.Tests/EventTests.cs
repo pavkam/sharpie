@@ -81,4 +81,3 @@ public class EventTests
                .ShouldNotBe(_event2.GetHashCode());
     }
 }
-

@@ -57,4 +57,3 @@ public sealed class MouseMoveEvent: Event
     /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => HashCode.Combine(Position, Type);
 }
-

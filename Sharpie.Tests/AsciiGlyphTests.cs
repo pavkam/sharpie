@@ -50,33 +50,12 @@ public class AsciiGlyphTests
 
         var cols = new[,]
         {
-            {
-                (new('▗'), _style1),
-                (new('█'), _style1),
-                (new('█'), _style1),
-                (new('▀'), _style1)
-            },
-            {
-                (new('█'), _style1),
-                (new(' '), _style1),
-                (new('▀'), _style1),
-                (new(' '), _style1)
-            },
-            {
-                (new('▖'), _style1),
-                (new('█'), _style1),
-                (new('█'), _style1),
-                (new('▀'), _style1)
-            },
-            {
-                (new(' '), _style1),
-                (new(' '), _style1),
-                (new(' '), _style1),
-                (new Rune(' '), _style1)
-            }
+            { (new('▗'), _style1), (new('█'), _style1), (new('█'), _style1), (new('▀'), _style1) },
+            { (new('█'), _style1), (new(' '), _style1), (new('▀'), _style1), (new(' '), _style1) },
+            { (new('▖'), _style1), (new('█'), _style1), (new('█'), _style1), (new('▀'), _style1) },
+            { (new(' '), _style1), (new(' '), _style1), (new(' '), _style1), (new Rune(' '), _style1) }
         };
 
         contents.ShouldBe(cols);
     }
 }
-

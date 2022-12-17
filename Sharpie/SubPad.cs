@@ -138,4 +138,3 @@ public sealed class SubPad: Surface, ISubPad
         base.Delete();
     }
 }
-

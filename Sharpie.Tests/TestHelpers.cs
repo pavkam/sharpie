@@ -20,7 +20,7 @@ internal static class TestHelpers
         drawing.DrawTo(mock.Object, new(0, 0, drawing.Size.Width, drawing.Size.Height), new(0, 0));
         return collector;
     }
-    
+
     public static void MockArea(this Mock<ICursesProvider> cursesMock, IntPtr handle, Rectangle area)
     {
         Debug.Assert(cursesMock != null);
@@ -70,4 +70,5 @@ internal static class TestHelpers
                   .Returns(1);
     }
 }
+
 

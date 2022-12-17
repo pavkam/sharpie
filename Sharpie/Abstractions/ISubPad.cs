@@ -77,4 +77,3 @@ public interface ISubPad: ISurface
     /// <remarks>This operation is not thread safe.</remarks>
     ISubPad Duplicate();
 }
-

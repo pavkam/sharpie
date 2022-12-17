@@ -78,4 +78,3 @@ public struct Style
     /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => HashCode.Combine(Attributes, ColorMixture);
 }
-

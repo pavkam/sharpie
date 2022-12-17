@@ -354,4 +354,3 @@ public class ColorManagerTests
         _cursesMock.Verify(v => v.pair_content(1, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny), Times.Once);
     }
 }
-

@@ -408,4 +408,3 @@ public sealed class EventPump: IEventPump
         _delegatedObjects.Enqueue(@object);
     }
 }
-

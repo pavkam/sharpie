@@ -53,18 +53,18 @@ void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
 {
     var x = 0;
     var y = 0;
-    
+
     foreach (var ch in str)
     {
-        var gl = new AsciiGlyph((byte)ch, styles[colorShift % styles.Length]);
-        t.Screen.Draw(new (x, y), gl);
-        
+        var gl = new AsciiGlyph((byte) ch, styles[colorShift % styles.Length]);
+        t.Screen.Draw(new(x, y), gl);
+
         x += gl.Size.Width;
         if (x >= t.Screen.Size.Width - gl.Size.Width)
         {
             x = 0;
             y += gl.Size.Height;
-        } 
+        }
 
         colorShift++;
     }
@@ -72,21 +72,21 @@ void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
 
 // A repeating timer that draws the message with different colors.
 var colorShift = 0;
-terminal.Repeat((t) =>
+terminal.Repeat(t =>
 {
     DrawFunAsciiMessage(t, message, colorShift++);
     t.Screen.Refresh();
-    
+
     return Task.CompletedTask;
 }, 100);
 
 // The main loop -- we need to monitor for resizes.
-terminal.Run((t, e)  =>
+terminal.Run((t, e) =>
 {
     if (e is TerminalResizeEvent)
     {
         t.Screen.Clear();
     }
-    
+
     return Task.CompletedTask;
 });

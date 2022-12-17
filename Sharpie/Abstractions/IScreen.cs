@@ -89,3 +89,4 @@ public interface IScreen: ITerminalSurface
     IPad Pad(Size size);
 }
 
+

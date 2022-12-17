@@ -1165,4 +1165,3 @@ public sealed class NativeCursesProvider: ICursesProvider, IDisposable
 
     ~NativeCursesProvider() { Dispose(); }
 }
-

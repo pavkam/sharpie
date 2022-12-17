@@ -452,4 +452,3 @@ public class SynchronizationTests
         protected internal override void AssertSynchronized() { _terminal.AssertSynchronized(); }
     }
 }
-

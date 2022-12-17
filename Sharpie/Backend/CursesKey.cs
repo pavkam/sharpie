@@ -160,4 +160,3 @@ public enum CursesKey: uint
     AltCtrlHome = 0x219,
     AltCtrlEnd = 0x214
 }
-

@@ -24,4 +24,3 @@ public interface IDrawable
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="destination" /> is <c>null</c>.</exception>
     void DrawTo(IDrawSurface destination, Rectangle srcArea, Point destLocation);
 }
-

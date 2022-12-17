@@ -143,7 +143,7 @@ public class DrawingTests
     {
         _drawing1X1.Glyph(new(0, 0), new('Z'), _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('Z'), _style1));
+                   .ShouldBe((new('Z'), _style1));
     }
 
     [TestMethod]
@@ -153,7 +153,7 @@ public class DrawingTests
         {
             _drawing1X1.Glyph(new(0, 0), new(ch), _style1);
             _drawing1X1.GetContents()[0, 0]
-                .ShouldBe((new(' '), _style1));
+                       .ShouldBe((new(' '), _style1));
         }
     }
 
@@ -171,7 +171,7 @@ public class DrawingTests
     {
         _drawing1X1.Glyph(new(0, 0), Drawing.CheckGlyphStyle.Diamond, Drawing.FillStyle.Black, _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('◇'), _style1));
+                   .ShouldBe((new('◇'), _style1));
     }
 
     [TestMethod]
@@ -191,7 +191,7 @@ public class DrawingTests
             _style1);
 
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('▽'), _style1));
+                   .ShouldBe((new('▽'), _style1));
     }
 
     [TestMethod, DataRow(-1), DataRow(9)]
@@ -208,7 +208,7 @@ public class DrawingTests
     {
         _drawing1X1.Glyph(new(0, 0), Drawing.GradientGlyphStyle.LeftToRight, 8, _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('█'), _style1));
+                   .ShouldBe((new('█'), _style1));
     }
 
     [TestMethod, DataRow(-1F, 0F), DataRow(2F, 0F), DataRow(2.1F, 0F), DataRow(0F, -1F), DataRow(0F, 2F),
@@ -313,7 +313,7 @@ public class DrawingTests
     {
         _drawing1X1.Text(new(0, 0), "", _style1);
         _drawing1X1.GetContents()[0, 0]
-            .Item1.ShouldBe(new(0));
+                   .Item1.ShouldBe(new(0));
     }
 
     [TestMethod]
@@ -324,7 +324,7 @@ public class DrawingTests
 
         _drawing1X1.Text(new(0, 0), emoji, _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((rune, _style1));
+                   .ShouldBe((rune, _style1));
     }
 
     [TestMethod]
@@ -374,7 +374,7 @@ public class DrawingTests
     {
         _drawing1X1.Point(new(x, y), _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new(c), _style1));
+                   .ShouldBe((new(c), _style1));
     }
 
     [TestMethod]
@@ -382,19 +382,19 @@ public class DrawingTests
     {
         _drawing1X1.Point(new(0, 0), _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('▘'), _style1));
+                   .ShouldBe((new('▘'), _style1));
 
         _drawing1X1.Point(new(0.6F, 0), _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('▀'), _style1));
+                   .ShouldBe((new('▀'), _style1));
 
         _drawing1X1.Point(new(0.6F, 0.9F), _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('▜'), _style1));
+                   .ShouldBe((new('▜'), _style1));
 
         _drawing1X1.Point(new(0.2F, 0.5F), _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('█'), _style1));
+                   .ShouldBe((new('█'), _style1));
     }
 
     [TestMethod]
@@ -435,7 +435,7 @@ public class DrawingTests
     {
         _drawing1X1.Box(new(0, 0, 1, 1), Drawing.LineStyle.Double, _style1);
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('╔'), _style1));
+                   .ShouldBe((new('╔'), _style1));
     }
 
     [TestMethod]
@@ -546,7 +546,7 @@ public class DrawingTests
         _drawing1X1.Line(new(0, y), 0.5F, Drawing.Orientation.Horizontal, Drawing.LineStyle.Light, _style1);
 
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('╴'), _style1));
+                   .ShouldBe((new('╴'), _style1));
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -555,7 +555,7 @@ public class DrawingTests
         _drawing1X1.Line(new(0.5F, y), 0.5F, Drawing.Orientation.Horizontal, Drawing.LineStyle.Light, _style1);
 
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('╶'), _style1));
+                   .ShouldBe((new('╶'), _style1));
     }
 
     [TestMethod, DataRow(Drawing.LineStyle.Light, '─'), DataRow(Drawing.LineStyle.Heavy, '━'),
@@ -566,7 +566,7 @@ public class DrawingTests
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Horizontal, style, _style1);
 
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new(exp), _style1));
+                   .ShouldBe((new(exp), _style1));
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -575,7 +575,7 @@ public class DrawingTests
         _drawing1X1.Line(new(x, 0), 0.5F, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
 
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('╵'), _style1));
+                   .ShouldBe((new('╵'), _style1));
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -584,7 +584,7 @@ public class DrawingTests
         _drawing1X1.Line(new(x, 0.5F), 0.5F, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
 
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('╷'), _style1));
+                   .ShouldBe((new('╷'), _style1));
     }
 
     [TestMethod, DataRow(Drawing.LineStyle.Light, '│'), DataRow(Drawing.LineStyle.Heavy, '┃'),
@@ -595,7 +595,7 @@ public class DrawingTests
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Vertical, style, _style1);
 
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new(exp), _style1));
+                   .ShouldBe((new(exp), _style1));
     }
 
     [TestMethod]
@@ -622,7 +622,7 @@ public class DrawingTests
         _drawing1X1.Line(new(0, 0), 0.4F, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
 
         _drawing1X1.GetContents()[0, 0]
-            .Item1.ShouldBe(new(0));
+                   .Item1.ShouldBe(new(0));
     }
 
     [TestMethod]
@@ -632,7 +632,7 @@ public class DrawingTests
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Horizontal, Drawing.LineStyle.Double, _style1);
 
         _drawing1X1.GetContents()[0, 0]
-            .ShouldBe((new('╪'), _style1));
+                   .ShouldBe((new('╪'), _style1));
     }
 
     [TestMethod, DataRow(Drawing.Orientation.Horizontal), DataRow(Drawing.Orientation.Vertical)]
@@ -644,4 +644,5 @@ public class DrawingTests
         });
     }
 }
+
 
