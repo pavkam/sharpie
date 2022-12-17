@@ -36,3 +36,4 @@ global using System.Diagnostics.CodeAnalysis;
 global using System.Runtime.InteropServices;
 global using Sharpie.Abstractions;
 global using Sharpie.Backend;
+global using System.Globalization;

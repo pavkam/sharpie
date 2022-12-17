@@ -41,4 +41,8 @@
         </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="basic.font" />
+    </ItemGroup>
+
 </Project>
