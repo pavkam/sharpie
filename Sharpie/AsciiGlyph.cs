@@ -1,10 +1,10 @@
 namespace Sharpie;
 
 /// <summary>
-/// Contains the definition of the standard ASCII font.
+/// Allows for the drawing of large ASCII glyphs.
 /// </summary>
 [PublicAPI]
-public sealed class LargeAsciiGlyph : IDrawable
+public sealed class AsciiGlyph : IDrawable
 {
     private const int BitsPerLine = 8;
     private const int Lines = 8;
@@ -33,7 +33,7 @@ public sealed class LargeAsciiGlyph : IDrawable
 
     private readonly Drawing _drawing;
     
-    static LargeAsciiGlyph()
+    static AsciiGlyph()
     {
         Debug.Assert(Raw.Length % CharsPerByte == 0);
         var byteCount = Raw.Length / CharsPerByte;
@@ -57,9 +57,9 @@ public sealed class LargeAsciiGlyph : IDrawable
     /// </summary>
     /// <param name="char">The character to obtain the glyph of.</param>
     /// <param name="style">The text style to use.</param>
-    public LargeAsciiGlyph(byte @char, Style style)
+    public AsciiGlyph(byte @char, Style style)
     {
-        _drawing = new(new(BitsPerLine / 2, Lines));
+        _drawing = new(new(BitsPerLine / 2, Lines / 2));
         _drawing.Fill(new(new(0, 0), _drawing.Size), new Rune(ControlCharacter.Whitespace), style);
 
         var shape = Shapes[@char];

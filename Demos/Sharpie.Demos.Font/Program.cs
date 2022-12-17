@@ -56,7 +56,7 @@ void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
     
     foreach (var ch in str)
     {
-        var gl = new LargeAsciiGlyph((byte)ch, styles[colorShift % styles.Length]);
+        var gl = new AsciiGlyph((byte)ch, styles[colorShift % styles.Length]);
         t.Screen.Draw(new (x, y), gl);
         
         x += gl.Size.Width;
