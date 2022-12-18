@@ -560,4 +560,73 @@ public class HelpersTests
 
         _cursesMock.Verify(v => v.wnoutrefresh(sa.Handle), Times.Once);
     }
+    
+    [TestMethod]
+    public void TraceLineInHalves_GeneratesTheExpectedOutput_1()
+    {
+        var pts = new List<PointF>();
+        Helpers.TraceLineInHalves(new(0,0), new(0.5F, 0.5F), p => pts.Add(p));
+        
+        pts.ShouldBe(new []{ new PointF(0,0), new PointF(0.5F, 0.5F) });
+    }
+    
+    [TestMethod]
+    public void TraceLineInHalves_GeneratesTheExpectedOutput_2()
+    {
+        var pts = new List<PointF>();
+        Helpers.TraceLineInHalves(new(0,0), new(2F, 2F), p => pts.Add(p));
+        
+        pts.ShouldBe(new []
+        {
+            new PointF(0,0), 
+            new PointF(0.5F, 0.5F),
+            new PointF(1F, 1F),
+            new PointF(1.5F, 1.5F),
+            new PointF(2F, 2F)
+        });
+    }
+    
+    [TestMethod]
+    public void TraceLineInHalves_GeneratesTheExpectedOutput_3()
+    {
+        var pts = new List<PointF>();
+        Helpers.TraceLineInHalves(new(0,0), new(0F, 1F), p => pts.Add(p));
+        
+        pts.ShouldBe(new []
+        {
+            new PointF(0,0), 
+            new PointF(0, 0.5F),
+            new PointF(0, 1F),
+        });
+    }
+    
+    [TestMethod]
+    public void TraceLineInHalves_GeneratesTheExpectedOutput_4()
+    {
+        var pts = new List<PointF>();
+        Helpers.TraceLineInHalves(new(0,0), new(1F, 0F), p => pts.Add(p));
+        
+        pts.ShouldBe(new []
+        {
+            new PointF(0,0), 
+            new PointF(0.5F, 0),
+            new PointF(1F, 0),
+        });
+    }
+    
+    [TestMethod]
+    public void TraceLineInHalves_GeneratesTheExpectedOutput_5()
+    {
+        var pts = new List<PointF>();
+        Helpers.TraceLineInHalves(new(0,0), new(-2, -2), p => pts.Add(p));
+        
+        pts.ShouldBe(new []
+        {
+            new PointF(0,0), 
+            new PointF(-0.5F, -0.5F),
+            new PointF(-1F, -1F),
+            new PointF(-1.5F, -1.5F),
+            new PointF(-2F, -2F),
+        });
+    }
 }

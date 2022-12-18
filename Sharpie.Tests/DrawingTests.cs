@@ -523,7 +523,7 @@ public class DrawingTests
     }
 
     [TestMethod]
-    public void Line_Throws_IfLocationIsInvalid()
+    public void Line1_Throws_IfLocationIsInvalid()
     {
         Should.Throw<ArgumentOutOfRangeException>(() =>
         {
@@ -532,7 +532,7 @@ public class DrawingTests
     }
 
     [TestMethod]
-    public void Line_Throws_IfLengthIsInvalid()
+    public void Line1_Throws_IfLengthIsInvalid()
     {
         Should.Throw<ArgumentOutOfRangeException>(() =>
         {
@@ -541,7 +541,7 @@ public class DrawingTests
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
-    public void Line_DrawsHalfLine_Horizontal_AtStart(float y)
+    public void Line1_DrawsHalfLine1_Horizontal_AtStart(float y)
     {
         _drawing1X1.Line(new(0, y), 0.5F, Drawing.Orientation.Horizontal, Drawing.LineStyle.Light, _style1);
 
@@ -550,7 +550,7 @@ public class DrawingTests
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
-    public void Line_DrawsHalfLine_Horizontal_AtEnd(float y)
+    public void Line1_DrawsHalfLine1_Horizontal_AtEnd(float y)
     {
         _drawing1X1.Line(new(0.5F, y), 0.5F, Drawing.Orientation.Horizontal, Drawing.LineStyle.Light, _style1);
 
@@ -561,7 +561,7 @@ public class DrawingTests
     [TestMethod, DataRow(Drawing.LineStyle.Light, '─'), DataRow(Drawing.LineStyle.Heavy, '━'),
      DataRow(Drawing.LineStyle.LightDashed, '┄'), DataRow(Drawing.LineStyle.HeavyDashed, '┅'),
      DataRow(Drawing.LineStyle.Double, '═')]
-    public void Line_DrawsFullLine_Horizontal(Drawing.LineStyle style, char exp)
+    public void Line1_DrawsFullLine1_Horizontal(Drawing.LineStyle style, char exp)
     {
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Horizontal, style, _style1);
 
@@ -570,7 +570,7 @@ public class DrawingTests
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
-    public void Line_DrawsHalfLine_Vertical_AtStart(float x)
+    public void Line1_DrawsHalfLine1_Vertical_AtStart(float x)
     {
         _drawing1X1.Line(new(x, 0), 0.5F, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
 
@@ -579,7 +579,7 @@ public class DrawingTests
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
-    public void Line_DrawsHalfLine_Vertical_AtEnd(float x)
+    public void Line1_DrawsHalfLine1_Vertical_AtEnd(float x)
     {
         _drawing1X1.Line(new(x, 0.5F), 0.5F, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
 
@@ -590,7 +590,7 @@ public class DrawingTests
     [TestMethod, DataRow(Drawing.LineStyle.Light, '│'), DataRow(Drawing.LineStyle.Heavy, '┃'),
      DataRow(Drawing.LineStyle.LightDashed, '┆'), DataRow(Drawing.LineStyle.HeavyDashed, '┇'),
      DataRow(Drawing.LineStyle.Double, '║')]
-    public void Line_DrawsFullLine_Vertical(Drawing.LineStyle style, char exp)
+    public void Line1_DrawsFullLine1_Vertical(Drawing.LineStyle style, char exp)
     {
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Vertical, style, _style1);
 
@@ -599,7 +599,7 @@ public class DrawingTests
     }
 
     [TestMethod]
-    public void Line_Throws_IfLengthLongerThanArea_Y()
+    public void Line1_Throws_IfLengthLongerThanArea_Y()
     {
         Should.Throw<ArgumentOutOfRangeException>(() =>
         {
@@ -608,7 +608,7 @@ public class DrawingTests
     }
 
     [TestMethod]
-    public void Line_Throws_IfLengthLongerThanArea_X()
+    public void Line1_Throws_IfLengthLongerThanArea_X()
     {
         Should.Throw<ArgumentOutOfRangeException>(() =>
         {
@@ -617,7 +617,7 @@ public class DrawingTests
     }
 
     [TestMethod]
-    public void Line_DoesNotDraw_IfLengthNotHalf()
+    public void Line1_DoesNotDraw_IfLengthNotHalf()
     {
         _drawing1X1.Line(new(0, 0), 0.4F, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
 
@@ -626,7 +626,7 @@ public class DrawingTests
     }
 
     [TestMethod]
-    public void Line_CombinesLineRunes()
+    public void Line1_CombinesLineRunes()
     {
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Vertical, Drawing.LineStyle.Light, _style1);
         _drawing1X1.Line(new(0, 0), 1, Drawing.Orientation.Horizontal, Drawing.LineStyle.Double, _style1);
@@ -636,12 +636,23 @@ public class DrawingTests
     }
 
     [TestMethod, DataRow(Drawing.Orientation.Horizontal), DataRow(Drawing.Orientation.Vertical)]
-    public void Line_Throws_IfStyleIsInvalid(Drawing.Orientation orientation)
+    public void Line1_Throws_IfStyleIsInvalid(Drawing.Orientation orientation)
     {
         Should.Throw<ArgumentOutOfRangeException>(() =>
         {
             _drawing1X1.Line(new(0, 0), 1, orientation, (Drawing.LineStyle) 100, _style1);
         });
+    }
+
+    [TestMethod]
+    public void Line2_DrawsLine()
+    {
+        _drawing3X3.Line(new(0, 0), new(_drawing3X3.Size.Width - 0.5F, _drawing3X3.Size.Height - 0.5F), _style1);
+        var contents = _drawing3X3.GetContents();
+        
+        contents[0,0].ShouldBe((new('▚'), _style1));
+        contents[1,1].ShouldBe((new('▚'), _style1));
+        contents[0,0].ShouldBe((new('▚'), _style1));
     }
 }
 

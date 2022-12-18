@@ -81,7 +81,7 @@ public sealed class Drawing: IDrawable
     }
 
     /// <summary>
-    ///     The possible line styles used in <see cref="Line" />.
+    ///     The possible line styles used in <see cref="Line(PointF, float, Orientation, LineStyle, Style)" />.
     /// </summary>
     public enum LineStyle
     {
@@ -858,8 +858,7 @@ public sealed class Drawing: IDrawable
     }
 
     /// <summary>
-    ///     Draws a line starting at a given <paramref name="location" /> for a given <paramref name="length" /> and
-    ///     <paramref name="lineStyle" />.
+    ///     Draws a line starting at a given starting at a given point vertically or horizontally using line drawing characters.
     /// </summary>
     /// <param name="location">The start location.</param>
     /// <param name="orientation">The line orientation.</param>
@@ -931,6 +930,17 @@ public sealed class Drawing: IDrawable
                 SetCell(x, i, stl, textStyle);
             }
         }
+    }
+
+    /// <summary>
+    /// Draws a line between two points in the drawing using block characters.
+    /// </summary>
+    /// <param name="start">The starting point.</param>
+    /// <param name="end">The ending point.</param>
+    /// <param name="textStyle">The style to use.</param>
+    public void Line(PointF start, PointF end, Style textStyle)
+    {
+        Helpers.TraceLineInHalves(start, end, p => Point(p, textStyle));
     }
 
     /// <summary>
