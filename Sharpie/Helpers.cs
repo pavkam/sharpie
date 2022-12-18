@@ -488,6 +488,65 @@ public static class Helpers
         return (intStart, intEnd - intStart + 1);
     }
 
+    /// <summary>
+    /// Draws a line between two points in the drawing using block characters.
+    /// </summary>
+    /// <param name="start">The starting point.</param>
+    /// <param name="end">The ending point.</param>
+    /// <param name="traceFunc">The trace function invoked for each point.</param>
+    internal static void TraceLineInHalves(PointF start, PointF end, Action<PointF> traceFunc)
+    {
+        Debug.Assert(traceFunc != null);
+        
+        var x1 = (int)Math.Floor(start.X * 2);
+        var y1 = (int)Math.Floor(start.Y * 2);
+        var x2 = (int)Math.Floor(end.X * 2);
+        var y2 = (int)Math.Floor(end.Y * 2);
+        
+        var w = x2 - x1;
+        var h = y2 - y1;
+        
+        var dx1 = Math.Sign(w);
+        var dx2 = Math.Sign(w);
+        
+        var dy1 = Math.Sign(h);
+        var dy2 = 0;
+
+        var longest = Math.Abs(w);
+        var shortest = Math.Abs(h);
+        
+        if (longest <= shortest)
+        {
+            longest = Math.Abs(h);
+            shortest = Math.Abs(w);
+            dy2 = Math.Sign(h);
+            dx2 = 0;
+        }
+
+        var numerator = longest >> 1;
+        for (var i = 0; i <= longest; i++)
+        {
+            traceFunc(new(x1 / 2F, y1 / 2F));
+            
+            numerator += shortest;
+            if (!(numerator < longest))
+            {
+                numerator -= longest;
+                x1 += dx1;
+                y1 += dy1;
+            } else
+            {
+                x1 += dx2;
+                y1 += dy2;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Refreshes a surface using terminal's <see cref="Terminal.AtomicRefresh"/> facility.
+    /// </summary>
+    /// <param name="t">The terminal.</param>
+    /// <param name="s">The surface.</param>
     internal static void Refresh(this Terminal t, ISurface s)
     {
         Debug.Assert(t != null);
