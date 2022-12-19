@@ -31,7 +31,7 @@ public sealed class Game
     private readonly List<Point> _clear = new();
     private readonly Style _foodStyle;
 
-    private readonly Drawing _glyph = new(new(1, 1));
+    private readonly Canvas _glyph = new(new(1, 1));
     private readonly Style _lostStyle;
     private readonly Random _random = new();
     private readonly List<Point> _snake = new();
@@ -166,7 +166,7 @@ public sealed class Game
         {
             if (_snake.Count > 0)
             {
-                _glyph.Glyph(Point.Empty, Drawing.CheckGlyphStyle.Diamond, Drawing.FillStyle.Black, _snakeHeadStyle);
+                _glyph.Glyph(Point.Empty, Canvas.CheckGlyphStyle.Diamond, Canvas.FillStyle.Black, _snakeHeadStyle);
                 surface.Draw(_snake[0], _glyph);
             }
 
@@ -175,19 +175,19 @@ public sealed class Game
 
         var headStyle = _direction switch
         {
-            Direction.Down => Drawing.TriangleGlyphStyle.Down,
-            Direction.Up => Drawing.TriangleGlyphStyle.Up,
-            Direction.Left => Drawing.TriangleGlyphStyle.Left,
-            Direction.Right => Drawing.TriangleGlyphStyle.Right,
-            var _ => (Drawing.TriangleGlyphStyle) 0
+            Direction.Down => Canvas.TriangleGlyphStyle.Down,
+            Direction.Up => Canvas.TriangleGlyphStyle.Up,
+            Direction.Left => Canvas.TriangleGlyphStyle.Left,
+            Direction.Right => Canvas.TriangleGlyphStyle.Right,
+            var _ => (Canvas.TriangleGlyphStyle) 0
         };
 
-        _glyph.Glyph(Point.Empty, headStyle, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, _snakeHeadStyle);
+        _glyph.Glyph(Point.Empty, headStyle, Canvas.GlyphSize.Normal, Canvas.FillStyle.Black, _snakeHeadStyle);
         surface.Draw(_snake[0], _glyph);
 
         for (var i = 1; i < _snake.Count; i++)
         {
-            _glyph.Glyph(Point.Empty, Drawing.CheckGlyphStyle.Square, Drawing.FillStyle.Black, _snakeBodyStyle);
+            _glyph.Glyph(Point.Empty, Canvas.CheckGlyphStyle.Square, Canvas.FillStyle.Black, _snakeBodyStyle);
             surface.Draw(_snake[i], _glyph);
         }
     }

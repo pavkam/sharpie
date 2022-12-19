@@ -324,10 +324,7 @@ public class SynchronizationTests
     {
         Check(() => ((IDrawSurface) _surface).DrawCell(new(0, 0), new('A'), Style.Default));
     }
-
-    [TestMethod]
-    public void Surface_CoversArea() { Check(() => ((IDrawSurface) _surface).CoversArea(new(0, 0, 1, 1))); }
-
+    
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Surface_Scrollable_Get() { Check(() => _surface.Scrollable.ToString()); }
 
@@ -427,9 +424,9 @@ public class SynchronizationTests
     [TestMethod] public void Surface_IsRectangleWithin() { Check(() => _surface.IsRectangleWithin(new(0, 0, 1, 1))); }
 
     [TestMethod]
-    public void Surface_Draw1() { Check(() => _surface.Draw(Point.Empty, new(0, 0, 1, 1), new Drawing(new(10, 10)))); }
+    public void Surface_Draw1() { Check(() => _surface.Draw(Point.Empty, new(0, 0, 1, 1), new Canvas(new(10, 10)))); }
 
-    [TestMethod] public void Surface_Draw2() { Check(() => _surface.Draw(Point.Empty, new Drawing(new(10, 10)))); }
+    [TestMethod] public void Surface_Draw2() { Check(() => _surface.Draw(Point.Empty, new Canvas(new(10, 10)))); }
 
     [TestMethod] public void Surface_LineDirty() { Check(() => _surface.LineDirty(0)); }
 

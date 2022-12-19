@@ -425,17 +425,9 @@ public static class Helpers
     /// <param name="start">The start of the interval.</param>
     /// <param name="count">The length of the interval.</param>
     /// <returns>An enumerable that returns the halves.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     Thrown if <paramref name="start" /> or <paramref name="count" /> are out
-    ///     of bounds.
-    /// </exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="count" /> is negative.</exception>
     internal static IEnumerable<(int coord, bool start)> EnumerateInHalves(float start, float count)
     {
-        if (start < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(start));
-        }
-
         if (count < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(count));
@@ -448,7 +440,10 @@ public static class Helpers
         {
             halves--;
 
-            yield return (allHalves / 2, allHalves % 2 == 0);
+            var left = allHalves % 2 == 0;
+            var index = allHalves / 2;
+            yield return (index, left);
+
             allHalves++;
         }
     }
@@ -561,5 +556,35 @@ public static class Helpers
             t.Curses.wrefresh(s.Handle)
              .Check(nameof(t.Curses.wrefresh), "Failed to perform window refresh.");
         }
+    }
+    
+    /// <summary>
+    /// Intersects the given <see cref="area"/> with the total area of a surface and returns the intersection.
+    /// </summary>
+    /// <param name="size">The size of the destination surface.</param>
+    /// <param name="area">The desired area.</param>
+    /// <returns><c>true</c> if the intersection is not empty; <c>false</c> otherwise.</returns>
+    internal static bool AdjustToActualArea(this Size size, ref Rectangle area)
+    {
+        var r = new Rectangle(new(0, 0), size);
+        r.Intersect(area);
+        area = r;
+
+        return r is { Width: > 0, Height: > 0 };
+    }
+    
+    /// <summary>
+    /// Intersects the given <see cref="area"/> with the total area of a surface and returns the intersection.
+    /// </summary>
+    /// <param name="size">The size of the destination surface.</param>
+    /// <param name="area">The desired area.</param>
+    /// <returns><c>true</c> if the intersection is not empty; <c>false</c> otherwise.</returns>
+    internal static bool AdjustToActualArea(this Size size, ref RectangleF area)
+    {
+        var r = new RectangleF(new(0, 0), size);
+        r.Intersect(area);
+        area = r;
+
+        return !r.IsEmpty;
     }
 }

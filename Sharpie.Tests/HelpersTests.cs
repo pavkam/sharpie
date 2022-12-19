@@ -367,13 +367,6 @@ public class HelpersTests
     }
 
     [TestMethod]
-    public void EnumerateInHalves_Throws_IfStartIsNegative()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.EnumerateInHalves(-1, 1)
-                                                               .ToArray());
-    }
-
-    [TestMethod]
     public void EnumerateInHalves_Throws_IfCountIsNegative()
     {
         Should.Throw<ArgumentOutOfRangeException>(() => Helpers.EnumerateInHalves(0, -1)
@@ -420,7 +413,19 @@ public class HelpersTests
         r[1]
             .ShouldBe((0, false));
     }
-
+    
+    [TestMethod]
+    public void EnumerateInHalves_UnderstandsNegativeSpectrum()
+    {
+        var r = Helpers.EnumerateInHalves(-1.6f, 3)
+                       .ToArray();
+        
+        r.ShouldBe(new[]
+        {
+            (-2, true), (-1, false), (-1, true), (0, false), (0, true), (0, false)
+        });
+    }
+    
     [TestMethod]
     public void EnumerateInHalves_ReturnsThreeIfCountAllows()
     {
@@ -628,5 +633,41 @@ public class HelpersTests
             new PointF(-1.5F, -1.5F),
             new PointF(-2F, -2F),
         });
+    }
+
+    [TestMethod, DataRow(100, 99), DataRow(99, 100), DataRow(100, 100)]
+    public void AdjustToActualArea1_ReturnsFalse_IfNewAreaIsEmpty(int x, int y)
+    {
+        var a = new Rectangle(x, y, 10, 10);
+        Helpers.AdjustToActualArea(new(100, 100), ref a)
+               .ShouldBeFalse();
+    }
+    
+    [TestMethod]
+    public void AdjustToActualArea1_ReturnsTrueAndNewArea()
+    {
+        var a = new Rectangle(50, 50, 100, 100);
+        Helpers.AdjustToActualArea(new(100, 100), ref a)
+               .ShouldBeTrue();
+        
+        a.ShouldBe(new(50, 50, 50, 50));
+    }
+    
+    [TestMethod, DataRow(100f, 99f), DataRow(99f, 100f), DataRow(100f, 100f)]
+    public void AdjustToActualArea2_ReturnsFalse_IfNewAreaIsEmpty(float x, float y)
+    {
+        var a = new RectangleF(x, y, 10, 10);
+        Helpers.AdjustToActualArea(new(100, 100), ref a)
+               .ShouldBeFalse();
+    }
+    
+    [TestMethod]
+    public void AdjustToActualArea2_ReturnsTrueAndNewArea()
+    {
+        var a = new RectangleF(50, 50, 100, 100);
+        Helpers.AdjustToActualArea(new(100, 100), ref a)
+               .ShouldBeTrue();
+        
+        a.ShouldBe(new(50, 50, 50, 50));
     }
 }

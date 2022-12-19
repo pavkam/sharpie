@@ -253,10 +253,6 @@ public abstract class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wadd_wch), "Failed to write character to the surface.");
     }
 
-    /// <inheritdoc cref="IDrawSurface.CoversArea" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    bool IDrawSurface.CoversArea(Rectangle area) => IsRectangleWithin(area);
-
     /// <inheritdoc cref="ISurface.EnableAttributes" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void EnableAttributes(VideoAttribute attributes)
@@ -663,7 +659,7 @@ public abstract class Surface: ISurface, IDisposable
 
         AssertSynchronized();
 
-        drawable.DrawTo(this, area, location);
+        drawable.DrawOnto(this, area, location);
     }
 
     /// <inheritdoc cref="ISurface.Draw(Point, IDrawable)" />

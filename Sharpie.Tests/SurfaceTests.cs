@@ -1540,7 +1540,7 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.Draw(location, area, drawingMock.Object);
 
-        drawingMock.Verify(v => v.DrawTo(s, area, location), Times.Once);
+        drawingMock.Verify(v => v.DrawOnto(s, area, location), Times.Once);
     }
 
     [TestMethod]
@@ -1556,17 +1556,7 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.Draw(location, drawingMock.Object);
 
-        drawingMock.Verify(v => v.DrawTo(s, area, location), Times.Once);
-    }
-
-    [TestMethod]
-    public void CoversArea_ReturnsTrue_IfInside()
-    {
-        var s = new Surface(_cursesMock.Object, new(1));
-        MockLargeArea(s);
-
-        ((IDrawSurface) s).CoversArea(new(0, 0, 5, 5))
-                          .ShouldBeTrue();
+        drawingMock.Verify(v => v.DrawOnto(s, area, location), Times.Once);
     }
 
     [TestMethod, DataRow(0, 0, true), DataRow(-1, 0, false), DataRow(9, 19, true), DataRow(10, 9, false)]
@@ -1600,17 +1590,7 @@ public class SurfaceTests
         sw.IsRectangleWithin(new(x, y, w, h))
           .ShouldBe(exp);
     }
-
-    [TestMethod]
-    public void CoversArea_ReturnsFalse_IfNotInside()
-    {
-        var s = new Surface(_cursesMock.Object, new(1));
-        MockSmallArea(s);
-
-        ((IDrawSurface) s).CoversArea(new(0, 0, 5, 5))
-                          .ShouldBeFalse();
-    }
-
+    
     [TestMethod]
     public void Destroy_CallsCurses()
     {
