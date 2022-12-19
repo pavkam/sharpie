@@ -558,10 +558,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
     }
 
     /// <inheritdoc cref="IDrawSurface.DrawCell" />
-    void IDrawSurface.DrawCell(Point location, Rune rune, Style style)
-    {
-        SetCell(location.X, location.Y, rune, style);
-    }
+    void IDrawSurface.DrawCell(Point location, Rune rune, Style style) { SetCell(location.X, location.Y, rune, style); }
 
     /// <inheritdoc cref="IDrawable.Size" />
     public Size Size { get; }
@@ -573,7 +570,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
         {
             throw new ArgumentNullException(nameof(destination));
         }
-        
+
         if (!Size.AdjustToActualArea(ref srcArea))
         {
             return;
@@ -752,7 +749,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
             }
 
             SetCell(x, y, c, style);
-            
+
             if (orientation == Orientation.Horizontal)
             {
                 x++;
@@ -769,10 +766,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
     /// <param name="location">The cell location.</param>
     /// <param name="rune">The rune to draw.</param>
     /// <param name="style">The text style.</param>
-    public void Glyph(Point location, Rune rune, Style style)
-    {
-        SetCell(location.X, location.Y, rune, style);
-    }
+    public void Glyph(Point location, Rune rune, Style style) { SetCell(location.X, location.Y, rune, style); }
 
     /// <summary>
     ///     Draws a glyph at a given <paramref name="location" /> using the provide styles.
@@ -874,7 +868,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
                 {
                     break;
                 }
-                
+
                 var stl = (left, lineStyle) switch
                 {
                     (true, LineStyle.Light) => LineSideAndStyle.LeftLight,
@@ -898,16 +892,16 @@ public sealed class Canvas: IDrawable, IDrawSurface
             {
                 return;
             }
-            
+
             var x = (int) Math.Floor(location.X);
-            
+
             foreach (var (i, top) in Helpers.EnumerateInHalves(location.Y, length))
             {
                 if (i >= Size.Height)
                 {
                     break;
                 }
-                
+
                 var stl = (top, lineStyle) switch
                 {
                     (true, LineStyle.Light) => LineSideAndStyle.TopLight,
@@ -1059,4 +1053,3 @@ public sealed class Canvas: IDrawable, IDrawSurface
         public LineSideAndStyle? Line => Special < 0 ? (LineSideAndStyle) (-Special) : null;
     }
 }
-
