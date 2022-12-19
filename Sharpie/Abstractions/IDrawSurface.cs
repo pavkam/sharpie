@@ -1,7 +1,7 @@
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Defines the traits needed by an object to draw a <see cref="Drawing" /> onto.
+///     Defines the traits needed by an object to draw a <see cref="IDrawable" /> onto.
 /// </summary>
 public interface IDrawSurface
 {
@@ -10,13 +10,11 @@ public interface IDrawSurface
     /// </summary>
     /// <param name="location">The location to draw to.</param>
     /// <param name="rune">The rune to draw.</param>
-    /// <param name="textStyle">The text style.</param>
-    void DrawCell(Point location, Rune rune, Style textStyle);
+    /// <param name="style">The cell style.</param>
+    void DrawCell(Point location, Rune rune, Style style);
 
     /// <summary>
-    ///     Checks if a given <paramref name="area" /> is within the drawing surface.
+    ///     The total size of the draw surface.
     /// </summary>
-    /// <param name="area">The area to check.</param>
-    /// <returns>The result of the check.</returns>
-    bool CoversArea(Rectangle area);
+    public Size Size { get; }
 }
