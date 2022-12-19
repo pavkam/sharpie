@@ -48,8 +48,8 @@ var styles = Enum.GetValues<StandardColor>()
                  .ToArray();
 
 // Prepare the glyph.
-var glyph = new Drawing(new(1, 1));
-var glyphStyle = Drawing.TriangleGlyphStyle.Up;
+var glyph = new Canvas(new(1, 1));
+var glyphStyle = Canvas.TriangleGlyphStyle.Up;
 var currentStyle = 0;
 var x = -1;
 var y = -1;
@@ -59,12 +59,12 @@ var dy = 1;
 // Set up a timer that will animate the glyph.
 terminal.Repeat(t =>
 {
-    glyph.Glyph(new(0, 0), glyphStyle, Drawing.GlyphSize.Normal, Drawing.FillStyle.Black, styles[currentStyle]);
+    glyph.Glyph(new(0, 0), glyphStyle, Canvas.GlyphSize.Normal, Canvas.FillStyle.Black, styles[currentStyle]);
 
     glyphStyle++;
-    if (glyphStyle > Drawing.TriangleGlyphStyle.Right)
+    if (glyphStyle > Canvas.TriangleGlyphStyle.Right)
     {
-        glyphStyle = Drawing.TriangleGlyphStyle.Up;
+        glyphStyle = Canvas.TriangleGlyphStyle.Up;
     }
 
     x += dx;

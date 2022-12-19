@@ -7,8 +7,8 @@ internal static class TestHelpers
     public static (Rune, Style)[,] GetContents(this IDrawable drawing)
     {
         var mock = new Mock<IDrawSurface>();
-        mock.Setup(s => s.CoversArea(It.IsAny<Rectangle>()))
-            .Returns(true);
+        mock.Setup(s => s.Size)
+            .Returns(drawing.Size);
 
         var collector = new (Rune, Style)[drawing.Size.Width, drawing.Size.Height];
         mock.Setup(s => s.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()))
@@ -17,7 +17,7 @@ internal static class TestHelpers
                 collector[location.X, location.Y] = (rune, textStyle);
             });
 
-        drawing.DrawTo(mock.Object, new(0, 0, drawing.Size.Width, drawing.Size.Height), new(0, 0));
+        drawing.DrawOnto(mock.Object, new(0, 0, drawing.Size.Width, drawing.Size.Height), new(0, 0));
         return collector;
     }
 

@@ -15,7 +15,7 @@ public sealed class AsciiGlyph: IDrawable
 
     private static readonly IReadOnlyList<bool[,]> Shapes;
 
-    private readonly Drawing _drawing;
+    private readonly Canvas _canvas;
 
     static AsciiGlyph()
     {
@@ -41,8 +41,8 @@ public sealed class AsciiGlyph: IDrawable
     /// <param name="style">The text style to use.</param>
     public AsciiGlyph(byte @char, Style style)
     {
-        _drawing = new(new(BitsPerLine / 2, Lines / 2));
-        _drawing.Fill(new(new(0, 0), _drawing.Size), new Rune(ControlCharacter.Whitespace), style);
+        _canvas = new(new(BitsPerLine / 2, Lines / 2));
+        _canvas.Fill(new(new(0, 0), _canvas.Size), new Rune(ControlCharacter.Whitespace), style);
 
         var shape = Shapes[@char];
 
@@ -53,18 +53,18 @@ public sealed class AsciiGlyph: IDrawable
                 var ap = new PointF(x / 2F, y / 2F);
                 if (shape[x, y])
                 {
-                    _drawing.Point(ap, style);
+                    _canvas.Point(ap, style);
                 }
             }
         }
     }
 
     /// <inheritdoc cref="IDrawable.Size" />
-    public Size Size => _drawing.Size;
+    public Size Size => _canvas.Size;
 
-    /// <inheritdoc cref="IDrawable.DrawTo" />
-    public void DrawTo(IDrawSurface destination, Rectangle srcArea, Point destLocation) =>
-        _drawing.DrawTo(destination, srcArea, destLocation);
+    /// <inheritdoc cref="IDrawable.DrawOnto" />
+    public void DrawOnto(IDrawSurface destination, Rectangle srcArea, Point destLocation) =>
+        _canvas.DrawOnto(destination, srcArea, destLocation);
 
     private static bool[,] ExtractGlyph(ReadOnlySpan<char> str)
     {
