@@ -184,7 +184,7 @@ public sealed class Terminal: ITerminal, IDisposable
         if (Options.UseMouse)
         {
             _initialMouseClickDelay = Curses.mouseinterval(Options.MouseClickInterval ?? 0)
-                                            .Check(nameof(Curses.mouseinterval), //TODO manual click
+                                            .Check(nameof(Curses.mouseinterval),
                                                 "Failed to set the mouse click interval.");
 
             Curses.mousemask((int) CursesMouseEvent.EventType.ReportPosition | (int) CursesMouseEvent.EventType.All,
@@ -663,7 +663,8 @@ public sealed class Terminal: ITerminal, IDisposable
     {
         public bool Stopped;
         public Timer? Timer;
-        public void Stop() { Stopped = true; }
+
+        public void Dispose() { Stopped = true; }
     }
 
     private sealed class ActionWrapper

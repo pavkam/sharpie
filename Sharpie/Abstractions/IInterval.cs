@@ -4,10 +4,10 @@ namespace Sharpie.Abstractions;
 ///     Describes a timed interval.
 /// </summary>
 [PublicAPI]
-public interface IInterval
+public interface IInterval: IDisposable
 {
     /// <summary>
-    ///     Stops the interval from repeating/executing next.
+    ///     Stops the interval from repeating/executing at the next tick.
     /// </summary>
-    void Stop();
+    void Stop() => Dispose();
 }

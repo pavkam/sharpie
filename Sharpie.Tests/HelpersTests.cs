@@ -413,19 +413,16 @@ public class HelpersTests
         r[1]
             .ShouldBe((0, false));
     }
-    
+
     [TestMethod]
     public void EnumerateInHalves_UnderstandsNegativeSpectrum()
     {
         var r = Helpers.EnumerateInHalves(-1.6f, 3)
                        .ToArray();
-        
-        r.ShouldBe(new[]
-        {
-            (-2, true), (-1, false), (-1, true), (0, false), (0, true), (0, false)
-        });
+
+        r.ShouldBe(new[] { (-2, true), (-1, false), (-1, true), (0, false), (0, true), (0, false) });
     }
-    
+
     [TestMethod]
     public void EnumerateInHalves_ReturnsThreeIfCountAllows()
     {
@@ -565,69 +562,55 @@ public class HelpersTests
 
         _cursesMock.Verify(v => v.wnoutrefresh(sa.Handle), Times.Once);
     }
-    
+
     [TestMethod]
     public void TraceLineInHalves_GeneratesTheExpectedOutput_1()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0,0), new(0.5F, 0.5F), p => pts.Add(p));
-        
-        pts.ShouldBe(new []{ new PointF(0,0), new PointF(0.5F, 0.5F) });
+        Helpers.TraceLineInHalves(new(0, 0), new(0.5F, 0.5F), p => pts.Add(p));
+
+        pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0.5F, 0.5F) });
     }
-    
+
     [TestMethod]
     public void TraceLineInHalves_GeneratesTheExpectedOutput_2()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0,0), new(2F, 2F), p => pts.Add(p));
-        
-        pts.ShouldBe(new []
+        Helpers.TraceLineInHalves(new(0, 0), new(2F, 2F), p => pts.Add(p));
+
+        pts.ShouldBe(new[]
         {
-            new PointF(0,0), 
-            new PointF(0.5F, 0.5F),
-            new PointF(1F, 1F),
-            new PointF(1.5F, 1.5F),
-            new PointF(2F, 2F)
+            new PointF(0, 0), new PointF(0.5F, 0.5F), new PointF(1F, 1F), new PointF(1.5F, 1.5F), new PointF(2F, 2F)
         });
     }
-    
+
     [TestMethod]
     public void TraceLineInHalves_GeneratesTheExpectedOutput_3()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0,0), new(0F, 1F), p => pts.Add(p));
-        
-        pts.ShouldBe(new []
-        {
-            new PointF(0,0), 
-            new PointF(0, 0.5F),
-            new PointF(0, 1F),
-        });
+        Helpers.TraceLineInHalves(new(0, 0), new(0F, 1F), p => pts.Add(p));
+
+        pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0, 0.5F), new PointF(0, 1F), });
     }
-    
+
     [TestMethod]
     public void TraceLineInHalves_GeneratesTheExpectedOutput_4()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0,0), new(1F, 0F), p => pts.Add(p));
-        
-        pts.ShouldBe(new []
-        {
-            new PointF(0,0), 
-            new PointF(0.5F, 0),
-            new PointF(1F, 0),
-        });
+        Helpers.TraceLineInHalves(new(0, 0), new(1F, 0F), p => pts.Add(p));
+
+        pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0.5F, 0), new PointF(1F, 0), });
     }
-    
+
     [TestMethod]
     public void TraceLineInHalves_GeneratesTheExpectedOutput_5()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0,0), new(-2, -2), p => pts.Add(p));
-        
-        pts.ShouldBe(new []
+        Helpers.TraceLineInHalves(new(0, 0), new(-2, -2), p => pts.Add(p));
+
+        pts.ShouldBe(new[]
         {
-            new PointF(0,0), 
+            new PointF(0, 0),
             new PointF(-0.5F, -0.5F),
             new PointF(-1F, -1F),
             new PointF(-1.5F, -1.5F),
@@ -639,35 +622,53 @@ public class HelpersTests
     public void AdjustToActualArea1_ReturnsFalse_IfNewAreaIsEmpty(int x, int y)
     {
         var a = new Rectangle(x, y, 10, 10);
-        Helpers.AdjustToActualArea(new(100, 100), ref a)
-               .ShouldBeFalse();
+        new Size(100, 100).AdjustToActualArea(ref a)
+                          .ShouldBeFalse();
     }
-    
+
     [TestMethod]
     public void AdjustToActualArea1_ReturnsTrueAndNewArea()
     {
         var a = new Rectangle(50, 50, 100, 100);
-        Helpers.AdjustToActualArea(new(100, 100), ref a)
-               .ShouldBeTrue();
-        
+        new Size(100, 100).AdjustToActualArea(ref a)
+                          .ShouldBeTrue();
+
         a.ShouldBe(new(50, 50, 50, 50));
     }
-    
+
     [TestMethod, DataRow(100f, 99f), DataRow(99f, 100f), DataRow(100f, 100f)]
     public void AdjustToActualArea2_ReturnsFalse_IfNewAreaIsEmpty(float x, float y)
     {
         var a = new RectangleF(x, y, 10, 10);
-        Helpers.AdjustToActualArea(new(100, 100), ref a)
-               .ShouldBeFalse();
+        new Size(100, 100).AdjustToActualArea(ref a)
+                          .ShouldBeFalse();
     }
-    
+
     [TestMethod]
     public void AdjustToActualArea2_ReturnsTrueAndNewArea()
     {
         var a = new RectangleF(50, 50, 100, 100);
         Helpers.AdjustToActualArea(new(100, 100), ref a)
                .ShouldBeTrue();
-        
+
         a.ShouldBe(new(50, 50, 50, 50));
+    }
+
+    [TestMethod, DataRow(110, 109), DataRow(109, 110), DataRow(110, 110)]
+    public void AdjustToActualArea3_ReturnsFalse_IfNewAreaIsEmpty(int x, int y)
+    {
+        var a = new Rectangle(x, y, 10, 10);
+        new Rectangle(10, 10, 100, 100).AdjustToActualArea(ref a)
+                                       .ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public void AdjustToActualArea3_ReturnsTrueAndNewArea()
+    {
+        var a = new Rectangle(50, 50, 100, 100);
+        new Rectangle(10, 10, 100, 100).AdjustToActualArea(ref a)
+                                       .ShouldBeTrue();
+
+        a.ShouldBe(new(50, 50, 60, 60));
     }
 }

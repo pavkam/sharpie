@@ -166,16 +166,30 @@ public class ScreenTests
     }
 
     [TestMethod]
-    public void Window_Throws_IfAreaOutsideBoundaries()
+    public void Window_Throws_IfAdjustedAreaIsEmpty()
     {
-        _cursesMock.MockSmallArea(_screen);
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen.Window(new(0, 0, 2, 2)));
+        _cursesMock.MockArea(_screen, new Size(18, 24));
+
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen.Window(new(5, 6, 0, 2)));
+    }
+
+    [TestMethod]
+    public void Window_AdjustsArea_ToMatchParent()
+    {
+        _cursesMock.MockArea(_screen, new Size(18, 24));
+
+        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                   .Returns(new IntPtr(3));
+
+        _screen.Window(new(15, 20, 15, 18));
+
+        _cursesMock.Verify(v => v.newwin(4, 3, 20, 15), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Window_Throws_IfCursesFails()
     {
-        _cursesMock.MockLargeArea(_screen);
+        _cursesMock.MockArea(_screen, new Size(100, 100));
 
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
@@ -187,7 +201,7 @@ public class ScreenTests
     [TestMethod]
     public void Window_ReturnsNewWindow_IfCursesSucceeds()
     {
-        _cursesMock.MockLargeArea(_screen);
+        _cursesMock.MockArea(_screen, new Size(100, 100));
 
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
@@ -203,7 +217,7 @@ public class ScreenTests
     [TestMethod, DataRow(true), DataRow(false)]
     public void Window_PreservesManagedCaret(bool mc)
     {
-        _cursesMock.MockLargeArea(_screen);
+        _cursesMock.MockArea(_screen, new Size(100, 100));
         _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(2));
 
@@ -270,8 +284,8 @@ public class ScreenTests
     {
         var w = new Window(_screen, new(1));
 
-        _cursesMock.MockArea(_screen, new(0, 0, 100, 100));
-        _cursesMock.MockArea(w, new(0, 0, 100, 100));
+        _cursesMock.MockArea(_screen, new Size(100, 100));
+        _cursesMock.MockArea(w, new Rectangle(0, 0, 100, 100));
 
         _screen.MarkDirty(1, 50);
 
@@ -290,10 +304,10 @@ public class ScreenTests
         var w2 = new Window(_screen, new(2));
         var w3 = new Window(_screen, new(3));
 
-        _cursesMock.MockLargeArea(_screen);
-        _cursesMock.MockArea(w1, new(0, 0, 100, 100));
-        _cursesMock.MockArea(w2, new(100, 110, 50, 50));
-        _cursesMock.MockArea(w3, new(300, 200, 100, 100));
+        _cursesMock.MockArea(_screen, new Size(1000, 1000));
+        _cursesMock.MockArea(w1, new Rectangle(0, 0, 100, 100));
+        _cursesMock.MockArea(w2, new Rectangle(100, 110, 50, 50));
+        _cursesMock.MockArea(w3, new Rectangle(300, 200, 100, 100));
 
         _screen.MarkDirty(75, 50);
 
@@ -341,8 +355,8 @@ public class ScreenTests
     {
         var w = new Window(_screen, new(1));
 
-        _cursesMock.MockArea(_screen, new(0, 0, 100, 100));
-        _cursesMock.MockArea(w, new(0, 0, 100, 100));
+        _cursesMock.MockArea(_screen, new Size(100, 100));
+        _cursesMock.MockArea(w, new Rectangle(0, 0, 100, 100));
 
         _screen.Refresh(1, 50);
 
@@ -359,10 +373,10 @@ public class ScreenTests
         var w2 = new Window(_screen, new(2));
         var w3 = new Window(_screen, new(3));
 
-        _cursesMock.MockLargeArea(_screen);
-        _cursesMock.MockArea(w1, new(0, 0, 100, 100));
-        _cursesMock.MockArea(w2, new(100, 110, 50, 50));
-        _cursesMock.MockArea(w3, new(300, 200, 100, 100));
+        _cursesMock.MockArea(_screen, new Size(1000, 1000));
+        _cursesMock.MockArea(w1, new Rectangle(0, 0, 100, 100));
+        _cursesMock.MockArea(w2, new Rectangle(100, 110, 50, 50));
+        _cursesMock.MockArea(w3, new Rectangle(300, 200, 100, 100));
 
         _screen.Refresh(75, 50);
 
@@ -405,7 +419,7 @@ public class ScreenTests
         _cursesMock.MockArea(h2, new(1, 1, 3, 3));
         var w2 = new Window(_screen, h2);
 
-        _cursesMock.MockArea(_screen, new(0, 0, 2, 2));
+        _cursesMock.MockArea(_screen, new Size(2, 2));
 
         _screen.AdjustChildrenToExplicitArea();
 

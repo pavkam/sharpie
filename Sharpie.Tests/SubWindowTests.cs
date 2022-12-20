@@ -126,10 +126,10 @@ public class SubWindowTests
     [TestMethod]
     public void Location_Set_SetsValue_IfCursesSucceeded()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var sw = new SubWindow(_parent, new(2));
-        _cursesMock.MockSmallArea(sw);
+        _cursesMock.MockArea(sw, new Size(1, 1));
 
         sw.Location = new(11, 22);
 
@@ -139,10 +139,10 @@ public class SubWindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfCursesFails()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var sw = new SubWindow(_parent, new(2));
-        _cursesMock.MockSmallArea(sw);
+        _cursesMock.MockArea(sw, new Size(1, 1));
 
         _cursesMock.Setup(s => s.mvderwin(sw.Handle, It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -155,10 +155,10 @@ public class SubWindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfOutsideParent()
     {
-        _cursesMock.MockSmallArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(1, 1));
 
         var sw = new SubWindow(_parent, new(1));
-        _cursesMock.MockSmallArea(sw);
+        _cursesMock.MockArea(sw, new Size(1, 1));
 
         Should.Throw<ArgumentOutOfRangeException>(() => sw.Location = new(6, 6));
     }
@@ -166,10 +166,10 @@ public class SubWindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_UpdatesLocation_IfInsideParent()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var sw = new SubWindow(_parent, new(2));
-        _cursesMock.MockSmallArea(sw);
+        _cursesMock.MockArea(sw, new Size(1, 1));
 
         sw.Location = new(5, 5);
 
@@ -179,7 +179,7 @@ public class SubWindowTests
     [TestMethod]
     public void Size_Set_SetsValue_IfCursesSucceeded()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var sw = new SubWindow(_parent, new(1));
         sw.Size = new(11, 22);
@@ -190,7 +190,7 @@ public class SubWindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_Throws_IfCursesFails()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var sw = new SubWindow(_parent, new(1));
 
@@ -201,20 +201,42 @@ public class SubWindowTests
               .Operation.ShouldBe("wresize");
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Size_Set_Throws_IfOutsideParent()
+    [TestMethod]
+    public void Size_Set_Throws_AdjustedAreaIsEmpty()
     {
-        _cursesMock.MockSmallArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(10, 10));
 
-        var sw = new SubWindow(_parent, new(1));
+        var sw = new SubWindow(_parent, new(10));
+        _cursesMock.Setup(s => s.getparx(sw.Handle))
+                   .Returns(15);
 
-        Should.Throw<ArgumentOutOfRangeException>(() => sw.Size = new(6, 6));
+        _cursesMock.Setup(s => s.getpary(sw.Handle))
+                   .Returns(15);
+
+        Should.Throw<ArgumentOutOfRangeException>(() => sw.Size = new(5, 5));
+    }
+
+    [TestMethod]
+    public void Size_Set_AdjustsSizeToMatchParent()
+    {
+        _cursesMock.MockArea(_parent, new Size(8, 18));
+
+        var sw = new SubWindow(_parent, new(10));
+        _cursesMock.Setup(s => s.getparx(sw.Handle))
+                   .Returns(5);
+
+        _cursesMock.Setup(s => s.getpary(sw.Handle))
+                   .Returns(6);
+
+        sw.Size = new(10, 10);
+
+        _cursesMock.Verify(v => v.wresize(sw.Handle, 10, 3), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_UpdatesSize_IfInsideParent()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var sw = new SubWindow(_parent, new(1));
 

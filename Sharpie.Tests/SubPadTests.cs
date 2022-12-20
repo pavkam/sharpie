@@ -106,10 +106,10 @@ public class SubPadTests
     [TestMethod]
     public void Location_Set_SetsValue_IfCursesSucceeded()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var sp = new SubPad(_parent, new(2));
-        _cursesMock.MockSmallArea(sp);
+        _cursesMock.MockArea(sp, new Size(1, 1));
 
         sp.Location = new(11, 22);
 
@@ -119,10 +119,10 @@ public class SubPadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfCursesFails()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var sp = new SubPad(_parent, new(2));
-        _cursesMock.MockSmallArea(sp);
+        _cursesMock.MockArea(sp, new Size(1, 1));
 
         _cursesMock.Setup(s => s.mvderwin(sp.Handle, It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -135,10 +135,10 @@ public class SubPadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_Throws_IfOutsideParent()
     {
-        _cursesMock.MockSmallArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(1, 1));
 
         var sp = new SubPad(_parent, new(1));
-        _cursesMock.MockSmallArea(sp);
+        _cursesMock.MockArea(sp, new Size(1, 1));
 
         Should.Throw<ArgumentOutOfRangeException>(() => sp.Location = new(6, 6));
     }
@@ -146,10 +146,10 @@ public class SubPadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Set_UpdatesLocation_IfInsideParent()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var sp = new SubPad(_parent, new(2));
-        _cursesMock.MockSmallArea(sp);
+        _cursesMock.MockArea(sp, new Size(1, 1));
 
         sp.Location = new(5, 5);
 
@@ -159,7 +159,7 @@ public class SubPadTests
     [TestMethod]
     public void Size_Set_SetsValue_IfCursesSucceeded()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var w = new SubPad(_parent, new(1));
         w.Size = new(11, 22);
@@ -170,7 +170,7 @@ public class SubPadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_Throws_IfCursesFails()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var w = new SubPad(_parent, new(1));
 
@@ -181,20 +181,42 @@ public class SubPadTests
               .Operation.ShouldBe("wresize");
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Size_Set_Throws_IfOutsideParent()
+    [TestMethod]
+    public void Size_Set_Throws_AdjustedAreaIsEmpty()
     {
-        _cursesMock.MockSmallArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(10, 10));
 
-        var w = new SubPad(_parent, new(1));
+        var sp = new SubPad(_parent, new(10));
+        _cursesMock.Setup(s => s.getparx(sp.Handle))
+                   .Returns(15);
 
-        Should.Throw<ArgumentOutOfRangeException>(() => w.Size = new(6, 6));
+        _cursesMock.Setup(s => s.getpary(sp.Handle))
+                   .Returns(15);
+
+        Should.Throw<ArgumentOutOfRangeException>(() => sp.Size = new(5, 5));
+    }
+
+    [TestMethod]
+    public void Size_Set_AdjustsSizeToMatchParent()
+    {
+        _cursesMock.MockArea(_parent, new Size(8, 18));
+
+        var sp = new SubPad(_parent, new(10));
+        _cursesMock.Setup(s => s.getparx(sp.Handle))
+                   .Returns(5);
+
+        _cursesMock.Setup(s => s.getpary(sp.Handle))
+                   .Returns(6);
+
+        sp.Size = new(10, 10);
+
+        _cursesMock.Verify(v => v.wresize(sp.Handle, 10, 3), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Size_Set_UpdatesSize_IfInsideParent()
     {
-        _cursesMock.MockLargeArea(_parent);
+        _cursesMock.MockArea(_parent, new Size(100, 100));
 
         var w = new SubPad(_parent, new(1));
 

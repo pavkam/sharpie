@@ -95,12 +95,13 @@ public sealed class SubWindow: Surface, ISubWindow
         get => base.Size;
         set
         {
-            if (!Window.IsRectangleWithin(new(Location, value)))
+            var area = new Rectangle(Location, value);
+            if (!Window.Size.AdjustToActualArea(ref area))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
-            Curses.wresize(Handle, value.Height, value.Width)
+            Curses.wresize(Handle, area.Height, area.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the window.");
         }
     }

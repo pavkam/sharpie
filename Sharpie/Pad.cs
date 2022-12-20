@@ -96,15 +96,15 @@ public sealed class Pad: Surface, IPad
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void Refresh(Rectangle srcArea, Point destLocation)
     {
-        if (!IsRectangleWithin(srcArea))
+        if (!Size.AdjustToActualArea(ref srcArea))
         {
-            throw new ArgumentOutOfRangeException(nameof(srcArea));
+            return;
         }
 
-        var destRect = srcArea with { X = destLocation.X, Y = destLocation.Y };
-        if (!Screen.IsRectangleWithin(destRect))
+        var destRect = srcArea with { Location = destLocation };
+        if (!Screen.Size.AdjustToActualArea(ref destRect))
         {
-            throw new ArgumentOutOfRangeException(nameof(destLocation));
+            return;
         }
 
         AssertSynchronized();
@@ -124,13 +124,13 @@ public sealed class Pad: Surface, IPad
 
     /// <inheritdoc cref="IPad.Refresh(System.Drawing.Point)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void Refresh(Point destLocation) => Refresh(new(new(0, 0), Size), destLocation);
+    public void Refresh(Point destLocation) => Refresh(new(Origin, Size), destLocation);
 
     /// <inheritdoc cref="IPad.SubPad" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubPad SubPad(Rectangle area)
     {
-        if (!IsRectangleWithin(area))
+        if (!Area.AdjustToActualArea(ref area))
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }

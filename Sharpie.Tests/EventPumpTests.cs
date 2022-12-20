@@ -504,13 +504,14 @@ public class EventPumpTests
     public void Listen1_AdjustsWindowsToExplicitArea()
     {
         var h1 = new IntPtr(1);
-        _cursesMock.MockArea(h1, new(0, 0, 5, 5));
+        _cursesMock.MockArea(h1, new Rectangle(0, 0, 5, 5));
         var w1 = new Window(_terminal.Screen, h1);
 
         var h2 = new IntPtr(2);
-        _cursesMock.MockArea(h2, new(1, 1, 3, 3));
+        _cursesMock.MockArea(h2, new Rectangle(1, 1, 3, 3));
         var w2 = new Window(_terminal.Screen, h2);
-        _cursesMock.MockArea(_terminal.Screen, new(0, 0, 2, 2));
+
+        _cursesMock.MockArea(_terminal.Screen, new Size(2, 2));
 
         SimulateEvents(1, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
 
@@ -521,7 +522,7 @@ public class EventPumpTests
     [TestMethod, Timeout(Timeout)]
     public void Listen1_ReturnsTerminalResizeEvents()
     {
-        _cursesMock.MockArea(_terminal.Screen, new(0, 0, 20, 10));
+        _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
 
         var events = SimulateEvents(2, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
         events.ShouldBe(new Event[] { new TerminalAboutToResizeEvent(), new TerminalResizeEvent(new(20, 10)) });
@@ -530,7 +531,7 @@ public class EventPumpTests
     [TestMethod, Timeout(Timeout)]
     public void Listen1_WhenUnmanaged_OnResize_DoesNotUpdateTheScreen()
     {
-        _cursesMock.MockArea(_terminal.Screen, new(0, 0, 20, 10));
+        _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
 
         SimulateEvents(2, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
 
@@ -544,8 +545,8 @@ public class EventPumpTests
     [TestMethod, Timeout(Timeout)]
     public void Listen1_WhenManaged_OnResize_UpdatesTheScreenAndWindow()
     {
-        _cursesMock.MockArea(_terminal.Screen, new(0, 0, 20, 10));
-        _cursesMock.MockArea(_window, new(0, 0, 5, 5));
+        _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
+        _cursesMock.MockArea(_window, new Rectangle(0, 0, 5, 5));
 
         SimulateEvents(2, _window, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
 

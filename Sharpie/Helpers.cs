@@ -492,24 +492,24 @@ public static class Helpers
     internal static void TraceLineInHalves(PointF start, PointF end, Action<PointF> traceFunc)
     {
         Debug.Assert(traceFunc != null);
-        
-        var x1 = (int)Math.Floor(start.X * 2);
-        var y1 = (int)Math.Floor(start.Y * 2);
-        var x2 = (int)Math.Floor(end.X * 2);
-        var y2 = (int)Math.Floor(end.Y * 2);
-        
+
+        var x1 = (int) Math.Floor(start.X * 2);
+        var y1 = (int) Math.Floor(start.Y * 2);
+        var x2 = (int) Math.Floor(end.X * 2);
+        var y2 = (int) Math.Floor(end.Y * 2);
+
         var w = x2 - x1;
         var h = y2 - y1;
-        
+
         var dx1 = Math.Sign(w);
         var dx2 = Math.Sign(w);
-        
+
         var dy1 = Math.Sign(h);
         var dy2 = 0;
 
         var longest = Math.Abs(w);
         var shortest = Math.Abs(h);
-        
+
         if (longest <= shortest)
         {
             longest = Math.Abs(h);
@@ -522,7 +522,7 @@ public static class Helpers
         for (var i = 0; i <= longest; i++)
         {
             traceFunc(new(x1 / 2F, y1 / 2F));
-            
+
             numerator += shortest;
             if (!(numerator < longest))
             {
@@ -557,22 +557,30 @@ public static class Helpers
              .Check(nameof(t.Curses.wrefresh), "Failed to perform window refresh.");
         }
     }
-    
+
     /// <summary>
     /// Intersects the given <see cref="area"/> with the total area of a surface and returns the intersection.
     /// </summary>
     /// <param name="size">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
     /// <returns><c>true</c> if the intersection is not empty; <c>false</c> otherwise.</returns>
-    internal static bool AdjustToActualArea(this Size size, ref Rectangle area)
-    {
-        var r = new Rectangle(new(0, 0), size);
-        r.Intersect(area);
-        area = r;
+    internal static bool AdjustToActualArea(this Size size, ref Rectangle area) =>
+        new Rectangle(new(0, 0), size).AdjustToActualArea(ref area);
 
-        return r is { Width: > 0, Height: > 0 };
+    /// <summary>
+    /// Intersects the given <see cref="area"/> with the total area of a surface and returns the intersection.
+    /// </summary>
+    /// <param name="total">The size of the destination surface.</param>
+    /// <param name="area">The desired area.</param>
+    /// <returns><c>true</c> if the intersection is not empty; <c>false</c> otherwise.</returns>
+    internal static bool AdjustToActualArea(this Rectangle total, ref Rectangle area)
+    {
+        total.Intersect(area);
+        area = total;
+
+        return total is { Width: > 0, Height: > 0 };
     }
-    
+
     /// <summary>
     /// Intersects the given <see cref="area"/> with the total area of a surface and returns the intersection.
     /// </summary>

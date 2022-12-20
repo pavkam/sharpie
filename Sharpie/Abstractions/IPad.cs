@@ -69,10 +69,6 @@ public interface IPad: ISurface
     /// <param name="srcArea">The rectangle of the pad to place onto the screen.</param>
     /// <param name="destLocation">The point on the screen to place that rectangle.</param>
     /// <exception cref="ObjectDisposedException">The terminal of the given window have been disposed.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     Thrown if <paramref name="srcArea" /> or <paramref name="destLocation" /> are
-    ///     out of bounds.
-    /// </exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
     ///     thread/context but wasn't.

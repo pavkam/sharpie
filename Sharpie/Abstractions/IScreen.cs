@@ -88,5 +88,3 @@ public interface IScreen: ITerminalSurface
     /// <remarks>This operation is not thread safe.</remarks>
     IPad Pad(Size size);
 }
-
-

@@ -59,4 +59,3 @@ public sealed class DelegateEvent: Event
     /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => Object.GetHashCode();
 }
-

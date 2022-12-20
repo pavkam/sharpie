@@ -30,6 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using System.Diagnostics.CodeAnalysis;
 using Sharpie;
+using Sharpie.Abstractions;
 using Sharpie.Backend;
 
 [assembly: ExcludeFromCodeCoverage]
@@ -56,15 +57,15 @@ foreach (var n in Enum.GetValues<StandardColor>()
     colors.Add(terminal.Colors.MixColors(n, n));
 }
 
-void DrawHeader()
+void DrawHeader(ITerminal t)
 {
-    terminal.Header!.CaretPosition = new(0, 0);
-    terminal.Header.WriteText("Press a number from 1 to 8 to change the color.");
-    terminal.Header.DrawHorizontalLine(terminal.Header.Size.Width - terminal.Header.CaretPosition.X);
-    terminal.Header.Refresh();
+    t.Header!.CaretLocation = new(0, 0);
+    t.Header.WriteText("Press a number from 1 to 8 to change the color.");
+    t.Header.DrawHorizontalLine(t.Header.Size.Width - t.Header.CaretLocation.X);
+    t.Header.Refresh();
 }
 
-DrawHeader();
+DrawHeader(terminal);
 terminal.SoftLabelKeys.Refresh();
 
 // Run the main loop.
@@ -73,7 +74,7 @@ terminal.Run((t, @event) =>
     switch (@event)
     {
         case TerminalResizeEvent:
-            DrawHeader();
+            DrawHeader(t);
             t.SoftLabelKeys.Refresh();
             break;
         case KeyEvent { Key: Key.Character, Char.Value: var k and >= '1' and <= '8' }:

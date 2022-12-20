@@ -399,7 +399,15 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void CaretPosition_Get_Returns_IfCursesSucceeded()
+    public void Area_ShouldBeBoundBySize()
+    {
+        var s = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(s, new Size(58, 78));
+        s.Area.ShouldBe(new(0, 0, 58, 78));
+    }
+
+    [TestMethod]
+    public void CaretLocation_Get_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
                    .Returns(11);
@@ -408,46 +416,46 @@ public class SurfaceTests
                    .Returns(22);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        s.CaretPosition.ShouldBe(new(11, 22));
+        s.CaretLocation.ShouldBe(new(11, 22));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CaretPosition_Get_Throws_IfCursesFails_1()
+    public void CaretLocation_Get_Throws_IfCursesFails_1()
     {
         _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
 
-        Should.Throw<CursesOperationException>(() => s.CaretPosition)
+        Should.Throw<CursesOperationException>(() => s.CaretLocation)
               .Operation.ShouldBe("getcurx");
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CaretPosition_Get_Throws_IfCursesFails_2()
+    public void CaretLocation_Get_Throws_IfCursesFails_2()
     {
         _cursesMock.Setup(s => s.getcury(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
 
-        Should.Throw<CursesOperationException>(() => s.CaretPosition)
+        Should.Throw<CursesOperationException>(() => s.CaretLocation)
               .Operation.ShouldBe("getcury");
     }
 
     [TestMethod]
-    public void CaretPosition_Set_SetsValue_IfCursesSucceeded()
+    public void CaretLocation_Set_SetsValue_IfCursesSucceeded()
     {
         var s = new Surface(_cursesMock.Object, new(1));
         MockLargeArea(s);
 
-        s.CaretPosition = new(11, 22);
+        s.CaretLocation = new(11, 22);
 
         _cursesMock.Verify(v => v.wmove(new(1), 22, 11), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CaretPosition_Set_Throws_IfCursesFails()
+    public void CaretLocation_Set_Throws_IfCursesFails()
     {
         var sw = new Surface(_cursesMock.Object, new(1));
         MockLargeArea(sw);
@@ -455,26 +463,26 @@ public class SurfaceTests
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => sw.CaretPosition = new(1, 1))
+        Should.Throw<CursesOperationException>(() => sw.CaretLocation = new(1, 1))
               .Operation.ShouldBe("wmove");
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CaretPosition_Set_Throws_IfOutsideArea()
+    public void CaretLocation_Set_Throws_IfOutsideArea()
     {
         var s = new Surface(_cursesMock.Object, new(1));
         MockSmallArea(s);
 
-        Should.Throw<ArgumentOutOfRangeException>(() => s.CaretPosition = new(6, 6));
+        Should.Throw<ArgumentOutOfRangeException>(() => s.CaretLocation = new(6, 6));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void CaretPosition_Set_UpdatesLocation_IfInsideArea()
+    public void CaretLocation_Set_UpdatesLocation_IfInsideArea()
     {
         var s = new Surface(_cursesMock.Object, new(1));
         MockLargeArea(s);
 
-        s.CaretPosition = new(5, 5);
+        s.CaretLocation = new(5, 5);
         _cursesMock.Verify(v => v.wmove(new(1), 5, 5), Times.Once);
     }
 
@@ -547,20 +555,28 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void ScrollUp_Throws_IfLinesIsLessThanOne()
+    public void ScrollUp_DoesNothing_IfLinesIsLessThanOne()
     {
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.ScrollUp(0));
+        var sf = new Surface(_cursesMock.Object, new(1));
+        sf.ScrollUp(0);
+
+        _cursesMock.Verify(s => s.wscrl(It.IsAny<IntPtr>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod]
-    public void ScrollUp_Throws_IfLinesIsGreaterThanTheHeight()
+    public void ScrollUp_UsesHeight_IfLinesIsGreaterThanTheHeight()
     {
-        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
+        var sf = new Surface(_cursesMock.Object, new(1));
+
+        _cursesMock.Setup(s => s.is_scrollok(sf.Handle))
+                   .Returns(true);
+
+        _cursesMock.Setup(s => s.getmaxy(sf.Handle))
                    .Returns(10);
 
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.ScrollUp(11));
+        sf.ScrollUp(11);
+
+        _cursesMock.Verify(s => s.wscrl(sf.Handle, 10));
     }
 
     [TestMethod]
@@ -609,20 +625,28 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void ScrollDown_Throws_IfLinesIsLessThanOne()
+    public void ScrollDown_DoesNothing_IfLinesIsLessThanOne()
     {
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.ScrollDown(0));
+        var sf = new Surface(_cursesMock.Object, new(1));
+        sf.ScrollDown(0);
+
+        _cursesMock.Verify(s => s.wscrl(It.IsAny<IntPtr>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod]
-    public void ScrollDown_Throws_IfLinesIsGreaterThanTheHeight()
+    public void ScrollDown_UsesHeight_IfLinesIsGreaterThanTheHeight()
     {
-        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
+        var sf = new Surface(_cursesMock.Object, new(1));
+
+        _cursesMock.Setup(s => s.is_scrollok(sf.Handle))
+                   .Returns(true);
+
+        _cursesMock.Setup(s => s.getmaxy(sf.Handle))
                    .Returns(10);
 
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.ScrollDown(11));
+        sf.ScrollDown(11);
+
+        _cursesMock.Verify(s => s.wscrl(sf.Handle, -10));
     }
 
     [TestMethod]
@@ -671,10 +695,12 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void InsertEmptyLines_Throws_IfLinesIsLessThanOne()
+    public void InsertEmptyLines_DoesNothing_IfLinesIsLessThanOne()
     {
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.InsertEmptyLines(0));
+        var sf = new Surface(_cursesMock.Object, new(1));
+        sf.InsertEmptyLines(0);
+
+        _cursesMock.Verify(s => s.winsdelln(It.IsAny<IntPtr>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -698,10 +724,12 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void DeleteLines_Throws_IfLinesIsLessThanOne()
+    public void DeleteLines_DoesNothing_IfLinesIsLessThanOne()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.DeleteLines(0));
+        s.DeleteLines(0);
+
+        _cursesMock.Verify(v => v.winsdelln(It.IsAny<IntPtr>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -716,7 +744,7 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void DeleteLines_AddsLines_IfCursesSucceeds()
+    public void DeleteLines_DeletesLines_IfCursesSucceeds()
     {
         var sw = new Surface(_cursesMock.Object, new(1));
         sw.DeleteLines(1);
@@ -725,10 +753,14 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void ChangeTextStyle_Throws_IfWidthIsLessThanOne()
+    public void ChangeTextStyle_DoesNothing_IfWidthIsLessThanOne()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.ChangeTextStyle(0, Style.Default));
+        s.ChangeTextStyle(0, Style.Default);
+
+        _cursesMock.Verify(
+            v => v.wchgat(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<uint>(), It.IsAny<short>(), It.IsAny<IntPtr>()),
+            Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -753,14 +785,18 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void DrawVerticalLine_Throws_IfWidthIsLessThanOne()
+    public void DrawVerticalLine1_DoesNothing_IfWLengthIsLessThanOne()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.DrawVerticalLine(0, new('a'), Style.Default));
+
+        s.DrawVerticalLine(0, new('a'), Style.Default);
+
+        _cursesMock.Verify(v => v.wvline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()),
+            Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void DrawVerticalLine_Throws_IfCursesFails()
+    public void DrawVerticalLine1_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.wvline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -771,7 +807,7 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void DrawVerticalLine_DrawsLine_IfCursesSucceeds()
+    public void DrawVerticalLine1_DrawsLine_IfCursesSucceeds()
     {
         var sw = new Surface(_cursesMock.Object, new(1));
         sw.DrawVerticalLine(3, new('a'),
@@ -785,10 +821,12 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void DrawVerticalLine2_Throws_IfWidthIsLessThanOne()
+    public void DrawVerticalLine2_DoesNothing_IfLengthIsLessThanOne()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.DrawVerticalLine(0));
+        s.DrawVerticalLine(0);
+
+        _cursesMock.Verify(v => v.wvline(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -812,14 +850,17 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void DrawHorizontalLine_Throws_IfWidthIsLessThanOne()
+    public void DrawHorizontalLine1_DoesNothing_IfLengthIsLessThanOne()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.DrawHorizontalLine(0, new('a'), Style.Default));
+        s.DrawHorizontalLine(0, new('a'), Style.Default);
+
+        _cursesMock.Verify(v => v.whline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()),
+            Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void DrawHorizontalLine_Throws_IfCursesFails()
+    public void DrawHorizontalLine1_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.whline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -830,7 +871,7 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void DrawHorizontalLine_DrawsLine_IfCursesSucceeds()
+    public void DrawHorizontalLine1_DrawsLine_IfCursesSucceeds()
     {
         var sw = new Surface(_cursesMock.Object, new(1));
         sw.DrawHorizontalLine(3, new('a'),
@@ -844,10 +885,12 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void DrawHorizontalLine2_Throws_IfWidthIsLessThanOne()
+    public void DrawHorizontalLine2_DoesNothing_IfWidthIsLessThanOne()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentException>(() => s.DrawHorizontalLine(0));
+        s.DrawHorizontalLine(0);
+
+        _cursesMock.Verify(v => v.whline(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -926,23 +969,13 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void LineDirty_Throws_IfLineIsNegative()
+    public void LineDirty_DoesNothing_IfYIsNegative()
     {
-        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
-                   .Returns(10);
+        var sf = new Surface(_cursesMock.Object, new(1));
+        sf.LineDirty(-1)
+          .ShouldBeFalse();
 
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.LineDirty(-1));
-    }
-
-    [TestMethod]
-    public void LineDirty_Throws_IfYIsOutsideBounds()
-    {
-        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
-                   .Returns(10);
-
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.LineDirty(10));
+        _cursesMock.Verify(s => s.is_linetouched(It.IsAny<IntPtr>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod]
@@ -960,23 +993,13 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void MarkDirty1_Throws_IfYIsNegative()
+    public void MarkDirty1_DoesNothing_IfCountIsNegative()
     {
-        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
-                   .Returns(10);
-
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(-1, 1));
-    }
+        s.MarkDirty(0, -1);
 
-    [TestMethod]
-    public void MarkDirty1_Throws_IfCountIsNegative()
-    {
-        _cursesMock.Setup(s => s.getmaxy(It.IsAny<IntPtr>()))
-                   .Returns(10);
-
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.MarkDirty(0, -1));
+        _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
+            Times.Never);
     }
 
     [TestMethod]
@@ -1146,10 +1169,12 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void RemoveText_Throws_IfCountIsLessThanOne()
+    public void RemoveText_DoesNothing_IfCountIsLessThanOne()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.RemoveText(0));
+        s.RemoveText(0);
+
+        _cursesMock.Verify(v => v.wdelch(It.IsAny<IntPtr>()), Times.Never);
     }
 
     [TestMethod]
@@ -1175,10 +1200,15 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void GetText_Throws_IfCountIsLessThanOne()
+    public void GetText_DoesNothing_IfCountIsLessThanOne()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<ArgumentOutOfRangeException>(() => s.GetText(0));
+
+        s.GetText(0)
+         .ShouldBeEmpty();
+
+        _cursesMock.Verify(v => v.win_wchnstr(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar[]>(), It.IsAny<int>()),
+            Times.Never);
     }
 
     [TestMethod]
@@ -1391,32 +1421,50 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void Replace2_Throws_IfTheSourceRectIsOutsideTheBounds()
+    public void Replace2_DoesNothing_IfTheDestinationAreaIsOutsideBounds()
     {
         var s1 = new Surface(_cursesMock.Object, new(1));
-        MockSmallArea(s1);
+        _cursesMock.MockArea(s1, new Size(10, 50));
 
         var s2 = new Surface(_cursesMock.Object, new(2));
+        _cursesMock.MockArea(s2, new Size(10, 50));
 
-        Should.Throw<ArgumentOutOfRangeException>(() =>
-        {
-            s1.Replace(s2, new(1, 1, 5, 5), new(0, 0), ReplaceStrategy.Overlay);
-        });
+        s1.Replace(s2, new(0, 0, 5, 5), new(999, 999), ReplaceStrategy.Overlay);
+
+        _cursesMock.Verify(
+            v => v.copywin(It.IsAny<IntPtr>(), It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod]
-    public void Replace2_Throws_IfTheDestinationAreaIsOutsideTheBounds()
+    public void Replace2_DoesNothing_IfTheSourceAreaIsOutsideBounds()
     {
         var s1 = new Surface(_cursesMock.Object, new(1));
-        MockLargeArea(s1);
+        _cursesMock.MockArea(s1, new Size(10, 50));
 
         var s2 = new Surface(_cursesMock.Object, new(2));
-        MockLargeArea(s2);
+        _cursesMock.MockArea(s2, new Size(10, 50));
 
-        Should.Throw<ArgumentOutOfRangeException>(() =>
-        {
-            s1.Replace(s2, new(0, 0, 5, 5), new(999, 999), ReplaceStrategy.Overlay);
-        });
+        s1.Replace(s2, new(11, 11, 5, 5), new(0, 0), ReplaceStrategy.Overlay);
+
+        _cursesMock.Verify(
+            v => v.copywin(It.IsAny<IntPtr>(), It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+    }
+
+    [TestMethod]
+    public void Replace2_CopiesAdjustedArea()
+    {
+        var s1 = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(s1, new Size(10, 50));
+
+        var s2 = new Surface(_cursesMock.Object, new(2));
+        _cursesMock.MockArea(s2, new Size(10, 50));
+
+        s1.Replace(s2, new(3, 4, 5, 5), new(5, 5), ReplaceStrategy.Overlay);
+
+        _cursesMock.Verify(v => v.copywin(s1.Handle, s2.Handle, 4, 3, 5,
+            5, 9, 9, 1), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -1449,8 +1497,8 @@ public class SurfaceTests
         MockLargeArea(s2);
 
         s1.Replace(s2, new(1, 2, 3, 4), new(5, 6), ReplaceStrategy.Overlay);
-        _cursesMock.Verify(s => s.copywin(new(1), new(2), 2, 1, 6,
-            5, 9, 9, 1));
+        _cursesMock.Verify(s => s.copywin(s1.Handle, s2.Handle, 2, 1, 6,
+            5, 9, 7, 1));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -1463,8 +1511,8 @@ public class SurfaceTests
         MockLargeArea(s2);
 
         s1.Replace(s2, new(1, 2, 3, 4), new(5, 6), ReplaceStrategy.Overwrite);
-        _cursesMock.Verify(s => s.copywin(new(1), new(2), 2, 1, 6,
-            5, 9, 9, 0));
+        _cursesMock.Verify(s => s.copywin(s1.Handle, s2.Handle, 2, 1, 6,
+            5, 9, 7, 0));
     }
 
     [TestMethod]
@@ -1491,34 +1539,51 @@ public class SurfaceTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawCell_Throws_IfCursesFails_1()
     {
-        IDrawSurface p = new Surface(_cursesMock.Object, new(1));
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
+        
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => p.DrawCell(new(1, 1), new('A'), Style.Default))
+        Should.Throw<CursesOperationException>(() => ((IDrawSurface)sf).DrawCell(new(1, 1), new('A'), Style.Default))
               .Operation.ShouldBe("wmove");
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawCell_Throws_IfCursesFails_2()
     {
-        IDrawSurface p = new Surface(_cursesMock.Object, new(1));
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
+        
         _cursesMock.Setup(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => p.DrawCell(new(1, 1), new('A'), Style.Default))
+        Should.Throw<CursesOperationException>(() => ((IDrawSurface)sf).DrawCell(new(1, 1), new('A'), Style.Default))
               .Operation.ShouldBe("wadd_wch");
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestMethod]
     public void DrawCell_CallsCurses()
     {
-        IDrawSurface p = new Surface(_cursesMock.Object, new(1));
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
 
-        p.DrawCell(new(3, 4), new('A'), Style.Default);
+        ((IDrawSurface)sf).DrawCell(new(3, 4), new('A'), Style.Default);
 
         _cursesMock.Verify(s => s.wmove(new(1), 4, 3), Times.Once);
         _cursesMock.Verify(s => s.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Once);
+    }
+    
+    [TestMethod]
+    public void DrawCell_DoesNothing_IfLocationOutsideBounds()
+    {
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
+        
+        ((IDrawSurface)sf).DrawCell(new(6, 6), new('A'), Style.Default);
+
+        _cursesMock.Verify(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        _cursesMock.Verify(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()), Times.Never);
     }
 
     [TestMethod]
@@ -1590,7 +1655,7 @@ public class SurfaceTests
         sw.IsRectangleWithin(new(x, y, w, h))
           .ShouldBe(exp);
     }
-    
+
     [TestMethod]
     public void Destroy_CallsCurses()
     {

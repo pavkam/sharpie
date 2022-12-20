@@ -113,7 +113,7 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    Point CaretPosition { get; set; }
+    Point CaretLocation { get; set; }
 
     /// <summary>
     ///     Specifies whether the surface has some "dirty" parts that need to be synchronized
@@ -183,10 +183,6 @@ public interface ISurface: IDrawSurface
     ///     Scrolls the contents of the surface <paramref name="lines" /> down. Only works for scrollable surfaces.
     /// </summary>
     /// <param name="lines">Number of lines to scroll.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="lines" /> is less than one or greater than the size
-    ///     of the surface.
-    /// </exception>
     /// <exception cref="NotSupportedException">The <see cref="Scrollable" /> is <c>false</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
@@ -200,10 +196,6 @@ public interface ISurface: IDrawSurface
     ///     Inserts <paramref name="lines" /> empty lines at the current caret position.
     /// </summary>
     /// <param name="lines">Number of lines to inserts.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="lines" /> is less than one or greater than the size
-    ///     of the surface.
-    /// </exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -233,7 +225,6 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <param name="width">The number of characters to change.</param>
     /// <param name="style">The applied style.</param>
-    /// <exception cref="ArgumentException">The <paramref name="width" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -275,7 +266,6 @@ public interface ISurface: IDrawSurface
     /// <param name="char">The character to use for the line.</param>
     /// <param name="length">The length of the line.</param>
     /// <param name="style">The style to use.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -288,7 +278,6 @@ public interface ISurface: IDrawSurface
     ///     Draws a vertical line using the standard line character from the current caret position downwards.
     /// </summary>
     /// <param name="length">The length of the line.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -303,7 +292,6 @@ public interface ISurface: IDrawSurface
     /// <param name="char">The character to use for the line.</param>
     /// <param name="style">The style to use.</param>
     /// <param name="length">The length of the line.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -316,7 +304,6 @@ public interface ISurface: IDrawSurface
     ///     Draws a horizontal line using the standard line character from the current caret position downwards.
     /// </summary>
     /// <param name="length">The length of the line.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="length" /> is less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -362,7 +349,6 @@ public interface ISurface: IDrawSurface
     ///     Removes the text under the caret and moves the contents of the line to the left.
     /// </summary>
     /// <param name="count">The number of characters to remove.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -375,7 +361,6 @@ public interface ISurface: IDrawSurface
     ///     Gets the text from the surface at the caret position to the right.
     /// </summary>
     /// <param name="count">The number of characters to get.</param>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count" /> less than one.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -419,7 +404,6 @@ public interface ISurface: IDrawSurface
     /// <param name="srcRect">The source rectangle to copy.</param>
     /// <param name="destPos">The destination position.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="surface" /> is null.</exception>
-    /// <exception cref="ArgumentException">The contents of <paramref name="surface" /> cannot be replaced.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -433,9 +417,6 @@ public interface ISurface: IDrawSurface
     /// </summary>
     /// <param name="y">The line to start with.</param>
     /// <param name="count">The count of lines to mark dirty.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///     The <paramref name="y" /> or <paramref name="count" /> are negative.
-    /// </exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
@@ -516,7 +497,6 @@ public interface ISurface: IDrawSurface
     /// <summary>
     ///     Checks if the line at <paramref name="y" /> is dirty.
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="y" /> is outside the bounds.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main

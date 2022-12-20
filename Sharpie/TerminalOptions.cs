@@ -32,4 +32,3 @@ public record TerminalOptions(bool UseColors = true, bool EchoInput = false, boo
     CaretMode CaretMode = CaretMode.Visible, bool ManualFlush = false, bool ManagedWindows = false,
     SoftLabelKeyMode SoftLabelKeyMode = SoftLabelKeyMode.Disabled, bool AllocateHeader = false,
     bool AllocateFooter = false, bool UseEnvironmentOverrides = true, bool UseStandardKeySequenceResolvers = true);
-    

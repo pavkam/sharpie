@@ -116,7 +116,7 @@ public interface IWindow: ITerminalSurface
     ///     Thrown if this operation was expected to run on the main
     ///     thread/context but wasn't.
     /// </exception>
-    /// <remarks>This operation is not thread safe.</remarks>
+    /// <remarks>This operation is not thread safe. The new size will be adjusted to match the parent's available space.</remarks>
     new Size Size { get; set; }
 
     /// <summary>

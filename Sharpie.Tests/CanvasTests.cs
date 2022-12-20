@@ -68,38 +68,44 @@ public class CanvasTests
     {
         Should.Throw<ArgumentNullException>(() => { _canvas1X1.DrawOnto(null!, Rectangle.Empty, Point.Empty); });
     }
-    
+
     [TestMethod]
     public void DrawOnto_DoesNothing_IfAreaOutside()
     {
-        _canvas1X1.DrawOnto(_drawSurfaceMock.Object, new(1, 1, 2, 3) , new (10, 10));
+        _canvas1X1.DrawOnto(_drawSurfaceMock.Object, new(1, 1, 2, 3), new(10, 10));
 
         _drawSurfaceMock.Verify(v => v.Size, Times.Never);
         _drawSurfaceMock.Verify(v => v.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()), Times.Never);
     }
-    
+
     [TestMethod]
     public void DrawOnto_DoesNothing_IfAreaOutsideDestination()
     {
         _drawSurfaceMock.Setup(s => s.Size)
                         .Returns(new Size(10, 10));
 
-        _canvas1X1.DrawOnto(_drawSurfaceMock.Object, new(0, 0, 2, 3) , new (10, 10));
+        _canvas1X1.DrawOnto(_drawSurfaceMock.Object, new(0, 0, 2, 3), new(10, 10));
 
         _drawSurfaceMock.Verify(v => v.Size, Times.Once);
         _drawSurfaceMock.Verify(v => v.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()), Times.Never);
     }
-    
+
     [TestMethod]
-    public void DrawOnto_DrawsOntoSurface_TheIntersection()
+    public void DrawOnto_DrawsTheAdjustedArea()
     {
         _drawSurfaceMock.Setup(s => s.Size)
                         .Returns(new Size(10, 10));
 
-        _canvas1X1.Glyph(new(0, 0), new('A'), _style1);
-        _canvas1X1.DrawOnto(_drawSurfaceMock.Object, new(0, 0, 2, 2), new(9, 9));
+        _canvas2X2.Glyph(new(0, 0), new('A'), _style1);
+        _canvas2X2.Glyph(new(1, 0), new('B'), _style1);
+        _canvas2X2.Glyph(new(0, 1), new('C'), _style1);
+        _canvas2X2.Glyph(new(1, 1), new('D'), _style1);
+        
+        _canvas2X2.DrawOnto(_drawSurfaceMock.Object, new(0, 0, 2, 2), new(9, 8));
 
-        _drawSurfaceMock.Verify(v => v.DrawCell(new(9, 9), new('A'), _style1), Times.Once);
+        _drawSurfaceMock.Verify(v => v.DrawCell(new(9, 8), new('A'), _style1), Times.Once);
+        _drawSurfaceMock.Verify(v => v.DrawCell(new(9, 9), new('C'), _style1), Times.Once);
+        _drawSurfaceMock.Verify(v => v.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()), Times.Exactly(2));
     }
 
     [TestMethod]
@@ -114,27 +120,29 @@ public class CanvasTests
         _drawSurfaceMock.Verify(v => v.DrawCell(new(6, 7), new('A'), _style1), Times.Once);
         _drawSurfaceMock.Verify(v => v.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()), Times.Once);
     }
-    
+
     [TestMethod]
     public void DrawCell_DoesNothing_IfOutside()
     {
-        ((IDrawSurface)_canvas1X1).DrawCell(new(1, 1), new('Z'), _style1);
-        _canvas1X1.GetContents()[0, 0].Item1.ShouldBe(new(0));
+        ((IDrawSurface) _canvas1X1).DrawCell(new(1, 1), new('Z'), _style1);
+        _canvas1X1.GetContents()[0, 0]
+                  .Item1.ShouldBe(new(0));
     }
 
     [TestMethod]
     public void DrawCell_DrawsGlyph()
     {
-        ((IDrawSurface)_canvas1X1).DrawCell(new(0, 0), new('Z'), _style1);
+        ((IDrawSurface) _canvas1X1).DrawCell(new(0, 0), new('Z'), _style1);
         _canvas1X1.GetContents()[0, 0]
                   .ShouldBe((new('Z'), _style1));
     }
-    
+
     [TestMethod]
     public void Glyph1_DoesNothing_IfOutside()
     {
         _canvas1X1.Glyph(new(1, 1), new('Z'), _style1);
-        _canvas1X1.GetContents()[0, 0].Item1.ShouldBe(new(0));
+        _canvas1X1.GetContents()[0, 0]
+                  .Item1.ShouldBe(new(0));
     }
 
     [TestMethod]
@@ -142,7 +150,7 @@ public class CanvasTests
     {
         _canvas1X1.Glyph(new(0, 0), new('Z'), _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('Z'), _style1));
+                  .ShouldBe((new('Z'), _style1));
     }
 
     [TestMethod]
@@ -152,7 +160,7 @@ public class CanvasTests
         {
             _canvas1X1.Glyph(new(0, 0), new(ch), _style1);
             _canvas1X1.GetContents()[0, 0]
-                       .ShouldBe((new(' '), _style1));
+                      .ShouldBe((new(' '), _style1));
         }
     }
 
@@ -170,7 +178,7 @@ public class CanvasTests
     {
         _canvas1X1.Glyph(new(0, 0), Canvas.CheckGlyphStyle.Diamond, Canvas.FillStyle.Black, _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('◇'), _style1));
+                  .ShouldBe((new('◇'), _style1));
     }
 
     [TestMethod]
@@ -190,7 +198,7 @@ public class CanvasTests
             _style1);
 
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('▽'), _style1));
+                  .ShouldBe((new('▽'), _style1));
     }
 
     [TestMethod, DataRow(-1), DataRow(9)]
@@ -207,9 +215,9 @@ public class CanvasTests
     {
         _canvas1X1.Glyph(new(0, 0), Canvas.GradientGlyphStyle.LeftToRight, 8, _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('█'), _style1));
+                  .ShouldBe((new('█'), _style1));
     }
-    
+
     [TestMethod]
     public void Fill1_FillsArea()
     {
@@ -276,7 +284,10 @@ public class CanvasTests
     [TestMethod]
     public void Text_Throws_IfTextIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => { _canvas2X2.Text(new(0, 0), null!, Canvas.Orientation.Horizontal, _style1); });
+        Should.Throw<ArgumentNullException>(() =>
+        {
+            _canvas2X2.Text(new(0, 0), null!, Canvas.Orientation.Horizontal, _style1);
+        });
     }
 
     [TestMethod]
@@ -284,7 +295,7 @@ public class CanvasTests
     {
         _canvas1X1.Text(new(0, 0), "", Canvas.Orientation.Horizontal, _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .Item1.ShouldBe(new(0));
+                  .Item1.ShouldBe(new(0));
     }
 
     [TestMethod]
@@ -295,7 +306,7 @@ public class CanvasTests
 
         _canvas1X1.Text(new(0, 0), emoji, Canvas.Orientation.Horizontal, _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((rune, _style1));
+                  .ShouldBe((rune, _style1));
     }
 
     [TestMethod]
@@ -337,8 +348,9 @@ public class CanvasTests
     [TestMethod]
     public void Point_DoesNothing_IfOutside()
     {
-        _canvas1X1.Point(new(1,1), _style1);
-        _canvas1X1.GetContents()[0, 0].Item1.ShouldBe(new(0));
+        _canvas1X1.Point(new(1, 1), _style1);
+        _canvas1X1.GetContents()[0, 0]
+                  .Item1.ShouldBe(new(0));
     }
 
     [TestMethod, DataRow(0.4F, 0.4F, '▘'), DataRow(0.5F, 0.4F, '▝'), DataRow(0.4F, 0.5F, '▖'), DataRow(0.5F, 0.5F, '▗')]
@@ -346,7 +358,7 @@ public class CanvasTests
     {
         _canvas1X1.Point(new(x, y), _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new(c), _style1));
+                  .ShouldBe((new(c), _style1));
     }
 
     [TestMethod]
@@ -354,19 +366,19 @@ public class CanvasTests
     {
         _canvas1X1.Point(new(0, 0), _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('▘'), _style1));
+                  .ShouldBe((new('▘'), _style1));
 
         _canvas1X1.Point(new(0.6F, 0), _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('▀'), _style1));
+                  .ShouldBe((new('▀'), _style1));
 
         _canvas1X1.Point(new(0.6F, 0.9F), _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('▜'), _style1));
+                  .ShouldBe((new('▜'), _style1));
 
         _canvas1X1.Point(new(0.2F, 0.5F), _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('█'), _style1));
+                  .ShouldBe((new('█'), _style1));
     }
 
     [TestMethod]
@@ -374,12 +386,19 @@ public class CanvasTests
     {
         _canvas2X2.Rectangle(new(2, 2, 2, 2), _style1);
         var c = _canvas2X2.GetContents();
-        c[0, 0].Item1.ShouldBe(new(0));
-        c[1, 0].Item1.ShouldBe(new(0));
-        c[0, 1].Item1.ShouldBe(new(0));
-        c[1, 1].Item1.ShouldBe(new(0));
+        c[0, 0]
+            .Item1.ShouldBe(new(0));
+
+        c[1, 0]
+            .Item1.ShouldBe(new(0));
+
+        c[0, 1]
+            .Item1.ShouldBe(new(0));
+
+        c[1, 1]
+            .Item1.ShouldBe(new(0));
     }
-    
+
     [TestMethod]
     public void Rectangle_DrawsRectangle()
     {
@@ -397,20 +416,21 @@ public class CanvasTests
         c[1, 1]
             .ShouldBe((new('▘'), _style1));
     }
-    
+
     [TestMethod]
     public void Box_DoesNothing_WhenOutsideArea()
     {
         _canvas1X1.Box(new(1, 1, 1, 1), Canvas.LineStyle.Double, _style1);
-        _canvas1X1.GetContents()[0, 0].Item1.ShouldBe(new(0));
+        _canvas1X1.GetContents()[0, 0]
+                  .Item1.ShouldBe(new(0));
     }
-    
+
     [TestMethod]
     public void Box_DrawsCross_When1X1()
     {
         _canvas1X1.Box(new(0, 0, 1, 1), Canvas.LineStyle.Double, _style1);
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('╔'), _style1));
+                  .ShouldBe((new('╔'), _style1));
     }
 
     [TestMethod]
@@ -501,21 +521,24 @@ public class CanvasTests
     public void Line1_DoesNothing_IfLengthLessThanZero()
     {
         _canvas1X1.Line(new(0, 0), -0.1f, Canvas.Orientation.Horizontal, Canvas.LineStyle.Light, _style1);
-        _canvas1X1.GetContents()[0, 0].Item1.ShouldBe(new(0));
+        _canvas1X1.GetContents()[0, 0]
+                  .Item1.ShouldBe(new(0));
     }
-    
+
     [TestMethod]
     public void Line1_DoesNothing_IfXPlusLengthIsLessThanZero()
     {
         _canvas1X1.Line(new(-1, 0), 0.5f, Canvas.Orientation.Horizontal, Canvas.LineStyle.Light, _style1);
-        _canvas1X1.GetContents()[0, 0].Item1.ShouldBe(new(0));
+        _canvas1X1.GetContents()[0, 0]
+                  .Item1.ShouldBe(new(0));
     }
-    
+
     [TestMethod]
     public void Line1_DoesNothing_IfYPlusLengthIsLessThanZero()
     {
         _canvas1X1.Line(new(0, -1), 0.5f, Canvas.Orientation.Vertical, Canvas.LineStyle.Light, _style1);
-        _canvas1X1.GetContents()[0, 0].Item1.ShouldBe(new(0));
+        _canvas1X1.GetContents()[0, 0]
+                  .Item1.ShouldBe(new(0));
     }
 
     [TestMethod]
@@ -526,7 +549,7 @@ public class CanvasTests
         _canvas1X1.GetContents()[0, 0]
                   .ShouldBe((new('═'), _style1));
     }
-    
+
     [TestMethod]
     public void Line1_StopsAtHeight()
     {
@@ -535,7 +558,7 @@ public class CanvasTests
         _canvas1X1.GetContents()[0, 0]
                   .ShouldBe((new('║'), _style1));
     }
-    
+
     [TestMethod]
     public void Line1_ExitsNegative_OnX()
     {
@@ -544,7 +567,7 @@ public class CanvasTests
         _canvas1X1.GetContents()[0, 0]
                   .ShouldBe((new('═'), _style1));
     }
-    
+
     [TestMethod]
     public void Line1_ExitsNegative_OnY()
     {
@@ -560,7 +583,7 @@ public class CanvasTests
         _canvas1X1.Line(new(0, y), 0.5F, Canvas.Orientation.Horizontal, Canvas.LineStyle.Light, _style1);
 
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('╴'), _style1));
+                  .ShouldBe((new('╴'), _style1));
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -569,7 +592,7 @@ public class CanvasTests
         _canvas1X1.Line(new(0.5F, y), 0.5F, Canvas.Orientation.Horizontal, Canvas.LineStyle.Light, _style1);
 
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('╶'), _style1));
+                  .ShouldBe((new('╶'), _style1));
     }
 
     [TestMethod, DataRow(Canvas.LineStyle.Light, '─'), DataRow(Canvas.LineStyle.Heavy, '━'),
@@ -580,7 +603,7 @@ public class CanvasTests
         _canvas1X1.Line(new(0, 0), 1, Canvas.Orientation.Horizontal, style, _style1);
 
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new(exp), _style1));
+                  .ShouldBe((new(exp), _style1));
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -589,7 +612,7 @@ public class CanvasTests
         _canvas1X1.Line(new(x, 0), 0.5F, Canvas.Orientation.Vertical, Canvas.LineStyle.Light, _style1);
 
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('╵'), _style1));
+                  .ShouldBe((new('╵'), _style1));
     }
 
     [TestMethod, DataRow(0F), DataRow(0.5F), DataRow(0.9F)]
@@ -598,7 +621,7 @@ public class CanvasTests
         _canvas1X1.Line(new(x, 0.5F), 0.5F, Canvas.Orientation.Vertical, Canvas.LineStyle.Light, _style1);
 
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('╷'), _style1));
+                  .ShouldBe((new('╷'), _style1));
     }
 
     [TestMethod, DataRow(Canvas.LineStyle.Light, '│'), DataRow(Canvas.LineStyle.Heavy, '┃'),
@@ -609,7 +632,7 @@ public class CanvasTests
         _canvas1X1.Line(new(0, 0), 1, Canvas.Orientation.Vertical, style, _style1);
 
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new(exp), _style1));
+                  .ShouldBe((new(exp), _style1));
     }
 
     [TestMethod]
@@ -618,7 +641,7 @@ public class CanvasTests
         _canvas1X1.Line(new(0, 0), 0.4F, Canvas.Orientation.Vertical, Canvas.LineStyle.Light, _style1);
 
         _canvas1X1.GetContents()[0, 0]
-                   .Item1.ShouldBe(new(0));
+                  .Item1.ShouldBe(new(0));
     }
 
     [TestMethod]
@@ -628,7 +651,7 @@ public class CanvasTests
         _canvas1X1.Line(new(0, 0), 1, Canvas.Orientation.Horizontal, Canvas.LineStyle.Double, _style1);
 
         _canvas1X1.GetContents()[0, 0]
-                   .ShouldBe((new('╪'), _style1));
+                  .ShouldBe((new('╪'), _style1));
     }
 
     [TestMethod, DataRow(Canvas.Orientation.Horizontal), DataRow(Canvas.Orientation.Vertical)]
@@ -645,11 +668,14 @@ public class CanvasTests
     {
         _canvas3X3.Line(new(0, 0), new(_canvas3X3.Size.Width - 0.5F, _canvas3X3.Size.Height - 0.5F), _style1);
         var contents = _canvas3X3.GetContents();
-        
-        contents[0,0].ShouldBe((new('▚'), _style1));
-        contents[1,1].ShouldBe((new('▚'), _style1));
-        contents[0,0].ShouldBe((new('▚'), _style1));
+
+        contents[0, 0]
+            .ShouldBe((new('▚'), _style1));
+
+        contents[1, 1]
+            .ShouldBe((new('▚'), _style1));
+
+        contents[0, 0]
+            .ShouldBe((new('▚'), _style1));
     }
 }
-
-
