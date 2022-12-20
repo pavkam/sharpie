@@ -14,10 +14,11 @@
         <RepositoryType>git</RepositoryType>
         <AssemblyName>sharpie-tests</AssemblyName>
         <LangVersion>11</LangVersion>
-        <PackageVersion>1.4.1</PackageVersion>
-        <AssemblyVersion>1.4.1</AssemblyVersion>
-        <FileVersion>1.4.1</FileVersion>
+        <PackageVersion>1.4.2</PackageVersion>
+        <AssemblyVersion>1.4.2</AssemblyVersion>
+        <FileVersion>1.4.2</FileVersion>
         <Authors>Alexandru Ciobanu</Authors>
+        <Product>Sharpie</Product>
     </PropertyGroup>
 
     <ItemGroup>

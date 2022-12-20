@@ -19,14 +19,14 @@
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <Authors>Alexandru Ciobanu</Authors>
-        <Company>sharpie-demos-font</Company>
-        <Product>sharpie-demos-font</Product>
+        <Company>Alexandru Ciobanu</Company>
+        <Product>Sharpie</Product>
         <PackageId>sharpie-demos-font</PackageId>
     </PropertyGroup>
 
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Sharpie\Sharpie.csproj"/>
+        <ProjectReference Include="..\..\Sharpie\Sharpie.csproj" />
     </ItemGroup>
 
 </Project>

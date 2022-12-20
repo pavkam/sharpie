@@ -14,13 +14,14 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>ncurses curses terminal console</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageVersion>1.4.1</PackageVersion>
-        <AssemblyVersion>1.4.1</AssemblyVersion>
-        <FileVersion>1.4.1</FileVersion>
+        <PackageVersion>1.4.2</PackageVersion>
+        <AssemblyVersion>1.4.2</AssemblyVersion>
+        <FileVersion>1.4.2</FileVersion>
         <PackageId>Sharpie-Curses</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
         <LangVersion>11</LangVersion>
         <Authors>Alexandru Ciobanu</Authors>
+        <Product>Sharpie</Product>
     </PropertyGroup>
 
     <ItemGroup>

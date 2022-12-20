@@ -20,11 +20,11 @@
         <FileVersion>1.0.0</FileVersion>
         <Authors>Alexandru Ciobanu</Authors>
         <PackageId>sharpie-demos-snake</PackageId>
-        <Product>sharpie-demos-snake</Product>
+        <Product>Sharpie</Product>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Sharpie\Sharpie.csproj"/>
+        <ProjectReference Include="..\..\Sharpie\Sharpie.csproj" />
     </ItemGroup>
 
 </Project>
