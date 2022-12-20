@@ -564,13 +564,20 @@ public static class Helpers
     /// <param name="size">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
     /// <returns><c>true</c> if the intersection is not empty; <c>false</c> otherwise.</returns>
-    internal static bool AdjustToActualArea(this Size size, ref Rectangle area)
-    {
-        var r = new Rectangle(new(0, 0), size);
-        r.Intersect(area);
-        area = r;
+    internal static bool AdjustToActualArea(this Size size, ref Rectangle area) => new Rectangle(new(0, 0), size).AdjustToActualArea(ref area);
 
-        return r is { Width: > 0, Height: > 0 };
+    /// <summary>
+    /// Intersects the given <see cref="area"/> with the total area of a surface and returns the intersection.
+    /// </summary>
+    /// <param name="total">The size of the destination surface.</param>
+    /// <param name="area">The desired area.</param>
+    /// <returns><c>true</c> if the intersection is not empty; <c>false</c> otherwise.</returns>
+    internal static bool AdjustToActualArea(this Rectangle total, ref Rectangle area)
+    {
+        total.Intersect(area);
+        area = total;
+
+        return total is { Width: > 0, Height: > 0 };
     }
     
     /// <summary>

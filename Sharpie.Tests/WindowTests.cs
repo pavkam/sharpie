@@ -233,6 +233,16 @@ public class WindowTests
     }
 
     [TestMethod]
+    public void Area_ShouldBeBoundByLocationAndSize()
+    {
+        var w = new Window(_screen, new(1));
+        
+        _cursesMock.MockArea(w, new(7, 8, 58, 78));
+        
+        w.Area.ShouldBe(new(7, 8, 58, 78));
+    }
+    
+    [TestMethod]
     public void Location_Get_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
@@ -346,25 +356,27 @@ public class WindowTests
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Size_Set_Throws_IfOutsideParent()
+    public void Size_Set_AdjustsAreaBasedOnParent()
     {
-        _cursesMock.MockSmallArea(_screen);
+        _cursesMock.MockArea(_screen, new(0, 0, 90, 80));
 
         var w = new Window(_screen, new(1));
+        _cursesMock.MockArea(w, new(10, 10, 100, 100));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => w.Size = new(6, 6));
+        w.Size = new(100, 100);
+        
+        _cursesMock.Verify(v => v.wresize(w.Handle, 70, 80), Times.Once);
     }
-
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Size_Set_UpdatesSize_IfInsideParent()
+    
+    [TestMethod]
+    public void Size_Set_Throws_IfAdjustedArea_IsOutsideParent()
     {
-        _cursesMock.MockLargeArea(_screen);
+        _cursesMock.MockArea(_screen, new(0, 0, 100, 100));
 
         var w = new Window(_screen, new(1));
-
-        w.Size = new(5, 5);
-
-        _cursesMock.Verify(v => v.wresize(w.Handle, 5, 5), Times.Once);
+        _cursesMock.MockArea(w, new(101, 101, 1, 1));
+        
+        Should.Throw<ArgumentOutOfRangeException>(() => w.Size = new(6, 6));
     }
 
     [TestMethod]
@@ -380,14 +392,29 @@ public class WindowTests
 
         w.Origin.ShouldBe(new(11, 22));
     }
-
+    
     [TestMethod]
-    public void SubWindow_Throws_IfAreaOutsideBoundaries()
+    public void SubWindow_Throws_IfAdjustedAreaIsEmpty()
     {
         var w = new Window(_screen, new(2));
-        _cursesMock.MockSmallArea(w);
+        _cursesMock.MockArea(w, new(5, 6, 18, 24));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => w.SubWindow(new(0, 0, 2, 2)));
+        Should.Throw<ArgumentOutOfRangeException>(() => w.SubWindow(new(30, 30, 2, 2)));
+    }
+
+    [TestMethod]
+    public void SubWindow_AdjustsArea_ToMatchParent()
+    {
+        var w = new Window(_screen, new(2));
+        _cursesMock.MockArea(w, new(5, 6, 18, 24));
+
+        _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>()))
+                   .Returns(new IntPtr(3));
+        
+        w.SubWindow(new(20, 28, 15, 18));
+
+        _cursesMock.Verify(v => v.derwin(w.Handle, 2, 3, 28, 20), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]

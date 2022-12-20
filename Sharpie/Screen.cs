@@ -164,7 +164,7 @@ public sealed class Screen: TerminalSurface, IScreen
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IWindow Window(Rectangle area)
     {
-        if (!IsRectangleWithin(area))
+        if (!Area.AdjustToActualArea(ref area))
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }

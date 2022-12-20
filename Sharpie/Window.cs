@@ -159,16 +159,16 @@ public sealed class Window: TerminalSurface, IWindow
         get => base.Size;
         set
         {
-            var location = Location;
-            if (!Screen.IsRectangleWithin(new(location, value)))
+            var area = new Rectangle(Location, value);
+            if (!Screen.Size.AdjustToActualArea(ref area))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
-            Curses.wresize(Handle, value.Height, value.Width)
+            Curses.wresize(Handle, area.Height, area.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the window.");
 
-            _explicitArea = new(location, value);
+            _explicitArea = area;
         }
     }
 
@@ -274,7 +274,7 @@ public sealed class Window: TerminalSurface, IWindow
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public ISubWindow SubWindow(Rectangle area)
     {
-        if (!IsRectangleWithin(area))
+        if (!Area.AdjustToActualArea(ref area))
         {
             throw new ArgumentOutOfRangeException(nameof(area));
         }

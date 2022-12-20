@@ -94,12 +94,13 @@ public sealed class SubPad: Surface, ISubPad
         get => base.Size;
         set
         {
-            if (!Pad.IsRectangleWithin(new(Location, value)))
+            var area = new Rectangle(Location, value);
+            if (!Pad.Size.AdjustToActualArea(ref area))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
-            }
+            } 
 
-            Curses.wresize(Handle, value.Height, value.Width)
+            Curses.wresize(Handle, area.Height, area.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the sub-pad.");
         }
     }

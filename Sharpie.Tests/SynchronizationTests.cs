@@ -349,9 +349,9 @@ public class SynchronizationTests
     [TestMethod] public void Surface_Background_Set() { Check(() => _surface.Background = (new('A'), Style.Default)); }
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Surface_CaretPosition_Get() { Check(() => _surface.CaretPosition.ToString()); }
+    public void Surface_CaretLocation_Get() { Check(() => _surface.CaretLocation.ToString()); }
 
-    [TestMethod] public void Surface_CaretPosition_Set() { Check(() => _surface.CaretPosition = Point.Empty); }
+    [TestMethod] public void Surface_CaretLocation_Set() { Check(() => _surface.CaretLocation = Point.Empty); }
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Surface_Dirty_Get() { Check(() => _surface.Dirty.ToString()); }

@@ -201,14 +201,31 @@ public class SubWindowTests
               .Operation.ShouldBe("wresize");
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Size_Set_Throws_IfOutsideParent()
+    
+    [TestMethod]
+    public void Size_Set_Throws_AdjustedAreaIsEmpty()
     {
-        _cursesMock.MockSmallArea(_parent);
+        _cursesMock.MockArea(_parent, new(0, 0, 10, 10));
 
-        var sw = new SubWindow(_parent, new(1));
+        var sw = new SubWindow(_parent, new(10));
+        _cursesMock.Setup(s => s.getparx(sw.Handle)).Returns(15);
+        _cursesMock.Setup(s => s.getpary(sw.Handle)).Returns(15);
+        
+        Should.Throw<ArgumentOutOfRangeException>(() => sw.Size = new(5, 5));
+    }
+    
+    [TestMethod]
+    public void Size_Set_AdjustsSizeToMatchParent()
+    {
+        _cursesMock.MockArea(_parent, new(0, 0, 8, 18));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => sw.Size = new(6, 6));
+        var sw = new SubWindow(_parent, new(10));
+        _cursesMock.Setup(s => s.getparx(sw.Handle)).Returns(5);
+        _cursesMock.Setup(s => s.getpary(sw.Handle)).Returns(6);
+        
+        sw.Size = new(10, 10);
+        
+        _cursesMock.Verify(v => v.wresize(sw.Handle, 10, 3), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]

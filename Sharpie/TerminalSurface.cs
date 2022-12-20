@@ -81,14 +81,9 @@ public class TerminalSurface: Surface, ITerminalSurface
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void Refresh(int y, int count)
     {
-        if (y < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(y));
-        }
-
         if (count < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(count));
+            return;
         }
 
         if (Terminal.AtomicRefreshOpen)

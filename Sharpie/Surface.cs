@@ -76,6 +76,11 @@ public abstract class Surface: ISurface, IDisposable
     protected internal virtual Point Origin => Point.Empty;
 
     /// <summary>
+    ///     Gets the area of the surface based on the <see cref="Origin"/> and <see cref="Size">.
+    /// </summary>
+    protected internal Rectangle Area => new(Origin, Size);
+    
+    /// <summary>
     ///     Disposes the current instance.
     /// </summary>
     public void Dispose()
@@ -197,8 +202,8 @@ public abstract class Surface: ISurface, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ISurface.CaretPosition" />
-    public Point CaretPosition
+    /// <inheritdoc cref="ISurface.CaretLocation" />
+    public Point CaretLocation
     {
         get
         {
@@ -234,7 +239,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (y < 0 || y >= Size.Height)
         {
-            throw new ArgumentOutOfRangeException(nameof(y));
+            return false;
         }
 
         return Curses.is_linetouched(Handle, y);
@@ -277,10 +282,12 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ScrollUp(int lines)
     {
-        if (lines <= 0 || lines > Size.Height)
+        if (lines <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(lines));
+            return;
         }
+        
+        lines = Math.Min(lines, Size.Height);
 
         if (!Scrollable)
         {
@@ -295,10 +302,12 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void ScrollDown(int lines)
     {
-        if (lines <= 0 || lines > Size.Height)
+        if (lines <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(lines));
+            return;
         }
+        
+        lines = Math.Min(lines, Size.Height);
 
         if (!Scrollable)
         {
@@ -315,7 +324,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (lines <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(lines));
+            return;
         }
 
         AssertSynchronized();
@@ -330,7 +339,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (lines <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(lines));
+            return;
         }
 
         AssertSynchronized();
@@ -345,7 +354,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (width < 1)
         {
-            throw new ArgumentOutOfRangeException(nameof(width), "The length should be greater than zero.");
+            return;
         }
 
         AssertSynchronized();
@@ -387,7 +396,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (length <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(length));
+            return;
         }
 
         AssertSynchronized();
@@ -402,7 +411,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (length <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(length));
+            return;
         }
 
         AssertSynchronized();
@@ -417,7 +426,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (length <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(length));
+            return;
         }
 
         AssertSynchronized();
@@ -432,7 +441,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (length <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(length));
+            return;
         }
 
         AssertSynchronized();
@@ -481,7 +490,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (count <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(count));
+            return;
         }
 
         AssertSynchronized();
@@ -498,18 +507,18 @@ public abstract class Surface: ISurface, IDisposable
         }
     }
 
-    /// <inheritdoc cref="ISurface.RemoveText" />
+    /// <inheritdoc cref="ISurface.GetText" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (Rune @char, Style style)[] GetText(int count)
     {
         if (count <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(count));
+            return Array.Empty<(Rune, Style)>();
         }
 
         AssertSynchronized();
 
-        count = Math.Min(count, Size.Width - CaretPosition.X);
+        count = Math.Min(count, Size.Width - CaretLocation.X);
         var arr = new CursesComplexChar[count];
 
         Curses.win_wchnstr(Handle, arr, count)
@@ -556,7 +565,7 @@ public abstract class Surface: ISurface, IDisposable
 
         if (surface == this)
         {
-            throw new ArgumentException(nameof(surface));
+            throw new ArgumentException($"The {nameof(surface)} cannot be self.", nameof(surface));
         }
 
         AssertSynchronized();
@@ -588,22 +597,22 @@ public abstract class Surface: ISurface, IDisposable
 
         if (surface == this)
         {
-            throw new ArgumentException(nameof(surface));
+            throw new ArgumentException($"The {nameof(surface)} cannot be self.", nameof(surface));
         }
 
-        if (!IsRectangleWithin(srcRect))
+        if (!Size.AdjustToActualArea(ref srcRect))
         {
-            throw new ArgumentOutOfRangeException(nameof(srcRect));
+            return;
         }
 
-        var destRect = new Rectangle(destPos, new(srcRect.Bottom - srcRect.Top, srcRect.Right - srcRect.Left));
-        if (!surface.IsRectangleWithin(destRect))
+        var destRect = new Rectangle(destPos, srcRect.Size);
+        if (!surface.Size.AdjustToActualArea(ref destRect))
         {
-            throw new ArgumentOutOfRangeException(nameof(destPos));
+            return;
         }
 
         Curses.copywin(Handle, surface.Handle, srcRect.Top, srcRect.Left, destRect.Top,
-                  destRect.Left, destRect.Bottom, destRect.Right, Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
+                  destRect.Left, destRect.Bottom - 1, destRect.Right - 1, Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
               .Check(nameof(Curses.copywin), "Failed to copy the surface contents.");
     }
 
@@ -611,14 +620,9 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public virtual void MarkDirty(int y, int count)
     {
-        if (y < 0)
+        if (count < 1)
         {
-            throw new ArgumentOutOfRangeException(nameof(y));
-        }
-
-        if (count < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(count));
+            return;
         }
 
         var (actY, actCount) = Helpers.IntersectSegments(y, count, 0, Size.Height);

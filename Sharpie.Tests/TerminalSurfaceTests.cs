@@ -126,25 +126,21 @@ public class TerminalSurfaceTests
     }
 
     [TestMethod]
-    public void Refresh2_Throws_IfYIsNegative()
+    public void Refresh2_DoesNothing_IfCountIsNegative()
     {
         var sa = new TerminalSurface(_terminal, new(1));
-
-        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
-                   .Returns(10);
-
-        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(-1, 1));
+        sa.Refresh(0, -1);
+        
+        _cursesMock.Verify(v => v.wredrawln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
-
+    
     [TestMethod]
-    public void Refresh2_Throws_IfCountIsNegative()
+    public void Refresh2_DoesNothing_IfDoesNotCoverArea_ForNegativeY()
     {
         var sa = new TerminalSurface(_terminal, new(1));
-
-        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
-                   .Returns(10);
-
-        Should.Throw<ArgumentOutOfRangeException>(() => sa.Refresh(0, -1));
+        sa.Refresh(-10, 5);
+        
+        _cursesMock.Verify(v => v.wredrawln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
 
     [TestMethod]

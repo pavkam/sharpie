@@ -639,16 +639,16 @@ public class HelpersTests
     public void AdjustToActualArea1_ReturnsFalse_IfNewAreaIsEmpty(int x, int y)
     {
         var a = new Rectangle(x, y, 10, 10);
-        Helpers.AdjustToActualArea(new(100, 100), ref a)
-               .ShouldBeFalse();
+        new Size(100, 100).AdjustToActualArea(ref a)
+                          .ShouldBeFalse();
     }
     
     [TestMethod]
     public void AdjustToActualArea1_ReturnsTrueAndNewArea()
     {
         var a = new Rectangle(50, 50, 100, 100);
-        Helpers.AdjustToActualArea(new(100, 100), ref a)
-               .ShouldBeTrue();
+        new Size(100, 100).AdjustToActualArea(ref a)
+                          .ShouldBeTrue();
         
         a.ShouldBe(new(50, 50, 50, 50));
     }
@@ -657,8 +657,8 @@ public class HelpersTests
     public void AdjustToActualArea2_ReturnsFalse_IfNewAreaIsEmpty(float x, float y)
     {
         var a = new RectangleF(x, y, 10, 10);
-        Helpers.AdjustToActualArea(new(100, 100), ref a)
-               .ShouldBeFalse();
+        new Size(100, 100).AdjustToActualArea(ref a)
+                          .ShouldBeFalse();
     }
     
     [TestMethod]
@@ -670,4 +670,22 @@ public class HelpersTests
         
         a.ShouldBe(new(50, 50, 50, 50));
     }
+    
+    [TestMethod, DataRow(110, 109), DataRow(109, 110), DataRow(110, 110)]
+    public void AdjustToActualArea3_ReturnsFalse_IfNewAreaIsEmpty(int x, int y)
+    {
+        var a = new Rectangle(x, y, 10, 10);
+        new Rectangle(10, 10, 100, 100).AdjustToActualArea(ref a)
+                          .ShouldBeFalse();
+    }
+    
+    [TestMethod]
+    public void AdjustToActualArea3_ReturnsTrueAndNewArea()
+    {
+        var a = new Rectangle(50, 50, 100, 100);
+        new Rectangle(10, 10, 100, 100).AdjustToActualArea(ref a)
+                               .ShouldBeTrue();
+        a.ShouldBe(new(50, 50, 60, 60));
+    }
+
 }

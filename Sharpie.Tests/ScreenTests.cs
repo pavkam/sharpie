@@ -164,13 +164,29 @@ public class ScreenTests
 
         _screen.Pads.ShouldBeEmpty();
     }
+    
+    [TestMethod]
+    public void Window_Throws_IfAdjustedAreaIsEmpty()
+    {
+        _cursesMock.MockArea(_screen, new(0, 0, 18, 24));
+
+        Should.Throw<ArgumentOutOfRangeException>(() => _screen.Window(new(5, 6, 0, 2)));
+    }
 
     [TestMethod]
-    public void Window_Throws_IfAreaOutsideBoundaries()
+    public void Window_AdjustsArea_ToMatchParent()
     {
-        _cursesMock.MockSmallArea(_screen);
-        Should.Throw<ArgumentOutOfRangeException>(() => _screen.Window(new(0, 0, 2, 2)));
+        _cursesMock.MockArea(_screen, new(0, 0, 18, 24));
+
+        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+                       It.IsAny<int>()))
+                   .Returns(new IntPtr(3));
+        
+        _screen.Window(new(15, 20, 15, 18));
+
+        _cursesMock.Verify(v => v.newwin( 4, 3, 20, 15), Times.Once);
     }
+
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Window_Throws_IfCursesFails()
