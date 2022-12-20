@@ -402,7 +402,7 @@ public class SurfaceTests
     public void Area_ShouldBeBoundBySize()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        _cursesMock.MockArea(s, new(0, 0, 58, 78));
+        _cursesMock.MockArea(s, new Size(58, 78));
         s.Area.ShouldBe(new(0, 0, 58, 78));
     }
 
@@ -1424,10 +1424,10 @@ public class SurfaceTests
     public void Replace2_DoesNothing_IfTheDestinationAreaIsOutsideBounds()
     {
         var s1 = new Surface(_cursesMock.Object, new(1));
-        _cursesMock.MockArea(s1, new(0, 0, 10, 50));
+        _cursesMock.MockArea(s1, new Size(10, 50));
 
         var s2 = new Surface(_cursesMock.Object, new(2));
-        _cursesMock.MockArea(s2, new(0, 0, 10, 50));
+        _cursesMock.MockArea(s2, new Size(10, 50));
 
         s1.Replace(s2, new(0, 0, 5, 5), new(999, 999), ReplaceStrategy.Overlay);
 
@@ -1440,10 +1440,10 @@ public class SurfaceTests
     public void Replace2_DoesNothing_IfTheSourceAreaIsOutsideBounds()
     {
         var s1 = new Surface(_cursesMock.Object, new(1));
-        _cursesMock.MockArea(s1, new(0, 0, 10, 50));
+        _cursesMock.MockArea(s1, new Size(10, 50));
 
         var s2 = new Surface(_cursesMock.Object, new(2));
-        _cursesMock.MockArea(s2, new(0, 0, 10, 50));
+        _cursesMock.MockArea(s2, new Size(10, 50));
 
         s1.Replace(s2, new(11, 11, 5, 5), new(0, 0), ReplaceStrategy.Overlay);
 
@@ -1456,10 +1456,10 @@ public class SurfaceTests
     public void Replace2_CopiesAdjustedArea()
     {
         var s1 = new Surface(_cursesMock.Object, new(1));
-        _cursesMock.MockArea(s1, new(0, 0, 10, 50));
+        _cursesMock.MockArea(s1, new Size(10, 50));
 
         var s2 = new Surface(_cursesMock.Object, new(2));
-        _cursesMock.MockArea(s2, new(0, 0, 10, 50));
+        _cursesMock.MockArea(s2, new Size(10, 50));
 
         s1.Replace(s2, new(3, 4, 5, 5), new(5, 5), ReplaceStrategy.Overlay);
 

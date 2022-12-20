@@ -62,7 +62,7 @@ public class SynchronizationTests
         _subWindow = new(_window, new(6));
         _terminalSurface = new(_terminal, new(7));
 
-        _cursesMock.MockArea(_surface, new(0, 0, 2, 2));
+        _cursesMock.MockArea(_surface, new Size(2, 2));
         _cursesMock.Setup(s => s.newpad(1, 1))
                    .Returns(new IntPtr(100));
 
