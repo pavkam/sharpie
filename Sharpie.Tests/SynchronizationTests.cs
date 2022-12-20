@@ -324,7 +324,7 @@ public class SynchronizationTests
     {
         Check(() => ((IDrawSurface) _surface).DrawCell(new(0, 0), new('A'), Style.Default));
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Surface_Scrollable_Get() { Check(() => _surface.Scrollable.ToString()); }
 

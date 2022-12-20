@@ -98,7 +98,7 @@ public sealed class SubPad: Surface, ISubPad
             if (!Pad.Size.AdjustToActualArea(ref area))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
-            } 
+            }
 
             Curses.wresize(Handle, area.Height, area.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the sub-pad.");

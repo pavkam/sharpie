@@ -76,10 +76,10 @@ public abstract class Surface: ISurface, IDisposable
     protected internal virtual Point Origin => Point.Empty;
 
     /// <summary>
-    ///     Gets the area of the surface based on the <see cref="Origin"/> and <see cref="Size">.
+    ///     Gets the area of the surface based on the <see cref="Origin"/> and <see cref="Size" />.
     /// </summary>
     protected internal Rectangle Area => new(Origin, Size);
-    
+
     /// <summary>
     ///     Disposes the current instance.
     /// </summary>
@@ -286,7 +286,7 @@ public abstract class Surface: ISurface, IDisposable
         {
             return;
         }
-        
+
         lines = Math.Min(lines, Size.Height);
 
         if (!Scrollable)
@@ -306,7 +306,7 @@ public abstract class Surface: ISurface, IDisposable
         {
             return;
         }
-        
+
         lines = Math.Min(lines, Size.Height);
 
         if (!Scrollable)
@@ -612,7 +612,8 @@ public abstract class Surface: ISurface, IDisposable
         }
 
         Curses.copywin(Handle, surface.Handle, srcRect.Top, srcRect.Left, destRect.Top,
-                  destRect.Left, destRect.Bottom - 1, destRect.Right - 1, Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
+                  destRect.Left, destRect.Bottom - 1, destRect.Right - 1,
+                  Convert.ToInt32(strategy == ReplaceStrategy.Overlay))
               .Check(nameof(Curses.copywin), "Failed to copy the surface contents.");
     }
 

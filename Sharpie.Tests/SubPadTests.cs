@@ -187,23 +187,29 @@ public class SubPadTests
         _cursesMock.MockArea(_parent, new(0, 0, 10, 10));
 
         var sp = new SubPad(_parent, new(10));
-        _cursesMock.Setup(s => s.getparx(sp.Handle)).Returns(15);
-        _cursesMock.Setup(s => s.getpary(sp.Handle)).Returns(15);
-        
+        _cursesMock.Setup(s => s.getparx(sp.Handle))
+                   .Returns(15);
+
+        _cursesMock.Setup(s => s.getpary(sp.Handle))
+                   .Returns(15);
+
         Should.Throw<ArgumentOutOfRangeException>(() => sp.Size = new(5, 5));
     }
-    
+
     [TestMethod]
     public void Size_Set_AdjustsSizeToMatchParent()
     {
         _cursesMock.MockArea(_parent, new(0, 0, 8, 18));
 
         var sp = new SubPad(_parent, new(10));
-        _cursesMock.Setup(s => s.getparx(sp.Handle)).Returns(5);
-        _cursesMock.Setup(s => s.getpary(sp.Handle)).Returns(6);
-        
+        _cursesMock.Setup(s => s.getparx(sp.Handle))
+                   .Returns(5);
+
+        _cursesMock.Setup(s => s.getpary(sp.Handle))
+                   .Returns(6);
+
         sp.Size = new(10, 10);
-        
+
         _cursesMock.Verify(v => v.wresize(sp.Handle, 10, 3), Times.Once);
     }
 

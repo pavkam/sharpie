@@ -164,7 +164,7 @@ public class ScreenTests
 
         _screen.Pads.ShouldBeEmpty();
     }
-    
+
     [TestMethod]
     public void Window_Throws_IfAdjustedAreaIsEmpty()
     {
@@ -178,15 +178,13 @@ public class ScreenTests
     {
         _cursesMock.MockArea(_screen, new(0, 0, 18, 24));
 
-        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
-                       It.IsAny<int>()))
+        _cursesMock.Setup(s => s.newwin(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(3));
-        
+
         _screen.Window(new(15, 20, 15, 18));
 
-        _cursesMock.Verify(v => v.newwin( 4, 3, 20, 15), Times.Once);
+        _cursesMock.Verify(v => v.newwin(4, 3, 20, 15), Times.Once);
     }
-
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Window_Throws_IfCursesFails()

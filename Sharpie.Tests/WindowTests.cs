@@ -236,12 +236,12 @@ public class WindowTests
     public void Area_ShouldBeBoundByLocationAndSize()
     {
         var w = new Window(_screen, new(1));
-        
+
         _cursesMock.MockArea(w, new(7, 8, 58, 78));
-        
+
         w.Area.ShouldBe(new(7, 8, 58, 78));
     }
-    
+
     [TestMethod]
     public void Location_Get_Returns_IfCursesSucceeded()
     {
@@ -364,10 +364,10 @@ public class WindowTests
         _cursesMock.MockArea(w, new(10, 10, 100, 100));
 
         w.Size = new(100, 100);
-        
+
         _cursesMock.Verify(v => v.wresize(w.Handle, 70, 80), Times.Once);
     }
-    
+
     [TestMethod]
     public void Size_Set_Throws_IfAdjustedArea_IsOutsideParent()
     {
@@ -375,7 +375,7 @@ public class WindowTests
 
         var w = new Window(_screen, new(1));
         _cursesMock.MockArea(w, new(101, 101, 1, 1));
-        
+
         Should.Throw<ArgumentOutOfRangeException>(() => w.Size = new(6, 6));
     }
 
@@ -392,7 +392,7 @@ public class WindowTests
 
         w.Origin.ShouldBe(new(11, 22));
     }
-    
+
     [TestMethod]
     public void SubWindow_Throws_IfAdjustedAreaIsEmpty()
     {
@@ -411,7 +411,7 @@ public class WindowTests
         _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
-        
+
         w.SubWindow(new(20, 28, 15, 18));
 
         _cursesMock.Verify(v => v.derwin(w.Handle, 2, 3, 28, 20), Times.Once);

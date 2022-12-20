@@ -130,16 +130,16 @@ public class TerminalSurfaceTests
     {
         var sa = new TerminalSurface(_terminal, new(1));
         sa.Refresh(0, -1);
-        
+
         _cursesMock.Verify(v => v.wredrawln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
-    
+
     [TestMethod]
     public void Refresh2_DoesNothing_IfDoesNotCoverArea_ForNegativeY()
     {
         var sa = new TerminalSurface(_terminal, new(1));
         sa.Refresh(-10, 5);
-        
+
         _cursesMock.Verify(v => v.wredrawln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
 

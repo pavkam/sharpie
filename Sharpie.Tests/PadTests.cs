@@ -164,7 +164,7 @@ public class PadTests
     {
         _cursesMock.MockArea(_pad, new(0, 0, 100, 100));
         _cursesMock.MockArea(_screen, new(0, 0, 100, 100));
-        
+
         _pad.Refresh(new(101, 101, 90, 90), new(0, 0));
 
         _cursesMock.Verify(
@@ -274,12 +274,12 @@ public class PadTests
         _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
-        
+
         p.SubPad(new(16, 20, 15, 18));
 
         _cursesMock.Verify(v => v.subpad(p.Handle, 4, 2, 20, 18), Times.Once);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void SubPad_Throws_IfCursesFails()
     {

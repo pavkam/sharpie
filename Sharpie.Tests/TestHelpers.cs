@@ -70,5 +70,3 @@ internal static class TestHelpers
                   .Returns(1);
     }
 }
-
-

@@ -397,7 +397,7 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.Origin.ShouldBe(new(0, 0));
     }
-    
+
     [TestMethod]
     public void Area_ShouldBeBoundBySize()
     {
@@ -554,13 +554,12 @@ public class SurfaceTests
               .Operation.ShouldBe("wattr_off");
     }
 
-   
     [TestMethod]
     public void ScrollUp_DoesNothing_IfLinesIsLessThanOne()
     {
         var sf = new Surface(_cursesMock.Object, new(1));
         sf.ScrollUp(0);
-        
+
         _cursesMock.Verify(s => s.wscrl(It.IsAny<IntPtr>(), It.IsAny<int>()), Times.Never);
     }
 
@@ -568,14 +567,15 @@ public class SurfaceTests
     public void ScrollUp_UsesHeight_IfLinesIsGreaterThanTheHeight()
     {
         var sf = new Surface(_cursesMock.Object, new(1));
-        
+
         _cursesMock.Setup(s => s.is_scrollok(sf.Handle))
                    .Returns(true);
+
         _cursesMock.Setup(s => s.getmaxy(sf.Handle))
                    .Returns(10);
-        
+
         sf.ScrollUp(11);
-        
+
         _cursesMock.Verify(s => s.wscrl(sf.Handle, 10));
     }
 
@@ -629,7 +629,7 @@ public class SurfaceTests
     {
         var sf = new Surface(_cursesMock.Object, new(1));
         sf.ScrollDown(0);
-        
+
         _cursesMock.Verify(s => s.wscrl(It.IsAny<IntPtr>(), It.IsAny<int>()), Times.Never);
     }
 
@@ -637,14 +637,15 @@ public class SurfaceTests
     public void ScrollDown_UsesHeight_IfLinesIsGreaterThanTheHeight()
     {
         var sf = new Surface(_cursesMock.Object, new(1));
-        
+
         _cursesMock.Setup(s => s.is_scrollok(sf.Handle))
                    .Returns(true);
+
         _cursesMock.Setup(s => s.getmaxy(sf.Handle))
                    .Returns(10);
-        
+
         sf.ScrollDown(11);
-        
+
         _cursesMock.Verify(s => s.wscrl(sf.Handle, -10));
     }
 
@@ -698,7 +699,7 @@ public class SurfaceTests
     {
         var sf = new Surface(_cursesMock.Object, new(1));
         sf.InsertEmptyLines(0);
-        
+
         _cursesMock.Verify(s => s.winsdelln(It.IsAny<IntPtr>(), It.IsAny<int>()), Times.Never);
     }
 
@@ -789,8 +790,9 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
 
         s.DrawVerticalLine(0, new('a'), Style.Default);
-        
-        _cursesMock.Verify(v => v.wvline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()), Times.Never);
+
+        _cursesMock.Verify(v => v.wvline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()),
+            Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -823,7 +825,7 @@ public class SurfaceTests
     {
         var s = new Surface(_cursesMock.Object, new(1));
         s.DrawVerticalLine(0);
-        
+
         _cursesMock.Verify(v => v.wvline(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<int>()), Times.Never);
     }
 
@@ -852,8 +854,9 @@ public class SurfaceTests
     {
         var s = new Surface(_cursesMock.Object, new(1));
         s.DrawHorizontalLine(0, new('a'), Style.Default);
-        
-        _cursesMock.Verify(v => v.whline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()), Times.Never);
+
+        _cursesMock.Verify(v => v.whline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()),
+            Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -886,7 +889,7 @@ public class SurfaceTests
     {
         var s = new Surface(_cursesMock.Object, new(1));
         s.DrawHorizontalLine(0);
-        
+
         _cursesMock.Verify(v => v.whline(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<int>()), Times.Never);
     }
 
@@ -969,8 +972,9 @@ public class SurfaceTests
     public void LineDirty_DoesNothing_IfYIsNegative()
     {
         var sf = new Surface(_cursesMock.Object, new(1));
-        sf.LineDirty(-1).ShouldBeFalse();
-        
+        sf.LineDirty(-1)
+          .ShouldBeFalse();
+
         _cursesMock.Verify(s => s.is_linetouched(It.IsAny<IntPtr>(), It.IsAny<int>()), Times.Never);
     }
 
@@ -987,14 +991,15 @@ public class SurfaceTests
         s.LineDirty(1)
          .ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void MarkDirty1_DoesNothing_IfCountIsNegative()
     {
         var s = new Surface(_cursesMock.Object, new(1));
         s.MarkDirty(0, -1);
-        
-        _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+
+        _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
+            Times.Never);
     }
 
     [TestMethod]
@@ -1168,7 +1173,7 @@ public class SurfaceTests
     {
         var s = new Surface(_cursesMock.Object, new(1));
         s.RemoveText(0);
-        
+
         _cursesMock.Verify(v => v.wdelch(It.IsAny<IntPtr>()), Times.Never);
     }
 
@@ -1446,7 +1451,7 @@ public class SurfaceTests
             v => v.copywin(It.IsAny<IntPtr>(), It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                 It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
-    
+
     [TestMethod]
     public void Replace2_CopiesAdjustedArea()
     {
@@ -1458,10 +1463,10 @@ public class SurfaceTests
 
         s1.Replace(s2, new(3, 4, 5, 5), new(5, 5), ReplaceStrategy.Overlay);
 
-        _cursesMock.Verify(
-            v => v.copywin(s1.Handle, s2.Handle, 4, 3, 5, 5, 9, 9, 1), Times.Once);
+        _cursesMock.Verify(v => v.copywin(s1.Handle, s2.Handle, 4, 3, 5,
+            5, 9, 9, 1), Times.Once);
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Replace2_Throws_IfCursesFails()
     {
@@ -1633,7 +1638,7 @@ public class SurfaceTests
         sw.IsRectangleWithin(new(x, y, w, h))
           .ShouldBe(exp);
     }
-    
+
     [TestMethod]
     public void Destroy_CallsCurses()
     {

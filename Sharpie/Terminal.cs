@@ -664,10 +664,7 @@ public sealed class Terminal: ITerminal, IDisposable
         public bool Stopped;
         public Timer? Timer;
 
-        public void Dispose()
-        {
-            Stopped = true;
-        }
+        public void Dispose() { Stopped = true; }
     }
 
     private sealed class ActionWrapper
