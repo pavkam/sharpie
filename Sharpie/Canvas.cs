@@ -582,17 +582,14 @@ public sealed class Canvas: IDrawable, IDrawSurface
             return;
         }
 
-        for (var x = srcArea.X; x < srcArea.Right; x++)
+        for (var x = srcArea.X; x < destArea.Width; x++)
         {
-            for (var y = srcArea.Y; y < srcArea.Bottom; y++)
+            for (var y = srcArea.Y; y < destArea.Height; y++)
             {
-                if (_cells[x, y]
-                    .Rune.Value !=
-                    0)
+                var cell = _cells[x, y];
+                if (cell.Rune.Value != 0)
                 {
-                    destination.DrawCell(new(x + destLocation.X, y + destLocation.Y), _cells[x, y]
-                        .Rune, _cells[x, y]
-                        .Style);
+                    destination.DrawCell(new(x + destLocation.X, y + destLocation.Y), cell.Rune, cell.Style);
                 }
             }
         }

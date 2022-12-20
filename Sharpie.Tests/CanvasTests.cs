@@ -91,15 +91,21 @@ public class CanvasTests
     }
 
     [TestMethod]
-    public void DrawOnto_DrawsOntoSurface_TheIntersection()
+    public void DrawOnto_DrawsTheAdjustedArea()
     {
         _drawSurfaceMock.Setup(s => s.Size)
                         .Returns(new Size(10, 10));
 
-        _canvas1X1.Glyph(new(0, 0), new('A'), _style1);
-        _canvas1X1.DrawOnto(_drawSurfaceMock.Object, new(0, 0, 2, 2), new(9, 9));
+        _canvas2X2.Glyph(new(0, 0), new('A'), _style1);
+        _canvas2X2.Glyph(new(1, 0), new('B'), _style1);
+        _canvas2X2.Glyph(new(0, 1), new('C'), _style1);
+        _canvas2X2.Glyph(new(1, 1), new('D'), _style1);
+        
+        _canvas2X2.DrawOnto(_drawSurfaceMock.Object, new(0, 0, 2, 2), new(9, 8));
 
-        _drawSurfaceMock.Verify(v => v.DrawCell(new(9, 9), new('A'), _style1), Times.Once);
+        _drawSurfaceMock.Verify(v => v.DrawCell(new(9, 8), new('A'), _style1), Times.Once);
+        _drawSurfaceMock.Verify(v => v.DrawCell(new(9, 9), new('C'), _style1), Times.Once);
+        _drawSurfaceMock.Verify(v => v.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()), Times.Exactly(2));
     }
 
     [TestMethod]

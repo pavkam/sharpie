@@ -1539,31 +1539,36 @@ public class SurfaceTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawCell_Throws_IfCursesFails_1()
     {
-        IDrawSurface p = new Surface(_cursesMock.Object, new(1));
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
+        
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => p.DrawCell(new(1, 1), new('A'), Style.Default))
+        Should.Throw<CursesOperationException>(() => ((IDrawSurface)sf).DrawCell(new(1, 1), new('A'), Style.Default))
               .Operation.ShouldBe("wmove");
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawCell_Throws_IfCursesFails_2()
     {
-        IDrawSurface p = new Surface(_cursesMock.Object, new(1));
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
+        
         _cursesMock.Setup(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => p.DrawCell(new(1, 1), new('A'), Style.Default))
+        Should.Throw<CursesOperationException>(() => ((IDrawSurface)sf).DrawCell(new(1, 1), new('A'), Style.Default))
               .Operation.ShouldBe("wadd_wch");
     }
 
     [TestMethod]
     public void DrawCell_CallsCurses()
     {
-        IDrawSurface p = new Surface(_cursesMock.Object, new(1));
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
 
-        p.DrawCell(new(3, 4), new('A'), Style.Default);
+        ((IDrawSurface)sf).DrawCell(new(3, 4), new('A'), Style.Default);
 
         _cursesMock.Verify(s => s.wmove(new(1), 4, 3), Times.Once);
         _cursesMock.Verify(s => s.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Once);
