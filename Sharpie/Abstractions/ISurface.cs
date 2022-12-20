@@ -101,7 +101,7 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    Size Size { get; }
+    new Size Size { get; }
 
     /// <summary>
     ///     Gets or sets the current position of the caret within the surface.
