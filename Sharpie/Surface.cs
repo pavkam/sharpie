@@ -251,6 +251,11 @@ public abstract class Surface: ISurface, IDisposable
     {
         AssertSynchronized();
 
+        if (!IsPointWithin(location))
+        {
+            return;
+        }
+        
         Curses.wmove(Handle, location.Y, location.X)
               .Check(nameof(Curses.wmove), "Failed to move the caret to the given coordinates.");
 

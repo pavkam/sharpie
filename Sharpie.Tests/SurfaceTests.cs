@@ -1558,7 +1558,7 @@ public class SurfaceTests
               .Operation.ShouldBe("wadd_wch");
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestMethod]
     public void DrawCell_CallsCurses()
     {
         IDrawSurface p = new Surface(_cursesMock.Object, new(1));
@@ -1567,6 +1567,18 @@ public class SurfaceTests
 
         _cursesMock.Verify(s => s.wmove(new(1), 4, 3), Times.Once);
         _cursesMock.Verify(s => s.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Once);
+    }
+    
+    [TestMethod]
+    public void DrawCell_DoesNothing_IfLocationOutsideBounds()
+    {
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
+        
+        ((IDrawSurface)sf).DrawCell(new(6, 6), new('A'), Style.Default);
+
+        _cursesMock.Verify(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        _cursesMock.Verify(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()), Times.Never);
     }
 
     [TestMethod]
