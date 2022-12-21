@@ -7,38 +7,41 @@ using System.Reflection;
 [PublicAPI]
 internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, IDisposable
 {
-    private sealed class SystemInteropAdapter: ISystemInteropAdapter
-    {
-        public bool TryLoad(string libraryName, Assembly assembly, DllImportSearchPath? searchPath,
-            out IntPtr handle) =>
-            NativeLibrary.TryLoad(libraryName, assembly, searchPath, out handle);
-
-        public bool TryLoad(string libraryPath, out IntPtr handle) => NativeLibrary.TryLoad(libraryPath, out handle);
-
-        public bool TryGetExport(IntPtr handle, string name, out IntPtr address) =>
-            NativeLibrary.TryGetExport(handle, name, out address);
-
-        public void Free(IntPtr handle) => NativeLibrary.Free(handle);
-
-        public Delegate GetDelegateForFunctionPointer(IntPtr ptr, Type t) =>
-            Marshal.GetDelegateForFunctionPointer(ptr, t);
-    }
-
-    private static readonly SystemInteropAdapter Adapter = new();
+    internal static readonly ISystemInteropAdapter Adapter = new SystemInteropAdapter();
 
     private readonly ISystemInteropAdapter _interopAdapter;
-    private IntPtr _libraryHandle;
     private readonly IReadOnlyDictionary<Type, Delegate> _methodTable;
+    private IntPtr _libraryHandle;
 
-    private NativeLibraryWrapper(ISystemInteropAdapter interopAdapter, IntPtr libraryHandle)
+    internal NativeLibraryWrapper(ISystemInteropAdapter interopAdapter, IntPtr libraryHandle)
     {
-        Debug.Assert(interopAdapter != null);
-        Debug.Assert(libraryHandle != IntPtr.Zero);
-
-        _interopAdapter = interopAdapter;
+        _interopAdapter = interopAdapter ?? throw new ArgumentNullException(nameof(interopAdapter));
         _libraryHandle = libraryHandle;
 
         _methodTable = GetExportedMethodTable();
+    }
+
+    public void Dispose()
+    {
+        if (_libraryHandle != IntPtr.Zero)
+        {
+            var h = Interlocked.Exchange(ref _libraryHandle, IntPtr.Zero);
+            if (h != IntPtr.Zero)
+            {
+                _interopAdapter.Free(_libraryHandle);
+                GC.SuppressFinalize(this);
+            }
+        }
+    }
+
+    public TDelegate Resolve<TDelegate>() where TDelegate: MulticastDelegate
+    {
+        if (!_methodTable.TryGetValue(typeof(TDelegate), out var r))
+        {
+            throw new MissingMethodException($"The function of type {typeof(TDelegate).Name} is has not been loaded.");
+        }
+
+        return (TDelegate) r;
     }
 
     private static NativeLibraryWrapper<TFunctions>? TryLoad(ISystemInteropAdapter interopAdapter,
@@ -59,7 +62,7 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
         return null;
     }
 
-    internal static NativeLibraryWrapper<TFunctions>? TryLoad(ISystemInteropAdapter interopAdapter,
+    public static NativeLibraryWrapper<TFunctions>? TryLoad(ISystemInteropAdapter interopAdapter,
         IEnumerable<string> libraryNameOrPaths)
     {
         if (interopAdapter == null)
@@ -76,6 +79,7 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
                                  .FirstOrDefault(r => r != null);
     }
 
+    [ExcludeFromCodeCoverage(Justification = "Forwards the call using .NET static code.")]
     public static NativeLibraryWrapper<TFunctions>? TryLoad(IEnumerable<string> libraryNameOrPaths) =>
         TryLoad(Adapter, libraryNameOrPaths);
 
@@ -99,7 +103,8 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
         return typeof(TFunctions).GetTypeInfo()
                                  .DeclaredMembers.Where(m => m.MemberType == MemberTypes.NestedType)
                                  .Select(s => (TypeInfo) s)
-                                 .Where(t => !t.IsGenericType && t.BaseType == typeof(MulticastDelegate) && 
+                                 .Where(t => !t.IsGenericType &&
+                                     t.BaseType == typeof(MulticastDelegate) &&
                                      t.GetCustomAttribute<UnmanagedFunctionPointerAttribute>() != null)
                                  .ToArray();
     }
@@ -110,28 +115,23 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
             .ToDictionary(import => import.AsType(), import => GetExportedMethod(import.Name, import));
     }
 
-    public TDelegate Resolve<TDelegate>() where TDelegate: MulticastDelegate
-    {
-        if (!_methodTable.TryGetValue(typeof(TDelegate), out var r))
-        {
-            throw new MissingMethodException($"The function of type {typeof(TDelegate).Name} is has not been loaded.");
-        }
-
-        return (TDelegate) r;
-    }
-
-    public void Dispose()
-    {
-        if (_libraryHandle != IntPtr.Zero)
-        {
-            var h = Interlocked.Exchange(ref _libraryHandle, IntPtr.Zero);
-            if (h != IntPtr.Zero)
-            {
-                _interopAdapter.Free(_libraryHandle);
-                GC.SuppressFinalize(this);
-            }
-        }
-    }
-
     ~NativeLibraryWrapper() { Dispose(); }
+
+    [ExcludeFromCodeCoverage(Justification = "Marshals all calls to .NET static code.")]
+    private sealed class SystemInteropAdapter: ISystemInteropAdapter
+    {
+        public bool TryLoad(string libraryName, Assembly assembly, DllImportSearchPath? searchPath,
+            out IntPtr handle) =>
+            NativeLibrary.TryLoad(libraryName, assembly, searchPath, out handle);
+
+        public bool TryLoad(string libraryPath, out IntPtr handle) => NativeLibrary.TryLoad(libraryPath, out handle);
+
+        public bool TryGetExport(IntPtr handle, string name, out IntPtr address) =>
+            NativeLibrary.TryGetExport(handle, name, out address);
+
+        public void Free(IntPtr handle) => NativeLibrary.Free(handle);
+
+        public Delegate GetDelegateForFunctionPointer(IntPtr ptr, Type t) =>
+            Marshal.GetDelegateForFunctionPointer(ptr, t);
+    }
 }

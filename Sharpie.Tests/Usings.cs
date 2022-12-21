@@ -38,4 +38,4 @@ global using Sharpie.Abstractions;
 global using Sharpie.Backend;
 global using JetBrains.Annotations;
 
-[assembly: ExcludeFromCodeCoverage]
+[assembly: ExcludeFromCodeCoverage(Justification = "Not part of the library.")]
