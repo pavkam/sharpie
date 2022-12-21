@@ -154,8 +154,6 @@ public interface ICursesProvider
 
     IntPtr wgetparent(IntPtr window);
 
-    int wgetdelay(IntPtr window);
-
     int wgetscrreg(IntPtr window, out int top, out int bottom);
 
     string? keyname(uint keyCode);

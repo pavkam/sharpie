@@ -2,13 +2,9 @@
 
 namespace Sharpie.Backend;
 
-using System.Reflection;
-
-[SuppressMessage("ReSharper", "IdentifierTypo"), SuppressMessage("ReSharper", "InconsistentNaming")]
-public class NCursesLibraryLoader
+[SuppressMessage("ReSharper", "IdentifierTypo"),SuppressMessage("ReSharper", "InconsistentNaming")]
+internal abstract class CursesFunctionMap
 {
-    private readonly NativeLibrary _library;
-
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int baudrate();
 
@@ -62,9 +58,6 @@ public class NCursesLibraryLoader
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int endwin();
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public delegate char erasechar();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void filter();
@@ -122,9 +115,6 @@ public class NCursesLibraryLoader
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int keypad(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public delegate char killchar();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int leaveok(IntPtr window, bool set);
@@ -273,9 +263,6 @@ public class NCursesLibraryLoader
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int syncok(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate uint termattrs();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate IntPtr termname();
@@ -508,9 +495,6 @@ public class NCursesLibraryLoader
     public delegate int wins_wch(IntPtr window, ref CursesComplexChar @char);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int winwstr(IntPtr window, string text);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate IntPtr wunctrl(ref CursesComplexChar @char);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -611,37 +595,4 @@ public class NCursesLibraryLoader
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public delegate int setlocale(int cate, [MarshalAs(UnmanagedType.LPStr)] string locale);
-    
-    public NCursesLibraryLoader(NativeLibrary library) => _library = library ?? throw new ArgumentNullException(nameof(library));
-
-    protected abstract Delegate GetExport(string name, Type type);
-    
-    public IReadOnlyDictionary<Type, Delegate> MethodTable
-    {
-        get
-        {
-            var table = new Dictionary<Type, Delegate>();
-
-            if (NativeLibrary.TryLoad("ncurses", Assembly.GetCallingAssembly(), null, out var libHandle))
-            {
-                var t = GetType()
-                    .GetTypeInfo();
-
-                var ds = t.DeclaredMembers.Where(m => m.MemberType == MemberTypes.NestedType)
-                          .Select(s => (TypeInfo) s)
-                          .Where(t => !t.IsGenericType && t.BaseType == typeof(MulticastDelegate))
-                          .ToArray();
-
-                foreach (var import in ds)
-                {
-                    var fh = NativeLibrary.GetExport(libHandle, import.Name);
-                    var k = Marshal.GetDelegateForFunctionPointer(fh, import);
-                    table.Add(import, k);
-                }
-            }
-        }
-    }
 }

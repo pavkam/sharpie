@@ -35,7 +35,7 @@ using Sharpie.Backend;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance.
-using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: CaretMode.Invisible));
+using var terminal = new Terminal(NativeCursesProvider.Load(), new(CaretMode: CaretMode.Invisible));
 
 // Prepare styles
 var styles = Enum.GetValues<StandardColor>()

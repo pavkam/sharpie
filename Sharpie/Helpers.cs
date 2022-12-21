@@ -103,35 +103,6 @@ public static class Helpers
     }
 
     /// <summary>
-    ///     Checks that a given Curses backend is valid.
-    /// </summary>
-    /// <param name="curses">The Curses backend.</param>
-    /// <returns>Returns <paramref name="curses" /> if it's valid. <c>null</c> otherwise.</returns>
-    /// <exception cref="ArgumentNullException">When <paramref name="curses" /> is <c>null</c>.</exception>
-    internal static ICursesProvider? ValidOrNull(this ICursesProvider curses)
-    {
-        if (curses == null)
-        {
-            throw new ArgumentNullException(nameof(curses));
-        }
-
-        try
-        {
-            curses.termname();
-        } catch (Exception e)
-        {
-            if (e is DllNotFoundException or EntryPointNotFoundException)
-            {
-                return null;
-            }
-
-            throw;
-        }
-
-        return curses;
-    }
-
-    /// <summary>
     ///     Converts a given rune to a complex character.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
@@ -559,7 +530,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Intersects the given <see cref="area"/> with the total area of a surface and returns the intersection.
+    /// Intersects the given <paramref name="area"/> with the total area of a surface and returns the intersection.
     /// </summary>
     /// <param name="size">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
@@ -568,7 +539,7 @@ public static class Helpers
         new Rectangle(new(0, 0), size).AdjustToActualArea(ref area);
 
     /// <summary>
-    /// Intersects the given <see cref="area"/> with the total area of a surface and returns the intersection.
+    /// Intersects the given <paramref name="area"/> with the total area of a surface and returns the intersection.
     /// </summary>
     /// <param name="total">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
@@ -582,7 +553,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Intersects the given <see cref="area"/> with the total area of a surface and returns the intersection.
+    /// Intersects the given <paramref name="area"/> with the total area of a surface and returns the intersection.
     /// </summary>
     /// <param name="size">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
