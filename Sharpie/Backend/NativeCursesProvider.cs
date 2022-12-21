@@ -1161,7 +1161,7 @@ public sealed class NativeCursesProvider: ICursesProvider, IDisposable
     private static extern bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
 
     [DllImport(LibCLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    private static extern int setlocale(int cate, string locale);
+    private static extern int setlocale(int cate, [MarshalAs(UnmanagedType.LPStr)] string locale);
 
     ~NativeCursesProvider() { Dispose(); }
 }
