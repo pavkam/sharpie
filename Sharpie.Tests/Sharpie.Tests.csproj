@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/pavkam/sharpie.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <AssemblyName>sharpie-tests</AssemblyName>
-        <LangVersion>11</LangVersion>
+        <LangVersion>10</LangVersion>
         <PackageVersion>1.4.2</PackageVersion>
         <AssemblyVersion>1.4.2</AssemblyVersion>
         <FileVersion>1.4.2</FileVersion>

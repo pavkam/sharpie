@@ -6,7 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>sharpie-demos-bounce</AssemblyName>
-        <LangVersion>11</LangVersion>
+        <LangVersion>10</LangVersion>
         <IsPackable>false</IsPackable>
         <Title>A Curses-based terminal manipulation library.</Title>
         <Description>Demo application for Sharpie library.</Description>

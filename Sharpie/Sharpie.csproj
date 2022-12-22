@@ -19,7 +19,7 @@
         <FileVersion>1.4.2</FileVersion>
         <PackageId>Sharpie-Curses</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
-        <LangVersion>11</LangVersion>
+        <LangVersion>10</LangVersion>
         <Authors>Alexandru Ciobanu</Authors>
         <Product>Sharpie</Product>
     </PropertyGroup>
