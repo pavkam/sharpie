@@ -33,6 +33,7 @@ namespace Sharpie.Tests;
 using System.Runtime.InteropServices;
 
 [TestClass]
+[SuppressMessage("ReSharper", "IdentifierTypo")]
 public class NCursesBackendTests
 {
     private Mock<IDotNetSystemAdapter> _dotNetSystemAdapterMock = null!;
@@ -676,7 +677,7 @@ public class NCursesBackendTests
     public void use_env_IsRelayedToLibrary(bool yes)
     {
         var called = false;
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.use_env>().Setup(s => s(yes)).Callback((IntPtr _,bool _) =>
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.use_env>().Setup(s => s(yes)).Callback((bool _) =>
         {
             called = true;
         });
@@ -935,10 +936,10 @@ public class NCursesBackendTests
         _backend.slk_attrset(i).ShouldBe(ret);
     }
     
-    [TestMethod, DataRow(0u), DataRow(-1u)]
+    [TestMethod, DataRow(0u), DataRow(99u)]
     public void COLOR_PAIR_IsRelayedToLibrary(uint ret)
     {
-        const uint i = 999U;
+        const uint i = 999u;
         
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.COLOR_PAIR, uint>(
             s => s(i), ret);
@@ -946,10 +947,10 @@ public class NCursesBackendTests
         _backend.COLOR_PAIR(i).ShouldBe(ret);
     }
     
-    [TestMethod, DataRow(0u), DataRow(-1u)]
+    [TestMethod, DataRow(0u), DataRow(99u)]
     public void PAIR_NUMBER_IsRelayedToLibrary(uint ret)
     {
-        const uint i = 999U;
+        const uint i = 999u;
         
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.PAIR_NUMBER, uint>(
             s => s(i), ret);
@@ -1980,7 +1981,7 @@ public class NCursesBackendTests
     {
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetscrreg>()
                                  .Setup(s => s(new (1), out It.Ref<int>.IsAny, out It.Ref<int>.IsAny))
-                                 .Returns((IntPtr _, out uint t, out uint b) =>
+                                 .Returns((IntPtr _, out int t, out int b) =>
                                  {
                                      t = 99;
                                      b = 299;
@@ -2076,7 +2077,7 @@ public class NCursesBackendTests
                                  .Returns((IntPtr _, ref int l, ref int c, bool _) =>
                                  {
                                      l.ShouldBe(1);
-                                     c.ShouldBe(1);
+                                     c.ShouldBe(2);
 
                                      l = 3;
                                      c = 4;
@@ -2105,7 +2106,7 @@ public class NCursesBackendTests
                                      return ret;
                                  });
 
-        _backend.setcchar(out var ch, "text", 20, 30, new (2)).ShouldBe(ret);
+        _backend.setcchar(out var ch, "text", 10, 20, new (2)).ShouldBe(ret);
         ch.ShouldBe(exp);
     }
     
@@ -2127,4 +2128,26 @@ public class NCursesBackendTests
         attrs.ShouldBe(1u);
         ((int)pair).ShouldBe(2);
     }
+    
+    
+    [TestMethod]
+    public void set_unicode_locale_DoesNothing()
+    {
+        _backend.set_unicode_locale();
+
+        _dotNetSystemAdapterMock.VerifyNoOtherCalls();
+        _nativeSymbolResolverMock.VerifyNoOtherCalls();
+    }
+
+    [TestMethod]
+    public void monitor_pending_resize_DoesNothing()
+    {
+        _backend.monitor_pending_resize(() => { }, out var d)
+                .ShouldBe(false);
+        d.ShouldBeNull();
+
+        _dotNetSystemAdapterMock.VerifyNoOtherCalls();
+        _nativeSymbolResolverMock.VerifyNoOtherCalls();
+    }
+
 }
