@@ -39,7 +39,7 @@ public class NCursesBackendTests
     private Mock<INativeSymbolResolver> _nativeSymbolResolverMock = null!;
     private NCursesBackend _backend = null!;
 
-    private static CursesComplexChar MakeTestComplexChar(int x) => new CursesComplexChar(x, x, x, x, x, x);
+    private static CursesComplexChar MakeTestComplexChar(uint x) => new CursesComplexChar(x, x, x, x, x, x);
 
     [TestInitialize]
     public void TestInitialize()
@@ -2047,5 +2047,84 @@ public class NCursesBackendTests
         _backend.mousemask(1, out var old).ShouldBe(ret);
         
         old.ShouldBe(11);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wattr_get_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wattr_get>()
+                                 .Setup(s => s(new(1), out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, new(2)))
+                                 .Returns((IntPtr _, out uint a, out short cp, IntPtr _) =>
+                                 {
+                                     a = 11;
+                                     cp = 22;
+                                     return ret;
+                                 });
+
+
+        _backend.wattr_get(new(1), out var attrs, out var colorPair, new(2)).ShouldBe(ret);
+        
+        attrs.ShouldBe(11u);
+        ((int)colorPair).ShouldBe(22);
+    }
+    
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void wmouse_trafo_IsRelayedToLibrary(bool ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wmouse_trafo>()
+                                 .Setup(s => s(new(1), ref It.Ref<int>.IsAny, ref It.Ref<int>.IsAny, true))
+                                 .Returns((IntPtr _, ref int l, ref int c, bool _) =>
+                                 {
+                                     l.ShouldBe(1);
+                                     c.ShouldBe(1);
+
+                                     l = 3;
+                                     c = 4;
+                                     return ret;
+                                 });
+
+        var line = 1;
+        var col = 2;
+
+        _backend.wmouse_trafo(new(1), ref line, ref col, true).ShouldBe(ret);
+        
+        line.ShouldBe(3);
+        col.ShouldBe(4);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void setcchar_IsRelayedToLibrary(int ret)
+    {
+        var exp = MakeTestComplexChar(1);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.setcchar>()
+                                 .Setup(s => s(out It.Ref<CursesComplexChar>.IsAny, "text", 10, 20, new(2)))
+                                 .Returns((out CursesComplexChar o, string _, uint _,
+                                     short _, IntPtr _) =>
+                                 {
+                                     o = exp;
+                                     return ret;
+                                 });
+
+        _backend.setcchar(out var ch, "text", 20, 30, new (2)).ShouldBe(ret);
+        ch.ShouldBe(exp);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void getcchar_IsRelayedToLibrary(int ret)
+    {
+        var sb = new StringBuilder();
+        var ch = MakeTestComplexChar(1);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getcchar>()
+                                 .Setup(s => s(ref ch, sb, out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, new(2)))
+                                 .Returns((ref CursesComplexChar _, StringBuilder _, out uint a, out short cp, IntPtr _) =>
+                                 {
+                                     a = 1;
+                                     cp = 2;
+                                     return ret;
+                                 });
+
+        _backend.getcchar(ch, sb, out var attrs, out var pair, new (2)).ShouldBe(ret);
+        attrs.ShouldBe(1u);
+        ((int)pair).ShouldBe(2);
     }
 }
