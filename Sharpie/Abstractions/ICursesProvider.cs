@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Interface provides access to the Curses functionality. Use the <see cref="NativeCursesProvider" /> property to
+///     Interface provides access to the Curses functionality. Use the <see cref="NCursesBackend" /> property to
 ///     access the actual
 ///     implementation.
 /// </summary>

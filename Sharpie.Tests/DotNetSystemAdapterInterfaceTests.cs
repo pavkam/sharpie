@@ -31,12 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Tests;
 
 [TestClass]
-public class CursesInitializationExceptionTests
+public class DotNetSystemAdapterInterfaceTests
 {
-    [TestMethod]
-    public void HasTheCorrectMessage()
-    {
-        var ex = new CursesInitializationException();
-        ex.Message.ShouldBe("Failed to load or initialize the Curses backend.");
-    }
+    [TestMethod] public void Instance_IsNotNull() { IDotNetSystemAdapter.Instance.ShouldNotBeNull(); }
 }

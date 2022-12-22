@@ -1,26 +1,68 @@
-#pragma warning disable CS1591
+/*
+Copyright (c) 2022, Alexandru Ciobanu
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 namespace Sharpie.Backend;
 
-using System.Reflection;
-
+/// <summary>
+///     Provides functionality to load native libraries and quickly extract the needed symbols.
+/// </summary>
+/// <typeparam name="TFunctions">
+///     The type of class that contains delegate definitions for extracted symbols. Each delegate inside this class
+///     represents a function in the library and is expected to have the same name.
+/// </typeparam>
 [PublicAPI]
 internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, IDisposable
 {
-    internal static readonly ISystemInteropAdapter Adapter = new SystemInteropAdapter();
-
-    private readonly ISystemInteropAdapter _interopAdapter;
+    private readonly IDotNetSystemAdapter _dotNetSystemAdapter;
     private readonly IReadOnlyDictionary<Type, Delegate> _methodTable;
     private IntPtr _libraryHandle;
 
-    internal NativeLibraryWrapper(ISystemInteropAdapter interopAdapter, IntPtr libraryHandle)
+    /// <summary>
+    ///     Creates a new instance of this class and extracts all required symbols.
+    /// </summary>
+    /// <param name="dotNetSystemAdapter">Adapter for .NET functionality.</param>
+    /// <param name="libraryHandle">The handle of the native library.</param>
+    /// <exception cref="MissingMethodException">Thrown if one or more function are not found in the library.</exception>
+    internal NativeLibraryWrapper(IDotNetSystemAdapter dotNetSystemAdapter, IntPtr libraryHandle)
     {
-        _interopAdapter = interopAdapter ?? throw new ArgumentNullException(nameof(interopAdapter));
+        Debug.Assert(dotNetSystemAdapter != null);
+
+        _dotNetSystemAdapter = dotNetSystemAdapter;
         _libraryHandle = libraryHandle;
 
         _methodTable = GetExportedMethodTable();
     }
 
+    /// <summary>
+    ///     Disposes of the library and unloads it.
+    /// </summary>
     public void Dispose()
     {
         if (_libraryHandle != IntPtr.Zero)
@@ -28,12 +70,18 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
             var h = Interlocked.Exchange(ref _libraryHandle, IntPtr.Zero);
             if (h != IntPtr.Zero)
             {
-                _interopAdapter.Free(_libraryHandle);
+                _dotNetSystemAdapter.FreeNativeLibrary(h);
                 GC.SuppressFinalize(this);
             }
         }
     }
 
+    /// <summary>
+    ///     Tries to resolve a given delegate type to the actual function exported by the library.
+    /// </summary>
+    /// <typeparam name="TDelegate">The type of the function to resolve.</typeparam>
+    /// <returns></returns>
+    /// <exception cref="MissingMethodException">Thrown if the requested function is not loaded from the library.</exception>
     public TDelegate Resolve<TDelegate>() where TDelegate: MulticastDelegate
     {
         if (!_methodTable.TryGetValue(typeof(TDelegate), out var r))
@@ -44,44 +92,36 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
         return (TDelegate) r;
     }
 
-    private static NativeLibraryWrapper<TFunctions>? TryLoad(ISystemInteropAdapter interopAdapter,
+    private static NativeLibraryWrapper<TFunctions>? TryLoad(IDotNetSystemAdapter dotNetSystemAdapter,
         string libraryNameOrPath)
     {
-        if (interopAdapter == null)
-        {
-            throw new ArgumentNullException(nameof(interopAdapter));
-        }
+        Debug.Assert(dotNetSystemAdapter != null);
 
         if (string.IsNullOrEmpty(Path.GetDirectoryName(libraryNameOrPath)) &&
-            interopAdapter.TryLoad(libraryNameOrPath, Assembly.GetCallingAssembly(), null, out var libHandle) ||
-            interopAdapter.TryLoad(libraryNameOrPath, out libHandle))
+            dotNetSystemAdapter.TryLoadNativeLibrary(libraryNameOrPath, Assembly.GetCallingAssembly(), null, out var libHandle) ||
+            dotNetSystemAdapter.TryLoadNativeLibrary(libraryNameOrPath, out libHandle))
         {
-            return new(interopAdapter, libHandle);
+            return new(dotNetSystemAdapter, libHandle);
         }
 
         return null;
     }
 
-    public static NativeLibraryWrapper<TFunctions>? TryLoad(ISystemInteropAdapter interopAdapter,
+    /// <summary>
+    ///     Tries to load a library using a list of potential candidate locations.
+    /// </summary>
+    /// <param name="dotNetSystemAdapter">Adapter for .NET functionality.</param>
+    /// <param name="libraryNameOrPaths">The list of library name/paths to try.</param>
+    /// <returns><c>null</c> is returned if the library could not be loaded; <c>true</c> otherwise.</returns>
+    public static NativeLibraryWrapper<TFunctions>? TryLoad(IDotNetSystemAdapter dotNetSystemAdapter,
         IEnumerable<string> libraryNameOrPaths)
     {
-        if (interopAdapter == null)
-        {
-            throw new ArgumentNullException(nameof(interopAdapter));
-        }
+        Debug.Assert(dotNetSystemAdapter != null);
+        Debug.Assert(libraryNameOrPaths != null);
 
-        if (libraryNameOrPaths == null)
-        {
-            throw new ArgumentNullException(nameof(libraryNameOrPaths));
-        }
-
-        return libraryNameOrPaths.Select(p => TryLoad(interopAdapter, p))
+        return libraryNameOrPaths.Select(p => TryLoad(dotNetSystemAdapter, p))
                                  .FirstOrDefault(r => r != null);
     }
-
-    [ExcludeFromCodeCoverage(Justification = "Forwards the call using .NET static code.")]
-    public static NativeLibraryWrapper<TFunctions>? TryLoad(IEnumerable<string> libraryNameOrPaths) =>
-        TryLoad(Adapter, libraryNameOrPaths);
 
     private Delegate GetExportedMethod(string name, Type delegateType)
     {
@@ -90,9 +130,9 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
             throw new ObjectDisposedException("This library has been unloaded.");
         }
 
-        if (_interopAdapter.TryGetExport(_libraryHandle, name, out var handle))
+        if (_dotNetSystemAdapter.TryGetNativeLibraryExport(_libraryHandle, name, out var handle))
         {
-            return _interopAdapter.GetDelegateForFunctionPointer(handle, delegateType);
+            return _dotNetSystemAdapter.NativeLibraryFunctionToDelegate(handle, delegateType);
         }
 
         throw new MissingMethodException($"Could not find {name} within the library.");
@@ -115,23 +155,8 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
             .ToDictionary(import => import.AsType(), import => GetExportedMethod(import.Name, import));
     }
 
+    /// <summary>
+    ///     Calls the <see cref="Dispose" /> method.
+    /// </summary>
     ~NativeLibraryWrapper() { Dispose(); }
-
-    [ExcludeFromCodeCoverage(Justification = "Marshals all calls to .NET static code.")]
-    private sealed class SystemInteropAdapter: ISystemInteropAdapter
-    {
-        public bool TryLoad(string libraryName, Assembly assembly, DllImportSearchPath? searchPath,
-            out IntPtr handle) =>
-            NativeLibrary.TryLoad(libraryName, assembly, searchPath, out handle);
-
-        public bool TryLoad(string libraryPath, out IntPtr handle) => NativeLibrary.TryLoad(libraryPath, out handle);
-
-        public bool TryGetExport(IntPtr handle, string name, out IntPtr address) =>
-            NativeLibrary.TryGetExport(handle, name, out address);
-
-        public void Free(IntPtr handle) => NativeLibrary.Free(handle);
-
-        public Delegate GetDelegateForFunctionPointer(IntPtr ptr, Type t) =>
-            Marshal.GetDelegateForFunctionPointer(ptr, t);
-    }
 }

@@ -36,163 +36,133 @@ using System.Runtime.InteropServices;
 [TestClass]
 public class NativeLibraryWrapperTests
 {
-    [SuppressMessage("ReSharper", "UnusedType.Local")]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    [SuppressMessage("ReSharper", "UnusedTypeParameter")]
-    [SuppressMessage("Performance", "CA1822:Mark members as static")]
-    private abstract class DummyFunctionMap
-    {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public delegate int Test1();
-
-        public delegate int Test2();
-
-        public void Test3() { }
-
-        public delegate int Test4<T>();
-    }
-
-    private Mock<ISystemInteropAdapter> _interopMock = null!;
+    private Mock<IDotNetSystemAdapter> _dotNetSystemAdapterMock = null!;
 
     [TestInitialize]
     public void TestInitialize()
     {
-        _interopMock = new();
+        _dotNetSystemAdapterMock = new();
 
-        _interopMock.Setup(s => s.TryGetExport(It.IsAny<IntPtr>(), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny))
-                    .Returns(true);
+        _dotNetSystemAdapterMock
+            .Setup(s => s.TryGetNativeLibraryExport(It.IsAny<IntPtr>(), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny))
+            .Returns(true);
 
-        _interopMock.Setup(s => s.GetDelegateForFunctionPointer(It.IsAny<IntPtr>(), It.IsAny<Type>()))
-                    .Returns(new DummyFunctionMap.Test1(() => 123));
-    }
-
-    [TestMethod] public void Adapter_IsNotNull() { NativeLibraryWrapper<DummyFunctionMap>.Adapter.ShouldNotBeNull(); }
-
-    [TestMethod]
-    public void TryLoad_Throws_IfInteropAdapterIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() =>
-            NativeLibraryWrapper<DummyFunctionMap>.TryLoad(null!, Array.Empty<string>()));
-    }
-
-    [TestMethod]
-    public void TryLoad_Throws_IfLibraryNameOrPathsIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() =>
-            NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_interopMock.Object, null!));
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryFunctionToDelegate(It.IsAny<IntPtr>(), It.IsAny<Type>()))
+                                .Returns(new DummyFunctionMap.Test1(() => 123));
     }
 
     [TestMethod]
     public void TryLoad_ReturnsNull_IfLibraryNameOrPathsIsEmpty()
     {
-        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_interopMock.Object, Array.Empty<string>())
+        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_dotNetSystemAdapterMock.Object, Array.Empty<string>())
                                               .ShouldBeNull();
     }
 
     [TestMethod]
     public void TryLoad_ReturnsNull_IfFailedToLoadAnything()
     {
-        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_interopMock.Object, new[] { "hello" })
+        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_dotNetSystemAdapterMock.Object, new[] { "hello" })
                                               .ShouldBeNull();
     }
 
     [TestMethod]
     public void TryLoad_TriesToLoadByName_IfHasNoDirectory_ThenByPath()
     {
-        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_interopMock.Object, new[] { "hello" });
+        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_dotNetSystemAdapterMock.Object, new[] { "hello" });
 
-        _interopMock.Verify(v => v.TryLoad("hello", It.IsNotNull<Assembly>(), null, out It.Ref<IntPtr>.IsAny),
-            Times.Once);
+        _dotNetSystemAdapterMock.Verify(
+            v => v.TryLoadNativeLibrary("hello", It.IsNotNull<Assembly>(), null, out It.Ref<IntPtr>.IsAny), Times.Once);
 
-        _interopMock.Verify(v => v.TryLoad("hello", out It.Ref<IntPtr>.IsAny), Times.Once);
+        _dotNetSystemAdapterMock.Verify(v => v.TryLoadNativeLibrary("hello", out It.Ref<IntPtr>.IsAny), Times.Once);
     }
 
     [TestMethod]
     public void TryLoad_TriesToLoadByPath_IfHasDirectory()
     {
-        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_interopMock.Object, new[] { "hello/world" });
+        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_dotNetSystemAdapterMock.Object, new[] { "hello/world" });
 
-        _interopMock.Verify(
-            v => v.TryLoad(It.IsAny<string>(), It.IsNotNull<Assembly>(), It.IsAny<DllImportSearchPath?>(),
+        _dotNetSystemAdapterMock.Verify(
+            v => v.TryLoadNativeLibrary(It.IsAny<string>(), It.IsNotNull<Assembly>(), It.IsAny<DllImportSearchPath?>(),
                 out It.Ref<IntPtr>.IsAny), Times.Never);
 
-        _interopMock.Verify(v => v.TryLoad("hello/world", out It.Ref<IntPtr>.IsAny), Times.Once);
+        _dotNetSystemAdapterMock.Verify(v => v.TryLoadNativeLibrary("hello/world", out It.Ref<IntPtr>.IsAny),
+            Times.Once);
     }
 
     [TestMethod]
     public void TryLoad_ReturnsAnInstance_IfLoadedByName()
     {
-        _interopMock.Setup(s => s.TryLoad(It.IsAny<string>(), It.IsAny<Assembly>(), It.IsAny<DllImportSearchPath?>(),
-                        out It.Ref<IntPtr>.IsAny))
-                    .Returns((string _, Assembly _, DllImportSearchPath? _, out IntPtr handle) =>
-                    {
-                        handle = new(1);
-                        return true;
-                    });
+        _dotNetSystemAdapterMock.Setup(s => s.TryLoadNativeLibrary(It.IsAny<string>(), It.IsAny<Assembly>(),
+                                    It.IsAny<DllImportSearchPath?>(), out It.Ref<IntPtr>.IsAny))
+                                .Returns((string _, Assembly _, DllImportSearchPath? _, out IntPtr handle) =>
+                                {
+                                    handle = new(1);
+                                    return true;
+                                });
 
-        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_interopMock.Object, new[] { "hello" })
+        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_dotNetSystemAdapterMock.Object, new[] { "hello" })
                                               .ShouldNotBeNull();
     }
 
     [TestMethod]
     public void TryLoad_ReturnsAnInstance_IfLoadedByPath()
     {
-        _interopMock.Setup(s => s.TryLoad(It.IsAny<string>(), out It.Ref<IntPtr>.IsAny))
-                    .Returns((string _, out IntPtr handle) =>
-                    {
-                        handle = new(1);
-                        return true;
-                    });
+        _dotNetSystemAdapterMock.Setup(s => s.TryLoadNativeLibrary(It.IsAny<string>(), out It.Ref<IntPtr>.IsAny))
+                                .Returns((string _, out IntPtr handle) =>
+                                {
+                                    handle = new(1);
+                                    return true;
+                                });
 
-        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_interopMock.Object, new[] { "hello/world" })
+        NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_dotNetSystemAdapterMock.Object, new[] { "hello/world" })
                                               .ShouldNotBeNull();
-    }
-
-    [TestMethod]
-    public void Ctor_Throws_IfInteropAdapter_IsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => new NativeLibraryWrapper<DummyFunctionMap>(null!, new(100)));
     }
 
     [TestMethod]
     public void Ctor_StoresTheHandleValue()
     {
-        new NativeLibraryWrapper<DummyFunctionMap>(_interopMock.Object, new(100)).ShouldNotBeNull();
+        new NativeLibraryWrapper<DummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100)).ShouldNotBeNull();
 
-        _interopMock.Verify(v => v.TryGetExport(new(100), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny));
+        _dotNetSystemAdapterMock.Verify(v =>
+            v.TryGetNativeLibraryExport(new(100), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny));
     }
 
     [TestMethod]
     public void Ctor_ExtractsOnlyTheSupportedSymbols()
     {
-        _interopMock.Setup(s => s.TryGetExport(It.IsAny<IntPtr>(), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny))
-                    .Returns((IntPtr _, string _, out IntPtr address) =>
-                    {
-                        address = new(111);
-                        return true;
-                    });
+        _dotNetSystemAdapterMock
+            .Setup(s => s.TryGetNativeLibraryExport(It.IsAny<IntPtr>(), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny))
+            .Returns((IntPtr _, string _, out IntPtr address) =>
+            {
+                address = new(111);
+                return true;
+            });
 
-        new NativeLibraryWrapper<DummyFunctionMap>(_interopMock.Object, new(100)).ShouldNotBeNull();
+        new NativeLibraryWrapper<DummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100)).ShouldNotBeNull();
 
-        _interopMock.Verify(v => v.GetDelegateForFunctionPointer(new(111), typeof(DummyFunctionMap.Test1)), Times.Once);
-        _interopMock.Verify(v => v.TryGetExport(It.IsAny<IntPtr>(), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny),
+        _dotNetSystemAdapterMock.Verify(
+            v => v.NativeLibraryFunctionToDelegate(new(111), typeof(DummyFunctionMap.Test1)), Times.Once);
+
+        _dotNetSystemAdapterMock.Verify(
+            v => v.TryGetNativeLibraryExport(It.IsAny<IntPtr>(), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny),
             Times.Once);
     }
 
     [TestMethod]
     public void Ctor_Throws_IfFailedToExtractOneSymbol()
     {
-        _interopMock.Setup(s => s.TryGetExport(It.IsAny<IntPtr>(), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny))
-                    .Returns(false);
+        _dotNetSystemAdapterMock
+            .Setup(s => s.TryGetNativeLibraryExport(It.IsAny<IntPtr>(), It.IsAny<string>(), out It.Ref<IntPtr>.IsAny))
+            .Returns(false);
 
         Should.Throw<MissingMethodException>(() =>
-            new NativeLibraryWrapper<DummyFunctionMap>(_interopMock.Object, new(100)));
+            new NativeLibraryWrapper<DummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100)));
     }
 
     [TestMethod]
     public void Resolve_Throws_IfUnknownDelegate()
     {
-        var w = new NativeLibraryWrapper<DummyFunctionMap>(_interopMock.Object, new(100));
+        var w = new NativeLibraryWrapper<DummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100));
 
         Should.Throw<MissingMethodException>(() => w.Resolve<LibCFunctionMap.setlocale>());
     }
@@ -200,12 +170,37 @@ public class NativeLibraryWrapperTests
     [TestMethod]
     public void Resolve_ExtractsTheKnownSymbol()
     {
-        _interopMock.Setup(s => s.GetDelegateForFunctionPointer(It.IsAny<IntPtr>(), It.IsAny<Type>()))
-                    .Returns(new DummyFunctionMap.Test1(() => 123));
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryFunctionToDelegate(It.IsAny<IntPtr>(), It.IsAny<Type>()))
+                                .Returns(new DummyFunctionMap.Test1(() => 123));
 
-        var w = new NativeLibraryWrapper<DummyFunctionMap>(_interopMock.Object, new(100)).ShouldNotBeNull();
+        var w = new NativeLibraryWrapper<DummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100)).ShouldNotBeNull();
 
         w.Resolve<DummyFunctionMap.Test1>()()
          .ShouldBe(123);
+    }
+
+    [TestMethod]
+    public void Dispose_FreesTheLibrary_OnlyOnce()
+    {
+        var w = new NativeLibraryWrapper<DummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100));
+        w.Dispose();
+        w.Dispose();
+
+        _dotNetSystemAdapterMock.Verify(v => v.FreeNativeLibrary(new(100)), Times.Once);
+    }
+
+    [SuppressMessage("ReSharper", "UnusedType.Local"), SuppressMessage("ReSharper", "UnusedMember.Local"),
+     SuppressMessage("ReSharper", "UnusedTypeParameter"),
+     SuppressMessage("Performance", "CA1822:Mark members as static")]
+    private abstract class DummyFunctionMap
+    {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public delegate int Test1();
+
+        public delegate int Test2();
+
+        public delegate int Test4<T>();
+
+        public void Test3() { }
     }
 }

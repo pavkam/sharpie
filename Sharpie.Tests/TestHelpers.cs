@@ -1,6 +1,7 @@
 namespace Sharpie.Tests;
 
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 internal static class TestHelpers
 {
@@ -56,5 +57,27 @@ internal static class TestHelpers
         Debug.Assert(surface != null);
 
         MockArea(cursesMock, surface.Handle, area);
+    }
+
+    public static Mock<T> MockResolve<T>(this Mock<INativeSymbolResolver> mock) where T: MulticastDelegate
+    {
+        var m = new Mock<T>();
+        mock.Setup(s => s.Resolve<T>())
+            .Returns(m.Object);
+
+        return m;
+    }
+
+    public static Mock<T> MockResolve<T, TResult>(this Mock<INativeSymbolResolver> mock,
+        Expression<Func<T, TResult>> expression, TResult ret) where T: MulticastDelegate
+    {
+        var m = new Mock<T>();
+        m.Setup(expression)
+         .Returns(new InvocationFunc(_ => ret));
+
+        mock.Setup(s => s.Resolve<T>())
+            .Returns(m.Object);
+
+        return m;
     }
 }
