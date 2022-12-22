@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SubPadTests
 {
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
     private Pad _parent = null!;
     private Terminal _terminal = null!;
 

@@ -37,6 +37,6 @@ public class CursesInitializationExceptionTests
     public void HasTheCorrectMessage()
     {
         var ex = new CursesInitializationException();
-        ex.Message.ShouldBe("Failed to load or initialize the Curses library.");
+        ex.Message.ShouldBe("Failed to load or initialize the Curses backend.");
     }
 }

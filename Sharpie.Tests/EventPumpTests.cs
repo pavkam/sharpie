@@ -37,7 +37,7 @@ public class EventPumpTests
 {
     private const int Timeout = 10000;
 
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
     private EventPump _pump = null!;
     private CancellationTokenSource _source = null!;
     private Terminal _terminal = null!;

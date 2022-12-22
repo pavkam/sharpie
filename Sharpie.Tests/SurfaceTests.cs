@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SurfaceTests
 {
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
 
     [TestInitialize]
     public void TestInitialize()
@@ -1541,11 +1541,11 @@ public class SurfaceTests
     {
         var sf = new Surface(_cursesMock.Object, new(1));
         _cursesMock.MockArea(sf, new Size(5, 5));
-        
+
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => ((IDrawSurface)sf).DrawCell(new(1, 1), new('A'), Style.Default))
+        Should.Throw<CursesOperationException>(() => ((IDrawSurface) sf).DrawCell(new(1, 1), new('A'), Style.Default))
               .Operation.ShouldBe("wmove");
     }
 
@@ -1554,11 +1554,11 @@ public class SurfaceTests
     {
         var sf = new Surface(_cursesMock.Object, new(1));
         _cursesMock.MockArea(sf, new Size(5, 5));
-        
+
         _cursesMock.Setup(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => ((IDrawSurface)sf).DrawCell(new(1, 1), new('A'), Style.Default))
+        Should.Throw<CursesOperationException>(() => ((IDrawSurface) sf).DrawCell(new(1, 1), new('A'), Style.Default))
               .Operation.ShouldBe("wadd_wch");
     }
 
@@ -1568,19 +1568,19 @@ public class SurfaceTests
         var sf = new Surface(_cursesMock.Object, new(1));
         _cursesMock.MockArea(sf, new Size(5, 5));
 
-        ((IDrawSurface)sf).DrawCell(new(3, 4), new('A'), Style.Default);
+        ((IDrawSurface) sf).DrawCell(new(3, 4), new('A'), Style.Default);
 
         _cursesMock.Verify(s => s.wmove(new(1), 4, 3), Times.Once);
         _cursesMock.Verify(s => s.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Once);
     }
-    
+
     [TestMethod]
     public void DrawCell_DoesNothing_IfLocationOutsideBounds()
     {
         var sf = new Surface(_cursesMock.Object, new(1));
         _cursesMock.MockArea(sf, new Size(5, 5));
-        
-        ((IDrawSurface)sf).DrawCell(new(6, 6), new('A'), Style.Default);
+
+        ((IDrawSurface) sf).DrawCell(new(6, 6), new('A'), Style.Default);
 
         _cursesMock.Verify(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         _cursesMock.Verify(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()), Times.Never);
@@ -1690,7 +1690,7 @@ public class SurfaceTests
 
     private sealed class Surface: Sharpie.Surface
     {
-        public Surface(ICursesProvider curses, IntPtr handle): base(curses, handle) { }
+        public Surface(ICursesBackend curses, IntPtr handle): base(curses, handle) { }
 
         protected internal override void AssertSynchronized() { }
     }

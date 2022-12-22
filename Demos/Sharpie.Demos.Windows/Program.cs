@@ -34,7 +34,7 @@ using Sharpie.Backend;
 
 [assembly: ExcludeFromCodeCoverage]
 using var terminal =
-    new Terminal(NativeCursesProvider.Instance, new(CaretMode: CaretMode.Visible, ManagedWindows: true));
+    new Terminal(CursesBackend.NCurses(), new(CaretMode: CaretMode.Visible, ManagedWindows: true));
 
 var rnd = new Random();
 

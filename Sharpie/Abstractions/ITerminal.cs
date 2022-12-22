@@ -40,7 +40,7 @@ public interface ITerminal
     /// <summary>
     ///     The Curses backend.
     /// </summary>
-    ICursesProvider Curses { get; }
+    ICursesBackend Curses { get; }
 
     /// <summary>
     ///     Checks whether the terminal has been disposed of and is no longer usable.

@@ -36,7 +36,7 @@ using Sharpie.Backend;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create a new terminal instance with an invisible cursor.
-using var terminal = new Terminal(NativeCursesProvider.Instance, new(CaretMode: CaretMode.Invisible));
+using var terminal = new Terminal(CursesBackend.NCurses(), new(CaretMode: CaretMode.Invisible));
 
 // Setup the message and a number of rotating styles that will be applied for each letter of the message.
 var message = "\x001 Let the ASCII fun begin! \x003";

@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SoftLabelKeyManagerTests
 {
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
     private SoftLabelKeyManager _mgr1 = null!;
     private SoftLabelKeyManager _mgr2 = null!;
     private Terminal _terminal = null!;

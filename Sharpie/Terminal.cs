@@ -65,7 +65,7 @@ public sealed class Terminal: ITerminal, IDisposable
     /// <exception cref="InvalidOperationException">Another terminal instance is active.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="curses" /> is <c>null</c>.</exception>
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public Terminal(ICursesProvider curses, TerminalOptions options)
+    public Terminal(ICursesBackend curses, TerminalOptions options)
     {
         Options = options;
         Curses = curses ?? throw new ArgumentNullException(nameof(curses));
@@ -350,7 +350,9 @@ public sealed class Terminal: ITerminal, IDisposable
     public string? CursesVersion => Curses.curses_version();
 
     /// <inheritdoc cref="ITerminal.SupportedAttributes" />
-    public VideoAttribute SupportedAttributes => (VideoAttribute) Curses.term_attrs();
+    public VideoAttribute SupportedAttributes =>
+        (VideoAttribute) Curses.term_attrs() 
+                               .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
 
     /// <inheritdoc cref="ITerminal.Screen" />
     IScreen ITerminal.Screen => Screen;
@@ -385,7 +387,7 @@ public sealed class Terminal: ITerminal, IDisposable
             : new(@char);
 
     /// <inheritdoc cref="ITerminal.Curses" />
-    public ICursesProvider Curses { get; }
+    public ICursesBackend Curses { get; }
 
     /// <inheritdoc cref="ITerminal.Disposed" />
     public bool Disposed { get; private set; }

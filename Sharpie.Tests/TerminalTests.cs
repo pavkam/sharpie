@@ -34,7 +34,7 @@ namespace Sharpie.Tests;
 public class TerminalTests
 {
     private readonly TerminalOptions _settings = new(ManualFlush: true);
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
     private Terminal? _terminal;
 
     [TestInitialize]
@@ -189,8 +189,8 @@ public class TerminalTests
     [TestMethod]
     public void Ctor_PreparesHeader_ByAskingCurses()
     {
-        _cursesMock.Setup(s => s.ripoffline(1, It.IsAny<ICursesProvider.ripoffline_callback>()))
-                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+        _cursesMock.Setup(s => s.ripoffline(1, It.IsAny<ICursesBackend.ripoffline_callback>()))
+                   .Callback((int _, ICursesBackend.ripoffline_callback cb) =>
                    {
                        cb(new(100), 1)
                            .ShouldBe(0);
@@ -206,7 +206,7 @@ public class TerminalTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_WhenPreparingHeader_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesBackend.ripoffline_callback>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateHeader: true)))
@@ -216,8 +216,8 @@ public class TerminalTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle()
     {
-        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
-                   .Callback((int _, ICursesProvider.ripoffline_callback cb) => { cb(IntPtr.Zero, 0); });
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesBackend.ripoffline_callback>()))
+                   .Callback((int _, ICursesBackend.ripoffline_callback cb) => { cb(IntPtr.Zero, 0); });
 
         Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateHeader: true)))
               .Operation.ShouldBe("ripoffline");
@@ -226,8 +226,8 @@ public class TerminalTests
     [TestMethod]
     public void Ctor_PreparesFooter_ByAskingCurses()
     {
-        _cursesMock.Setup(s => s.ripoffline(-1, It.IsAny<ICursesProvider.ripoffline_callback>()))
-                   .Callback((int _, ICursesProvider.ripoffline_callback cb) =>
+        _cursesMock.Setup(s => s.ripoffline(-1, It.IsAny<ICursesBackend.ripoffline_callback>()))
+                   .Callback((int _, ICursesBackend.ripoffline_callback cb) =>
                    {
                        cb(new(100), 1)
                            .ShouldBe(0);
@@ -243,7 +243,7 @@ public class TerminalTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_WhenPreparingFooter_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesBackend.ripoffline_callback>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateFooter: true)))
@@ -253,8 +253,8 @@ public class TerminalTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle()
     {
-        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesProvider.ripoffline_callback>()))
-                   .Callback((int _, ICursesProvider.ripoffline_callback cb) => { cb(IntPtr.Zero, 0); });
+        _cursesMock.Setup(s => s.ripoffline(It.IsAny<int>(), It.IsAny<ICursesBackend.ripoffline_callback>()))
+                   .Callback((int _, ICursesBackend.ripoffline_callback cb) => { cb(IntPtr.Zero, 0); });
 
         Should.Throw<CursesOperationException>(() => new Terminal(_cursesMock.Object, new(AllocateFooter: true)))
               .Operation.ShouldBe("ripoffline");
@@ -611,12 +611,23 @@ public class TerminalTests
     }
 
     [TestMethod]
+    public void SupportedAttributes_Throws_IfCursesFails()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+
+        _cursesMock.Setup(s => s.term_attrs())
+                   .Returns(-1);
+
+        Should.Throw<CursesOperationException>(() => _terminal.SupportedAttributes.ToString()).Operation.ShouldBe("term_attrs");
+    }
+    
+    [TestMethod]
     public void SupportedAttributes_Returns_WhateverCursesReturns()
     {
         _terminal = new(_cursesMock.Object, _settings);
 
         _cursesMock.Setup(s => s.term_attrs())
-                   .Returns((uint) VideoAttribute.Italic);
+                   .Returns(unchecked((int) VideoAttribute.Italic));
 
         _terminal.SupportedAttributes.ShouldBe(VideoAttribute.Italic);
     }

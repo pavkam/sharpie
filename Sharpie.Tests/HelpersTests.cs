@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class HelpersTests
 {
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
 
     [TestInitialize] public void TestInitialize() { _cursesMock = new(); }
 
@@ -322,48 +322,6 @@ public class HelpersTests
     {
         var result = Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) evt);
         result.modifierKey.ShouldBe(expMod);
-    }
-
-    [TestMethod]
-    public void ValidOrNull_Throws_IfCursesIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => Helpers.ValidOrNull(null!));
-    }
-
-    [TestMethod]
-    public void ValidOrNull_ReturnsNull_IfTermNameFailsWithDllNotFoundException()
-    {
-        _cursesMock.Setup(s => s.termname())
-                   .Throws<DllNotFoundException>();
-
-        _cursesMock.Object.ValidOrNull()
-                   .ShouldBeNull();
-    }
-
-    [TestMethod]
-    public void ValidOrNull_ReturnsNull_IfTermNameFailsWithEntryPointNotFoundException()
-    {
-        _cursesMock.Setup(s => s.termname())
-                   .Throws<EntryPointNotFoundException>();
-
-        _cursesMock.Object.ValidOrNull()
-                   .ShouldBeNull();
-    }
-
-    [TestMethod]
-    public void ValidOrNull_Throws_IfUnexpectedErrorOccurs()
-    {
-        _cursesMock.Setup(s => s.termname())
-                   .Throws<ArgumentOutOfRangeException>();
-
-        Should.Throw<ArgumentOutOfRangeException>(() => _cursesMock.Object.ValidOrNull());
-    }
-
-    [TestMethod]
-    public void ValidOrNull_ReturnsCurses_IfTermNameDoesNotFail()
-    {
-        _cursesMock.Object.ValidOrNull()
-                   .ShouldBe(_cursesMock.Object);
     }
 
     [TestMethod]

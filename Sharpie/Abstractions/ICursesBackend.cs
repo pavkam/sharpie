@@ -32,12 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Abstractions;
 
 /// <summary>
-///     Interface provides access to the Curses functionality. Use the <see cref="NativeCursesProvider" /> property to
+///     Interface provides access to the Curses functionality. Use the <see cref="NCursesBackend" /> property to
 ///     access the actual
 ///     implementation.
 /// </summary>
 [PublicAPI, SuppressMessage("ReSharper", "InconsistentNaming"), SuppressMessage("ReSharper", "IdentifierTypo")]
-public interface ICursesProvider
+public interface ICursesBackend
 {
     public delegate int ripoffline_callback(IntPtr window, int columns);
 
@@ -86,7 +86,7 @@ public interface ICursesProvider
 
     int flushinp();
 
-    uint getattrs(IntPtr window);
+    int getattrs(IntPtr window);
 
     int getcurx(IntPtr window);
 
@@ -153,8 +153,6 @@ public interface ICursesProvider
     bool is_syncok(IntPtr window);
 
     IntPtr wgetparent(IntPtr window);
-
-    int wgetdelay(IntPtr window);
 
     int wgetscrreg(IntPtr window, out int top, out int bottom);
 
@@ -317,7 +315,7 @@ public interface ICursesProvider
 
     int whline(IntPtr window, uint @char, int count);
 
-    uint winch(IntPtr window);
+    int winch(IntPtr window);
 
     int winchnstr(IntPtr window, StringBuilder dest, int length);
 
@@ -387,7 +385,7 @@ public interface ICursesProvider
 
     int slk_set(int labelIndex, string title, int align);
 
-    uint term_attrs();
+    int term_attrs();
 
     int unget_wch(uint @char);
 

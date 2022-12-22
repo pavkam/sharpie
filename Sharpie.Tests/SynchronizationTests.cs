@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SynchronizationTests
 {
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
     private Pad _pad = null!;
     private SubPad _subPad = null!;
     private SubWindow _subWindow = null!;

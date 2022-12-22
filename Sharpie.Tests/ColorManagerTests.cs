@@ -34,7 +34,7 @@ namespace Sharpie.Tests;
 public class ColorManagerTests
 {
     private ColorManager _colorManager = null!;
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
     private Terminal _terminal = null!;
 
     [TestInitialize]
