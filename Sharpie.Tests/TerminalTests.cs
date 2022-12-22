@@ -611,12 +611,23 @@ public class TerminalTests
     }
 
     [TestMethod]
+    public void SupportedAttributes_Throws_IfCursesFails()
+    {
+        _terminal = new(_cursesMock.Object, _settings);
+
+        _cursesMock.Setup(s => s.term_attrs())
+                   .Returns(-1);
+
+        Should.Throw<CursesOperationException>(() => _terminal.SupportedAttributes.ToString()).Operation.ShouldBe("term_attrs");
+    }
+    
+    [TestMethod]
     public void SupportedAttributes_Returns_WhateverCursesReturns()
     {
         _terminal = new(_cursesMock.Object, _settings);
 
         _cursesMock.Setup(s => s.term_attrs())
-                   .Returns((uint) VideoAttribute.Italic);
+                   .Returns(unchecked((int) VideoAttribute.Italic));
 
         _terminal.SupportedAttributes.ShouldBe(VideoAttribute.Italic);
     }

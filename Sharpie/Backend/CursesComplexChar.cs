@@ -34,13 +34,25 @@ namespace Sharpie.Backend;
 /// <summary>
 ///     Opaque Curses character with attributes and color.
 /// </summary>
-[StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage]
+[PublicAPI, StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage,
+ SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
 public struct CursesComplexChar
 {
-    [MarshalAs(UnmanagedType.U4)] private readonly uint attrAndColorPair;
-    [MarshalAs(UnmanagedType.U4)] private readonly uint char0;
-    [MarshalAs(UnmanagedType.U4)] private readonly uint char1;
-    [MarshalAs(UnmanagedType.U4)] private readonly uint char2;
-    [MarshalAs(UnmanagedType.U4)] private readonly uint char3;
-    [MarshalAs(UnmanagedType.U4)] private readonly uint char4;
+    internal CursesComplexChar(uint attrAndColorPair, uint char0, uint char1, uint char2,
+        uint char3, uint char4)
+    {
+        _attrAndColorPair = attrAndColorPair;
+        _char0 = char0;
+        _char1 = char1;
+        _char2 = char2;
+        _char3 = char3;
+        _char4 = char4;
+    }
+
+    [MarshalAs(UnmanagedType.U4)] private readonly uint _attrAndColorPair;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint _char0;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint _char1;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint _char2;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint _char3;
+    [MarshalAs(UnmanagedType.U4)] private readonly uint _char4;
 }

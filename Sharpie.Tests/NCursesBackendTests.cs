@@ -39,6 +39,8 @@ public class NCursesBackendTests
     private Mock<INativeSymbolResolver> _nativeSymbolResolverMock = null!;
     private NCursesBackend _backend = null!;
 
+    private static CursesComplexChar MakeTestComplexChar(int x) => new CursesComplexChar(x, x, x, x, x, x);
+
     [TestInitialize]
     public void TestInitialize()
     {
@@ -1223,6 +1225,16 @@ public class NCursesBackendTests
 
         _backend.keyname('A').ShouldBe(ret);
     }
+    
+    [TestMethod, DataRow((string?)null), DataRow("hello")]
+    public void key_name_IsRelayedToLibrary(string ret)
+    {
+        var h = Marshal.StringToHGlobalAnsi(ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.key_name, IntPtr>(
+            s => s('A'), h);
+
+        _backend.key_name('A').ShouldBe(ret);
+    }
 
     [TestMethod, DataRow(99), DataRow(0)]
     public void dupwin_IsRelayedToLibrary(int ret)
@@ -1403,5 +1415,637 @@ public class NCursesBackendTests
             s => s(new(1), 1, 2), ret);
 
         _backend.wresize(new(1), 1, 2).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void pnoutrefresh_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.pnoutrefresh, int>(
+            s => s(new(1), 1, 2, 3, 4, 5, 6), ret);
+
+        _backend.pnoutrefresh(new(1), 1, 2, 3, 4, 5, 6).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void prefresh_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.prefresh, int>(
+            s => s(new(1), 1, 2, 3, 4, 5, 6), ret);
+
+        _backend.prefresh(new(1), 1, 2, 3, 4, 5, 6).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(99), DataRow(0)]
+    public void subpad_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.subpad, IntPtr>(
+            s => s(new(1), 1, 2, 3, 4), new(ret));
+
+        _backend.subpad(new(1), 1, 2, 3, 4).ShouldBe(new(ret));
+    }
+    
+    [TestMethod, DataRow(99), DataRow(0)]
+    public void subwin_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.subwin, IntPtr>(
+            s => s(new(1), 1, 2, 3, 4), new(ret));
+
+        _backend.subwin(new(1), 1, 2, 3, 4).ShouldBe(new(ret));
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void waddchnstr_IsRelayedToLibrary(int ret)
+    {
+        var a = Array.Empty<uint>();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.waddchnstr, int>(
+            s => s(new(1), a, 1), ret);
+
+        _backend.waddchnstr(new(1), a, 1).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wborder_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wborder, int>(
+            s => s(new(1), 'A', 'B', 'C', 'D', 
+                'E','F','G','H'), ret);
+
+        _backend.wborder(new(1), 'A', 'B', 'C', 'D', 
+            'E','F','G','H').ShouldBe(ret);
+    }
+     
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wchgat_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wchgat, int>(
+            s => s(new(1), 1, 99, 44, new(999)), ret);
+
+        _backend.wchgat(new(1), 1, 99, 44, new(999)).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wcolor_set_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wcolor_set, int>(
+            s => s(new(1), 1, new(999)), ret);
+
+        _backend.wcolor_set(new(1), 1, new(999)).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wgetnstr_IsRelayedToLibrary(int ret)
+    {
+        var a = new StringBuilder();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetnstr, int>(
+            s => s(new(1), a, 1), ret);
+
+        _backend.wgetnstr(new(1), a, 1).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void winchnstr_IsRelayedToLibrary(int ret)
+    {
+        var a = new StringBuilder();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.winchnstr, int>(
+            s => s(new(1), a, 1), ret);
+
+        _backend.winchnstr(new(1), a, 1).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void assume_default_colors_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.assume_default_colors, int>(
+            s => s(1, 2), ret);
+
+        _backend.assume_default_colors(1, 2).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void define_key_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.define_key, int>(
+            s => s("key", 99), ret);
+
+        _backend.define_key("key", 99).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void key_defined_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.key_defined, int>(
+            s => s("key"), ret);
+
+        _backend.key_defined("key").ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void keyok_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.keyok, int>(
+            s => s('A', true), ret);
+
+        _backend.keyok('A', true).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void unget_wch_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.unget_wch, int>(
+            s => s('A'), ret);
+
+        _backend.unget_wch('A').ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_set_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_set, int>(
+            s => s(3, "title", 90), ret);
+
+        _backend.slk_set(3, "title", 90).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void term_attrs_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.term_attrs, int>(
+            s => s(), ret);
+
+        _backend.term_attrs().ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wattr_set_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wattr_set, int>(
+            s => s(new(1), 2, 3, new(4)), ret);
+
+        _backend.wattr_set(new(1), 2, 3, new(4)).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void getattrs_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getattrs, int>(
+            s => s(new(1)), ret);
+
+        _backend.getattrs(new(1)).ShouldBe(ret);
+    }
+
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_attr_on_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_on, int>(
+            s => s(1, new(2)), ret);
+
+        _backend.slk_attr_on(1, new(2)).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_attr_off_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_off, int>(
+            s => s(1, new(2)), ret);
+
+        _backend.slk_attr_off(1, new(2)).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wins_nwstr_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wins_nwstr, int>(
+            s => s(new(1), "text", 2), ret);
+
+        _backend.wins_nwstr(new(1), "text", 2).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(99), DataRow(0)]
+    public void wgetparent_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetparent, IntPtr>(
+            s => s(new(1)), new(ret));
+
+        _backend.wgetparent(new(1)).ShouldBe(new(ret));
+    }
+    
+    [TestMethod]
+    public void wbkgdset_IsRelayedToLibrary()
+    {
+        var called = true;
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wbkgdset>()
+                                 .Setup(s => s(new(1), 2))
+                                 .Callback(() =>
+                                 {
+                                     called = true;
+                                 });
+
+        _backend.wbkgdset(new(1), 2);
+        
+        called.ShouldBeTrue();
+    }
+    
+    [TestMethod]
+    public void wtimeout_IsRelayedToLibrary()
+    {
+        var called = true;
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wtimeout>()
+                                 .Setup(s => s(new(1), 2))
+                                 .Callback(() =>
+                                 {
+                                     called = true;
+                                 });
+
+        _backend.wtimeout(new(1), 2);
+        
+        called.ShouldBeTrue();
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void winnwstr_IsRelayedToLibrary(int ret)
+    {
+        var a = new StringBuilder();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.winnwstr, int>(
+            s => s(new(1), a, 1), ret);
+
+        _backend.winnwstr(new(1), a, 1).ShouldBe(ret);
+    }
+
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void waddnwstr_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.waddnwstr, int>(
+            s => s(new(1), "text", 1), ret);
+
+        _backend.waddnwstr(new(1), "text", 1).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wgetn_wstr_IsRelayedToLibrary(int ret)
+    {
+        var a = new StringBuilder();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetn_wstr, int>(
+            s => s(new(1), a, 1), ret);
+
+        _backend.wgetn_wstr(new(1), a, 1).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void win_wchnstr_IsRelayedToLibrary(int ret)
+    {
+        var a = Array.Empty<CursesComplexChar>();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.win_wchnstr, int>(
+            s => s(new(1), a, 1), ret);
+
+        _backend.win_wchnstr(new(1), a, 1).ShouldBe(ret);
+    }
+
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wadd_wchnstr_IsRelayedToLibrary(int ret)
+    {
+        var a = Array.Empty<CursesComplexChar>();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wadd_wchnstr, int>(
+            s => s(new(1), a, 1), ret);
+
+        _backend.wadd_wchnstr(new(1), a, 1).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void init_color_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.init_color, int>(
+            s => s(1, 2, 3, 4), ret);
+
+        _backend.init_color(1, 2, 3, 4).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void init_pair_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.init_pair, int>(
+            s => s(1, 2, 3), ret);
+
+        _backend.init_pair(1, 2, 3).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow((string?)null), DataRow("hello")]
+    public void wunctrl_IsRelayedToLibrary(string ret)
+    {
+        var ch = new CursesComplexChar();
+        var h = Marshal.StringToHGlobalUni(ret);
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wunctrl, IntPtr>(
+            s => s(ref ch), h);
+
+        _backend.wunctrl(ch).ShouldBe(ret);
+    }
+    
+    [TestMethod]
+    public void wbkgrndset_IsRelayedToLibrary()
+    {
+        var ch = new CursesComplexChar();
+        
+        var called = true;
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wbkgrndset>()
+                                 .Setup(s => s(new(1), ref ch))
+                                 .Callback(() =>
+                                 {
+                                     called = true;
+                                 });
+
+        _backend.wbkgrndset(new(1), ch);
+        
+        called.ShouldBeTrue();
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wecho_wchar_IsRelayedToLibrary(int ret)
+    {
+        var ch = new CursesComplexChar();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wecho_wchar, int>(s => s(new(1), ref ch), ret);
+
+        _backend.wecho_wchar(new(1), ch).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wadd_wch_IsRelayedToLibrary(int ret)
+    {
+        var ch = new CursesComplexChar();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wadd_wch, int>(s => s(new(1), ref ch), ret);
+
+        _backend.wadd_wch(new(1), ch).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wbkgrnd_IsRelayedToLibrary(int ret)
+    {
+        var ch = new CursesComplexChar();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wbkgrnd, int>(s => s(new(1), ref ch), ret);
+
+        _backend.wbkgrnd(new(1), ch).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void pecho_wchar_IsRelayedToLibrary(int ret)
+    {
+        var ch = new CursesComplexChar();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.pecho_wchar, int>(s => s(new(1), ref ch), ret);
+
+        _backend.pecho_wchar(new(1), ch).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wvline_set_IsRelayedToLibrary(int ret)
+    {
+        var ch = new CursesComplexChar();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wvline_set, int>(s => s(new(1), ref ch, 4), ret);
+
+        _backend.wvline_set(new(1), ch, 4).ShouldBe(ret);
+    }
+     
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void whline_set_IsRelayedToLibrary(int ret)
+    {
+        var ch = new CursesComplexChar();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.whline_set, int>(s => s(new(1), ref ch, 4), ret);
+
+        _backend.whline_set(new(1), ch, 4).ShouldBe(ret);
+    }
+         
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void ripoffline_IsRelayedToLibrary(int ret)
+    {
+        var rf = new ICursesBackend.ripoffline_callback((_, _) => 0);
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.ripoffline, int>(s => s(1, rf), ret);
+
+        _backend.ripoffline(1, rf).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void ungetmouse_IsRelayedToLibrary(int ret)
+    {
+        var e = new CursesMouseEvent();
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.ungetmouse, int>(s => s(ref e), ret);
+
+        _backend.ungetmouse(e).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wborder_set_IsRelayedToLibrary(int ret)
+    {
+        var ch1 = MakeTestComplexChar(1);
+        var ch2 = MakeTestComplexChar(2);
+        var ch3 = MakeTestComplexChar(3);
+        var ch4 = MakeTestComplexChar(4);
+        var ch5 = MakeTestComplexChar(5);
+        var ch6 = MakeTestComplexChar(6);
+        var ch7 = MakeTestComplexChar(7);
+        var ch8 = MakeTestComplexChar(8);
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wborder_set, int>(s => s(new(1), 
+            ref ch1, ref ch2, ref ch3, ref ch4, ref ch5, ref ch6, ref ch7, ref ch8), ret);
+
+        _backend.wborder_set(new(1), ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void erasewchar_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.erasewchar>()
+                                 .Setup(s => s(out It.Ref<uint>.IsAny))
+                                 .Returns((out uint o) =>
+                                 {
+                                     o = 'A';
+                                     return ret;
+                                 });
+
+        _backend.erasewchar(out var ch).ShouldBe(ret);
+        ch.ShouldBe('A');
+    }
+    
+        
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void killwchar_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.killwchar>()
+                                 .Setup(s => s(out It.Ref<uint>.IsAny))
+                                 .Returns((out uint o) =>
+                                 {
+                                     o = 'A';
+                                     return ret;
+                                 });
+
+        _backend.killwchar(out var ch).ShouldBe(ret);
+        ch.ShouldBe('A');
+    }
+    
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wins_wch_IsRelayedToLibrary(int ret)
+    {
+        var ch = MakeTestComplexChar(1);
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wins_wch, int>(s => s(new(1), ref ch), ret);
+
+        _backend.wins_wch(new(1), ch).ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void getmouse_IsRelayedToLibrary(int ret)
+    {
+        var exp = new CursesMouseEvent { id = 199 };
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getmouse>()
+                                 .Setup(s => s(out It.Ref<CursesMouseEvent>.IsAny))
+                                 .Returns((out CursesMouseEvent o) =>
+                                 {
+                                     o = exp;
+                                     return ret;
+                                 });
+
+
+        _backend.getmouse(out var x).ShouldBe(ret);
+        x.ShouldBe(exp);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wget_wch_IsRelayedToLibrary(int ret)
+    {
+        const uint exp = 199u;
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(new (1), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint o) =>
+                                 {
+                                     o = exp;
+                                     return ret;
+                                 });
+
+
+        _backend.wget_wch(new (1), out var x).ShouldBe(ret);
+        x.ShouldBe(exp);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wgetbkgrnd_IsRelayedToLibrary(int ret)
+    {
+        var exp = MakeTestComplexChar(1);
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetbkgrnd>()
+                                 .Setup(s => s(new (1), out It.Ref<CursesComplexChar>.IsAny))
+                                 .Returns((IntPtr _, out CursesComplexChar o) =>
+                                 {
+                                     o = exp;
+                                     return ret;
+                                 });
+
+
+        _backend.wgetbkgrnd(new (1), out var x).ShouldBe(ret);
+        x.ShouldBe(exp);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void win_wch_IsRelayedToLibrary(int ret)
+    {
+        var exp = MakeTestComplexChar(1);
+        
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.win_wch>()
+                                 .Setup(s => s(new (1), out It.Ref<CursesComplexChar>.IsAny))
+                                 .Returns((IntPtr _, out CursesComplexChar o) =>
+                                 {
+                                     o = exp;
+                                     return ret;
+                                 });
+
+
+        _backend.win_wch(new (1), out var x).ShouldBe(ret);
+        x.ShouldBe(exp);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void wgetscrreg_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetscrreg>()
+                                 .Setup(s => s(new (1), out It.Ref<int>.IsAny, out It.Ref<int>.IsAny))
+                                 .Returns((IntPtr _, out uint t, out uint b) =>
+                                 {
+                                     t = 99;
+                                     b = 299;
+                                     return ret;
+                                 });
+
+
+        _backend.wgetscrreg(new (1), out var top, out var bottom).ShouldBe(ret);
+        top.ShouldBe(99);
+        bottom.ShouldBe(299);
+    }
+
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void pair_content_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.pair_content>()
+                                 .Setup(s => s(1, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny))
+                                 .Returns((short _, out short t, out short b) =>
+                                 {
+                                     t = 99;
+                                     b = 299;
+                                     return ret;
+                                 });
+
+
+        _backend.pair_content(1, out var fg, out var bg).ShouldBe(ret);
+        ((int)fg).ShouldBe(99);
+        ((int)bg).ShouldBe(299);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void color_content_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.color_content>()
+                                 .Setup(s => s(1, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny))
+                                 .Returns((short _, out short r, out short g, out short b) =>
+                                 {
+                                     r = 11;
+                                     g = 22;
+                                     b = 33;
+                                     return ret;
+                                 });
+
+
+        _backend.color_content(1, out var red, out var green, out var blue).ShouldBe(ret);
+        
+        ((int)red).ShouldBe(11);
+        ((int)green).ShouldBe(22);
+        ((int)blue).ShouldBe(33);
+    }
+      
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void mousemask_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask>()
+                                 .Setup(s => s(1, out It.Ref<int>.IsAny))
+                                 .Returns((int _, out int om) =>
+                                 {
+                                     om = 11;
+                                     return ret;
+                                 });
+
+
+        _backend.mousemask(1, out var old).ShouldBe(ret);
+        
+        old.ShouldBe(11);
     }
 }
