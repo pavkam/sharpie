@@ -35,9 +35,9 @@ using Nito.Disposables;
 [TestClass, SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 public class UnixNCursesBackendTests
 {
+    private UnixNCursesBackend _backend = null!;
     private Mock<IDotNetSystemAdapter> _dotNetSystemAdapterMock = null!;
     private Mock<INativeSymbolResolver> _nativeSymbolResolverMock = null!;
-    private UnixNCursesBackend _backend = null!;
 
     [TestInitialize]
     public void TestInitialize()
@@ -100,7 +100,7 @@ public class UnixNCursesBackendTests
         d.ShouldBe(NoopDisposable.Instance);
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"),]
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo")]
     public void mousemask_CallsCursesButNotNotConsole_IfCursesFails()
     {
         _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)

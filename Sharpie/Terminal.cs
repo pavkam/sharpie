@@ -351,7 +351,7 @@ public sealed class Terminal: ITerminal, IDisposable
 
     /// <inheritdoc cref="ITerminal.SupportedAttributes" />
     public VideoAttribute SupportedAttributes =>
-        (VideoAttribute) Curses.term_attrs() //TODO: add test
+        (VideoAttribute) Curses.term_attrs() 
                                .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
 
     /// <inheritdoc cref="ITerminal.Screen" />
