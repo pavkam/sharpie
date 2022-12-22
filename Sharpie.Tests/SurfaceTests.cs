@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SurfaceTests
 {
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
 
     [TestInitialize]
     public void TestInitialize()
@@ -1690,7 +1690,7 @@ public class SurfaceTests
 
     private sealed class Surface: Sharpie.Surface
     {
-        public Surface(ICursesProvider curses, IntPtr handle): base(curses, handle) { }
+        public Surface(ICursesBackend curses, IntPtr handle): base(curses, handle) { }
 
         protected internal override void AssertSynchronized() { }
     }

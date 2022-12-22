@@ -37,7 +37,7 @@ namespace Sharpie.Abstractions;
 ///     implementation.
 /// </summary>
 [PublicAPI, SuppressMessage("ReSharper", "InconsistentNaming"), SuppressMessage("ReSharper", "IdentifierTypo")]
-public interface ICursesProvider
+public interface ICursesBackend
 {
     public delegate int ripoffline_callback(IntPtr window, int columns);
 

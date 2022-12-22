@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SubWindowTests
 {
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
     private Window _parent = null!;
     private Terminal _terminal = null!;
 

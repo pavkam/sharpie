@@ -35,7 +35,7 @@ public class TerminalMainLoopTests
 {
     private const int Timeout = 10000;
 
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
     private Terminal _terminal = null!;
 
     [TestInitialize]

@@ -22,7 +22,7 @@ internal static class TestHelpers
         return collector;
     }
 
-    public static void MockArea(this Mock<ICursesProvider> cursesMock, ISurface surface, Size size)
+    public static void MockArea(this Mock<ICursesBackend> cursesMock, ISurface surface, Size size)
     {
         Debug.Assert(cursesMock != null);
         Debug.Assert(surface != null);
@@ -34,7 +34,7 @@ internal static class TestHelpers
                   .Returns(size.Height);
     }
 
-    public static void MockArea(this Mock<ICursesProvider> cursesMock, IntPtr handle, Rectangle area)
+    public static void MockArea(this Mock<ICursesBackend> cursesMock, IntPtr handle, Rectangle area)
     {
         Debug.Assert(cursesMock != null);
 
@@ -51,7 +51,7 @@ internal static class TestHelpers
                   .Returns(area.Height);
     }
 
-    public static void MockArea(this Mock<ICursesProvider> cursesMock, ISurface surface, Rectangle area)
+    public static void MockArea(this Mock<ICursesBackend> cursesMock, ISurface surface, Rectangle area)
     {
         Debug.Assert(cursesMock != null);
         Debug.Assert(surface != null);

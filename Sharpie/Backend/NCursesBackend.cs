@@ -3,7 +3,7 @@
 namespace Sharpie.Backend;
 
 [PublicAPI]
-internal class NCursesBackend: ICursesProvider
+internal class NCursesBackend: ICursesBackend
 {
     public IDotNetSystemAdapter DotNetSystemAdapter { get; }
     private readonly INativeSymbolResolver _nCursesSymbolResolver;
@@ -149,7 +149,7 @@ internal class NCursesBackend: ICursesProvider
     public bool is_wintouched(IntPtr window) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.is_wintouched>()(window);
 
-    string? ICursesProvider.keyname(uint keyCode) =>
+    string? ICursesBackend.keyname(uint keyCode) =>
         Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.keyname>()(keyCode));
 
     public int keypad(IntPtr window, bool set) =>
@@ -158,7 +158,7 @@ internal class NCursesBackend: ICursesProvider
     public int leaveok(IntPtr window, bool set) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.leaveok>()(window, set);
 
-    string? ICursesProvider.longname() =>
+    string? ICursesBackend.longname() =>
         Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.longname>()());
 
     public int meta(IntPtr window, bool set) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.meta>()(window, set);
@@ -230,7 +230,7 @@ internal class NCursesBackend: ICursesProvider
 
     public int reset_shell_mode() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.reset_shell_mode>()();
 
-    public int ripoffline(int lines, ICursesProvider.ripoffline_callback callback) =>
+    public int ripoffline(int lines, ICursesBackend.ripoffline_callback callback) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.ripoffline>()(lines, callback);
 
     public int savetty() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.savetty>()();
@@ -285,7 +285,7 @@ internal class NCursesBackend: ICursesProvider
     public int syncok(IntPtr window, bool set) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.syncok>()(window, set);
 
-    string? ICursesProvider.termname() =>
+    string? ICursesBackend.termname() =>
         Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.termname>()());
 
     public int ungetch(uint @char) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.ungetch>()(@char);

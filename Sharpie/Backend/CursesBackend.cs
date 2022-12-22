@@ -1,7 +1,7 @@
 namespace Sharpie.Backend;
 
 /// <summary>
-/// Provides functionality for obtaining <see cref="ICursesProvider"/> instances.
+/// Provides functionality for obtaining <see cref="ICursesBackend"/> instances.
 /// </summary>
 [PublicAPI]
 public static class CursesBackend
@@ -14,7 +14,7 @@ public static class CursesBackend
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="dotNetSystemAdapter"/> or <paramref name="libPathResolver"/> are <c>null</c>.</exception>
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
-    internal static ICursesProvider NCurses(IDotNetSystemAdapter dotNetSystemAdapter,
+    internal static ICursesBackend NCurses(IDotNetSystemAdapter dotNetSystemAdapter,
         Func<string, IEnumerable<string>> libPathResolver)
     {
         Debug.Assert(dotNetSystemAdapter != null);
@@ -48,7 +48,7 @@ public static class CursesBackend
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="libPathResolver"/> is <c>null</c>.</exception>
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested.")]
-    public static ICursesProvider NCurses(Func<string, IEnumerable<string>> libPathResolver)
+    public static ICursesBackend NCurses(Func<string, IEnumerable<string>> libPathResolver)
     {
         if (libPathResolver == null)
         {
@@ -66,7 +66,7 @@ public static class CursesBackend
     /// <param name="dotNetSystemAdapter">Adapter for .NET functionality.</param>
     /// <returns></returns>
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
-    internal static ICursesProvider NCurses(IDotNetSystemAdapter dotNetSystemAdapter)
+    internal static ICursesBackend NCurses(IDotNetSystemAdapter dotNetSystemAdapter)
     {
         return NCurses(dotNetSystemAdapter, s => { return new[] { s }; });
     }
@@ -78,5 +78,5 @@ public static class CursesBackend
     /// <returns></returns>
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested.")]
-    public static ICursesProvider NCurses() => NCurses(IDotNetSystemAdapter.Instance);
+    public static ICursesBackend NCurses() => NCurses(IDotNetSystemAdapter.Instance);
 }

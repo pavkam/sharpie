@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class HelpersTests
 {
-    private Mock<ICursesProvider> _cursesMock = null!;
+    private Mock<ICursesBackend> _cursesMock = null!;
 
     [TestInitialize] public void TestInitialize() { _cursesMock = new(); }
 

@@ -125,10 +125,7 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
 
     private Delegate GetExportedMethod(string name, Type delegateType)
     {
-        if (_libraryHandle == IntPtr.Zero)
-        {
-            throw new ObjectDisposedException("This library has been unloaded.");
-        }
+        Debug.Assert(_libraryHandle != IntPtr.Zero);
 
         if (_dotNetSystemAdapter.TryGetNativeLibraryExport(_libraryHandle, name, out var handle))
         {

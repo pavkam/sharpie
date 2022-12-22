@@ -234,7 +234,7 @@ internal abstract class NCursesFunctionMap
     public delegate int reset_shell_mode();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int ripoffline(int lines, ICursesProvider.ripoffline_callback callback);
+    public delegate int ripoffline(int lines, ICursesBackend.ripoffline_callback callback);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int savetty();

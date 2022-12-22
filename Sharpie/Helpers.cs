@@ -110,7 +110,7 @@ public static class Helpers
     /// <param name="style">The style to apply.</param>
     /// <returns>The complex character.</returns>
     /// <exception cref="CursesOperationException">Thrown if <paramref name="rune" /> failed to convert to a complex char.</exception>
-    public static CursesComplexChar ToComplexChar(this ICursesProvider curses, Rune rune, Style style)
+    public static CursesComplexChar ToComplexChar(this ICursesBackend curses, Rune rune, Style style)
     {
         // Convert the special characters into Unicode.
         if (rune.IsAscii &&
@@ -136,7 +136,7 @@ public static class Helpers
     /// <param name="curses">The curses backend.</param>
     /// <param name="char">The char to breakdown.</param>
     /// <returns>The rune and the style.</returns>
-    public static (Rune rune, Style style) FromComplexChar(this ICursesProvider curses, CursesComplexChar @char)
+    public static (Rune rune, Style style) FromComplexChar(this ICursesBackend curses, CursesComplexChar @char)
     {
         // Use Curses to decode the characters. Assume 10 characters is enough in the string.
 

@@ -47,7 +47,7 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="curses" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
-    internal Surface(ICursesProvider curses, IntPtr handle)
+    internal Surface(ICursesBackend curses, IntPtr handle)
     {
         if (handle == IntPtr.Zero)
         {
@@ -67,7 +67,7 @@ public abstract class Surface: ISurface, IDisposable
     /// <summary>
     ///     The curses backend.
     /// </summary>
-    protected internal ICursesProvider Curses { get; }
+    protected internal ICursesBackend Curses { get; }
 
     /// <summary>
     ///     Returns the origin of the surface (location within a potential parent). This
