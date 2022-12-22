@@ -86,7 +86,7 @@ public interface ICursesBackend
 
     int flushinp();
 
-    uint getattrs(IntPtr window);
+    int getattrs(IntPtr window);
 
     int getcurx(IntPtr window);
 
@@ -315,7 +315,7 @@ public interface ICursesBackend
 
     int whline(IntPtr window, uint @char, int count);
 
-    uint winch(IntPtr window);
+    int winch(IntPtr window);
 
     int winchnstr(IntPtr window, StringBuilder dest, int length);
 
@@ -385,7 +385,7 @@ public interface ICursesBackend
 
     int slk_set(int labelIndex, string title, int align);
 
-    uint term_attrs();
+    int term_attrs();
 
     int unget_wch(uint @char);
 

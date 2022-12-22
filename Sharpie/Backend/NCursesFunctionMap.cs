@@ -208,7 +208,7 @@ internal abstract class NCursesFunctionMap
     public delegate uint PAIR_NUMBER(uint colorPair);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int pechochar(IntPtr pad, uint @char);
+    public delegate int pechochar(IntPtr pad, uint charAndAttrs);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
@@ -252,7 +252,7 @@ internal abstract class NCursesFunctionMap
     public delegate int slk_attrset(uint attrs);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate char slk_attr();
+    public delegate int slk_attr();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int slk_attr_set(uint attrs, short colorPair, IntPtr reserved);
@@ -350,7 +350,7 @@ internal abstract class NCursesFunctionMap
     public delegate int wdelch(IntPtr window);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int wechochar(IntPtr window, uint @char);
+    public delegate int wechochar(IntPtr window, uint charAndAttrs);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int werase(IntPtr window);
@@ -365,7 +365,7 @@ internal abstract class NCursesFunctionMap
     public delegate int whline(IntPtr window, uint @char, int count);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate uint winch(IntPtr window);
+    public delegate int winch(IntPtr window);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int winchnstr(IntPtr window, StringBuilder dest, int length);
@@ -469,7 +469,7 @@ internal abstract class NCursesFunctionMap
     public delegate int slk_set(int labelIndex, string title, int fmt);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate uint term_attrs();
+    public delegate int term_attrs();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int unget_wch(uint @char);
@@ -535,7 +535,7 @@ internal abstract class NCursesFunctionMap
     public delegate int erasewchar(out uint @char);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate uint getattrs(IntPtr window);
+    public delegate int getattrs(IntPtr window);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int getcurx(IntPtr window);

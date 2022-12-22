@@ -96,7 +96,7 @@ internal class NCursesBackend: ICursesBackend
 
     public int flushinp() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.flushinp>()();
 
-    public uint getattrs(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.getattrs>()(window);
+    public  int getattrs(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.getattrs>()(window);
 
     public int getcurx(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.getcurx>()(window);
 
@@ -149,7 +149,7 @@ internal class NCursesBackend: ICursesBackend
     public bool is_wintouched(IntPtr window) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.is_wintouched>()(window);
 
-    string? ICursesBackend.keyname(uint keyCode) =>
+    public string? keyname(uint keyCode) =>
         Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.keyname>()(keyCode));
 
     public int keypad(IntPtr window, bool set) =>
@@ -158,7 +158,7 @@ internal class NCursesBackend: ICursesBackend
     public int leaveok(IntPtr window, bool set) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.leaveok>()(window, set);
 
-    string? ICursesBackend.longname() =>
+    public string? longname() =>
         Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.longname>()());
 
     public int meta(IntPtr window, bool set) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.meta>()(window, set);
@@ -207,8 +207,8 @@ internal class NCursesBackend: ICursesBackend
     public uint PAIR_NUMBER(uint colorPair) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.PAIR_NUMBER>()(colorPair);
 
-    public int pechochar(IntPtr pad, uint @char) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.pechochar>()(pad, @char);
+    public int pechochar(IntPtr pad, uint charAndAttrs) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.pechochar>()(pad, charAndAttrs);
 
     public int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol) =>
@@ -285,7 +285,7 @@ internal class NCursesBackend: ICursesBackend
     public int syncok(IntPtr window, bool set) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.syncok>()(window, set);
 
-    string? ICursesBackend.termname() =>
+    public string? termname() =>
         Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.termname>()());
 
     public int ungetch(uint @char) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.ungetch>()(@char);
@@ -352,7 +352,7 @@ internal class NCursesBackend: ICursesBackend
     public int whline(IntPtr window, uint @char, int count) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.whline>()(window, @char, count);
 
-    public uint winch(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.winch>()(window);
+    public int winch(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.winch>()(window);
 
     public int winchnstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, int length) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.winchnstr>()(window, dest, length);
@@ -446,7 +446,7 @@ internal class NCursesBackend: ICursesBackend
     public int slk_set(int labelIndex, string title, int align) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_set>()(labelIndex, title, align);
 
-    public uint term_attrs() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.term_attrs>()();
+    public int term_attrs() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.term_attrs>()();
 
     public int unget_wch(uint @char) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.unget_wch>()(@char);
 
