@@ -68,7 +68,25 @@ public static class CursesBackend
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     internal static ICursesBackend NCurses(IDotNetSystemAdapter dotNetSystemAdapter)
     {
-        return NCurses(dotNetSystemAdapter, s => { return new[] { s }; });
+        return NCurses(dotNetSystemAdapter, s =>
+        {
+            if ((dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd) && s == "ncurses")
+            {
+                return new[]
+                {
+                    "ncursesw",
+                    "libncursesw.so",
+                    "libncursesw.so.5",
+                    "libncursesw.so.6",
+                    "ncurses",
+                    "libncurses.so",
+                    "libncurses.so.5",
+                    "libncurses.so.6",
+                };
+            }
+
+            return new[] { s };
+        });
     }
 
     /// <summary>

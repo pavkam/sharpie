@@ -146,4 +146,36 @@ public class CursesBackendTests
             s => s.TryLoadNativeLibrary("libc", It.IsAny<Assembly>(), It.IsAny<DllImportSearchPath?>(),
                 out It.Ref<IntPtr>.IsAny), Times.Once);
     }
+    
+    [TestMethod]
+    public void NCurses2_ForLinux_HasManyOptionsForNCurses()
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.IsLinux)
+                                .Returns(true);
+        
+        var options = new[]
+        {
+            "ncursesw",
+            "libncursesw.so",
+            "libncursesw.so.5",
+            "libncursesw.so.6",
+            "ncurses",
+            "libncurses.so",
+            "libncurses.so.5",
+            "libncurses.so.6",
+        };
+
+        Should.Throw<CursesInitializationException>(() => CursesBackend.NCurses(_dotNetSystemAdapterMock.Object));
+
+        foreach (var option in options)
+        {
+            _dotNetSystemAdapterMock.Verify(
+                s => s.TryLoadNativeLibrary(option, It.IsAny<Assembly>(), It.IsAny<DllImportSearchPath?>(),
+                    out It.Ref<IntPtr>.IsAny), Times.Once);
+        }
+        
+        _dotNetSystemAdapterMock.Verify(
+            s => s.TryLoadNativeLibrary(It.IsAny<string>(), It.IsAny<Assembly>(), It.IsAny<DllImportSearchPath?>(),
+                out It.Ref<IntPtr>.IsAny), Times.Exactly(options.Length));
+    }
 }
