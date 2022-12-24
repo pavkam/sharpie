@@ -43,6 +43,16 @@ In addition to wrapping NCurses, this library also adds numerous quality-of-life
 5. Supports protected/synchronized or raw access to all classes,
 6. And other small additions here and there...
 
+# Platforms
+**Sharpie** has been tested with the following platform/library combinations:
+| OS          | Architecture | Curses       |
+| ----------- | ------------ | ------------ |
+| MacOS 13    | ARM64        | ncurses 5.7  |
+| MacOS 13    | ARM64        | ncurses 6.3  |
+| Ubuntu 22   | ARM64        | ncursesw 5.7 |
+
+> If you successfully test the library on other platforms please let me know.
+
 # How To
 What follows is a small example of how to use the library:
 ![Demo](media/demo-1.gif)
