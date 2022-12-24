@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Backend;
 
 /// <summary>
-/// NCurses-backend with unix-specific extensions.
+///     NCurses-backend with unix-specific extensions.
 /// </summary>
 [SupportedOSPlatform("linux"), SupportedOSPlatform("macos"), SupportedOSPlatform("freebsd")]
 internal sealed class UnixNCursesBackend: NCursesBackend
@@ -39,35 +39,35 @@ internal sealed class UnixNCursesBackend: NCursesBackend
     private readonly INativeSymbolResolver _libCSymbolResolver;
 
     /// <summary>
-    /// Creates a new instance of this class.
+    ///     Creates a new instance of this class.
     /// </summary>
     /// <param name="dotNetSystemAdapter">The .NET system adapter.</param>
     /// <param name="nCursesSymbolResolver">The NCurses symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
-    public UnixNCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, 
-        INativeSymbolResolver nCursesSymbolResolver, 
-        INativeSymbolResolver libCSymbolResolver):
-        base(dotNetSystemAdapter, nCursesSymbolResolver)
+    public UnixNCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver nCursesSymbolResolver,
+        INativeSymbolResolver libCSymbolResolver): base(dotNetSystemAdapter, nCursesSymbolResolver)
     {
         Debug.Assert(dotNetSystemAdapter.IsUnixLike);
         Debug.Assert(libCSymbolResolver != null);
 
         _libCSymbolResolver = libCSymbolResolver;
     }
-    
+
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
-    
-    public override int mousemask(int newMask, out int oldMask)
+
+    public override int mousemask(uint newMask, out uint oldMask)
     {
         var result = base.mousemask(newMask, out oldMask);
         if (!result.Failed())
         {
+            var parser = CursesMouseEventParser.Get(mouse_version());
+
             var csi = "\x1b[?1003l";
-            if ((newMask & (int) CursesMouseEvent.EventType.ReportPosition) != 0)
+            if ((newMask & parser.ReportPosition) != 0)
             {
                 csi = "\x1b[?1003h";
-            } else if ((newMask & (int) CursesMouseEvent.EventType.All) != 0)
+            } else if ((newMask & parser.All) != 0)
             {
                 csi = "\x1b[?1000h";
             }
@@ -90,7 +90,7 @@ internal sealed class UnixNCursesBackend: NCursesBackend
         handle = DotNetSystemAdapter.MonitorTerminalResizeSignal(action);
         return true;
     }
-    
+
     // ReSharper restore InconsistentNaming
     // ReSharper restore IdentifierTypo
 }

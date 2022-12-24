@@ -1,7 +1,8 @@
 namespace Sharpie;
 
 /// <summary>
-///     A general-purpose drawing surface that can be latter draw onto any object that implements <see cref="Sharpie.Abstractions.IDrawSurface" />.
+///     A general-purpose drawing surface that can be latter draw onto any object that implements
+///     <see cref="Sharpie.Abstractions.IDrawSurface" />.
 ///     Supports multiple types of drawing operations most commonly used in terminal apps.
 /// </summary>
 [PublicAPI]
@@ -557,9 +558,6 @@ public sealed class Canvas: IDrawable, IDrawSurface
         _cells = new Cell[size.Width, size.Height];
     }
 
-    /// <inheritdoc cref="IDrawSurface.DrawCell" />
-    void IDrawSurface.DrawCell(Point location, Rune rune, Style style) { SetCell(location.X, location.Y, rune, style); }
-
     /// <inheritdoc cref="IDrawable.Size" />
     public Size Size { get; }
 
@@ -594,6 +592,9 @@ public sealed class Canvas: IDrawable, IDrawSurface
             }
         }
     }
+
+    /// <inheritdoc cref="IDrawSurface.DrawCell" />
+    void IDrawSurface.DrawCell(Point location, Rune rune, Style style) { SetCell(location.X, location.Y, rune, style); }
 
     private bool InArea(int x, int y) => x >= 0 && x < Size.Width && y >= 0 && y < Size.Height;
 
@@ -835,7 +836,8 @@ public sealed class Canvas: IDrawable, IDrawSurface
     }
 
     /// <summary>
-    ///     Draws a line starting at a given starting at a given point vertically or horizontally using line drawing characters.
+    ///     Draws a line starting at a given starting at a given point vertically or horizontally using line drawing
+    ///     characters.
     /// </summary>
     /// <param name="location">The start location.</param>
     /// <param name="orientation">The line orientation.</param>
@@ -920,7 +922,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
     }
 
     /// <summary>
-    /// Draws a line between two points in the drawing using block characters.
+    ///     Draws a line between two points in the drawing using block characters.
     /// </summary>
     /// <param name="startLocation">The starting cell.</param>
     /// <param name="endLocation">The ending cell.</param>

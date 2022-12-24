@@ -112,6 +112,10 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
+        _cursesMock.Setup(s => s.mouse_version())
+                   .Returns(1);
+        
+        
         _terminal = new(_cursesMock.Object,
             new(UseStandardKeySequenceResolvers: false,
                 ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
@@ -567,7 +571,7 @@ public class EventPumpTests
                        var dx = skip ? 10 : 0;
                        me = new()
                        {
-                           x = dx + 5, y = dx + 6, buttonState = (uint) CursesMouseEvent.EventType.ReportPosition
+                           x = dx + 5, y = dx + 6, buttonState = 8u << 24 // report position
                        };
 
                        var res = skip ? -1 : 0;
@@ -582,35 +586,17 @@ public class EventPumpTests
 
         _cursesMock.Verify(v => v.getmouse(out It.Ref<CursesMouseEvent>.IsAny), Times.Exactly(2));
     }
-
-    [TestMethod, Timeout(Timeout)]
-    public void Listen1_SkipsMouseEvents_WithBadButtons()
-    {
-        _pump.UseInternalMouseEventResolver = false;
-
-        var skip = true;
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
-                   {
-                       me = new() { buttonState = skip ? 0 : (uint) CursesMouseEvent.EventType.Button2Released };
-
-                       skip = !skip;
-                       return 0;
-                   });
-
-        var e = SimulateEventRep(2, (int) CursesKey.Yes, (int) CursesKey.Mouse);
-        ((MouseActionEvent) e).Button.ShouldBe(MouseButton.Button2);
-
-        _cursesMock.Verify(v => v.getmouse(out It.Ref<CursesMouseEvent>.IsAny), Times.Exactly(2));
-    }
-
+    
     [TestMethod, Timeout(Timeout)]
     public void Listen1_ProcessesMouseMoveEvents()
     {
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {
-                       me = new() { x = 5, y = 6, buttonState = (uint) CursesMouseEvent.EventType.ReportPosition };
+                       me = new()
+                       {
+                           x = 5, y = 6, buttonState = 8u << 24 // report position
+                       };
 
                        return 0;
                    });
@@ -627,7 +613,10 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {
-                       me = new() { x = 5, y = 6, buttonState = (uint) CursesMouseEvent.EventType.ReportPosition };
+                       me = new()
+                       {
+                           x = 5, y = 6, buttonState = 8u << 24 // report position
+                       };
 
                        return 0;
                    });
@@ -651,8 +640,7 @@ public class EventPumpTests
                        {
                            x = 5,
                            y = 6,
-                           buttonState = (uint) CursesMouseEvent.EventType.Button1Clicked |
-                               (uint) CursesMouseEvent.EventType.Alt
+                           buttonState = (4u << ((1 - 1) * 6)) | (4u << 24) // Button1Clicked + Alt
                        };
 
                        return 0;
@@ -680,8 +668,7 @@ public class EventPumpTests
                        {
                            x = 5,
                            y = 6,
-                           buttonState = (uint) CursesMouseEvent.EventType.Button1Pressed |
-                               (uint) CursesMouseEvent.EventType.Alt
+                           buttonState = (2u << ((1 - 1) * 6)) | (4u << 24) // Button1Pressed + Alt
                        };
 
                        return 0;
@@ -837,7 +824,10 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
                    .Returns((out CursesMouseEvent me) =>
                    {
-                       me = new() { buttonState = (uint) CursesMouseEvent.EventType.ReportPosition };
+                       me = new()
+                       {
+                           buttonState = 8u << 24 // report position
+                       };
                        return 0;
                    });
 

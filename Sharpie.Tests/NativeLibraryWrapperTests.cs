@@ -79,6 +79,8 @@ public class NativeLibraryWrapperTests
     [TestMethod]
     public void TryLoad_TriesToLoadByPath_IfHasDirectory()
     {
+        _dotNetSystemAdapterMock.Setup(s => s.GetDirectoryName(It.IsAny<string>()))
+                                .Returns("something");
         NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_dotNetSystemAdapterMock.Object, new[] { "hello/world" });
 
         _dotNetSystemAdapterMock.Verify(

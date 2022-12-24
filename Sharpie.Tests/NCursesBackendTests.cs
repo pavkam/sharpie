@@ -39,9 +39,7 @@ public class NCursesBackendTests
     private Mock<IDotNetSystemAdapter> _dotNetSystemAdapterMock = null!;
     private Mock<INativeSymbolResolver> _nativeSymbolResolverMock = null!;
 
-    private static CursesComplexChar MakeTestComplexChar(uint x) =>
-        new(x, x, x, x, x,
-            x);
+    private static CursesComplexChar MakeTestComplexChar(uint x) => new() { _attrAndColorPair = x };
 
     [TestInitialize]
     public void TestInitialize()
@@ -526,6 +524,9 @@ public class NCursesBackendTests
     public void longname_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.longname, IntPtr>(s => s(), h);
 
         _backend.longname()
@@ -536,6 +537,9 @@ public class NCursesBackendTests
     public void termname_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.termname, IntPtr>(s => s(), h);
 
         _backend.termname()
@@ -546,6 +550,8 @@ public class NCursesBackendTests
     public void curses_version_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curses_version, IntPtr>(s => s(), h);
 
         _backend.curses_version()
@@ -1030,6 +1036,9 @@ public class NCursesBackendTests
     {
         const int i = 999;
         var h = Marshal.StringToHGlobalAnsi(ret);
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_label, IntPtr>(s => s(i), h);
 
         _backend.slk_label(i)
@@ -1211,6 +1220,10 @@ public class NCursesBackendTests
     public void keybound_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
+        
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.keybound, IntPtr>(s => s('A', 2), h);
 
         _backend.keybound('A', 2)
@@ -1221,6 +1234,9 @@ public class NCursesBackendTests
     public void keyname_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.keyname, IntPtr>(s => s('A'), h);
 
         _backend.keyname('A')
@@ -1231,6 +1247,9 @@ public class NCursesBackendTests
     public void key_name_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.key_name, IntPtr>(s => s('A'), h);
 
         _backend.key_name('A')
@@ -1718,6 +1737,9 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void init_color_IsRelayedToLibrary(int ret)
     {
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.init_color, int>(s => s(1, 2, 3, 4), ret);
 
         _backend.init_color(1, 2, 3, 4)
@@ -1738,7 +1760,9 @@ public class NCursesBackendTests
     {
         var ch = new CursesComplexChar();
         var h = Marshal.StringToHGlobalUni(ret);
-
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryUnicodeStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wunctrl, IntPtr>(s => s(ref ch), h);
 
         _backend.wunctrl(ch)
@@ -2035,6 +2059,9 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void color_content_IsRelayedToLibrary(int ret)
     {
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.color_content>()
                                  .Setup(s => s(1, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny,
                                      out It.Ref<short>.IsAny))
@@ -2055,12 +2082,27 @@ public class NCursesBackendTests
         ((int) blue).ShouldBe(33);
     }
 
+    [TestMethod, DataRow("something", -1), DataRow("6.2.3", 2), DataRow("something6.2.3", 2),
+     DataRow("something 5.7", -1),  DataRow("something 4.7.5", -1), DataRow("something 5.7.12312", 1)]
+    public void mouse_version_ParsesCursesVersion(string ver, int m)
+    {
+        var h = Marshal.StringToHGlobalAnsi(ver);
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curses_version>()
+                                 .Setup(s => s())
+                                 .Returns(h);
+
+        _backend.mouse_version()
+                .ShouldBe(m);
+    }
+
     [TestMethod, DataRow(0), DataRow(-1)]
     public void mousemask_IsRelayedToLibrary(int ret)
     {
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask>()
-                                 .Setup(s => s(1, out It.Ref<int>.IsAny))
-                                 .Returns((int _, out int om) =>
+                                 .Setup(s => s(1, out It.Ref<uint>.IsAny))
+                                 .Returns((uint _, out uint om) =>
                                  {
                                      om = 11;
                                      return ret;
@@ -2070,8 +2112,9 @@ public class NCursesBackendTests
         _backend.mousemask(1, out var old)
                 .ShouldBe(ret);
 
-        old.ShouldBe(11);
+        old.ShouldBe(11u);
     }
+
 
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wattr_get_IsRelayedToLibrary(int ret)

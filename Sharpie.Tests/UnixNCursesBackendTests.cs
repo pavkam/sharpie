@@ -30,6 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
+using System.Runtime.InteropServices;
 using Nito.Disposables;
 
 [TestClass, SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
@@ -107,8 +108,8 @@ public class UnixNCursesBackendTests
                                 .Returns(true);
 
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask>()
-                                 .Setup(s => s(It.IsAny<int>(), out It.Ref<int>.IsAny))
-                                 .Returns((int _, out int o) =>
+                                 .Setup(s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
+                                 .Returns((uint _, out uint o) =>
                                  {
                                      o = 999;
                                      return -1;
@@ -117,25 +118,60 @@ public class UnixNCursesBackendTests
         _backend.mousemask(100, out var old)
                 .ShouldBe(-1);
 
-        old.ShouldBe(999);
+        old.ShouldBe(999u);
 
         _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush(It.IsAny<string>()), Times.Never);
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"), DataRow(0, "\x1b[?1003l"),
-     DataRow((int) CursesMouseEvent.EventType.ReportPosition, "\x1b[?1003h"),
-     DataRow((int) CursesMouseEvent.EventType.All, "\x1b[?1000h")]
-    public void mousemask_CallsCursesAndConsole_IfCursesSucceeds_WithReportPosition(int mask, string exp)
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"), 
+     DataRow(1), DataRow(2)]
+    public void mousemask_OutsToConsole_WhenReportingPosition(int abi)
     {
-        _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)
-                                .Returns(true);
-
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask, int>(
-            s => s(It.IsAny<int>(), out It.Ref<int>.IsAny), 0);
+            s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
 
-        _backend.mousemask(mask, out var _)
+        var version = abi == 2 ? "version 6.0.0" : "version 1.0.0";
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curses_version, IntPtr>(
+            s => s(), Marshal.StringToHGlobalAnsi(version));
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        
+        var parser = CursesMouseEventParser.Get(abi);
+        _backend.mousemask(parser.ReportPosition, out var _)
                 .ShouldBe(0);
 
-        _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush(exp), Times.Once);
+        _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush("\x1b[?1003h"), Times.Once);
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"), 
+     DataRow(1), DataRow(2)]
+    public void mousemask_OutsToConsole_WhenAll(int abi)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask, int>(
+            s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
+
+        var version = abi == 2 ? "version 6.0.0" : "version 1.0.0";
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curses_version, IntPtr>(
+            s => s(), Marshal.StringToHGlobalAnsi(version));
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
+        var parser = CursesMouseEventParser.Get(abi);
+        _backend.mousemask(parser.All, out var _)
+                .ShouldBe(0);
+
+        _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush("\x1b[?1000h"), Times.Once);
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo")]
+    public void mousemask_OutsToConsole_WhenNothing()
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask, int>(
+            s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
+
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curses_version>();
+        _backend.mousemask(0, out var _)
+                .ShouldBe(0);
+        
+        _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush("\x1b[?1003l"), Times.Once);
     }
 }
