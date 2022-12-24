@@ -10,6 +10,7 @@ using System.Collections.Concurrent;
 public sealed class EventPump: IEventPump
 {
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
+    private CursesMouseEventParser _cursesMouseEventParser;
     private ConcurrentQueue<object> _delegatedObjects = new();
     private MouseEventResolver? _mouseEventResolver;
 
@@ -21,7 +22,11 @@ public sealed class EventPump: IEventPump
     ///     Thrown if <paramref name="parent" /> is <c>null</c>.
     /// </exception>
     /// <remarks>This method is not thread-safe.</remarks>
-    internal EventPump(Terminal parent) => Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
+    internal EventPump(Terminal parent)
+    {
+        Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
+        _cursesMouseEventParser = CursesMouseEventParser.Get(Terminal.Curses.mouse_version());
+    }
 
     /// <inheritdoc cref="IColorManager.Terminal" />
     public Terminal Terminal { get; }
@@ -275,17 +280,13 @@ public sealed class EventPump: IEventPump
                         return null;
                     }
 
-                    if (mouseEvent.buttonState == (uint) CursesMouseEvent.EventType.ReportPosition)
-                    {
-                        return new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y));
-                    }
 
-                    var (button, state, mouseMod) =
-                        Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) mouseEvent.buttonState);
+                    var parsed = _cursesMouseEventParser.Parse(mouseEvent.buttonState);
 
-                    return button == 0
-                        ? null
-                        : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), button, state, mouseMod);
+                    return parsed == null
+                        ? new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y))
+                        : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), parsed.Value.button, parsed.Value.state,
+                            parsed.Value.modifierKey);
                 default:
                     var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
                     return new KeyEvent(key, new(ControlCharacter.Null), Terminal.Curses.key_name(keyCode), keyMod);

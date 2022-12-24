@@ -3,21 +3,25 @@ namespace Sharpie.Backend;
 using System.Text.RegularExpressions;
 
 /// <summary>
-/// Provides functionality for obtaining <see cref="ICursesBackend"/> instances.
+///     Provides functionality for obtaining <see cref="ICursesBackend" /> instances.
 /// </summary>
 [PublicAPI]
 public static class CursesBackend
 {
     private const string NCursesPrefix = "ncurses";
     private const string LibCPrefix = "libc";
-        
+
     /// <summary>
-    /// Internal method that loads the Curses backend from native libraries (and any other support library that is required).
+    ///     Internal method that loads the Curses backend from native libraries (and any other support library that is
+    ///     required).
     /// </summary>
     /// <param name="dotNetSystemAdapter">Adapter for .NET functionality.</param>
     /// <param name="libPathResolver">Function that provides paths/names for the native loader.</param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="dotNetSystemAdapter"/> or <paramref name="libPathResolver"/> are <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">
+    ///     Thrown if <paramref name="dotNetSystemAdapter" /> or
+    ///     <paramref name="libPathResolver" /> are <c>null</c>.
+    /// </exception>
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     internal static ICursesBackend NCurses(IDotNetSystemAdapter dotNetSystemAdapter,
         Func<string, IEnumerable<string>> libPathResolver)
@@ -46,11 +50,11 @@ public static class CursesBackend
     }
 
     /// <summary>
-    /// Loads the Curses backend from native libraries (and any other support library that is required).
+    ///     Loads the Curses backend from native libraries (and any other support library that is required).
     /// </summary>
     /// <param name="libPathResolver">Function that provides paths/names for the native loader.</param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="libPathResolver"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="libPathResolver" /> is <c>null</c>.</exception>
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested.")]
     public static ICursesBackend NCurses(Func<string, IEnumerable<string>> libPathResolver)
@@ -62,11 +66,11 @@ public static class CursesBackend
 
         return NCurses(IDotNetSystemAdapter.Instance, libPathResolver);
     }
-       
 
     /// <summary>
-    /// Internal method that loads the Curses backend from native libraries (and any other support library that is required).
-    /// This method uses standard known names for the 'ncurses' and potentially 'libc' libraries.
+    ///     Internal method that loads the Curses backend from native libraries (and any other support library that is
+    ///     required).
+    ///     This method uses standard known names for the 'ncurses' and potentially 'libc' libraries.
     /// </summary>
     /// <param name="dotNetSystemAdapter">Adapter for .NET functionality.</param>
     /// <returns></returns>
@@ -86,8 +90,8 @@ public static class CursesBackend
     }
 
     /// <summary>
-    /// Loads the Curses backend from native libraries (and any other support library that is required).
-    /// This method uses standard known names for the required libraries.
+    ///     Loads the Curses backend from native libraries (and any other support library that is required).
+    ///     This method uses standard known names for the required libraries.
     /// </summary>
     /// <returns></returns>
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
@@ -109,7 +113,7 @@ public static class CursesBackend
                                                                    .Value)));
     }
 
-    [SupportedOSPlatform("linux"),SupportedOSPlatform("freebsd")]
+    [SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd")]
     private static IEnumerable<string> FindLinuxAndFreeBsdNCursesCandidates()
     {
         return new[]
@@ -121,10 +125,10 @@ public static class CursesBackend
             "libncurses.so.6",
             "libncurses.so.5",
             "libncurses.so",
-            NCursesPrefix,
+            NCursesPrefix
         };
     }
-    
+
     [SupportedOSPlatform("macos")]
     private static IEnumerable<string> FindMacOsNCursesCandidates(IDotNetSystemAdapter dotNetSystemAdapter)
     {
@@ -132,10 +136,10 @@ public static class CursesBackend
 
         var homeBrewPrefix = dotNetSystemAdapter.GetEnvironmentVariable("HOMEBREW_PREFIX");
         var homeBrewCellar = dotNetSystemAdapter.GetEnvironmentVariable("HOMEBREW_CELLAR");
-        
+
         var candidates = new List<(string name, int version)>();
         var matchRegEx = new Regex(@"libncurses\.(\d+)\.dylib", RegexOptions.Compiled);
-        
+
         if (!string.IsNullOrEmpty(homeBrewPrefix))
         {
             var libPath = dotNetSystemAdapter.CombinePaths(homeBrewPrefix, "lib");
@@ -144,7 +148,7 @@ public static class CursesBackend
                 candidates.AddRange(GetCandidatesInDirectory(dotNetSystemAdapter, libPath, matchRegEx));
             }
         }
-        
+
         if (!string.IsNullOrEmpty(homeBrewCellar))
         {
             var ncursesPath = dotNetSystemAdapter.CombinePaths(homeBrewCellar, NCursesPrefix);

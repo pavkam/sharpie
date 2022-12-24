@@ -431,7 +431,9 @@ public interface ICursesBackend
 
     int ungetmouse(CursesMouseEvent @event);
 
-    int mousemask(int newMask, out int oldMask);
+    int mousemask(uint newMask, out uint oldMask);
+
+    int mouse_version();
 
     bool wenclose(IntPtr window, int line, int col);
 
@@ -445,3 +447,4 @@ public interface ICursesBackend
 
     bool monitor_pending_resize(Action action, [NotNullWhen(true)] out IDisposable? handle);
 }
+

@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Backend;
 
 /// <summary>
-/// Function map for LibC library.
+///     Function map for LibC library.
 /// </summary>
 [SuppressMessage("ReSharper", "IdentifierTypo"), SuppressMessage("ReSharper", "InconsistentNaming")]
 internal abstract class LibCFunctionMap

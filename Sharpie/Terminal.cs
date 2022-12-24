@@ -50,7 +50,7 @@ public sealed class Terminal: ITerminal, IDisposable
     private TerminalSurface? _header;
     private int? _initialCaretMode;
     private int? _initialMouseClickDelay;
-    private int? _initialMouseMask;
+    private uint? _initialMouseMask;
     private ManualResetEventSlim? _runCompletedEvent;
     private Screen _screen;
     private SoftLabelKeyManager _softLabelKeyManager;
@@ -72,7 +72,7 @@ public sealed class Terminal: ITerminal, IDisposable
 
         if (options.MouseClickInterval is < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(options.MouseClickInterval));
+            throw new ArgumentOutOfRangeException(nameof(options));
         }
 
         if (_terminalInstanceActive)
@@ -187,8 +187,9 @@ public sealed class Terminal: ITerminal, IDisposable
                                             .Check(nameof(Curses.mouseinterval),
                                                 "Failed to set the mouse click interval.");
 
-            Curses.mousemask((int) CursesMouseEvent.EventType.ReportPosition | (int) CursesMouseEvent.EventType.All,
-                      out var initialMouseMask)
+            var parser = CursesMouseEventParser.Get(Curses.mouse_version());
+
+            Curses.mousemask(parser.ReportPosition | parser.All, out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
             _eventPump.UseInternalMouseEventResolver = Options.MouseClickInterval == null;
@@ -351,7 +352,7 @@ public sealed class Terminal: ITerminal, IDisposable
 
     /// <inheritdoc cref="ITerminal.SupportedAttributes" />
     public VideoAttribute SupportedAttributes =>
-        (VideoAttribute) Curses.term_attrs() 
+        (VideoAttribute) Curses.term_attrs()
                                .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
 
     /// <inheritdoc cref="ITerminal.Screen" />

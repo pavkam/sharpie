@@ -279,118 +279,6 @@ public static class Helpers
     }
 
     /// <summary>
-    ///     Converts a Curses mouse action into proper format.
-    /// </summary>
-    /// <param name="type">The Curses mouse event type.</param>
-    /// <returns>The mouse action attributes.</returns>
-    internal static (MouseButton button, MouseButtonState state, ModifierKey modifierKey) ConvertMouseActionEvent(
-        CursesMouseEvent.EventType type)
-    {
-        var modifierKey = ModifierKey.None;
-        var button = (MouseButton) 0;
-        var state = (MouseButtonState) 0;
-
-        if (type.HasFlag(CursesMouseEvent.EventType.Alt))
-        {
-            modifierKey |= ModifierKey.Alt;
-        }
-
-        if (type.HasFlag(CursesMouseEvent.EventType.Ctrl))
-        {
-            modifierKey |= ModifierKey.Ctrl;
-        }
-
-        if (type.HasFlag(CursesMouseEvent.EventType.Shift))
-        {
-            modifierKey |= ModifierKey.Shift;
-        }
-
-        if (type.HasFlag(CursesMouseEvent.EventType.Button1Released))
-        {
-            button = MouseButton.Button1;
-            state = MouseButtonState.Released;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button1Pressed))
-        {
-            button = MouseButton.Button1;
-            state = MouseButtonState.Pressed;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button1Clicked))
-        {
-            button = MouseButton.Button1;
-            state = MouseButtonState.Clicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button1DoubleClicked))
-        {
-            button = MouseButton.Button1;
-            state = MouseButtonState.DoubleClicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button1TripleClicked))
-        {
-            button = MouseButton.Button1;
-            state = MouseButtonState.TripleClicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2Released))
-        {
-            button = MouseButton.Button2;
-            state = MouseButtonState.Released;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2Pressed))
-        {
-            button = MouseButton.Button2;
-            state = MouseButtonState.Pressed;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2Clicked))
-        {
-            button = MouseButton.Button2;
-            state = MouseButtonState.Clicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2DoubleClicked))
-        {
-            button = MouseButton.Button2;
-            state = MouseButtonState.DoubleClicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button2TripleClicked))
-        {
-            button = MouseButton.Button2;
-            state = MouseButtonState.TripleClicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3Released))
-        {
-            button = MouseButton.Button3;
-            state = MouseButtonState.Released;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3Pressed))
-        {
-            button = MouseButton.Button3;
-            state = MouseButtonState.Pressed;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3Clicked))
-        {
-            button = MouseButton.Button3;
-            state = MouseButtonState.Clicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3DoubleClicked))
-        {
-            button = MouseButton.Button3;
-            state = MouseButtonState.DoubleClicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button3TripleClicked))
-        {
-            button = MouseButton.Button3;
-            state = MouseButtonState.TripleClicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4Released))
-        {
-            button = MouseButton.Button4;
-            state = MouseButtonState.Released;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4Pressed))
-        {
-            button = MouseButton.Button4;
-            state = MouseButtonState.Pressed;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4Clicked))
-        {
-            button = MouseButton.Button4;
-            state = MouseButtonState.Clicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4DoubleClicked))
-        {
-            button = MouseButton.Button4;
-            state = MouseButtonState.DoubleClicked;
-        } else if (type.HasFlag(CursesMouseEvent.EventType.Button4TripleClicked))
-        {
-            button = MouseButton.Button4;
-            state = MouseButtonState.TripleClicked;
-        }
-
-        return (button, state, modifierKey);
-    }
-
-    /// <summary>
     ///     Enumerates a given interval using 1/2s.
     /// </summary>
     /// <param name="start">The start of the interval.</param>
@@ -455,7 +343,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Draws a line between two points in the drawing using block characters.
+    ///     Draws a line between two points in the drawing using block characters.
     /// </summary>
     /// <param name="start">The starting point.</param>
     /// <param name="end">The ending point.</param>
@@ -509,7 +397,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Refreshes a surface using terminal's <see cref="Terminal.AtomicRefresh"/> facility.
+    ///     Refreshes a surface using terminal's <see cref="Terminal.AtomicRefresh" /> facility.
     /// </summary>
     /// <param name="t">The terminal.</param>
     /// <param name="s">The surface.</param>
@@ -530,7 +418,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Intersects the given <paramref name="area"/> with the total area of a surface and returns the intersection.
+    ///     Intersects the given <paramref name="area" /> with the total area of a surface and returns the intersection.
     /// </summary>
     /// <param name="size">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
@@ -539,7 +427,7 @@ public static class Helpers
         new Rectangle(new(0, 0), size).AdjustToActualArea(ref area);
 
     /// <summary>
-    /// Intersects the given <paramref name="area"/> with the total area of a surface and returns the intersection.
+    ///     Intersects the given <paramref name="area" /> with the total area of a surface and returns the intersection.
     /// </summary>
     /// <param name="total">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
@@ -553,7 +441,7 @@ public static class Helpers
     }
 
     /// <summary>
-    /// Intersects the given <paramref name="area"/> with the total area of a surface and returns the intersection.
+    ///     Intersects the given <paramref name="area" /> with the total area of a surface and returns the intersection.
     /// </summary>
     /// <param name="size">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>

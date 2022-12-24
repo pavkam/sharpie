@@ -2,11 +2,13 @@
 
 namespace Sharpie.Backend;
 
+using System.Text.RegularExpressions;
+
 [PublicAPI]
 internal class NCursesBackend: ICursesBackend
 {
-    public IDotNetSystemAdapter DotNetSystemAdapter { get; }
     private readonly INativeSymbolResolver _nCursesSymbolResolver;
+    private int? _mouseAbiVersion;
 
     internal NCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver nCursesSymbolResolver)
     {
@@ -16,6 +18,8 @@ internal class NCursesBackend: ICursesBackend
         DotNetSystemAdapter = dotNetSystemAdapter;
         _nCursesSymbolResolver = nCursesSymbolResolver;
     }
+
+    public IDotNetSystemAdapter DotNetSystemAdapter { get; }
 
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
@@ -34,7 +38,8 @@ internal class NCursesBackend: ICursesBackend
 
     public bool is_nodelay(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.is_nodelay>()(window);
 
-    public bool is_notimeout(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.is_notimeout>()(window);
+    public bool is_notimeout(IntPtr window) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.is_notimeout>()(window);
 
     public bool is_scrollok(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.is_scrollok>()(window);
 
@@ -96,7 +101,7 @@ internal class NCursesBackend: ICursesBackend
 
     public int flushinp() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.flushinp>()();
 
-    public  int getattrs(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.getattrs>()(window);
+    public int getattrs(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.getattrs>()(window);
 
     public int getcurx(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.getcurx>()(window);
 
@@ -114,7 +119,8 @@ internal class NCursesBackend: ICursesBackend
 
     public int getpary(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.getpary>()(window);
 
-    public int halfdelay(int tenthsOfSec) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.halfdelay>()(tenthsOfSec);
+    public int halfdelay(int tenthsOfSec) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.halfdelay>()(tenthsOfSec);
 
     public bool has_colors() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.has_colors>()();
 
@@ -125,7 +131,8 @@ internal class NCursesBackend: ICursesBackend
     public void idcok(IntPtr window, bool set) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.idcok>()(window, set);
 
-    public int idlok(IntPtr window, bool set) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.idlok>()(window, set);
+    public int idlok(IntPtr window, bool set) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.idlok>()(window, set);
 
     public void immedok(IntPtr window, bool set) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.immedok>()(window, set);
@@ -150,7 +157,8 @@ internal class NCursesBackend: ICursesBackend
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.is_wintouched>()(window);
 
     public string? keyname(uint keyCode) =>
-        Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.keyname>()(keyCode));
+        DotNetSystemAdapter.NativeLibraryAnsiStrPtrToString(
+            _nCursesSymbolResolver.Resolve<NCursesFunctionMap.keyname>()(keyCode));
 
     public int keypad(IntPtr window, bool set) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.keypad>()(window, set);
@@ -159,7 +167,8 @@ internal class NCursesBackend: ICursesBackend
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.leaveok>()(window, set);
 
     public string? longname() =>
-        Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.longname>()());
+        DotNetSystemAdapter.NativeLibraryAnsiStrPtrToString(
+            _nCursesSymbolResolver.Resolve<NCursesFunctionMap.longname>()());
 
     public int meta(IntPtr window, bool set) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.meta>()(window, set);
 
@@ -262,7 +271,8 @@ internal class NCursesBackend: ICursesBackend
     public int slk_init(int format) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_init>()(format);
 
     public string? slk_label(int labelIndex) =>
-        Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_label>()(labelIndex));
+        DotNetSystemAdapter.NativeLibraryAnsiStrPtrToString(
+            _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_label>()(labelIndex));
 
     public int slk_noutrefresh() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_noutrefresh>()();
 
@@ -286,7 +296,8 @@ internal class NCursesBackend: ICursesBackend
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.syncok>()(window, set);
 
     public string? termname() =>
-        Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.termname>()());
+        DotNetSystemAdapter.NativeLibraryAnsiStrPtrToString(
+            _nCursesSymbolResolver.Resolve<NCursesFunctionMap.termname>()());
 
     public int ungetch(uint @char) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.ungetch>()(@char);
 
@@ -346,7 +357,7 @@ internal class NCursesBackend: ICursesBackend
 
     public int wgetch(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wgetch>()(window);
 
-    public int wgetnstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, int length) =>
+    public int wgetnstr(IntPtr window, StringBuilder dest, int length) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wgetnstr>()(window, dest, length);
 
     public int whline(IntPtr window, uint @char, int count) =>
@@ -354,7 +365,7 @@ internal class NCursesBackend: ICursesBackend
 
     public int winch(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.winch>()(window);
 
-    public int winchnstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, int length) =>
+    public int winchnstr(IntPtr window, StringBuilder dest, int length) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.winchnstr>()(window, dest, length);
 
     public int winsch(IntPtr window, uint charAndAttrs) =>
@@ -402,10 +413,12 @@ internal class NCursesBackend: ICursesBackend
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.resizeterm>()(lines, cols);
 
     public string? keybound(uint keyCode, int count) =>
-        Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.keybound>()(keyCode, count));
+        DotNetSystemAdapter.NativeLibraryAnsiStrPtrToString(
+            _nCursesSymbolResolver.Resolve<NCursesFunctionMap.keybound>()(keyCode, count));
 
     public string? curses_version() =>
-        Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.curses_version>()());
+        DotNetSystemAdapter.NativeLibraryAnsiStrPtrToString(_nCursesSymbolResolver
+            .Resolve<NCursesFunctionMap.curses_version>()());
 
     public int assume_default_colors(int fgColor, int bgColor) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.assume_default_colors>()(fgColor, bgColor);
@@ -432,7 +445,8 @@ internal class NCursesBackend: ICursesBackend
             reserved);
 
     public string? key_name(uint @char) =>
-        Marshal.PtrToStringAnsi(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.key_name>()(@char));
+        DotNetSystemAdapter.NativeLibraryAnsiStrPtrToString(
+            _nCursesSymbolResolver.Resolve<NCursesFunctionMap.key_name>()(@char));
 
     public int killwchar(out uint @char) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.killwchar>()(out @char);
 
@@ -456,7 +470,7 @@ internal class NCursesBackend: ICursesBackend
     public int wadd_wchnstr(IntPtr window, CursesComplexChar[] str, int count) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wadd_wchnstr>()(window, str, count);
 
-    public int waddnwstr(IntPtr window, [MarshalAs(UnmanagedType.LPWStr)] string text, int length) =>
+    public int waddnwstr(IntPtr window, string text, int length) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.waddnwstr>()(window, text, length);
 
     public int wbkgrnd(IntPtr window, CursesComplexChar @char) =>
@@ -503,7 +517,8 @@ internal class NCursesBackend: ICursesBackend
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wins_wch>()(window, ref @char);
 
     public string? wunctrl(CursesComplexChar @char) =>
-        Marshal.PtrToStringUni(_nCursesSymbolResolver.Resolve<NCursesFunctionMap.wunctrl>()(ref @char));
+        DotNetSystemAdapter.NativeLibraryUnicodeStrPtrToString(
+            _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wunctrl>()(ref @char));
 
     public int wvline_set(IntPtr window, CursesComplexChar @char, int count) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wvline_set>()(window, ref @char, count);
@@ -514,8 +529,38 @@ internal class NCursesBackend: ICursesBackend
     public int ungetmouse(CursesMouseEvent @event) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.ungetmouse>()(ref @event);
 
-    public virtual int mousemask(int newMask, out int oldMask) =>
+    public virtual int mousemask(uint newMask, out uint oldMask) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.mousemask>()(newMask, out oldMask);
+
+    public virtual int mouse_version()
+    {
+        if (_mouseAbiVersion == null)
+        {
+            var ver = curses_version();
+            var abi = -1;
+            if (ver != null)
+            {
+                var versionParser = new Regex(@".*(\d+)\.(\d+)\.(\d+)");
+                var match = versionParser.Match(ver);
+                if (match.Success)
+                {
+                    var major = int.Parse(match.Groups[1]
+                                               .Value);
+
+                    abi = major switch
+                    {
+                        >= 6 => 2,
+                        5 => 1,
+                        var _ => abi
+                    };
+                }
+            }
+
+            _mouseAbiVersion = abi;
+        }
+
+        return _mouseAbiVersion.Value;
+    }
 
     public bool wenclose(IntPtr window, int line, int col) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wenclose>()(window, line, col);

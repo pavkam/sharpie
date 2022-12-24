@@ -86,3 +86,4 @@ public interface IEventPump
     /// <remarks>This operation is not thread safe.</remarks>
     bool Uses(ResolveEscapeSequenceFunc resolver);
 }
+

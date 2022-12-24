@@ -282,48 +282,6 @@ public class HelpersTests
         result.modifierKey.ShouldBe(expMod);
     }
 
-    [TestMethod, DataRow(CursesMouseEvent.EventType.Button1Released, MouseButton.Button1, MouseButtonState.Released),
-     DataRow(CursesMouseEvent.EventType.Button1Pressed, MouseButton.Button1, MouseButtonState.Pressed),
-     DataRow(CursesMouseEvent.EventType.Button1Clicked, MouseButton.Button1, MouseButtonState.Clicked),
-     DataRow(CursesMouseEvent.EventType.Button1DoubleClicked, MouseButton.Button1, MouseButtonState.DoubleClicked),
-     DataRow(CursesMouseEvent.EventType.Button1TripleClicked, MouseButton.Button1, MouseButtonState.TripleClicked),
-     DataRow(CursesMouseEvent.EventType.Button2Released, MouseButton.Button2, MouseButtonState.Released),
-     DataRow(CursesMouseEvent.EventType.Button2Pressed, MouseButton.Button2, MouseButtonState.Pressed),
-     DataRow(CursesMouseEvent.EventType.Button2Clicked, MouseButton.Button2, MouseButtonState.Clicked),
-     DataRow(CursesMouseEvent.EventType.Button2DoubleClicked, MouseButton.Button2, MouseButtonState.DoubleClicked),
-     DataRow(CursesMouseEvent.EventType.Button2TripleClicked, MouseButton.Button2, MouseButtonState.TripleClicked),
-     DataRow(CursesMouseEvent.EventType.Button3Released, MouseButton.Button3, MouseButtonState.Released),
-     DataRow(CursesMouseEvent.EventType.Button3Pressed, MouseButton.Button3, MouseButtonState.Pressed),
-     DataRow(CursesMouseEvent.EventType.Button3Clicked, MouseButton.Button3, MouseButtonState.Clicked),
-     DataRow(CursesMouseEvent.EventType.Button3DoubleClicked, MouseButton.Button3, MouseButtonState.DoubleClicked),
-     DataRow(CursesMouseEvent.EventType.Button3TripleClicked, MouseButton.Button3, MouseButtonState.TripleClicked),
-     DataRow(CursesMouseEvent.EventType.Button4Released, MouseButton.Button4, MouseButtonState.Released),
-     DataRow(CursesMouseEvent.EventType.Button4Pressed, MouseButton.Button4, MouseButtonState.Pressed),
-     DataRow(CursesMouseEvent.EventType.Button4Clicked, MouseButton.Button4, MouseButtonState.Clicked),
-     DataRow(CursesMouseEvent.EventType.Button4DoubleClicked, MouseButton.Button4, MouseButtonState.DoubleClicked),
-     DataRow(CursesMouseEvent.EventType.Button4TripleClicked, MouseButton.Button4, MouseButtonState.TripleClicked)]
-    public void ConvertMouseActionEvent_ConvertsKnownMappings(int evt, MouseButton expButton, MouseButtonState expState)
-    {
-        var result = Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) evt);
-        result.button.ShouldBe(expButton);
-        result.state.ShouldBe(expState);
-    }
-
-    [TestMethod, DataRow(0, ModifierKey.None), DataRow(CursesMouseEvent.EventType.Alt, ModifierKey.Alt),
-     DataRow(CursesMouseEvent.EventType.Ctrl, ModifierKey.Ctrl),
-     DataRow(CursesMouseEvent.EventType.Shift, ModifierKey.Shift),
-     DataRow(CursesMouseEvent.EventType.Alt | CursesMouseEvent.EventType.Ctrl, ModifierKey.Alt | ModifierKey.Ctrl),
-     DataRow(CursesMouseEvent.EventType.Shift | CursesMouseEvent.EventType.Ctrl, ModifierKey.Shift | ModifierKey.Ctrl),
-     DataRow(CursesMouseEvent.EventType.Alt | CursesMouseEvent.EventType.Shift, ModifierKey.Alt | ModifierKey.Shift),
-     DataRow(CursesMouseEvent.EventType.Ctrl | CursesMouseEvent.EventType.Shift, ModifierKey.Ctrl | ModifierKey.Shift),
-     DataRow(CursesMouseEvent.EventType.Alt | CursesMouseEvent.EventType.Ctrl | CursesMouseEvent.EventType.Shift,
-         ModifierKey.Alt | ModifierKey.Shift | ModifierKey.Ctrl)]
-    public void ConvertMouseActionEvent_MapsModifiers(int evt, ModifierKey expMod)
-    {
-        var result = Helpers.ConvertMouseActionEvent((CursesMouseEvent.EventType) evt);
-        result.modifierKey.ShouldBe(expMod);
-    }
-
     [TestMethod]
     public void EnumerateInHalves_Throws_IfCountIsNegative()
     {
