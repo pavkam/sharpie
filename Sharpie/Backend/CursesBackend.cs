@@ -1,11 +1,16 @@
 namespace Sharpie.Backend;
 
+using System.Text.RegularExpressions;
+
 /// <summary>
 /// Provides functionality for obtaining <see cref="ICursesBackend"/> instances.
 /// </summary>
 [PublicAPI]
 public static class CursesBackend
 {
+    private const string NCursesPrefix = "ncurses";
+    private const string LibCPrefix = "libc";
+        
     /// <summary>
     /// Internal method that loads the Curses backend from native libraries (and any other support library that is required).
     /// </summary>
@@ -20,7 +25,7 @@ public static class CursesBackend
         Debug.Assert(dotNetSystemAdapter != null);
         Debug.Assert(libPathResolver != null);
 
-        var cw = NativeLibraryWrapper<NCursesFunctionMap>.TryLoad(dotNetSystemAdapter, libPathResolver("ncurses"));
+        var cw = NativeLibraryWrapper<NCursesFunctionMap>.TryLoad(dotNetSystemAdapter, libPathResolver(NCursesPrefix));
         if (cw == null)
         {
             throw new CursesInitializationException();
@@ -28,7 +33,7 @@ public static class CursesBackend
 
         if (dotNetSystemAdapter.IsUnixLike)
         {
-            var lw = NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, libPathResolver("libc"));
+            var lw = NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, libPathResolver(LibCPrefix));
             if (lw == null)
             {
                 throw new CursesInitializationException();
@@ -68,24 +73,15 @@ public static class CursesBackend
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     internal static ICursesBackend NCurses(IDotNetSystemAdapter dotNetSystemAdapter)
     {
-        return NCurses(dotNetSystemAdapter, s =>
+        return NCurses(dotNetSystemAdapter, lib =>
         {
-            if ((dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd) && s == "ncurses")
+            return lib switch
             {
-                return new[]
-                {
-                    "ncursesw",
-                    "libncursesw.so",
-                    "libncursesw.so.5",
-                    "libncursesw.so.6",
-                    "ncurses",
-                    "libncurses.so",
-                    "libncurses.so.5",
-                    "libncurses.so.6",
-                };
-            }
-
-            return new[] { s };
+                NCursesPrefix when dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd =>
+                    FindLinuxAndFreeBsdNCursesCandidates(),
+                NCursesPrefix when dotNetSystemAdapter.IsMacOs => FindMacOsNCursesCandidates(dotNetSystemAdapter),
+                var _ => new[] { lib }
+            };
         });
     }
 
@@ -97,4 +93,76 @@ public static class CursesBackend
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested.")]
     public static ICursesBackend NCurses() => NCurses(IDotNetSystemAdapter.Instance);
+
+    private static IEnumerable<(string name, int version)> GetCandidatesInDirectory(
+        IDotNetSystemAdapter dotNetSystemAdapter, string directory, Regex pattern)
+    {
+        Debug.Assert(dotNetSystemAdapter != null);
+        Debug.Assert(pattern != null);
+        Debug.Assert(!string.IsNullOrEmpty(directory));
+
+        return dotNetSystemAdapter.EnumerateFiles(directory)
+                                  .Select(f => pattern.Match(f))
+                                  .Where(m => m.Success)
+                                  .Select(m => (name: dotNetSystemAdapter.CombinePaths(directory, m.Groups[0]
+                                      .Value), version: int.Parse(m.Groups[1]
+                                                                   .Value)));
+    }
+
+    [SupportedOSPlatform("linux"),SupportedOSPlatform("freebsd")]
+    private static IEnumerable<string> FindLinuxAndFreeBsdNCursesCandidates()
+    {
+        return new[]
+        {
+            "libncursesw.so.6",
+            "libncursesw.so.5",
+            "libncursesw.so",
+            "ncursesw",
+            "libncurses.so.6",
+            "libncurses.so.5",
+            "libncurses.so",
+            NCursesPrefix,
+        };
+    }
+    
+    [SupportedOSPlatform("macos")]
+    private static IEnumerable<string> FindMacOsNCursesCandidates(IDotNetSystemAdapter dotNetSystemAdapter)
+    {
+        Debug.Assert(dotNetSystemAdapter != null);
+
+        var homeBrewPrefix = dotNetSystemAdapter.GetEnvironmentVariable("HOMEBREW_PREFIX");
+        var homeBrewCellar = dotNetSystemAdapter.GetEnvironmentVariable("HOMEBREW_CELLAR");
+        
+        var candidates = new List<(string name, int version)>();
+        var matchRegEx = new Regex(@"libncurses\.(\d+)\.dylib", RegexOptions.Compiled);
+        
+        if (!string.IsNullOrEmpty(homeBrewPrefix))
+        {
+            var libPath = dotNetSystemAdapter.CombinePaths(homeBrewPrefix, "lib");
+            if (dotNetSystemAdapter.DirectoryExists(libPath))
+            {
+                candidates.AddRange(GetCandidatesInDirectory(dotNetSystemAdapter, libPath, matchRegEx));
+            }
+        }
+        
+        if (!string.IsNullOrEmpty(homeBrewCellar))
+        {
+            var ncursesPath = dotNetSystemAdapter.CombinePaths(homeBrewCellar, NCursesPrefix);
+            if (dotNetSystemAdapter.DirectoryExists(ncursesPath))
+            {
+                foreach (var v in dotNetSystemAdapter.EnumerateDirectories(ncursesPath))
+                {
+                    var libPath = dotNetSystemAdapter.CombinePaths(v, "lib");
+                    if (dotNetSystemAdapter.DirectoryExists(libPath))
+                    {
+                        candidates.AddRange(GetCandidatesInDirectory(dotNetSystemAdapter, libPath, matchRegEx));
+                    }
+                }
+            }
+        }
+
+        return candidates.OrderByDescending(c => c.version)
+                         .Select(c => c.name)
+                         .Concat(new[] { NCursesPrefix });
+    }
 }

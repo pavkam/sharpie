@@ -6,9 +6,9 @@ using System.Runtime.Versioning;
 /// <summary>
 /// An internal interface used to help test the functionality or native library loader.
 /// </summary>
-
 internal interface IDotNetSystemAdapter
 {
+    [ExcludeFromCodeCoverage(Justification = ".NET runtime interop implementation.")]
     private sealed class DotNetSystemAdapter: IDotNetSystemAdapter
     {
     }
@@ -16,7 +16,7 @@ internal interface IDotNetSystemAdapter
     /// <summary>
     /// The actual instance that connects this interface to the .NET runtime.
     /// </summary>
-    public static IDotNetSystemAdapter Instance = new DotNetSystemAdapter();
+    public static readonly IDotNetSystemAdapter Instance = new DotNetSystemAdapter();
 
     /// <inheritdoc cref="System.Runtime.InteropServices.NativeLibrary.TryLoad(string,Assembly,DllImportSearchPath?,out System.IntPtr)"/>
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
@@ -93,4 +93,28 @@ internal interface IDotNetSystemAdapter
      ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     IDisposable MonitorTerminalResizeSignal(Action action) =>
         PosixSignalRegistration.Create(PosixSignal.SIGWINCH, _ => { action(); });
+
+    /// <inheritdoc cref="System.Environment.GetEnvironmentVariable(string)"/>
+    [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
+    string? GetEnvironmentVariable(string name) => Environment.GetEnvironmentVariable(name);
+
+    /// <inheritdoc cref=" System.IO.Directory.Exists(string)"/>
+    [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
+    bool DirectoryExists(string name) => Directory.Exists(name);
+
+    /// <inheritdoc cref=" System.IO.Path.GetDirectoryName(string)"/>
+    [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
+    string? GetDirectoryName(string path) => Path.GetDirectoryName(path);
+        
+    /// <inheritdoc cref=" System.IO.Path.Combine(string[])"/>
+    [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
+    string CombinePaths(params string[] paths) => Path.Combine(paths);
+    
+    /// <inheritdoc cref=" System.IO.Directory.EnumerateDirectories(string)"/>
+    [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
+    IEnumerable<string> EnumerateDirectories(string directory) => Directory.EnumerateDirectories(directory);
+    
+    /// <inheritdoc cref=" System.IO.Directory.EnumerateFiles(string)"/>
+    [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
+    IEnumerable<string> EnumerateFiles(string directory) => Directory.EnumerateFiles(directory);
 }

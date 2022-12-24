@@ -49,6 +49,18 @@ public class CursesBackendTests
                                 });
     }
 
+    private void VerifyAttempts(params string[] candidates)
+    {
+        foreach (var c in candidates)
+        {
+            _dotNetSystemAdapterMock.Verify(
+                s => s.TryLoadNativeLibrary(c, out It.Ref<IntPtr>.IsAny), Times.Once);
+        }
+        
+        _dotNetSystemAdapterMock.Verify(
+            s => s.TryLoadNativeLibrary(It.IsAny<string>(), out It.Ref<IntPtr>.IsAny), Times.Exactly(candidates.Length));
+    }
+    
     [TestInitialize]
     public void TestInitialize()
     {
@@ -147,35 +159,110 @@ public class CursesBackendTests
                 out It.Ref<IntPtr>.IsAny), Times.Once);
     }
     
-    [TestMethod]
-    public void NCurses2_ForLinux_HasManyOptionsForNCurses()
+    [TestMethod, DataRow("linux"), DataRow("freebsd")]
+    public void NCurses2_ForLinuxOrFreeBsd_HasSpecificOptions(string op)
     {
         _dotNetSystemAdapterMock.Setup(s => s.IsLinux)
-                                .Returns(true);
+                                .Returns(op == "linux");
+        _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)
+                                .Returns(op == "freebsd");
         
         var options = new[]
         {
-            "ncursesw",
-            "libncursesw.so",
-            "libncursesw.so.5",
             "libncursesw.so.6",
-            "ncurses",
-            "libncurses.so",
-            "libncurses.so.5",
+            "libncursesw.so.5",
+            "libncursesw.so",
+            "ncursesw",
             "libncurses.so.6",
+            "libncurses.so.5",
+            "libncurses.so",
+            "ncurses",
         };
 
         Should.Throw<CursesInitializationException>(() => CursesBackend.NCurses(_dotNetSystemAdapterMock.Object));
 
-        foreach (var option in options)
-        {
-            _dotNetSystemAdapterMock.Verify(
-                s => s.TryLoadNativeLibrary(option, It.IsAny<Assembly>(), It.IsAny<DllImportSearchPath?>(),
-                    out It.Ref<IntPtr>.IsAny), Times.Once);
-        }
-        
-        _dotNetSystemAdapterMock.Verify(
-            s => s.TryLoadNativeLibrary(It.IsAny<string>(), It.IsAny<Assembly>(), It.IsAny<DllImportSearchPath?>(),
-                out It.Ref<IntPtr>.IsAny), Times.Exactly(options.Length));
+        VerifyAttempts(options);
     }
+
+    [TestMethod]
+    public void NCurses2_ForMacOs_TriesToLoadDefault_IfNoHomeBrewFound()
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.IsMacOs)
+                                .Returns(true);
+
+        Should.Throw<CursesInitializationException>(() => CursesBackend.NCurses(_dotNetSystemAdapterMock.Object));
+
+        VerifyAttempts("ncurses");
+    }
+    
+    [TestMethod]
+    public void NCurses2_ForMacOs_ScansTheLibraryDirectory_IfNoHomeBrewFound()
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.IsMacOs)
+                                .Returns(true);
+
+        _dotNetSystemAdapterMock.Setup(s => s.CombinePaths(It.IsAny<string[]>()))
+                                .Returns((string[] ps) => string.Join("+", ps));
+        _dotNetSystemAdapterMock.Setup(s => s.GetEnvironmentVariable("HOMEBREW_PREFIX")).Returns("/h");
+        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+lib")).Returns(true);
+        _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+lib")).Returns(new[]
+        {
+            "dummy.txt",
+            "libncurses.10",
+            "libncurses.dylib",
+            "libncurses.a.dylib",
+            "libncurses.1.dylib",
+            "libncurses.10.dylib"
+        });
+        
+        Should.Throw<CursesInitializationException>(() => CursesBackend.NCurses(_dotNetSystemAdapterMock.Object));
+        
+        VerifyAttempts("/h+lib+libncurses.1.dylib", "/h+lib+libncurses.10.dylib", "ncurses");
+    }
+    
+    [TestMethod]
+    public void NCurses2_ForMacOs_ScansTheCellarDirectories_IfNoHomeBrewFound()
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.IsMacOs)
+                                .Returns(true);
+
+        _dotNetSystemAdapterMock.Setup(s => s.CombinePaths(It.IsAny<string[]>()))
+                                .Returns((string[] ps) => string.Join("+", ps));
+        _dotNetSystemAdapterMock.Setup(s => s.GetEnvironmentVariable("HOMEBREW_CELLAR")).Returns("/h");
+        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses")).Returns(true);
+        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses-one+lib")).Returns(true);
+        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses-2+lib")).Returns(true);
+        _dotNetSystemAdapterMock.Setup(s => s.EnumerateDirectories("/h+ncurses")).Returns(new[]
+        {
+            "/h+ncurses-one",
+            "/h+ncurses-2"
+        });
+        
+        _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+ncurses-one+lib")).Returns(new[]
+        {
+            "dummy.txt",
+            "libncurses.10",
+            "libncurses.dylib",
+            "libncurses.a.dylib",
+            "libncurses.1.dylib",
+            "libncurses.10.dylib"
+        });
+        
+        _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+ncurses-2+lib")).Returns(new[]
+        {
+            "dummy.txt",
+            "libncurses.2.dylib",
+            "libncurses.12.dylib"
+        });
+        
+        Should.Throw<CursesInitializationException>(() => CursesBackend.NCurses(_dotNetSystemAdapterMock.Object));
+        
+        VerifyAttempts(
+            "/h+ncurses-one+lib+libncurses.1.dylib",
+            "/h+ncurses-2+lib+libncurses.2.dylib",
+            "/h+ncurses-one+lib+libncurses.10.dylib",
+            "/h+ncurses-2+lib+libncurses.12.dylib",
+            "ncurses");
+    }
+    
 }
