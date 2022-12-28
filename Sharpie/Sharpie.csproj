@@ -14,9 +14,9 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>ncurses curses terminal console</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageVersion>1.5.1</PackageVersion>
-        <AssemblyVersion>1.5.1</AssemblyVersion>
-        <FileVersion>1.5.1</FileVersion>
+        <PackageVersion>1.5.2</PackageVersion>
+        <AssemblyVersion>1.5.2</AssemblyVersion>
+        <FileVersion>1.5.2</FileVersion>
         <PackageId>Sharpie-Curses</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
         <LangVersion>10</LangVersion>
