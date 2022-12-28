@@ -42,14 +42,9 @@ public interface IColorManager
     ITerminal Terminal { get; }
 
     /// <summary>
-    ///     Specifies whether the colors are enabled.
+    ///     Specifies the color mode if this terminal.
     /// </summary>
-    bool Enabled { get; }
-
-    /// <summary>
-    ///     Specifies whether the terminal supports colors.
-    /// </summary>
-    bool ColorsAreSupported { get; }
+    ColorMode Mode { get; }
 
     /// <summary>
     ///     Specifies whether the terminal supports redefining colors.

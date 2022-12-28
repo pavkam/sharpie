@@ -177,8 +177,11 @@ public sealed class Terminal: ITerminal, IDisposable
               .Check(nameof(curses.nonl), "Failed to disable new line translation.");
 
         // Caret configuration
-        _initialCaretMode = Curses.curs_set((int) Options.CaretMode)
-                                  .Check(nameof(Curses.curs_set), "Failed to change the caret mode.");
+        var prevCaretMode = Curses.curs_set((int) Options.CaretMode);
+        if (!prevCaretMode.Failed())
+        {
+            _initialCaretMode = prevCaretMode;
+        }
 
         // Mouse configuration
         if (Options.UseMouse)
