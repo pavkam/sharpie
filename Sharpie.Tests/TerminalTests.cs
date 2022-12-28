@@ -278,17 +278,6 @@ public class TerminalTests
         _cursesMock.Verify(v => v.curs_set((int) CaretMode.VeryVisible), Times.Once);
     }
 
-    [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Ctor_Throws_WhenCursesFailsToPreparesCaretMode(bool enabled)
-    {
-        _cursesMock.Setup(s => s.curs_set(It.IsAny<int>()))
-                   .Returns(-1);
-
-        Should.Throw<CursesOperationException>(() =>
-                  new Terminal(_cursesMock.Object, new(CaretMode: CaretMode.VeryVisible)))
-              .Operation.ShouldBe("curs_set");
-    }
-
     [TestMethod, DataRow(true, 1), DataRow(true, 2), DataRow(false, 0)]
     public void Ctor_PreparesUseMouse_ByAskingCurses(bool enabled, int abi)
     {
@@ -923,6 +912,18 @@ public class TerminalTests
                    .Returns(-1);
 
         Should.NotThrow(() => _terminal.Dispose());
+    }
+    
+    [TestMethod]
+    public void Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode()
+    {
+        _cursesMock.Setup(s => s.curs_set(It.IsAny<int>()))
+                   .Returns(-1);
+
+        var terminal = new Terminal(_cursesMock.Object, new(CaretMode: CaretMode.VeryVisible));
+        terminal.Dispose();
+
+        _cursesMock.Verify(v => v.curs_set(It.IsAny<int>()), Times.Once);
     }
 
     [TestMethod]
