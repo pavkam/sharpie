@@ -50,11 +50,13 @@ public class SynchronizationTests
         _cursesMock = new();
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(1));
+        _cursesMock.Setup(s => s.has_colors())
+                   .Returns(true);
 
         _terminal = new(_cursesMock.Object,
             new(SoftLabelKeyMode: SoftLabelKeyMode.FourFour,
                 ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
-
+       
         _surface = new(_terminal, new(2));
         _pad = new(_terminal.Screen, new(3));
         _window = new(_terminal.Screen, new(4));

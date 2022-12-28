@@ -124,7 +124,7 @@ public class TerminalTests
 
         _terminal = new(_cursesMock.Object, new(enabled));
 
-        _terminal.Colors.Enabled.ShouldBe(enabled);
+        _terminal.Colors.Mode.ShouldBe(enabled ? ColorMode.Extended: ColorMode.Disabled);
         ((ITerminal) _terminal).Colors.ShouldBe(_terminal.Colors);
     }
 
