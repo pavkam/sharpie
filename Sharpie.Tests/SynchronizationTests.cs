@@ -283,16 +283,6 @@ public class SynchronizationTests
     [TestMethod] public void Window_Size_Set() { Check(() => _window.Size = new(1, 1)); }
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Window_UseHardwareLineEdit_Get() { Check(() => _window.UseHardwareLineEdit.ToString()); }
-
-    [TestMethod] public void Window_UseHardwareLineEdit_Set() { Check(() => _window.UseHardwareLineEdit = true); }
-
-    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Window_UseHardwareCharEdit_Get() { Check(() => _window.UseHardwareCharEdit.ToString()); }
-
-    [TestMethod] public void Window_UseHardwareCharEdit_Set() { Check(() => _window.UseHardwareCharEdit = true); }
-
-    [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Window_WhenManaged_Visible_Get() { Check(() => _window.Visible.ToString()); }
 
     [TestMethod] public void Window_WhenManaged_Visible_Set() { Check(() => _window.Visible = true); }

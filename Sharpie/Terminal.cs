@@ -370,12 +370,6 @@ public sealed class Terminal: ITerminal, IDisposable
     /// <inheritdoc cref="ITerminal.Events" />
     IEventPump ITerminal.Events => Events;
 
-    /// <inheritdoc cref="ITerminal.HasHardwareLineEditor" />
-    public bool HasHardwareLineEditor => Curses.has_il();
-
-    /// <inheritdoc cref="ITerminal.HasHardwareCharEditor" />
-    public bool HasHardwareCharEditor => Curses.has_ic();
-
     /// <inheritdoc cref="ITerminal.CurrentKillChar" />
     public Rune? CurrentKillChar =>
         Curses.killwchar(out var @char)

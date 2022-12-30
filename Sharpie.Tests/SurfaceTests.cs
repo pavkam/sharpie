@@ -1207,74 +1207,19 @@ public class SurfaceTests
         s.GetText(0)
          .ShouldBeEmpty();
 
-        _cursesMock.Verify(v => v.win_wchnstr(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar[]>(), It.IsAny<int>()),
+        _cursesMock.Verify(v => v.win_wch(It.IsAny<IntPtr>(), out It.Ref<CursesComplexChar>.IsAny),
+            Times.Never);
+        _cursesMock.Verify(v => v.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()),
             Times.Never);
     }
-
+    
     [TestMethod]
-    public void GetText_AsksCurses_WithTheGivenCount()
+    public void GetText_AsksCurses_WithTheGivenCountUpToEnd()
     {
-        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
-                   .Returns(20);
-
-        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
-                   .Returns(0);
-
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero))
-                   .Returns((CursesComplexChar _, StringBuilder sb, out uint a, out short cp,
-                       IntPtr _) =>
-                   {
-                       sb.Append('a');
-                       a = 0;
-                       cp = 0;
-
-                       return 0;
-                   });
-
-        var s = new Surface(_cursesMock.Object, new(1));
-        s.GetText(15)
-         .Length.ShouldBe(15);
-
-        _cursesMock.Verify(v => v.win_wchnstr(new(1), It.IsAny<CursesComplexChar[]>(), 15), Times.Once);
-    }
-
-    [TestMethod]
-    public void GetText_AsksCurses_WithTheDeltaCount_IfNotEnoughLength()
-    {
-        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
-                   .Returns(20);
-
-        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
-                   .Returns(0);
-
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero))
-                   .Returns((CursesComplexChar _, StringBuilder sb, out uint a, out short cp,
-                       IntPtr _) =>
-                   {
-                       sb.Append('a');
-                       a = 0;
-                       cp = 0;
-
-                       return 0;
-                   });
-
-        var s = new Surface(_cursesMock.Object, new(1));
-        s.GetText(50)
-         .Length.ShouldBe(20);
-
-        _cursesMock.Verify(v => v.win_wchnstr(new(1), It.IsAny<CursesComplexChar[]>(), 20), Times.Once);
-    }
-
-    [TestMethod]
-    public void GetText_GetsContents_FromCurses()
-    {
-        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
-                   .Returns(20);
-
-        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
-                   .Returns(0);
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
+        _cursesMock.Setup(s => s.getcurx(sf.Handle))
+                   .Returns(2);
 
         var ch = 'a';
         _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
@@ -1282,60 +1227,77 @@ public class SurfaceTests
                    .Returns((CursesComplexChar _, StringBuilder sb, out uint a, out short cp,
                        IntPtr _) =>
                    {
-                       sb.Append(ch);
-                       a = ch;
-                       cp = (short) ch;
+                       sb.Append(ch++);
+                       a = (uint)Style.Default.Attributes;
+                       cp = Style.Default.ColorMixture.Handle;
 
-                       ch++;
                        return 0;
                    });
 
-        var s = new Surface(_cursesMock.Object, new(1));
-        var chars = s.GetText(3);
 
-        chars[0]
-            .@char.ShouldBe(new('a'));
+        var txt = sf.GetText(5);
+        txt.ShouldBe(new[] { (new('a'), Style.Default), (new Rune('b'), Style.Default), (new ('c'), Style.Default) });
 
-        chars[0]
-            .style.Attributes.ShouldBe((VideoAttribute) 'a');
+        _cursesMock.Verify(v => v.wmove(sf.Handle, 0, 3), Times.Once);
+        _cursesMock.Verify(v => v.wmove(sf.Handle, 0, 4), Times.Once);
+        _cursesMock.Verify(v => v.wmove(sf.Handle, 0, 2), Times.Once);
+        _cursesMock.Verify(v => v.wmove(sf.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(3));
+        _cursesMock.Verify(v => v.win_wch(sf.Handle, out It.Ref<CursesComplexChar>.IsAny),
+            Times.Exactly(3));
+    }
+    
+    [TestMethod]
+    public void GetText_AsksCurses_UntilReadFails()
+    {
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
+        _cursesMock.Setup(s => s.getcurx(sf.Handle))
+                   .Returns(2);
+        _cursesMock.Setup(s => s.getcury(sf.Handle))
+                   .Returns(3);
+        _cursesMock.Setup(s => s.win_wch(sf.Handle, out It.Ref<CursesComplexChar>.IsAny))
+                   .Returns(-1);
+        
+        var txt = sf.GetText(5);
+        txt.ShouldBeEmpty();
 
-        chars[0]
-            .style.ColorMixture.ShouldBe(new() { Handle = (short) 'a' });
-
-        chars[1]
-            .@char.ShouldBe(new('b'));
-
-        chars[1]
-            .style.Attributes.ShouldBe((VideoAttribute) 'b');
-
-        chars[1]
-            .style.ColorMixture.ShouldBe(new() { Handle = (short) 'b' });
-
-        chars[2]
-            .@char.ShouldBe(new('c'));
-
-        chars[2]
-            .style.Attributes.ShouldBe((VideoAttribute) 'c');
-
-        chars[2]
-            .style.ColorMixture.ShouldBe(new() { Handle = (short) 'c' });
+        _cursesMock.Verify(v => v.wmove(sf.Handle, 3, 2), Times.Once);
+        _cursesMock.Verify(v => v.wmove(sf.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        _cursesMock.Verify(v => v.win_wch(sf.Handle, out It.Ref<CursesComplexChar>.IsAny),
+            Times.Once);
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void GetText_Throws_IfCursesFails()
+    [TestMethod]
+    public void GetText_AsksCurses_UntilMovingCursorFails()
     {
-        _cursesMock.Setup(s => s.getmaxx(It.IsAny<IntPtr>()))
-                   .Returns(20);
-
-        _cursesMock.Setup(s => s.getcurx(It.IsAny<IntPtr>()))
-                   .Returns(0);
-
-        _cursesMock.Setup(s => s.win_wchnstr(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar[]>(), It.IsAny<int>()))
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(5, 5));
+        _cursesMock.Setup(s => s.getcurx(sf.Handle))
+                   .Returns(2);
+        _cursesMock.Setup(s => s.getcury(sf.Handle))
+                   .Returns(3);
+        _cursesMock.Setup(s => s.wmove(sf.Handle, 3, 3))
                    .Returns(-1);
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
+                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero))
+                   .Returns((CursesComplexChar _, StringBuilder sb, out uint a, out short cp,
+                       IntPtr _) =>
+                   {
+                       sb.Append('a');
+                       a = (uint)Style.Default.Attributes;
+                       cp = Style.Default.ColorMixture.Handle;
 
-        var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<CursesOperationException>(() => s.GetText(1))
-              .Operation.ShouldBe("win_wchnstr");
+                       return 0;
+                   });
+        
+        var txt = sf.GetText(5);
+        txt.ShouldBe(new[] { (new Rune('a'), Style.Default) });
+
+        _cursesMock.Verify(v => v.wmove(sf.Handle, 3, 3), Times.Once);
+        _cursesMock.Verify(v => v.wmove(sf.Handle, 3, 2), Times.Once);
+        _cursesMock.Verify(v => v.wmove(sf.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(2));
+        _cursesMock.Verify(v => v.win_wch(sf.Handle, out It.Ref<CursesComplexChar>.IsAny),
+            Times.Once);
     }
 
     [TestMethod]
