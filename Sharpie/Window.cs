@@ -88,43 +88,6 @@ public sealed class Window: TerminalSurface, IWindow
         }
     }
 
-    /// <inheritdoc cref="IWindow.UseHardwareLineEdit" />
-    public bool UseHardwareLineEdit
-    {
-        get
-        {
-            AssertSynchronized();
-            return Curses.is_idlok(Handle);
-        }
-        set
-        {
-            AssertSynchronized();
-            if (Curses.has_il())
-            {
-                Curses.idlok(Handle, value)
-                      .Check(nameof(Curses.idlok), "Failed to change the hardware line mode.");
-            }
-        }
-    }
-
-    /// <inheritdoc cref="IWindow.UseHardwareCharEdit" />
-    public bool UseHardwareCharEdit
-    {
-        get
-        {
-            AssertSynchronized();
-            return Curses.is_idcok(Handle);
-        }
-        set
-        {
-            AssertSynchronized();
-            if (Curses.has_ic())
-            {
-                Curses.idcok(Handle, value);
-            }
-        }
-    }
-
     /// <inheritdoc cref="IWindow.Location" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public Point Location

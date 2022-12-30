@@ -109,22 +109,12 @@ public interface ITerminal
     IEventPump Events { get; }
 
     /// <summary>
-    ///     Specifies whether the terminal supports hardware line insert and delete.
-    /// </summary>
-    bool HasHardwareLineEditor { get; }
-
-    /// <summary>
-    ///     Specifies whether the terminal supports hardware character insert and delete.
-    /// </summary>
-    bool HasHardwareCharEditor { get; }
-
-    /// <summary>
-    ///     Gets the currently defined kill character. \0 is returned if none is defined.
+    ///     Gets the currently defined kill character. <c>null</c> is returned if none is defined.
     /// </summary>
     Rune? CurrentKillChar { get; }
 
     /// <summary>
-    ///     Gets the currently defined erase character. \0 is returned if none is defined.
+    ///     Gets the currently defined erase character. <c>null</c> is returned if none is defined.
     /// </summary>
     Rune? CurrentEraseChar { get; }
 

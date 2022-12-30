@@ -62,52 +62,12 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
-    public void is_cleared_IsRelayedToLibrary(bool ret)
-    {
-        var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_cleared, bool>(s => s(h), ret);
-
-        _backend.is_cleared(h)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void is_idcok_IsRelayedToLibrary(bool ret)
-    {
-        var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_idcok, bool>(s => s(h), ret);
-
-        _backend.is_idcok(h)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void is_idlok_IsRelayedToLibrary(bool ret)
-    {
-        var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_idlok, bool>(s => s(h), ret);
-
-        _backend.is_idlok(h)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
     public void is_immedok_IsRelayedToLibrary(bool ret)
     {
         var h = new IntPtr(999);
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_immedok, bool>(s => s(h), ret);
 
         _backend.is_immedok(h)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void is_keypad_IsRelayedToLibrary(bool ret)
-    {
-        var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_keypad, bool>(s => s(h), ret);
-
-        _backend.is_keypad(h)
                 .ShouldBe(ret);
     }
 
@@ -122,42 +82,12 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
-    public void is_nodelay_IsRelayedToLibrary(bool ret)
-    {
-        var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_nodelay, bool>(s => s(h), ret);
-
-        _backend.is_nodelay(h)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void is_notimeout_IsRelayedToLibrary(bool ret)
-    {
-        var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_notimeout, bool>(s => s(h), ret);
-
-        _backend.is_notimeout(h)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
     public void is_scrollok_IsRelayedToLibrary(bool ret)
     {
         var h = new IntPtr(999);
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_scrollok, bool>(s => s(h), ret);
 
         _backend.is_scrollok(h)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void is_syncok_IsRelayedToLibrary(bool ret)
-    {
-        var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_syncok, bool>(s => s(h), ret);
-
-        _backend.is_syncok(h)
                 .ShouldBe(ret);
     }
 
@@ -169,19 +99,6 @@ public class NCursesBackendTests
 
         _backend.is_wintouched(h)
                 .ShouldBe(ret);
-    }
-
-    [TestMethod]
-    public void filter_IsRelayedToLibrary()
-    {
-        var called = true;
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.filter>()
-                                 .Setup(s => s())
-                                 .Callback(() => { called = true; });
-
-        _backend.filter();
-
-        called.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -206,19 +123,6 @@ public class NCursesBackendTests
                                  .Callback(() => { called = true; });
 
         _backend.qiflush();
-
-        called.ShouldBeTrue();
-    }
-
-    [TestMethod]
-    public void nofilter_IsRelayedToLibrary()
-    {
-        var called = true;
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.nofilter>()
-                                 .Setup(s => s())
-                                 .Callback(() => { called = true; });
-
-        _backend.nofilter();
 
         called.ShouldBeTrue();
     }
@@ -251,24 +155,6 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
-    public void def_prog_mode_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.def_prog_mode, int>(s => s(), ret);
-
-        _backend.def_prog_mode()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void def_shell_mode_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.def_shell_mode, int>(s => s(), ret);
-
-        _backend.def_shell_mode()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
     public void doupdate_IsRelayedToLibrary(int ret)
     {
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.doupdate, int>(s => s(), ret);
@@ -292,15 +178,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.endwin, int>(s => s(), ret);
 
         _backend.endwin()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void flushinp_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.flushinp, int>(s => s(), ret);
-
-        _backend.flushinp()
                 .ShouldBe(ret);
     }
 
@@ -364,42 +241,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.raw, int>(s => s(), ret);
 
         _backend.raw()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void resetty_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.resetty, int>(s => s(), ret);
-
-        _backend.resetty()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void reset_prog_mode_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.reset_prog_mode, int>(s => s(), ret);
-
-        _backend.reset_prog_mode()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void reset_shell_mode_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.reset_shell_mode, int>(s => s(), ret);
-
-        _backend.reset_shell_mode()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void savetty_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.savetty, int>(s => s(), ret);
-
-        _backend.savetty()
                 .ShouldBe(ret);
     }
 
@@ -476,24 +317,6 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
-    public void has_ic_IsRelayedToLibrary(bool ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.has_ic, bool>(s => s(), ret);
-
-        _backend.has_ic()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void has_il_IsRelayedToLibrary(bool ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.has_il, bool>(s => s(), ret);
-
-        _backend.has_il()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
     public void can_change_color_IsRelayedToLibrary(bool ret)
     {
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.can_change_color, bool>(s => s(), ret);
@@ -501,16 +324,7 @@ public class NCursesBackendTests
         _backend.can_change_color()
                 .ShouldBe(ret);
     }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void isendwin_IsRelayedToLibrary(bool ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.isendwin, bool>(s => s(), ret);
-
-        _backend.isendwin()
-                .ShouldBe(ret);
-    }
-
+    
     [TestMethod, DataRow(0), DataRow(999)]
     public void initscr_IsRelayedToLibrary(int ret)
     {
@@ -555,28 +369,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curses_version, IntPtr>(s => s(), h);
 
         _backend.curses_version()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true, 0), DataRow(false, -1)]
-    public void clearok_IsRelayedToLibrary(bool yes, int ret)
-    {
-        var h = new IntPtr(999);
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.clearok, int>(s => s(h, yes), ret);
-
-        _backend.clearok(h, yes)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true, 0), DataRow(false, -1)]
-    public void idlok_IsRelayedToLibrary(bool yes, int ret)
-    {
-        var h = new IntPtr(999);
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.idlok, int>(s => s(h, yes), ret);
-
-        _backend.idlok(h, yes)
                 .ShouldBe(ret);
     }
 
@@ -669,21 +461,6 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
-    public void idcok_IsRelayedToLibrary(bool yes)
-    {
-        var h = new IntPtr(999);
-        var called = false;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.idcok>()
-                                 .Setup(s => s(h, yes))
-                                 .Callback((IntPtr _, bool _) => { called = true; });
-
-        _backend.idcok(h, yes);
-
-        called.ShouldBeTrue();
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
     public void immedok_IsRelayedToLibrary(bool yes)
     {
         var h = new IntPtr(999);
@@ -710,63 +487,7 @@ public class NCursesBackendTests
 
         called.ShouldBeTrue();
     }
-
-    [TestMethod]
-    public void wcursyncup_IsRelayedToLibrary()
-    {
-        var h = new IntPtr(999);
-        var called = false;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wcursyncup>()
-                                 .Setup(s => s(h))
-                                 .Callback((IntPtr _) => { called = true; });
-
-        _backend.wcursyncup(h);
-
-        called.ShouldBeTrue();
-    }
-
-    [TestMethod]
-    public void wsyncdown_IsRelayedToLibrary()
-    {
-        var h = new IntPtr(999);
-        var called = false;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wsyncdown>()
-                                 .Setup(s => s(h))
-                                 .Callback((IntPtr _) => { called = true; });
-
-        _backend.wsyncdown(h);
-
-        called.ShouldBeTrue();
-    }
-
-    [TestMethod]
-    public void wsyncup_IsRelayedToLibrary()
-    {
-        var h = new IntPtr(999);
-        var called = false;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wsyncup>()
-                                 .Setup(s => s(h))
-                                 .Callback((IntPtr _) => { called = true; });
-
-        _backend.wsyncup(h);
-
-        called.ShouldBeTrue();
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wclear_IsRelayedToLibrary(int ret)
-    {
-        var h = new IntPtr(999);
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wclear, int>(s => s(h), ret);
-
-        _backend.wclear(h)
-                .ShouldBe(ret);
-    }
-
+ 
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wclrtobot_IsRelayedToLibrary(int ret)
     {
@@ -808,17 +529,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.werase, int>(s => s(h), ret);
 
         _backend.werase(h)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wgetch_IsRelayedToLibrary(int ret)
-    {
-        var h = new IntPtr(999);
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetch, int>(s => s(h), ret);
-
-        _backend.wgetch(h)
                 .ShouldBe(ret);
     }
 
@@ -911,72 +621,6 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
-    public void slk_attroff_IsRelayedToLibrary(int ret)
-    {
-        const uint i = 999U;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attroff, int>(s => s(i), ret);
-
-        _backend.slk_attroff(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void slk_attron_IsRelayedToLibrary(int ret)
-    {
-        const uint i = 999U;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attron, int>(s => s(i), ret);
-
-        _backend.slk_attron(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void slk_attrset_IsRelayedToLibrary(int ret)
-    {
-        const uint i = 999U;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attrset, int>(s => s(i), ret);
-
-        _backend.slk_attrset(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0u), DataRow(99u)]
-    public void COLOR_PAIR_IsRelayedToLibrary(uint ret)
-    {
-        const uint i = 999u;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.COLOR_PAIR, uint>(s => s(i), ret);
-
-        _backend.COLOR_PAIR(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0u), DataRow(99u)]
-    public void PAIR_NUMBER_IsRelayedToLibrary(uint ret)
-    {
-        const uint i = 999u;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.PAIR_NUMBER, uint>(s => s(i), ret);
-
-        _backend.PAIR_NUMBER(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void halfdelay_IsRelayedToLibrary(int ret)
-    {
-        const int i = 999;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.halfdelay, int>(s => s(i), ret);
-
-        _backend.halfdelay(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
     public void curs_set_IsRelayedToLibrary(int ret)
     {
         const int i = 999;
@@ -984,17 +628,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curs_set, int>(s => s(i), ret);
 
         _backend.curs_set(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void delay_output_IsRelayedToLibrary(int ret)
-    {
-        const int i = 999;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.delay_output, int>(s => s(i), ret);
-
-        _backend.delay_output(i)
                 .ShouldBe(ret);
     }
 
@@ -1021,31 +654,6 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
-    public void set_tabsize_IsRelayedToLibrary(int ret)
-    {
-        const int i = 999;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.set_tabsize, int>(s => s(i), ret);
-
-        _backend.set_tabsize(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow((string?) null), DataRow("hello")]
-    public void slk_label_IsRelayedToLibrary(string ret)
-    {
-        const int i = 999;
-        var h = Marshal.StringToHGlobalAnsi(ret);
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-        
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_label, IntPtr>(s => s(i), h);
-
-        _backend.slk_label(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_color_IsRelayedToLibrary(int ret)
     {
         const short i = 999;
@@ -1057,49 +665,11 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
-    public void ungetch_IsRelayedToLibrary(int ret)
-    {
-        const uint i = 999;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.ungetch, int>(s => s(i), ret);
-
-        _backend.ungetch(i)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_IsRelayedToLibrary(int ret)
     {
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(), ret);
 
         _backend.slk_attr()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void is_term_resized_IsRelayedToLibrary(bool ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_term_resized, bool>(s => s(10, 20), ret);
-
-        _backend.is_term_resized(10, 20)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void resize_term_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.resize_term, int>(s => s(10, 20), ret);
-
-        _backend.resize_term(10, 20)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void resizeterm_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.resizeterm, int>(s => s(10, 20), ret);
-
-        _backend.resizeterm(10, 20)
                 .ShouldBe(ret);
     }
 
@@ -1181,15 +751,6 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
-    public void wsetscrreg_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wsetscrreg, int>(s => s(new(1), 1, 10), ret);
-
-        _backend.wsetscrreg(new(1), 1, 10)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
     public void wredrawln_IsRelayedToLibrary(int ret)
     {
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wredrawln, int>(s => s(new(1), 1, 10), ret);
@@ -1204,42 +765,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wtouchln, int>(s => s(new(1), 2, 10, 1), ret);
 
         _backend.wtouchln(new(1), 2, 10, 1)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void wenclose_IsRelayedToLibrary(bool ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wenclose, bool>(s => s(new(1), 1, 2), ret);
-
-        _backend.wenclose(new(1), 1, 2)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow((string?) null), DataRow("hello")]
-    public void keybound_IsRelayedToLibrary(string ret)
-    {
-        var h = Marshal.StringToHGlobalAnsi(ret);
-        
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-        
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.keybound, IntPtr>(s => s('A', 2), h);
-
-        _backend.keybound('A', 2)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow((string?) null), DataRow("hello")]
-    public void keyname_IsRelayedToLibrary(string ret)
-    {
-        var h = Marshal.StringToHGlobalAnsi(ret);
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-        
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.keyname, IntPtr>(s => s('A'), h);
-
-        _backend.keyname('A')
                 .ShouldBe(ret);
     }
 
@@ -1302,24 +827,6 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
-    public void pechochar_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.pechochar, int>(s => s(new(1), 'A'), ret);
-
-        _backend.pechochar(new(1), 'A')
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void winsch_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.winsch, int>(s => s(new(1), 'A'), ret);
-
-        _backend.winsch(new(1), 'A')
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
     public void wattr_on_IsRelayedToLibrary(int ret)
     {
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wattr_on, int>(s => s(new(1), 1, new(2)), ret);
@@ -1343,42 +850,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_set, int>(s => s(1, 2, new(2)), ret);
 
         _backend.slk_attr_set(1, 2, new(2))
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void waddch_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.waddch, int>(s => s(new(1), 'A'), ret);
-
-        _backend.waddch(new(1), 'A')
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wbkgd_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wbkgd, int>(s => s(new(1), 'A'), ret);
-
-        _backend.wbkgd(new(1), 'A')
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wechochar_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wechochar, int>(s => s(new(1), 'A'), ret);
-
-        _backend.wechochar(new(1), 'A')
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow('A'), DataRow(-1)]
-    public void winch_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.winch, int>(s => s(new(1)), ret);
-
-        _backend.winch(new(1))
                 .ShouldBe(ret);
     }
 
@@ -1467,26 +938,6 @@ public class NCursesBackendTests
                 .ShouldBe(new(ret));
     }
 
-    [TestMethod, DataRow(99), DataRow(0)]
-    public void subwin_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.subwin, IntPtr>(s => s(new(1), 1, 2, 3, 4), new(ret));
-
-        _backend.subwin(new(1), 1, 2, 3, 4)
-                .ShouldBe(new(ret));
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void waddchnstr_IsRelayedToLibrary(int ret)
-    {
-        var a = Array.Empty<uint>();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.waddchnstr, int>(s => s(new(1), a, 1), ret);
-
-        _backend.waddchnstr(new(1), a, 1)
-                .ShouldBe(ret);
-    }
-
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wborder_IsRelayedToLibrary(int ret)
     {
@@ -1517,69 +968,11 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
-    public void wgetnstr_IsRelayedToLibrary(int ret)
-    {
-        var a = new StringBuilder();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetnstr, int>(s => s(new(1), a, 1), ret);
-
-        _backend.wgetnstr(new(1), a, 1)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void winchnstr_IsRelayedToLibrary(int ret)
-    {
-        var a = new StringBuilder();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.winchnstr, int>(s => s(new(1), a, 1), ret);
-
-        _backend.winchnstr(new(1), a, 1)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
     public void assume_default_colors_IsRelayedToLibrary(int ret)
     {
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.assume_default_colors, int>(s => s(1, 2), ret);
 
         _backend.assume_default_colors(1, 2)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void define_key_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.define_key, int>(s => s("key", 99), ret);
-
-        _backend.define_key("key", 99)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void key_defined_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.key_defined, int>(s => s("key"), ret);
-
-        _backend.key_defined("key")
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void keyok_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.keyok, int>(s => s('A', true), ret);
-
-        _backend.keyok('A', true)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void unget_wch_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.unget_wch, int>(s => s('A'), ret);
-
-        _backend.unget_wch('A')
                 .ShouldBe(ret);
     }
 
@@ -1611,15 +1004,6 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
-    public void getattrs_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getattrs, int>(s => s(new(1)), ret);
-
-        _backend.getattrs(new(1))
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_on_IsRelayedToLibrary(int ret)
     {
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_on, int>(s => s(1, new(2)), ret);
@@ -1637,37 +1021,6 @@ public class NCursesBackendTests
                 .ShouldBe(ret);
     }
 
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wins_nwstr_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wins_nwstr, int>(s => s(new(1), "text", 2), ret);
-
-        _backend.wins_nwstr(new(1), "text", 2)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(99), DataRow(0)]
-    public void wgetparent_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetparent, IntPtr>(s => s(new(1)), new(ret));
-
-        _backend.wgetparent(new(1))
-                .ShouldBe(new(ret));
-    }
-
-    [TestMethod]
-    public void wbkgdset_IsRelayedToLibrary()
-    {
-        var called = true;
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wbkgdset>()
-                                 .Setup(s => s(new(1), 2))
-                                 .Callback(() => { called = true; });
-
-        _backend.wbkgdset(new(1), 2);
-
-        called.ShouldBeTrue();
-    }
-
     [TestMethod]
     public void wtimeout_IsRelayedToLibrary()
     {
@@ -1680,60 +1033,7 @@ public class NCursesBackendTests
 
         called.ShouldBeTrue();
     }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void winnwstr_IsRelayedToLibrary(int ret)
-    {
-        var a = new StringBuilder();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.winnwstr, int>(s => s(new(1), a, 1), ret);
-
-        _backend.winnwstr(new(1), a, 1)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void waddnwstr_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.waddnwstr, int>(s => s(new(1), "text", 1), ret);
-
-        _backend.waddnwstr(new(1), "text", 1)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wgetn_wstr_IsRelayedToLibrary(int ret)
-    {
-        var a = new StringBuilder();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetn_wstr, int>(s => s(new(1), a, 1), ret);
-
-        _backend.wgetn_wstr(new(1), a, 1)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void win_wchnstr_IsRelayedToLibrary(int ret)
-    {
-        var a = Array.Empty<CursesComplexChar>();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.win_wchnstr, int>(s => s(new(1), a, 1), ret);
-
-        _backend.win_wchnstr(new(1), a, 1)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wadd_wchnstr_IsRelayedToLibrary(int ret)
-    {
-        var a = Array.Empty<CursesComplexChar>();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wadd_wchnstr, int>(s => s(new(1), a, 1), ret);
-
-        _backend.wadd_wchnstr(new(1), a, 1)
-                .ShouldBe(ret);
-    }
-
+    
     [TestMethod, DataRow(0), DataRow(-1)]
     public void init_color_IsRelayedToLibrary(int ret)
     {
@@ -1752,46 +1052,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.init_pair, int>(s => s(1, 2, 3), ret);
 
         _backend.init_pair(1, 2, 3)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow((string?) null), DataRow("hello")]
-    public void wunctrl_IsRelayedToLibrary(string ret)
-    {
-        var ch = new CursesComplexChar();
-        var h = Marshal.StringToHGlobalUni(ret);
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryUnicodeStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-        
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wunctrl, IntPtr>(s => s(ref ch), h);
-
-        _backend.wunctrl(ch)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod]
-    public void wbkgrndset_IsRelayedToLibrary()
-    {
-        var ch = new CursesComplexChar();
-
-        var called = true;
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wbkgrndset>()
-                                 .Setup(s => s(new(1), ref ch))
-                                 .Callback(() => { called = true; });
-
-        _backend.wbkgrndset(new(1), ch);
-
-        called.ShouldBeTrue();
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wecho_wchar_IsRelayedToLibrary(int ret)
-    {
-        var ch = new CursesComplexChar();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wecho_wchar, int>(s => s(new(1), ref ch), ret);
-
-        _backend.wecho_wchar(new(1), ch)
                 .ShouldBe(ret);
     }
 
@@ -1814,17 +1074,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wbkgrnd, int>(s => s(new(1), ref ch), ret);
 
         _backend.wbkgrnd(new(1), ch)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void pecho_wchar_IsRelayedToLibrary(int ret)
-    {
-        var ch = new CursesComplexChar();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.pecho_wchar, int>(s => s(new(1), ref ch), ret);
-
-        _backend.pecho_wchar(new(1), ch)
                 .ShouldBe(ret);
     }
 
@@ -1858,17 +1107,6 @@ public class NCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.ripoffline, int>(s => s(1, rf), ret);
 
         _backend.ripoffline(1, rf)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void ungetmouse_IsRelayedToLibrary(int ret)
-    {
-        var e = new CursesMouseEvent();
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.ungetmouse, int>(s => s(ref e), ret);
-
-        _backend.ungetmouse(e)
                 .ShouldBe(ret);
     }
 
@@ -1925,17 +1163,6 @@ public class NCursesBackendTests
                 .ShouldBe(ret);
 
         ch.ShouldBe('A');
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wins_wch_IsRelayedToLibrary(int ret)
-    {
-        var ch = MakeTestComplexChar(1);
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wins_wch, int>(s => s(new(1), ref ch), ret);
-
-        _backend.wins_wch(new(1), ch)
-                .ShouldBe(ret);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
@@ -2014,26 +1241,6 @@ public class NCursesBackendTests
                 .ShouldBe(ret);
 
         x.ShouldBe(exp);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void wgetscrreg_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetscrreg>()
-                                 .Setup(s => s(new(1), out It.Ref<int>.IsAny, out It.Ref<int>.IsAny))
-                                 .Returns((IntPtr _, out int t, out int b) =>
-                                 {
-                                     t = 99;
-                                     b = 299;
-                                     return ret;
-                                 });
-
-
-        _backend.wgetscrreg(new(1), out var top, out var bottom)
-                .ShouldBe(ret);
-
-        top.ShouldBe(99);
-        bottom.ShouldBe(299);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
@@ -2134,31 +1341,6 @@ public class NCursesBackendTests
 
         attrs.ShouldBe(11u);
         ((int) colorPair).ShouldBe(22);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void wmouse_trafo_IsRelayedToLibrary(bool ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wmouse_trafo>()
-                                 .Setup(s => s(new(1), ref It.Ref<int>.IsAny, ref It.Ref<int>.IsAny, true))
-                                 .Returns((IntPtr _, ref int l, ref int c, bool _) =>
-                                 {
-                                     l.ShouldBe(1);
-                                     c.ShouldBe(2);
-
-                                     l = 3;
-                                     c = 4;
-                                     return ret;
-                                 });
-
-        var line = 1;
-        var col = 2;
-
-        _backend.wmouse_trafo(new(1), ref line, ref col, true)
-                .ShouldBe(ret);
-
-        line.ShouldBe(3);
-        col.ShouldBe(4);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]

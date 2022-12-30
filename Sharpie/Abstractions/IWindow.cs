@@ -53,38 +53,6 @@ public interface IWindow: ITerminalSurface
     IEnumerable<ISubWindow> SubWindows { get; }
 
     /// <summary>
-    ///     Enables or disables the use of hardware line insert/delete handling fpr this window.
-    /// </summary>
-    /// <remarks>
-    ///     This functionality only works if hardware has support for it. Consult
-    ///     <see cref="Terminal.HasHardwareLineEditor" />
-    ///     Default is <c>false</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
-    /// <exception cref="CursesSynchronizationException">
-    ///     Thrown if this operation was expected to run on the main
-    ///     thread/context but wasn't.
-    /// </exception>
-    /// <remarks>This operation is not thread safe.</remarks>
-    bool UseHardwareLineEdit { get; set; }
-
-    /// <summary>
-    ///     Enables or disables the use of hardware character insert/delete handling for this window.
-    /// </summary>
-    /// <remarks>
-    ///     This functionality only works if hardware has support for it. Consult
-    ///     <see cref="Terminal.HasHardwareCharEditor" />
-    ///     Default is <c>true</c>.
-    /// </remarks>
-    /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>
-    /// <exception cref="CursesSynchronizationException">
-    ///     Thrown if this operation was expected to run on the main
-    ///     thread/context but wasn't.
-    /// </exception>
-    /// <remarks>This operation is not thread safe.</remarks>
-    bool UseHardwareCharEdit { get; set; }
-
-    /// <summary>
     ///     Gets or sets the value indicating if the window is visible.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Window is no longer usable.</exception>

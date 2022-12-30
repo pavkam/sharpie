@@ -523,14 +523,38 @@ public abstract class Surface: ISurface, IDisposable
 
         AssertSynchronized();
 
-        count = Math.Min(count, Size.Width - CaretLocation.X);
-        var arr = new CursesComplexChar[count];
+        var caretAt = CaretLocation;
+        var x = caretAt.X;
+        var max = Size.Width;
+        var chars = new List<CursesComplexChar>();
 
-        Curses.win_wchnstr(Handle, arr, count)
-              .Check(nameof(Curses.win_wchnstr), "Failed to get the text from the surface.");
+        while (true)
+        {
+            if (Curses.win_wch(Handle, out var @char)
+                      .Failed())
+            {
+                break;
+            }
+            
+            chars.Add(@char);
+            
+            x++;
+            if (x >= max)
+            {
+                break;
+            }
+             
+            if (Curses.wmove(Handle, caretAt.Y, x)
+                      .Failed())
+            {
+                break;
+            }
+        }
 
-        return arr.Select(ch => Curses.FromComplexChar(ch))
-                  .ToArray();
+        CaretLocation = caretAt;
+        
+        return chars.Select(ch => Curses.FromComplexChar(ch))
+                    .ToArray();
     }
 
     /// <inheritdoc cref="ISurface.Clear" />

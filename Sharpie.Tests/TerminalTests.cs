@@ -627,28 +627,6 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void HasHardwareLineEditor_Returns_WhateverCursesReturns()
-    {
-        _terminal = new(_cursesMock.Object, _settings);
-
-        _cursesMock.Setup(s => s.has_il())
-                   .Returns(true);
-
-        _terminal.HasHardwareLineEditor.ShouldBeTrue();
-    }
-
-    [TestMethod]
-    public void HasHardwareCharEditor_Returns_WhateverCursesReturns()
-    {
-        _terminal = new(_cursesMock.Object, _settings);
-
-        _cursesMock.Setup(s => s.has_ic())
-                   .Returns(true);
-
-        _terminal.HasHardwareCharEditor.ShouldBeTrue();
-    }
-
-    [TestMethod]
     public void CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined()
     {
         _terminal = new(_cursesMock.Object, _settings);

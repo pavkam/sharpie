@@ -49,8 +49,6 @@ public interface ICursesBackend
 
     int cbreak();
 
-    int clearok(IntPtr window, bool set);
-
     int color_content(short color, out short red, out short green, out short blue);
 
     int copywin(IntPtr fromWindow, IntPtr toWindow, int srcStartLine, int srcStartCol,
@@ -58,12 +56,6 @@ public interface ICursesBackend
         int overlay);
 
     int curs_set(int level);
-
-    int def_prog_mode();
-
-    int def_shell_mode();
-
-    int delay_output(int delayMillis);
 
     int delwin(IntPtr window);
 
@@ -80,13 +72,7 @@ public interface ICursesBackend
 
     int erasewchar(out uint @char);
 
-    void filter();
-
     int flash();
-
-    int flushinp();
-
-    int getattrs(IntPtr window);
 
     int getcurx(IntPtr window);
 
@@ -104,17 +90,7 @@ public interface ICursesBackend
 
     int getpary(IntPtr window);
 
-    int halfdelay(int tenthsOfSec);
-
     bool has_colors();
-
-    bool has_ic();
-
-    bool has_il();
-
-    void idcok(IntPtr window, bool set);
-
-    int idlok(IntPtr window, bool set);
 
     void immedok(IntPtr window, bool set);
 
@@ -126,37 +102,15 @@ public interface ICursesBackend
 
     int intrflush(IntPtr window, bool set);
 
-    bool isendwin();
-
     bool is_linetouched(IntPtr window, int line);
 
     bool is_wintouched(IntPtr window);
 
-    bool is_cleared(IntPtr window);
-
-    bool is_idcok(IntPtr window);
-
-    bool is_idlok(IntPtr window);
-
     bool is_immedok(IntPtr window);
-
-    bool is_keypad(IntPtr window);
 
     bool is_leaveok(IntPtr window);
 
-    bool is_nodelay(IntPtr window);
-
-    bool is_notimeout(IntPtr window);
-
     bool is_scrollok(IntPtr window);
-
-    bool is_syncok(IntPtr window);
-
-    IntPtr wgetparent(IntPtr window);
-
-    int wgetscrreg(IntPtr window, out int top, out int bottom);
-
-    string? keyname(uint keyCode);
 
     int keypad(IntPtr window, bool set);
 
@@ -196,12 +150,6 @@ public interface ICursesBackend
 
     int pair_content(short colorPair, out short fgColor, out short bgColor);
 
-    uint COLOR_PAIR(uint attrs);
-
-    uint PAIR_NUMBER(uint colorPair);
-
-    int pechochar(IntPtr pad, uint charAndAttrs);
-
     int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol);
 
@@ -212,27 +160,13 @@ public interface ICursesBackend
 
     int raw();
 
-    int resetty();
-
-    int reset_prog_mode();
-
-    int reset_shell_mode();
-
     int ripoffline(int lines, ripoffline_callback callback);
-
-    int savetty();
 
     int scrollok(IntPtr window, bool set);
 
-    int slk_attroff(uint attrs);
-
     int slk_attr_off(uint attrs, IntPtr reserved);
 
-    int slk_attron(uint attrs);
-
     int slk_attr_on(uint attrs, IntPtr reserved);
-
-    int slk_attrset(uint attrs);
 
     int slk_attr();
 
@@ -243,8 +177,6 @@ public interface ICursesBackend
     int slk_color(short colorPair);
 
     int slk_init(int format);
-
-    string? slk_label(int labelIndex);
 
     int slk_noutrefresh();
 
@@ -259,20 +191,11 @@ public interface ICursesBackend
     IntPtr subpad(IntPtr pad, int lines, int cols, int atLine,
         int atCol);
 
-    IntPtr subwin(IntPtr window, int lines, int cols, int atLine,
-        int atCol);
-
     int syncok(IntPtr window, bool set);
 
     string? termname();
 
-    int ungetch(uint @char);
-
     void use_env(bool set);
-
-    int waddch(IntPtr window, uint charAndAttrs);
-
-    int waddchnstr(IntPtr window, uint[] charsAndAttrs, int length);
 
     int wattr_get(IntPtr window, out uint attrs, out short colorPair, IntPtr reserved);
 
@@ -282,10 +205,6 @@ public interface ICursesBackend
 
     int wattr_off(IntPtr window, uint attrs, IntPtr reserved);
 
-    int wbkgd(IntPtr window, uint charAndAttrs);
-
-    void wbkgdset(IntPtr window, uint charAndAttrs);
-
     int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
         uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
         uint bottomRightCorner);
@@ -293,33 +212,17 @@ public interface ICursesBackend
     int wchgat(IntPtr window, int count, uint attrs, short colorPair,
         IntPtr reserved);
 
-    int wclear(IntPtr window);
-
     int wclrtobot(IntPtr window);
 
     int wclrtoeol(IntPtr window);
 
     int wcolor_set(IntPtr window, short colorPair, IntPtr reserved);
 
-    void wcursyncup(IntPtr window);
-
     int wdelch(IntPtr window);
-
-    int wechochar(IntPtr window, uint charAndAttrs);
 
     int werase(IntPtr window);
 
-    int wgetch(IntPtr window);
-
-    int wgetnstr(IntPtr window, StringBuilder dest, int length);
-
     int whline(IntPtr window, uint @char, int count);
-
-    int winch(IntPtr window);
-
-    int winchnstr(IntPtr window, StringBuilder dest, int length);
-
-    int winsch(IntPtr window, uint charAndAttrs);
 
     int winsdelln(IntPtr window, int count);
 
@@ -333,43 +236,19 @@ public interface ICursesBackend
 
     int wscrl(IntPtr window, int count);
 
-    int wsetscrreg(IntPtr window, int top, int bottom);
-
-    void wsyncdown(IntPtr window);
-
-    void wsyncup(IntPtr window); // NO
-
     void wtimeout(IntPtr window, int delay);
 
     int wtouchln(IntPtr window, int line, int count, int changed);
 
     int wvline(IntPtr window, uint @char, int count);
 
-    bool is_term_resized(int lines, int cols);
-
-    int resize_term(int lines, int cols);
-
-    int resizeterm(int lines, int cols);
-
-    string? keybound(uint keyCode, int count);
-
     string? curses_version();
 
     int assume_default_colors(int fgColor, int bgColor);
 
-    int define_key(string keyName, int keyCode);
-
-    int key_defined(string keyName);
-
-    int keyok(int keyCode, bool set);
-
-    int set_tabsize(int size);
-
     int use_default_colors();
 
     int wresize(IntPtr window, int lines, int columns);
-
-    void nofilter();
 
     int getcchar(CursesComplexChar @char, StringBuilder dest, out uint attrs, out short colorPair,
         IntPtr reserved);
@@ -378,8 +257,6 @@ public interface ICursesBackend
 
     int killwchar(out uint @char);
 
-    int pecho_wchar(IntPtr window, CursesComplexChar @char);
-
     int setcchar(out CursesComplexChar @char, string text, uint attrs, short colorPair,
         IntPtr reserved);
 
@@ -387,60 +264,32 @@ public interface ICursesBackend
 
     int term_attrs();
 
-    int unget_wch(uint @char);
-
     int wadd_wch(IntPtr window, CursesComplexChar @char);
 
-    int wadd_wchnstr(IntPtr window, CursesComplexChar[] str, int count);
-
-    int waddnwstr(IntPtr window, string text, int length);
-
     int wbkgrnd(IntPtr window, CursesComplexChar @char);
-
-    void wbkgrndset(IntPtr window, CursesComplexChar @char);
 
     int wborder_set(IntPtr window, CursesComplexChar leftSide, CursesComplexChar rightSide, CursesComplexChar topSide,
         CursesComplexChar bottomSide, CursesComplexChar topLeftCorner, CursesComplexChar topRightCorner,
         CursesComplexChar bottomLeftCorner, CursesComplexChar bottomRightCorner);
 
-    int wecho_wchar(IntPtr window, CursesComplexChar @char);
-
     int wget_wch(IntPtr window, out uint @char);
 
     int wgetbkgrnd(IntPtr window, out CursesComplexChar @char);
-
-    int wgetn_wstr(IntPtr window, StringBuilder dest, int length);
 
     int whline_set(IntPtr window, CursesComplexChar @char, int count);
 
     int win_wch(IntPtr window, out CursesComplexChar @char);
 
-    int win_wchnstr(IntPtr window, CursesComplexChar[] @char, int length);
-
-    int winnwstr(IntPtr window, StringBuilder dest, int length);
-
-    int wins_nwstr(IntPtr window, string text, int length);
-
-    int wins_wch(IntPtr window, CursesComplexChar @char);
-
-    string? wunctrl(CursesComplexChar @char);
-
     int wvline_set(IntPtr window, CursesComplexChar @char, int count);
 
     int getmouse(out CursesMouseEvent @event);
-
-    int ungetmouse(CursesMouseEvent @event);
 
     int mousemask(uint newMask, out uint oldMask);
 
     int mouse_version();
 
-    bool wenclose(IntPtr window, int line, int col);
-
     int mouseinterval(int millis);
-
-    bool wmouse_trafo(IntPtr window, ref int line, ref int col, bool toScreen);
-
+    
     void set_title(string title);
 
     void set_unicode_locale();
