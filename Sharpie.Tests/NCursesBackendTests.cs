@@ -620,18 +620,6 @@ public class NCursesBackendTests
                 .ShouldBe(ret);
     }
 
-    [TestMethod, DataRow(0u), DataRow(99u)]
-    public void COLOR_PAIR_IsRelayedToLibrary(uint ret)
-    {
-        const uint i = 999u;
-
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.COLOR_PAIR, uint>(s => s(i), ret);
-
-        _backend.COLOR_PAIR(i)
-                .ShouldBe(ret);
-    }
-    
-
     [TestMethod, DataRow(0), DataRow(-1)]
     public void curs_set_IsRelayedToLibrary(int ret)
     {

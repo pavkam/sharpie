@@ -150,8 +150,6 @@ public interface ICursesBackend
 
     int pair_content(short colorPair, out short fgColor, out short bgColor);
 
-    uint COLOR_PAIR(uint attrs);
-
     int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol);
 

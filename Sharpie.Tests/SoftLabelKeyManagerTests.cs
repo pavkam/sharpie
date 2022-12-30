@@ -125,17 +125,14 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void StyleGet_ReturnsStyle_FromCurses()
     {
+        const int attr = unchecked((int)VideoAttribute.Italic) | (15 << 8) | 'a';
         _cursesMock.Setup(s => s.slk_attr())
-                   .Returns(999);
-
-        _cursesMock.Setup(s => s.COLOR_PAIR(It.IsAny<uint>()))
-                   .Returns(100);
+                   .Returns(attr);
 
         var style = _mgr1.Style;
-        style.Attributes.ShouldBe((VideoAttribute) 999);
-        style.ColorMixture.ShouldBe(new() { Handle = 100 });
-
-        _cursesMock.Verify(v => v.COLOR_PAIR(999));
+        
+        style.Attributes.ShouldBe(VideoAttribute.Italic);
+        style.ColorMixture.ShouldBe(new() { Handle = 15 });
     }
 
     [TestMethod]
@@ -174,15 +171,10 @@ public class SoftLabelKeyManagerTests
     public void ColorMixtureGet_ReturnsStyle_FromCurses()
     {
         _cursesMock.Setup(s => s.slk_attr())
-                   .Returns(999);
-
-        _cursesMock.Setup(s => s.COLOR_PAIR(It.IsAny<uint>()))
-                   .Returns(100);
+                   .Returns( 15 << 8);
 
         var mix = _mgr1.ColorMixture;
-        mix.ShouldBe(new() { Handle = 100 });
-
-        _cursesMock.Verify(v => v.COLOR_PAIR(999));
+        mix.ShouldBe(new() { Handle = 15 });
     }
 
     [TestMethod]

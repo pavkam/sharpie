@@ -85,12 +85,13 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
             AssertEnabled();
             AssertSynchronized();
 
-            var attrsAndColors = Terminal.Curses.slk_attr()
+            var attrsAndColors = (uint) Terminal.Curses.slk_attr()
                                          .Check(nameof(Terminal.Curses.slk_attr),
                                              "Failed to get the soft label key attributes.");
 
-            var colorPair = (short) Terminal.Curses.COLOR_PAIR((uint) attrsAndColors);
-            return new() { Attributes = (VideoAttribute) attrsAndColors, ColorMixture = new() { Handle = colorPair } };
+            var colorPair = (attrsAndColors >> 8) & 0xFF; //TODO - not cross-backend.
+            var attrs = attrsAndColors & 0xFFFF0000;
+            return new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = (short) colorPair } };
         }
         set
         {

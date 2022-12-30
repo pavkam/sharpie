@@ -55,9 +55,6 @@ internal abstract class NCursesFunctionMap
     public delegate int color_content(short color, out short red, out short green, out short blue);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate uint COLOR_PAIR(uint attrs);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int copywin(IntPtr fromWindow, IntPtr toWindow, int srcMinLine, int srcMinCol,
         int destMinLine, int destMinCol, int destMaxLine, int destMaxCol,
         int overlay);

@@ -157,8 +157,6 @@ internal class NCursesBackend: ICursesBackend
     public int pair_content(short colorPair, out short fgColor, out short bgColor) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.pair_content>()(colorPair, out fgColor, out bgColor);
 
-    public uint COLOR_PAIR(uint attrs) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.COLOR_PAIR>()(attrs);
-
     public int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.pnoutrefresh>()(pad, padMinLine, padMinCol, scrMinLine,
