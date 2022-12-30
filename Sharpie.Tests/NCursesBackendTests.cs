@@ -334,7 +334,7 @@ public class NCursesBackendTests
                 .ShouldBe(new(ret));
     }
 
-    [TestMethod, DataRow((string?) null), DataRow("hello")]
+    [TestMethod, DataRow(null), DataRow("hello")]
     public void longname_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
@@ -347,7 +347,7 @@ public class NCursesBackendTests
                 .ShouldBe(ret);
     }
 
-    [TestMethod, DataRow((string?) null), DataRow("hello")]
+    [TestMethod, DataRow(null), DataRow("hello")]
     public void termname_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
@@ -360,7 +360,7 @@ public class NCursesBackendTests
                 .ShouldBe(ret);
     }
 
-    [TestMethod, DataRow((string?) null), DataRow("hello")]
+    [TestMethod, DataRow(null), DataRow("hello")]
     public void curses_version_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
@@ -664,13 +664,25 @@ public class NCursesBackendTests
                 .ShouldBe(ret);
     }
 
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void slk_attr_IsRelayedToLibrary(int ret)
+    [TestMethod]
+    public void slk_attr_IsRelayedToLibrary_1()
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(), 
+            ((int) VideoAttribute.Blink << 16) + (99 << 8));
 
-        _backend.slk_attr()
-                .ShouldBe(ret);
+        _backend.slk_attr(out var a, out var cp)
+                .ShouldBe(0);
+        a.ShouldBe(VideoAttribute.Blink);
+        ((int)cp).ShouldBe(99);
+    }
+    
+    [TestMethod]
+    public void slk_attr_IsRelayedToLibrary_2()
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(), -1);
+
+        _backend.slk_attr(out var _, out var _)
+                .ShouldBe(-1);
     }
 
     [TestMethod, DataRow(99), DataRow(0)]
@@ -768,7 +780,7 @@ public class NCursesBackendTests
                 .ShouldBe(ret);
     }
 
-    [TestMethod, DataRow((string?) null), DataRow("hello")]
+    [TestMethod, DataRow(null), DataRow("hello")]
     public void key_name_IsRelayedToLibrary(string ret)
     {
         var h = Marshal.StringToHGlobalAnsi(ret);
@@ -829,27 +841,27 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wattr_on_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wattr_on, int>(s => s(new(1), 1, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wattr_on, int>(s => s(new(1), (uint) VideoAttribute.Blink << 16, new(2)), ret);
 
-        _backend.wattr_on(new(1), 1, new(2))
+        _backend.wattr_on(new(1), VideoAttribute.Blink, new(2))
                 .ShouldBe(ret);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wattr_off_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wattr_off, int>(s => s(new(1), 1, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wattr_off, int>(s => s(new(1), (uint) VideoAttribute.Blink << 16, new(2)), ret);
 
-        _backend.wattr_off(new(1), 1, new(2))
+        _backend.wattr_off(new(1), VideoAttribute.Blink, new(2))
                 .ShouldBe(ret);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_set_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_set, int>(s => s(1, 2, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_set, int>(s => s((uint) VideoAttribute.Blink << 16, 2, new(2)), ret);
 
-        _backend.slk_attr_set(1, 2, new(2))
+        _backend.slk_attr_set(VideoAttribute.Blink, 2, new(2))
                 .ShouldBe(ret);
     }
 
@@ -952,9 +964,10 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wchgat_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wchgat, int>(s => s(new(1), 1, 99, 44, new(999)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wchgat, int>(
+            s => s(new(1), 1, (uint) VideoAttribute.Blink << 16, 44, new(999)), ret);
 
-        _backend.wchgat(new(1), 1, 99, 44, new(999))
+        _backend.wchgat(new(1), 1, VideoAttribute.Blink, 44, new(999))
                 .ShouldBe(ret);
     }
 
@@ -985,39 +998,50 @@ public class NCursesBackendTests
                 .ShouldBe(ret);
     }
 
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void term_attrs_IsRelayedToLibrary(int ret)
+    [TestMethod]
+    public void term_attrs_IsRelayedToLibrary_1()
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.term_attrs, int>(s => s(), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.term_attrs, int>(s => s(), (int) VideoAttribute.Blink << 16);
 
-        _backend.term_attrs()
-                .ShouldBe(ret);
+        _backend.term_attrs(out var x)
+                .ShouldBe(0);
+        
+        x.ShouldBe(VideoAttribute.Blink);
     }
+    
+    [TestMethod]
+    public void term_attrs_IsRelayedToLibrary_2()
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.term_attrs, int>(s => s(), -1);
 
+        _backend.term_attrs(out var _)
+                .ShouldBe(-1);
+    }
+    
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wattr_set_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wattr_set, int>(s => s(new(1), 2, 3, new(4)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wattr_set, int>(s => s(new(1), (uint) VideoAttribute.Blink << 16, 3, new(4)), ret);
 
-        _backend.wattr_set(new(1), 2, 3, new(4))
+        _backend.wattr_set(new(1), VideoAttribute.Blink, 3, new(4))
                 .ShouldBe(ret);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_on_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_on, int>(s => s(1, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_on, int>(s => s((uint) VideoAttribute.Blink << 16, new(2)), ret);
 
-        _backend.slk_attr_on(1, new(2))
+        _backend.slk_attr_on(VideoAttribute.Blink, new(2))
                 .ShouldBe(ret);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_off_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_off, int>(s => s(1, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_off, int>(s => s((uint) VideoAttribute.Blink << 16, new(2)), ret);
 
-        _backend.slk_attr_off(1, new(2))
+        _backend.slk_attr_off( VideoAttribute.Blink, new(2))
                 .ShouldBe(ret);
     }
 
@@ -1330,7 +1354,7 @@ public class NCursesBackendTests
                                  .Setup(s => s(new(1), out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, new(2)))
                                  .Returns((IntPtr _, out uint a, out short cp, IntPtr _) =>
                                  {
-                                     a = 11;
+                                     a = (uint) VideoAttribute.Blink << 16;
                                      cp = 22;
                                      return ret;
                                  });
@@ -1339,7 +1363,7 @@ public class NCursesBackendTests
         _backend.wattr_get(new(1), out var attrs, out var colorPair, new(2))
                 .ShouldBe(ret);
 
-        attrs.ShouldBe(11u);
+        attrs.ShouldBe(VideoAttribute.Blink);
         ((int) colorPair).ShouldBe(22);
     }
 
@@ -1348,7 +1372,7 @@ public class NCursesBackendTests
     {
         var exp = MakeTestComplexChar(1);
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.setcchar>()
-                                 .Setup(s => s(out It.Ref<CursesComplexChar>.IsAny, "text", 10, 20, new(2)))
+                                 .Setup(s => s(out It.Ref<CursesComplexChar>.IsAny, "text", (uint) VideoAttribute.Blink << 16, 20, new(2)))
                                  .Returns((out CursesComplexChar o, string _, uint _, short _,
                                      IntPtr _) =>
                                  {
@@ -1356,7 +1380,7 @@ public class NCursesBackendTests
                                      return ret;
                                  });
 
-        _backend.setcchar(out var ch, "text", 10, 20, new(2))
+        _backend.setcchar(out var ch, "text", VideoAttribute.Blink, 20, new(2))
                 .ShouldBe(ret);
 
         ch.ShouldBe(exp);
@@ -1372,7 +1396,7 @@ public class NCursesBackendTests
                                  .Returns((ref CursesComplexChar _, StringBuilder _, out uint a, out short cp,
                                      IntPtr _) =>
                                  {
-                                     a = 1;
+                                     a = (uint) VideoAttribute.Blink << 16;
                                      cp = 2;
                                      return ret;
                                  });
@@ -1380,7 +1404,7 @@ public class NCursesBackendTests
         _backend.getcchar(ch, sb, out var attrs, out var pair, new(2))
                 .ShouldBe(ret);
 
-        attrs.ShouldBe(1u);
+        attrs.ShouldBe(VideoAttribute.Blink);
         ((int) pair).ShouldBe(2);
     }
 

@@ -164,13 +164,13 @@ public interface ICursesBackend
 
     int scrollok(IntPtr window, bool set);
 
-    int slk_attr_off(uint attrs, IntPtr reserved);
+    int slk_attr_off(VideoAttribute attributes, IntPtr reserved);
 
-    int slk_attr_on(uint attrs, IntPtr reserved);
+    int slk_attr_on(VideoAttribute attributes, IntPtr reserved);
 
-    int slk_attr();
+    int slk_attr(out VideoAttribute attributes, out short colorPair);
 
-    int slk_attr_set(uint attrs, short colorPair, IntPtr reserved);
+    int slk_attr_set(VideoAttribute attributes, short colorPair, IntPtr reserved);
 
     int slk_clear();
 
@@ -197,19 +197,19 @@ public interface ICursesBackend
 
     void use_env(bool set);
 
-    int wattr_get(IntPtr window, out uint attrs, out short colorPair, IntPtr reserved);
+    int wattr_get(IntPtr window, out VideoAttribute attributes, out short colorPair, IntPtr reserved);
 
-    int wattr_set(IntPtr window, uint attrs, short colorPair, IntPtr reserved);
+    int wattr_set(IntPtr window, VideoAttribute attributes, short colorPair, IntPtr reserved);
 
-    int wattr_on(IntPtr window, uint attrs, IntPtr reserved);
+    int wattr_on(IntPtr window, VideoAttribute attributes, IntPtr reserved);
 
-    int wattr_off(IntPtr window, uint attrs, IntPtr reserved);
+    int wattr_off(IntPtr window, VideoAttribute attributes, IntPtr reserved);
 
     int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
         uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
         uint bottomRightCorner);
 
-    int wchgat(IntPtr window, int count, uint attrs, short colorPair,
+    int wchgat(IntPtr window, int count, VideoAttribute attributes, short colorPair,
         IntPtr reserved);
 
     int wclrtobot(IntPtr window);
@@ -250,19 +250,19 @@ public interface ICursesBackend
 
     int wresize(IntPtr window, int lines, int columns);
 
-    int getcchar(CursesComplexChar @char, StringBuilder dest, out uint attrs, out short colorPair,
+    int getcchar(CursesComplexChar @char, StringBuilder dest, out VideoAttribute attributes, out short colorPair,
         IntPtr reserved);
 
     string? key_name(uint @char);
 
     int killwchar(out uint @char);
 
-    int setcchar(out CursesComplexChar @char, string text, uint attrs, short colorPair,
+    int setcchar(out CursesComplexChar @char, string text, VideoAttribute attributes, short colorPair,
         IntPtr reserved);
 
     int slk_set(int labelIndex, string title, int align);
 
-    int term_attrs();
+    int term_attrs(out VideoAttribute attributes);
 
     int wadd_wch(IntPtr window, CursesComplexChar @char);
 

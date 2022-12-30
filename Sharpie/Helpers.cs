@@ -124,7 +124,7 @@ public static class Helpers
         }
 
         // Use Curses to encode the characters.
-        curses.setcchar(out var @char, rune.ToString(), (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
+        curses.setcchar(out var @char, rune.ToString(), style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
               .Check(nameof(curses.setcchar), "Failed to convert string to complex character.");
 
         return @char;
@@ -145,7 +145,7 @@ public static class Helpers
               .Check(nameof(curses.getcchar), "Failed to deconstruct the complex character.");
 
         return (Rune.GetRuneAt(builder.ToString(), 0),
-            new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } });
+            new() { Attributes = attrs, ColorMixture = new() { Handle = colorPair } });
     }
 
     /// <summary>

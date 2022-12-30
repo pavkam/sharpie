@@ -354,9 +354,16 @@ public sealed class Terminal: ITerminal, IDisposable
     public string? CursesVersion => Curses.curses_version();
 
     /// <inheritdoc cref="ITerminal.SupportedAttributes" />
-    public VideoAttribute SupportedAttributes =>
-        (VideoAttribute) Curses.term_attrs()
-                               .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
+    public VideoAttribute SupportedAttributes
+    {
+        get
+        { 
+            Curses.term_attrs(out var attributes)
+                .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
+
+            return attributes;
+        }
+    }
 
     /// <inheritdoc cref="ITerminal.Screen" />
     IScreen ITerminal.Screen => Screen;

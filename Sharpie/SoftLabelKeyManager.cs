@@ -85,20 +85,18 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
             AssertEnabled();
             AssertSynchronized();
 
-            var attrsAndColors = (uint) Terminal.Curses.slk_attr()
+           Terminal.Curses.slk_attr(out var attributes, out var colorPair)
                                          .Check(nameof(Terminal.Curses.slk_attr),
                                              "Failed to get the soft label key attributes.");
 
-            var colorPair = (attrsAndColors >> 8) & 0xFF; //TODO - not cross-backend.
-            var attrs = attrsAndColors & 0xFFFF0000;
-            return new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = (short) colorPair } };
+            return new() { Attributes = attributes, ColorMixture = new() { Handle = colorPair } };
         }
         set
         {
             AssertEnabled();
             AssertSynchronized();
 
-            Terminal.Curses.slk_attr_set((uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
+            Terminal.Curses.slk_attr_set(value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
                     .Check(nameof(Terminal.Curses.slk_attr_set), "Failed to configure the soft label key attributes.");
         }
     }
@@ -146,7 +144,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         AssertEnabled();
         AssertSynchronized();
 
-        Terminal.Curses.slk_attr_on((uint) attributes, IntPtr.Zero)
+        Terminal.Curses.slk_attr_on(attributes, IntPtr.Zero)
                 .Check(nameof(Terminal.Curses.slk_attr_on), "Failed to configure the soft label key attributes.");
     }
 
@@ -157,7 +155,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         AssertEnabled();
         AssertSynchronized();
 
-        Terminal.Curses.slk_attr_off((uint) attributes, IntPtr.Zero)
+        Terminal.Curses.slk_attr_off(attributes, IntPtr.Zero)
                 .Check(nameof(Terminal.Curses.slk_attr_off), "Failed to configure the soft label key attributes.");
     }
 

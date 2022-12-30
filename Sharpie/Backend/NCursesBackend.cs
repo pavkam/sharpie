@@ -21,6 +21,10 @@ internal class NCursesBackend: ICursesBackend
 
     public IDotNetSystemAdapter DotNetSystemAdapter { get; }
 
+    private uint EncodeCursesAttribute(VideoAttribute attributes, short colorPair) => ((uint)attributes << 16) | (((uint)colorPair & 0xFF) << 8);
+
+    private (VideoAttribute attributtes, short colorPair) DecodeCursesAttributes(uint attrs) => ((VideoAttribute) (attrs >> 16), (short) ((attrs >> 8) & 0xFF));
+
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
@@ -177,16 +181,29 @@ internal class NCursesBackend: ICursesBackend
     public int scrollok(IntPtr window, bool set) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.scrollok>()(window, set);
 
-    public int slk_attr_off(uint attrs, IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr_off>()(attrs, reserved);
+    public int slk_attr_off(VideoAttribute attributes, IntPtr reserved) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr_off>()(EncodeCursesAttribute(attributes, 0), reserved);
 
-    public int slk_attr_on(uint attrs, IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr_on>()(attrs, reserved);
+    public int slk_attr_on(VideoAttribute attributes, IntPtr reserved) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr_on>()(EncodeCursesAttribute(attributes, 0), reserved);
 
-    public int slk_attr() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr>()();
+    public int slk_attr(out VideoAttribute attributes, out short colorPair)
+    {
+        var ret = _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr>()();
+        if (ret.Failed())
+        {
+            attributes = VideoAttribute.None;
+            colorPair = 0;
 
-    public int slk_attr_set(uint attrs, short colorPair, IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr_set>()(attrs, colorPair, reserved);
+            return ret;
+        }
+
+        (attributes, colorPair) = DecodeCursesAttributes((uint) ret);
+        return 0;
+    }
+
+    public int slk_attr_set(VideoAttribute attributes, short colorPair, IntPtr reserved) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr_set>()(EncodeCursesAttribute(attributes, 0), colorPair, reserved);
 
     public int slk_clear() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_clear>()();
 
@@ -217,17 +234,23 @@ internal class NCursesBackend: ICursesBackend
 
     public void use_env(bool set) { _nCursesSymbolResolver.Resolve<NCursesFunctionMap.use_env>()(set); }
 
-    public int wattr_get(IntPtr window, out uint attrs, out short colorPair, IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wattr_get>()(window, out attrs, out colorPair, reserved);
+    public int wattr_get(IntPtr window, out VideoAttribute attributes, out short colorPair, IntPtr reserved)
+    {
+        var ret = _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wattr_get>()(window, out var attrs, out colorPair,
+            reserved);
 
-    public int wattr_set(IntPtr window, uint attrs, short colorPair, IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wattr_set>()(window, attrs, colorPair, reserved);
+        (attributes, _) = DecodeCursesAttributes(attrs);
+        return ret;
+    }
 
-    public int wattr_on(IntPtr window, uint attrs, IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wattr_on>()(window, attrs, reserved);
+    public int wattr_set(IntPtr window, VideoAttribute attributes, short colorPair, IntPtr reserved) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wattr_set>()(window, EncodeCursesAttribute(attributes, 0), colorPair, reserved);
 
-    public int wattr_off(IntPtr window, uint attrs, IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wattr_off>()(window, attrs, reserved);
+    public int wattr_on(IntPtr window, VideoAttribute attributes, IntPtr reserved) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wattr_on>()(window, EncodeCursesAttribute(attributes, 0), reserved);
+
+    public int wattr_off(IntPtr window, VideoAttribute attributes, IntPtr reserved) =>
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wattr_off>()(window, EncodeCursesAttribute(attributes, 0), reserved);
 
     public int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
         uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
@@ -235,9 +258,9 @@ internal class NCursesBackend: ICursesBackend
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wborder>()(window, leftSide, rightSide, topSide, bottomSide,
             topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner);
 
-    public int wchgat(IntPtr window, int count, uint attrs, short colorPair,
+    public int wchgat(IntPtr window, int count, VideoAttribute attributes, short colorPair,
         IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wchgat>()(window, count, attrs, colorPair, reserved);
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wchgat>()(window, count, EncodeCursesAttribute(attributes, 0), colorPair, reserved);
 
     public int wclrtobot(IntPtr window) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wclrtobot>()(window);
 
@@ -290,10 +313,15 @@ internal class NCursesBackend: ICursesBackend
     public int wresize(IntPtr window, int lines, int columns) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wresize>()(window, lines, columns);
 
-    public int getcchar(CursesComplexChar @char, StringBuilder dest, out uint attrs, out short colorPair,
-        IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.getcchar>()(ref @char, dest, out attrs, out colorPair,
-            reserved);
+    public int getcchar(CursesComplexChar @char, StringBuilder dest, out VideoAttribute attributes, out short colorPair,
+        IntPtr reserved)
+    {
+        var ret = _nCursesSymbolResolver.Resolve<NCursesFunctionMap.getcchar>()(ref @char, dest, out var attrs,
+            out colorPair, reserved);
+
+        (attributes, _) = DecodeCursesAttributes(attrs);
+        return ret;
+    }
 
     public string? key_name(uint @char) =>
         DotNetSystemAdapter.NativeLibraryAnsiStrPtrToString(
@@ -301,14 +329,25 @@ internal class NCursesBackend: ICursesBackend
 
     public int killwchar(out uint @char) => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.killwchar>()(out @char);
 
-    public int setcchar(out CursesComplexChar @char, string text, uint attrs, short colorPair,
+    public int setcchar(out CursesComplexChar @char, string text, VideoAttribute attributes, short colorPair,
         IntPtr reserved) =>
-        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.setcchar>()(out @char, text, attrs, colorPair, reserved);
+        _nCursesSymbolResolver.Resolve<NCursesFunctionMap.setcchar>()(out @char, text, EncodeCursesAttribute(attributes, 0), colorPair, reserved);
 
     public int slk_set(int labelIndex, string title, int align) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.slk_set>()(labelIndex, title, align);
 
-    public int term_attrs() => _nCursesSymbolResolver.Resolve<NCursesFunctionMap.term_attrs>()();
+    public int term_attrs(out VideoAttribute attributes)
+    {
+        var ret = _nCursesSymbolResolver.Resolve<NCursesFunctionMap.term_attrs>()();
+        if (ret.Failed())
+        {
+            attributes = VideoAttribute.None;
+            return ret;
+        }
+        
+        (attributes, _) = DecodeCursesAttributes((uint) ret);
+        return 0;
+    }
 
     public int wadd_wch(IntPtr window, CursesComplexChar @char) =>
         _nCursesSymbolResolver.Resolve<NCursesFunctionMap.wadd_wch>()(window, ref @char);

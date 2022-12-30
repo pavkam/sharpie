@@ -118,13 +118,13 @@ public class HelpersTests
     [TestMethod, DataRow(0x1F, "\x241F"), DataRow(0x7F, "\x247F"), DataRow(0x9F, "\x249F")]
     public void ToComplexChar_ConvertsSpecialAsciiToUnicode(int ch, string expected)
     {
-        _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+        _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                        It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
         _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
         _cursesMock.Verify(
-            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<short>(),
+            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<VideoAttribute>(), It.IsAny<short>(),
                 It.IsAny<IntPtr>()), Times.Once);
     }
 
@@ -133,20 +133,20 @@ public class HelpersTests
      DataRow((int) ControlCharacter.Tab, "\t")]
     public void ToComplexChar_DoesNotConvertOtherAsciiToUnicode(int ch, string expected)
     {
-        _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+        _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                        It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
         _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
         _cursesMock.Verify(
-            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<short>(),
+            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<VideoAttribute>(), It.IsAny<short>(),
                 It.IsAny<IntPtr>()), Times.Once);
     }
 
     [TestMethod]
     public void ToComplexChar_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+        _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                        It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
@@ -157,7 +157,7 @@ public class HelpersTests
     public void FromComplexChar_Throws_IfCursesFails()
     {
         _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
+                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         var c = new CursesComplexChar();
@@ -168,12 +168,12 @@ public class HelpersTests
     public void FromComplexChar_ReturnsCursesChar()
     {
         _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
-                   .Returns((CursesComplexChar _, StringBuilder sb, out uint attrs, out short colorPair,
+                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
+                   .Returns((CursesComplexChar _, StringBuilder sb, out VideoAttribute attrs, out short colorPair,
                        IntPtr _) =>
                    {
                        sb.Append('H');
-                       attrs = (uint) VideoAttribute.Dim;
+                       attrs = VideoAttribute.Dim;
                        colorPair = 10;
                        return 0;
                    });

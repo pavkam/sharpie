@@ -609,7 +609,7 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, _settings);
 
-        _cursesMock.Setup(s => s.term_attrs())
+        _cursesMock.Setup(s => s.term_attrs(out It.Ref<VideoAttribute>.IsAny))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => _terminal.SupportedAttributes.ToString()).Operation.ShouldBe("term_attrs");
@@ -620,8 +620,12 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, _settings);
 
-        _cursesMock.Setup(s => s.term_attrs())
-                   .Returns(unchecked((int) VideoAttribute.Italic));
+        _cursesMock.Setup(s => s.term_attrs(out It.Ref<VideoAttribute>.IsAny))
+                   .Returns((out VideoAttribute v) =>
+                   {
+                       v = VideoAttribute.Italic;
+                       return 0;
+                   });
 
         _terminal.SupportedAttributes.ShouldBe(VideoAttribute.Italic);
     }
