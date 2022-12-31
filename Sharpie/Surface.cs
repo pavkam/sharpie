@@ -526,7 +526,7 @@ public abstract class Surface: ISurface, IDisposable
         var caretAt = CaretLocation;
         var x = caretAt.X;
         var max = Size.Width;
-        var chars = new List<CursesComplexChar>();
+        var chars = new List<ComplexChar>();
 
         while (true)
         {

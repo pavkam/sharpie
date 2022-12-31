@@ -33,10 +33,10 @@ namespace Sharpie;
 /// <summary>
 ///     Internal helper routines.
 /// </summary>
-public static class Helpers
+internal static class Helpers
 {
     private const int CursesErrorResult = -1;
-
+    
     /// <summary>
     ///     Checks if a given code shows a failure.
     /// </summary>
@@ -52,7 +52,7 @@ public static class Helpers
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="code" /> value.</returns>
     /// <exception cref="CursesOperationException">Thrown if <paramref name="code" /> indicates an error.</exception>
-    internal static int Check(this int code, string operation, string message)
+    public static int Check(this int code, string operation, string message)
     {
         if (code == CursesErrorResult)
         {
@@ -70,7 +70,7 @@ public static class Helpers
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="ptr" /> value.</returns>
     /// <exception cref="CursesOperationException">Thrown if <paramref name="ptr" /> is zero.</exception>
-    internal static IntPtr Check(this IntPtr ptr, string operation, string message)
+    public static IntPtr Check(this IntPtr ptr, string operation, string message)
     {
         if (ptr == IntPtr.Zero)
         {
@@ -81,28 +81,6 @@ public static class Helpers
     }
 
     /// <summary>
-    ///     Converts millis to tenths of a second by rounding up.
-    /// </summary>
-    /// <param name="value">The millis.</param>
-    /// <returns>The value in 100s of millis.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Argument <paramref name="value" /> is less than zero.</exception>
-    internal static int ConvertMillisToTenths(int value)
-    {
-        switch (value)
-        {
-            case < 0:
-                throw new ArgumentOutOfRangeException(nameof(value));
-            case 0:
-                return 0;
-            default:
-            {
-                var hundreds = value / 100 + (value % 100 > 0 ? 1 : 0);
-                return Math.Min(255, hundreds);
-            }
-        }
-    }
-
-    /// <summary>
     ///     Converts a given rune to a complex character.
     /// </summary>
     /// <param name="curses">The curses backend.</param>
@@ -110,7 +88,7 @@ public static class Helpers
     /// <param name="style">The style to apply.</param>
     /// <returns>The complex character.</returns>
     /// <exception cref="CursesOperationException">Thrown if <paramref name="rune" /> failed to convert to a complex char.</exception>
-    public static CursesComplexChar ToComplexChar(this ICursesBackend curses, Rune rune, Style style)
+    public static ComplexChar ToComplexChar(this ICursesBackend curses, Rune rune, Style style)
     {
         // Convert the special characters into Unicode.
         if (rune.IsAscii &&
@@ -136,7 +114,7 @@ public static class Helpers
     /// <param name="curses">The curses backend.</param>
     /// <param name="char">The char to breakdown.</param>
     /// <returns>The rune and the style.</returns>
-    public static (Rune rune, Style style) FromComplexChar(this ICursesBackend curses, CursesComplexChar @char)
+    public static (Rune rune, Style style) FromComplexChar(this ICursesBackend curses, ComplexChar @char)
     {
         // Use Curses to decode the characters. Assume 10 characters is enough in the string.
 
@@ -153,7 +131,7 @@ public static class Helpers
     /// </summary>
     /// <param name="keyCode">The key code.</param>
     /// <returns>The key and modifiers combination.</returns>
-    internal static (Key key, ModifierKey modifierKey) ConvertKeyPressEvent(uint keyCode)
+    public static (Key key, ModifierKey modifierKey) ConvertKeyPressEvent(uint keyCode)
     {
         return (CursesKey) keyCode switch
         {
@@ -285,7 +263,7 @@ public static class Helpers
     /// <param name="count">The length of the interval.</param>
     /// <returns>An enumerable that returns the halves.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="count" /> is negative.</exception>
-    internal static IEnumerable<(int coord, bool start)> EnumerateInHalves(float start, float count)
+    public static IEnumerable<(int coord, bool start)> EnumerateInHalves(float start, float count)
     {
         if (count < 0)
         {
@@ -316,7 +294,7 @@ public static class Helpers
     /// <param name="seg2Len">The length of the second segment.</param>
     /// <returns>A tuple containing the intersection.</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    internal static (int start, int count) IntersectSegments(int seg1Start, int seg1Len, int seg2Start, int seg2Len)
+    public static (int start, int count) IntersectSegments(int seg1Start, int seg1Len, int seg2Start, int seg2Len)
     {
         if (seg1Len < 0)
         {
@@ -348,7 +326,7 @@ public static class Helpers
     /// <param name="start">The starting point.</param>
     /// <param name="end">The ending point.</param>
     /// <param name="traceFunc">The trace function invoked for each point.</param>
-    internal static void TraceLineInHalves(PointF start, PointF end, Action<PointF> traceFunc)
+    public static void TraceLineInHalves(PointF start, PointF end, Action<PointF> traceFunc)
     {
         Debug.Assert(traceFunc != null);
 
@@ -401,7 +379,7 @@ public static class Helpers
     /// </summary>
     /// <param name="t">The terminal.</param>
     /// <param name="s">The surface.</param>
-    internal static void Refresh(this Terminal t, ISurface s)
+    public static void Refresh(this Terminal t, ISurface s)
     {
         Debug.Assert(t != null);
         Debug.Assert(s != null);
@@ -423,7 +401,7 @@ public static class Helpers
     /// <param name="size">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
     /// <returns><c>true</c> if the intersection is not empty; <c>false</c> otherwise.</returns>
-    internal static bool AdjustToActualArea(this Size size, ref Rectangle area) =>
+    public static bool AdjustToActualArea(this Size size, ref Rectangle area) =>
         new Rectangle(new(0, 0), size).AdjustToActualArea(ref area);
 
     /// <summary>
@@ -432,7 +410,7 @@ public static class Helpers
     /// <param name="total">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
     /// <returns><c>true</c> if the intersection is not empty; <c>false</c> otherwise.</returns>
-    internal static bool AdjustToActualArea(this Rectangle total, ref Rectangle area)
+    public static bool AdjustToActualArea(this Rectangle total, ref Rectangle area)
     {
         total.Intersect(area);
         area = total;
@@ -446,7 +424,7 @@ public static class Helpers
     /// <param name="size">The size of the destination surface.</param>
     /// <param name="area">The desired area.</param>
     /// <returns><c>true</c> if the intersection is not empty; <c>false</c> otherwise.</returns>
-    internal static bool AdjustToActualArea(this Size size, ref RectangleF area)
+    public static bool AdjustToActualArea(this Size size, ref RectangleF area)
     {
         var r = new RectangleF(new(0, 0), size);
         r.Intersect(area);

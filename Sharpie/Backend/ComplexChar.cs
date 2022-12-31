@@ -32,16 +32,46 @@ namespace Sharpie.Backend;
 #pragma warning disable CS1591
 
 /// <summary>
-///     Opaque Curses character with attributes and color.
+/// A Curses, back-end-specific complex character that encodes the rune and its attributes.
 /// </summary>
-[PublicAPI, StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage,
- SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
-public struct CursesComplexChar
+[PublicAPI]
+public sealed class ComplexChar
 {
-    [MarshalAs(UnmanagedType.U4)] internal uint _attrAndColorPair;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char0;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char1;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char2;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char3;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char4;
+    /// <summary>
+    /// The backend-specific payload.
+    /// </summary>
+    internal object Payload { get; }
+
+    /// <summary>
+    /// Creates a new complex character.
+    /// </summary>
+    /// <param name="payload">The backend-specific payload.</param>
+    internal ComplexChar(object payload)
+    {
+        Debug.Assert(payload != null);
+        
+        Payload = payload;
+    }
+
+    /// <inheritdoc cref="object.Equals(object?)"/>
+    public override bool Equals(object? obj) => obj is ComplexChar cc && Equals(cc.Payload, Payload);
+
+    /// <inheritdoc cref="object.GetHashCode"/>
+    public override int GetHashCode() => Payload.GetHashCode();
+
+    /// <summary>
+    /// Equality comparison operator.
+    /// </summary>
+    /// <param name="left">The left value.</param>
+    /// <param name="right">The right value.</param>
+    /// <returns>The result of the comparison.</returns>
+    public static bool operator ==(ComplexChar? left, ComplexChar? right) => Equals(left, right);
+    
+    /// <summary>
+    /// Inequality comparison operator.
+    /// </summary>
+    /// <param name="left">The left value.</param>
+    /// <param name="right">The right value.</param>
+    /// <returns>The result of the comparison.</returns>
+    public static bool operator !=(ComplexChar? left, ComplexChar? right) => !Equals(left, right);
 }

@@ -250,37 +250,37 @@ public interface ICursesBackend
 
     int wresize(IntPtr window, int lines, int columns);
 
-    int getcchar(CursesComplexChar @char, StringBuilder dest, out VideoAttribute attributes, out short colorPair,
+    int getcchar(ComplexChar @char, StringBuilder dest, out VideoAttribute attributes, out short colorPair,
         IntPtr reserved);
 
     string? key_name(uint @char);
 
     int killwchar(out uint @char);
 
-    int setcchar(out CursesComplexChar @char, string text, VideoAttribute attributes, short colorPair,
+    int setcchar(out ComplexChar @char, string text, VideoAttribute attributes, short colorPair,
         IntPtr reserved);
 
     int slk_set(int labelIndex, string title, int align);
 
     int term_attrs(out VideoAttribute attributes);
 
-    int wadd_wch(IntPtr window, CursesComplexChar @char);
+    int wadd_wch(IntPtr window, ComplexChar @char);
 
-    int wbkgrnd(IntPtr window, CursesComplexChar @char);
+    int wbkgrnd(IntPtr window, ComplexChar @char);
 
-    int wborder_set(IntPtr window, CursesComplexChar leftSide, CursesComplexChar rightSide, CursesComplexChar topSide,
-        CursesComplexChar bottomSide, CursesComplexChar topLeftCorner, CursesComplexChar topRightCorner,
-        CursesComplexChar bottomLeftCorner, CursesComplexChar bottomRightCorner);
+    int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
+        ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner,
+        ComplexChar bottomLeftCorner, ComplexChar bottomRightCorner);
 
     int wget_wch(IntPtr window, out uint @char);
 
-    int wgetbkgrnd(IntPtr window, out CursesComplexChar @char);
+    int wgetbkgrnd(IntPtr window, out ComplexChar @char);
 
-    int whline_set(IntPtr window, CursesComplexChar @char, int count);
+    int whline_set(IntPtr window, ComplexChar @char, int count);
 
-    int win_wch(IntPtr window, out CursesComplexChar @char);
+    int win_wch(IntPtr window, out ComplexChar @char);
 
-    int wvline_set(IntPtr window, CursesComplexChar @char, int count);
+    int wvline_set(IntPtr window, ComplexChar @char, int count);
 
     int getmouse(out CursesMouseEvent @event);
 
