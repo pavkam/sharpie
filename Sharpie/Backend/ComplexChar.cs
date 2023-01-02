@@ -34,30 +34,25 @@ namespace Sharpie.Backend;
 /// <summary>
 /// A Curses, back-end-specific complex character that encodes the rune and its attributes.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString, nq}")]
 public sealed class ComplexChar
 {
     /// <summary>
     /// The backend-specific payload.
     /// </summary>
-    internal object Payload { get; }
+    internal object? Raw { get; }
 
     /// <summary>
     /// Creates a new complex character.
     /// </summary>
-    /// <param name="payload">The backend-specific payload.</param>
-    internal ComplexChar(object payload)
-    {
-        Debug.Assert(payload != null);
-        
-        Payload = payload;
-    }
+    /// <param name="raw">The backend-specific payload.</param>
+    internal ComplexChar(object? raw) => Raw = raw;
 
     /// <inheritdoc cref="object.Equals(object?)"/>
-    public override bool Equals(object? obj) => obj is ComplexChar cc && Equals(cc.Payload, Payload);
+    public override bool Equals(object? obj) => obj is ComplexChar cc && Equals(cc.Raw, Raw);
 
     /// <inheritdoc cref="object.GetHashCode"/>
-    public override int GetHashCode() => Payload.GetHashCode();
+    public override int GetHashCode() => Raw?.GetHashCode() ?? 0;
 
     /// <summary>
     /// Equality comparison operator.
@@ -74,4 +69,7 @@ public sealed class ComplexChar
     /// <param name="right">The right value.</param>
     /// <returns>The result of the comparison.</returns>
     public static bool operator !=(ComplexChar? left, ComplexChar? right) => !Equals(left, right);
+
+    /// <inheritdoc cref="object.ToString"/>
+    public override string? ToString() => Raw?.ToString();
 }

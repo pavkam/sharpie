@@ -36,6 +36,30 @@ namespace Sharpie;
 internal static class Helpers
 {
     private const int CursesErrorResult = -1;
+
+
+    /// <summary>
+    /// Gets the raw value of a given <see cref="ComplexChar"/> and validates its compatibility with the backend.
+    /// </summary>
+    /// <param name="char">The character.</param>
+    /// <typeparam name="T">The type of the raw payload.</typeparam>
+    /// <returns>The raw payload.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="char"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="char"/> is not valid in the backend.</exception>
+    public static T GetRawValue<T>(this ComplexChar @char)
+    {
+        if (@char == null)
+        {
+            throw new ArgumentNullException(nameof(@char));
+        }
+
+        if (@char.Raw is T raw)
+        {
+            return raw;
+        }
+
+        throw new ArgumentException("Incompatible complex character", nameof(@char));
+    }
     
     /// <summary>
     ///     Checks if a given code shows a failure.

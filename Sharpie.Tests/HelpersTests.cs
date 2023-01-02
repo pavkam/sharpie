@@ -555,4 +555,25 @@ public class HelpersTests
 
         a.ShouldBe(new(50, 50, 60, 60));
     }
+    
+    [TestMethod]
+    public void GetRawValue_Throws_IfCharIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => ((ComplexChar) null!).GetRawValue<string>());
+    }
+    
+    [TestMethod]
+    public void GetRawValue_Throws_IfCharOfBadType()
+    {
+        var c = new ComplexChar(12);
+        Should.Throw<ArgumentException>(() => c.GetRawValue<string>());
+    }
+    
+    [TestMethod]
+    public void GetRawValue_ReturnsTheRawValue_IfCharIsOk()
+    {
+        var c = new ComplexChar(12);
+        c.GetRawValue<int>()
+         .ShouldBe(12);
+    }
 }

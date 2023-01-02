@@ -358,4 +358,114 @@ public class NCursesBackendTests
     {
         _backend.DecodeCursesAttributes(((uint) VideoAttribute.Blink << 16) | (15 << 8)).ShouldBe((VideoAttribute.Blink, (short)15));
     }
+    
+    [TestMethod]
+    public void wadd_wch_Throws_IfCharIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _backend.wadd_wch(new(1), null!));
+    }
+    
+    [TestMethod]
+    public void wadd_wch_Throws_IfCharIsIncompatible()
+    {
+        Should.Throw<ArgumentException>(() => _backend.wadd_wch(new(1), new("bad")));
+    }
+    
+    [TestMethod]
+    public void wbkgrnd_Throws_IfCharIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _backend.wbkgrnd(new(1), null!));
+    }
+    
+    [TestMethod]
+    public void wbkgrnd_Throws_IfCharIsIncompatible()
+    {
+        Should.Throw<ArgumentException>(() => _backend.wbkgrnd(new(1), new("bad")));
+    }
+    
+    [TestMethod]
+    public void wvline_set_Throws_IfCharIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _backend.wvline_set(new(1), null!, 4));
+    }
+    
+    [TestMethod]
+    public void wvline_set_Throws_IfCharIsIncompatible()
+    {
+        Should.Throw<ArgumentException>(() => _backend.wvline_set(new(1), new("bad"), 4));
+    }
+
+    [TestMethod]
+    public void whline_set_Throws_IfCharIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
+    }
+    
+    [TestMethod]
+    public void whline_set_Throws_IfCharIsIncompatible()
+    {
+        Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
+    }
+    
+    [TestMethod]
+    public void wgetbkgrnd_Throws_IfCharIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
+    }
+    
+    [TestMethod]
+    public void wgetbkgrnd_Throws_IfCharIsIncompatible()
+    {
+        Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
+    }
+
+    [TestMethod]
+    public void getcchar_Throws_IfCharIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => _backend.getcchar(null!, new(), out var _, out var _, new(2)));
+    }
+    
+    [TestMethod]
+    public void getcchar_Throws_IfCharIsIncompatible()
+    {
+        Should.Throw<ArgumentException>(() => _backend.getcchar(new("bad"), new(), out var _, out var _, new(2)));
+    }
+    
+    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5),
+     DataRow(6), DataRow(7)]
+    public void wborder_set_Throws_IfCharIsNull(int bad)
+    {
+        var chs = new ComplexChar[8];
+        for (var x = 0; x < chs.Length; x++)
+        {
+            if (x != bad)
+            {
+                (chs[x], _) = MakeTestComplexChar();
+            } 
+        }
+        
+        Should.Throw<ArgumentNullException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
+            chs[4], chs[5], chs[6], chs[7]));
+    }
+    
+        
+    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5),
+     DataRow(6), DataRow(7)]
+    public void wborder_set_Throws_IfCharIsIncompatible(int bad)
+    {
+        var chs = new ComplexChar[8];
+        for (var x = 0; x < chs.Length; x++)
+        {
+            if (x != bad)
+            {
+                (chs[x], _) = MakeTestComplexChar();
+            } else
+            {
+                chs[x] = new("bad");
+            }
+        }
+        
+        Should.Throw<ArgumentException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
+            chs[4], chs[5], chs[6], chs[7]));
+    }
 }

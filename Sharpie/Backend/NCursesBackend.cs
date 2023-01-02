@@ -64,8 +64,7 @@ internal class NCursesBackend: BaseCursesBackend
     public override int getcchar(ComplexChar @char, StringBuilder dest, out VideoAttribute attributes, out short colorPair,
         IntPtr reserved)
     {
-        Debug.Assert(@char.Payload is NCursesComplexChar);
-        var c = (NCursesComplexChar) @char.Payload;
+        var c = @char.GetRawValue<NCursesComplexChar>();
         
         var ret = CursesSymbolResolver.Resolve<NCursesFunctionMap.getcchar>()(ref c, dest, out var attrs,
             out colorPair, reserved);
@@ -85,16 +84,14 @@ internal class NCursesBackend: BaseCursesBackend
 
     public override int wadd_wch(IntPtr window, ComplexChar @char)
     {
-        Debug.Assert(@char.Payload is NCursesComplexChar);
-        var c = (NCursesComplexChar) @char.Payload;
+        var c = @char.GetRawValue<NCursesComplexChar>();
         
         return CursesSymbolResolver.Resolve<NCursesFunctionMap.wadd_wch>()(window, ref c);
     }
 
     public override int wbkgrnd(IntPtr window, ComplexChar @char)
     {
-        Debug.Assert(@char.Payload is NCursesComplexChar);
-        var c = (NCursesComplexChar) @char.Payload;
+        var c = @char.GetRawValue<NCursesComplexChar>();
 
         return CursesSymbolResolver.Resolve<NCursesFunctionMap.wbkgrnd>()(window, ref c);
     }
@@ -103,23 +100,14 @@ internal class NCursesBackend: BaseCursesBackend
         ComplexChar topSide, ComplexChar bottomSide, ComplexChar topLeftCorner,
         ComplexChar topRightCorner, ComplexChar bottomLeftCorner, ComplexChar bottomRightCorner)
     {
-        Debug.Assert(leftSide.Payload is NCursesComplexChar);
-        Debug.Assert(rightSide.Payload is NCursesComplexChar);
-        Debug.Assert(topSide.Payload is NCursesComplexChar);
-        Debug.Assert(bottomSide.Payload is NCursesComplexChar);
-        Debug.Assert(topLeftCorner.Payload is NCursesComplexChar);
-        Debug.Assert(topRightCorner.Payload is NCursesComplexChar);
-        Debug.Assert(bottomLeftCorner.Payload is NCursesComplexChar);
-        Debug.Assert(bottomRightCorner.Payload is NCursesComplexChar);
-        
-        var lc = (NCursesComplexChar) leftSide.Payload;
-        var rc = (NCursesComplexChar) rightSide.Payload;
-        var tc = (NCursesComplexChar) topSide.Payload;
-        var bc = (NCursesComplexChar) bottomSide.Payload;
-        var tlc = (NCursesComplexChar) topLeftCorner.Payload;
-        var trc = (NCursesComplexChar) topRightCorner.Payload;
-        var blc = (NCursesComplexChar) bottomLeftCorner.Payload;
-        var brc = (NCursesComplexChar) bottomRightCorner.Payload;
+        var lc = leftSide.GetRawValue<NCursesComplexChar>();
+        var rc = rightSide.GetRawValue<NCursesComplexChar>();
+        var tc = topSide.GetRawValue<NCursesComplexChar>();
+        var bc = bottomSide.GetRawValue<NCursesComplexChar>();
+        var tlc = topLeftCorner.GetRawValue<NCursesComplexChar>();
+        var trc = topRightCorner.GetRawValue<NCursesComplexChar>();
+        var blc = bottomLeftCorner.GetRawValue<NCursesComplexChar>();
+        var brc = bottomRightCorner.GetRawValue<NCursesComplexChar>();
         
         return CursesSymbolResolver.Resolve<NCursesFunctionMap.wborder_set>()(window, ref lc, ref rc,
             ref tc, ref bc, ref tlc, ref trc, ref blc,
@@ -136,8 +124,7 @@ internal class NCursesBackend: BaseCursesBackend
 
     public override int whline_set(IntPtr window, ComplexChar @char, int count)
     {
-        Debug.Assert(@char.Payload is NCursesComplexChar);
-        var c = (NCursesComplexChar) @char.Payload;
+        var c = @char.GetRawValue<NCursesComplexChar>();
         
         return CursesSymbolResolver.Resolve<NCursesFunctionMap.whline_set>()(window, ref c, count);
     }
@@ -151,8 +138,7 @@ internal class NCursesBackend: BaseCursesBackend
 
     public override int wvline_set(IntPtr window, ComplexChar @char, int count)
     {
-        Debug.Assert(@char.Payload is NCursesComplexChar);
-        var c = (NCursesComplexChar) @char.Payload;
+        var c = @char.GetRawValue<NCursesComplexChar>();
         
         return CursesSymbolResolver.Resolve<NCursesFunctionMap.wvline_set>()(window, ref c, count);
     }
