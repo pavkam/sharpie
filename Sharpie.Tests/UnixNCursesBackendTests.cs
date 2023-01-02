@@ -53,40 +53,22 @@ public class UnixNCursesBackendTests
             _nativeSymbolResolverMock.Object);
     }
 
-    [TestMethod]
-    public void set_unicode_locale_OnMacOs_CallsLibC_WithProperArguments()
+    [TestMethod, DataRow("linux", 6), DataRow("macos", 0), DataRow("freebsd", 6),SuppressMessage("ReSharper", "IdentifierTypo")]
+    public void initscr_CallsLibc_ToSetupUnicode(string os, int cate)
     {
         _dotNetSystemAdapterMock.Setup(s => s.IsMacOs)
-                                .Returns(true);
-
-        var m = _nativeSymbolResolverMock.MockResolve<LibCFunctionMap.setlocale>();
-        _backend.set_unicode_locale();
-
-        m.Verify(v => v(0, ""));
-    }
-
-    [TestMethod]
-    public void set_unicode_locale_OnLinux_CallsLibC_WithProperArguments()
-    {
+                                .Returns(os == "macos");
         _dotNetSystemAdapterMock.Setup(s => s.IsLinux)
-                                .Returns(true);
-
-        var m = _nativeSymbolResolverMock.MockResolve<LibCFunctionMap.setlocale>();
-        _backend.set_unicode_locale();
-
-        m.Verify(v => v(6, ""));
-    }
-
-    [TestMethod]
-    public void set_unicode_locale_OnFreeBsd_CallsLibC_WithProperArguments()
-    {
+                                .Returns(os == "linux");
         _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)
-                                .Returns(true);
-
+                                .Returns(os == "freebsd");
+        
         var m = _nativeSymbolResolverMock.MockResolve<LibCFunctionMap.setlocale>();
-        _backend.set_unicode_locale();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.initscr>();
+        
+        _backend.initscr();
 
-        m.Verify(v => v(6, ""));
+        m.Verify(v => v(cate, ""));
     }
 
     [TestMethod]
@@ -107,7 +89,7 @@ public class UnixNCursesBackendTests
         _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)
                                 .Returns(true);
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask>()
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask>()
                                  .Setup(s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
                                  .Returns((uint _, out uint o) =>
                                  {
@@ -127,11 +109,11 @@ public class UnixNCursesBackendTests
      DataRow(1), DataRow(2)]
     public void mousemask_OutsToConsole_WhenReportingPosition(int abi)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask, int>(
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask, int>(
             s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
 
         var version = abi == 2 ? "version 6.0.0" : "version 1.0.0";
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curses_version, IntPtr>(
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.curses_version, IntPtr>(
             s => s(), Marshal.StringToHGlobalAnsi(version));
         _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
                                 .CallBase();
@@ -147,11 +129,11 @@ public class UnixNCursesBackendTests
      DataRow(1), DataRow(2)]
     public void mousemask_OutsToConsole_WhenAll(int abi)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask, int>(
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask, int>(
             s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
 
         var version = abi == 2 ? "version 6.0.0" : "version 1.0.0";
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curses_version, IntPtr>(
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.curses_version, IntPtr>(
             s => s(), Marshal.StringToHGlobalAnsi(version));
         _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
                                 .CallBase();
@@ -165,10 +147,10 @@ public class UnixNCursesBackendTests
     [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo")]
     public void mousemask_OutsToConsole_WhenNothing()
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.mousemask, int>(
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask, int>(
             s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.curses_version>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.curses_version>();
         _backend.mousemask(0, out var _)
                 .ShouldBe(0);
         

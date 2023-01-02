@@ -66,14 +66,6 @@ public class TerminalTests
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
-    public void Ctor_SetsTheApplicationLocale(bool enable)
-    {
-        _terminal = new(_cursesMock.Object, new());
-
-        _cursesMock.Verify(v => v.set_unicode_locale());
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
     public void Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(bool enable)
     {
         _terminal = new(_cursesMock.Object, new(UseEnvironmentOverrides: enable));

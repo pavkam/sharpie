@@ -114,7 +114,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
     public void immedok(IntPtr window, bool set) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.immedok>()(window, set);
 
-    public IntPtr initscr() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.initscr>()();
+    public virtual IntPtr initscr() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.initscr>()();
 
     public int init_color(short color, short red, short green, short blue) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.init_color>()(color, red, green, blue);
