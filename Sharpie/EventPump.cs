@@ -10,7 +10,6 @@ using System.Collections.Concurrent;
 public sealed class EventPump: IEventPump
 {
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private CursesMouseEventParser _cursesMouseEventParser;
     private ConcurrentQueue<object> _delegatedObjects = new();
     private MouseEventResolver? _mouseEventResolver;
 
@@ -22,11 +21,7 @@ public sealed class EventPump: IEventPump
     ///     Thrown if <paramref name="parent" /> is <c>null</c>.
     /// </exception>
     /// <remarks>This method is not thread-safe.</remarks>
-    internal EventPump(Terminal parent)
-    {
-        Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
-        _cursesMouseEventParser = CursesMouseEventParser.Get(Terminal.Curses.mouse_version());
-    }
+    internal EventPump(Terminal parent) => Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
 
     /// <inheritdoc cref="IColorManager.Terminal" />
     public Terminal Terminal { get; }
@@ -149,7 +144,7 @@ public sealed class EventPump: IEventPump
                 {
                     if (hasPendingResize)
                     {
-                        @event = new TerminalAboutToResizeEvent();
+                        yield return new TerminalAboutToResizeEvent();
                     }
 
                     if (Terminal.TryUpdate())
@@ -246,14 +241,6 @@ public sealed class EventPump: IEventPump
         }
     }
 
-    private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)
-    {
-        Terminal.Curses.wtimeout(windowHandle, quickWait ? 10 : 50);
-        var result = Terminal.Curses.wget_wch(windowHandle, out var keyCode);
-
-        return (result, keyCode);
-    }
-
     private Event? ReadNextEvent(IntPtr windowHandle, bool quickWait)
     {
         if (_delegatedObjects.TryDequeue(out var @object))
@@ -261,39 +248,16 @@ public sealed class EventPump: IEventPump
             return new DelegateEvent(@object);
         }
 
-        var (result, keyCode) = ReadNext(windowHandle, quickWait);
-        if (result.Failed())
+        Terminal.Curses.wget_event(windowHandle, quickWait ? 10 : 50, out var raw);
+        return raw switch
         {
-            return null;
-        }
-
-        if (result == (int) CursesKey.Yes)
-        {
-            switch (keyCode)
-            {
-                case (uint) CursesKey.Resize:
-                    return new TerminalResizeEvent(Terminal.Screen.Size);
-                case (uint) CursesKey.Mouse:
-                    if (Terminal.Curses.getmouse(out var mouseEvent)
-                                .Failed())
-                    {
-                        return null;
-                    }
-
-
-                    var parsed = _cursesMouseEventParser.Parse(mouseEvent.buttonState);
-
-                    return parsed == null
-                        ? new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y))
-                        : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), parsed.Value.button, parsed.Value.state,
-                            parsed.Value.modifierKey);
-                default:
-                    var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
-                    return new KeyEvent(key, new(ControlCharacter.Null), Terminal.Curses.key_name(keyCode), keyMod);
-            }
-        }
-
-        return new KeyEvent(Key.Character, new(keyCode), Terminal.Curses.key_name(keyCode), ModifierKey.None);
+            CursesResizeEvent => new TerminalResizeEvent(Terminal.Screen.Size),
+            CursesMouseEvent { Button: not MouseButton.Unknown } cme => new MouseMoveEvent(new(cme.X, cme.Y)),
+            CursesMouseEvent { Button: MouseButton.Unknown } cme => new MouseActionEvent(new(cme.X, cme.Y), cme.Button, cme.State, cme.Modifiers),
+            CursesKeyEvent { Key: var key, Modifiers: var mod } => new KeyEvent(key, new(ControlCharacter.Null), null, mod),
+            CursesCharEvent { Char: var ch } => new KeyEvent(Key.Character, new(ch), Terminal.Curses.key_name(ch), ModifierKey.None),
+            var _ => null
+        };
     }
 
     /// <summary>
