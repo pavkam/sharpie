@@ -147,12 +147,12 @@ public abstract class Surface: ISurface, IDisposable
             Curses.wattr_get(Handle, out var attrs, out var colorPair, IntPtr.Zero)
                   .Check(nameof(Curses.wattr_get), "Failed to get the surface style.");
 
-            return new() { Attributes = (VideoAttribute) attrs, ColorMixture = new() { Handle = colorPair } };
+            return new() { Attributes = attrs, ColorMixture = new() { Handle = colorPair } };
         }
         set
         {
             AssertSynchronized();
-            Curses.wattr_set(Handle, (uint) value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
+            Curses.wattr_set(Handle, value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
                   .Check(nameof(Curses.wattr_set), "Failed to set the surface style.");
         }
     }
@@ -269,7 +269,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         AssertSynchronized();
 
-        Curses.wattr_on(Handle, (uint) attributes, IntPtr.Zero)
+        Curses.wattr_on(Handle, attributes, IntPtr.Zero)
               .Check(nameof(Curses.wattr_on), "Failed to enable surface attributes.");
     }
 
@@ -279,7 +279,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         AssertSynchronized();
 
-        Curses.wattr_off(Handle, (uint) attributes, IntPtr.Zero)
+        Curses.wattr_off(Handle, attributes, IntPtr.Zero)
               .Check(nameof(Curses.wattr_off), "Failed to disable surface attributes.");
     }
 
@@ -364,7 +364,7 @@ public abstract class Surface: ISurface, IDisposable
 
         AssertSynchronized();
 
-        Curses.wchgat(Handle, width, (uint) style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
+        Curses.wchgat(Handle, width, style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
               .Check(nameof(Curses.wchgat), "Failed to change style of characters in the surface.");
     }
 
@@ -526,7 +526,7 @@ public abstract class Surface: ISurface, IDisposable
         var caretAt = CaretLocation;
         var x = caretAt.X;
         var max = Size.Width;
-        var chars = new List<CursesComplexChar>();
+        var chars = new List<ComplexChar>();
 
         while (true)
         {

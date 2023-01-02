@@ -102,9 +102,9 @@ public class SoftLabelKeyManagerTests
     [TestMethod, SuppressMessage("ReSharper", "UnusedVariable")]
     public void StyleGet_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.slk_attr())
+        _cursesMock.Setup(s => s.slk_attr(out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny))
                    .Returns(-1);
-
+        
         Should.Throw<CursesOperationException>(() =>
               {
                   var l = _mgr1.Style;
@@ -115,7 +115,7 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void StyleSet_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.slk_attr_set(It.IsAny<uint>(), It.IsAny<short>(), It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.slk_attr_set(It.IsAny<VideoAttribute>(), It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _mgr1.Style = Style.Default; })
@@ -125,9 +125,14 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void StyleGet_ReturnsStyle_FromCurses()
     {
-        const int attr = unchecked((int)VideoAttribute.Italic) | (15 << 8) | 'a';
-        _cursesMock.Setup(s => s.slk_attr())
-                   .Returns(attr);
+        _cursesMock.Setup(s => s.slk_attr(out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny))
+                   .Returns((out VideoAttribute va, out short cp) =>
+                   {
+                       va = VideoAttribute.Italic;
+                       cp = 15;
+
+                       return 0;
+                   });
 
         var style = _mgr1.Style;
         
@@ -140,7 +145,7 @@ public class SoftLabelKeyManagerTests
     {
         _mgr1.Style = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 5 } };
 
-        _cursesMock.Verify(v => v.slk_attr_set((uint) VideoAttribute.Bold, 5, IntPtr.Zero));
+        _cursesMock.Verify(v => v.slk_attr_set(VideoAttribute.Bold, 5, IntPtr.Zero));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "UnusedVariable")]
@@ -157,7 +162,7 @@ public class SoftLabelKeyManagerTests
     [TestMethod, SuppressMessage("ReSharper", "UnusedVariable")]
     public void ColorMixtureGet_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.slk_attr())
+        _cursesMock.Setup(s => s.slk_attr(out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() =>
@@ -170,8 +175,14 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void ColorMixtureGet_ReturnsStyle_FromCurses()
     {
-        _cursesMock.Setup(s => s.slk_attr())
-                   .Returns( 15 << 8);
+        _cursesMock.Setup(s => s.slk_attr(out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny))
+                   .Returns((out VideoAttribute va, out short cp) =>
+                   {
+                       va = VideoAttribute.Italic;
+                       cp = 15;
+
+                       return 0;
+                   });
 
         var mix = _mgr1.ColorMixture;
         mix.ShouldBe(new() { Handle = 15 });
@@ -251,7 +262,7 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void EnableAttributes_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.slk_attr_on(It.IsAny<uint>(), It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.slk_attr_on(It.IsAny<VideoAttribute>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _mgr1.EnableAttributes(VideoAttribute.Italic); })
@@ -261,12 +272,12 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void EnableAttributes_Succeeds_IfCursesSucceeds()
     {
-        _cursesMock.Setup(s => s.slk_attr_on(It.IsAny<uint>(), It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.slk_attr_on(It.IsAny<VideoAttribute>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
         _mgr1.EnableAttributes(VideoAttribute.Italic);
 
-        _cursesMock.Verify(v => v.slk_attr_on((uint) VideoAttribute.Italic, IntPtr.Zero), Times.Once);
+        _cursesMock.Verify(v => v.slk_attr_on( VideoAttribute.Italic, IntPtr.Zero), Times.Once);
     }
 
     [TestMethod]
@@ -278,7 +289,7 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void DisableAttributes_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.slk_attr_off(It.IsAny<uint>(), It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.slk_attr_off(It.IsAny<VideoAttribute>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => { _mgr1.DisableAttributes(VideoAttribute.Italic); })
@@ -288,12 +299,12 @@ public class SoftLabelKeyManagerTests
     [TestMethod]
     public void DisableAttributes_Succeeds_IfCursesSucceeds()
     {
-        _cursesMock.Setup(s => s.slk_attr_off(It.IsAny<uint>(), It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.slk_attr_off(It.IsAny<VideoAttribute>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
         _mgr1.DisableAttributes(VideoAttribute.Italic);
 
-        _cursesMock.Verify(v => v.slk_attr_off((uint) VideoAttribute.Italic, IntPtr.Zero), Times.Once);
+        _cursesMock.Verify(v => v.slk_attr_off(VideoAttribute.Italic, IntPtr.Zero), Times.Once);
     }
 
     [TestMethod]

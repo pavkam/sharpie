@@ -34,217 +34,14 @@ namespace Sharpie.Backend;
 ///     Function map for NCurses library.
 /// </summary>
 [SuppressMessage("ReSharper", "IdentifierTypo"), SuppressMessage("ReSharper", "InconsistentNaming")]
-internal abstract class NCursesFunctionMap
+internal abstract class NCursesFunctionMap: BaseCursesFunctionMap
 {
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int assume_default_colors(int fgColor, int bgColor);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int baudrate();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int beep();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool can_change_color();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int cbreak();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int color_content(short color, out short red, out short green, out short blue);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int copywin(IntPtr fromWindow, IntPtr toWindow, int srcMinLine, int srcMinCol,
-        int destMinLine, int destMinCol, int destMaxLine, int destMaxCol,
-        int overlay);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int curs_set(int level);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi, CharSet = CharSet.Ansi)]
-    public delegate IntPtr curses_version();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int delwin(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate IntPtr derwin(IntPtr window, int lines, int cols, int beginLine,
-        int beginCol);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int doupdate();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate IntPtr dupwin(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int echo();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int endwin();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int erasewchar(out uint @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int flash();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getbegx(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getbegy(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getcchar(ref CursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest,
+    public delegate int getcchar(ref NCursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest,
         out uint attrs, out short colorPair, IntPtr reserved);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getcurx(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getcury(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getmaxx(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getmaxy(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getmouse(out CursesMouseEvent @event);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getparx(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getpary(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool has_colors();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void immedok(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int init_color(short color, short red, short green, short blue);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int init_pair(short colorPair, short fgColor, short bgColor);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate IntPtr initscr();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int intrflush(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool is_immedok(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool is_leaveok(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool is_linetouched(IntPtr window, int line);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool is_scrollok(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool is_wintouched(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi, CharSet = CharSet.Ansi)]
-    public delegate IntPtr key_name(uint @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int keypad(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int killwchar(out uint @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int leaveok(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi, CharSet = CharSet.Ansi)]
-    public delegate IntPtr longname();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int meta(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int mouseinterval(int millis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int mousemask(uint newMask, out uint oldMask);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int mvderwin(IntPtr window, int parentLine, int parentCol);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int mvwin(IntPtr window, int toLine, int toCol);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate IntPtr newpad(int lines, int cols);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate IntPtr newwin(int lines, int cols, int atLine, int atCol);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int nl();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int nocbreak();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int nodelay(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int noecho();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int nonl();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void noqiflush();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int noraw();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int notimeout(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int overlay(IntPtr srcWindow, IntPtr destWindow);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int overwrite(IntPtr srcWindow, IntPtr destWindow);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int pair_content(short colorPair, out short fgColor, out short bgColor);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
-        int scrMinCol, int scrMaxLine, int scrMaxCol);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void qiflush();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int raw();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int ripoffline(int lines, ICursesBackend.ripoffline_callback callback);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int scrollok(IntPtr window, bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int setcchar(out CursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs,
+    public delegate int setcchar(out NCursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs,
         short colorPair, IntPtr reserved);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
@@ -284,120 +81,26 @@ internal abstract class NCursesFunctionMap
     public delegate int slk_touch();
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int start_color();
+    public delegate int wadd_wch(IntPtr window, ref NCursesComplexChar @char);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate IntPtr subpad(IntPtr pad, int lines, int cols, int atRow,
-        int atCol);
+    public delegate int wbkgrnd(IntPtr window, ref NCursesComplexChar @char);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int syncok(IntPtr window, bool set);
+    public delegate int wborder_set(IntPtr window, ref NCursesComplexChar leftSide, ref NCursesComplexChar rightSide,
+        ref NCursesComplexChar topSide, ref NCursesComplexChar bottomSide, ref NCursesComplexChar topLeftCorner,
+        ref NCursesComplexChar topRightCorner, ref NCursesComplexChar bottomLeftCorner,
+        ref NCursesComplexChar bottomRightCorner);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int term_attrs();
+    public delegate int wgetbkgrnd(IntPtr window, out NCursesComplexChar @char);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate IntPtr termname();
+    public delegate int whline_set(IntPtr window, ref NCursesComplexChar @char, int count);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int use_default_colors();
+    public delegate int win_wch(IntPtr window, out NCursesComplexChar @char);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void use_env(bool set);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wadd_wch(IntPtr window, ref CursesComplexChar @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wattr_get(IntPtr window, out uint attrs, out short colorPair, IntPtr reserved);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wattr_off(IntPtr window, uint attrs, IntPtr reserved);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wattr_on(IntPtr window, uint attrs, IntPtr reserved);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wattr_set(IntPtr window, uint attrs, short colorPair, IntPtr reserved);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wbkgrnd(IntPtr window, ref CursesComplexChar @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
-        uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
-        uint bottomRightCorner);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wborder_set(IntPtr window, ref CursesComplexChar leftSide, ref CursesComplexChar rightSide,
-        ref CursesComplexChar topSide, ref CursesComplexChar bottomSide, ref CursesComplexChar topLeftCorner,
-        ref CursesComplexChar topRightCorner, ref CursesComplexChar bottomLeftCorner,
-        ref CursesComplexChar bottomRightCorner);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wchgat(IntPtr window, int count, uint attrs, short colorPair,
-        IntPtr reserved);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wclrtobot(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wclrtoeol(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wcolor_set(IntPtr window, short colorPair, IntPtr reserved);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wdelch(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int werase(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wget_wch(IntPtr window, out uint dest);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wgetbkgrnd(IntPtr window, out CursesComplexChar @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int whline(IntPtr window, uint @char, int count);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int whline_set(IntPtr window, ref CursesComplexChar @char, int count);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int win_wch(IntPtr window, out CursesComplexChar @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int winsdelln(IntPtr window, int count);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wmove(IntPtr window, int newLine, int newCol);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wnoutrefresh(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wredrawln(IntPtr window, int startLine, int lineCount);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wrefresh(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wresize(IntPtr window, int lines, int columns);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wscrl(IntPtr window, int count);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void wtimeout(IntPtr window, int delay);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wtouchln(IntPtr window, int line, int count, int changed);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wvline(IntPtr window, uint @char, int count);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wvline_set(IntPtr window, ref CursesComplexChar @char, int count);
+    public delegate int wvline_set(IntPtr window, ref NCursesComplexChar @char, int count);
 }

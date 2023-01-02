@@ -81,9 +81,6 @@ public sealed class Terminal: ITerminal, IDisposable
                 "Another terminal instance is active. Only one instance can be active at one time.");
         }
 
-        // Set unicode locale.
-        curses.set_unicode_locale();
-
         // Pre-screen creation.
         curses.use_env(Options.UseEnvironmentOverrides);
 
@@ -354,9 +351,16 @@ public sealed class Terminal: ITerminal, IDisposable
     public string? CursesVersion => Curses.curses_version();
 
     /// <inheritdoc cref="ITerminal.SupportedAttributes" />
-    public VideoAttribute SupportedAttributes =>
-        (VideoAttribute) Curses.term_attrs()
-                               .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
+    public VideoAttribute SupportedAttributes
+    {
+        get
+        { 
+            Curses.term_attrs(out var attributes)
+                .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
+
+            return attributes;
+        }
+    }
 
     /// <inheritdoc cref="ITerminal.Screen" />
     IScreen ITerminal.Screen => Screen;

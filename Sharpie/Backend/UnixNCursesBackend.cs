@@ -79,10 +79,12 @@ internal sealed class UnixNCursesBackend: NCursesBackend
         return result;
     }
 
-    public override void set_unicode_locale()
+    public override IntPtr initscr()
     {
         var category = DotNetSystemAdapter.IsMacOs ? 0 : 6;
         _libCSymbolResolver.Resolve<LibCFunctionMap.setlocale>()(category, "");
+
+        return base.initscr();
     }
 
     public override bool monitor_pending_resize(Action action, [NotNullWhen(true)] out IDisposable? handle)

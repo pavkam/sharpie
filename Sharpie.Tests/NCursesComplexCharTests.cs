@@ -26,22 +26,26 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
-namespace Sharpie.Backend;
-#pragma warning disable CS1591
+namespace Sharpie.Tests;
 
-/// <summary>
-///     Opaque Curses character with attributes and color.
-/// </summary>
-[PublicAPI, StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage,
- SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
-public struct CursesComplexChar
+[TestClass]
+public class NCursesComplexCharTests
 {
-    [MarshalAs(UnmanagedType.U4)] internal uint _attrAndColorPair;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char0;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char1;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char2;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char3;
-    [MarshalAs(UnmanagedType.U4)] internal uint _char4;
+    [TestMethod]
+    public void ToString_ProperlyFormats()
+    {
+        var nc = new NCursesComplexChar
+        {
+            _attrAndColorPair = 1,
+            _char0 = 2,
+            _char1 = 3,
+            _char2 = 4,
+            _char3 = 5,
+            _char4 = 6,
+        };
+        
+        nc.ToString().ShouldBe("00000001-00000002:00000003:00000004:00000005:00000006");
+    }
 }

@@ -86,7 +86,7 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
     {
         if (!_methodTable.TryGetValue(typeof(TDelegate), out var r))
         {
-            throw new MissingMethodException($"The function of type {typeof(TDelegate).Name} is has not been loaded.");
+            throw new MissingMethodException($"The function of type {typeof(TDelegate).Name} has not been loaded.");
         }
 
         return (TDelegate) r;
@@ -136,20 +136,30 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
         throw new MissingMethodException($"Could not find {name} within the library.");
     }
 
-    private static IEnumerable<TypeInfo> GetRequiredDelegates()
+    private static IEnumerable<TypeInfo> GetRequiredDelegates(TypeInfo ti)
     {
-        return typeof(TFunctions).GetTypeInfo()
-                                 .DeclaredMembers.Where(m => m.MemberType == MemberTypes.NestedType)
-                                 .Select(s => (TypeInfo) s)
-                                 .Where(t => !t.IsGenericType &&
-                                     t.BaseType == typeof(MulticastDelegate) &&
-                                     t.GetCustomAttribute<UnmanagedFunctionPointerAttribute>() != null)
-                                 .ToArray();
+        Debug.Assert(ti != null);
+
+        var result = new List<TypeInfo>();
+        if (ti.BaseType != null && ti.BaseType != typeof(object))
+        {
+            result.AddRange(GetRequiredDelegates(ti.BaseType.GetTypeInfo()));
+        }
+
+        result.AddRange(ti.GetTypeInfo()
+                          .DeclaredMembers.Where(m => m.MemberType == MemberTypes.NestedType)
+                          .Select(s => (TypeInfo) s)
+                          .Where(t => !t.IsGenericType &&
+                              t.BaseType == typeof(MulticastDelegate) &&
+                              t.GetCustomAttribute<UnmanagedFunctionPointerAttribute>() != null)
+                          .ToArray());
+
+        return result;
     }
 
     private IReadOnlyDictionary<Type, Delegate> GetExportedMethodTable()
     {
-        return GetRequiredDelegates()
+        return GetRequiredDelegates(typeof(TFunctions).GetTypeInfo())
             .ToDictionary(import => import.AsType(), import => GetExportedMethod(import.Name, import));
     }
 

@@ -180,6 +180,22 @@ public class NativeLibraryWrapperTests
         w.Resolve<DummyFunctionMap.Test1>()()
          .ShouldBe(123);
     }
+    
+    [TestMethod]
+    public void Resolve_TraversesInheritance()
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryFunctionToDelegate(It.IsAny<IntPtr>(), typeof(ExtendedDummyFunctionMap.Test8)))
+                                .Returns(new ExtendedDummyFunctionMap.Test8(() => 456));
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryFunctionToDelegate(It.IsAny<IntPtr>(), typeof(DummyFunctionMap.Test1)))
+                                .Returns(new DummyFunctionMap.Test1(() => 123));
+
+        var w = new NativeLibraryWrapper<ExtendedDummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100)).ShouldNotBeNull();
+
+        w.Resolve<DummyFunctionMap.Test1>()()
+         .ShouldBe(123);
+        w.Resolve<ExtendedDummyFunctionMap.Test8>()()
+         .ShouldBe(456);
+    }
 
     [TestMethod]
     public void Dispose_FreesTheLibrary_OnlyOnce()
@@ -194,6 +210,15 @@ public class NativeLibraryWrapperTests
     [SuppressMessage("ReSharper", "UnusedType.Local"), SuppressMessage("ReSharper", "UnusedMember.Local"),
      SuppressMessage("ReSharper", "UnusedTypeParameter"),
      SuppressMessage("Performance", "CA1822:Mark members as static")]
+    private abstract class ExtendedDummyFunctionMap: DummyFunctionMap
+    {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public delegate int Test8();
+    }
+    
+    [SuppressMessage("ReSharper", "UnusedType.Local"), SuppressMessage("ReSharper", "UnusedMember.Local"),
+     SuppressMessage("ReSharper", "UnusedTypeParameter"),
+     SuppressMessage("Performance", "CA1822:Mark members as static")]
     private abstract class DummyFunctionMap
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -201,6 +226,7 @@ public class NativeLibraryWrapperTests
 
         public delegate int Test2();
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public delegate int Test4<T>();
 
         public void Test3() { }

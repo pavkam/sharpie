@@ -81,50 +81,16 @@ public class HelpersTests
         exception.Message.ShouldBe("The call to operation failed: message");
     }
 
-    [TestMethod]
-    public void ConvertMillisToTenths_Throws_IfValueIsNegative()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => { Helpers.ConvertMillisToTenths(-1); });
-    }
-
-    [TestMethod]
-    public void ConvertMillisToTenths_ReturnsZero_IfValueIsZero()
-    {
-        Helpers.ConvertMillisToTenths(0)
-               .ShouldBe(0);
-    }
-
-    [TestMethod]
-    public void ConvertMillisToTenths_RoundsUp_IfValueBelow100()
-    {
-        Helpers.ConvertMillisToTenths(1)
-               .ShouldBe(1);
-    }
-
-    [TestMethod]
-    public void ConvertMillisToTenths_RoundsUp_IfValueBelowMid100s()
-    {
-        Helpers.ConvertMillisToTenths(450)
-               .ShouldBe(5);
-    }
-
-    [TestMethod]
-    public void ConvertMillisToTenths_AppliesMaximum()
-    {
-        Helpers.ConvertMillisToTenths(256000)
-               .ShouldBe(255);
-    }
-
     [TestMethod, DataRow(0x1F, "\x241F"), DataRow(0x7F, "\x247F"), DataRow(0x9F, "\x249F")]
     public void ToComplexChar_ConvertsSpecialAsciiToUnicode(int ch, string expected)
     {
-        _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+        _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                        It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
         _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
         _cursesMock.Verify(
-            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<short>(),
+            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<VideoAttribute>(), It.IsAny<short>(),
                 It.IsAny<IntPtr>()), Times.Once);
     }
 
@@ -133,20 +99,20 @@ public class HelpersTests
      DataRow((int) ControlCharacter.Tab, "\t")]
     public void ToComplexChar_DoesNotConvertOtherAsciiToUnicode(int ch, string expected)
     {
-        _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+        _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                        It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
         _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
         _cursesMock.Verify(
-            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, expected, It.IsAny<uint>(), It.IsAny<short>(),
+            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<VideoAttribute>(), It.IsAny<short>(),
                 It.IsAny<IntPtr>()), Times.Once);
     }
 
     [TestMethod]
     public void ToComplexChar_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+        _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                        It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
@@ -156,29 +122,31 @@ public class HelpersTests
     [TestMethod]
     public void FromComplexChar_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
+        var ch = new ComplexChar("test");
+        
+        _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(),
+                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
                    .Returns(-1);
-
-        var c = new CursesComplexChar();
-        Should.Throw<CursesOperationException>(() => _cursesMock.Object.FromComplexChar(c));
+        
+        Should.Throw<CursesOperationException>(() => _cursesMock.Object.FromComplexChar(ch));
     }
 
     [TestMethod]
     public void FromComplexChar_ReturnsCursesChar()
     {
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
-                   .Returns((CursesComplexChar _, StringBuilder sb, out uint attrs, out short colorPair,
+        var ch = new ComplexChar("test");
+        _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(),
+                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
+                   .Returns((ComplexChar _, StringBuilder sb, out VideoAttribute attrs, out short colorPair,
                        IntPtr _) =>
                    {
                        sb.Append('H');
-                       attrs = (uint) VideoAttribute.Dim;
+                       attrs = VideoAttribute.Dim;
                        colorPair = 10;
                        return 0;
                    });
 
-        var (rune, style) = _cursesMock.Object.FromComplexChar(new());
+        var (rune, style) = _cursesMock.Object.FromComplexChar(ch);
         rune.ShouldBe(new('H'));
         style.Attributes.ShouldBe(VideoAttribute.Dim);
         style.ColorMixture.ShouldBe(new() { Handle = 10 });
@@ -586,5 +554,26 @@ public class HelpersTests
                                        .ShouldBeTrue();
 
         a.ShouldBe(new(50, 50, 60, 60));
+    }
+    
+    [TestMethod]
+    public void GetRawValue_Throws_IfCharIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => ((ComplexChar) null!).GetRawValue<string>());
+    }
+    
+    [TestMethod]
+    public void GetRawValue_Throws_IfCharOfBadType()
+    {
+        var c = new ComplexChar(12);
+        Should.Throw<ArgumentException>(() => c.GetRawValue<string>());
+    }
+    
+    [TestMethod]
+    public void GetRawValue_ReturnsTheRawValue_IfCharIsOk()
+    {
+        var c = new ComplexChar(12);
+        c.GetRawValue<int>()
+         .ShouldBe(12);
     }
 }

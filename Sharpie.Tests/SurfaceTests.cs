@@ -193,11 +193,11 @@ public class SurfaceTests
     [TestMethod]
     public void Style_Get_Returns_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny,
+        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny,
                        IntPtr.Zero))
-                   .Returns((IntPtr _, out uint a, out short p, IntPtr _) =>
+                   .Returns((IntPtr _, out VideoAttribute a, out short p, IntPtr _) =>
                    {
-                       a = (uint) VideoAttribute.Italic;
+                       a = VideoAttribute.Italic;
                        p = 22;
 
                        return 0;
@@ -213,7 +213,7 @@ public class SurfaceTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Style_Get_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny,
+        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny,
                        IntPtr.Zero))
                    .Returns(-1);
 
@@ -229,13 +229,13 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.Style = new() { Attributes = VideoAttribute.Italic, ColorMixture = new() { Handle = 22 } };
 
-        _cursesMock.Verify(v => v.wattr_set(It.IsAny<IntPtr>(), (uint) VideoAttribute.Italic, 22, IntPtr.Zero));
+        _cursesMock.Verify(v => v.wattr_set(It.IsAny<IntPtr>(), VideoAttribute.Italic, 22, IntPtr.Zero));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Style_Set_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wattr_set(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<short>(), IntPtr.Zero))
+        _cursesMock.Setup(s => s.wattr_set(It.IsAny<IntPtr>(), It.IsAny<VideoAttribute>(), It.IsAny<short>(), IntPtr.Zero))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
@@ -247,9 +247,9 @@ public class SurfaceTests
     [TestMethod]
     public void ColorMixture_Get_Returns_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny,
+        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny,
                        IntPtr.Zero))
-                   .Returns((IntPtr _, out uint a, out short p, IntPtr _) =>
+                   .Returns((IntPtr _, out VideoAttribute a, out short p, IntPtr _) =>
                    {
                        a = 0;
                        p = 22;
@@ -265,7 +265,7 @@ public class SurfaceTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void ColorMixture_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny,
+        _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny,
                        IntPtr.Zero))
                    .Returns(-1);
 
@@ -299,13 +299,13 @@ public class SurfaceTests
     [TestMethod]
     public void Background_Get_Returns_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
-                   .Returns((CursesComplexChar _, StringBuilder sb, out uint attrs, out short colorPair,
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(),
+                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
+                   .Returns((ComplexChar _, StringBuilder sb, out VideoAttribute attrs, out short colorPair,
                        IntPtr _) =>
                    {
                        sb.Append('H');
-                       attrs = (uint) VideoAttribute.Dim;
+                       attrs = VideoAttribute.Dim;
                        colorPair = 10;
                        return 0;
                    });
@@ -315,13 +315,13 @@ public class SurfaceTests
         bk.style.ShouldBe(new() { Attributes = VideoAttribute.Dim, ColorMixture = new() { Handle = 10 } });
         bk.@char.ShouldBe(new('H'));
 
-        _cursesMock.Verify(v => v.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<CursesComplexChar>.IsAny), Times.Once);
+        _cursesMock.Verify(v => v.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<ComplexChar>.IsAny), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Background_Get_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<CursesComplexChar>.IsAny))
+        _cursesMock.Setup(s => s.wgetbkgrnd(It.IsAny<IntPtr>(), out It.Ref<ComplexChar>.IsAny))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
@@ -336,16 +336,16 @@ public class SurfaceTests
         s.Background = (new('a'), new() { Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 22 } });
 
         _cursesMock.Verify(
-            v => v.setcchar(out It.Ref<CursesComplexChar>.IsAny, "a", (uint) VideoAttribute.Blink, 22,
+            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, "a", VideoAttribute.Blink, 22,
                 It.IsAny<IntPtr>()), Times.Once);
 
-        _cursesMock.Verify(v => v.wbkgrnd(new(1), It.IsAny<CursesComplexChar>()));
+        _cursesMock.Verify(v => v.wbkgrnd(new(1), It.IsAny<ComplexChar>()));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Background_Set_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wbkgrnd(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()))
+        _cursesMock.Setup(s => s.wbkgrnd(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>()))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
@@ -518,13 +518,13 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.EnableAttributes(VideoAttribute.Bold);
 
-        _cursesMock.Verify(v => v.wattr_on(new(1), (uint) VideoAttribute.Bold, IntPtr.Zero), Times.Once);
+        _cursesMock.Verify(v => v.wattr_on(new(1), VideoAttribute.Bold, IntPtr.Zero), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void EnableAttributes_Throws_IfCursesCallFails()
     {
-        _cursesMock.Setup(s => s.wattr_on(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.wattr_on(It.IsAny<IntPtr>(), It.IsAny<VideoAttribute>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
@@ -539,13 +539,13 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.DisableAttributes(VideoAttribute.Bold);
 
-        _cursesMock.Verify(v => v.wattr_off(new(1), (uint) VideoAttribute.Bold, IntPtr.Zero), Times.Once);
+        _cursesMock.Verify(v => v.wattr_off(new(1), VideoAttribute.Bold, IntPtr.Zero), Times.Once);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DisableAttributes_Throws_IfCursesCallFails()
     {
-        _cursesMock.Setup(s => s.wattr_off(It.IsAny<IntPtr>(), It.IsAny<uint>(), It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.wattr_off(It.IsAny<IntPtr>(), It.IsAny<VideoAttribute>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
@@ -759,14 +759,15 @@ public class SurfaceTests
         s.ChangeTextStyle(0, Style.Default);
 
         _cursesMock.Verify(
-            v => v.wchgat(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<uint>(), It.IsAny<short>(), It.IsAny<IntPtr>()),
+            v => v.wchgat(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<VideoAttribute>(),
+                It.IsAny<short>(), It.IsAny<IntPtr>()),
             Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void ChangeTextStyle_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wchgat(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<uint>(), It.IsAny<short>(),
+        _cursesMock.Setup(s => s.wchgat(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<VideoAttribute>(), It.IsAny<short>(),
                        It.IsAny<IntPtr>()))
                    .Returns(-1);
 
@@ -781,7 +782,7 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.ChangeTextStyle(3, new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 22 } });
 
-        _cursesMock.Verify(v => v.wchgat(new(1), 3, (uint) VideoAttribute.Bold, 22, IntPtr.Zero), Times.Once);
+        _cursesMock.Verify(v => v.wchgat(new(1), 3, VideoAttribute.Bold, 22, IntPtr.Zero), Times.Once);
     }
 
     [TestMethod]
@@ -791,14 +792,14 @@ public class SurfaceTests
 
         s.DrawVerticalLine(0, new('a'), Style.Default);
 
-        _cursesMock.Verify(v => v.wvline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()),
+        _cursesMock.Verify(v => v.wvline_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<int>()),
             Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawVerticalLine1_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wvline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()))
+        _cursesMock.Setup(s => s.wvline_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<int>()))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
@@ -814,10 +815,10 @@ public class SurfaceTests
             new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 22 } });
 
         _cursesMock.Verify(
-            s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+            s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                 It.IsAny<short>(), IntPtr.Zero), Times.Once);
 
-        _cursesMock.Verify(v => v.wvline_set(new(1), It.IsAny<CursesComplexChar>(), 3), Times.Once);
+        _cursesMock.Verify(v => v.wvline_set(new(1), It.IsAny<ComplexChar>(), 3), Times.Once);
     }
 
     [TestMethod]
@@ -855,14 +856,14 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.DrawHorizontalLine(0, new('a'), Style.Default);
 
-        _cursesMock.Verify(v => v.whline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()),
+        _cursesMock.Verify(v => v.whline_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<int>()),
             Times.Never);
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawHorizontalLine1_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.whline_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(), It.IsAny<int>()))
+        _cursesMock.Setup(s => s.whline_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(), It.IsAny<int>()))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
@@ -878,10 +879,10 @@ public class SurfaceTests
             new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 22 } });
 
         _cursesMock.Verify(
-            s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+            s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                 It.IsAny<short>(), IntPtr.Zero), Times.Once);
 
-        _cursesMock.Verify(v => v.whline_set(new(1), It.IsAny<CursesComplexChar>(), 3), Times.Once);
+        _cursesMock.Verify(v => v.whline_set(new(1), It.IsAny<ComplexChar>(), 3), Times.Once);
     }
 
     [TestMethod]
@@ -916,10 +917,10 @@ public class SurfaceTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void DrawBorder_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wborder_set(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>(),
-                       It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(),
-                       It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(),
-                       It.IsAny<CursesComplexChar>()))
+        _cursesMock.Setup(s => s.wborder_set(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>(),
+                       It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
+                       It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
+                       It.IsAny<ComplexChar>()))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
@@ -936,13 +937,13 @@ public class SurfaceTests
             new('a'), new('a'), new('a'), Style.Default);
 
         _cursesMock.Verify(
-            s => s.setcchar(out It.Ref<CursesComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<uint>(),
+            s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                 It.IsAny<short>(), IntPtr.Zero), Times.Exactly(8));
 
         _cursesMock.Verify(
-            s => s.wborder_set(new(1), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(),
-                It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(),
-                It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>(), It.IsAny<CursesComplexChar>()),
+            s => s.wborder_set(new(1), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
+                It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(),
+                It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>(), It.IsAny<ComplexChar>()),
             Times.Once);
     }
 
@@ -1136,7 +1137,7 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.WriteText("", Style.Default);
 
-        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Never);
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Never);
     }
 
     [TestMethod]
@@ -1145,13 +1146,13 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.WriteText("12345", Style.Default);
 
-        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Exactly(5));
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void WriteText1_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.wadd_wch(new(1), It.IsAny<CursesComplexChar>()))
+        _cursesMock.Setup(s => s.wadd_wch(new(1), It.IsAny<ComplexChar>()))
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
@@ -1165,7 +1166,7 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(1));
         s.WriteText("12345");
 
-        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Exactly(5));
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
     }
 
     [TestMethod]
@@ -1207,7 +1208,7 @@ public class SurfaceTests
         s.GetText(0)
          .ShouldBeEmpty();
 
-        _cursesMock.Verify(v => v.win_wch(It.IsAny<IntPtr>(), out It.Ref<CursesComplexChar>.IsAny),
+        _cursesMock.Verify(v => v.win_wch(It.IsAny<IntPtr>(), out It.Ref<ComplexChar>.IsAny),
             Times.Never);
         _cursesMock.Verify(v => v.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()),
             Times.Never);
@@ -1222,13 +1223,13 @@ public class SurfaceTests
                    .Returns(2);
 
         var ch = 'a';
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero))
-                   .Returns((CursesComplexChar _, StringBuilder sb, out uint a, out short cp,
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(),
+                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero))
+                   .Returns((ComplexChar _, StringBuilder sb, out VideoAttribute a, out short cp,
                        IntPtr _) =>
                    {
                        sb.Append(ch++);
-                       a = (uint)Style.Default.Attributes;
+                       a = Style.Default.Attributes;
                        cp = Style.Default.ColorMixture.Handle;
 
                        return 0;
@@ -1242,7 +1243,7 @@ public class SurfaceTests
         _cursesMock.Verify(v => v.wmove(sf.Handle, 0, 4), Times.Once);
         _cursesMock.Verify(v => v.wmove(sf.Handle, 0, 2), Times.Once);
         _cursesMock.Verify(v => v.wmove(sf.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(3));
-        _cursesMock.Verify(v => v.win_wch(sf.Handle, out It.Ref<CursesComplexChar>.IsAny),
+        _cursesMock.Verify(v => v.win_wch(sf.Handle, out It.Ref<ComplexChar>.IsAny),
             Times.Exactly(3));
     }
     
@@ -1255,7 +1256,7 @@ public class SurfaceTests
                    .Returns(2);
         _cursesMock.Setup(s => s.getcury(sf.Handle))
                    .Returns(3);
-        _cursesMock.Setup(s => s.win_wch(sf.Handle, out It.Ref<CursesComplexChar>.IsAny))
+        _cursesMock.Setup(s => s.win_wch(sf.Handle, out It.Ref<ComplexChar>.IsAny))
                    .Returns(-1);
         
         var txt = sf.GetText(5);
@@ -1263,7 +1264,7 @@ public class SurfaceTests
 
         _cursesMock.Verify(v => v.wmove(sf.Handle, 3, 2), Times.Once);
         _cursesMock.Verify(v => v.wmove(sf.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Once);
-        _cursesMock.Verify(v => v.win_wch(sf.Handle, out It.Ref<CursesComplexChar>.IsAny),
+        _cursesMock.Verify(v => v.win_wch(sf.Handle, out It.Ref<ComplexChar>.IsAny),
             Times.Once);
     }
 
@@ -1278,13 +1279,13 @@ public class SurfaceTests
                    .Returns(3);
         _cursesMock.Setup(s => s.wmove(sf.Handle, 3, 3))
                    .Returns(-1);
-        _cursesMock.Setup(s => s.getcchar(It.IsAny<CursesComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero))
-                   .Returns((CursesComplexChar _, StringBuilder sb, out uint a, out short cp,
+        _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(),
+                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero))
+                   .Returns((ComplexChar _, StringBuilder sb, out VideoAttribute a, out short cp,
                        IntPtr _) =>
                    {
                        sb.Append('a');
-                       a = (uint)Style.Default.Attributes;
+                       a = Style.Default.Attributes;
                        cp = Style.Default.ColorMixture.Handle;
 
                        return 0;
@@ -1296,7 +1297,7 @@ public class SurfaceTests
         _cursesMock.Verify(v => v.wmove(sf.Handle, 3, 3), Times.Once);
         _cursesMock.Verify(v => v.wmove(sf.Handle, 3, 2), Times.Once);
         _cursesMock.Verify(v => v.wmove(sf.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(2));
-        _cursesMock.Verify(v => v.win_wch(sf.Handle, out It.Ref<CursesComplexChar>.IsAny),
+        _cursesMock.Verify(v => v.win_wch(sf.Handle, out It.Ref<ComplexChar>.IsAny),
             Times.Once);
     }
 
@@ -1517,7 +1518,7 @@ public class SurfaceTests
         var sf = new Surface(_cursesMock.Object, new(1));
         _cursesMock.MockArea(sf, new Size(5, 5));
 
-        _cursesMock.Setup(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()))
+        _cursesMock.Setup(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => ((IDrawSurface) sf).DrawCell(new(1, 1), new('A'), Style.Default))
@@ -1533,7 +1534,7 @@ public class SurfaceTests
         ((IDrawSurface) sf).DrawCell(new(3, 4), new('A'), Style.Default);
 
         _cursesMock.Verify(s => s.wmove(new(1), 4, 3), Times.Once);
-        _cursesMock.Verify(s => s.wadd_wch(new(1), It.IsAny<CursesComplexChar>()), Times.Once);
+        _cursesMock.Verify(s => s.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Once);
     }
 
     [TestMethod]
@@ -1545,7 +1546,7 @@ public class SurfaceTests
         ((IDrawSurface) sf).DrawCell(new(6, 6), new('A'), Style.Default);
 
         _cursesMock.Verify(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
-        _cursesMock.Verify(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<CursesComplexChar>()), Times.Never);
+        _cursesMock.Verify(s => s.wadd_wch(It.IsAny<IntPtr>(), It.IsAny<ComplexChar>()), Times.Never);
     }
 
     [TestMethod]

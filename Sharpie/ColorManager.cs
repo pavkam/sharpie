@@ -200,24 +200,24 @@ public sealed class ColorManager: IColorManager
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public (short red, short green, short blue) BreakdownColor(StandardColor color) => BreakdownColor((short) color);
 
-    private short MassageColor(short fgColor, StandardColor replacement)
+    private short MassageColor(short color, StandardColor replacement)
     {
-        if (fgColor == -1)
+        if (color == -1)
         {
             if (_ignorant)
             {
                 return (short) replacement;
             }
 
-            return fgColor;
+            return color;
         }
 
         if (Mode == ColorMode.Standard)
         {
-            return (short) (fgColor % StandardColorCount);
+            return (short) (color % StandardColorCount);
         }
 
-        return fgColor;
+        return color;
     }
 
     private void AssertHasColors()

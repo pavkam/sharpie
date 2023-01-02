@@ -66,14 +66,6 @@ public class TerminalTests
     }
 
     [TestMethod, DataRow(true), DataRow(false)]
-    public void Ctor_SetsTheApplicationLocale(bool enable)
-    {
-        _terminal = new(_cursesMock.Object, new());
-
-        _cursesMock.Verify(v => v.set_unicode_locale());
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
     public void Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(bool enable)
     {
         _terminal = new(_cursesMock.Object, new(UseEnvironmentOverrides: enable));
@@ -609,7 +601,7 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, _settings);
 
-        _cursesMock.Setup(s => s.term_attrs())
+        _cursesMock.Setup(s => s.term_attrs(out It.Ref<VideoAttribute>.IsAny))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => _terminal.SupportedAttributes.ToString()).Operation.ShouldBe("term_attrs");
@@ -620,8 +612,12 @@ public class TerminalTests
     {
         _terminal = new(_cursesMock.Object, _settings);
 
-        _cursesMock.Setup(s => s.term_attrs())
-                   .Returns(unchecked((int) VideoAttribute.Italic));
+        _cursesMock.Setup(s => s.term_attrs(out It.Ref<VideoAttribute>.IsAny))
+                   .Returns((out VideoAttribute v) =>
+                   {
+                       v = VideoAttribute.Italic;
+                       return 0;
+                   });
 
         _terminal.SupportedAttributes.ShouldBe(VideoAttribute.Italic);
     }

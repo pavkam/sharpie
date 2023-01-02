@@ -44,7 +44,7 @@ public enum VideoAttribute : uint
     /// <summary>
     ///     The best highlighting mode available.
     /// </summary>
-    StandOut = 1 << 16,
+    StandOut = 1,
 
     /// <summary>
     ///     Underlined text.
