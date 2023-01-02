@@ -47,6 +47,29 @@ internal abstract class BaseCursesBackend: ICursesBackend
     /// <returns>The tuple containing the decoded values.</returns>
     protected internal abstract (VideoAttribute attributtes, short colorPair) DecodeCursesAttributes(uint attrs);
 
+    /// <summary>
+    /// Decodes the key code type based on the result and key code returned by <see cref="wget_wch"/>.
+    /// </summary>
+    /// <param name="result">The result of read call.</param>
+    /// <param name="keyCode">The key code obtained from the read call..</param>
+    /// <returns>The identified type..</returns>
+    protected internal abstract CursesKeyCodeType DecodeKeyCodeType(int result, uint keyCode);
+    
+    /// <summary>
+    /// Decodes the raw key into a backend-independent representation.
+    /// </summary>
+    /// <param name="keyCode">The key code to decode.</param>
+    /// <returns>The decoded key.</returns>
+    protected internal abstract (Key key, ModifierKey modifierKey) DecodeRawKey(uint keyCode);
+
+    /// <summary>
+    ///    Decodes the raw mouse state flags into a backend-independent representation.
+    /// </summary>
+    /// <param name="flags">The raw Curses mouse event flags.</param>
+    /// <returns>The mouse action attributes.</returns>
+    protected internal abstract (MouseButton button, MouseButtonState state, ModifierKey modifierKey)
+        DecodeRawMouseButtonState(uint flags);
+    
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
@@ -356,6 +379,40 @@ internal abstract class BaseCursesBackend: ICursesBackend
     public int wget_wch(IntPtr window, out uint @char) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wget_wch>()(window, out @char);
 
+    public int wget_event(IntPtr window, int delay, out CursesEvent? @event)
+    {
+        wtimeout(window, delay);
+        var result = wget_wch(window, out var keyCode);
+        @event = null;
+        
+        var kct = DecodeKeyCodeType(result, keyCode);
+        switch (kct)
+        {
+            case CursesKeyCodeType.Resize:
+                @event = new CursesResizeEvent();
+                break;
+            case CursesKeyCodeType.Mouse:
+                if (getmouse(out var ms)
+                    .Failed())
+                {
+                    return result;
+                }
+
+                var (mb, mst, mm) = DecodeRawMouseButtonState(ms.buttonState);
+                @event = new CursesMouseEvent(ms.x, ms.y, mb, mst, mm);
+                break;
+            case CursesKeyCodeType.Key:
+                var (k, m) = DecodeRawKey(keyCode);
+                @event = new CursesKeyEvent(k, m);
+                break;
+            case CursesKeyCodeType.Character:
+                @event = new CursesCharEvent((char) keyCode);
+                break;
+        }
+
+        return result;
+    }
+
     public abstract int wgetbkgrnd(IntPtr window, out ComplexChar @char);
 
     public abstract int whline_set(IntPtr window, ComplexChar @char, int count);
@@ -364,8 +421,8 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public abstract int wvline_set(IntPtr window, ComplexChar @char, int count);
 
-    public int getmouse(out CursesMouseEvent @event) =>
-        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.getmouse>()(out @event);
+    public virtual int getmouse(out CursesMouseState state) =>
+        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.getmouse>()(out state);
 
     public virtual int mousemask(uint newMask, out uint oldMask) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mousemask>()(newMask, out oldMask);

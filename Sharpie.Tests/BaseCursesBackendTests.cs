@@ -1012,10 +1012,13 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void getmouse_IsRelayedToLibrary(int ret)
     {
-        var exp = new CursesMouseEvent { id = 199 };
+        _backendMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
+                    .CallBase();
+        
+        var exp = new CursesMouseState { id = 199 };
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.getmouse>()
-                                 .Setup(s => s(out It.Ref<CursesMouseEvent>.IsAny))
-                                 .Returns((out CursesMouseEvent o) =>
+                                 .Setup(s => s(out It.Ref<CursesMouseState>.IsAny))
+                                 .Returns((out CursesMouseState o) =>
                                  {
                                      o = exp;
                                      return ret;
@@ -1160,5 +1163,148 @@ public class BaseCursesBackendTests
 
         _dotNetSystemAdapterMock.VerifyNoOtherCalls();
         _nativeSymbolResolverMock.VerifyNoOtherCalls();
+    }
+    
+    [TestMethod]
+    public void wget_event_SetsTimeoutAndReadsCharacter()
+    {
+        var wt = _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint kc) =>
+                                 {
+                                     kc = 999;
+                                     return 88;
+                                 });
+
+        _backend.wget_event(new(1), 10, out var _).ShouldBe(88);
+        
+        wt.Verify(v => v(new(1), 10), Times.Once);
+    }
+    
+    [TestMethod]
+    public void wget_event_ReturnsNullEvent_IfKeyCodeTypeIsUnknown()
+    {
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint kc) =>
+                                 {
+                                     kc = 999;
+                                     return -1;
+                                 });
+
+        _backend.wget_event(new(1), 10, out var e).ShouldBe(-1);
+        e.ShouldBeNull();
+    }
+    
+    [TestMethod]
+    public void wget_event_ReturnsCharEvent_IfKeyCodeTypeIsCharacter()
+    {
+        _backendMock.Setup(s => s.DecodeKeyCodeType(0, 'A'))
+                    .Returns(CursesKeyCodeType.Character);
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint kc) =>
+                                 {
+                                     kc = 'A';
+                                     return 0;
+                                 });
+
+        _backend.wget_event(new(1), 10, out var e).ShouldBe(0);
+        e.ShouldBe(new CursesCharEvent('A'));
+    }
+    
+    [TestMethod]
+    public void wget_event_ReturnsResizeEvent_IfKeyCodeTypeIsResize()
+    {
+        _backendMock.Setup(s => s.DecodeKeyCodeType(22, 11))
+                    .Returns(CursesKeyCodeType.Resize);
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint kc) =>
+                                 {
+                                     kc = 11;
+                                     return 22;
+                                 });
+
+        _backend.wget_event(new(1), 10, out var e).ShouldBe(22);
+        e.ShouldBe(new CursesResizeEvent());
+    }
+    
+    [TestMethod]
+    public void wget_event_ReturnsKeyEvent_IfKeyCodeTypeIsKey()
+    {
+        _backendMock.Setup(s => s.DecodeKeyCodeType(11, 'A'))
+                    .Returns(CursesKeyCodeType.Key);
+        _backendMock.Setup(s => s.DecodeRawKey('A'))
+                    .Returns((Key.Backspace, ModifierKey.Ctrl));
+
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint kc) =>
+                                 {
+                                     kc = 'A';
+                                     return 11;
+                                 });
+
+        _backend.wget_event(new(1), 10, out var e).ShouldBe(11);
+        e.ShouldBe(new CursesKeyEvent(Key.Backspace, ModifierKey.Ctrl));
+    }
+
+    [TestMethod]
+    public void wget_event_ReturnsMouseEvent_IfKeyCodeTypeIsMouse()
+    {
+        _backendMock.Setup(s => s.DecodeKeyCodeType(11, 'A'))
+                    .Returns(CursesKeyCodeType.Mouse);
+        _backendMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
+                    .Returns((out CursesMouseState ms) =>
+                    {
+                        ms = new() { x = 10, y = 20, buttonState = 999 };
+                        return 0;
+                    });
+        
+        _backendMock.Setup(s => s.DecodeRawMouseButtonState(999))
+                    .Returns((MouseButton.Button2, MouseButtonState.TripleClicked, ModifierKey.Ctrl));
+
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint kc) =>
+                                 {
+                                     kc = 'A';
+                                     return 11;
+                                 });
+
+        _backend.wget_event(new(1), 10, out var e).ShouldBe(11);
+        e.ShouldBe(new CursesMouseEvent(10, 20, MouseButton.Button2, MouseButtonState.TripleClicked, ModifierKey.Ctrl));
+    }
+    
+    [TestMethod]
+    public void wget_event_ReturnsNull_IfKeyCodeTypeIsMouse_AndGetMouseFails()
+    {
+        _backendMock.Setup(s => s.DecodeKeyCodeType(11, 'A'))
+                    .Returns(CursesKeyCodeType.Mouse);
+        _backendMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
+                    .Returns((out CursesMouseState ms) =>
+                    {
+                        ms = new() { x = 10, y = 20, buttonState = 999 };
+                        return -1;
+                    });
+        
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint kc) =>
+                                 {
+                                     kc = 'A';
+                                     return 11;
+                                 });
+
+        _backend.wget_event(new(1), 10, out var e).ShouldBe(11);
+        e.ShouldBeNull();
     }
 }

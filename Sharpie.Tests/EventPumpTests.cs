@@ -565,8 +565,8 @@ public class EventPumpTests
     public void Listen1_SkipsInvalidMouseEvents()
     {
         var skip = true;
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
+                   .Returns((out CursesMouseState me) =>
                    {
                        var dx = skip ? 10 : 0;
                        me = new()
@@ -584,14 +584,14 @@ public class EventPumpTests
         e.Type.ShouldBe(EventType.MouseMove);
         ((MouseMoveEvent) e).Position.ShouldBe(new(5, 6));
 
-        _cursesMock.Verify(v => v.getmouse(out It.Ref<CursesMouseEvent>.IsAny), Times.Exactly(2));
+        _cursesMock.Verify(v => v.getmouse(out It.Ref<CursesMouseState>.IsAny), Times.Exactly(2));
     }
     
     [TestMethod, Timeout(Timeout)]
     public void Listen1_ProcessesMouseMoveEvents()
     {
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
+                   .Returns((out CursesMouseState me) =>
                    {
                        me = new()
                        {
@@ -610,8 +610,8 @@ public class EventPumpTests
     public void Listen1_ProcessesMouseMoveEvents_AndUsesInternalMouseResolver()
     {
         _pump.UseInternalMouseEventResolver = true;
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
+                   .Returns((out CursesMouseState me) =>
                    {
                        me = new()
                        {
@@ -633,8 +633,8 @@ public class EventPumpTests
     public void Listen1_ProcessesMouseActionEvents()
     {
         _pump.UseInternalMouseEventResolver = false;
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
+                   .Returns((out CursesMouseState me) =>
                    {
                        me = new()
                        {
@@ -661,8 +661,8 @@ public class EventPumpTests
     {
         _pump.UseInternalMouseEventResolver = true;
 
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
+                   .Returns((out CursesMouseState me) =>
                    {
                        me = new()
                        {
@@ -821,8 +821,8 @@ public class EventPumpTests
     public void Listen1_ConsidersBreaksInSequences()
     {
         _pump.Use(KeySequenceResolver.AltKeyResolver);
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
+        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
+                   .Returns((out CursesMouseState me) =>
                    {
                        me = new()
                        {

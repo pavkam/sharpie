@@ -26,20 +26,25 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
-#pragma warning disable CS1591
-namespace Sharpie.Backend;
+namespace Sharpie.Tests;
 
-/// <summary>
-///     Curses mouse event - encapsulates the data sent by the backend related to mouse events.
-/// </summary>
-[PublicAPI, StructLayout(LayoutKind.Sequential), ExcludeFromCodeCoverage]
-public struct CursesMouseEvent
+[TestClass]
+public class CursesMouseStateTests
 {
-    [MarshalAs(UnmanagedType.I2)] internal short id;
-    [MarshalAs(UnmanagedType.I4)] internal int x;
-    [MarshalAs(UnmanagedType.I4)] internal int y;
-    [MarshalAs(UnmanagedType.I4)] internal int z;
-    [MarshalAs(UnmanagedType.U4)] internal uint buttonState;
+    [TestMethod]
+    public void ToString_ProperlyFormats()
+    {
+        var nc = new CursesMouseState
+        {
+            id = 11,
+            x = 33,
+            y = 44,
+            z = 22,
+            buttonState = 456
+        };
+        
+        nc.ToString().ShouldBe("33x44:000001C8");
+    }
 }

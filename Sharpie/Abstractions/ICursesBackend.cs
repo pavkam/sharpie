@@ -274,6 +274,8 @@ public interface ICursesBackend
 
     int wget_wch(IntPtr window, out uint @char);
 
+    int wget_event(IntPtr window, int delay, out CursesEvent? @event);
+    
     int wgetbkgrnd(IntPtr window, out ComplexChar @char);
 
     int whline_set(IntPtr window, ComplexChar @char, int count);
@@ -282,7 +284,7 @@ public interface ICursesBackend
 
     int wvline_set(IntPtr window, ComplexChar @char, int count);
 
-    int getmouse(out CursesMouseEvent @event);
+    int getmouse(out CursesMouseState state);
 
     int mousemask(uint newMask, out uint oldMask);
 

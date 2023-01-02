@@ -35,8 +35,7 @@ namespace Sharpie;
 /// </summary>
 internal static class Helpers
 {
-    private const int CursesErrorResult = -1;
-
+    public const int CursesErrorResult = -1;
 
     /// <summary>
     /// Gets the raw value of a given <see cref="ComplexChar"/> and validates its compatibility with the backend.

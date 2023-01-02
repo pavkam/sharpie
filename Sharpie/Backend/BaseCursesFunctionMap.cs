@@ -109,7 +109,7 @@ internal abstract class BaseCursesFunctionMap
     public delegate int getmaxy(IntPtr window);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getmouse(out CursesMouseEvent @event);
+    public delegate int getmouse(out CursesMouseState state);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int getparx(IntPtr window);

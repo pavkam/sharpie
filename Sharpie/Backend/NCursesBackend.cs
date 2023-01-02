@@ -16,6 +16,11 @@ internal class NCursesBackend: BaseCursesBackend
     protected internal override uint EncodeCursesAttribute(VideoAttribute attributes, short colorPair) => ((uint)attributes << 16) | (((uint)colorPair & 0xFF) << 8);
 
     protected internal override (VideoAttribute attributtes, short colorPair) DecodeCursesAttributes(uint attrs) => ((VideoAttribute) (attrs >> 16), (short) ((attrs >> 8) & 0xFF));
+    protected internal override CursesKeyCodeType DecodeKeyCodeType(int result, uint keyCode) => throw new NotImplementedException();
+
+    protected internal override (Key key, ModifierKey modifierKey) DecodeRawKey(uint keyCode) => throw new NotImplementedException();
+
+    protected internal override (MouseButton button, MouseButtonState state, ModifierKey modifierKey) DecodeRawMouseButtonState(uint flags) => throw new NotImplementedException();
 
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
