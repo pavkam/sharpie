@@ -64,9 +64,9 @@ internal class NCursesBackend: BaseCursesBackend
     public override int getcchar(ComplexChar @char, StringBuilder dest, out VideoAttribute attributes, out short colorPair,
         IntPtr reserved)
     {
-        var c = @char.GetRawValue<NCursesComplexChar>();
+        var c = new[] { @char.GetRawValue<NCursesComplexChar>() };
         
-        var ret = CursesSymbolResolver.Resolve<NCursesFunctionMap.getcchar>()(ref c, dest, out var attrs,
+        var ret = CursesSymbolResolver.Resolve<NCursesFunctionMap.getcchar>()(ref c[0], dest, out var attrs,
             out colorPair, reserved);
 
         (attributes, _) = DecodeCursesAttributes(attrs);
@@ -76,71 +76,80 @@ internal class NCursesBackend: BaseCursesBackend
     public override int setcchar(out ComplexChar @char, string text, VideoAttribute attributes, short colorPair,
         IntPtr reserved)
     {
-        var ret = CursesSymbolResolver.Resolve<NCursesFunctionMap.setcchar>()(out var c, text,
+        var c = new NCursesComplexChar[1];
+        
+        var ret = CursesSymbolResolver.Resolve<NCursesFunctionMap.setcchar>()(out c[0], text,
             EncodeCursesAttribute(attributes, 0), colorPair, reserved);
-        @char = new(c);
+        @char = new(c[0]);
         return ret;
     }
 
     public override int wadd_wch(IntPtr window, ComplexChar @char)
     {
-        var c = @char.GetRawValue<NCursesComplexChar>();
+        var c = new[] { @char.GetRawValue<NCursesComplexChar>() };
         
-        return CursesSymbolResolver.Resolve<NCursesFunctionMap.wadd_wch>()(window, ref c);
+        return CursesSymbolResolver.Resolve<NCursesFunctionMap.wadd_wch>()(window, ref c[0]);
     }
 
     public override int wbkgrnd(IntPtr window, ComplexChar @char)
     {
-        var c = @char.GetRawValue<NCursesComplexChar>();
+        var c = new[] { @char.GetRawValue<NCursesComplexChar>() };
 
-        return CursesSymbolResolver.Resolve<NCursesFunctionMap.wbkgrnd>()(window, ref c);
+        return CursesSymbolResolver.Resolve<NCursesFunctionMap.wbkgrnd>()(window, ref c[0]);
     }
 
     public override int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide,
         ComplexChar topSide, ComplexChar bottomSide, ComplexChar topLeftCorner,
         ComplexChar topRightCorner, ComplexChar bottomLeftCorner, ComplexChar bottomRightCorner)
     {
-        var lc = leftSide.GetRawValue<NCursesComplexChar>();
-        var rc = rightSide.GetRawValue<NCursesComplexChar>();
-        var tc = topSide.GetRawValue<NCursesComplexChar>();
-        var bc = bottomSide.GetRawValue<NCursesComplexChar>();
-        var tlc = topLeftCorner.GetRawValue<NCursesComplexChar>();
-        var trc = topRightCorner.GetRawValue<NCursesComplexChar>();
-        var blc = bottomLeftCorner.GetRawValue<NCursesComplexChar>();
-        var brc = bottomRightCorner.GetRawValue<NCursesComplexChar>();
+        var c = new[]
+        {
+           leftSide.GetRawValue<NCursesComplexChar>(),
+            rightSide.GetRawValue<NCursesComplexChar>(),
+            topSide.GetRawValue<NCursesComplexChar>(),
+            bottomSide.GetRawValue<NCursesComplexChar>(),
+            topLeftCorner.GetRawValue<NCursesComplexChar>(),
+            topRightCorner.GetRawValue<NCursesComplexChar>(),
+            bottomLeftCorner.GetRawValue<NCursesComplexChar>(),
+            bottomRightCorner.GetRawValue<NCursesComplexChar>()
+        };
         
-        return CursesSymbolResolver.Resolve<NCursesFunctionMap.wborder_set>()(window, ref lc, ref rc,
-            ref tc, ref bc, ref tlc, ref trc, ref blc,
-            ref brc);
+        return CursesSymbolResolver.Resolve<NCursesFunctionMap.wborder_set>()(window, ref c[0], ref c[1],
+            ref c[2], ref c[3], ref c[4], ref c[5], ref c[6],
+            ref c[7]);
     }
 
     public override int wgetbkgrnd(IntPtr window, out ComplexChar @char)
     {
-        var ret = CursesSymbolResolver.Resolve<NCursesFunctionMap.wgetbkgrnd>()(window, out var c);
-        @char = new(c);
+        var c = new NCursesComplexChar[1];
+        
+        var ret = CursesSymbolResolver.Resolve<NCursesFunctionMap.wgetbkgrnd>()(window, out c[0]);
+        @char = new(c[0]);
 
         return ret;
     }
 
     public override int whline_set(IntPtr window, ComplexChar @char, int count)
     {
-        var c = @char.GetRawValue<NCursesComplexChar>();
+        var c = new[] { @char.GetRawValue<NCursesComplexChar>() };
         
-        return CursesSymbolResolver.Resolve<NCursesFunctionMap.whline_set>()(window, ref c, count);
+        return CursesSymbolResolver.Resolve<NCursesFunctionMap.whline_set>()(window, ref c[0], count);
     }
 
     public override int win_wch(IntPtr window, out ComplexChar @char)
     {
-        var ret = CursesSymbolResolver.Resolve<NCursesFunctionMap.win_wch>()(window, out var c);
-        @char = new(c);
+        var c = new NCursesComplexChar[1];
+        
+        var ret = CursesSymbolResolver.Resolve<NCursesFunctionMap.win_wch>()(window, out c[0]);
+        @char = new(c[0]);
         return ret;
     }
 
     public override int wvline_set(IntPtr window, ComplexChar @char, int count)
     {
-        var c = @char.GetRawValue<NCursesComplexChar>();
+        var c = new[] { @char.GetRawValue<NCursesComplexChar>() };
         
-        return CursesSymbolResolver.Resolve<NCursesFunctionMap.wvline_set>()(window, ref c, count);
+        return CursesSymbolResolver.Resolve<NCursesFunctionMap.wvline_set>()(window, ref c[0], count);
     }
 
     public override int mouse_version()
