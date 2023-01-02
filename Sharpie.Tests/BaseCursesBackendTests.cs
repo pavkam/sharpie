@@ -288,6 +288,9 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(0), DataRow(999)]
     public void initscr_IsRelayedToLibrary(int ret)
     {
+        _backendMock.Setup(s => s.initscr())
+                    .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.initscr, IntPtr>(s => s(), new(ret));
 
         _backend.initscr()

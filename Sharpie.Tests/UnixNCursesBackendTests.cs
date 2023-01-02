@@ -64,11 +64,12 @@ public class UnixNCursesBackendTests
                                 .Returns(os == "freebsd");
         
         var m = _nativeSymbolResolverMock.MockResolve<LibCFunctionMap.setlocale>();
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.initscr>();
+        var o = _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.initscr>();
         
         _backend.initscr();
 
         m.Verify(v => v(cate, ""));
+        o.Verify(o => o());
     }
 
     [TestMethod]
