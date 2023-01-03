@@ -57,11 +57,6 @@ public enum EventType
     TerminalResize,
 
     /// <summary>
-    ///     The terminal is about to be resized.
-    /// </summary>
-    TerminalAboutToResize,
-
-    /// <summary>
     ///     A key has been pressed.
     /// </summary>
     KeyPress,

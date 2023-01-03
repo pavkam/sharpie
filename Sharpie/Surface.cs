@@ -76,7 +76,7 @@ public abstract class Surface: ISurface, IDisposable
     protected internal virtual Point Origin => Point.Empty;
 
     /// <summary>
-    ///     Gets the area of the surface based on the <see cref="Origin"/> and <see cref="Size" />.
+    ///     Gets the area of the surface based on the <see cref="Origin" /> and <see cref="Size" />.
     /// </summary>
     protected internal Rectangle Area => new(Origin, Size);
 
@@ -255,7 +255,7 @@ public abstract class Surface: ISurface, IDisposable
         {
             return;
         }
-        
+
         Curses.wmove(Handle, location.Y, location.X)
               .Check(nameof(Curses.wmove), "Failed to move the caret to the given coordinates.");
 
@@ -535,15 +535,15 @@ public abstract class Surface: ISurface, IDisposable
             {
                 break;
             }
-            
+
             chars.Add(@char);
-            
+
             x++;
             if (x >= max)
             {
                 break;
             }
-             
+
             if (Curses.wmove(Handle, caretAt.Y, x)
                       .Failed())
             {
@@ -552,7 +552,7 @@ public abstract class Surface: ISurface, IDisposable
         }
 
         CaretLocation = caretAt;
-        
+
         return chars.Select(ch => Curses.FromComplexChar(ch))
                     .ToArray();
     }

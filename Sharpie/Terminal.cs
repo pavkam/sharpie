@@ -187,9 +187,7 @@ public sealed class Terminal: ITerminal, IDisposable
                                             .Check(nameof(Curses.mouseinterval),
                                                 "Failed to set the mouse click interval.");
 
-            var parser = CursesMouseEventParser.Get(Curses.mouse_version());
-
-            Curses.mousemask(parser.ReportPosition | parser.All, out var initialMouseMask)
+            Curses.mousemask(0xffffffff, out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
             _eventPump.UseInternalMouseEventResolver = Options.MouseClickInterval == null;
@@ -354,9 +352,9 @@ public sealed class Terminal: ITerminal, IDisposable
     public VideoAttribute SupportedAttributes
     {
         get
-        { 
+        {
             Curses.term_attrs(out var attributes)
-                .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
+                  .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
 
             return attributes;
         }

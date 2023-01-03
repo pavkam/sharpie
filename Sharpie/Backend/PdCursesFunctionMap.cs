@@ -37,8 +37,8 @@ namespace Sharpie.Backend;
 internal abstract class PdCursesFunctionMap: BaseCursesFunctionMap
 {
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getcchar(ref uint @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest,
-        out uint attrs, out short colorPair, IntPtr reserved);
+    public delegate int getcchar(ref uint @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, out uint attrs,
+        out short colorPair, IntPtr reserved);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int setcchar(out uint @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs,
@@ -51,9 +51,8 @@ internal abstract class PdCursesFunctionMap: BaseCursesFunctionMap
     public delegate int wbkgrnd(IntPtr window, ref uint @char);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wborder_set(IntPtr window, ref uint leftSide, ref uint rightSide,
-        ref uint topSide, ref uint bottomSide, ref uint topLeftCorner,
-        ref uint topRightCorner, ref uint bottomLeftCorner,
+    public delegate int wborder_set(IntPtr window, ref uint leftSide, ref uint rightSide, ref uint topSide,
+        ref uint bottomSide, ref uint topLeftCorner, ref uint topRightCorner, ref uint bottomLeftCorner,
         ref uint bottomRightCorner);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]

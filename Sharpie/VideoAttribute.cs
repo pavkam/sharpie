@@ -34,7 +34,7 @@ namespace Sharpie;
 ///     Defines the possible video attributes.
 /// </summary>
 [PublicAPI, Flags]
-public enum VideoAttribute : uint
+public enum VideoAttribute: uint
 {
     /// <summary>
     ///     No attributes, default text style.

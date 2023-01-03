@@ -42,7 +42,7 @@ public class NCursesBackendTests
     private static (ComplexChar, NCursesComplexChar) MakeTestComplexChar(uint x = 1)
     {
         var nc = new NCursesComplexChar { _attrAndColorPair = x };
-        
+
         return (new(nc), nc);
     }
 
@@ -128,15 +128,16 @@ public class NCursesBackendTests
     [TestMethod]
     public void slk_attr_IsRelayedToLibrary_1()
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(), 
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(),
             ((int) VideoAttribute.Blink << 16) + (99 << 8));
 
         _backend.slk_attr(out var a, out var cp)
                 .ShouldBe(0);
+
         a.ShouldBe(VideoAttribute.Blink);
-        ((int)cp).ShouldBe(99);
+        ((int) cp).ShouldBe(99);
     }
-    
+
     [TestMethod]
     public void slk_attr_IsRelayedToLibrary_2()
     {
@@ -149,7 +150,8 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_set_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_set, int>(s => s((uint) VideoAttribute.Blink << 16, 2, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_set, int>(
+            s => s((uint) VideoAttribute.Blink << 16, 2, new(2)), ret);
 
         _backend.slk_attr_set(VideoAttribute.Blink, 2, new(2))
                 .ShouldBe(ret);
@@ -167,7 +169,8 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_on_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_on, int>(s => s((uint) VideoAttribute.Blink << 16, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_on, int>(
+            s => s((uint) VideoAttribute.Blink << 16, new(2)), ret);
 
         _backend.slk_attr_on(VideoAttribute.Blink, new(2))
                 .ShouldBe(ret);
@@ -176,9 +179,10 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_off_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_off, int>(s => s((uint) VideoAttribute.Blink << 16, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_off, int>(
+            s => s((uint) VideoAttribute.Blink << 16, new(2)), ret);
 
-        _backend.slk_attr_off( VideoAttribute.Blink, new(2))
+        _backend.slk_attr_off(VideoAttribute.Blink, new(2))
                 .ShouldBe(ret);
     }
 
@@ -186,7 +190,7 @@ public class NCursesBackendTests
     public void wadd_wch_IsRelayedToLibrary(int ret)
     {
         var (ch, nc) = MakeTestComplexChar();
-        
+
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wadd_wch, int>(s => s(new(1), ref nc), ret);
 
         _backend.wadd_wch(new(1), ch)
@@ -291,9 +295,10 @@ public class NCursesBackendTests
     public void setcchar_IsRelayedToLibrary(int ret)
     {
         var (ch, nc) = MakeTestComplexChar();
-        
+
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.setcchar>()
-                                 .Setup(s => s(out It.Ref<NCursesComplexChar>.IsAny, "text", (uint) VideoAttribute.Blink << 16, 20, new(2)))
+                                 .Setup(s => s(out It.Ref<NCursesComplexChar>.IsAny, "text",
+                                     (uint) VideoAttribute.Blink << 16, 20, new(2)))
                                  .Returns((out NCursesComplexChar o, string _, uint _, short _,
                                      IntPtr _) =>
                                  {
@@ -311,9 +316,9 @@ public class NCursesBackendTests
     public void getcchar_IsRelayedToLibrary(int ret)
     {
         var sb = new StringBuilder();
-        
+
         var (ch, nc) = MakeTestComplexChar();
-        
+
         _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getcchar>()
                                  .Setup(s => s(ref nc, sb, out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, new(2)))
                                  .Returns((ref NCursesComplexChar _, StringBuilder _, out uint a, out short cp,
@@ -330,20 +335,22 @@ public class NCursesBackendTests
         attrs.ShouldBe(VideoAttribute.Blink);
         ((int) pair).ShouldBe(2);
     }
-    
+
     [TestMethod, DataRow("something", -1), DataRow("6.2.3", 2), DataRow("something6.2.3", 2),
-     DataRow("something 5.7", -1),  DataRow("something 4.7.5", -1), DataRow("something 5.7.12312", 1)]
-    public void mouse_version_ParsesCursesVersion(string ver, int m)
+     DataRow("something 5.7", -1), DataRow("something 4.7.5", -1), DataRow("something 5.7.12312", 1)]
+    public void CursesMouseEventParser_ReturnsMouseParserBasedOnAbi(string ver, int m)
     {
         var h = Marshal.StringToHGlobalAnsi(ver);
         _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
                                 .CallBase();
+
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.curses_version>()
                                  .Setup(s => s())
                                  .Returns(h);
 
-        _backend.mouse_version()
-                .ShouldBe(m);
+        _backend.CursesMouseEventParser.ShouldBe(m == 2
+            ? CursesMouseEventParser.Get(2)
+            : CursesMouseEventParser.Get(1));
     }
 
     [TestMethod]
@@ -352,43 +359,163 @@ public class NCursesBackendTests
         _backend.EncodeCursesAttribute(VideoAttribute.Blink, 15)
                 .ShouldBe(((uint) VideoAttribute.Blink << 16) | (15 << 8));
     }
-    
+
     [TestMethod]
     public void DecodeCursesAttributes_WorksAsExpected()
     {
-        _backend.DecodeCursesAttributes(((uint) VideoAttribute.Blink << 16) | (15 << 8)).ShouldBe((VideoAttribute.Blink, (short)15));
+        _backend.DecodeCursesAttributes(((uint) VideoAttribute.Blink << 16) | (15 << 8))
+                .ShouldBe((VideoAttribute.Blink, (short) 15));
     }
-    
+
+    [TestMethod, DataRow(-1, 10u, (int) CursesKeyCodeType.Unknown), DataRow(0, 32u, (int) CursesKeyCodeType.Character),
+     DataRow(100, 32u, (int) CursesKeyCodeType.Character),
+     DataRow((int) NCursesKeyCode.Yes, (uint) NCursesKeyCode.F3, (int) CursesKeyCodeType.Key),
+     DataRow((int) NCursesKeyCode.Yes, (uint) NCursesKeyCode.Resize, (int) CursesKeyCodeType.Resize),
+     DataRow((int) NCursesKeyCode.Yes, (uint) NCursesKeyCode.Mouse, (int) CursesKeyCodeType.Mouse)]
+    public void DecodeKeyCodeType_DecodesProperly(int res, uint code, int exp)
+    {
+        _backend.DecodeKeyCodeType(res, code)
+                .ShouldBe((CursesKeyCodeType) exp);
+    }
+
+    [TestMethod, DataRow(NCursesKeyCode.F1, Key.F1, ModifierKey.None),
+     DataRow(NCursesKeyCode.F2, Key.F2, ModifierKey.None), DataRow(NCursesKeyCode.F3, Key.F3, ModifierKey.None),
+     DataRow(NCursesKeyCode.F4, Key.F4, ModifierKey.None), DataRow(NCursesKeyCode.F5, Key.F5, ModifierKey.None),
+     DataRow(NCursesKeyCode.F6, Key.F6, ModifierKey.None), DataRow(NCursesKeyCode.F7, Key.F7, ModifierKey.None),
+     DataRow(NCursesKeyCode.F8, Key.F8, ModifierKey.None), DataRow(NCursesKeyCode.F9, Key.F9, ModifierKey.None),
+     DataRow(NCursesKeyCode.F10, Key.F10, ModifierKey.None), DataRow(NCursesKeyCode.F11, Key.F11, ModifierKey.None),
+     DataRow(NCursesKeyCode.F12, Key.F12, ModifierKey.None), DataRow(NCursesKeyCode.ShiftF1, Key.F1, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF2, Key.F2, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF3, Key.F3, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF4, Key.F4, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF5, Key.F5, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF6, Key.F6, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF7, Key.F7, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF8, Key.F8, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF9, Key.F9, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF10, Key.F10, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF11, Key.F11, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftF12, Key.F12, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.CtrlF1, Key.F1, ModifierKey.Ctrl), DataRow(NCursesKeyCode.CtrlF2, Key.F2, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlF3, Key.F3, ModifierKey.Ctrl), DataRow(NCursesKeyCode.CtrlF4, Key.F4, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlF5, Key.F5, ModifierKey.Ctrl), DataRow(NCursesKeyCode.CtrlF6, Key.F6, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlF7, Key.F7, ModifierKey.Ctrl), DataRow(NCursesKeyCode.CtrlF8, Key.F8, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlF9, Key.F9, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlF10, Key.F10, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlF11, Key.F11, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlF12, Key.F12, ModifierKey.Ctrl), DataRow(NCursesKeyCode.AltF1, Key.F1, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltF2, Key.F2, ModifierKey.Alt), DataRow(NCursesKeyCode.AltF3, Key.F3, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltF4, Key.F4, ModifierKey.Alt), DataRow(NCursesKeyCode.AltF5, Key.F5, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltF6, Key.F6, ModifierKey.Alt), DataRow(NCursesKeyCode.AltF7, Key.F7, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltF8, Key.F8, ModifierKey.Alt), DataRow(NCursesKeyCode.AltF9, Key.F9, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltF10, Key.F10, ModifierKey.Alt), DataRow(NCursesKeyCode.AltF11, Key.F11, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltF12, Key.F12, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltF1, Key.F1, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF2, Key.F2, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF3, Key.F3, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF4, Key.F4, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF5, Key.F5, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF6, Key.F6, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF7, Key.F7, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF8, Key.F8, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF9, Key.F9, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF10, Key.F10, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF11, Key.F11, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftAltF12, Key.F12, ModifierKey.Alt | ModifierKey.Shift),
+     DataRow(NCursesKeyCode.Up, Key.KeypadUp, ModifierKey.None),
+     DataRow(NCursesKeyCode.Down, Key.KeypadDown, ModifierKey.None),
+     DataRow(NCursesKeyCode.Left, Key.KeypadLeft, ModifierKey.None),
+     DataRow(NCursesKeyCode.Right, Key.KeypadRight, ModifierKey.None),
+     DataRow(NCursesKeyCode.Home, Key.KeypadHome, ModifierKey.None),
+     DataRow(NCursesKeyCode.End, Key.KeypadEnd, ModifierKey.None),
+     DataRow(NCursesKeyCode.PageDown, Key.KeypadPageDown, ModifierKey.None),
+     DataRow(NCursesKeyCode.PageUp, Key.KeypadPageUp, ModifierKey.None),
+     DataRow(NCursesKeyCode.DeleteChar, Key.DeleteChar, ModifierKey.None),
+     DataRow(NCursesKeyCode.InsertChar, Key.InsertChar, ModifierKey.None),
+     DataRow(NCursesKeyCode.Tab, Key.Tab, ModifierKey.None),
+     DataRow(NCursesKeyCode.BackTab, Key.Tab, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.Backspace, Key.Backspace, ModifierKey.None),
+     DataRow(NCursesKeyCode.ShiftUp, Key.KeypadUp, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftDown, Key.KeypadDown, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftLeft, Key.KeypadLeft, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftRight, Key.KeypadRight, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftHome, Key.KeypadHome, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftEnd, Key.KeypadEnd, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftPageDown, Key.KeypadPageDown, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.ShiftPageUp, Key.KeypadPageUp, ModifierKey.Shift),
+     DataRow(NCursesKeyCode.AltUp, Key.KeypadUp, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltDown, Key.KeypadDown, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltLeft, Key.KeypadLeft, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltRight, Key.KeypadRight, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltHome, Key.KeypadHome, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltEnd, Key.KeypadEnd, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltPageDown, Key.KeypadPageDown, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltPageUp, Key.KeypadPageUp, ModifierKey.Alt),
+     DataRow(NCursesKeyCode.CtrlUp, Key.KeypadUp, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlDown, Key.KeypadDown, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlLeft, Key.KeypadLeft, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlRight, Key.KeypadRight, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlHome, Key.KeypadHome, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlEnd, Key.KeypadEnd, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlPageDown, Key.KeypadPageDown, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.CtrlPageUp, Key.KeypadPageUp, ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlUp, Key.KeypadUp, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlDown, Key.KeypadDown, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlLeft, Key.KeypadLeft, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlRight, Key.KeypadRight, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlHome, Key.KeypadHome, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlEnd, Key.KeypadEnd, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlPageDown, Key.KeypadPageDown, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlPageUp, Key.KeypadPageUp, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftAltUp, Key.KeypadUp, ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltDown, Key.KeypadDown, ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltLeft, Key.KeypadLeft, ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltRight, Key.KeypadRight, ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltPageDown, Key.KeypadPageDown, ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltPageUp, Key.KeypadPageUp, ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltHome, Key.KeypadHome, ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltEnd, Key.KeypadEnd, ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.AltCtrlPageDown, Key.KeypadPageDown, ModifierKey.Alt | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.AltCtrlPageUp, Key.KeypadPageUp, ModifierKey.Alt | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.AltCtrlHome, Key.KeypadHome, ModifierKey.Alt | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.AltCtrlEnd, Key.KeypadEnd, ModifierKey.Alt | ModifierKey.Ctrl),
+     DataRow((uint) 9999, Key.Unknown, ModifierKey.None)]
+    public void DecodeRawKey_DecodesProperly(uint rawKey, Key expKey, ModifierKey expMod)
+    {
+        _backend.DecodeRawKey(rawKey)
+                .ShouldBe((expKey, expMod));
+    }
+
     [TestMethod]
     public void wadd_wch_Throws_IfCharIsNull()
     {
         Should.Throw<ArgumentNullException>(() => _backend.wadd_wch(new(1), null!));
     }
-    
+
     [TestMethod]
     public void wadd_wch_Throws_IfCharIsIncompatible()
     {
         Should.Throw<ArgumentException>(() => _backend.wadd_wch(new(1), new("bad")));
     }
-    
+
     [TestMethod]
     public void wbkgrnd_Throws_IfCharIsNull()
     {
         Should.Throw<ArgumentNullException>(() => _backend.wbkgrnd(new(1), null!));
     }
-    
+
     [TestMethod]
     public void wbkgrnd_Throws_IfCharIsIncompatible()
     {
         Should.Throw<ArgumentException>(() => _backend.wbkgrnd(new(1), new("bad")));
     }
-    
+
     [TestMethod]
     public void wvline_set_Throws_IfCharIsNull()
     {
         Should.Throw<ArgumentNullException>(() => _backend.wvline_set(new(1), null!, 4));
     }
-    
+
     [TestMethod]
     public void wvline_set_Throws_IfCharIsIncompatible()
     {
@@ -400,19 +527,19 @@ public class NCursesBackendTests
     {
         Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
     }
-    
+
     [TestMethod]
     public void whline_set_Throws_IfCharIsIncompatible()
     {
         Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
     }
-    
+
     [TestMethod]
     public void wgetbkgrnd_Throws_IfCharIsNull()
     {
         Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
     }
-    
+
     [TestMethod]
     public void wgetbkgrnd_Throws_IfCharIsIncompatible()
     {
@@ -424,15 +551,14 @@ public class NCursesBackendTests
     {
         Should.Throw<ArgumentNullException>(() => _backend.getcchar(null!, new(), out var _, out var _, new(2)));
     }
-    
+
     [TestMethod]
     public void getcchar_Throws_IfCharIsIncompatible()
     {
         Should.Throw<ArgumentException>(() => _backend.getcchar(new("bad"), new(), out var _, out var _, new(2)));
     }
-    
-    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5),
-     DataRow(6), DataRow(7)]
+
+    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5), DataRow(6), DataRow(7)]
     public void wborder_set_Throws_IfCharIsNull(int bad)
     {
         var chs = new ComplexChar[8];
@@ -441,16 +567,14 @@ public class NCursesBackendTests
             if (x != bad)
             {
                 (chs[x], _) = MakeTestComplexChar();
-            } 
+            }
         }
-        
+
         Should.Throw<ArgumentNullException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
             chs[4], chs[5], chs[6], chs[7]));
     }
-    
-        
-    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5),
-     DataRow(6), DataRow(7)]
+
+    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5), DataRow(6), DataRow(7)]
     public void wborder_set_Throws_IfCharIsIncompatible(int bad)
     {
         var chs = new ComplexChar[8];
@@ -464,7 +588,7 @@ public class NCursesBackendTests
                 chs[x] = new("bad");
             }
         }
-        
+
         Should.Throw<ArgumentException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
             chs[4], chs[5], chs[6], chs[7]));
     }

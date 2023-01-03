@@ -3,13 +3,13 @@
 namespace Sharpie.Backend;
 
 /// <summary>
-/// Implements the <see cref="ICursesBackend"/> interface and serves as base class for specific Curses backends.
+///     Implements the <see cref="ICursesBackend" /> interface and serves as base class for specific Curses backends.
 /// </summary>
 [PublicAPI]
 internal abstract class BaseCursesBackend: ICursesBackend
 {
     /// <summary>
-    /// Creates a new instance of this class.
+    ///     Creates a new instance of this class.
     /// </summary>
     /// <param name="dotNetSystemAdapter">The .NET system interop adapter.</param>
     /// <param name="cursesSymbolResolver">The Curses symbol resolver.</param>
@@ -23,17 +23,22 @@ internal abstract class BaseCursesBackend: ICursesBackend
     }
 
     /// <summary>
-    /// The Curses symbol resolver.
+    ///     The mouse event parser used by the backend.
+    /// </summary>
+    protected internal abstract CursesMouseEventParser CursesMouseEventParser { get; }
+
+    /// <summary>
+    ///     The Curses symbol resolver.
     /// </summary>
     protected internal INativeSymbolResolver CursesSymbolResolver { get; }
-    
+
     /// <summary>
-    /// The .NET system interop adapter.
+    ///     The .NET system interop adapter.
     /// </summary>
     protected internal IDotNetSystemAdapter DotNetSystemAdapter { get; }
 
     /// <summary>
-    /// Encodes the given video attributes and the color pair into a Curses-specific value.
+    ///     Encodes the given video attributes and the color pair into a Curses-specific value.
     /// </summary>
     /// <param name="attributes">The attributes.</param>
     /// <param name="colorPair">The color pair.</param>
@@ -41,11 +46,38 @@ internal abstract class BaseCursesBackend: ICursesBackend
     protected internal abstract uint EncodeCursesAttribute(VideoAttribute attributes, short colorPair);
 
     /// <summary>
-    /// Decodes the Curses-specific value back into vide attributes and the color pair.
+    ///     Decodes the Curses-specific value back into vide attributes and the color pair.
     /// </summary>
     /// <param name="attrs">The backend specific value.</param>
     /// <returns>The tuple containing the decoded values.</returns>
     protected internal abstract (VideoAttribute attributtes, short colorPair) DecodeCursesAttributes(uint attrs);
+
+    /// <summary>
+    ///     Decodes the key code type based on the result and key code returned by <see cref="wget_wch" />.
+    /// </summary>
+    /// <param name="result">The result of read call.</param>
+    /// <param name="keyCode">The key code obtained from the read call..</param>
+    /// <returns>The identified type..</returns>
+    protected internal abstract CursesKeyCodeType DecodeKeyCodeType(int result, uint keyCode);
+
+    /// <summary>
+    ///     Decodes the raw key into a backend-independent representation.
+    /// </summary>
+    /// <param name="keyCode">The key code to decode.</param>
+    /// <returns>The decoded key.</returns>
+    protected internal abstract (Key key, ModifierKey modifierKey) DecodeRawKey(uint keyCode);
+
+    /// <summary>
+    ///     Decodes the raw mouse state flags into a backend-independent representation.
+    /// </summary>
+    /// <param name="flags">The raw Curses mouse event flags.</param>
+    /// <returns>The mouse action attributes.</returns>
+    protected internal virtual (MouseButton button, MouseButtonState state, ModifierKey modifierKey)
+        DecodeRawMouseButtonState(uint flags)
+    {
+        var parsed = CursesMouseEventParser.Parse(flags);
+        return parsed ?? (MouseButton.Unknown, MouseButtonState.None, ModifierKey.None);
+    }
 
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
@@ -89,7 +121,8 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public int endwin() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.endwin>()();
 
-    public int erasewchar(out uint @char) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.erasewchar>()(out @char);
+    public int erasewchar(out uint @char) =>
+        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.erasewchar>()(out @char);
 
     public int flash() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.flash>()();
 
@@ -189,8 +222,8 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public int prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine,
         int scrMinCol, int scrMaxLine, int scrMaxCol) =>
-        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.prefresh>()(pad, padMinLine, padMinCol, scrMinLine, scrMinCol,
-            scrMaxLine, scrMaxCol);
+        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.prefresh>()(pad, padMinLine, padMinCol, scrMinLine,
+            scrMinCol, scrMaxLine, scrMaxCol);
 
     public void qiflush() { CursesSymbolResolver.Resolve<BaseCursesFunctionMap.qiflush>()(); }
 
@@ -213,7 +246,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
     public abstract int slk_clear();
 
     public abstract int slk_set(int labelIndex, string title, int align);
-    
+
     public abstract int slk_color(short colorPair);
 
     public abstract int slk_init(int format);
@@ -251,13 +284,16 @@ internal abstract class BaseCursesBackend: ICursesBackend
     }
 
     public int wattr_set(IntPtr window, VideoAttribute attributes, short colorPair, IntPtr reserved) =>
-        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wattr_set>()(window, EncodeCursesAttribute(attributes, 0), colorPair, reserved);
+        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wattr_set>()(window, EncodeCursesAttribute(attributes, 0),
+            colorPair, reserved);
 
     public int wattr_on(IntPtr window, VideoAttribute attributes, IntPtr reserved) =>
-        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wattr_on>()(window, EncodeCursesAttribute(attributes, 0), reserved);
+        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wattr_on>()(window, EncodeCursesAttribute(attributes, 0),
+            reserved);
 
     public int wattr_off(IntPtr window, VideoAttribute attributes, IntPtr reserved) =>
-        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wattr_off>()(window, EncodeCursesAttribute(attributes, 0), reserved);
+        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wattr_off>()(window, EncodeCursesAttribute(attributes, 0),
+            reserved);
 
     public int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide,
         uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner,
@@ -267,7 +303,8 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public int wchgat(IntPtr window, int count, VideoAttribute attributes, short colorPair,
         IntPtr reserved) =>
-        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wchgat>()(window, count, EncodeCursesAttribute(attributes, 0), colorPair, reserved);
+        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wchgat>()(window, count,
+            EncodeCursesAttribute(attributes, 0), colorPair, reserved);
 
     public int wclrtobot(IntPtr window) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wclrtobot>()(window);
 
@@ -289,7 +326,8 @@ internal abstract class BaseCursesBackend: ICursesBackend
     public int wmove(IntPtr window, int newLine, int newCol) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wmove>()(window, newLine, newCol);
 
-    public int wnoutrefresh(IntPtr window) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wnoutrefresh>()(window);
+    public int wnoutrefresh(IntPtr window) =>
+        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wnoutrefresh>()(window);
 
     public int wredrawln(IntPtr window, int startLine, int lineCount) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wredrawln>()(window, startLine, lineCount);
@@ -340,7 +378,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
             attributes = VideoAttribute.None;
             return ret;
         }
-        
+
         (attributes, _) = DecodeCursesAttributes((uint) ret);
         return 0;
     }
@@ -349,12 +387,46 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public abstract int wbkgrnd(IntPtr window, ComplexChar @char);
 
-    public abstract int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide,
-        ComplexChar topSide, ComplexChar bottomSide, ComplexChar topLeftCorner,
-        ComplexChar topRightCorner, ComplexChar bottomLeftCorner, ComplexChar bottomRightCorner);
+    public abstract int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
+        ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner,
+        ComplexChar bottomRightCorner);
 
     public int wget_wch(IntPtr window, out uint @char) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.wget_wch>()(window, out @char);
+
+    public int wget_event(IntPtr window, int delay, out CursesEvent? @event)
+    {
+        wtimeout(window, delay);
+        var result = wget_wch(window, out var keyCode);
+        @event = null;
+
+        var kct = DecodeKeyCodeType(result, keyCode);
+        switch (kct)
+        {
+            case CursesKeyCodeType.Resize:
+                @event = new CursesResizeEvent();
+                break;
+            case CursesKeyCodeType.Mouse:
+                if (getmouse(out var ms)
+                    .Failed())
+                {
+                    return result;
+                }
+
+                var (mb, mst, mm) = DecodeRawMouseButtonState(ms.buttonState);
+                @event = new CursesMouseEvent(ms.x, ms.y, mb, mst, mm);
+                break;
+            case CursesKeyCodeType.Key:
+                var (k, m) = DecodeRawKey(keyCode);
+                @event = new CursesKeyEvent(k, m);
+                break;
+            case CursesKeyCodeType.Character:
+                @event = new CursesCharEvent((char) keyCode);
+                break;
+        }
+
+        return result;
+    }
 
     public abstract int wgetbkgrnd(IntPtr window, out ComplexChar @char);
 
@@ -364,25 +436,17 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public abstract int wvline_set(IntPtr window, ComplexChar @char, int count);
 
-    public int getmouse(out CursesMouseEvent @event) =>
-        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.getmouse>()(out @event);
+    public virtual int getmouse(out CursesMouseState state) =>
+        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.getmouse>()(out state);
 
     public virtual int mousemask(uint newMask, out uint oldMask) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mousemask>()(newMask, out oldMask);
-
-    public abstract int mouse_version();
 
     public int mouseinterval(int millis) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mouseinterval>()(millis);
 
     public void set_title(string title) { DotNetSystemAdapter.SetConsoleTitle(title); }
 
     public virtual void set_unicode_locale() { }
-
-    public virtual bool monitor_pending_resize(Action action, [NotNullWhen(true)] out IDisposable? handle)
-    {
-        handle = null;
-        return false;
-    }
 
     // ReSharper restore InconsistentNaming
     // ReSharper restore IdentifierTypo

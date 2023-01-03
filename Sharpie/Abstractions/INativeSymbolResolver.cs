@@ -15,4 +15,3 @@ internal interface INativeSymbolResolver
     /// <exception cref="MissingMethodException">Thrown if the given function could not be resolved.</exception>
     TDelegate Resolve<TDelegate>() where TDelegate: MulticastDelegate;
 }
-

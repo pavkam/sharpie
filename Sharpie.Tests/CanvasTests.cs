@@ -48,8 +48,8 @@ public class CanvasTests
         _canvas3X3 = new(new(3, 3));
     }
 
-    [TestMethod, DataRow(0, 1), DataRow(1, 0), SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-    [SuppressMessage("Performance", "CA1806:Do not ignore method results")]
+    [TestMethod, DataRow(0, 1), DataRow(1, 0), SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
+     SuppressMessage("Performance", "CA1806:Do not ignore method results")]
     public void Ctor_Throws_IfSizeIsInvalid(int width, int height)
     {
         Should.Throw<ArgumentOutOfRangeException>(() => { new Canvas(new(width, height)); });

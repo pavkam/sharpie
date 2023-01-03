@@ -61,13 +61,11 @@ internal sealed class UnixNCursesBackend: NCursesBackend
         var result = base.mousemask(newMask, out oldMask);
         if (!result.Failed())
         {
-            var parser = CursesMouseEventParser.Get(mouse_version());
-
             var csi = "\x1b[?1003l";
-            if ((newMask & parser.ReportPosition) != 0)
+            if ((newMask & CursesMouseEventParser.ReportPosition) != 0)
             {
                 csi = "\x1b[?1003h";
-            } else if ((newMask & parser.All) != 0)
+            } else if ((newMask & CursesMouseEventParser.All) != 0)
             {
                 csi = "\x1b[?1000h";
             }
@@ -85,12 +83,6 @@ internal sealed class UnixNCursesBackend: NCursesBackend
         _libCSymbolResolver.Resolve<LibCFunctionMap.setlocale>()(category, "");
 
         return base.initscr();
-    }
-
-    public override bool monitor_pending_resize(Action action, [NotNullWhen(true)] out IDisposable? handle)
-    {
-        handle = DotNetSystemAdapter.MonitorTerminalResizeSignal(action);
-        return true;
     }
 
     // ReSharper restore InconsistentNaming

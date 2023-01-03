@@ -116,7 +116,7 @@ public class TerminalTests
 
         _terminal = new(_cursesMock.Object, new(enabled));
 
-        _terminal.Colors.Mode.ShouldBe(enabled ? ColorMode.Extended: ColorMode.Disabled);
+        _terminal.Colors.Mode.ShouldBe(enabled ? ColorMode.Extended : ColorMode.Disabled);
         ((ITerminal) _terminal).Colors.ShouldBe(_terminal.Colors);
     }
 
@@ -270,24 +270,17 @@ public class TerminalTests
         _cursesMock.Verify(v => v.curs_set((int) CaretMode.VeryVisible), Times.Once);
     }
 
-    [TestMethod, DataRow(true, 1), DataRow(true, 2), DataRow(false, 0)]
-    public void Ctor_PreparesUseMouse_ByAskingCurses(bool enabled, int abi)
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void Ctor_PreparesUseMouse_ByAskingCurses(bool enabled)
     {
-        _cursesMock.Setup(s => s.mouse_version())
-                   .Returns(abi);
-        
         _terminal = new(_cursesMock.Object, new(UseMouse: enabled, MouseClickInterval: 999));
         _terminal.Events.UseInternalMouseEventResolver.ShouldBeFalse();
 
         _cursesMock.Verify(v => v.mouseinterval(999), enabled ? Times.Once : Times.Never);
 
-        var parser = CursesMouseEventParser.Get(abi);
-        var expMask = enabled
-            ? parser.ReportPosition | parser.All
-            : 0;
+        var expMask = enabled ? 0xffffffff : 0;
 
         _cursesMock.Verify(v => v.mousemask(expMask, out It.Ref<uint>.IsAny), Times.Once);
-        _cursesMock.Verify(v => v.mouse_version(), Times.Exactly(enabled ? 2: 1));
     }
 
     [TestMethod]
@@ -604,9 +597,10 @@ public class TerminalTests
         _cursesMock.Setup(s => s.term_attrs(out It.Ref<VideoAttribute>.IsAny))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => _terminal.SupportedAttributes.ToString()).Operation.ShouldBe("term_attrs");
+        Should.Throw<CursesOperationException>(() => _terminal.SupportedAttributes.ToString())
+              .Operation.ShouldBe("term_attrs");
     }
-    
+
     [TestMethod]
     public void SupportedAttributes_Returns_WhateverCursesReturns()
     {
@@ -887,7 +881,7 @@ public class TerminalTests
 
         Should.NotThrow(() => _terminal.Dispose());
     }
-    
+
     [TestMethod]
     public void Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode()
     {

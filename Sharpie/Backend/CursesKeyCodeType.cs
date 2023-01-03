@@ -26,43 +26,38 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
-namespace Sharpie.Tests;
+namespace Sharpie.Backend;
+#pragma warning disable CS1591
 
-[TestClass]
-public class TerminalAboutToResizeEventTests
+/// <summary>
+///     Backend-independent key code classification.
+/// </summary>
+internal enum CursesKeyCodeType
 {
-    private readonly TerminalAboutToResizeEvent _event1 = new();
+    /// <summary>
+    ///     The type could no be identified.
+    /// </summary>
+    Unknown,
 
-    [TestMethod]
-    public void Ctor_InitializesPropertiesCorrectly() { _event1.Type.ShouldBe(EventType.TerminalAboutToResize); }
+    /// <summary>
+    ///     The key code is a character.
+    /// </summary>
+    Character,
 
-    [TestMethod]
-    public void ToString_ProperlyFormats()
-    {
-        _event1.ToString()
-               .ShouldBe("Resizing");
-    }
+    /// <summary>
+    ///     The key code identifies a mouse event.
+    /// </summary>
+    Mouse,
 
-    [TestMethod, DataRow(null), DataRow("")]
-    public void Equals_ReturnsFalse_IfNotSameType(object? b)
-    {
-        _event1.Equals(b)
-               .ShouldBeFalse();
-    }
+    /// <summary>
+    ///     The key code identifies a resize event.
+    /// </summary>
+    Resize,
 
-    [TestMethod]
-    public void Equals_ReturnsTrue_IfSameType()
-    {
-        _event1.Equals(new TerminalAboutToResizeEvent())
-               .ShouldBeTrue();
-    }
-
-    [TestMethod]
-    public void GetHashCode_IsEqual_Always()
-    {
-        _event1.GetHashCode()
-               .ShouldBe(new TerminalAboutToResizeEvent().GetHashCode());
-    }
+    /// <summary>
+    ///     The key code encodes a key.
+    /// </summary>
+    Key
 }

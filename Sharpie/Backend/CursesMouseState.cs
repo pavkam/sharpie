@@ -28,25 +28,21 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Sharpie;
+#pragma warning disable CS1591
+namespace Sharpie.Backend;
 
 /// <summary>
-///     The terminal is about to be resized event.
+///     Curses mouse event - encapsulates the data sent by the backend related to mouse events.
 /// </summary>
-[PublicAPI]
-public sealed class TerminalAboutToResizeEvent: Event
+[PublicAPI, StructLayout(LayoutKind.Sequential), DebuggerDisplay("{ToString(), nq}")]
+public struct CursesMouseState
 {
-    /// <summary>
-    ///     Creates a new instance of the class.
-    /// </summary>
-    internal TerminalAboutToResizeEvent(): base(EventType.TerminalAboutToResize) { }
+    [MarshalAs(UnmanagedType.I2)] internal short id;
+    [MarshalAs(UnmanagedType.I4)] internal int x;
+    [MarshalAs(UnmanagedType.I4)] internal int y;
+    [MarshalAs(UnmanagedType.I4)] internal int z;
+    [MarshalAs(UnmanagedType.U4)] internal uint buttonState;
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => "Resizing";
-
-    /// <inheritdoc cref="object.Equals(object)" />
-    public override bool Equals(object? obj) => obj is TerminalAboutToResizeEvent && obj.GetType() == GetType();
-
-    /// <inheritdoc cref="object.GetHashCode" />
-    public override int GetHashCode() => 0xF00BA;
+    public override string ToString() => $"{x}x{y}:{buttonState:X8}";
 }

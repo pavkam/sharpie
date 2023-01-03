@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
-using Nito.Disposables;
-
 [TestClass]
 public class EventPumpTests
 {
@@ -45,64 +43,43 @@ public class EventPumpTests
 
     [UsedImplicitly] public TestContext TestContext { get; set; } = null!;
 
-    private Event[] SimulateEvents(int count, ISurface w, params (int result, uint keyCode)[] raw)
+    private Event[] SimulateActualEvents(ISurface sf, int expectedCount, params CursesEvent?[] cursesEvents)
     {
-        var i = 0;
-
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Returns((IntPtr _, out uint kc) =>
+        var q = new Queue<CursesEvent?>(cursesEvents);
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+                   .Returns((IntPtr _, int _, out CursesEvent? ce) =>
                    {
-                       if (i == raw.Length)
-                       {
-                           kc = 0;
-                           return -1;
-                       }
-
-                       kc = raw[i]
-                           .keyCode;
-
-                       var res = raw[i]
-                           .result;
-
-                       i++;
-
-                       return res;
+                       ce = q.Dequeue();
+                       return ce == null ? -1 : 0;
                    });
 
-        var events = new List<Event>();
+        var cts = new CancellationTokenSource();
+        using var en = _pump.Listen(sf, cts.Token)
+                            .GetEnumerator();
 
-        foreach (var e in _pump.Listen(w, _source.Token))
+        var result = new List<Event>();
+        while (en.MoveNext())
         {
-            if (e.Type is EventType.Start or EventType.Stop)
+            if (en.Current is StartEvent or StopEvent)
             {
                 continue;
             }
 
-            count--;
-            if (count == 0)
-            {
-                _source.Cancel();
-            }
+            expectedCount--;
 
-            events.Add(e);
+            result.Add(en.Current);
+            if (expectedCount == 0)
+            {
+                cts.Cancel();
+            }
         }
 
-        return events.ToArray();
+        return result.ToArray();
     }
 
-    private Event SimulateEvent(ISurface w, params (int result, uint keyCode)[] raw) =>
-        SimulateEvents(1, w, raw)
-            .Single();
-
-    private Event SimulateEvent(params (int result, uint keyCode)[] raw) => SimulateEvent(_window, raw);
-
-    private Event SimulateEventRep(int count, int result, uint keyCode) =>
-        SimulateEvents(1, _window, Enumerable.Repeat((result, keyCode), count)
-                                             .ToArray())
-            .Single();
-
-    private Event SimulateEvent(ISurface w, int result, uint keyCode) => SimulateEvent(w, (result, keyCode));
-    private Event SimulateEvent(int result, uint keyCode) => SimulateEvent(_window, result, keyCode);
+    private Event? SimulateActualEvent(ISurface sf, params CursesEvent?[] cursesEvents) =>
+        SimulateActualEvents(sf, 1, cursesEvents)
+            .SingleOrDefault();
 
     [TestInitialize]
     public void TestInitialize()
@@ -112,10 +89,6 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
-        _cursesMock.Setup(s => s.mouse_version())
-                   .Returns(1);
-        
-        
         _terminal = new(_cursesMock.Object,
             new(UseStandardKeySequenceResolvers: false,
                 ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
@@ -325,16 +298,25 @@ public class EventPumpTests
     }
 
     [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen1_CallsCurses_ForWindow()
+    public void Listen1_AsksCursesForEvent_AfterEmittingStart()
     {
-        _pump.Listen(_window, CancellationToken.None)
-             .First(f => f.Type != EventType.Start);
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+                   .Returns((IntPtr _, int _, out CursesEvent ce) =>
+                   {
+                       ce = new CursesCharEvent('a');
+                       return 0;
+                   });
 
-        _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
+        _pump.Listen(_window, CancellationToken.None)
+             .First(f => f.Type != EventType.Start)
+             .ToString();
+
+        _cursesMock.Verify(s => s.wget_event(_window.Handle, It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!),
+            Times.Once);
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_EmitsStart()
+    public void Listen1_EmitsStartEvent()
     {
         _pump.Listen(_window, CancellationToken.None)
              .First()
@@ -342,7 +324,7 @@ public class EventPumpTests
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_EmitsStop()
+    public void Listen1_EmitsStopEvent()
     {
         var f = true;
         foreach (var e in _pump.Listen(_window, _source.Token))
@@ -363,10 +345,10 @@ public class EventPumpTests
     [TestMethod, Timeout(Timeout)]
     public void Listen1_KeepsReadingUntilCancelled()
     {
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Returns((IntPtr _, out uint kc) =>
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+                   .Returns((IntPtr _, int _, out CursesEvent ce) =>
                    {
-                       kc = 'a';
+                       ce = new CursesCharEvent('a');
                        return 0;
                    });
 
@@ -385,151 +367,61 @@ public class EventPumpTests
 
         count.ShouldBe(0);
 
-        _cursesMock.Verify(v => v.wtimeout(_window.Handle, It.IsAny<int>()), Times.Exactly(5));
-        _cursesMock.Verify(v => v.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Exactly(5));
+        _cursesMock.Verify(v => v.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!),
+            Times.Exactly(5));
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_SkipsBadReads()
+    public void Listen1_KeepsAskingCurses_IfNoEventsReceivedOnRead()
     {
-        SimulateEvents(5, _window, (-1, 0), (0, 0), (-1, 0),
-            (0, 0), (-1, 0), (0, 0), (-1, 0), (0, 0),
-            (-1, 0), (0, 0));
+        var a = new CursesCharEvent('a');
+        var b = new CursesCharEvent('b');
+        var c = new CursesCharEvent('c');
+        var d = new CursesCharEvent('d');
+        var e = new CursesCharEvent('e');
 
-        _cursesMock.Verify(v => v.wtimeout(_window.Handle, It.IsAny<int>()), Times.Exactly(10));
-        _cursesMock.Verify(v => v.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Exactly(10));
+        SimulateActualEvents(_window, 5, null, a, null,
+            b, null, c, null, d,
+            null, e);
+
+        _cursesMock.Verify(v => v.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!),
+            Times.Exactly(10));
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_CallsUpdate_WhenNoEventAndNoResizeMonitoring()
+    public void Listen1_AsksCursesToUpdateTerminal_WhenNoEventReceived()
     {
-        SimulateEvents(1, _window, (-1, 0), (0, 0));
+        SimulateActualEvents(_window, 1, null, new CursesResizeEvent());
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_DoesNotCallUpdate_IfBatchOpen()
+    public void Listen1_DoesNotAsksCursesToUpdateTerminal_WhenNoEventReceived_AndAtomic()
     {
         using (_terminal.AtomicRefresh())
         {
-            SimulateEvents(1, _window, (-1, 0), (0, 0));
+            SimulateActualEvents(_window, 1, null, new CursesCharEvent('A'));
             _cursesMock.Verify(v => v.doupdate(), Times.Never);
         }
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_TriesToSetupResizeMonitoring()
-    {
-        var disposed = false;
-        _cursesMock.Setup(s => s.monitor_pending_resize(It.IsAny<Action>(), out It.Ref<IDisposable?>.IsAny))
-                   .Returns((Action action, out IDisposable? handle) =>
-                   {
-                       action.ShouldNotBeNull();
-                       handle = new Disposable(() => { disposed = true; });
-                       return true;
-                   });
-
-        SimulateEvents(1, _window, (-1, 0), (0, 0));
-
-        disposed.ShouldBeTrue();
-    }
-
-    [TestMethod, Timeout(Timeout)]
-    public void Listen1_DisposesMonitoringEventIfExceptionHappened()
-    {
-        var disposed = false;
-        _cursesMock.Setup(s => s.monitor_pending_resize(It.IsAny<Action>(), out It.Ref<IDisposable?>.IsAny))
-                   .Returns((Action _, out IDisposable? handle) =>
-                   {
-                       handle = new Disposable(() => { disposed = true; });
-                       return true;
-                   });
-
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Throws<InvalidProgramException>();
-
-        Should.Throw<InvalidProgramException>(() => _pump.Listen(_window, _source.Token)
-                                                         .ToArray());
-
-        disposed.ShouldBeTrue();
-    }
-
-    [TestMethod, Timeout(Timeout)]
-    public void Listen1_DoesNotCallUpdate_WhenNoEventAndMonitoringResize()
-    {
-        _cursesMock.Setup(s => s.monitor_pending_resize(It.IsAny<Action>(), out It.Ref<IDisposable?>.IsAny))
-                   .Returns((Action _, out IDisposable? handle) =>
-                   {
-                       handle = new Disposable(null);
-                       return true;
-                   });
-
-        var events = SimulateEvents(1, _window, (-1, 0), (0, 0));
-        events[0]
-            .Type.ShouldBe(EventType.KeyPress);
-
-        _cursesMock.Verify(v => v.doupdate(), Times.Never);
-    }
-
-    [TestMethod, Timeout(Timeout)]
-    public void Listen1_CallsUpdate_WhenMonitoringResizeTriggers()
-    {
-        _cursesMock.Setup(s => s.monitor_pending_resize(It.IsAny<Action>(), out It.Ref<IDisposable?>.IsAny))
-                   .Returns((Action act, out IDisposable? handle) =>
-                   {
-                       handle = new Disposable(null);
-                       act();
-                       return true;
-                   });
-
-        var events = SimulateEvents(2, _window, (-1, 0), (-1, 0), (-1, 0),
-            (0, 0));
-
-        events[0]
-            .Type.ShouldBe(EventType.TerminalAboutToResize);
-
-        events[1]
-            .Type.ShouldBe(EventType.KeyPress);
-
-        _cursesMock.Verify(v => v.doupdate(), Times.Once);
-    }
-
-    [TestMethod, Timeout(Timeout)]
-    public void Listen1_GoesDeepWithinChildren_ToApplyPendingRefreshes()
-    {
-        var w = new Window(_terminal.Screen, new(3));
-
-        SimulateEvents(1, w, (-1, 0), (0, 0));
-
-        _cursesMock.Verify(v => v.doupdate(), Times.Once);
-    }
-
-    [TestMethod, Timeout(Timeout)]
-    public void Listen1_AdjustsWindowsToExplicitArea()
+    public void Listen1_AsksScreenToAdjustWindowsToExplicitArea()
     {
         var h1 = new IntPtr(1);
-        _cursesMock.MockArea(h1, new Rectangle(0, 0, 5, 5));
+        _cursesMock.MockArea(h1, new(0, 0, 5, 5));
         var w1 = new Window(_terminal.Screen, h1);
 
         var h2 = new IntPtr(2);
-        _cursesMock.MockArea(h2, new Rectangle(1, 1, 3, 3));
+        _cursesMock.MockArea(h2, new(1, 1, 3, 3));
         var w2 = new Window(_terminal.Screen, h2);
 
         _cursesMock.MockArea(_terminal.Screen, new Size(2, 2));
 
-        SimulateEvents(1, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
+        SimulateActualEvents(_terminal.Screen, 1, new CursesResizeEvent());
 
         _cursesMock.Verify(v => v.wresize(w1.Handle, 2, 2), Times.Once);
         _cursesMock.Verify(v => v.wresize(w2.Handle, 1, 1), Times.Once);
-    }
-
-    [TestMethod, Timeout(Timeout)]
-    public void Listen1_ReturnsTerminalResizeEvents()
-    {
-        _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
-
-        var events = SimulateEvents(2, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
-        events.ShouldBe(new Event[] { new TerminalAboutToResizeEvent(), new TerminalResizeEvent(new(20, 10)) });
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -537,7 +429,7 @@ public class EventPumpTests
     {
         _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
 
-        SimulateEvents(2, _terminal.Screen, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
+        SimulateActualEvents(_terminal.Screen, 1, new CursesResizeEvent());
 
         _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
             Times.Never);
@@ -552,7 +444,7 @@ public class EventPumpTests
         _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
         _cursesMock.MockArea(_window, new Rectangle(0, 0, 5, 5));
 
-        SimulateEvents(2, _window, ((int) CursesKey.Yes, (uint) CursesKey.Resize));
+        SimulateActualEvents(_terminal.Screen, 2, new CursesResizeEvent(), new CursesCharEvent('A'));
 
         _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
         _cursesMock.Verify(v => v.wtouchln(_window.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
@@ -562,98 +454,41 @@ public class EventPumpTests
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_SkipsInvalidMouseEvents()
+    public void Listen1_ProcessesTerminalResizeEvents()
     {
-        var skip = true;
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
-                   {
-                       var dx = skip ? 10 : 0;
-                       me = new()
-                       {
-                           x = dx + 5, y = dx + 6, buttonState = 8u << 24 // report position
-                       };
+        _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
 
-                       var res = skip ? -1 : 0;
-                       skip = !skip;
-
-                       return res;
-                   });
-
-        var e = SimulateEventRep(2, (int) CursesKey.Yes, (uint) CursesKey.Mouse);
-        e.Type.ShouldBe(EventType.MouseMove);
-        ((MouseMoveEvent) e).Position.ShouldBe(new(5, 6));
-
-        _cursesMock.Verify(v => v.getmouse(out It.Ref<CursesMouseEvent>.IsAny), Times.Exactly(2));
+        var events = SimulateActualEvents(_terminal.Screen, 1, new CursesResizeEvent());
+        events.ShouldBe(new Event[] { new TerminalResizeEvent(new(20, 10)) });
     }
-    
+
     [TestMethod, Timeout(Timeout)]
     public void Listen1_ProcessesMouseMoveEvents()
     {
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
-                   {
-                       me = new()
-                       {
-                           x = 5, y = 6, buttonState = 8u << 24 // report position
-                       };
+        var e = SimulateActualEvent(_terminal.Screen,
+            new CursesMouseEvent(5, 6, MouseButton.Unknown, MouseButtonState.None, ModifierKey.None));
 
-                       return 0;
-                   });
-
-        var e = SimulateEvent((int) CursesKey.Yes, (uint) CursesKey.Mouse);
-        e.Type.ShouldBe(EventType.MouseMove);
-        ((MouseMoveEvent) e).Position.ShouldBe(new(5, 6));
+        e.ShouldBe(new MouseMoveEvent(new(5, 6)));
     }
 
     [TestMethod, Timeout(Timeout)]
     public void Listen1_ProcessesMouseMoveEvents_AndUsesInternalMouseResolver()
     {
         _pump.UseInternalMouseEventResolver = true;
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
-                   {
-                       me = new()
-                       {
-                           x = 5, y = 6, buttonState = 8u << 24 // report position
-                       };
 
-                       return 0;
-                   });
+        var ce = new CursesMouseEvent(5, 6, MouseButton.Unknown, MouseButtonState.None, ModifierKey.None);
+        var e = SimulateActualEvent(_terminal.Screen, ce, ce);
 
-        var e = SimulateEvents(1, _window, ((int) CursesKey.Yes, (uint) CursesKey.Mouse),
-            ((int) CursesKey.Yes, (uint) CursesKey.Mouse));
-
-        e.Length.ShouldBe(1);
-        e[0]
-            .ShouldBe(new MouseMoveEvent(new(5, 6)));
+        e.ShouldBe(new MouseMoveEvent(new(5, 6)));
     }
 
     [TestMethod, Timeout(Timeout)]
     public void Listen1_ProcessesMouseActionEvents()
     {
-        _pump.UseInternalMouseEventResolver = false;
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
-                   {
-                       me = new()
-                       {
-                           x = 5,
-                           y = 6,
-                           buttonState = (4u << ((1 - 1) * 6)) | (4u << 24) // Button1Clicked + Alt
-                       };
+        var ce = new CursesMouseEvent(5, 6, MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Alt);
+        var e = SimulateActualEvent(_terminal.Screen, ce, ce);
 
-                       return 0;
-                   });
-
-        var e = SimulateEvent((int) CursesKey.Yes, (uint) CursesKey.Mouse);
-        e.Type.ShouldBe(EventType.MouseAction);
-
-        var me = (MouseActionEvent) e;
-        me.Button.ShouldBe(MouseButton.Button1);
-        me.Modifiers.ShouldBe(ModifierKey.Alt);
-        me.Position.ShouldBe(new(5, 6));
-        me.State.ShouldBe(MouseButtonState.Clicked);
+        e.ShouldBe(new MouseActionEvent(new(5, 6), MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Alt));
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -661,26 +496,15 @@ public class EventPumpTests
     {
         _pump.UseInternalMouseEventResolver = true;
 
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
-                   {
-                       me = new()
-                       {
-                           x = 5,
-                           y = 6,
-                           buttonState = (2u << ((1 - 1) * 6)) | (4u << 24) // Button1Pressed + Alt
-                       };
+        var ce = new CursesMouseEvent(5, 6, MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Alt);
+        var e = SimulateActualEvents(_terminal.Screen, 2, ce, ce);
 
-                       return 0;
-                   });
-
-        var e = SimulateEvents(2, _window, ((int) CursesKey.Yes, (uint) CursesKey.Mouse));
-        e.Length.ShouldBe(2);
-        e[0]
-            .ShouldBe(new MouseMoveEvent(new(5, 6)));
-
-        e[1]
-            .ShouldBe(new MouseActionEvent(new(5, 6), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.Alt));
+        e.ShouldBe(new Event[]
+        {
+            new MouseMoveEvent(new(5, 6)),
+            new MouseActionEvent(new(5, 6), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.Alt),
+            new MouseActionEvent(new(5, 6), MouseButton.Button1, MouseButtonState.Released, ModifierKey.Alt)
+        });
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -689,14 +513,8 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent((int) CursesKey.Yes, (uint) CursesKey.AltUp);
-        e.Type.ShouldBe(EventType.KeyPress);
-
-        var me = (KeyEvent) e;
-        me.Modifiers.ShouldBe(ModifierKey.Alt);
-        me.Char.ShouldBe(new(ControlCharacter.Null));
-        me.Key.ShouldBe(Key.KeypadUp);
-        me.Name.ShouldBe("yup");
+        var e = SimulateActualEvent(_terminal.Screen, new CursesKeyEvent(Key.KeypadUp, ModifierKey.Alt));
+        e.ShouldBe(new KeyEvent(Key.KeypadUp, new(ControlCharacter.Null), "yup", ModifierKey.Alt));
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -705,13 +523,8 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent(0, 'a');
-        e.Type.ShouldBe(EventType.KeyPress);
-
-        var me = (KeyEvent) e;
-        me.Char.ShouldBe(new('a'));
-        me.Key.ShouldBe(Key.Character);
-        me.Name.ShouldBe("yup");
+        var e = SimulateActualEvent(_terminal.Screen, new CursesCharEvent('A'));
+        e.ShouldBe(new KeyEvent(Key.Character, new('A'), "yup", ModifierKey.None));
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -721,13 +534,8 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent(0, ControlCharacter.Tab);
-        e.Type.ShouldBe(EventType.KeyPress);
-
-        var me = (KeyEvent) e;
-        me.Char.ShouldBe(new(ControlCharacter.Null));
-        me.Key.ShouldBe(Key.Tab);
-        me.Name.ShouldBe("yup");
+        var e = SimulateActualEvent(_terminal.Screen, new CursesCharEvent(ControlCharacter.Tab));
+        e.ShouldBe(new KeyEvent(Key.Tab, new(ControlCharacter.Null), "yup", ModifierKey.None));
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -736,13 +544,8 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent(0, ControlCharacter.Tab);
-        e.Type.ShouldBe(EventType.KeyPress);
-
-        var me = (KeyEvent) e;
-        me.Char.ShouldBe(new(ControlCharacter.Tab));
-        me.Key.ShouldBe(Key.Character);
-        me.Name.ShouldBe("yup");
+        var e = SimulateActualEvent(_terminal.Screen, new CursesCharEvent(ControlCharacter.Tab));
+        e.ShouldBe(new KeyEvent(Key.Character, new(ControlCharacter.Tab), "yup", ModifierKey.None));
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -752,18 +555,14 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent((0, ControlCharacter.Escape), (0, 'a'));
-        e.Type.ShouldBe(EventType.KeyPress);
+        var e = SimulateActualEvent(_terminal.Screen, new CursesCharEvent(ControlCharacter.Escape),
+            new CursesCharEvent('a'));
 
-        var me = (KeyEvent) e;
-        me.Char.ShouldBe(new('a'));
-        me.Modifiers.ShouldBe(ModifierKey.Alt);
-        me.Key.ShouldBe(Key.Character);
-        me.Name.ShouldBe("yup");
+        e.ShouldBe(new KeyEvent(Key.Character, new('a'), "yup", ModifierKey.Alt));
     }
 
     [TestMethod, Timeout(Timeout)]
-    public void Listen1_DoeNotProcessTranslatedSeq2Events_IfResolverNotInstalled()
+    public void Listen1_DoesNotProcessTranslatedSeq2Events_IfResolverNotInstalled()
     {
         _cursesMock.Setup(s => s.key_name('a'))
                    .Returns("-a-");
@@ -771,20 +570,14 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.key_name(ControlCharacter.Escape))
                    .Returns("-esc-");
 
-        var e = SimulateEvents(2, _window, (0, ControlCharacter.Escape), (0, 'a'));
-        e.Length.ShouldBe(2);
+        var e = SimulateActualEvents(_terminal.Screen, 2, new CursesCharEvent(ControlCharacter.Escape),
+            new CursesCharEvent('a'));
 
-        var me0 = (KeyEvent) e[0];
-        me0.Char.ShouldBe(new(ControlCharacter.Escape));
-        me0.Modifiers.ShouldBe(ModifierKey.None);
-        me0.Key.ShouldBe(Key.Character);
-        me0.Name.ShouldBe("-esc-");
-
-        var me1 = (KeyEvent) e[1];
-        me1.Char.ShouldBe(new('a'));
-        me1.Modifiers.ShouldBe(ModifierKey.None);
-        me1.Key.ShouldBe(Key.Character);
-        me1.Name.ShouldBe("-a-");
+        e.ShouldBe(new Event[]
+        {
+            new KeyEvent(Key.Character, new(ControlCharacter.Escape), "-esc-", ModifierKey.None),
+            new KeyEvent(Key.Character, new('a'), "-a-", ModifierKey.None)
+        });
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -796,14 +589,11 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("yup");
 
-        var e = SimulateEvent((0, ControlCharacter.Escape), (0, 'O'), (0, '8'), (0, 'A'));
-        e.Type.ShouldBe(EventType.KeyPress);
+        var e = SimulateActualEvent(_terminal.Screen, new CursesCharEvent(ControlCharacter.Escape),
+            new CursesCharEvent('O'), new CursesCharEvent('8'), new CursesCharEvent('A'));
 
-        var me = (KeyEvent) e;
-        me.Char.ShouldBe(new(ControlCharacter.Null));
-        me.Modifiers.ShouldBe(ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
-        me.Key.ShouldBe(Key.KeypadUp);
-        me.Name.ShouldBe("yup");
+        e.ShouldBe(new KeyEvent(Key.KeypadUp, new(ControlCharacter.Null), "yup",
+            ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift));
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -811,38 +601,31 @@ public class EventPumpTests
     {
         _pump.Use(KeySequenceResolver.SpecialCharacterResolver);
 
-        var e = SimulateEvents(2, _window, (0, ControlCharacter.Escape), (0, ControlCharacter.Escape));
-        e.Length.ShouldBe(2);
-        ((KeyEvent) e[0]).Key.ShouldBe(Key.Escape);
-        ((KeyEvent) e[1]).Key.ShouldBe(Key.Escape);
+        var e = SimulateActualEvents(_terminal.Screen, 2, new CursesCharEvent(ControlCharacter.Escape),
+            new CursesCharEvent(ControlCharacter.Escape));
+
+        e.ShouldBe(new Event[]
+        {
+            new KeyEvent(Key.Escape, new(ControlCharacter.Null), null, ModifierKey.None),
+            new KeyEvent(Key.Escape, new(ControlCharacter.Null), null, ModifierKey.None)
+        });
     }
 
     [TestMethod, Timeout(Timeout)]
     public void Listen1_ConsidersBreaksInSequences()
     {
         _pump.Use(KeySequenceResolver.AltKeyResolver);
-        _cursesMock.Setup(s => s.getmouse(out It.Ref<CursesMouseEvent>.IsAny))
-                   .Returns((out CursesMouseEvent me) =>
-                   {
-                       me = new()
-                       {
-                           buttonState = 8u << 24 // report position
-                       };
-                       return 0;
-                   });
 
-        var e = SimulateEvents(3, _window, (0, ControlCharacter.Escape), ((int) CursesKey.Yes, (int) CursesKey.Mouse),
-            (0, 'A'));
+        var e = SimulateActualEvents(_terminal.Screen, 3, new CursesCharEvent(ControlCharacter.Escape),
+            new CursesMouseEvent(1, 2, MouseButton.Unknown, MouseButtonState.None, ModifierKey.None),
+            new CursesCharEvent('A'));
 
-        e.Length.ShouldBe(3);
-
-        ((KeyEvent) e[0]).Key.ShouldBe(Key.Character);
-        ((KeyEvent) e[0]).Char.ShouldBe(new(ControlCharacter.Escape));
-
-        e[1]
-            .Type.ShouldBe(EventType.MouseMove);
-
-        ((KeyEvent) e[2]).Char.ShouldBe(new('A'));
+        e.ShouldBe(new Event[]
+        {
+            new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
+            new MouseMoveEvent(new(1, 2)),
+            new KeyEvent(Key.Character, new('A'), null, ModifierKey.None)
+        });
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -851,16 +634,14 @@ public class EventPumpTests
         _pump.Delegate("hello");
         _pump.Delegate("world");
 
-        var events = SimulateEvents(3, _window, (0, 0));
-        events.Length.ShouldBe(3);
-        events[0]
-            .ShouldBe(new DelegateEvent("hello"));
+        var e = SimulateActualEvents(_terminal.Screen, 3, new CursesCharEvent('A'));
 
-        events[1]
-            .ShouldBe(new DelegateEvent("world"));
-
-        events[2]
-            .Type.ShouldBe(EventType.KeyPress);
+        e.ShouldBe(new Event[]
+        {
+            new DelegateEvent("hello"),
+            new DelegateEvent("world"),
+            new KeyEvent(Key.Character, new('A'), null, ModifierKey.None)
+        });
     }
 
     [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
@@ -870,7 +651,8 @@ public class EventPumpTests
                    .Returns(new IntPtr(10));
 
         _pump.Listen(CancellationToken.None)
-             .First();
+             .First()
+             .ToString();
 
         _cursesMock.Verify(v => v.newpad(1, 1), Times.Once);
         _cursesMock.Verify(v => v.keypad(new(10), true), Times.Once);
@@ -890,7 +672,7 @@ public class EventPumpTests
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
 
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Throws<InvalidProgramException>();
 
         Should.Throw<InvalidProgramException>(() => _pump.Listen(CancellationToken.None)
@@ -902,34 +684,59 @@ public class EventPumpTests
     [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen2_CallsCurses_ForDummyPad()
     {
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+                   .Returns((IntPtr _, int _, out CursesEvent ce) =>
+                   {
+                       ce = new CursesCharEvent('a');
+                       return 0;
+                   });
+
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
 
         _pump.Listen(CancellationToken.None)
-             .First(f => f.Type != EventType.Start);
+             .First(f => f.Type != EventType.Start)
+             .ToString();
 
-        _cursesMock.Verify(s => s.wget_wch(new(10), out It.Ref<uint>.IsAny), Times.Once);
+        _cursesMock.Verify(s => s.wget_event(new(10), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!), Times.Once);
     }
 
     [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen3_Calls_Listen1()
     {
-        _pump.Listen(_window)
-             .First(f => f.Type != EventType.Start);
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+                   .Returns((IntPtr _, int _, out CursesEvent ce) =>
+                   {
+                       ce = new CursesCharEvent('a');
+                       return 0;
+                   });
 
-        _cursesMock.Verify(s => s.wget_wch(_window.Handle, out It.Ref<uint>.IsAny), Times.Once);
+        _pump.Listen(_window)
+             .First(f => f.Type != EventType.Start)
+             .ToString();
+
+        _cursesMock.Verify(s => s.wget_event(_window.Handle, It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!),
+            Times.Once);
     }
 
     [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void Listen3_Calls_Listen2()
+    public void Listen4_Calls_Listen2()
     {
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+                   .Returns((IntPtr _, int _, out CursesEvent ce) =>
+                   {
+                       ce = new CursesCharEvent('a');
+                       return 0;
+                   });
+
         _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
 
         _pump.Listen()
-             .First(f => f.Type != EventType.Start);
+             .First(f => f.Type != EventType.Start)
+             .ToString();
 
-        _cursesMock.Verify(s => s.wget_wch(new(10), out It.Ref<uint>.IsAny), Times.Once);
+        _cursesMock.Verify(s => s.wget_event(new(10), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!), Times.Once);
     }
 
     [TestMethod]

@@ -10,7 +10,6 @@ using System.Collections.Concurrent;
 public sealed class EventPump: IEventPump
 {
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private CursesMouseEventParser _cursesMouseEventParser;
     private ConcurrentQueue<object> _delegatedObjects = new();
     private MouseEventResolver? _mouseEventResolver;
 
@@ -22,11 +21,7 @@ public sealed class EventPump: IEventPump
     ///     Thrown if <paramref name="parent" /> is <c>null</c>.
     /// </exception>
     /// <remarks>This method is not thread-safe.</remarks>
-    internal EventPump(Terminal parent)
-    {
-        Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
-        _cursesMouseEventParser = CursesMouseEventParser.Get(Terminal.Curses.mouse_version());
-    }
+    internal EventPump(Terminal parent) => Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
 
     /// <inheritdoc cref="IColorManager.Terminal" />
     public Terminal Terminal { get; }
@@ -132,33 +127,18 @@ public sealed class EventPump: IEventPump
 
         AssertSynchronized();
 
-        var hasPendingResize = false;
-        var monitorsResizes =
-            Terminal.Curses.monitor_pending_resize(() => { hasPendingResize = true; }, out var monitorHandle);
-
         var escapeSequence = new List<KeyEvent>();
+        yield return new StartEvent();
 
-        try
+        while (!cancellationToken.IsCancellationRequested)
         {
-            yield return new StartEvent();
-
-            while (!cancellationToken.IsCancellationRequested)
+            var @event = ReadNextEvent(handle, escapeSequence.Count > 0);
+            switch (@event)
             {
-                var @event = ReadNextEvent(handle, escapeSequence.Count > 0);
-                if (!monitorsResizes && @event == null || hasPendingResize)
-                {
-                    if (hasPendingResize)
-                    {
-                        @event = new TerminalAboutToResizeEvent();
-                    }
-
-                    if (Terminal.TryUpdate())
-                    {
-                        hasPendingResize = false;
-                    }
-                }
-
-                if (@event is KeyEvent ke)
+                case null:
+                    Terminal.TryUpdate();
+                    break;
+                case KeyEvent ke:
                 {
                     escapeSequence.Add(ke);
                     var count = TryResolveKeySequence(escapeSequence, false, out var resolved);
@@ -168,90 +148,81 @@ public sealed class EventPump: IEventPump
                     }
 
                     @event = resolved;
-                } else if (@event?.Type != EventType.Delegate)
-                {
-                    while (escapeSequence.Count > 0)
-                    {
-                        var count = TryResolveKeySequence(escapeSequence, true, out var resolved);
-                        Debug.Assert(count > 0);
-                        Debug.Assert(resolved != null);
-
-                        escapeSequence.RemoveRange(0, count);
-                        yield return resolved;
-                    }
-
-                    // Process/resolve mouse events.
-                    switch (@event)
-                    {
-                        case MouseMoveEvent mme:
-                        {
-                            if (TryResolveMouseEvent(mme, out var l))
-                            {
-                                @event = null;
-                                foreach (var oe in l)
-                                {
-                                    yield return oe;
-                                }
-                            }
-
-                            break;
-                        }
-                        case MouseActionEvent mae:
-                        {
-                            if (TryResolveMouseEvent(mae, out var l))
-                            {
-                                @event = null;
-                                foreach (var oe in l)
-                                {
-                                    yield return oe;
-                                }
-                            }
-
-                            break;
-                        }
-                    }
+                    break;
                 }
-
-                if (@event is not null)
+                default:
                 {
-                    var isResize = @event.Type == EventType.TerminalResize;
-
-                    if (isResize)
+                    if (@event.Type != EventType.Delegate)
                     {
-                        if (!monitorsResizes)
+                        while (escapeSequence.Count > 0)
                         {
-                            yield return new TerminalAboutToResizeEvent();
+                            var count = TryResolveKeySequence(escapeSequence, true, out var resolved);
+                            Debug.Assert(count > 0);
+                            Debug.Assert(resolved != null);
+
+                            escapeSequence.RemoveRange(0, count);
+                            yield return resolved;
                         }
 
-                        Terminal.Screen.AdjustChildrenToExplicitArea();
-                    }
-
-                    yield return @event;
-
-                    if (isResize && Terminal.Screen.ManagedWindows)
-                    {
-                        using (Terminal.AtomicRefresh())
+                        // Process/resolve mouse events.
+                        switch (@event)
                         {
-                            Terminal.Screen.MarkDirty();
-                            Terminal.Screen.Refresh();
+                            case MouseMoveEvent mme:
+                            {
+                                if (TryResolveMouseEvent(mme, out var l))
+                                {
+                                    @event = null;
+                                    foreach (var oe in l)
+                                    {
+                                        yield return oe;
+                                    }
+                                }
+
+                                break;
+                            }
+                            case MouseActionEvent mae:
+                            {
+                                if (TryResolveMouseEvent(mae, out var l))
+                                {
+                                    @event = null;
+                                    foreach (var oe in l)
+                                    {
+                                        yield return oe;
+                                    }
+                                }
+
+                                break;
+                            }
                         }
                     }
+
+                    break;
                 }
             }
 
-            yield return new StopEvent();
-        } finally
-        {
-            monitorHandle?.Dispose();
+            if (@event is not null)
+            {
+                var isResize = @event.Type == EventType.TerminalResize;
+
+                if (isResize)
+                {
+                    Terminal.Screen.AdjustChildrenToExplicitArea();
+                }
+
+                yield return @event;
+
+                if (isResize && Terminal.Screen.ManagedWindows)
+                {
+                    using (Terminal.AtomicRefresh())
+                    {
+                        Terminal.Screen.MarkDirty();
+                        Terminal.Screen.Refresh();
+                    }
+                }
+            }
         }
-    }
 
-    private (int result, uint keyCode) ReadNext(IntPtr windowHandle, bool quickWait)
-    {
-        Terminal.Curses.wtimeout(windowHandle, quickWait ? 10 : 50);
-        var result = Terminal.Curses.wget_wch(windowHandle, out var keyCode);
-
-        return (result, keyCode);
+        yield return new StopEvent();
     }
 
     private Event? ReadNextEvent(IntPtr windowHandle, bool quickWait)
@@ -261,39 +232,19 @@ public sealed class EventPump: IEventPump
             return new DelegateEvent(@object);
         }
 
-        var (result, keyCode) = ReadNext(windowHandle, quickWait);
-        if (result.Failed())
+        Terminal.Curses.wget_event(windowHandle, quickWait ? 10 : 50, out var raw);
+        return raw switch
         {
-            return null;
-        }
-
-        if (result == (int) CursesKey.Yes)
-        {
-            switch (keyCode)
-            {
-                case (uint) CursesKey.Resize:
-                    return new TerminalResizeEvent(Terminal.Screen.Size);
-                case (uint) CursesKey.Mouse:
-                    if (Terminal.Curses.getmouse(out var mouseEvent)
-                                .Failed())
-                    {
-                        return null;
-                    }
-
-
-                    var parsed = _cursesMouseEventParser.Parse(mouseEvent.buttonState);
-
-                    return parsed == null
-                        ? new MouseMoveEvent(new(mouseEvent.x, mouseEvent.y))
-                        : new MouseActionEvent(new(mouseEvent.x, mouseEvent.y), parsed.Value.button, parsed.Value.state,
-                            parsed.Value.modifierKey);
-                default:
-                    var (key, keyMod) = Helpers.ConvertKeyPressEvent(keyCode);
-                    return new KeyEvent(key, new(ControlCharacter.Null), Terminal.Curses.key_name(keyCode), keyMod);
-            }
-        }
-
-        return new KeyEvent(Key.Character, new(keyCode), Terminal.Curses.key_name(keyCode), ModifierKey.None);
+            CursesResizeEvent => new TerminalResizeEvent(Terminal.Screen.Size),
+            CursesMouseEvent { Button: MouseButton.Unknown } cme => new MouseMoveEvent(new(cme.X, cme.Y)),
+            CursesMouseEvent { Button: not MouseButton.Unknown } cme => new MouseActionEvent(new(cme.X, cme.Y),
+                cme.Button, cme.State, cme.Modifiers),
+            CursesKeyEvent { Key: var key, Modifiers: var mod } => new KeyEvent(key, new(ControlCharacter.Null),
+                Terminal.Curses.key_name((uint) key), mod),
+            CursesCharEvent { Char: var ch } => new KeyEvent(Key.Character, new(ch), Terminal.Curses.key_name(ch),
+                ModifierKey.None),
+            var _ => null
+        };
     }
 
     /// <summary>

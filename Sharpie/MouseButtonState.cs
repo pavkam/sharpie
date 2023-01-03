@@ -37,6 +37,11 @@ namespace Sharpie;
 public enum MouseButtonState: uint
 {
     /// <summary>
+    ///     No state to speak of.
+    /// </summary>
+    None = 0,
+
+    /// <summary>
     ///     The button has been released.
     /// </summary>
     Released = 1,

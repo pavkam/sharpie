@@ -43,9 +43,10 @@ public class NCursesComplexCharTests
             _char1 = 3,
             _char2 = 4,
             _char3 = 5,
-            _char4 = 6,
+            _char4 = 6
         };
-        
-        nc.ToString().ShouldBe("00000001-00000002:00000003:00000004:00000005:00000006");
+
+        nc.ToString()
+          .ShouldBe("00000001-00000002:00000003:00000004:00000005:00000006");
     }
 }

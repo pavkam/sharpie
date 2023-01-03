@@ -81,6 +81,7 @@ public class NativeLibraryWrapperTests
     {
         _dotNetSystemAdapterMock.Setup(s => s.GetDirectoryName(It.IsAny<string>()))
                                 .Returns("something");
+
         NativeLibraryWrapper<DummyFunctionMap>.TryLoad(_dotNetSystemAdapterMock.Object, new[] { "hello/world" });
 
         _dotNetSystemAdapterMock.Verify(
@@ -180,19 +181,24 @@ public class NativeLibraryWrapperTests
         w.Resolve<DummyFunctionMap.Test1>()()
          .ShouldBe(123);
     }
-    
+
     [TestMethod]
     public void Resolve_TraversesInheritance()
     {
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryFunctionToDelegate(It.IsAny<IntPtr>(), typeof(ExtendedDummyFunctionMap.Test8)))
-                                .Returns(new ExtendedDummyFunctionMap.Test8(() => 456));
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryFunctionToDelegate(It.IsAny<IntPtr>(), typeof(DummyFunctionMap.Test1)))
-                                .Returns(new DummyFunctionMap.Test1(() => 123));
+        _dotNetSystemAdapterMock
+            .Setup(s => s.NativeLibraryFunctionToDelegate(It.IsAny<IntPtr>(), typeof(ExtendedDummyFunctionMap.Test8)))
+            .Returns(new ExtendedDummyFunctionMap.Test8(() => 456));
 
-        var w = new NativeLibraryWrapper<ExtendedDummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100)).ShouldNotBeNull();
+        _dotNetSystemAdapterMock
+            .Setup(s => s.NativeLibraryFunctionToDelegate(It.IsAny<IntPtr>(), typeof(DummyFunctionMap.Test1)))
+            .Returns(new DummyFunctionMap.Test1(() => 123));
+
+        var w = new NativeLibraryWrapper<ExtendedDummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100))
+            .ShouldNotBeNull();
 
         w.Resolve<DummyFunctionMap.Test1>()()
          .ShouldBe(123);
+
         w.Resolve<ExtendedDummyFunctionMap.Test8>()()
          .ShouldBe(456);
     }
@@ -215,7 +221,7 @@ public class NativeLibraryWrapperTests
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public delegate int Test8();
     }
-    
+
     [SuppressMessage("ReSharper", "UnusedType.Local"), SuppressMessage("ReSharper", "UnusedMember.Local"),
      SuppressMessage("ReSharper", "UnusedTypeParameter"),
      SuppressMessage("Performance", "CA1822:Mark members as static")]

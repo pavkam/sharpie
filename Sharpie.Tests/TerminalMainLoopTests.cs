@@ -269,10 +269,10 @@ public class TerminalMainLoopTests
     [TestMethod, Timeout(Timeout)]
     public void Run_ReadsEventsFromPump()
     {
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Returns((IntPtr _, out uint kc) =>
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+                   .Returns((IntPtr _, int _, out CursesEvent kc) =>
                    {
-                       kc = 'A';
+                       kc = new CursesCharEvent('A');
                        return 0;
                    });
 
@@ -299,10 +299,10 @@ public class TerminalMainLoopTests
     public void Stop_EnqueuesStoppingTheRun()
     {
         var ch = 'a';
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Returns((IntPtr _, out uint kc) =>
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+                   .Returns((IntPtr _, int _, out CursesEvent kc) =>
                    {
-                       kc = ch++;
+                       kc = new CursesCharEvent(ch++);
                        return 0;
                    });
 
@@ -331,10 +331,10 @@ public class TerminalMainLoopTests
     [TestMethod, Timeout(Timeout)]
     public void Run_StopsOnCtrlC()
     {
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
-                   .Returns((IntPtr _, out uint kc) =>
+        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+                   .Returns((IntPtr _, int _, out CursesEvent kc) =>
                    {
-                       kc = 3;
+                       kc = new CursesCharEvent((char) 3);
                        return 0;
                    });
 

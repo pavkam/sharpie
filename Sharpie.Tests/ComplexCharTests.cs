@@ -33,17 +33,16 @@ namespace Sharpie.Tests;
 [TestClass]
 public class ComplexCharTests
 {
-    [TestMethod]
-    public void Ctor_StoresTheRawValue()
-    {
-        new ComplexChar("hello").Raw.ShouldBe("hello");
-    }
+    [TestMethod] public void Ctor_StoresTheRawValue() { new ComplexChar("hello").Raw.ShouldBe("hello"); }
 
     [TestMethod]
     public void ToString_ProperlyFormats_UsingPayload()
     {
-        new ComplexChar("hello").ToString().ShouldBe("hello");
-        new ComplexChar(123).ToString().ShouldBe("123");
+        new ComplexChar("hello").ToString()
+                                .ShouldBe("hello");
+
+        new ComplexChar(123).ToString()
+                            .ShouldBe("123");
     }
 
     [TestMethod, DataRow(null), DataRow("")]
@@ -59,7 +58,7 @@ public class ComplexCharTests
     {
         var c1 = new ComplexChar(1);
         var c2 = new ComplexChar(2);
-        
+
         c1.Equals(c2)
           .ShouldBeFalse();
     }
@@ -69,7 +68,7 @@ public class ComplexCharTests
     {
         var c1 = new ComplexChar("hello");
         var c2 = new ComplexChar("hello");
-        
+
         c1.Equals(c2)
           .ShouldBeTrue();
     }
@@ -83,14 +82,14 @@ public class ComplexCharTests
         c1.GetHashCode()
           .ShouldBe(c2.GetHashCode());
     }
-    
+
     [TestMethod]
     public void GetHashCode_IsZero_ForNullRaw()
     {
         var c = new ComplexChar(null);
 
         c.GetHashCode()
-          .ShouldBe(0);
+         .ShouldBe(0);
     }
 
     [TestMethod]
@@ -100,7 +99,7 @@ public class ComplexCharTests
         var c2 = new ComplexChar("world");
 
         c1.GetHashCode()
-           .ShouldNotBe(c2.GetHashCode());
+          .ShouldNotBe(c2.GetHashCode());
     }
 
     [TestMethod]
@@ -108,7 +107,7 @@ public class ComplexCharTests
     {
         var c1 = new ComplexChar("hello");
         var c2 = new ComplexChar("world");
-        
+
         Assert.IsFalse(c1 == c2);
     }
 
@@ -117,7 +116,7 @@ public class ComplexCharTests
     {
         var c1 = new ComplexChar("hello");
         var c2 = new ComplexChar("hello");
-        
+
         Assert.IsTrue(c1 == c2);
     }
 
@@ -126,7 +125,7 @@ public class ComplexCharTests
     {
         var c1 = new ComplexChar("hello");
         var c2 = new ComplexChar("world");
-        
+
         Assert.IsTrue(c1 != c2);
     }
 
