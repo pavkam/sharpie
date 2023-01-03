@@ -1137,21 +1137,27 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void mousemask_IsRelayedToLibrary(int ret)
     {
+        var p = CursesMouseEventParser.Get(2);
+        _backendMock.Setup(s => s.CursesMouseEventParser)
+                    .Returns(p);
         _backendMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
                     .CallBase();
 
+        var expNm = 0u;
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask>()
-                                 .Setup(s => s(1, out It.Ref<uint>.IsAny))
-                                 .Returns((uint _, out uint om) =>
+                                 .Setup(s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
+                                 .Returns((uint nm, out uint om) =>
                                  {
+                                     expNm = nm;
                                      om = 11;
                                      return ret;
                                  });
 
 
-        _backend.mousemask(1, out var old)
+        _backend.mousemask(0xffffffff, out var old)
                 .ShouldBe(ret);
-
+        expNm.ShouldBe(p.All | p.ReportPosition);
+        
         old.ShouldBe(11u);
     }
 

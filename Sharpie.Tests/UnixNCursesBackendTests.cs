@@ -77,6 +77,9 @@ public class UnixNCursesBackendTests
     [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo")]
     public void mousemask_CallsCursesButNotNotConsole_IfCursesFails()
     {
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.curses_version, IntPtr>(s => s(),
+            Marshal.StringToHGlobalAnsi("version 1"));
+            
         _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)
                                 .Returns(true);
 

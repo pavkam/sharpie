@@ -446,8 +446,11 @@ internal abstract class BaseCursesBackend: ICursesBackend
     public virtual int getmouse(out CursesMouseState state) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.getmouse>()(out state);
 
-    public virtual int mousemask(uint newMask, out uint oldMask) =>
-        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mousemask>()(newMask, out oldMask);
+    public virtual int mousemask(uint newMask, out uint oldMask)
+    {
+        var actualMask = newMask & (CursesMouseEventParser.All | CursesMouseEventParser.ReportPosition);
+        return CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mousemask>()(actualMask, out oldMask);
+    }
 
     public int mouseinterval(int millis) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mouseinterval>()(millis);
 
