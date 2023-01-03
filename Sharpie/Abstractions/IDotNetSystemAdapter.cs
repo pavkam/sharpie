@@ -11,6 +11,13 @@ internal interface IDotNetSystemAdapter
     public static readonly IDotNetSystemAdapter Instance = new DotNetSystemAdapter();
 
     /// <summary>
+    ///     Checks if the operating system is Windows.
+    /// </summary>
+    /// <returns><c>true</c> if the operating system is Windows; <c>false</c> otherwise.</returns>
+    [SupportedOSPlatformGuard("windows"), ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
+    bool IsWindows => OperatingSystem.IsWindows();
+    
+    /// <summary>
     ///     Checks if the operating system is Linux.
     /// </summary>
     /// <returns><c>true</c> if the operating system is Linux; <c>false</c> otherwise.</returns>

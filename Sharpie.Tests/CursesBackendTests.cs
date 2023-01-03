@@ -183,6 +183,33 @@ public class CursesBackendTests
 
         VerifyAttempts(options);
     }
+    
+    [TestMethod]
+    public void NCurses2_ForWindows_HasSpecificOptions()
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.IsWindows)
+                                .Returns(true);
+
+        var options = new[]
+        {
+            "libncursesw.dll",
+            "libncursesw6.dll",
+            "libncursesw5.dll",
+            "ncursesw.dll",
+            "ncursesw6.dll",
+            "ncursesw5.dll",
+            "libncurses.dll",
+            "libncurses6.dll",
+            "libncurses5.dll",
+            "ncurses.dll",
+            "ncurses6.dll",
+            "ncurses5.dll"
+        };
+
+        Should.Throw<CursesInitializationException>(() => CursesBackend.NCurses(_dotNetSystemAdapterMock.Object));
+
+        VerifyAttempts(options);
+    }
 
     [TestMethod]
     public void NCurses2_ForMacOs_TriesToLoadDefault_IfNoHomeBrewFound()
@@ -268,5 +295,86 @@ public class CursesBackendTests
 
         VerifyAttempts("/h+ncurses-one+lib+libncurses.1.dylib", "/h+ncurses-2+lib+libncurses.2.dylib",
             "/h+ncurses-one+lib+libncurses.10.dylib", "/h+ncurses-2+lib+libncurses.12.dylib", "ncurses");
+    }
+    
+    
+    
+    [TestMethod]
+    public void PdCurses1_Throws_IfFailedToLoadPdCurses()
+    {
+        Should.Throw<CursesInitializationException>(() =>
+            CursesBackend.PdCurses(_dotNetSystemAdapterMock.Object, s => new[] { s }));
+    }
+
+    [TestMethod]
+    public void PdCurses1_LoadsPdCurses()
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.IsUnixLike)
+                                .Returns(false);
+
+        MockLoadResult("pdcurses", true);
+
+        var requests = new List<string>();
+        CursesBackend.PdCurses(_dotNetSystemAdapterMock.Object, s =>
+                     {
+                         requests.Add(s);
+                         return new[] { s };
+                     })
+                     .ShouldBeOfType<PdCursesBackend>();
+
+        requests.ShouldBe(new[] { "pdcurses" });
+    }
+
+    [TestMethod]
+    public void PdCurses2_Throws_LibPathResolverIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() => CursesBackend.PdCurses((Func<string, IEnumerable<string>>) null!));
+    }
+
+    [TestMethod]
+    public void PdCurses2_CallsPdCurses1()
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.IsUnixLike)
+                                .Returns(true);
+
+        MockLoadResult("pdcurses", true);
+
+        CursesBackend.PdCurses(_dotNetSystemAdapterMock.Object);
+
+        _dotNetSystemAdapterMock.Verify(
+            s => s.TryLoadNativeLibrary("pdcurses", It.IsAny<Assembly>(), It.IsAny<DllImportSearchPath?>(),
+                out It.Ref<IntPtr>.IsAny), Times.Once);
+    }
+
+    [TestMethod, DataRow("linux"), DataRow("freebsd")]
+    public void PdCurses2_ForLinuxOrFreeBsd_HasSpecificOptions(string op)
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.IsLinux)
+                                .Returns(op == "linux");
+
+        _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)
+                                .Returns(op == "freebsd");
+
+        var options = new[] { "libpdcurses2.so", "libpdcurses.so", "libXCurses.so", "pdcurses" };
+
+        Should.Throw<CursesInitializationException>(() => CursesBackend.PdCurses(_dotNetSystemAdapterMock.Object));
+
+        VerifyAttempts(options);
+    }
+    
+    [TestMethod]
+    public void PdCurses2_ForWindows_HasSpecificOptions()
+    {
+        _dotNetSystemAdapterMock.Setup(s => s.IsWindows)
+                                .Returns(true);
+
+        var options = new[]
+        {
+            "libpdcurses.dll", "pdcurses.dll"
+        };
+
+        Should.Throw<CursesInitializationException>(() => CursesBackend.PdCurses(_dotNetSystemAdapterMock.Object));
+
+        VerifyAttempts(options);
     }
 }
