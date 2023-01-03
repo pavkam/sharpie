@@ -1137,21 +1137,27 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void mousemask_IsRelayedToLibrary(int ret)
     {
+        var p = CursesMouseEventParser.Get(2);
+        _backendMock.Setup(s => s.CursesMouseEventParser)
+                    .Returns(p);
         _backendMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
                     .CallBase();
 
+        var expNm = 0u;
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask>()
-                                 .Setup(s => s(1, out It.Ref<uint>.IsAny))
-                                 .Returns((uint _, out uint om) =>
+                                 .Setup(s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
+                                 .Returns((uint nm, out uint om) =>
                                  {
+                                     expNm = nm;
                                      om = 11;
                                      return ret;
                                  });
 
 
-        _backend.mousemask(1, out var old)
+        _backend.mousemask(0xffffffff, out var old)
                 .ShouldBe(ret);
-
+        expNm.ShouldBe(p.All | p.ReportPosition);
+        
         old.ShouldBe(11u);
     }
 
@@ -1241,7 +1247,7 @@ public class BaseCursesBackendTests
         _backend.wget_event(new(1), 10, out var e)
                 .ShouldBe(0);
 
-        e.ShouldBe(new CursesCharEvent('A'));
+        e.ShouldBe(new CursesCharEvent('A', ModifierKey.None));
     }
 
     [TestMethod]
@@ -1272,7 +1278,7 @@ public class BaseCursesBackendTests
                     .Returns(CursesKeyCodeType.Key);
 
         _backendMock.Setup(s => s.DecodeRawKey('A'))
-                    .Returns((Key.Backspace, ModifierKey.Ctrl));
+                    .Returns((Key.Backspace, ControlCharacter.Null, ModifierKey.Ctrl));
 
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
@@ -1287,6 +1293,30 @@ public class BaseCursesBackendTests
                 .ShouldBe(11);
 
         e.ShouldBe(new CursesKeyEvent(Key.Backspace, ModifierKey.Ctrl));
+    }
+    
+    [TestMethod]
+    public void wget_event_ReturnsCharEvent_IfDecodedKeyCodeIsCharIndeed()
+    {
+        _backendMock.Setup(s => s.DecodeKeyCodeType(11, 'A'))
+                    .Returns(CursesKeyCodeType.Key);
+
+        _backendMock.Setup(s => s.DecodeRawKey('A'))
+                    .Returns((Key.Character, 'Z', ModifierKey.Ctrl));
+
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint kc) =>
+                                 {
+                                     kc = 'A';
+                                     return 11;
+                                 });
+
+        _backend.wget_event(new(1), 10, out var e)
+                .ShouldBe(11);
+
+        e.ShouldBe(new CursesCharEvent('Z', ModifierKey.Ctrl));
     }
 
     [TestMethod]

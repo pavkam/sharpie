@@ -47,9 +47,8 @@ public enum NCursesKeyCode: uint
     Home = 0x106,
     Mouse = 0x199,
     End = 0x168,
-    DeleteChar = 0x14a,
-    InsertChar = 0x14b,
-    Tab = 0x009,
+    Delete = 0x14a,
+    Insert = 0x14b,
     BackTab = 0x161,
 
     F1 = 0x109,
