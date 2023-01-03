@@ -44,7 +44,8 @@ public class CursesMouseStateTests
             z = 22,
             buttonState = 456
         };
-        
-        nc.ToString().ShouldBe("33x44:000001C8");
+
+        nc.ToString()
+          .ShouldBe("33x44:000001C8");
     }
 }

@@ -123,11 +123,11 @@ public class HelpersTests
     public void FromComplexChar_Throws_IfCursesFails()
     {
         var ch = new ComplexChar("test");
-        
-        _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(),
-                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
+
+        _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(), out It.Ref<VideoAttribute>.IsAny,
+                       out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
                    .Returns(-1);
-        
+
         Should.Throw<CursesOperationException>(() => _cursesMock.Object.FromComplexChar(ch));
     }
 
@@ -135,8 +135,8 @@ public class HelpersTests
     public void FromComplexChar_ReturnsCursesChar()
     {
         var ch = new ComplexChar("test");
-        _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(),
-                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
+        _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(), out It.Ref<VideoAttribute>.IsAny,
+                       out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
                    .Returns((ComplexChar _, StringBuilder sb, out VideoAttribute attrs, out short colorPair,
                        IntPtr _) =>
                    {
@@ -376,7 +376,7 @@ public class HelpersTests
         var pts = new List<PointF>();
         Helpers.TraceLineInHalves(new(0, 0), new(0F, 1F), p => pts.Add(p));
 
-        pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0, 0.5F), new PointF(0, 1F), });
+        pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0, 0.5F), new PointF(0, 1F) });
     }
 
     [TestMethod]
@@ -385,7 +385,7 @@ public class HelpersTests
         var pts = new List<PointF>();
         Helpers.TraceLineInHalves(new(0, 0), new(1F, 0F), p => pts.Add(p));
 
-        pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0.5F, 0), new PointF(1F, 0), });
+        pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0.5F, 0), new PointF(1F, 0) });
     }
 
     [TestMethod]
@@ -400,7 +400,7 @@ public class HelpersTests
             new PointF(-0.5F, -0.5F),
             new PointF(-1F, -1F),
             new PointF(-1.5F, -1.5F),
-            new PointF(-2F, -2F),
+            new PointF(-2F, -2F)
         });
     }
 
@@ -457,20 +457,20 @@ public class HelpersTests
 
         a.ShouldBe(new(50, 50, 60, 60));
     }
-    
+
     [TestMethod]
     public void GetRawValue_Throws_IfCharIsNull()
     {
         Should.Throw<ArgumentNullException>(() => ((ComplexChar) null!).GetRawValue<string>());
     }
-    
+
     [TestMethod]
     public void GetRawValue_Throws_IfCharOfBadType()
     {
         var c = new ComplexChar(12);
         Should.Throw<ArgumentException>(() => c.GetRawValue<string>());
     }
-    
+
     [TestMethod]
     public void GetRawValue_ReturnsTheRawValue_IfCharIsOk()
     {

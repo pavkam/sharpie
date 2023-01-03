@@ -127,33 +127,18 @@ public sealed class EventPump: IEventPump
 
         AssertSynchronized();
 
-        var hasPendingResize = false;
-        var monitorsResizes =
-            Terminal.Curses.monitor_pending_resize(() => { hasPendingResize = true; }, out var monitorHandle);
-
         var escapeSequence = new List<KeyEvent>();
+        yield return new StartEvent();
 
-        try
+        while (!cancellationToken.IsCancellationRequested)
         {
-            yield return new StartEvent();
-
-            while (!cancellationToken.IsCancellationRequested)
+            var @event = ReadNextEvent(handle, escapeSequence.Count > 0);
+            switch (@event)
             {
-                var @event = ReadNextEvent(handle, escapeSequence.Count > 0);
-                if (!monitorsResizes && @event == null || hasPendingResize)
-                {
-                    if (hasPendingResize)
-                    {
-                        yield return new TerminalAboutToResizeEvent();
-                    }
-
-                    if (Terminal.TryUpdate())
-                    {
-                        hasPendingResize = false;
-                    }
-                }
-
-                if (@event is KeyEvent ke)
+                case null:
+                    Terminal.TryUpdate();
+                    break;
+                case KeyEvent ke:
                 {
                     escapeSequence.Add(ke);
                     var count = TryResolveKeySequence(escapeSequence, false, out var resolved);
@@ -163,82 +148,81 @@ public sealed class EventPump: IEventPump
                     }
 
                     @event = resolved;
-                } else if (@event?.Type != EventType.Delegate)
-                {
-                    while (escapeSequence.Count > 0)
-                    {
-                        var count = TryResolveKeySequence(escapeSequence, true, out var resolved);
-                        Debug.Assert(count > 0);
-                        Debug.Assert(resolved != null);
-
-                        escapeSequence.RemoveRange(0, count);
-                        yield return resolved;
-                    }
-
-                    // Process/resolve mouse events.
-                    switch (@event)
-                    {
-                        case MouseMoveEvent mme:
-                        {
-                            if (TryResolveMouseEvent(mme, out var l))
-                            {
-                                @event = null;
-                                foreach (var oe in l)
-                                {
-                                    yield return oe;
-                                }
-                            }
-
-                            break;
-                        }
-                        case MouseActionEvent mae:
-                        {
-                            if (TryResolveMouseEvent(mae, out var l))
-                            {
-                                @event = null;
-                                foreach (var oe in l)
-                                {
-                                    yield return oe;
-                                }
-                            }
-
-                            break;
-                        }
-                    }
+                    break;
                 }
-
-                if (@event is not null)
+                default:
                 {
-                    var isResize = @event.Type == EventType.TerminalResize;
-
-                    if (isResize)
+                    if (@event.Type != EventType.Delegate)
                     {
-                        if (!monitorsResizes)
+                        while (escapeSequence.Count > 0)
                         {
-                            yield return new TerminalAboutToResizeEvent();
+                            var count = TryResolveKeySequence(escapeSequence, true, out var resolved);
+                            Debug.Assert(count > 0);
+                            Debug.Assert(resolved != null);
+
+                            escapeSequence.RemoveRange(0, count);
+                            yield return resolved;
                         }
 
-                        Terminal.Screen.AdjustChildrenToExplicitArea();
-                    }
-
-                    yield return @event;
-
-                    if (isResize && Terminal.Screen.ManagedWindows)
-                    {
-                        using (Terminal.AtomicRefresh())
+                        // Process/resolve mouse events.
+                        switch (@event)
                         {
-                            Terminal.Screen.MarkDirty();
-                            Terminal.Screen.Refresh();
+                            case MouseMoveEvent mme:
+                            {
+                                if (TryResolveMouseEvent(mme, out var l))
+                                {
+                                    @event = null;
+                                    foreach (var oe in l)
+                                    {
+                                        yield return oe;
+                                    }
+                                }
+
+                                break;
+                            }
+                            case MouseActionEvent mae:
+                            {
+                                if (TryResolveMouseEvent(mae, out var l))
+                                {
+                                    @event = null;
+                                    foreach (var oe in l)
+                                    {
+                                        yield return oe;
+                                    }
+                                }
+
+                                break;
+                            }
                         }
                     }
+
+                    break;
                 }
             }
 
-            yield return new StopEvent();
-        } finally
-        {
-            monitorHandle?.Dispose();
+            if (@event is not null)
+            {
+                var isResize = @event.Type == EventType.TerminalResize;
+
+                if (isResize)
+                {
+                    Terminal.Screen.AdjustChildrenToExplicitArea();
+                }
+
+                yield return @event;
+
+                if (isResize && Terminal.Screen.ManagedWindows)
+                {
+                    using (Terminal.AtomicRefresh())
+                    {
+                        Terminal.Screen.MarkDirty();
+                        Terminal.Screen.Refresh();
+                    }
+                }
+            }
         }
+
+        yield return new StopEvent();
     }
 
     private Event? ReadNextEvent(IntPtr windowHandle, bool quickWait)
@@ -252,10 +236,13 @@ public sealed class EventPump: IEventPump
         return raw switch
         {
             CursesResizeEvent => new TerminalResizeEvent(Terminal.Screen.Size),
-            CursesMouseEvent { Button: not MouseButton.Unknown } cme => new MouseMoveEvent(new(cme.X, cme.Y)),
-            CursesMouseEvent { Button: MouseButton.Unknown } cme => new MouseActionEvent(new(cme.X, cme.Y), cme.Button, cme.State, cme.Modifiers),
-            CursesKeyEvent { Key: var key, Modifiers: var mod } => new KeyEvent(key, new(ControlCharacter.Null), null, mod),
-            CursesCharEvent { Char: var ch } => new KeyEvent(Key.Character, new(ch), Terminal.Curses.key_name(ch), ModifierKey.None),
+            CursesMouseEvent { Button: MouseButton.Unknown } cme => new MouseMoveEvent(new(cme.X, cme.Y)),
+            CursesMouseEvent { Button: not MouseButton.Unknown } cme => new MouseActionEvent(new(cme.X, cme.Y),
+                cme.Button, cme.State, cme.Modifiers),
+            CursesKeyEvent { Key: var key, Modifiers: var mod } => new KeyEvent(key, new(ControlCharacter.Null),
+                Terminal.Curses.key_name((uint) key), mod),
+            CursesCharEvent { Char: var ch } => new KeyEvent(Key.Character, new(ch), Terminal.Curses.key_name(ch),
+                ModifierKey.None),
             var _ => null
         };
     }

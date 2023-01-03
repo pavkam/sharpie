@@ -41,8 +41,8 @@ internal abstract class NCursesFunctionMap: BaseCursesFunctionMap
         out uint attrs, out short colorPair, IntPtr reserved);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int setcchar(out NCursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs,
-        short colorPair, IntPtr reserved);
+    public delegate int setcchar(out NCursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text,
+        uint attrs, short colorPair, IntPtr reserved);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int slk_attr();

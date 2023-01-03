@@ -42,12 +42,12 @@ public enum ColorMode
     Disabled = 0,
 
     /// <summary>
-    ///     Terminal supports only standard color set defined by <see cref="StandardColor"/>.
+    ///     Terminal supports only standard color set defined by <see cref="StandardColor" />.
     /// </summary>
     Standard = 1,
 
     /// <summary>
-    ///     Terminal supports extended colors in addition to <see cref="StandardColor"/>.
+    ///     Terminal supports extended colors in addition to <see cref="StandardColor" />.
     /// </summary>
     Extended = 2
 }

@@ -72,7 +72,10 @@ foreach (var @event in terminal.Events.Listen(subWindow))
 
         using (terminal.AtomicRefresh())
         {
+            terminal.Screen.MarkDirty();
             terminal.Screen.Refresh();
+            
+            subWindow.MarkDirty();
             subWindow.Refresh();
         }
     }

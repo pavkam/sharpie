@@ -89,12 +89,6 @@ internal interface IDotNetSystemAdapter
         Console.Out.Flush();
     }
 
-    /// <inheritdoc cref="System.Runtime.InteropServices.PosixSignalRegistration.Create" />
-    [SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"), SupportedOSPlatform("macos"),
-     ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
-    IDisposable MonitorTerminalResizeSignal(Action action) =>
-        PosixSignalRegistration.Create(PosixSignal.SIGWINCH, _ => { action(); });
-
     /// <inheritdoc cref="System.Environment.GetEnvironmentVariable(string)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     string? GetEnvironmentVariable(string name) => Environment.GetEnvironmentVariable(name);
@@ -124,4 +118,3 @@ internal interface IDotNetSystemAdapter
     {
     }
 }
-

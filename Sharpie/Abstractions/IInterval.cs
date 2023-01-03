@@ -11,4 +11,3 @@ public interface IInterval: IDisposable
     /// </summary>
     void Stop() => Dispose();
 }
-

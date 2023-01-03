@@ -37,27 +37,27 @@ namespace Sharpie.Backend;
 internal enum CursesKeyCodeType
 {
     /// <summary>
-    /// The type could no be identified.
+    ///     The type could no be identified.
     /// </summary>
     Unknown,
-    
+
     /// <summary>
-    /// The key code is a character.
+    ///     The key code is a character.
     /// </summary>
     Character,
-    
+
     /// <summary>
-    /// The key code identifies a mouse event.
+    ///     The key code identifies a mouse event.
     /// </summary>
     Mouse,
-    
+
     /// <summary>
-    /// The key code identifies a resize event.
+    ///     The key code identifies a resize event.
     /// </summary>
     Resize,
-    
+
     /// <summary>
-    /// The key code encodes a key.
+    ///     The key code encodes a key.
     /// </summary>
-    Key,
+    Key
 }

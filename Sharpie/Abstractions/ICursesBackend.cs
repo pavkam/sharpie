@@ -269,13 +269,13 @@ public interface ICursesBackend
     int wbkgrnd(IntPtr window, ComplexChar @char);
 
     int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide,
-        ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner,
-        ComplexChar bottomLeftCorner, ComplexChar bottomRightCorner);
+        ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner,
+        ComplexChar bottomRightCorner);
 
     int wget_wch(IntPtr window, out uint @char);
 
     int wget_event(IntPtr window, int delay, out CursesEvent? @event);
-    
+
     int wgetbkgrnd(IntPtr window, out ComplexChar @char);
 
     int whline_set(IntPtr window, ComplexChar @char, int count);
@@ -288,12 +288,7 @@ public interface ICursesBackend
 
     int mousemask(uint newMask, out uint oldMask);
 
-    int mouse_version();
-
     int mouseinterval(int millis);
-    
+
     void set_title(string title);
-
-    bool monitor_pending_resize(Action action, [NotNullWhen(true)] out IDisposable? handle);
 }
-

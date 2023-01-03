@@ -104,7 +104,7 @@ public class SoftLabelKeyManagerTests
     {
         _cursesMock.Setup(s => s.slk_attr(out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny))
                    .Returns(-1);
-        
+
         Should.Throw<CursesOperationException>(() =>
               {
                   var l = _mgr1.Style;
@@ -135,7 +135,7 @@ public class SoftLabelKeyManagerTests
                    });
 
         var style = _mgr1.Style;
-        
+
         style.Attributes.ShouldBe(VideoAttribute.Italic);
         style.ColorMixture.ShouldBe(new() { Handle = 15 });
     }
@@ -277,7 +277,7 @@ public class SoftLabelKeyManagerTests
 
         _mgr1.EnableAttributes(VideoAttribute.Italic);
 
-        _cursesMock.Verify(v => v.slk_attr_on( VideoAttribute.Italic, IntPtr.Zero), Times.Once);
+        _cursesMock.Verify(v => v.slk_attr_on(VideoAttribute.Italic, IntPtr.Zero), Times.Once);
     }
 
     [TestMethod]

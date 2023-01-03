@@ -40,7 +40,7 @@ public enum MouseButton: uint
     ///     Unknown button.
     /// </summary>
     Unknown = 0,
-    
+
     /// <summary>
     ///     The button 1.
     /// </summary>

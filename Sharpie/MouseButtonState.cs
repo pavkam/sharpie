@@ -40,7 +40,7 @@ public enum MouseButtonState: uint
     ///     No state to speak of.
     /// </summary>
     None = 0,
-    
+
     /// <summary>
     ///     The button has been released.
     /// </summary>

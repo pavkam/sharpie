@@ -32,44 +32,44 @@ namespace Sharpie.Backend;
 #pragma warning disable CS1591
 
 /// <summary>
-/// A Curses, back-end-specific complex character that encodes the rune and its attributes.
+///     A Curses, back-end-specific complex character that encodes the rune and its attributes.
 /// </summary>
 [PublicAPI, DebuggerDisplay("{ToString, nq}")]
 public sealed class ComplexChar
 {
     /// <summary>
-    /// The backend-specific payload.
-    /// </summary>
-    internal object? Raw { get; }
-
-    /// <summary>
-    /// Creates a new complex character.
+    ///     Creates a new complex character.
     /// </summary>
     /// <param name="raw">The backend-specific payload.</param>
     internal ComplexChar(object? raw) => Raw = raw;
 
-    /// <inheritdoc cref="object.Equals(object?)"/>
+    /// <summary>
+    ///     The backend-specific payload.
+    /// </summary>
+    internal object? Raw { get; }
+
+    /// <inheritdoc cref="object.Equals(object?)" />
     public override bool Equals(object? obj) => obj is ComplexChar cc && Equals(cc.Raw, Raw);
 
-    /// <inheritdoc cref="object.GetHashCode"/>
+    /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode() => Raw?.GetHashCode() ?? 0;
 
     /// <summary>
-    /// Equality comparison operator.
+    ///     Equality comparison operator.
     /// </summary>
     /// <param name="left">The left value.</param>
     /// <param name="right">The right value.</param>
     /// <returns>The result of the comparison.</returns>
     public static bool operator ==(ComplexChar? left, ComplexChar? right) => Equals(left, right);
-    
+
     /// <summary>
-    /// Inequality comparison operator.
+    ///     Inequality comparison operator.
     /// </summary>
     /// <param name="left">The left value.</param>
     /// <param name="right">The right value.</param>
     /// <returns>The result of the comparison.</returns>
     public static bool operator !=(ComplexChar? left, ComplexChar? right) => !Equals(left, right);
 
-    /// <inheritdoc cref="object.ToString"/>
+    /// <inheritdoc cref="object.ToString" />
     public override string? ToString() => Raw?.ToString();
 }

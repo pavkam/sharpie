@@ -18,4 +18,3 @@ public interface IDrawSurface
     /// <param name="style">The cell style.</param>
     void DrawCell(Point location, Rune rune, Style style);
 }
-
