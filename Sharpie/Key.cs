@@ -55,6 +55,11 @@ public enum Key: uint
     ///     The Escape key.
     /// </summary>
     Escape,
+    
+    /// <summary>
+    ///     The Insert key.
+    /// </summary>
+    Insert,
 
     /// <summary>
     ///     The delete key.
@@ -105,16 +110,6 @@ public enum Key: uint
     ///     End key.
     /// </summary>
     KeypadEnd,
-
-    /// <summary>
-    ///     Delete character key.
-    /// </summary>
-    DeleteChar,
-
-    /// <summary>
-    ///     Insert character key.
-    /// </summary>
-    InsertChar,
 
     /// <summary>
     ///     Tab key.

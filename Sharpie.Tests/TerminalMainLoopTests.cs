@@ -272,7 +272,7 @@ public class TerminalMainLoopTests
         _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent kc) =>
                    {
-                       kc = new CursesCharEvent('A');
+                       kc = new CursesCharEvent('A', ModifierKey.None);
                        return 0;
                    });
 
@@ -302,7 +302,7 @@ public class TerminalMainLoopTests
         _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent kc) =>
                    {
-                       kc = new CursesCharEvent(ch++);
+                       kc = new CursesCharEvent(ch++, ModifierKey.None);
                        return 0;
                    });
 
@@ -334,7 +334,7 @@ public class TerminalMainLoopTests
         _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent kc) =>
                    {
-                       kc = new CursesCharEvent((char) 3);
+                       kc = new CursesCharEvent((char) 3, ModifierKey.None);
                        return 0;
                    });
 

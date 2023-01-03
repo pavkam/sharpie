@@ -1241,7 +1241,7 @@ public class BaseCursesBackendTests
         _backend.wget_event(new(1), 10, out var e)
                 .ShouldBe(0);
 
-        e.ShouldBe(new CursesCharEvent('A'));
+        e.ShouldBe(new CursesCharEvent('A', ModifierKey.None));
     }
 
     [TestMethod]
@@ -1272,7 +1272,7 @@ public class BaseCursesBackendTests
                     .Returns(CursesKeyCodeType.Key);
 
         _backendMock.Setup(s => s.DecodeRawKey('A'))
-                    .Returns((Key.Backspace, ModifierKey.Ctrl));
+                    .Returns((Key.Backspace, ControlCharacter.Null, ModifierKey.Ctrl));
 
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
@@ -1287,6 +1287,30 @@ public class BaseCursesBackendTests
                 .ShouldBe(11);
 
         e.ShouldBe(new CursesKeyEvent(Key.Backspace, ModifierKey.Ctrl));
+    }
+    
+    [TestMethod]
+    public void wget_event_ReturnsCharEvent_IfDecodedKeyCodeIsCharIndeed()
+    {
+        _backendMock.Setup(s => s.DecodeKeyCodeType(11, 'A'))
+                    .Returns(CursesKeyCodeType.Key);
+
+        _backendMock.Setup(s => s.DecodeRawKey('A'))
+                    .Returns((Key.Character, 'Z', ModifierKey.Ctrl));
+
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+                                 .Returns((IntPtr _, out uint kc) =>
+                                 {
+                                     kc = 'A';
+                                     return 11;
+                                 });
+
+        _backend.wget_event(new(1), 10, out var e)
+                .ShouldBe(11);
+
+        e.ShouldBe(new CursesCharEvent('Z', ModifierKey.Ctrl));
     }
 
     [TestMethod]

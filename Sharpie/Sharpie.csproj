@@ -25,14 +25,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="$(AssemblyName)-tests"/>
-        <InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>
+        <InternalsVisibleTo Include="$(AssemblyName)-tests" />
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2022.3.1"/>
-        <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2"/>
-        <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
+        <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2" />
+        <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -44,7 +44,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="basic.font"/>
+        <None Remove="basic.font" />
     </ItemGroup>
 
 </Project>

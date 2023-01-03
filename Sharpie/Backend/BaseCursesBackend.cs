@@ -50,7 +50,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
     /// </summary>
     /// <param name="attrs">The backend specific value.</param>
     /// <returns>The tuple containing the decoded values.</returns>
-    protected internal abstract (VideoAttribute attributtes, short colorPair) DecodeCursesAttributes(uint attrs);
+    protected internal abstract (VideoAttribute attributes, short colorPair) DecodeCursesAttributes(uint attrs);
 
     /// <summary>
     ///     Decodes the key code type based on the result and key code returned by <see cref="wget_wch" />.
@@ -65,7 +65,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
     /// </summary>
     /// <param name="keyCode">The key code to decode.</param>
     /// <returns>The decoded key.</returns>
-    protected internal abstract (Key key, ModifierKey modifierKey) DecodeRawKey(uint keyCode);
+    protected internal abstract (Key key, char @char, ModifierKey modifierKey) DecodeRawKey(uint keyCode);
 
     /// <summary>
     ///     Decodes the raw mouse state flags into a backend-independent representation.
@@ -417,11 +417,18 @@ internal abstract class BaseCursesBackend: ICursesBackend
                 @event = new CursesMouseEvent(ms.x, ms.y, mb, mst, mm);
                 break;
             case CursesKeyCodeType.Key:
-                var (k, m) = DecodeRawKey(keyCode);
-                @event = new CursesKeyEvent(k, m);
+                var (k, c, m) = DecodeRawKey(keyCode);
+                if (k == Key.Character)
+                {
+                    @event = new CursesCharEvent(c, m);
+                } else
+                {
+                    @event = new CursesKeyEvent(k, m);
+                }
+
                 break;
             case CursesKeyCodeType.Character:
-                @event = new CursesCharEvent((char) keyCode);
+                @event = new CursesCharEvent((char) keyCode, ModifierKey.None);
                 break;
         }
 

@@ -167,9 +167,9 @@ public class SynchronizationTests
                              .ToArray());
     }
 
-    [TestMethod] public void EventPump_Use() { Check(() => _terminal.Events.Use((_, _) => (null, 0))); }
+    [TestMethod] public void EventPump_Use() { Check(() => _terminal.Events.Use(_ => (null, 0))); }
 
-    [TestMethod] public void EventPump_Uses() { Check(() => _terminal.Events.Uses((_, _) => (null, 0))); }
+    [TestMethod] public void EventPump_Uses() { Check(() => _terminal.Events.Uses(_ => (null, 0))); }
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Pad_SubPads() { Check(() => _pad.SubPads.ToArray()); }

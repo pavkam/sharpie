@@ -9,7 +9,8 @@ public abstract record CursesEvent;
 ///     Character input event.
 /// </summary>
 /// <param name="Char">The character that was read from the terminal.</param>
-public sealed record CursesCharEvent(char Char): CursesEvent;
+/// <param name="Modifiers">The key modifiers.</param>
+public sealed record CursesCharEvent(char Char, ModifierKey Modifiers): CursesEvent;
 
 /// <summary>
 ///     Key input event.
