@@ -51,7 +51,7 @@ public class KeyEventTests
         var e = new KeyEvent(Key.F1, new(ControlCharacter.Null), null, ModifierKey.None);
 
         e.ToString()
-         .ShouldBe("Key [F1]");
+         .ShouldBe("F1");
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public class KeyEventTests
         var e = new KeyEvent(Key.F1, new(ControlCharacter.Null), "name", ModifierKey.None);
 
         e.ToString()
-         .ShouldBe("Key [name]");
+         .ShouldBe("F1 (name)");
     }
 
     [TestMethod]
@@ -70,7 +70,7 @@ public class KeyEventTests
             ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
 
         e.ToString()
-         .ShouldBe("Key [CTRL-SHIFT-ALT-name]");
+         .ShouldBe("CTRL-SHIFT-ALT-F1 (name)");
     }
 
     [TestMethod]
@@ -79,7 +79,7 @@ public class KeyEventTests
         var e = new KeyEvent(Key.Character, new('a'), null, ModifierKey.None);
 
         e.ToString()
-         .ShouldBe("Key ['a']");
+         .ShouldBe("'a'");
     }
 
     [TestMethod]
@@ -88,7 +88,7 @@ public class KeyEventTests
         var e = new KeyEvent(Key.Character, new('a'), "name", ModifierKey.None);
 
         e.ToString()
-         .ShouldBe("Key ['name']");
+         .ShouldBe("'a' (name)");
     }
 
     [TestMethod]
@@ -97,7 +97,7 @@ public class KeyEventTests
         var e = new KeyEvent(Key.Character, new('a'), "name", ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift);
 
         e.ToString()
-         .ShouldBe("Key [CTRL-SHIFT-ALT-'name']");
+         .ShouldBe("CTRL-SHIFT-ALT-'a' (name)");
     }
 
     [TestMethod, DataRow(null), DataRow("")]

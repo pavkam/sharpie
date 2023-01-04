@@ -46,7 +46,7 @@ public class MouseMoveEventTests
     public void ToString_ProperlyFormats()
     {
         _event1.ToString()
-               .ShouldBe("Mouse [1, 2]");
+               .ShouldBe("Mouse @ 1x2");
     }
 
     [TestMethod, DataRow(null), DataRow("")]

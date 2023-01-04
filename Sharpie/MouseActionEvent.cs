@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     Contains the details of a Curses event.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public sealed class MouseActionEvent: Event
 {
     /// <summary>
@@ -91,7 +91,7 @@ public sealed class MouseActionEvent: Event
             modifiers.Append("ALT-");
         }
 
-        return $"Mouse [{modifiers}{Button}-{State} at {Position.X}, {Position.Y}]";
+        return $"Mouse {modifiers}{Button}-{State} @ {Position.X}x{Position.Y}";
     }
 
     /// <inheritdoc cref="object.Equals(object)" />

@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     Defines a key event.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public sealed class KeyEvent: Event
 {
     /// <summary>
@@ -91,9 +91,10 @@ public sealed class KeyEvent: Event
             modifiers.Append("ALT-");
         }
 
+        var fmtName = string.IsNullOrEmpty(Name) ? Name : $" ({Name})";
         return Key == Key.Character
-            ? $"Key [{modifiers}'{Name ?? Char.ToString()}']"
-            : $"Key [{modifiers}{Name ?? Key.ToString()}]";
+            ? $"{modifiers}'{Char.ToString()}'{fmtName}"
+            : $"{modifiers}{Key.ToString()}{fmtName}";
     }
 
     /// <inheritdoc cref="object.Equals(object)" />

@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     Generated automatically when <see cref="EventPump" /> stops listening for events.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public sealed class StopEvent: Event
 {
     /// <summary>

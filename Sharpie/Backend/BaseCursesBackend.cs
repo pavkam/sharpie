@@ -435,17 +435,18 @@ internal abstract class BaseCursesBackend: ICursesBackend
                 break;
             case CursesKeyCodeType.Key:
                 var (k, c, m) = DecodeRawKey(keyCode);
+                var keyName = key_name(keyCode);
                 if (k == Key.Character)
                 {
-                    @event = new CursesCharEvent(c, m);
+                    @event = new CursesCharEvent(keyName, c, m);
                 } else
                 {
-                    @event = new CursesKeyEvent(k, m);
+                    @event = new CursesKeyEvent(keyName, k, m);
                 }
 
                 break;
             case CursesKeyCodeType.Character:
-                @event = new CursesCharEvent((char) keyCode, ModifierKey.None);
+                @event = new CursesCharEvent(key_name(keyCode), (char) keyCode, ModifierKey.None);
                 break;
         }
 

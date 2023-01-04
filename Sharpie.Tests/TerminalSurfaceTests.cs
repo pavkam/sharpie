@@ -68,6 +68,15 @@ public class TerminalSurfaceTests
     }
 
     [TestMethod]
+    public void ToString_ReturnsFormattedRepresentation()
+    {
+        var sa = new TerminalSurface(_terminal, new(999));
+        _cursesMock.MockArea(sa, new Size(100, 200));
+        
+        sa.ToString().ShouldBe("TerminalSurface #000003E7 (100x200)");
+    }
+    
+    [TestMethod]
     public void Terminal_IsInitialized()
     {
         var sa = new TerminalSurface(_terminal, new(1));

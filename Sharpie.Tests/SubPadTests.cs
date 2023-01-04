@@ -67,6 +67,15 @@ public class SubPadTests
     }
 
     [TestMethod]
+    public void ToString_ReturnsFormattedRepresentation()
+    {
+        var sp = new SubPad(_parent, new(999));
+        _cursesMock.MockArea(sp, new Rectangle(5, 6, 100, 200));
+        
+        sp.ToString().ShouldBe("SubPad #000003E7 (100x200 @ 5x6)");
+    }
+    
+    [TestMethod]
     public void Location_Get_Returns_IfCursesSucceeded()
     {
         _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
