@@ -53,7 +53,7 @@ public class StyleTests
     public void ToString_ProperlyFormats()
     {
         _style.ToString()
-              .ShouldBe("Style [Bold; Mixture [1]]");
+              .ShouldBe("Bold, #0001");
     }
 
     [TestMethod, DataRow(null), DataRow("")]

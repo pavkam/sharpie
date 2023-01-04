@@ -41,7 +41,7 @@ public class ColorMixtureTests
     public void ToString_ProperlyFormats()
     {
         new ColorMixture { Handle = 999 }.ToString()
-                                         .ShouldBe("Mixture [999]");
+                                         .ShouldBe("#03E7");
     }
 
     [TestMethod, DataRow(null), DataRow("")]

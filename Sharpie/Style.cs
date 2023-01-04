@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     Represents the style of the text (attributes and colors).
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public struct Style
 {
     /// <summary>
@@ -53,7 +53,7 @@ public struct Style
     public ColorMixture ColorMixture { get; init; }
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"Style [{Attributes}; {ColorMixture}]";
+    public override string ToString() => $"{Attributes}, {ColorMixture}";
 
     /// <summary>
     ///     The equality operator.

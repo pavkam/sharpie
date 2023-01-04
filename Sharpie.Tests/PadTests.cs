@@ -57,6 +57,15 @@ public class PadTests
     public void Ctor_Throws_IfScreenIsNull() { Should.Throw<ArgumentException>(() => new Pad(null!, IntPtr.MaxValue)); }
 
     [TestMethod]
+    public void ToString_ReturnsFormattedRepresentation()
+    {
+        var p = new Pad(_screen, new(999));
+        _cursesMock.MockArea(p, new Size(100, 200));
+        
+        p.ToString().ShouldBe("Pad #000003E7 (100x200)");
+    }
+    
+    [TestMethod]
     public void Screen_IsInitialized()
     {
         var p = new Pad(_screen, IntPtr.MaxValue);

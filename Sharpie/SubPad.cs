@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     Represents a Curses sub-pad and contains all it's functionality.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public sealed class SubPad: Surface, ISubPad
 {
     /// <summary>
@@ -138,4 +138,7 @@ public sealed class SubPad: Surface, ISubPad
 
         base.Delete();
     }
+    
+    /// <inheritdoc cref="object.ToString"/>
+    public override string ToString() => $"{GetType().Name} #{Handle:X8} ({Size.Width}x{Size.Height} @ {Location.X}x{Location.Y})";
 }

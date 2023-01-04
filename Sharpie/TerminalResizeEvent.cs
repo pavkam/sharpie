@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     The terminal resized event.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public sealed class TerminalResizeEvent: Event
 {
     /// <summary>
@@ -48,7 +48,7 @@ public sealed class TerminalResizeEvent: Event
     public Size Size { get; }
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"Resize [{Size.Width} x {Size.Height}]";
+    public override string ToString() => $"Resize @ {Size.Width}x{Size.Height}";
 
     /// <inheritdoc cref="object.Equals(object)" />
     public override bool Equals(object? obj) =>

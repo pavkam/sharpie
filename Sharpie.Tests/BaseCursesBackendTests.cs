@@ -79,6 +79,8 @@ public class BaseCursesBackendTests
         _backendMock.Setup(s => s.DecodeCursesAttributes(It.IsAny<uint>()))
                     .Returns((uint attrs) => ((VideoAttribute) (attrs >> 16), (short) ((attrs >> 8) & 0xFF)));
 
+        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+                                .CallBase();
         _backend = _backendMock.Object;
     }
 
@@ -387,11 +389,7 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(null), DataRow("hello")]
     public void longname_IsRelayedToLibrary(string ret)
     {
-        var h = Marshal.StringToHGlobalAnsi(ret);
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.longname, IntPtr>(s => s(), h);
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.longname, IntPtr>(s => s(), Marshal.StringToHGlobalAnsi(ret));
 
         _backend.longname()
                 .ShouldBe(ret);
@@ -400,11 +398,7 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(null), DataRow("hello")]
     public void termname_IsRelayedToLibrary(string ret)
     {
-        var h = Marshal.StringToHGlobalAnsi(ret);
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.termname, IntPtr>(s => s(), h);
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.termname, IntPtr>(s => s(), Marshal.StringToHGlobalAnsi(ret));
 
         _backend.termname()
                 .ShouldBe(ret);
@@ -413,11 +407,7 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(null), DataRow("hello")]
     public void curses_version_IsRelayedToLibrary(string ret)
     {
-        var h = Marshal.StringToHGlobalAnsi(ret);
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.curses_version, IntPtr>(s => s(), h);
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.curses_version, IntPtr>(s => s(), Marshal.StringToHGlobalAnsi(ret));
 
         _backend.curses_version()
                 .ShouldBe(ret);
@@ -792,11 +782,7 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(null), DataRow("hello")]
     public void key_name_IsRelayedToLibrary(string ret)
     {
-        var h = Marshal.StringToHGlobalAnsi(ret);
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.key_name, IntPtr>(s => s('A'), h);
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.key_name, IntPtr>(s => s('A'), Marshal.StringToHGlobalAnsi(ret));
 
         _backend.key_name('A')
                 .ShouldBe(ret);
@@ -1039,9 +1025,6 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void init_color_IsRelayedToLibrary(int ret)
     {
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.init_color, int>(s => s(1, 2, 3, 4), ret);
 
         _backend.init_color(1, 2, 3, 4)
@@ -1144,9 +1127,6 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void color_content_IsRelayedToLibrary(int ret)
     {
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
-                                .CallBase();
-
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.color_content>()
                                  .Setup(s => s(1, out It.Ref<short>.IsAny, out It.Ref<short>.IsAny,
                                      out It.Ref<short>.IsAny))
@@ -1335,6 +1315,9 @@ public class BaseCursesBackendTests
         _backendMock.Setup(s => s.DecodeKeyCodeType(0, 'A'))
                     .Returns(CursesKeyCodeType.Character);
 
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.key_name>()
+                                 .Setup(s => s('A'))
+                                 .Returns(Marshal.StringToHGlobalAnsi("name"));
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
                                  .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
@@ -1347,7 +1330,7 @@ public class BaseCursesBackendTests
         _backend.wget_event(new(1), 10, out var e)
                 .ShouldBe(0);
 
-        e.ShouldBe(new CursesCharEvent('A', ModifierKey.None));
+        e.ShouldBe(new CursesCharEvent("name", 'A', ModifierKey.None));
     }
 
     [TestMethod]
@@ -1380,6 +1363,9 @@ public class BaseCursesBackendTests
         _backendMock.Setup(s => s.DecodeRawKey('A'))
                     .Returns((Key.Backspace, ControlCharacter.Null, ModifierKey.Ctrl));
 
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.key_name>()
+                                 .Setup(s => s('A'))
+                                 .Returns(Marshal.StringToHGlobalAnsi("name"));
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
                                  .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
@@ -1392,7 +1378,7 @@ public class BaseCursesBackendTests
         _backend.wget_event(new(1), 10, out var e)
                 .ShouldBe(11);
 
-        e.ShouldBe(new CursesKeyEvent(Key.Backspace, ModifierKey.Ctrl));
+        e.ShouldBe(new CursesKeyEvent("name", Key.Backspace, ModifierKey.Ctrl));
     }
 
     [TestMethod]
@@ -1403,7 +1389,9 @@ public class BaseCursesBackendTests
 
         _backendMock.Setup(s => s.DecodeRawKey('A'))
                     .Returns((Key.Character, 'Z', ModifierKey.Ctrl));
-
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.key_name>()
+                                 .Setup(s => s('A'))
+                                 .Returns(Marshal.StringToHGlobalAnsi("name"));
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wtimeout>();
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.wget_wch>()
                                  .Setup(s => s(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
@@ -1416,7 +1404,7 @@ public class BaseCursesBackendTests
         _backend.wget_event(new(1), 10, out var e)
                 .ShouldBe(11);
 
-        e.ShouldBe(new CursesCharEvent('Z', ModifierKey.Ctrl));
+        e.ShouldBe(new CursesCharEvent("name", 'Z', ModifierKey.Ctrl));
     }
 
     [TestMethod]
