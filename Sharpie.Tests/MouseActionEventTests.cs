@@ -52,7 +52,7 @@ public class MouseActionEventTests
         var e = new MouseActionEvent(new(1, 2), MouseButton.Button2, MouseButtonState.Clicked, ModifierKey.None);
 
         e.ToString()
-         .ShouldBe("Mouse Button2-Clicked @ 1 x 2");
+         .ShouldBe("Mouse Button2-Clicked @ 1x2");
     }
 
     [TestMethod]
