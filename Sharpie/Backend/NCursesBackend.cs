@@ -17,8 +17,12 @@ internal class NCursesBackend: BaseCursesBackend
     /// </summary>
     /// <param name="dotNetSystemAdapter">The .NET system adapter.</param>
     /// <param name="nCursesSymbolResolver">The NCurses library symbol resolver.</param>
-    internal NCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver nCursesSymbolResolver):
-        base(dotNetSystemAdapter, nCursesSymbolResolver)
+    /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
+    internal NCursesBackend(
+        IDotNetSystemAdapter dotNetSystemAdapter, 
+        INativeSymbolResolver nCursesSymbolResolver,
+        INativeSymbolResolver? libCSymbolResolver):
+        base(dotNetSystemAdapter, nCursesSymbolResolver, libCSymbolResolver)
     {
     }
 
@@ -205,6 +209,11 @@ internal class NCursesBackend: BaseCursesBackend
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
+    public override int endwin() => CursesSymbolResolver.Resolve<NCursesFunctionMap.endwin>()();
+
+    public override int getmouse(out CursesMouseState state) =>
+        CursesSymbolResolver.Resolve<NCursesFunctionMap.getmouse>()(out state);
+    
     public override int slk_attr_off(VideoAttribute attributes, IntPtr reserved) =>
         CursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr_off>()(EncodeCursesAttribute(attributes, 0), reserved);
 

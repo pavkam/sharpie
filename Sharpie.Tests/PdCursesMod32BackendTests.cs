@@ -31,9 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Tests;
 
 [TestClass, SuppressMessage("ReSharper", "IdentifierTypo")]
-public class PdCursesBackendTests
+public class PdCursesMod32BackendTests
 {
-    private PdCursesBackend _backend = null!;
+    private PdCursesMod32Backend _backend = null!;
     private Mock<IDotNetSystemAdapter> _dotNetSystemAdapterMock = null!;
     private Mock<INativeSymbolResolver> _nativeSymbolResolverMock = null!;
     
@@ -48,11 +48,10 @@ public class PdCursesBackendTests
         _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object, null);
     }
 
-    
     [TestMethod, DataRow(0), DataRow(-1)]
     public void endwin_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.endwin, int>(s => s(), ret);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.endwin_w32_4302, int>(s => s(), ret);
 
         _backend.endwin()
                 .ShouldBe(ret);
@@ -62,7 +61,7 @@ public class PdCursesBackendTests
     public void getmouse_IsRelayedToLibrary(int ret)
     {
         var exp = new CursesMouseState { id = 199 };
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.getmouse>()
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.nc_getmouse>()
                                  .Setup(s => s(out It.Ref<CursesMouseState>.IsAny))
                                  .Returns((out CursesMouseState o) =>
                                  {
@@ -77,96 +76,140 @@ public class PdCursesBackendTests
         x.ShouldBe(exp);
     }
     
-    [TestMethod]
-    public void slk_clear_ReturnsError()
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_clear_IsRelayedToLibrary(int ret)
     {
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_clear, int>(s => s(), ret);
+
         _backend.slk_clear()
-                .ShouldBe(-1);
+                .ShouldBe(ret);
     }
-    
-    [TestMethod]
-    public void slk_noutrefresh_ReturnsError()
+
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_noutrefresh_IsRelayedToLibrary(int ret)
     {
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_noutrefresh, int>(s => s(), ret);
+
         _backend.slk_noutrefresh()
-                .ShouldBe(-1);
+                .ShouldBe(ret);
     }
-    
-    [TestMethod]
-    public void slk_refresh_ReturnsError()
+
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_refresh_IsRelayedToLibrary(int ret)
     {
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_refresh, int>(s => s(), ret);
+
         _backend.slk_refresh()
-                .ShouldBe(-1);
+                .ShouldBe(ret);
     }
 
-    [TestMethod]
-    public void slk_restore_ReturnsError()
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_restore_IsRelayedToLibrary(int ret)
     {
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_restore, int>(s => s(), ret);
+
         _backend.slk_restore()
-                .ShouldBe(-1);
+                .ShouldBe(ret);
     }
 
-    [TestMethod]
-    public void slk_touch_ReturnsError()
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_touch_IsRelayedToLibrary(int ret)
     {
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_touch, int>(s => s(), ret);
+
         _backend.slk_touch()
-                .ShouldBe(-1);
+                .ShouldBe(ret);
+    }
+
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_init_IsRelayedToLibrary(int ret)
+    {
+        const int i = 999;
+
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_init, int>(s => s(i), ret);
+
+        _backend.slk_init(i)
+                .ShouldBe(ret);
+    }
+
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_color_IsRelayedToLibrary(int ret)
+    {
+        const short i = 999;
+
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_color, int>(s => s(i), ret);
+
+        _backend.slk_color(i)
+                .ShouldBe(ret);
     }
 
     [TestMethod]
-    public void slk_init_ReturnsError()
+    public void slk_attr_IsRelayedToLibrary_1()
     {
-        _backend.slk_init(1)
-                .ShouldBe(-1);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr, int>(s => s(),
+            0x0A400000);
+
+        _backend.slk_attr(out var a, out var cp)
+                .ShouldBe(0);
+
+        a.ShouldBe(VideoAttribute.Blink);
+        ((int) cp).ShouldBe(10);
     }
 
     [TestMethod]
-    public void slk_color_ReturnsError()
+    public void slk_attr_IsRelayedToLibrary_2()
     {
-        _backend.slk_color(1)
-                .ShouldBe(-1);
-    }
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr, int>(s => s(), -1);
 
-    [TestMethod]
-    public void slk_attr_ReturnsError()
-    {
         _backend.slk_attr(out var _, out var _)
                 .ShouldBe(-1);
     }
 
-    [TestMethod]
-    public void slk_attr_set_ReturnsError()
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_attr_set_IsRelayedToLibrary(int ret)
     {
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr_set, int>(
+            s => s(0x00400000, 2, new(2)), ret);
+
         _backend.slk_attr_set(VideoAttribute.Blink, 2, new(2))
-                .ShouldBe(-1);
+                .ShouldBe(ret);
     }
 
-    [TestMethod]
-    public void slk_set_ReturnsError()
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_set_IsRelayedToLibrary(int ret)
     {
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_set, int>(s => s(3, "title", 90), ret);
+
         _backend.slk_set(3, "title", 90)
-                .ShouldBe(-1);
-    }
-    
-    [TestMethod]
-    public void slk_attr_on_ReturnsError()
-    {
-        _backend.slk_attr_on(VideoAttribute.Blink, new(2))
-                .ShouldBe(-1);
-    }
-    
-    [TestMethod]
-    public void slk_attr_off_ReturnsError()
-    {
-        _backend.slk_attr_off(VideoAttribute.Blink, new(2))
-                .ShouldBe(-1);
+                .ShouldBe(ret);
     }
 
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_attr_on_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr_on, int>(
+            s => s(0x00400000, new(2)), ret);
+
+        _backend.slk_attr_on(VideoAttribute.Blink, new(2))
+                .ShouldBe(ret);
+    }
+
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void slk_attr_off_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr_off, int>(
+            s => s(0x00400000, new(2)), ret);
+
+        _backend.slk_attr_off(VideoAttribute.Blink, new(2))
+                .ShouldBe(ret);
+    }
+    
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wadd_wch_IsRelayedToLibrary(int ret)
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.wadd_wch, int>(s => s(new(1), ref nc), ret);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.wadd_wch, int>(s => s(new(1), ref nc), ret);
 
         _backend.wadd_wch(new(1), ch)
                 .ShouldBe(ret);
@@ -177,7 +220,7 @@ public class PdCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.wbkgrnd, int>(s => s(new(1), ref nc), ret);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.wbkgrnd, int>(s => s(new(1), ref nc), ret);
 
         _backend.wbkgrnd(new(1), ch)
                 .ShouldBe(ret);
@@ -188,7 +231,7 @@ public class PdCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.wvline_set, int>(s => s(new(1), ref nc, 4), ret);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.wvline_set, int>(s => s(new(1), ref nc, 4), ret);
 
         _backend.wvline_set(new(1), ch, 4)
                 .ShouldBe(ret);
@@ -199,7 +242,7 @@ public class PdCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.whline_set, int>(s => s(new(1), ref nc, 4), ret);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.whline_set, int>(s => s(new(1), ref nc, 4), ret);
 
         _backend.whline_set(new(1), ch, 4)
                 .ShouldBe(ret);
@@ -217,7 +260,7 @@ public class PdCursesBackendTests
         var (ch7, nc7) = MakeTestComplexChar(7);
         var (ch8, nc8) = MakeTestComplexChar(8);
 
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.wborder_set, int>(
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.wborder_set, int>(
             s => s(new(1), ref nc1, ref nc2, ref nc3, ref nc4,
                 ref nc5, ref nc6, ref nc7, ref nc8), ret);
 
@@ -231,7 +274,7 @@ public class PdCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.wgetbkgrnd>()
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.wgetbkgrnd>()
                                  .Setup(s => s(new(1), out It.Ref<uint>.IsAny))
                                  .Returns((IntPtr _, out uint o) =>
                                  {
@@ -251,7 +294,7 @@ public class PdCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.win_wch>()
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.win_wch>()
                                  .Setup(s => s(new(1), out It.Ref<uint>.IsAny))
                                  .Returns((IntPtr _, out uint o) =>
                                  {
@@ -271,7 +314,7 @@ public class PdCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.setcchar>()
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.setcchar>()
                                  .Setup(s => s(out It.Ref<uint>.IsAny, "text",
                                      0x00400000, 20, new(2)))
                                  .Returns((out uint o, string _, uint _, short _,
@@ -294,7 +337,7 @@ public class PdCursesBackendTests
 
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.getcchar>()
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.getcchar>()
                                  .Setup(s => s(ref nc, sb, out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, new(2)))
                                  .Returns((ref uint _, StringBuilder _, out uint a, out short cp,
                                      IntPtr _) =>
@@ -365,16 +408,17 @@ public class PdCursesBackendTests
 
     [TestMethod, DataRow(-1, 10u, (int) CursesKeyCodeType.Unknown), DataRow(0, 32u, (int) CursesKeyCodeType.Character),
      DataRow(100, 32u, (int) CursesKeyCodeType.Character),
-     DataRow((int) PdCursesKeyCode.Yes, (uint) PdCursesKeyCode.F3, (int) CursesKeyCodeType.Key),
-     DataRow((int) PdCursesKeyCode.Yes, (uint) PdCursesKeyCode.Resize, (int) CursesKeyCodeType.Resize),
-     DataRow((int) PdCursesKeyCode.Yes, (uint) PdCursesKeyCode.Mouse, (int) CursesKeyCodeType.Mouse)]
+     DataRow((int) PdCursesKeyCode.Yes + 0xeb00, (uint) PdCursesKeyCode.F3 + 0xeb00, (int) CursesKeyCodeType.Key),
+     DataRow((int) PdCursesKeyCode.Yes + 0xeb00, (uint) PdCursesKeyCode.Resize + 0xeb00, (int) CursesKeyCodeType.Resize),
+     DataRow((int) PdCursesKeyCode.Yes + 0xeb00, (uint) PdCursesKeyCode.Mouse + 0xeb00, (int) CursesKeyCodeType.Mouse)]
     public void DecodeKeyCodeType_DecodesProperly(int res, uint code, int exp)
     {
         _backend.DecodeKeyCodeType(res, code)
                 .ShouldBe((CursesKeyCodeType) exp);
     }
 
-    [TestMethod, DataRow(PdCursesKeyCode.F1, ControlCharacter.Null, Key.F1, ModifierKey.None),
+    [TestMethod, 
+     DataRow(PdCursesKeyCode.F1, ControlCharacter.Null, Key.F1, ModifierKey.None),
      DataRow(PdCursesKeyCode.F2, ControlCharacter.Null, Key.F2, ModifierKey.None),
      DataRow(PdCursesKeyCode.F3, ControlCharacter.Null, Key.F3, ModifierKey.None),
      DataRow(PdCursesKeyCode.F4, ControlCharacter.Null, Key.F4, ModifierKey.None),
@@ -586,7 +630,7 @@ public class PdCursesBackendTests
      DataRow((uint) 9999, ControlCharacter.Null, Key.Unknown, ModifierKey.None)]
     public void DecodeRawKey_DecodesProperly(uint rawKey, char chr, Key expKey, ModifierKey expMod)
     {
-        _backend.DecodeRawKey(rawKey)
+        _backend.DecodeRawKey(rawKey + 0xeb00)
                 .ShouldBe((expKey, chr, expMod));
     }
 

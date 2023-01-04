@@ -37,7 +37,7 @@ using Sharpie.Demos.Snake;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance.
-using var terminal = new Terminal(CursesBackend.NCurses(),
+using var terminal = new Terminal(CursesBackend.Load(),
     new(CaretMode: CaretMode.Invisible, UseMouse: false, AllocateHeader: true));
 
 // Configure the header.

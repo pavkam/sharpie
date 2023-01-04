@@ -34,13 +34,13 @@ namespace Sharpie.Backend;
 ///     Function map for PDCurses library.
 /// </summary>
 [SuppressMessage("ReSharper", "IdentifierTypo"), SuppressMessage("ReSharper", "InconsistentNaming")]
-internal abstract class PdCursesFunctionMap: BaseCursesFunctionMap
+internal abstract class PdCursesMod32FunctionMap: BaseCursesFunctionMap
 {
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int endwin();
+    public delegate int endwin_w32_4302();
     
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getmouse(out CursesMouseState state);
+    public delegate int nc_getmouse(out CursesMouseState state);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int getcchar(ref uint @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, out uint attrs,
@@ -72,4 +72,41 @@ internal abstract class PdCursesFunctionMap: BaseCursesFunctionMap
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int wvline_set(IntPtr window, ref uint @char, int count);
+    
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_attr();
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_attr_off(uint attrs, IntPtr reserved);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_attr_on(uint attrs, IntPtr reserved);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_attr_set(uint attrs, short colorPair, IntPtr reserved);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_clear();
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_color(short colorPair);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_init(int format);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_noutrefresh();
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_refresh();
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_restore();
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi, CharSet = CharSet.Ansi)]
+    public delegate int slk_set(int labelIndex, string title, int fmt);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int slk_touch();
+
 }

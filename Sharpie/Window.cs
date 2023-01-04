@@ -127,7 +127,7 @@ public sealed class Window: TerminalSurface, IWindow
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
-
+            
             Curses.wresize(Handle, area.Height, area.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the window.");
 

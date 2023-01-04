@@ -28,8 +28,10 @@ internal class PdCursesBackend: BaseCursesBackend
     /// </summary>
     /// <param name="dotNetSystemAdapter">The .NET system adapter.</param>
     /// <param name="pdCursesSymbolResolver">The PDCurses library symbol resolver.</param>
-    internal PdCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver pdCursesSymbolResolver):
-        base(dotNetSystemAdapter, pdCursesSymbolResolver) =>
+    /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
+    internal PdCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, 
+        INativeSymbolResolver pdCursesSymbolResolver, INativeSymbolResolver? libCSymbolResolver):
+        base(dotNetSystemAdapter, pdCursesSymbolResolver, libCSymbolResolver) =>
         CursesMouseEventParser = CursesMouseEventParser.Get(2);
 
     /// <inheritdoc cref="BaseCursesBackend.CursesMouseEventParser" />
@@ -141,7 +143,7 @@ internal class PdCursesBackend: BaseCursesBackend
     /// <inheritdoc cref="BaseCursesBackend.DecodeRawKey" />
     protected internal override (Key key, char @char, ModifierKey modifierKey) DecodeRawKey(uint keyCode)
     {
-        return (PdCursesKeyCode) keyCode switch
+        return (PdCursesKeyCode)keyCode switch
         {
             PdCursesKeyCode.F1 => (Key.F1, ControlCharacter.Null, ModifierKey.None),
             PdCursesKeyCode.F2 => (Key.F2, ControlCharacter.Null, ModifierKey.None),
@@ -359,6 +361,11 @@ internal class PdCursesBackend: BaseCursesBackend
 
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
+
+    public override int endwin() => CursesSymbolResolver.Resolve<PdCursesFunctionMap.endwin>()();
+
+    public override int getmouse(out CursesMouseState state) =>
+        CursesSymbolResolver.Resolve<PdCursesFunctionMap.getmouse>()(out state);
 
     public override int slk_attr_off(VideoAttribute attributes, IntPtr reserved) => Helpers.CursesErrorResult;
 

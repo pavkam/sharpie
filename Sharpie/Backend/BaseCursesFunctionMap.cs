@@ -82,9 +82,6 @@ internal abstract class BaseCursesFunctionMap
     public delegate int echo();
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int endwin();
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int erasewchar(out uint @char);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
@@ -107,9 +104,6 @@ internal abstract class BaseCursesFunctionMap
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int getmaxy(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getmouse(out CursesMouseState state);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int getparx(IntPtr window);

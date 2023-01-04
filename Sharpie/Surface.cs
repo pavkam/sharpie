@@ -214,11 +214,11 @@ public abstract class Surface: ISurface, IDisposable
         }
         set
         {
-            if (!IsPointWithin(value))
+            if (!IsPointWithin(value)) //TODO: this is messed up -- the origin check should not always apply.
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
-
+            
             Curses.wmove(Handle, value.Y, value.X)
                   .Check(nameof(Curses.wmove), "Failed to move the caret.");
         }
