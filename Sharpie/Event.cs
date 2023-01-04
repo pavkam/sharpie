@@ -33,13 +33,14 @@ namespace Sharpie;
 /// <summary>
 ///     An event from the terminal.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public class Event
 {
     /// <summary>
     ///     Creates a new instance of the class.
     /// </summary>
     /// <param name="type">The type of the event.</param>
+    
     protected internal Event(EventType type) => Type = type;
 
     /// <summary>

@@ -239,9 +239,9 @@ public sealed class EventPump: IEventPump
             CursesMouseEvent { Button: MouseButton.Unknown } cme => new MouseMoveEvent(new(cme.X, cme.Y)),
             CursesMouseEvent { Button: not MouseButton.Unknown } cme => new MouseActionEvent(new(cme.X, cme.Y),
                 cme.Button, cme.State, cme.Modifiers),
-            CursesKeyEvent { Key: var key, Modifiers: var mod } => new KeyEvent(key, new(ControlCharacter.Null),
-                Terminal.Curses.key_name((uint) key), mod),
-            CursesCharEvent { Char: var ch, Modifiers: var mod } => new KeyEvent(Key.Character, new(ch), Terminal.Curses.key_name(ch),
+            CursesKeyEvent { Name: var name, Key: var key, Modifiers: var mod } => new KeyEvent(key, new(ControlCharacter.Null),
+                name, mod),
+            CursesCharEvent { Name: var name, Char: var ch, Modifiers: var mod } => new KeyEvent(Key.Character, new(ch), name,
                 mod),
             var _ => null
         };

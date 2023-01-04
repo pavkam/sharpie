@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     Represents a surface and contains all its functionality.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public abstract class Surface: ISurface, IDisposable
 {
     private IntPtr _handle;
@@ -745,4 +745,7 @@ public abstract class Surface: ISurface, IDisposable
     ///     The destructor. Calls <see cref="Destroy" />.
     /// </summary>
     ~Surface() { Destroy(); }
+
+    /// <inheritdoc cref="object.ToString"/>
+    public override string ToString() => $"{GetType().Name} #{Handle:X8} ({Size.Width}x{Size.Height})";
 }

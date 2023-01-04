@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     Represents a Curses window and contains all it's functionality.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public sealed class Window: TerminalSurface, IWindow
 {
     private readonly IList<SubWindow> _subWindows = new List<SubWindow>();
@@ -345,4 +345,7 @@ public sealed class Window: TerminalSurface, IWindow
 
         base.Delete();
     }
+    
+    /// <inheritdoc cref="object.ToString"/>
+    public override string ToString() => $"{GetType().Name} #{Handle:X8} ({Size.Width}x{Size.Height} @ {Location.X}x{Location.Y})";
 }

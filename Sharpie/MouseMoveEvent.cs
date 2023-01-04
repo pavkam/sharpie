@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     Defines a mouse move event.
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public sealed class MouseMoveEvent: Event
 {
     /// <summary>
@@ -48,7 +48,7 @@ public sealed class MouseMoveEvent: Event
     public Point Position { get; }
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"Mouse [{Position.X}, {Position.Y}]";
+    public override string ToString() => $"Mouse @ {Position.X}x{Position.Y}";
 
     /// <inheritdoc cref="object.Equals(object)" />
     public override bool Equals(object? obj) =>

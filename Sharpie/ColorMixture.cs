@@ -33,7 +33,7 @@ namespace Sharpie;
 /// <summary>
 ///     Defines a color pair (foreground and background colors).
 /// </summary>
-[PublicAPI]
+[PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public struct ColorMixture
 {
     /// <summary>
@@ -47,7 +47,7 @@ public struct ColorMixture
     internal short Handle { get; init; }
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"Mixture [{Handle}]";
+    public override string ToString() => $"#{Handle:X4}";
 
     /// <inheritdoc cref="object.Equals(object)" />
     public override bool Equals(object? obj) => obj is ColorMixture cm && cm.Handle == Handle;

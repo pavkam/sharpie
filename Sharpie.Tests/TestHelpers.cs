@@ -43,6 +43,12 @@ internal static class TestHelpers
 
         cursesMock.Setup(s => s.getbegx(handle))
                   .Returns(area.Left);
+        
+        cursesMock.Setup(s => s.getparx(handle))
+                  .Returns(area.Left);
+
+        cursesMock.Setup(s => s.getpary(handle))
+                  .Returns(area.Top);
 
         cursesMock.Setup(s => s.getmaxx(handle))
                   .Returns(area.Width);
