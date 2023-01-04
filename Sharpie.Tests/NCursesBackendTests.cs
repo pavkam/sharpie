@@ -57,7 +57,35 @@ public class NCursesBackendTests
 
         _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object);
     }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void endwin_IsRelayedToLibrary(int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.endwin, int>(s => s(), ret);
 
+        _backend.endwin()
+                .ShouldBe(ret);
+    }
+    
+    [TestMethod, DataRow(0), DataRow(-1)]
+    public void getmouse_IsRelayedToLibrary(int ret)
+    {
+        var exp = new CursesMouseState { id = 199 };
+        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getmouse>()
+                                 .Setup(s => s(out It.Ref<CursesMouseState>.IsAny))
+                                 .Returns((out CursesMouseState o) =>
+                                 {
+                                     o = exp;
+                                     return ret;
+                                 });
+
+
+        _backend.getmouse(out var x)
+                .ShouldBe(ret);
+
+        x.ShouldBe(exp);
+    }
+    
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_clear_IsRelayedToLibrary(int ret)
     {

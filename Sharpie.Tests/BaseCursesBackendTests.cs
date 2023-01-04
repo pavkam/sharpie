@@ -210,15 +210,6 @@ public class BaseCursesBackendTests
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
-    public void endwin_IsRelayedToLibrary(int ret)
-    {
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.endwin, int>(s => s(), ret);
-
-        _backend.endwin()
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
     public void flash_IsRelayedToLibrary(int ret)
     {
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.flash, int>(s => s(), ret);
@@ -1045,28 +1036,6 @@ public class BaseCursesBackendTests
                 .ShouldBe(ret);
 
         ch.ShouldBe('A');
-    }
-
-    [TestMethod, DataRow(0), DataRow(-1)]
-    public void getmouse_IsRelayedToLibrary(int ret)
-    {
-        _backendMock.Setup(s => s.getmouse(out It.Ref<CursesMouseState>.IsAny))
-                    .CallBase();
-
-        var exp = new CursesMouseState { id = 199 };
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.getmouse>()
-                                 .Setup(s => s(out It.Ref<CursesMouseState>.IsAny))
-                                 .Returns((out CursesMouseState o) =>
-                                 {
-                                     o = exp;
-                                     return ret;
-                                 });
-
-
-        _backend.getmouse(out var x)
-                .ShouldBe(ret);
-
-        x.ShouldBe(exp);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]

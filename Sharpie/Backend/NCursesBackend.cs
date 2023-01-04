@@ -205,6 +205,11 @@ internal class NCursesBackend: BaseCursesBackend
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
+    public override int endwin() => CursesSymbolResolver.Resolve<NCursesFunctionMap.endwin>()();
+
+    public override int getmouse(out CursesMouseState state) =>
+        CursesSymbolResolver.Resolve<NCursesFunctionMap.getmouse>()(out state);
+    
     public override int slk_attr_off(VideoAttribute attributes, IntPtr reserved) =>
         CursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr_off>()(EncodeCursesAttribute(attributes, 0), reserved);
 

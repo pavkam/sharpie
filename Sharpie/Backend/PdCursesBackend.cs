@@ -141,7 +141,7 @@ internal class PdCursesBackend: BaseCursesBackend
     /// <inheritdoc cref="BaseCursesBackend.DecodeRawKey" />
     protected internal override (Key key, char @char, ModifierKey modifierKey) DecodeRawKey(uint keyCode)
     {
-        return (PdCursesKeyCode) keyCode switch
+        return (PdCursesKeyCode)keyCode switch
         {
             PdCursesKeyCode.F1 => (Key.F1, ControlCharacter.Null, ModifierKey.None),
             PdCursesKeyCode.F2 => (Key.F2, ControlCharacter.Null, ModifierKey.None),
@@ -359,6 +359,11 @@ internal class PdCursesBackend: BaseCursesBackend
 
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
+
+    public override int endwin() => CursesSymbolResolver.Resolve<PdCursesFunctionMap.endwin>()();
+
+    public override int getmouse(out CursesMouseState state) =>
+        CursesSymbolResolver.Resolve<PdCursesFunctionMap.getmouse>()(out state);
 
     public override int slk_attr_off(VideoAttribute attributes, IntPtr reserved) => Helpers.CursesErrorResult;
 

@@ -35,9 +35,8 @@ using Sharpie.Backend;
 [assembly: ExcludeFromCodeCoverage]
 
 
-
 // Create the terminal instance without any non-standard settings.
-using var terminal = new Terminal(CursesBackend.NCurses(), new());
+using var terminal = new Terminal(CursesBackend.PdCurses(), new());
 
 // Set the main screen attributes for text and drawings.
 terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, StandardColor.Blue);

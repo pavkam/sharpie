@@ -119,7 +119,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public int echo() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.echo>()();
 
-    public int endwin() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.endwin>()();
+    public abstract int endwin();
 
     public int erasewchar(out uint @char) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.erasewchar>()(out @char);
@@ -443,8 +443,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public abstract int wvline_set(IntPtr window, ComplexChar @char, int count);
 
-    public virtual int getmouse(out CursesMouseState state) =>
-        CursesSymbolResolver.Resolve<BaseCursesFunctionMap.getmouse>()(out state);
+    public abstract int getmouse(out CursesMouseState state);
 
     public virtual int mousemask(uint newMask, out uint oldMask)
     {

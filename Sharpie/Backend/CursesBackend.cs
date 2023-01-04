@@ -219,7 +219,7 @@ public static class CursesBackend
         Debug.Assert(dotNetSystemAdapter != null);
         Debug.Assert(libPathResolver != null);
 
-        var cw = NativeLibraryWrapper<PdCursesFunctionMap>.TryLoad(dotNetSystemAdapter,
+        var cw = NativeLibraryWrapper<PdCursesMod32FunctionMap>.TryLoad(dotNetSystemAdapter,
             libPathResolver(PdCursesPrefix));
 
         if (cw == null)
@@ -227,7 +227,7 @@ public static class CursesBackend
             throw new CursesInitializationException();
         }
 
-        return new PdCursesBackend(dotNetSystemAdapter, cw);
+        return new PdCursesMod32Backend(dotNetSystemAdapter, cw);
     }
 
     /// <summary>
