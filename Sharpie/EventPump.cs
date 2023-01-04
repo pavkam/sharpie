@@ -241,8 +241,8 @@ public sealed class EventPump: IEventPump
                 cme.Button, cme.State, cme.Modifiers),
             CursesKeyEvent { Key: var key, Modifiers: var mod } => new KeyEvent(key, new(ControlCharacter.Null),
                 Terminal.Curses.key_name((uint) key), mod),
-            CursesCharEvent { Char: var ch, Modifiers: var mod } => new KeyEvent(Key.Character, new(ch), Terminal.Curses.key_name(ch),
-                mod),
+            CursesCharEvent { Char: var ch, Modifiers: var mod } => new KeyEvent(Key.Character, new(ch),
+                Terminal.Curses.key_name(ch), mod),
             var _ => null
         };
     }

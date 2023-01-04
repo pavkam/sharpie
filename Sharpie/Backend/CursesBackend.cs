@@ -9,28 +9,28 @@ using System.Text.RegularExpressions;
 public static class CursesBackend
 {
     /// <summary>
-    /// Lists the supported backends.
+    ///     Lists the supported backends.
     /// </summary>
     [PublicAPI, Flags]
     public enum Provider
     {
         /// <summary>
-        /// The NCurses back-end.
+        ///     The NCurses back-end.
         /// </summary>
         NCurses = 1,
-        
+
         /// <summary>
-        /// The PDCurses back-end.
+        ///     The PDCurses back-end.
         /// </summary>
         PdCurses = 2,
-        
+
         /// <summary>
-        /// The PDCursesMod with 32-bit WIDE support.
+        ///     The PDCursesMod with 32-bit WIDE support.
         /// </summary>
         PdCursesMod32Wide = 4,
-        
+
         /// <summary>
-        /// Any supported backend.
+        ///     Any supported backend.
         /// </summary>
         Any = NCurses | PdCurses | PdCursesMod32Wide
     }
@@ -44,7 +44,8 @@ public static class CursesBackend
     /// <returns>The loaded backend or <c>null</c> if the load failed.</returns>
     [SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
      SupportedOSPlatform("windows")]
-    internal static BaseCursesBackend? TryLoad(IDotNetSystemAdapter dotNetSystemAdapter, Provider provider, string[] paths)
+    internal static BaseCursesBackend? TryLoad(IDotNetSystemAdapter dotNetSystemAdapter, Provider provider,
+        string[] paths)
     {
         Debug.Assert(dotNetSystemAdapter != null);
         Debug.Assert(paths != null);
@@ -53,7 +54,8 @@ public static class CursesBackend
         {
             Provider.NCurses => NativeLibraryWrapper<NCursesFunctionMap>.TryLoad(dotNetSystemAdapter, paths),
             Provider.PdCurses => NativeLibraryWrapper<PdCursesFunctionMap>.TryLoad(dotNetSystemAdapter, paths),
-            Provider.PdCursesMod32Wide => NativeLibraryWrapper<PdCursesMod32FunctionMap>.TryLoad(dotNetSystemAdapter, paths),
+            Provider.PdCursesMod32Wide => NativeLibraryWrapper<PdCursesMod32FunctionMap>.TryLoad(dotNetSystemAdapter,
+                paths),
             var _ => null
         };
 
@@ -65,15 +67,15 @@ public static class CursesBackend
         INativeSymbolResolver? cSym = dotNetSystemAdapter.IsUnixLike
             ? NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, new[] { "libc" })
             : null;
-     
+
         return provider switch
         {
             Provider.PdCurses => new PdCursesBackend(dotNetSystemAdapter, sym, cSym),
             Provider.PdCursesMod32Wide => new PdCursesMod32Backend(dotNetSystemAdapter, sym, cSym),
-            var _ => new NCursesBackend(dotNetSystemAdapter, sym, cSym),
+            var _ => new NCursesBackend(dotNetSystemAdapter, sym, cSym)
         };
     }
-    
+
     /// <summary>
     ///     Internal method that loads the NCurses backend from native libraries (and any other support library that is
     ///     required).
@@ -82,64 +84,43 @@ public static class CursesBackend
     /// <param name="providers">The desired providers.</param>
     /// <param name="dotNetSystemAdapter">Adapter for .NET system.</param>
     /// <returns>The loaded Curses backend.</returns>
-    /// <exception cref="ArgumentException">Thrown if <paramref name="providers"/> is empty.</exception>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="providers" /> is empty.</exception>
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     [SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
      SupportedOSPlatform("windows")]
     internal static ICursesBackend Load(IDotNetSystemAdapter dotNetSystemAdapter, Provider providers)
     {
         ICursesBackend? result = null;
-        
+
         if (providers.HasFlag(Provider.PdCursesMod32Wide))
         {
             if (dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd)
             {
-                result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide, new[]
-                {
-                    "libpdcurses2.so", 
-                    "libpdcurses.so", 
-                    "libXCurses.so", 
-                });
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide,
+                    new[] { "libpdcurses2.so", "libpdcurses.so", "libXCurses.so" });
             } else if (dotNetSystemAdapter.IsMacOs)
             {
-                result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide, new[]
-                {
-                    "libpdcurses.dylib", 
-                });
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide, new[] { "libpdcurses.dylib" });
             } else if (dotNetSystemAdapter.IsWindows)
             {
-                result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide, new[]
-                {
-                    "libpdcurses.dll",
-                    "pdcurses.dll"
-                });
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide,
+                    new[] { "libpdcurses.dll", "pdcurses.dll" });
             }
         }
-        
+
         if (providers.HasFlag(Provider.PdCurses) && result == null)
         {
             if (dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd)
             {
-                result = TryLoad(dotNetSystemAdapter, Provider.PdCurses, new[]
-                {
-                    "libpdcurses2.so", 
-                    "libpdcurses.so", 
-                    "libXCurses.so", 
-                });
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCurses,
+                    new[] { "libpdcurses2.so", "libpdcurses.so", "libXCurses.so" });
             } else if (dotNetSystemAdapter.IsMacOs)
             {
-                result = TryLoad(dotNetSystemAdapter, Provider.PdCurses, new[]
-                {
-                    "libpdcurses.dylib", 
-                    "libpdcurses2.dylib" 
-                });
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCurses,
+                    new[] { "libpdcurses.dylib", "libpdcurses2.dylib" });
             } else if (dotNetSystemAdapter.IsWindows)
             {
-                result = TryLoad(dotNetSystemAdapter, Provider.PdCurses, new[]
-                {
-                    "libpdcurses.dll",
-                    "pdcurses.dll"
-                });
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCurses, new[] { "libpdcurses.dll", "pdcurses.dll" });
             }
         }
 
@@ -147,40 +128,43 @@ public static class CursesBackend
         {
             if (dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd)
             {
-                result = TryLoad(dotNetSystemAdapter, Provider.NCurses, new[]
-                {
-                    "libncursesw.so.6",
-                    "libncursesw.so.5",
-                    "libncursesw.so",
-                    "ncursesw",
-                    "libncurses.so.6",
-                    "libncurses.so.5",
-                    "libncurses.so",
-                    "ncurses"
-                });
+                result = TryLoad(dotNetSystemAdapter, Provider.NCurses,
+                    new[]
+                    {
+                        "libncursesw.so.6",
+                        "libncursesw.so.5",
+                        "libncursesw.so",
+                        "ncursesw",
+                        "libncurses.so.6",
+                        "libncurses.so.5",
+                        "libncurses.so",
+                        "ncurses"
+                    });
             } else if (dotNetSystemAdapter.IsMacOs)
             {
-                result = TryLoad(dotNetSystemAdapter, Provider.NCurses, FindMacOsNCursesCandidates(dotNetSystemAdapter));
+                result = TryLoad(dotNetSystemAdapter, Provider.NCurses,
+                    FindMacOsNCursesCandidates(dotNetSystemAdapter));
             } else if (dotNetSystemAdapter.IsWindows)
             {
-                result = TryLoad(dotNetSystemAdapter, Provider.NCurses, new[]
-                {
-                    "libncursesw.dll",
-                    "libncursesw6.dll",
-                    "libncursesw5.dll",
-                    "ncursesw.dll",
-                    "ncursesw6.dll",
-                    "ncursesw5.dll",
-                    "libncurses.dll",
-                    "libncurses6.dll",
-                    "libncurses5.dll",
-                    "ncurses.dll",
-                    "ncurses6.dll",
-                    "ncurses5.dll"
-                });
+                result = TryLoad(dotNetSystemAdapter, Provider.NCurses,
+                    new[]
+                    {
+                        "libncursesw.dll",
+                        "libncursesw6.dll",
+                        "libncursesw5.dll",
+                        "ncursesw.dll",
+                        "ncursesw6.dll",
+                        "ncursesw5.dll",
+                        "libncurses.dll",
+                        "libncurses6.dll",
+                        "libncurses5.dll",
+                        "ncurses.dll",
+                        "ncurses6.dll",
+                        "ncurses5.dll"
+                    });
             }
         }
-        
+
         if (result == null)
         {
             throw new CursesInitializationException();
@@ -190,17 +174,18 @@ public static class CursesBackend
     }
 
     /// <summary>
-    ///     Loads the Curses backend based on the specified <paramref name="providers"/>. 
+    ///     Loads the Curses backend based on the specified <paramref name="providers" />.
     /// </summary>
     /// <param name="providers">The desired providers.</param>
     /// <returns>The loaded Curses backend.</returns>
     /// <exception cref="CursesInitializationException">Thrown if no suitable provider was found.</exception>
-    /// <exception cref="ArgumentException">Thrown if <paramref name="providers"/> is empty.</exception>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="providers" /> is empty.</exception>
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested."),
      SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
      SupportedOSPlatform("windows")]
-    public static ICursesBackend Load(Provider providers = Provider.Any) => Load(IDotNetSystemAdapter.Instance, providers);
-    
+    public static ICursesBackend Load(Provider providers = Provider.Any) =>
+        Load(IDotNetSystemAdapter.Instance, providers);
+
     private static IEnumerable<(string name, int version)> GetCandidatesInDirectory(
         IDotNetSystemAdapter dotNetSystemAdapter, string directory, Regex pattern)
     {
@@ -215,7 +200,7 @@ public static class CursesBackend
                                       .Value), version: int.Parse(m.Groups[1]
                                                                    .Value)));
     }
-    
+
     [SupportedOSPlatform("macos")]
     private static string[] FindMacOsNCursesCandidates(IDotNetSystemAdapter dotNetSystemAdapter)
     {

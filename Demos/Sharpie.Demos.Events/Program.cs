@@ -34,7 +34,6 @@ using Sharpie.Backend;
 
 [assembly: ExcludeFromCodeCoverage]
 
-
 // Create the terminal instance without any non-standard settings.
 using var terminal = new Terminal(CursesBackend.Load(), new());
 
@@ -73,7 +72,7 @@ foreach (var @event in terminal.Events.Listen(subWindow))
         {
             terminal.Screen.MarkDirty();
             terminal.Screen.Refresh();
-            
+
             subWindow.MarkDirty();
             subWindow.Refresh();
         }

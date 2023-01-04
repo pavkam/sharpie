@@ -8,30 +8,15 @@ namespace Sharpie.Backend;
 [PublicAPI]
 internal class PdCursesBackend: BaseCursesBackend
 {
-    [Flags]
-    private enum PdVideoAttribute: uint
-    {
-        Normal = 0,
-        AltCharset = 0x00010000,
-        RightHighlight = 0x00020000,
-        LeftHighlight = 0x00040000,
-        Italic = 0x00080000,
-        Underline = 0x00100000,
-        Reverse = 0x00200000,
-        Blink = 0x00400000,
-        Bold = 0x00800000,
-        StandOut = Reverse | Bold,
-    }
-
     /// <summary>
     ///     Creates a new instance of this class.
     /// </summary>
     /// <param name="dotNetSystemAdapter">The .NET system adapter.</param>
     /// <param name="pdCursesSymbolResolver">The PDCurses library symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
-    internal PdCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, 
-        INativeSymbolResolver pdCursesSymbolResolver, INativeSymbolResolver? libCSymbolResolver):
-        base(dotNetSystemAdapter, pdCursesSymbolResolver, libCSymbolResolver) =>
+    internal PdCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver pdCursesSymbolResolver,
+        INativeSymbolResolver? libCSymbolResolver): base(dotNetSystemAdapter, pdCursesSymbolResolver,
+        libCSymbolResolver) =>
         CursesMouseEventParser = CursesMouseEventParser.Get(2);
 
     /// <inheritdoc cref="BaseCursesBackend.CursesMouseEventParser" />
@@ -45,85 +30,101 @@ internal class PdCursesBackend: BaseCursesBackend
         {
             pdc |= PdVideoAttribute.StandOut;
         }
+
         if (attributes.HasFlag(VideoAttribute.Underline))
         {
             pdc |= PdVideoAttribute.Underline;
         }
+
         if (attributes.HasFlag(VideoAttribute.Reverse))
         {
             pdc |= PdVideoAttribute.Reverse;
         }
+
         if (attributes.HasFlag(VideoAttribute.Blink))
         {
             pdc |= PdVideoAttribute.Blink;
         }
+
         if (attributes.HasFlag(VideoAttribute.Bold))
         {
             pdc |= PdVideoAttribute.Bold;
         }
+
         if (attributes.HasFlag(VideoAttribute.AltCharset))
         {
             pdc |= PdVideoAttribute.AltCharset;
         }
+
         if (attributes.HasFlag(VideoAttribute.LeftHighlight))
         {
             pdc |= PdVideoAttribute.LeftHighlight;
         }
+
         if (attributes.HasFlag(VideoAttribute.RightHighlight))
         {
             pdc |= PdVideoAttribute.RightHighlight;
         }
+
         if (attributes.HasFlag(VideoAttribute.Italic))
         {
             pdc |= PdVideoAttribute.Italic;
         }
-        
+
         return (uint) pdc | (((uint) colorPair & 0xFF) << 24);
     }
 
     /// <inheritdoc cref="BaseCursesBackend.DecodeCursesAttributes" />
     protected internal override (VideoAttribute attributes, short colorPair) DecodeCursesAttributes(uint attrs)
     {
-        var pdc = (PdVideoAttribute)(attrs & 0x00FF0000);
+        var pdc = (PdVideoAttribute) (attrs & 0x00FF0000);
         var at = VideoAttribute.None;
-        
+
         if (pdc.HasFlag(PdVideoAttribute.StandOut))
         {
             at |= VideoAttribute.StandOut;
         }
+
         if (pdc.HasFlag(PdVideoAttribute.Underline))
         {
             at |= VideoAttribute.Underline;
         }
+
         if (pdc.HasFlag(PdVideoAttribute.Reverse) && !pdc.HasFlag(PdVideoAttribute.Bold))
         {
             at |= VideoAttribute.Reverse;
         }
+
         if (pdc.HasFlag(PdVideoAttribute.Blink))
         {
             at |= VideoAttribute.Blink;
         }
+
         if (pdc.HasFlag(PdVideoAttribute.Bold) && !pdc.HasFlag(PdVideoAttribute.Reverse))
         {
             at |= VideoAttribute.Bold;
         }
+
         if (pdc.HasFlag(PdVideoAttribute.AltCharset))
         {
             at |= VideoAttribute.AltCharset;
         }
+
         if (pdc.HasFlag(PdVideoAttribute.LeftHighlight))
         {
             at |= VideoAttribute.LeftHighlight;
         }
+
         if (pdc.HasFlag(PdVideoAttribute.RightHighlight))
         {
             at |= VideoAttribute.RightHighlight;
         }
+
         if (pdc.HasFlag(PdVideoAttribute.Italic))
         {
             at |= VideoAttribute.Italic;
         }
-        
+
         return (at, (short) (attrs >> 24));
     }
 
@@ -143,7 +144,7 @@ internal class PdCursesBackend: BaseCursesBackend
     /// <inheritdoc cref="BaseCursesBackend.DecodeRawKey" />
     protected internal override (Key key, char @char, ModifierKey modifierKey) DecodeRawKey(uint keyCode)
     {
-        return (PdCursesKeyCode)keyCode switch
+        return (PdCursesKeyCode) keyCode switch
         {
             PdCursesKeyCode.F1 => (Key.F1, ControlCharacter.Null, ModifierKey.None),
             PdCursesKeyCode.F2 => (Key.F2, ControlCharacter.Null, ModifierKey.None),
@@ -359,6 +360,21 @@ internal class PdCursesBackend: BaseCursesBackend
         };
     }
 
+    [Flags]
+    private enum PdVideoAttribute: uint
+    {
+        Normal = 0,
+        AltCharset = 0x00010000,
+        RightHighlight = 0x00020000,
+        LeftHighlight = 0x00040000,
+        Italic = 0x00080000,
+        Underline = 0x00100000,
+        Reverse = 0x00200000,
+        Blink = 0x00400000,
+        Bold = 0x00800000,
+        StandOut = Reverse | Bold
+    }
+
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
@@ -375,11 +391,12 @@ internal class PdCursesBackend: BaseCursesBackend
     {
         attributes = VideoAttribute.None;
         colorPair = 0;
-        
+
         return Helpers.CursesErrorResult;
     }
 
-    public override int slk_attr_set(VideoAttribute attributes, short colorPair, IntPtr reserved) => Helpers.CursesErrorResult;
+    public override int slk_attr_set(VideoAttribute attributes, short colorPair, IntPtr reserved) =>
+        Helpers.CursesErrorResult;
 
     public override int slk_clear() => Helpers.CursesErrorResult;
 

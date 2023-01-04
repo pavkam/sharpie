@@ -38,41 +38,18 @@ internal abstract class PdCursesMod32FunctionMap: BaseCursesFunctionMap
 {
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int endwin_w32_4302();
-    
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int nc_getmouse(out CursesMouseState state);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int getcchar(ref uint @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, out uint attrs,
         out short colorPair, IntPtr reserved);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int nc_getmouse(out CursesMouseState state);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int setcchar(out uint @char, [MarshalAs(UnmanagedType.LPWStr)] string text, uint attrs,
         short colorPair, IntPtr reserved);
 
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wadd_wch(IntPtr window, ref uint @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wbkgrnd(IntPtr window, ref uint @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wborder_set(IntPtr window, ref uint leftSide, ref uint rightSide, ref uint topSide,
-        ref uint bottomSide, ref uint topLeftCorner, ref uint topRightCorner, ref uint bottomLeftCorner,
-        ref uint bottomRightCorner);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wgetbkgrnd(IntPtr window, out uint @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int whline_set(IntPtr window, ref uint @char, int count);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int win_wch(IntPtr window, out uint @char);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int wvline_set(IntPtr window, ref uint @char, int count);
-    
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int slk_attr();
 
@@ -109,4 +86,26 @@ internal abstract class PdCursesMod32FunctionMap: BaseCursesFunctionMap
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int slk_touch();
 
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int wadd_wch(IntPtr window, ref uint @char);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int wbkgrnd(IntPtr window, ref uint @char);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int wborder_set(IntPtr window, ref uint leftSide, ref uint rightSide, ref uint topSide,
+        ref uint bottomSide, ref uint topLeftCorner, ref uint topRightCorner, ref uint bottomLeftCorner,
+        ref uint bottomRightCorner);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int wgetbkgrnd(IntPtr window, out uint @char);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int whline_set(IntPtr window, ref uint @char, int count);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int win_wch(IntPtr window, out uint @char);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int wvline_set(IntPtr window, ref uint @char, int count);
 }

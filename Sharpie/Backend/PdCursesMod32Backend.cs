@@ -9,44 +9,48 @@ namespace Sharpie.Backend;
 internal class PdCursesMod32Backend: PdCursesBackend
 {
     private const int KeyOffset = 0xeb00;
-    
+
     /// <summary>
     ///     Creates a new instance of this class.
     /// </summary>
     /// <param name="dotNetSystemAdapter">The .NET system adapter.</param>
     /// <param name="pdCursesSymbolResolver">The PDCursesMod library symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
-    internal PdCursesMod32Backend(IDotNetSystemAdapter dotNetSystemAdapter, 
-        INativeSymbolResolver pdCursesSymbolResolver, INativeSymbolResolver? libCSymbolResolver):
-        base(dotNetSystemAdapter, pdCursesSymbolResolver, libCSymbolResolver)
+    internal PdCursesMod32Backend(IDotNetSystemAdapter dotNetSystemAdapter,
+        INativeSymbolResolver pdCursesSymbolResolver, INativeSymbolResolver? libCSymbolResolver): base(
+        dotNetSystemAdapter, pdCursesSymbolResolver, libCSymbolResolver)
     {
-        
     }
-    
+
     /// <inheritdoc cref="BaseCursesBackend.DecodeKeyCodeType" />
     protected internal override CursesKeyCodeType DecodeKeyCodeType(int result, uint keyCode)
     {
         return (result, keyCode) switch
         {
             (< 0, var _) => CursesKeyCodeType.Unknown,
-            ((int) PdCursesKeyCode.Yes + KeyOffset, (uint) PdCursesKeyCode.Resize + KeyOffset) => CursesKeyCodeType.Resize,
-            ((int) PdCursesKeyCode.Yes + KeyOffset, (uint) PdCursesKeyCode.Mouse + KeyOffset) => CursesKeyCodeType.Mouse,
+            ((int) PdCursesKeyCode.Yes + KeyOffset, (uint) PdCursesKeyCode.Resize + KeyOffset) => CursesKeyCodeType
+                .Resize,
+            ((int) PdCursesKeyCode.Yes + KeyOffset, (uint) PdCursesKeyCode.Mouse + KeyOffset) =>
+                CursesKeyCodeType.Mouse,
             ((int) PdCursesKeyCode.Yes + KeyOffset, var _) => CursesKeyCodeType.Key,
             (>= 0, var _) => CursesKeyCodeType.Character
         };
     }
 
     /// <inheritdoc cref="BaseCursesBackend.DecodeRawKey" />
-    protected internal override (Key key, char @char, ModifierKey modifierKey) DecodeRawKey(uint keyCode) => base.DecodeRawKey(keyCode - KeyOffset);
+    protected internal override (Key key, char @char, ModifierKey modifierKey) DecodeRawKey(uint keyCode) =>
+        base.DecodeRawKey(keyCode - KeyOffset);
 
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
     public override int slk_attr_off(VideoAttribute attributes, IntPtr reserved) =>
-        CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_attr_off>()(EncodeCursesAttribute(attributes, 0), reserved);
+        CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_attr_off>()(EncodeCursesAttribute(attributes, 0),
+            reserved);
 
     public override int slk_attr_on(VideoAttribute attributes, IntPtr reserved) =>
-        CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_attr_on>()(EncodeCursesAttribute(attributes, 0), reserved);
+        CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_attr_on>()(EncodeCursesAttribute(attributes, 0),
+            reserved);
 
     public override int slk_attr(out VideoAttribute attributes, out short colorPair)
     {
@@ -64,8 +68,8 @@ internal class PdCursesMod32Backend: PdCursesBackend
     }
 
     public override int slk_attr_set(VideoAttribute attributes, short colorPair, IntPtr reserved) =>
-        CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_attr_set>()(EncodeCursesAttribute(attributes, 0), colorPair,
-            reserved);
+        CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_attr_set>()(EncodeCursesAttribute(attributes, 0),
+            colorPair, reserved);
 
     public override int slk_clear() => CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_clear>()();
 
@@ -75,7 +79,8 @@ internal class PdCursesMod32Backend: PdCursesBackend
     public override int slk_set(int labelIndex, string title, int align) =>
         CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_set>()(labelIndex, title, align);
 
-    public override int slk_init(int format) => CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_init>()(format);
+    public override int slk_init(int format) =>
+        CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_init>()(format);
 
     public override int slk_noutrefresh() => CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_noutrefresh>()();
 
@@ -84,7 +89,7 @@ internal class PdCursesMod32Backend: PdCursesBackend
     public override int slk_restore() => CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_restore>()();
 
     public override int slk_touch() => CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_touch>()();
-    
+
     public override int endwin() => CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.endwin_w32_4302>()();
 
     public override int getmouse(out CursesMouseState state) =>
@@ -144,8 +149,9 @@ internal class PdCursesMod32Backend: PdCursesBackend
             bottomRightCorner.GetRawValue<uint>()
         };
 
-        return CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.wborder_set>()(window, ref c[0], ref c[1], ref c[2],
-            ref c[3], ref c[4], ref c[5], ref c[6], ref c[7]);
+        return CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.wborder_set>()(window, ref c[0], ref c[1],
+            ref c[2], ref c[3], ref c[4], ref c[5], ref c[6],
+            ref c[7]);
     }
 
     public override int wgetbkgrnd(IntPtr window, out ComplexChar @char)

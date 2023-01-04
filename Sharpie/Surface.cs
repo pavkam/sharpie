@@ -214,11 +214,11 @@ public abstract class Surface: ISurface, IDisposable
         }
         set
         {
-            if (!IsPointWithin(value)) //TODO: this is messed up -- the origin check should not always apply.
+            if (!IsPointWithin(value))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
-            
+
             Curses.wmove(Handle, value.Y, value.X)
                   .Check(nameof(Curses.wmove), "Failed to move the caret.");
         }
@@ -673,8 +673,7 @@ public abstract class Surface: ISurface, IDisposable
     public bool IsPointWithin(Point point)
     {
         var size = Size;
-        var origin = Origin;
-        return point.X >= origin.X && point.Y >= origin.Y && point.X < size.Width && point.Y < size.Height;
+        return point is { X: >= 0, Y: >= 0 } && point.X < size.Width && point.Y < size.Height;
     }
 
     /// <inheritdoc cref="ISurface.IsRectangleWithin" />

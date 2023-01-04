@@ -16,7 +16,7 @@ internal interface IDotNetSystemAdapter
     /// <returns><c>true</c> if the operating system is Windows; <c>false</c> otherwise.</returns>
     [SupportedOSPlatformGuard("windows"), ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     bool IsWindows => OperatingSystem.IsWindows();
-    
+
     /// <summary>
     ///     Checks if the operating system is Linux.
     /// </summary>

@@ -14,14 +14,12 @@ internal abstract class BaseCursesBackend: ICursesBackend
     /// <param name="dotNetSystemAdapter">The .NET system interop adapter.</param>
     /// <param name="cursesSymbolResolver">The Curses symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
-    protected BaseCursesBackend(
-        IDotNetSystemAdapter dotNetSystemAdapter, 
-        INativeSymbolResolver cursesSymbolResolver,
+    protected BaseCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver cursesSymbolResolver,
         INativeSymbolResolver? libCSymbolResolver)
     {
         Debug.Assert(dotNetSystemAdapter != null);
         Debug.Assert(cursesSymbolResolver != null);
-        
+
         LibCSymbolResolver = libCSymbolResolver;
         DotNetSystemAdapter = dotNetSystemAdapter;
         CursesSymbolResolver = cursesSymbolResolver;
@@ -36,7 +34,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
     ///     The Curses symbol resolver.
     /// </summary>
     protected internal INativeSymbolResolver CursesSymbolResolver { get; }
-    
+
     /// <summary>
     ///     The Libc symbol resolver.
     /// </summary>

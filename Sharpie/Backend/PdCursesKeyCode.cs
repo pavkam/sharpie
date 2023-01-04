@@ -247,5 +247,5 @@ public enum PdCursesKeyCode: uint
     RightAlt = Yes + 0x121,
     Resize = Yes + 0x122,
     ShiftUp = Yes + 0x123,
-    ShiftDown = Yes + 0x124,
+    ShiftDown = Yes + 0x124
 }
