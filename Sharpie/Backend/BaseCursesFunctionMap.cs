@@ -129,17 +129,12 @@ internal abstract class BaseCursesFunctionMap
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int intrflush(IntPtr window, bool set);
 
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool is_immedok(IntPtr window);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate bool is_leaveok(IntPtr window);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate bool is_linetouched(IntPtr window, int line);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool is_scrollok(IntPtr window);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate bool is_wintouched(IntPtr window);

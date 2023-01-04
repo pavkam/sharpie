@@ -90,11 +90,11 @@ internal abstract class BaseCursesBackend: ICursesBackend
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
-    public bool is_immedok(IntPtr window) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.is_immedok>()(window);
+    public abstract bool is_immedok(IntPtr window);
 
     public bool is_leaveok(IntPtr window) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.is_leaveok>()(window);
 
-    public bool is_scrollok(IntPtr window) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.is_scrollok>()(window);
+    public abstract bool is_scrollok(IntPtr window);
 
     public int baudrate() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.baudrate>()();
 
@@ -152,7 +152,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public bool has_colors() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.has_colors>()();
 
-    public void immedok(IntPtr window, bool set) =>
+    public virtual void immedok(IntPtr window, bool set) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.immedok>()(window, set);
 
     public virtual IntPtr initscr()
@@ -249,7 +249,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
     public int ripoffline(int lines, ICursesBackend.ripoffline_callback callback) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.ripoffline>()(lines, callback);
 
-    public int scrollok(IntPtr window, bool set) =>
+    public virtual int scrollok(IntPtr window, bool set) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.scrollok>()(window, set);
 
     public abstract int slk_attr_off(VideoAttribute attributes, IntPtr reserved);

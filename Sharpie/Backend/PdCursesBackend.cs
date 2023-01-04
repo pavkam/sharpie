@@ -8,6 +8,8 @@ namespace Sharpie.Backend;
 [PublicAPI]
 internal class PdCursesBackend: BaseCursesBackend
 {
+    private readonly Dictionary<IntPtr, (bool immedOk, bool scrollOk)> _windowStates = new();
+    
     /// <summary>
     ///     Creates a new instance of this class.
     /// </summary>
@@ -377,6 +379,40 @@ internal class PdCursesBackend: BaseCursesBackend
 
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
+
+    public override bool is_immedok(IntPtr window) => _windowStates.TryGetValue(window, out var state) && state.immedOk; // TODO: test me
+
+    public override bool is_scrollok(IntPtr window) =>
+        _windowStates.TryGetValue(window, out var state) && state.scrollOk; // TODO: test me
+    
+    public override int scrollok(IntPtr window, bool set) // TODO: test me
+    {
+        var res = base.scrollok(window, set);
+        if (!res.Failed())
+        {
+            if (_windowStates.TryGetValue(window, out var state))
+            {
+                _windowStates[window] = (state.immedOk, set);
+            } else
+            {
+                _windowStates[window] = (false, set);
+            }
+        }
+
+        return res;
+    }
+
+    public override void immedok(IntPtr window, bool set) // TODO: test me
+    {
+        base.immedok(window, set);
+        if (_windowStates.TryGetValue(window, out var state))
+        {
+            _windowStates[window] = (set, state.scrollOk);
+        } else
+        {
+            _windowStates[window] = (set, false);
+        }
+    }
 
     public override int endwin() => CursesSymbolResolver.Resolve<PdCursesFunctionMap.endwin>()();
 

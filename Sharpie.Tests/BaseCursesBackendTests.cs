@@ -121,17 +121,7 @@ public class BaseCursesBackendTests
 
         _dotNetSystemAdapterMock.Verify(v => v.SetConsoleTitle("hello"), Times.Once);
     }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void is_immedok_IsRelayedToLibrary(bool ret)
-    {
-        var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.is_immedok, bool>(s => s(h), ret);
-
-        _backend.is_immedok(h)
-                .ShouldBe(ret);
-    }
-
+    
     [TestMethod, DataRow(true), DataRow(false)]
     public void is_leaveok_IsRelayedToLibrary(bool ret)
     {
@@ -139,16 +129,6 @@ public class BaseCursesBackendTests
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.is_leaveok, bool>(s => s(h), ret);
 
         _backend.is_leaveok(h)
-                .ShouldBe(ret);
-    }
-
-    [TestMethod, DataRow(true), DataRow(false)]
-    public void is_scrollok_IsRelayedToLibrary(bool ret)
-    {
-        var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.is_scrollok, bool>(s => s(h), ret);
-
-        _backend.is_scrollok(h)
                 .ShouldBe(ret);
     }
 
@@ -483,7 +463,8 @@ public class BaseCursesBackendTests
     public void scrollok_IsRelayedToLibrary(bool yes, int ret)
     {
         var h = new IntPtr(999);
-
+        _backendMock.Setup(s => s.scrollok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
+                    .CallBase();
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.scrollok, int>(s => s(h, yes), ret);
 
         _backend.scrollok(h, yes)
@@ -506,7 +487,9 @@ public class BaseCursesBackendTests
     {
         var h = new IntPtr(999);
         var called = false;
-
+        _backendMock.Setup(s => s.immedok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
+                    .CallBase();
+        
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.immedok>()
                                  .Setup(s => s(h, yes))
                                  .Callback((IntPtr _, bool _) => { called = true; });
