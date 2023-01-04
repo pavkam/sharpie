@@ -55,7 +55,7 @@ public enum Key: uint
     ///     The Escape key.
     /// </summary>
     Escape,
-    
+
     /// <summary>
     ///     The Insert key.
     /// </summary>

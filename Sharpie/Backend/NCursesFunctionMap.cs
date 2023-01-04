@@ -38,13 +38,13 @@ internal abstract class NCursesFunctionMap: BaseCursesFunctionMap
 {
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int endwin();
-    
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate int getmouse(out CursesMouseState state);
-    
+
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int getcchar(ref NCursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest,
         out uint attrs, out short colorPair, IntPtr reserved);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate int getmouse(out CursesMouseState state);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int setcchar(out NCursesComplexChar @char, [MarshalAs(UnmanagedType.LPWStr)] string text,

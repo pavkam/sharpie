@@ -36,7 +36,7 @@ public class PdCursesMod32BackendTests
     private PdCursesMod32Backend _backend = null!;
     private Mock<IDotNetSystemAdapter> _dotNetSystemAdapterMock = null!;
     private Mock<INativeSymbolResolver> _nativeSymbolResolverMock = null!;
-    
+
     private static (ComplexChar, uint) MakeTestComplexChar(uint x = 1) => (new(x), x);
 
     [TestInitialize]
@@ -56,7 +56,7 @@ public class PdCursesMod32BackendTests
         _backend.endwin()
                 .ShouldBe(ret);
     }
-    
+
     [TestMethod, DataRow(0), DataRow(-1)]
     public void getmouse_IsRelayedToLibrary(int ret)
     {
@@ -75,7 +75,7 @@ public class PdCursesMod32BackendTests
 
         x.ShouldBe(exp);
     }
-    
+
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_clear_IsRelayedToLibrary(int ret)
     {
@@ -146,8 +146,7 @@ public class PdCursesMod32BackendTests
     [TestMethod]
     public void slk_attr_IsRelayedToLibrary_1()
     {
-        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr, int>(s => s(),
-            0x0A400000);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr, int>(s => s(), 0x0A400000);
 
         _backend.slk_attr(out var a, out var cp)
                 .ShouldBe(0);
@@ -168,8 +167,8 @@ public class PdCursesMod32BackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_set_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr_set, int>(
-            s => s(0x00400000, 2, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr_set, int>(s => s(0x00400000, 2, new(2)),
+            ret);
 
         _backend.slk_attr_set(VideoAttribute.Blink, 2, new(2))
                 .ShouldBe(ret);
@@ -187,8 +186,8 @@ public class PdCursesMod32BackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_on_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr_on, int>(
-            s => s(0x00400000, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr_on, int>(s => s(0x00400000, new(2)),
+            ret);
 
         _backend.slk_attr_on(VideoAttribute.Blink, new(2))
                 .ShouldBe(ret);
@@ -197,13 +196,13 @@ public class PdCursesMod32BackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_off_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr_off, int>(
-            s => s(0x00400000, new(2)), ret);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.slk_attr_off, int>(s => s(0x00400000, new(2)),
+            ret);
 
         _backend.slk_attr_off(VideoAttribute.Blink, new(2))
                 .ShouldBe(ret);
     }
-    
+
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wadd_wch_IsRelayedToLibrary(int ret)
     {
@@ -315,8 +314,7 @@ public class PdCursesMod32BackendTests
         var (ch, nc) = MakeTestComplexChar();
 
         _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.setcchar>()
-                                 .Setup(s => s(out It.Ref<uint>.IsAny, "text",
-                                     0x00400000, 20, new(2)))
+                                 .Setup(s => s(out It.Ref<uint>.IsAny, "text", 0x00400000, 20, new(2)))
                                  .Returns((out uint o, string _, uint _, short _,
                                      IntPtr _) =>
                                  {
@@ -360,56 +358,39 @@ public class PdCursesMod32BackendTests
         _backend.CursesMouseEventParser.ShouldBe(CursesMouseEventParser.Get(2));
     }
 
-    [TestMethod, 
-     DataRow(VideoAttribute.None, 0),
-     DataRow(VideoAttribute.StandOut, 0x00A00000),
-     DataRow(VideoAttribute.Underline, 0x00100000),
-     DataRow(VideoAttribute.Reverse, 0x00200000),
-     DataRow(VideoAttribute.Blink, 0x00400000),
-     DataRow(VideoAttribute.Dim, 0),
-     DataRow(VideoAttribute.Bold, 0x00800000),
-     DataRow(VideoAttribute.AltCharset, 0x00010000),
-     DataRow(VideoAttribute.Invisible, 0),
-     DataRow(VideoAttribute.Protect, 0),
-     DataRow(VideoAttribute.HorizontalHighlight, 0),
-     DataRow(VideoAttribute.LeftHighlight, 0x00040000),
-     DataRow(VideoAttribute.LowHighlight, 0),
-     DataRow(VideoAttribute.LowHighlight, 0),
-     DataRow(VideoAttribute.RightHighlight, 0x00020000),
-     DataRow(VideoAttribute.TopHighlight, 0),
-     DataRow(VideoAttribute.VerticalHighlight, 0),
-     DataRow(VideoAttribute.Italic, 0x00080000),
-     DataRow(VideoAttribute.AltCharset | VideoAttribute.Bold, 0x00810000),
-    ]
+    [TestMethod, DataRow(VideoAttribute.None, 0), DataRow(VideoAttribute.StandOut, 0x00A00000),
+     DataRow(VideoAttribute.Underline, 0x00100000), DataRow(VideoAttribute.Reverse, 0x00200000),
+     DataRow(VideoAttribute.Blink, 0x00400000), DataRow(VideoAttribute.Dim, 0),
+     DataRow(VideoAttribute.Bold, 0x00800000), DataRow(VideoAttribute.AltCharset, 0x00010000),
+     DataRow(VideoAttribute.Invisible, 0), DataRow(VideoAttribute.Protect, 0),
+     DataRow(VideoAttribute.HorizontalHighlight, 0), DataRow(VideoAttribute.LeftHighlight, 0x00040000),
+     DataRow(VideoAttribute.LowHighlight, 0), DataRow(VideoAttribute.LowHighlight, 0),
+     DataRow(VideoAttribute.RightHighlight, 0x00020000), DataRow(VideoAttribute.TopHighlight, 0),
+     DataRow(VideoAttribute.VerticalHighlight, 0), DataRow(VideoAttribute.Italic, 0x00080000),
+     DataRow(VideoAttribute.AltCharset | VideoAttribute.Bold, 0x00810000)]
     public void EncodeCursesAttribute_WorksAsExpected(VideoAttribute attr, int exp)
     {
         _backend.EncodeCursesAttribute(attr, 15)
-                .ShouldBe((uint)exp | (15 << 24));
+                .ShouldBe((uint) exp | (15 << 24));
     }
 
-    [TestMethod, 
-     DataRow(VideoAttribute.None, 0),
-     DataRow(VideoAttribute.StandOut, 0x00A00000),
-     DataRow(VideoAttribute.Underline, 0x00100000),
-     DataRow(VideoAttribute.Reverse, 0x00200000),
-     DataRow(VideoAttribute.Blink, 0x00400000),
-     DataRow(VideoAttribute.Bold, 0x00800000),
-     DataRow(VideoAttribute.AltCharset, 0x00010000),
-     DataRow(VideoAttribute.LeftHighlight, 0x00040000),
-     DataRow(VideoAttribute.RightHighlight, 0x00020000),
-     DataRow(VideoAttribute.Italic, 0x00080000),
-     DataRow(VideoAttribute.AltCharset | VideoAttribute.Bold, 0x00810000),
-    ]
+    [TestMethod, DataRow(VideoAttribute.None, 0), DataRow(VideoAttribute.StandOut, 0x00A00000),
+     DataRow(VideoAttribute.Underline, 0x00100000), DataRow(VideoAttribute.Reverse, 0x00200000),
+     DataRow(VideoAttribute.Blink, 0x00400000), DataRow(VideoAttribute.Bold, 0x00800000),
+     DataRow(VideoAttribute.AltCharset, 0x00010000), DataRow(VideoAttribute.LeftHighlight, 0x00040000),
+     DataRow(VideoAttribute.RightHighlight, 0x00020000), DataRow(VideoAttribute.Italic, 0x00080000),
+     DataRow(VideoAttribute.AltCharset | VideoAttribute.Bold, 0x00810000)]
     public void DecodeCursesAttributes_WorksAsExpected(VideoAttribute exp, int attr)
     {
-        _backend.DecodeCursesAttributes((uint)attr | (15 << 24))
+        _backend.DecodeCursesAttributes((uint) attr | (15 << 24))
                 .ShouldBe((exp, (short) 15));
     }
 
     [TestMethod, DataRow(-1, 10u, (int) CursesKeyCodeType.Unknown), DataRow(0, 32u, (int) CursesKeyCodeType.Character),
      DataRow(100, 32u, (int) CursesKeyCodeType.Character),
      DataRow((int) PdCursesKeyCode.Yes + 0xeb00, (uint) PdCursesKeyCode.F3 + 0xeb00, (int) CursesKeyCodeType.Key),
-     DataRow((int) PdCursesKeyCode.Yes + 0xeb00, (uint) PdCursesKeyCode.Resize + 0xeb00, (int) CursesKeyCodeType.Resize),
+     DataRow((int) PdCursesKeyCode.Yes + 0xeb00, (uint) PdCursesKeyCode.Resize + 0xeb00,
+         (int) CursesKeyCodeType.Resize),
      DataRow((int) PdCursesKeyCode.Yes + 0xeb00, (uint) PdCursesKeyCode.Mouse + 0xeb00, (int) CursesKeyCodeType.Mouse)]
     public void DecodeKeyCodeType_DecodesProperly(int res, uint code, int exp)
     {
@@ -417,8 +398,7 @@ public class PdCursesMod32BackendTests
                 .ShouldBe((CursesKeyCodeType) exp);
     }
 
-    [TestMethod, 
-     DataRow(PdCursesKeyCode.F1, ControlCharacter.Null, Key.F1, ModifierKey.None),
+    [TestMethod, DataRow(PdCursesKeyCode.F1, ControlCharacter.Null, Key.F1, ModifierKey.None),
      DataRow(PdCursesKeyCode.F2, ControlCharacter.Null, Key.F2, ModifierKey.None),
      DataRow(PdCursesKeyCode.F3, ControlCharacter.Null, Key.F3, ModifierKey.None),
      DataRow(PdCursesKeyCode.F4, ControlCharacter.Null, Key.F4, ModifierKey.None),

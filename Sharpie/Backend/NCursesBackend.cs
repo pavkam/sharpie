@@ -18,11 +18,8 @@ internal class NCursesBackend: BaseCursesBackend
     /// <param name="dotNetSystemAdapter">The .NET system adapter.</param>
     /// <param name="nCursesSymbolResolver">The NCurses library symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
-    internal NCursesBackend(
-        IDotNetSystemAdapter dotNetSystemAdapter, 
-        INativeSymbolResolver nCursesSymbolResolver,
-        INativeSymbolResolver? libCSymbolResolver):
-        base(dotNetSystemAdapter, nCursesSymbolResolver, libCSymbolResolver)
+    internal NCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver nCursesSymbolResolver,
+        INativeSymbolResolver? libCSymbolResolver): base(dotNetSystemAdapter, nCursesSymbolResolver, libCSymbolResolver)
     {
     }
 
@@ -183,23 +180,34 @@ internal class NCursesBackend: BaseCursesBackend
             NCursesKeyCode.CtrlPageDown => (Key.KeypadPageDown, ControlCharacter.Null, ModifierKey.Ctrl),
             NCursesKeyCode.CtrlPageUp => (Key.KeypadPageUp, ControlCharacter.Null, ModifierKey.Ctrl),
             NCursesKeyCode.ShiftCtrlUp => (Key.KeypadUp, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Ctrl),
-            NCursesKeyCode.ShiftCtrlDown => (Key.KeypadDown, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Ctrl),
-            NCursesKeyCode.ShiftCtrlLeft => (Key.KeypadLeft, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Ctrl),
-            NCursesKeyCode.ShiftCtrlRight => (Key.KeypadRight, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Ctrl),
-            NCursesKeyCode.ShiftCtrlHome => (Key.KeypadHome, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Ctrl),
+            NCursesKeyCode.ShiftCtrlDown => (Key.KeypadDown, ControlCharacter.Null,
+                ModifierKey.Shift | ModifierKey.Ctrl),
+            NCursesKeyCode.ShiftCtrlLeft => (Key.KeypadLeft, ControlCharacter.Null,
+                ModifierKey.Shift | ModifierKey.Ctrl),
+            NCursesKeyCode.ShiftCtrlRight => (Key.KeypadRight, ControlCharacter.Null,
+                ModifierKey.Shift | ModifierKey.Ctrl),
+            NCursesKeyCode.ShiftCtrlHome => (Key.KeypadHome, ControlCharacter.Null,
+                ModifierKey.Shift | ModifierKey.Ctrl),
             NCursesKeyCode.ShiftCtrlEnd => (Key.KeypadEnd, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Ctrl),
-            NCursesKeyCode.ShiftCtrlPageDown => (Key.KeypadPageDown, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Ctrl),
-            NCursesKeyCode.ShiftCtrlPageUp => (Key.KeypadPageUp, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Ctrl),
+            NCursesKeyCode.ShiftCtrlPageDown => (Key.KeypadPageDown, ControlCharacter.Null,
+                ModifierKey.Shift | ModifierKey.Ctrl),
+            NCursesKeyCode.ShiftCtrlPageUp => (Key.KeypadPageUp, ControlCharacter.Null,
+                ModifierKey.Shift | ModifierKey.Ctrl),
             NCursesKeyCode.ShiftAltUp => (Key.KeypadUp, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Alt),
             NCursesKeyCode.ShiftAltDown => (Key.KeypadDown, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Alt),
             NCursesKeyCode.ShiftAltLeft => (Key.KeypadLeft, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Alt),
-            NCursesKeyCode.ShiftAltRight => (Key.KeypadRight, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Alt),
-            NCursesKeyCode.ShiftAltPageDown => (Key.KeypadPageDown, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Alt),
-            NCursesKeyCode.ShiftAltPageUp => (Key.KeypadPageUp, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Alt),
+            NCursesKeyCode.ShiftAltRight => (Key.KeypadRight, ControlCharacter.Null,
+                ModifierKey.Shift | ModifierKey.Alt),
+            NCursesKeyCode.ShiftAltPageDown => (Key.KeypadPageDown, ControlCharacter.Null,
+                ModifierKey.Shift | ModifierKey.Alt),
+            NCursesKeyCode.ShiftAltPageUp => (Key.KeypadPageUp, ControlCharacter.Null,
+                ModifierKey.Shift | ModifierKey.Alt),
             NCursesKeyCode.ShiftAltHome => (Key.KeypadHome, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Alt),
             NCursesKeyCode.ShiftAltEnd => (Key.KeypadEnd, ControlCharacter.Null, ModifierKey.Shift | ModifierKey.Alt),
-            NCursesKeyCode.AltCtrlPageDown => (Key.KeypadPageDown, ControlCharacter.Null, ModifierKey.Alt | ModifierKey.Ctrl),
-            NCursesKeyCode.AltCtrlPageUp => (Key.KeypadPageUp, ControlCharacter.Null, ModifierKey.Alt | ModifierKey.Ctrl),
+            NCursesKeyCode.AltCtrlPageDown => (Key.KeypadPageDown, ControlCharacter.Null,
+                ModifierKey.Alt | ModifierKey.Ctrl),
+            NCursesKeyCode.AltCtrlPageUp => (Key.KeypadPageUp, ControlCharacter.Null,
+                ModifierKey.Alt | ModifierKey.Ctrl),
             NCursesKeyCode.AltCtrlHome => (Key.KeypadHome, ControlCharacter.Null, ModifierKey.Alt | ModifierKey.Ctrl),
             NCursesKeyCode.AltCtrlEnd => (Key.KeypadEnd, ControlCharacter.Null, ModifierKey.Alt | ModifierKey.Ctrl),
             var _ => (Key.Unknown, ControlCharacter.Null, ModifierKey.None)
@@ -213,7 +221,7 @@ internal class NCursesBackend: BaseCursesBackend
 
     public override int getmouse(out CursesMouseState state) =>
         CursesSymbolResolver.Resolve<NCursesFunctionMap.getmouse>()(out state);
-    
+
     public override int slk_attr_off(VideoAttribute attributes, IntPtr reserved) =>
         CursesSymbolResolver.Resolve<NCursesFunctionMap.slk_attr_off>()(EncodeCursesAttribute(attributes, 0), reserved);
 

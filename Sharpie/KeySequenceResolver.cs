@@ -79,12 +79,12 @@ public static class KeySequenceResolver
         var one = sequence.Count > 0 ? sequence[0] : null;
         var key = one switch
         {
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Escape } => new(
-                Key.Escape, new(ControlCharacter.Null), null, one.Modifiers),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Escape } => new(Key.Escape,
+                new(ControlCharacter.Null), null, one.Modifiers),
             { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.Tab } => new(Key.Tab,
                 new(ControlCharacter.Null), null, one.Modifiers),
-            { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.NewLine } => new(
-                Key.Return, new(ControlCharacter.Null), null, one.Modifiers),
+            { Key: Key.Character, Char.IsAscii: true, Char.Value: ControlCharacter.NewLine } => new(Key.Return,
+                new(ControlCharacter.Null), null, one.Modifiers),
             { Key: Key.Character, Char.IsAscii: true, Char.Value: 0x7f } => new(Key.Backspace,
                 new(ControlCharacter.Null), null, one.Modifiers),
             var _ => (KeyEvent?) null
@@ -162,8 +162,7 @@ public static class KeySequenceResolver
             { Key: Key.Unknown or Key.Escape } => null,
             { Key: var k and not Key.Character, Modifiers: var mod, Name: var n } => new(k, new(ControlCharacter.Null),
                 n, mod | ModifierKey.Alt),
-            { Char: var ch, Modifiers: var mod } => new(Key.Character, ch, null,
-                mod | ModifierKey.Alt),
+            { Char: var ch, Modifiers: var mod } => new(Key.Character, ch, null, mod | ModifierKey.Alt),
             var _ => null
         };
 
@@ -184,7 +183,6 @@ public static class KeySequenceResolver
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="sequence" /> is <c>null</c>.</exception>
     public static (KeyEvent? key, int count) KeyPadModifiersResolver(IReadOnlyList<KeyEvent> sequence)
     {
-
         if (sequence == null)
         {
             throw new ArgumentNullException(nameof(sequence));

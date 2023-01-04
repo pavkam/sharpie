@@ -559,8 +559,8 @@ public class EventPumpTests
     [TestMethod, Timeout(Timeout)]
     public void Listen1_DoesNotProcessTranslatedSeq2Events_IfResolverNotInstalled()
     {
-        var e = SimulateActualEvents(_terminal.Screen, 2, new CursesCharEvent(ControlCharacter.Escape, ModifierKey.None),
-            new CursesCharEvent('a', ModifierKey.None));
+        var e = SimulateActualEvents(_terminal.Screen, 2,
+            new CursesCharEvent(ControlCharacter.Escape, ModifierKey.None), new CursesCharEvent('a', ModifierKey.None));
 
         e.ShouldBe(new Event[]
         {
@@ -576,7 +576,8 @@ public class EventPumpTests
         _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
 
         var e = SimulateActualEvent(_terminal.Screen, new CursesCharEvent(ControlCharacter.Escape, ModifierKey.None),
-            new CursesCharEvent('O', ModifierKey.None), new CursesCharEvent('8', ModifierKey.None), new CursesCharEvent('A', ModifierKey.None));
+            new CursesCharEvent('O', ModifierKey.None), new CursesCharEvent('8', ModifierKey.None),
+            new CursesCharEvent('A', ModifierKey.None));
 
         e.ShouldBe(new KeyEvent(Key.KeypadUp, new(ControlCharacter.Null), null,
             ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift));
@@ -587,7 +588,8 @@ public class EventPumpTests
     {
         _pump.Use(KeySequenceResolver.SpecialCharacterResolver);
 
-        var e = SimulateActualEvents(_terminal.Screen, 2, new CursesCharEvent(ControlCharacter.Escape, ModifierKey.None),
+        var e = SimulateActualEvents(_terminal.Screen, 2,
+            new CursesCharEvent(ControlCharacter.Escape, ModifierKey.None),
             new CursesCharEvent(ControlCharacter.Escape, ModifierKey.None));
 
         e.ShouldBe(new Event[]
@@ -602,7 +604,8 @@ public class EventPumpTests
     {
         _pump.Use(KeySequenceResolver.AltKeyResolver);
 
-        var e = SimulateActualEvents(_terminal.Screen, 3, new CursesCharEvent(ControlCharacter.Escape, ModifierKey.None),
+        var e = SimulateActualEvents(_terminal.Screen, 3,
+            new CursesCharEvent(ControlCharacter.Escape, ModifierKey.None),
             new CursesMouseEvent(1, 2, MouseButton.Unknown, MouseButtonState.None, ModifierKey.None),
             new CursesCharEvent('A', ModifierKey.None));
 

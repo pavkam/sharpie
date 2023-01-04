@@ -54,7 +54,7 @@ public class NCursesBackendTests
 
         _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object, null);
     }
-    
+
     [TestMethod, DataRow(0), DataRow(-1)]
     public void endwin_IsRelayedToLibrary(int ret)
     {
@@ -63,7 +63,7 @@ public class NCursesBackendTests
         _backend.endwin()
                 .ShouldBe(ret);
     }
-    
+
     [TestMethod, DataRow(0), DataRow(-1)]
     public void getmouse_IsRelayedToLibrary(int ret)
     {
@@ -82,7 +82,7 @@ public class NCursesBackendTests
 
         x.ShouldBe(exp);
     }
-    
+
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_clear_IsRelayedToLibrary(int ret)
     {
@@ -404,17 +404,17 @@ public class NCursesBackendTests
     }
 
     [TestMethod, DataRow(NCursesKeyCode.F1, ControlCharacter.Null, Key.F1, ModifierKey.None),
-     DataRow(NCursesKeyCode.F2, ControlCharacter.Null, Key.F2, ModifierKey.None), 
+     DataRow(NCursesKeyCode.F2, ControlCharacter.Null, Key.F2, ModifierKey.None),
      DataRow(NCursesKeyCode.F3, ControlCharacter.Null, Key.F3, ModifierKey.None),
-     DataRow(NCursesKeyCode.F4, ControlCharacter.Null, Key.F4, ModifierKey.None), 
+     DataRow(NCursesKeyCode.F4, ControlCharacter.Null, Key.F4, ModifierKey.None),
      DataRow(NCursesKeyCode.F5, ControlCharacter.Null, Key.F5, ModifierKey.None),
-     DataRow(NCursesKeyCode.F6, ControlCharacter.Null, Key.F6, ModifierKey.None), 
+     DataRow(NCursesKeyCode.F6, ControlCharacter.Null, Key.F6, ModifierKey.None),
      DataRow(NCursesKeyCode.F7, ControlCharacter.Null, Key.F7, ModifierKey.None),
-     DataRow(NCursesKeyCode.F8, ControlCharacter.Null, Key.F8, ModifierKey.None), 
+     DataRow(NCursesKeyCode.F8, ControlCharacter.Null, Key.F8, ModifierKey.None),
      DataRow(NCursesKeyCode.F9, ControlCharacter.Null, Key.F9, ModifierKey.None),
-     DataRow(NCursesKeyCode.F10, ControlCharacter.Null, Key.F10, ModifierKey.None), 
+     DataRow(NCursesKeyCode.F10, ControlCharacter.Null, Key.F10, ModifierKey.None),
      DataRow(NCursesKeyCode.F11, ControlCharacter.Null, Key.F11, ModifierKey.None),
-     DataRow(NCursesKeyCode.F12, ControlCharacter.Null, Key.F12, ModifierKey.None), 
+     DataRow(NCursesKeyCode.F12, ControlCharacter.Null, Key.F12, ModifierKey.None),
      DataRow(NCursesKeyCode.ShiftF1, ControlCharacter.Null, Key.F1, ModifierKey.Shift),
      DataRow(NCursesKeyCode.ShiftF2, ControlCharacter.Null, Key.F2, ModifierKey.Shift),
      DataRow(NCursesKeyCode.ShiftF3, ControlCharacter.Null, Key.F3, ModifierKey.Shift),
@@ -438,15 +438,15 @@ public class NCursesBackendTests
      DataRow(NCursesKeyCode.CtrlF9, ControlCharacter.Null, Key.F9, ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.CtrlF10, ControlCharacter.Null, Key.F10, ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.CtrlF11, ControlCharacter.Null, Key.F11, ModifierKey.Ctrl),
-     DataRow(NCursesKeyCode.CtrlF12, ControlCharacter.Null, Key.F12, ModifierKey.Ctrl), 
+     DataRow(NCursesKeyCode.CtrlF12, ControlCharacter.Null, Key.F12, ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.AltF1, ControlCharacter.Null, Key.F1, ModifierKey.Alt),
      DataRow(NCursesKeyCode.AltF2, ControlCharacter.Null, Key.F2, ModifierKey.Alt),
      DataRow(NCursesKeyCode.AltF3, ControlCharacter.Null, Key.F3, ModifierKey.Alt),
-     DataRow(NCursesKeyCode.AltF4, ControlCharacter.Null, Key.F4, ModifierKey.Alt), 
+     DataRow(NCursesKeyCode.AltF4, ControlCharacter.Null, Key.F4, ModifierKey.Alt),
      DataRow(NCursesKeyCode.AltF5, ControlCharacter.Null, Key.F5, ModifierKey.Alt),
-     DataRow(NCursesKeyCode.AltF6, ControlCharacter.Null, Key.F6, ModifierKey.Alt), 
+     DataRow(NCursesKeyCode.AltF6, ControlCharacter.Null, Key.F6, ModifierKey.Alt),
      DataRow(NCursesKeyCode.AltF7, ControlCharacter.Null, Key.F7, ModifierKey.Alt),
-     DataRow(NCursesKeyCode.AltF8, ControlCharacter.Null, Key.F8, ModifierKey.Alt), 
+     DataRow(NCursesKeyCode.AltF8, ControlCharacter.Null, Key.F8, ModifierKey.Alt),
      DataRow(NCursesKeyCode.AltF9, ControlCharacter.Null, Key.F9, ModifierKey.Alt),
      DataRow(NCursesKeyCode.AltF10, ControlCharacter.Null, Key.F10, ModifierKey.Alt),
      DataRow(NCursesKeyCode.AltF11, ControlCharacter.Null, Key.F11, ModifierKey.Alt),
@@ -502,20 +502,26 @@ public class NCursesBackendTests
      DataRow(NCursesKeyCode.ShiftCtrlUp, ControlCharacter.Null, Key.KeypadUp, ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.ShiftCtrlDown, ControlCharacter.Null, Key.KeypadDown, ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.ShiftCtrlLeft, ControlCharacter.Null, Key.KeypadLeft, ModifierKey.Shift | ModifierKey.Ctrl),
-     DataRow(NCursesKeyCode.ShiftCtrlRight, ControlCharacter.Null, Key.KeypadRight, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlRight, ControlCharacter.Null, Key.KeypadRight,
+         ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.ShiftCtrlHome, ControlCharacter.Null, Key.KeypadHome, ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.ShiftCtrlEnd, ControlCharacter.Null, Key.KeypadEnd, ModifierKey.Shift | ModifierKey.Ctrl),
-     DataRow(NCursesKeyCode.ShiftCtrlPageDown, ControlCharacter.Null, Key.KeypadPageDown, ModifierKey.Shift | ModifierKey.Ctrl),
-     DataRow(NCursesKeyCode.ShiftCtrlPageUp, ControlCharacter.Null, Key.KeypadPageUp, ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlPageDown, ControlCharacter.Null, Key.KeypadPageDown,
+         ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.ShiftCtrlPageUp, ControlCharacter.Null, Key.KeypadPageUp,
+         ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.ShiftAltUp, ControlCharacter.Null, Key.KeypadUp, ModifierKey.Shift | ModifierKey.Alt),
      DataRow(NCursesKeyCode.ShiftAltDown, ControlCharacter.Null, Key.KeypadDown, ModifierKey.Shift | ModifierKey.Alt),
      DataRow(NCursesKeyCode.ShiftAltLeft, ControlCharacter.Null, Key.KeypadLeft, ModifierKey.Shift | ModifierKey.Alt),
      DataRow(NCursesKeyCode.ShiftAltRight, ControlCharacter.Null, Key.KeypadRight, ModifierKey.Shift | ModifierKey.Alt),
-     DataRow(NCursesKeyCode.ShiftAltPageDown, ControlCharacter.Null, Key.KeypadPageDown, ModifierKey.Shift | ModifierKey.Alt),
-     DataRow(NCursesKeyCode.ShiftAltPageUp, ControlCharacter.Null, Key.KeypadPageUp, ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltPageDown, ControlCharacter.Null, Key.KeypadPageDown,
+         ModifierKey.Shift | ModifierKey.Alt),
+     DataRow(NCursesKeyCode.ShiftAltPageUp, ControlCharacter.Null, Key.KeypadPageUp,
+         ModifierKey.Shift | ModifierKey.Alt),
      DataRow(NCursesKeyCode.ShiftAltHome, ControlCharacter.Null, Key.KeypadHome, ModifierKey.Shift | ModifierKey.Alt),
      DataRow(NCursesKeyCode.ShiftAltEnd, ControlCharacter.Null, Key.KeypadEnd, ModifierKey.Shift | ModifierKey.Alt),
-     DataRow(NCursesKeyCode.AltCtrlPageDown, ControlCharacter.Null, Key.KeypadPageDown, ModifierKey.Alt | ModifierKey.Ctrl),
+     DataRow(NCursesKeyCode.AltCtrlPageDown, ControlCharacter.Null, Key.KeypadPageDown,
+         ModifierKey.Alt | ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.AltCtrlPageUp, ControlCharacter.Null, Key.KeypadPageUp, ModifierKey.Alt | ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.AltCtrlHome, ControlCharacter.Null, Key.KeypadHome, ModifierKey.Alt | ModifierKey.Ctrl),
      DataRow(NCursesKeyCode.AltCtrlEnd, ControlCharacter.Null, Key.KeypadEnd, ModifierKey.Alt | ModifierKey.Ctrl),
