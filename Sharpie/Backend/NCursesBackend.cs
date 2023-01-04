@@ -17,8 +17,12 @@ internal class NCursesBackend: BaseCursesBackend
     /// </summary>
     /// <param name="dotNetSystemAdapter">The .NET system adapter.</param>
     /// <param name="nCursesSymbolResolver">The NCurses library symbol resolver.</param>
-    internal NCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver nCursesSymbolResolver):
-        base(dotNetSystemAdapter, nCursesSymbolResolver)
+    /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
+    internal NCursesBackend(
+        IDotNetSystemAdapter dotNetSystemAdapter, 
+        INativeSymbolResolver nCursesSymbolResolver,
+        INativeSymbolResolver? libCSymbolResolver):
+        base(dotNetSystemAdapter, nCursesSymbolResolver, libCSymbolResolver)
     {
     }
 

@@ -30,8 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
-using System.Runtime.InteropServices;
-
 [TestClass, SuppressMessage("ReSharper", "IdentifierTypo")]
 public class PdCursesBackendTests
 {
@@ -47,10 +45,7 @@ public class PdCursesBackendTests
         _dotNetSystemAdapterMock = new();
         _nativeSymbolResolverMock = new();
 
-        _dotNetSystemAdapterMock.Setup(s => s.IsUnixLike)
-                                .Returns(true);
-
-        _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object);
+        _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object, null);
     }
 
     

@@ -36,7 +36,7 @@ using Sharpie.Backend;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance and enable 4 * 4 SLK mode,
-using var terminal = new Terminal(CursesBackend.NCurses(),
+using var terminal = new Terminal(CursesBackend.Load(),
     new(CaretMode: CaretMode.Invisible, UseMouse: true, SoftLabelKeyMode: SoftLabelKeyMode.FourFour,
         AllocateHeader: true));
 

@@ -8,106 +8,199 @@ using System.Text.RegularExpressions;
 [PublicAPI]
 public static class CursesBackend
 {
-    private const string PdCursesPrefix = "pdcurses";
-    private const string NCursesPrefix = "ncurses";
-    private const string LibCPrefix = "libc";
+    /// <summary>
+    /// Lists the supported backends.
+    /// </summary>
+    [PublicAPI, Flags]
+    public enum Provider
+    {
+        /// <summary>
+        /// The NCurses back-end.
+        /// </summary>
+        NCurses = 1,
+        
+        /// <summary>
+        /// The PDCurses back-end.
+        /// </summary>
+        PdCurses = 2,
+        
+        /// <summary>
+        /// The PDCursesMod with 32-bit WIDE support.
+        /// </summary>
+        PdCursesMod32Wide = 4,
+        
+        /// <summary>
+        /// Any supported backend.
+        /// </summary>
+        Any = NCurses | PdCurses | PdCursesMod32Wide
+    }
 
     /// <summary>
-    ///     Internal method that loads the NCurses backend from native libraries (and any other support library that is
-    ///     required).
+    ///     Internal method that tries to load Curses backend, and, optionally libc.
     /// </summary>
     /// <param name="dotNetSystemAdapter">Adapter for .NET functionality.</param>
-    /// <param name="libPathResolver">Function that provides paths/names for the native loader.</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">
-    ///     Thrown if <paramref name="dotNetSystemAdapter" /> or
-    ///     <paramref name="libPathResolver" /> are <c>null</c>.
-    /// </exception>
-    /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
+    /// <param name="provider">The desired provider.</param>
+    /// <param name="paths">The list of paths for the library.</param>
+    /// <returns>The loaded backend or <c>null</c> if the load failed.</returns>
     [SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
      SupportedOSPlatform("windows")]
-    internal static ICursesBackend NCurses(IDotNetSystemAdapter dotNetSystemAdapter,
-        Func<string, IEnumerable<string>> libPathResolver)
+    internal static BaseCursesBackend? TryLoad(IDotNetSystemAdapter dotNetSystemAdapter, Provider provider, string[] paths)
     {
         Debug.Assert(dotNetSystemAdapter != null);
-        Debug.Assert(libPathResolver != null);
+        Debug.Assert(paths != null);
 
-        var cw = NativeLibraryWrapper<NCursesFunctionMap>.TryLoad(dotNetSystemAdapter, libPathResolver(NCursesPrefix));
-        if (cw == null)
+        INativeSymbolResolver? sym = provider switch
         {
-            throw new CursesInitializationException();
+            Provider.NCurses => NativeLibraryWrapper<NCursesFunctionMap>.TryLoad(dotNetSystemAdapter, paths),
+            Provider.PdCurses => NativeLibraryWrapper<PdCursesFunctionMap>.TryLoad(dotNetSystemAdapter, paths),
+            Provider.PdCursesMod32Wide => NativeLibraryWrapper<PdCursesMod32FunctionMap>.TryLoad(dotNetSystemAdapter, paths),
+            var _ => null
+        };
+
+        if (sym == null)
+        {
+            return null;
         }
 
-        if (dotNetSystemAdapter.IsUnixLike)
+        INativeSymbolResolver? cSym = dotNetSystemAdapter.IsUnixLike
+            ? NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, new[] { "libc" })
+            : null;
+     
+        return provider switch
         {
-            var lw = NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, libPathResolver(LibCPrefix));
-            if (lw == null)
-            {
-                throw new CursesInitializationException();
-            }
-
-            return new UnixNCursesBackend(dotNetSystemAdapter, cw, lw);
-        }
-
-        return new NCursesBackend(dotNetSystemAdapter, cw);
+            Provider.PdCurses => new PdCursesBackend(dotNetSystemAdapter, sym, cSym),
+            Provider.PdCursesMod32Wide => new PdCursesMod32Backend(dotNetSystemAdapter, sym, cSym),
+            var _ => new NCursesBackend(dotNetSystemAdapter, sym, cSym),
+        };
     }
-
-    /// <summary>
-    ///     Loads the NCurses backend from native libraries (and any other support library that is required).
-    /// </summary>
-    /// <param name="libPathResolver">Function that provides paths/names for the native loader.</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="libPathResolver" /> is <c>null</c>.</exception>
-    /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
-    [SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
-     SupportedOSPlatform("windows"),
-     ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested.")]
-    public static ICursesBackend NCurses(Func<string, IEnumerable<string>> libPathResolver)
-    {
-        if (libPathResolver == null)
-        {
-            throw new ArgumentNullException(nameof(libPathResolver));
-        }
-
-        return NCurses(IDotNetSystemAdapter.Instance, libPathResolver);
-    }
-
+    
     /// <summary>
     ///     Internal method that loads the NCurses backend from native libraries (and any other support library that is
     ///     required).
     ///     This method uses standard known names for the 'ncurses' and potentially 'libc' libraries.
     /// </summary>
-    /// <param name="dotNetSystemAdapter">Adapter for .NET functionality.</param>
-    /// <returns></returns>
+    /// <param name="providers">The desired providers.</param>
+    /// <param name="dotNetSystemAdapter">Adapter for .NET system.</param>
+    /// <returns>The loaded Curses backend.</returns>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="providers"/> is empty.</exception>
     /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     [SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
      SupportedOSPlatform("windows")]
-    internal static ICursesBackend NCurses(IDotNetSystemAdapter dotNetSystemAdapter)
+    internal static ICursesBackend Load(IDotNetSystemAdapter dotNetSystemAdapter, Provider providers)
     {
-        return NCurses(dotNetSystemAdapter, lib =>
+        ICursesBackend? result = null;
+        
+        if (providers.HasFlag(Provider.PdCursesMod32Wide))
         {
-            return lib switch
+            if (dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd)
             {
-                NCursesPrefix when dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd =>
-                    FindLinuxAndFreeBsdNCursesCandidates(),
-                NCursesPrefix when dotNetSystemAdapter.IsMacOs => FindMacOsNCursesCandidates(dotNetSystemAdapter),
-                NCursesPrefix when dotNetSystemAdapter.IsWindows => FindWindowsNCursesCandidates(),
-                var _ => new[] { lib }
-            };
-        });
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide, new[]
+                {
+                    "libpdcurses2.so", 
+                    "libpdcurses.so", 
+                    "libXCurses.so", 
+                });
+            } else if (dotNetSystemAdapter.IsMacOs)
+            {
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide, new[]
+                {
+                    "libpdcurses.dylib", 
+                });
+            } else if (dotNetSystemAdapter.IsWindows)
+            {
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide, new[]
+                {
+                    "libpdcurses.dll",
+                    "pdcurses.dll"
+                });
+            }
+        }
+        
+        if (providers.HasFlag(Provider.PdCurses) && result == null)
+        {
+            if (dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd)
+            {
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCurses, new[]
+                {
+                    "libpdcurses2.so", 
+                    "libpdcurses.so", 
+                    "libXCurses.so", 
+                });
+            } else if (dotNetSystemAdapter.IsMacOs)
+            {
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCurses, new[]
+                {
+                    "libpdcurses.dylib", 
+                    "libpdcurses2.dylib" 
+                });
+            } else if (dotNetSystemAdapter.IsWindows)
+            {
+                result = TryLoad(dotNetSystemAdapter, Provider.PdCurses, new[]
+                {
+                    "libpdcurses.dll",
+                    "pdcurses.dll"
+                });
+            }
+        }
+
+        if (providers.HasFlag(Provider.NCurses) && result == null)
+        {
+            if (dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd)
+            {
+                result = TryLoad(dotNetSystemAdapter, Provider.NCurses, new[]
+                {
+                    "libncursesw.so.6",
+                    "libncursesw.so.5",
+                    "libncursesw.so",
+                    "ncursesw",
+                    "libncurses.so.6",
+                    "libncurses.so.5",
+                    "libncurses.so",
+                    "ncurses"
+                });
+            } else if (dotNetSystemAdapter.IsMacOs)
+            {
+                result = TryLoad(dotNetSystemAdapter, Provider.NCurses, FindMacOsNCursesCandidates(dotNetSystemAdapter));
+            } else if (dotNetSystemAdapter.IsWindows)
+            {
+                result = TryLoad(dotNetSystemAdapter, Provider.NCurses, new[]
+                {
+                    "libncursesw.dll",
+                    "libncursesw6.dll",
+                    "libncursesw5.dll",
+                    "ncursesw.dll",
+                    "ncursesw6.dll",
+                    "ncursesw5.dll",
+                    "libncurses.dll",
+                    "libncurses6.dll",
+                    "libncurses5.dll",
+                    "ncurses.dll",
+                    "ncurses6.dll",
+                    "ncurses5.dll"
+                });
+            }
+        }
+        
+        if (result == null)
+        {
+            throw new CursesInitializationException();
+        }
+
+        return result;
     }
 
     /// <summary>
-    ///     Loads the NCurses backend from native libraries (and any other support library that is required).
-    ///     This method uses standard known names for the required libraries.
+    ///     Loads the Curses backend based on the specified <paramref name="providers"/>. 
     /// </summary>
-    /// <returns></returns>
-    /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
+    /// <param name="providers">The desired providers.</param>
+    /// <returns>The loaded Curses backend.</returns>
+    /// <exception cref="CursesInitializationException">Thrown if no suitable provider was found.</exception>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="providers"/> is empty.</exception>
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested."),
      SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
      SupportedOSPlatform("windows")]
-    public static ICursesBackend NCurses() => NCurses(IDotNetSystemAdapter.Instance);
-
+    public static ICursesBackend Load(Provider providers = Provider.Any) => Load(IDotNetSystemAdapter.Instance, providers);
+    
     private static IEnumerable<(string name, int version)> GetCandidatesInDirectory(
         IDotNetSystemAdapter dotNetSystemAdapter, string directory, Regex pattern)
     {
@@ -122,45 +215,9 @@ public static class CursesBackend
                                       .Value), version: int.Parse(m.Groups[1]
                                                                    .Value)));
     }
-
-    [SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd")]
-    private static IEnumerable<string> FindLinuxAndFreeBsdNCursesCandidates()
-    {
-        return new[]
-        {
-            "libncursesw.so.6",
-            "libncursesw.so.5",
-            "libncursesw.so",
-            "ncursesw",
-            "libncurses.so.6",
-            "libncurses.so.5",
-            "libncurses.so",
-            NCursesPrefix
-        };
-    }
-
-    [SupportedOSPlatform("windows")]
-    private static IEnumerable<string> FindWindowsNCursesCandidates()
-    {
-        return new[]
-        {
-            "libncursesw.dll",
-            "libncursesw6.dll",
-            "libncursesw5.dll",
-            "ncursesw.dll",
-            "ncursesw6.dll",
-            "ncursesw5.dll",
-            "libncurses.dll",
-            "libncurses6.dll",
-            "libncurses5.dll",
-            "ncurses.dll",
-            "ncurses6.dll",
-            "ncurses5.dll"
-        };
-    }
-
+    
     [SupportedOSPlatform("macos")]
-    private static IEnumerable<string> FindMacOsNCursesCandidates(IDotNetSystemAdapter dotNetSystemAdapter)
+    private static string[] FindMacOsNCursesCandidates(IDotNetSystemAdapter dotNetSystemAdapter)
     {
         Debug.Assert(dotNetSystemAdapter != null);
 
@@ -181,7 +238,7 @@ public static class CursesBackend
 
         if (!string.IsNullOrEmpty(homeBrewCellar))
         {
-            var ncursesPath = dotNetSystemAdapter.CombinePaths(homeBrewCellar, NCursesPrefix);
+            var ncursesPath = dotNetSystemAdapter.CombinePaths(homeBrewCellar, "ncurses");
             if (dotNetSystemAdapter.DirectoryExists(ncursesPath))
             {
                 foreach (var v in dotNetSystemAdapter.EnumerateDirectories(ncursesPath))
@@ -197,101 +254,7 @@ public static class CursesBackend
 
         return candidates.OrderByDescending(c => c.version)
                          .Select(c => c.name)
-                         .Concat(new[] { NCursesPrefix });
-    }
-
-    /// <summary>
-    ///     Internal method that loads the PDCurses backend from native library.
-    /// </summary>
-    /// <param name="dotNetSystemAdapter">Adapter for .NET functionality.</param>
-    /// <param name="libPathResolver">Function that provides paths/names for the native loader.</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">
-    ///     Thrown if <paramref name="dotNetSystemAdapter" /> or
-    ///     <paramref name="libPathResolver" /> are <c>null</c>.
-    /// </exception>
-    /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
-    [SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
-     SupportedOSPlatform("windows")]
-    internal static ICursesBackend PdCurses(IDotNetSystemAdapter dotNetSystemAdapter,
-        Func<string, IEnumerable<string>> libPathResolver)
-    {
-        Debug.Assert(dotNetSystemAdapter != null);
-        Debug.Assert(libPathResolver != null);
-
-        var cw = NativeLibraryWrapper<PdCursesMod32FunctionMap>.TryLoad(dotNetSystemAdapter,
-            libPathResolver(PdCursesPrefix));
-
-        if (cw == null)
-        {
-            throw new CursesInitializationException();
-        }
-
-        return new PdCursesMod32Backend(dotNetSystemAdapter, cw);
-    }
-
-    /// <summary>
-    ///     Loads the PDCurses backend from native library.
-    /// </summary>
-    /// <param name="libPathResolver">Function that provides paths/names for the native loader.</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="libPathResolver" /> is <c>null</c>.</exception>
-    /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
-    [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested."),
-     SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
-     SupportedOSPlatform("windows")]
-    public static ICursesBackend PdCurses(Func<string, IEnumerable<string>> libPathResolver)
-    {
-        if (libPathResolver == null)
-        {
-            throw new ArgumentNullException(nameof(libPathResolver));
-        }
-
-        return PdCurses(IDotNetSystemAdapter.Instance, libPathResolver);
-    }
-
-    /// <summary>
-    ///     Internal method that loads the PDCurses backend from native library.
-    /// </summary>
-    /// <param name="dotNetSystemAdapter">Adapter for .NET functionality.</param>
-    /// <returns></returns>
-    /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
-    [SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
-     SupportedOSPlatform("windows")]
-    internal static ICursesBackend PdCurses(IDotNetSystemAdapter dotNetSystemAdapter)
-    {
-        return PdCurses(dotNetSystemAdapter, lib =>
-        {
-            return lib switch
-            {
-                PdCursesPrefix when dotNetSystemAdapter.IsLinux || dotNetSystemAdapter.IsFreeBsd =>
-                    FindLinuxAndFreeBsdPdCursesCandidates(),
-                PdCursesPrefix when dotNetSystemAdapter.IsWindows => FindWindowsPdCursesCandidates(),
-                var _ => new[] { lib }
-            };
-        });
-    }
-
-    /// <summary>
-    ///     Loads the Curses backend from native libraries (and any other support library that is required).
-    ///     This method uses standard known names for the required libraries.
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
-    [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested."),
-     SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
-     SupportedOSPlatform("windows")]
-    public static ICursesBackend PdCurses() => PdCurses(IDotNetSystemAdapter.Instance);
-
-    [SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd")]
-    private static IEnumerable<string> FindLinuxAndFreeBsdPdCursesCandidates()
-    {
-        return new[] { "libpdcurses2.so", "libpdcurses.so", "libXCurses.so", PdCursesPrefix };
-    }
-
-    [SupportedOSPlatform("windows")]
-    private static IEnumerable<string> FindWindowsPdCursesCandidates()
-    {
-        return new[] { "libpdcurses.dll", "pdcurses.dll" };
+                         .Concat(new[] { "ncursesw", "ncurses" })
+                         .ToArray();
     }
 }

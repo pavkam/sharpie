@@ -13,11 +13,16 @@ internal abstract class BaseCursesBackend: ICursesBackend
     /// </summary>
     /// <param name="dotNetSystemAdapter">The .NET system interop adapter.</param>
     /// <param name="cursesSymbolResolver">The Curses symbol resolver.</param>
-    protected BaseCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver cursesSymbolResolver)
+    /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
+    protected BaseCursesBackend(
+        IDotNetSystemAdapter dotNetSystemAdapter, 
+        INativeSymbolResolver cursesSymbolResolver,
+        INativeSymbolResolver? libCSymbolResolver)
     {
         Debug.Assert(dotNetSystemAdapter != null);
         Debug.Assert(cursesSymbolResolver != null);
-
+        
+        LibCSymbolResolver = libCSymbolResolver;
         DotNetSystemAdapter = dotNetSystemAdapter;
         CursesSymbolResolver = cursesSymbolResolver;
     }
@@ -31,6 +36,11 @@ internal abstract class BaseCursesBackend: ICursesBackend
     ///     The Curses symbol resolver.
     /// </summary>
     protected internal INativeSymbolResolver CursesSymbolResolver { get; }
+    
+    /// <summary>
+    ///     The Libc symbol resolver.
+    /// </summary>
+    protected internal INativeSymbolResolver? LibCSymbolResolver { get; }
 
     /// <summary>
     ///     The .NET system interop adapter.
@@ -147,7 +157,16 @@ internal abstract class BaseCursesBackend: ICursesBackend
     public void immedok(IntPtr window, bool set) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.immedok>()(window, set);
 
-    public virtual IntPtr initscr() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.initscr>()();
+    public virtual IntPtr initscr()
+    {
+        if (DotNetSystemAdapter.IsUnixLike && LibCSymbolResolver != null)
+        {
+            var category = DotNetSystemAdapter.IsMacOs ? 0 : 6;
+            LibCSymbolResolver.Resolve<LibCFunctionMap.setlocale>()(category, "");
+        }
+
+        return CursesSymbolResolver.Resolve<BaseCursesFunctionMap.initscr>()();
+    }
 
     public int init_color(short color, short red, short green, short blue) =>
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.init_color>()(color, red, green, blue);
@@ -445,10 +464,26 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public abstract int getmouse(out CursesMouseState state);
 
-    public virtual int mousemask(uint newMask, out uint oldMask)
+    public int mousemask(uint newMask, out uint oldMask)
     {
         var actualMask = newMask & (CursesMouseEventParser.All | CursesMouseEventParser.ReportPosition);
-        return CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mousemask>()(actualMask, out oldMask);
+        var result = CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mousemask>()(actualMask, out oldMask);
+        if (!result.Failed() && DotNetSystemAdapter.IsUnixLike)
+        {
+            var csi = "\x1b[?1003l";
+            if ((newMask & CursesMouseEventParser.ReportPosition) != 0)
+            {
+                csi = "\x1b[?1003h";
+            } else if ((newMask & CursesMouseEventParser.All) != 0)
+            {
+                csi = "\x1b[?1000h";
+            }
+
+            // Force enable mouse reporting. Curses doesn't always want to do that.
+            DotNetSystemAdapter.OutAndFlush(csi);
+        }
+
+        return result;
     }
 
     public int mouseinterval(int millis) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mouseinterval>()(millis);

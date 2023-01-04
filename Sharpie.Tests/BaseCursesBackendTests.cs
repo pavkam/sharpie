@@ -40,16 +40,32 @@ public class BaseCursesBackendTests
     private Mock<IDotNetSystemAdapter> _dotNetSystemAdapterMock = null!;
     private Mock<INativeSymbolResolver> _nativeSymbolResolverMock = null!;
 
+    [UsedImplicitly] public TestContext TestContext { get; set; } = null!;
+    
     [TestInitialize]
     public void TestInitialize()
     {
         _dotNetSystemAdapterMock = new();
         _nativeSymbolResolverMock = new();
 
+        var isLinux = TestContext.TestName!.Contains("_WhenLinux_");
+        var isFreeBsd = TestContext.TestName!.Contains("_WhenFreeBsd_");
+        var isMacOs = TestContext.TestName!.Contains("_WhenMacOs_");
+        var isWindows = TestContext.TestName!.Contains("_WhenWindows_");
+        var isUnix = TestContext.TestName!.Contains("_WhenUnix_") || isLinux || isFreeBsd || isMacOs;
+        
         _dotNetSystemAdapterMock.Setup(s => s.IsUnixLike)
-                                .Returns(true);
+                                .Returns(isUnix);
+        _dotNetSystemAdapterMock.Setup(s => s.IsLinux)
+                                .Returns(isLinux);
+        _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)
+                                .Returns(isFreeBsd);
+        _dotNetSystemAdapterMock.Setup(s => s.IsMacOs)
+                                .Returns(isMacOs);
+        _dotNetSystemAdapterMock.Setup(s => s.IsWindows)
+                                .Returns(isWindows);
 
-        _backendMock = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object);
+        _backendMock = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object, isWindows ? null : _nativeSymbolResolverMock.Object);
         _backendMock.Setup(s => s.EncodeCursesAttribute(It.IsAny<VideoAttribute>(), It.IsAny<short>()))
                     .Returns((VideoAttribute attributes, short colorPair) =>
                         ((uint) attributes << 16) | (((uint) colorPair & 0xFF) << 8));
@@ -319,7 +335,48 @@ public class BaseCursesBackendTests
         _backend.initscr()
                 .ShouldBe(new(ret));
     }
+    
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo")]
+    public void initscr_WhenLinux_CallsLibc_ToSetupUnicode()
+    {
+        var m = _nativeSymbolResolverMock.MockResolve<LibCFunctionMap.setlocale>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.initscr>();
 
+        _backendMock.Setup(s => s.initscr())
+                    .CallBase();
+        _backend.initscr();
+
+        m.Verify(v => v(6, ""));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo")]
+    public void initscr_WhenFreeBsd_CallsLibc_ToSetupUnicode()
+    {
+        var m = _nativeSymbolResolverMock.MockResolve<LibCFunctionMap.setlocale>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.initscr>();
+
+        _backendMock.Setup(s => s.initscr())
+                    .CallBase();
+        
+        _backend.initscr();
+
+        m.Verify(v => v(6, ""));
+    }
+    
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo")]
+    public void initscr_WhenMacOs_CallsLibc_ToSetupUnicode()
+    {
+        var m = _nativeSymbolResolverMock.MockResolve<LibCFunctionMap.setlocale>();
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.initscr>();
+
+        _backendMock.Setup(s => s.initscr())
+                    .CallBase();
+        
+        _backend.initscr();
+
+        m.Verify(v => v(0, ""));
+    }
+    
     [TestMethod, DataRow(null), DataRow("hello")]
     public void longname_IsRelayedToLibrary(string ret)
     {
@@ -1109,9 +1166,7 @@ public class BaseCursesBackendTests
         var p = CursesMouseEventParser.Get(2);
         _backendMock.Setup(s => s.CursesMouseEventParser)
                     .Returns(p);
-        _backendMock.Setup(s => s.mousemask(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
-                    .CallBase();
-
+     
         var expNm = 0u;
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask>()
                                  .Setup(s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
@@ -1121,8 +1176,7 @@ public class BaseCursesBackendTests
                                      om = 11;
                                      return ret;
                                  });
-
-
+        
         _backend.mousemask(0xffffffff, out var old)
                 .ShouldBe(ret);
         expNm.ShouldBe(p.All | p.ReportPosition);
@@ -1130,6 +1184,75 @@ public class BaseCursesBackendTests
         old.ShouldBe(11u);
     }
 
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo")]
+    public void mousemask_WhenUnix_CallsCursesButNotConsole_IfCursesFails()
+    {
+        _backendMock.Setup(s => s.CursesMouseEventParser)
+                    .Returns(CursesMouseEventParser.Get(1));
+        
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask>()
+                                 .Setup(s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
+                                 .Returns((uint _, out uint o) =>
+                                 {
+                                     o = 999;
+                                     return -1;
+                                 });
+
+        _backend.mousemask(100, out var old)
+                .ShouldBe(-1);
+
+        old.ShouldBe(999u);
+
+        _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush(It.IsAny<string>()), Times.Never);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"), DataRow(1), DataRow(2)]
+    public void mousemask_WhenUnix_OutsToConsole_WhenReportingPosition(int abi)
+    {
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask, int>(
+            s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
+
+        var parser = CursesMouseEventParser.Get(abi);
+        _backendMock.Setup(s => s.CursesMouseEventParser)
+                    .Returns(parser);
+        
+        _backend.mousemask(parser.ReportPosition, out var _)
+                .ShouldBe(0);
+
+        _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush("\x1b[?1003h"), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"), DataRow(1), DataRow(2)]
+    public void mousemask_WhenUnix_OutsToConsole_WhenAll(int abi)
+    {
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask, int>(
+            s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
+
+        var parser = CursesMouseEventParser.Get(abi);
+        _backendMock.Setup(s => s.CursesMouseEventParser)
+                    .Returns(parser);
+        
+        _backend.mousemask(parser.All, out var _)
+                .ShouldBe(0);
+
+        _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush("\x1b[?1000h"), Times.Once);
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo")]
+    public void mousemask_WhenUnix_OutsToConsole_WhenNothing()
+    {
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask, int>(
+            s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
+
+        _backendMock.Setup(s => s.CursesMouseEventParser)
+                    .Returns(CursesMouseEventParser.Get(1));
+
+        _backend.mousemask(0, out var _)
+                .ShouldBe(0);
+
+        _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush("\x1b[?1003l"), Times.Once);
+    }
+    
     [TestMethod, DataRow(0), DataRow(-1)]
     public void wattr_get_IsRelayedToLibrary(int ret)
     {

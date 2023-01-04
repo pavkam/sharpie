@@ -15,8 +15,10 @@ internal class PdCursesMod32Backend: PdCursesBackend
     /// </summary>
     /// <param name="dotNetSystemAdapter">The .NET system adapter.</param>
     /// <param name="pdCursesSymbolResolver">The PDCursesMod library symbol resolver.</param>
-    internal PdCursesMod32Backend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver pdCursesSymbolResolver):
-        base(dotNetSystemAdapter, pdCursesSymbolResolver)
+    /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
+    internal PdCursesMod32Backend(IDotNetSystemAdapter dotNetSystemAdapter, 
+        INativeSymbolResolver pdCursesSymbolResolver, INativeSymbolResolver? libCSymbolResolver):
+        base(dotNetSystemAdapter, pdCursesSymbolResolver, libCSymbolResolver)
     {
         
     }

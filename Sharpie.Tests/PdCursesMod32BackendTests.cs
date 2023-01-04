@@ -45,10 +45,7 @@ public class PdCursesMod32BackendTests
         _dotNetSystemAdapterMock = new();
         _nativeSymbolResolverMock = new();
 
-        _dotNetSystemAdapterMock.Setup(s => s.IsUnixLike)
-                                .Returns(true);
-
-        _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object);
+        _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object, null);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
