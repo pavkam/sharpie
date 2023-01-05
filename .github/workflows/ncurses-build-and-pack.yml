@@ -4,6 +4,7 @@ on: [workflow_dispatch]
 
 jobs:
   ubuntu-x64:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - name: Clone NCurses Master
@@ -21,7 +22,7 @@ jobs:
             --enable-widec \
             --with-pkg-config-libdir=/usr/lib/pkgconfig \
             --with-shared \
-            --enable-sigwinch
+            --enable-sigwinch \
             --with-versioned-syms \
             --with-xterm-kbs=del \
             --enable-warnings \
@@ -38,7 +39,6 @@ jobs:
           if-no-files-found: error
           
   macos-x64:
-    if: ${{ false }}
     runs-on: macOS-latest
     steps:
       - name: Clone NCurses Master
@@ -56,7 +56,7 @@ jobs:
             --enable-widec \
             --with-pkg-config-libdir=/usr/lib/pkgconfig \
             --with-shared \
-            --enable-sigwinch
+            --enable-sigwinch \
             --with-versioned-syms \
             --with-xterm-kbs=del \
             --enable-warnings \
@@ -65,12 +65,12 @@ jobs:
             --without-manpages \
             --with-gpm=no
           make
-          mv lib/libncursesw.so lib/libncursesw-x64.so
+          mv lib/libncursesw.dylib lib/libncursesw-x64.dylib
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/libncursesw-x64.so'
+          path: 'lib/libncursesw-x64.dylib'
           if-no-files-found: error
           
   windows-x64:
