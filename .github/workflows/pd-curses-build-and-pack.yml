@@ -1,4 +1,4 @@
-name: Build PDCursesMod
+name: Build PDCurses
 
 on: [workflow_dispatch]
 
