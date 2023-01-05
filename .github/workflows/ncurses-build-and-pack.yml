@@ -4,7 +4,6 @@ on: [workflow_dispatch]
 
 jobs:
   ubuntu-x64:
-    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - name: Clone NCurses Master
@@ -39,7 +38,6 @@ jobs:
           if-no-files-found: error
           
   macos-x64:
-    if: ${{ false }}
     runs-on: macOS-latest
     steps:
       - name: Clone NCurses Master
