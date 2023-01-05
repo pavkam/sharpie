@@ -3,7 +3,7 @@ name: Build PDCurses
 on: [workflow_dispatch]
 
 jobs:
-  windowx-x64:
+  windows-x64:
     runs-on: windows-2019
 
     steps:
@@ -16,7 +16,7 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           cd wincon
-          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
+          nmake WIDE=Y DLL=Y -f Makefile.vc
           ren pdcurses.dll pdcurses-wincon-x64.dll
         shell: cmd
       - name: Upload Artifacts (2)
