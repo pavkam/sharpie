@@ -1,0 +1,62 @@
+name: Build PDCurses
+
+on: [workflow_dispatch]
+
+jobs:
+  windows-x64:
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Clone NCurses Master
+        uses: actions/checkout@master
+        with:
+          repository: mirror/ncurses
+          ref: refs/heads/master
+      - name: Install MSys2
+        uses: msys2/setup-msys2@v2
+        with:
+          install: gcc make
+      - name: Make
+        run: |
+          ./configure \
+            --prefix=/mingw64 \
+            --without-cxx \
+            --without-ada \
+            --enable-warnings \
+            --enable-assertions \
+            --enable-exp-win32 \
+            --enable-ext-funcs \
+            --disable-home-terminfo \
+            --disable-echo \
+            --disable-getcap \
+            --disable-hard-tabs \
+            --disable-leaks \
+            --disable-macros \
+            --disable-overwrite \
+            --enable-opaque-curses \
+            --enable-opaque-panel \
+            --enable-opaque-menu \
+            --enable-opaque-form \
+            --enable-database \
+            --enable-sp-funcs \
+            --enable-term-driver \
+            --enable-interop \
+            --disable-termcap \
+            --enable-database \
+            --with-progs \
+            --without-libtool \
+            --enable-pc-files \
+            --with-shared \
+            --with-normal \
+            --without-debug \
+            --with-fallbacks=ms-terminal \
+            --without-manpages
+          make
+      - name: Upload Artifacts (2)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: '*.dll'
+          if-no-files-found: error
