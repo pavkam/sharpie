@@ -15,6 +15,7 @@ jobs:
         run: |
          ./configure \
             --prefix=/usr \
+            --enable-pc-files \
             --without-cxx \
             --without-ada \
             --enable-widec \
@@ -27,6 +28,42 @@ jobs:
             --enable-assertions \
             --disable-macros \
             --without-manpages
+          make
+          mv lib/libncursesw.so lib/libncursesw-x64.so
+      - name: Upload Artifacts (1)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'lib/libncursesw-x64.so'
+          if-no-files-found: error
+          
+  macos-x64:
+    if: ${{ false }}
+    runs-on: macOS-latest
+    steps:
+      - name: Clone NCurses Master
+        uses: actions/checkout@master
+        with:
+          repository: mirror/ncurses
+          ref: refs/heads/master
+      - name: Make
+        run: |
+         ./configure \
+            --prefix=/usr \
+            --enable-pc-files \
+            --without-cxx \
+            --without-ada \
+            --enable-widec \
+            --with-pkg-config-libdir=/usr/lib/pkgconfig \
+            --with-shared \
+            --enable-sigwinch
+            --with-versioned-syms \
+            --with-xterm-kbs=del \
+            --enable-warnings \
+            --enable-assertions \
+            --disable-macros \
+            --without-manpages \
+            --with-gpm=no
           make
           mv lib/libncursesw.so lib/libncursesw-x64.so
       - name: Upload Artifacts (1)
