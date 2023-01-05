@@ -44,7 +44,7 @@ In addition to wrapping NCurses, this library also adds numerous quality-of-life
 6. And other small additions here and there...
 
 # Platforms
-**Sharpie** supports any platform that **.NET 6.0+** and **ncurses** support. This essentially means that `Linux` and modern `Macos` are supported on both `x64` and `ARM64` architectures. Technically `Windows` is also supported but no development time was used to ensure that.
+**Sharpie** supports any platform that **.NET 6.0+**, **[ncurses](https://github.com/mirror/ncurses)**, **[pdcurses](https://github.com/wmcbrine/PDCurses)** and **[pdcurses-mod](https://github.com/Bill-Gray/PDCursesMod)** support. This essentially means that `Linux`, `Macos` and `Windows` are supported on both `x64` and `ARM64` architectures.
 
 For more information on supported platforms visit [.NET Supported Platforms Page](https://github.com/dotnet/core/blob/main/release-notes/6.0/supported-os.md) and [NCurses Packages Page](https://invisible-island.net/ncurses/#packages).
 
