@@ -6,9 +6,15 @@ name: Build, Test and Release
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'Sharpie.Tests/**'
+      - 'Sharpie/**'
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ "main" ]
+    paths:
+      - 'Sharpie.Tests/**'
+      - 'Sharpie/**'
 
 jobs:
   build_test_deploy:
