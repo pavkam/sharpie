@@ -103,13 +103,15 @@ jobs:
         with:
           name: libraries
           path: lib
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
         with:
+          commit-message: (chore) Update PDCursesMod native libraries.
+          committer: Alexandru Ciobanu <alex+git[bot]@ciobanu.org>
+          author: Alexandru Ciobanu <alex+git[bot]@ciobanu.org>
+          title: Update PDCursesMod native library to latest master.
+          body: This is an auto-generated PR with native library updates.
+          delete-branch: true
+          labels: dependencies
+          assignees: pavkam
           branch: pdcursesmod-lib-update
-          create_branch: true
-          push_options: '--force'
-          commit_user_name: Alexandru Ciobanu [bot]
-          commit_user_email: alex+git[bot]@ciobanu.org
-          commit_author: Alexandru Ciobanu <alex+git[bot]@ciobanu.org>
-          commit_message: (chore) Update PDCursesMod native libraries.
-
