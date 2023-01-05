@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: '*.so'
+          path: '**/*.so'
           if-no-files-found: error
           
   windows-x64:
