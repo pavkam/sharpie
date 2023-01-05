@@ -54,6 +54,8 @@ using (terminal.AtomicRefresh())
     subWindow.Refresh();
 }
 
+subWindow.WriteText($"Using {terminal.CursesVersion} on {terminal.Name}");
+
 // Process all events coming from the terminal.
 foreach (var @event in terminal.Events.Listen(subWindow))
 {
