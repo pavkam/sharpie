@@ -1,0 +1,19 @@
+name: Build
+
+on: [workflow_dispatch]
+
+jobs:
+  ubuntu-x64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          name: Bill-Gray/PDCursesMod
+          ref: refs/heads/master
+      - name: make
+        run: |
+         cd vt
+         make WIDE=Y DLL=Y CHTYPE_32=Y  
+         cd ../fb
+         make WIDE=Y DLL=Y CHTYPE_32=Y
+
