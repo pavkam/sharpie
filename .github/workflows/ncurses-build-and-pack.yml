@@ -75,20 +75,15 @@ jobs:
           if-no-files-found: error
           
   windows-x64:
-    runs-on: windows-2019
-    defaults:
-      run:
-        shell: msys2 {0}
+    runs-on: ubuntu-latest
     steps:
       - name: Clone NCurses Master
         uses: actions/checkout@master
         with:
           repository: mirror/ncurses
           ref: refs/heads/master
-      - name: Install MSys2
-        uses: msys2/setup-msys2@v2
-        with:
-          install: gcc make diffutils msys2-w32api-headers msys2-w32api-runtime
+      - name: Install MinGW
+        run: apt-get install mingw-w64
       - name: Make
         run: |
           ./configure \
