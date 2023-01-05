@@ -18,19 +18,14 @@ jobs:
             --without-cxx \
             --without-ada \
             --enable-widec \
-            --enable-pc-files \
             --with-pkg-config-libdir=/usr/lib/pkgconfig \
             --with-shared \
+            --enable-sigwinch
             --with-versioned-syms \
             --with-xterm-kbs=del \
             --enable-warnings \
             --enable-assertions \
             --disable-macros \
-            --enable-opaque-curses \
-            --enable-opaque-panel \
-            --enable-opaque-menu \
-            --enable-opaque-form \
-            --enable-database \
             --without-manpages
           make
           mv lib/libncursesw.so lib/libncursesw-x64.so
