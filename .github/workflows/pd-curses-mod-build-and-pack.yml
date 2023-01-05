@@ -15,10 +15,10 @@ jobs:
         run: |
          cd vt
          make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.so libpdcurses-vt-x64.so
+         mv libpdcurses.so libpdcursesmod-vt-x64.so
          cd ../fb
          make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.so libpdcurses-fb-x64.so
+         mv libpdcurses.so libpdcursesmod-fb-x64.so
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
@@ -44,7 +44,7 @@ jobs:
         run: |
          cd vt
          make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.dylib libpdcurses-vt-x64.dylib
+         mv libpdcurses.dylib libpdcursesmod-vt-x64.dylib
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
@@ -66,13 +66,13 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           cd wingui
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
-          ren pdcurses.dll pdcurses-wingui-x64.dll
+          ren pdcurses.dll pdcursesmod-wingui-x64.dll
           cd ..\wincon
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
-          ren pdcurses.dll pdcurses-wincon-x64.dll
+          ren pdcurses.dll pdcursesmod-wincon-x64.dll
           cd ..\vt
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
-          ren pdcurses.dll pdcurses-vt-x64.dll
+          ren pdcurses.dll pdcursesmod-vt-x64.dll
         shell: cmd
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
@@ -92,3 +92,20 @@ jobs:
           name: libraries
           path: 'vt/*.dll'
           if-no-files-found: error
+          
+  push-to-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: libraries
+          path: lib
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_user_name: Alexandru Ciobanu [bot]
+          commit_user_email: alex+git[bot]@ciobanu.org
+          commit_author: Alexandru Ciobanu <alex+git[bot]@ciobanu.org>
+          commit_message: (chore) Update PDCursesMod native libraries.
+
