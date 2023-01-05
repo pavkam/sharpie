@@ -52,7 +52,7 @@ jobs:
           path: 'vt/*.dylib'
           if-no-files-found: error
 
-  windowx-x64:
+  windows-x64:
     runs-on: windows-2019
 
     steps:
