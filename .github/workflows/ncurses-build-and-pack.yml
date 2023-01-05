@@ -1,7 +1,10 @@
 name: Build NCurses
 
-on: [workflow_dispatch]
-
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 1 1-12 *'
+    
 jobs:
   ubuntu-x64:
     runs-on: ubuntu-latest
@@ -147,3 +150,15 @@ jobs:
           commit_user_email: alex+git[bot]@ciobanu.org
           commit_author: Alexandru Ciobanu <alex+git[bot]@ciobanu.org>
           commit_message: (chore) Update NCurses native libraries.
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: (chore) Update NCurses native libraries.
+          committer: Alexandru Ciobanu <alex+git[bot]@ciobanu.org>
+          author: Alexandru Ciobanu <alex+git[bot]@ciobanu.org>
+          title: Update NCurses native library to latest master.
+          body: This is an auto-generated PR with native library updates.
+          delete-branch: true
+          labels: dependencies
+          assignees: pavkam
+          branch: ncurses-lib-update
