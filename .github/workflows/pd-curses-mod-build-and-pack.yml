@@ -17,4 +17,9 @@ jobs:
          make WIDE=Y DLL=Y CHTYPE_32=Y  
          cd ../fb
          make WIDE=Y DLL=Y CHTYPE_32=Y
+      - name: Store artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: built
+          path: '*/libpdcurses.so'
 
