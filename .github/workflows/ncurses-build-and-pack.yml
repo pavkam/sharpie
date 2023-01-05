@@ -146,4 +146,4 @@ jobs:
           commit_user_name: Alexandru Ciobanu [bot]
           commit_user_email: alex+git[bot]@ciobanu.org
           commit_author: Alexandru Ciobanu <alex+git[bot]@ciobanu.org>
-          commit_message: (chore) Update PDCursesMod native libraries.
+          commit_message: (chore) Update NCurses native libraries.
