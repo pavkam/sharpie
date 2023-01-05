@@ -3,7 +3,45 @@ name: Build NCurses
 on: [workflow_dispatch]
 
 jobs:
+  ubuntu-x64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone NCurses Master
+        uses: actions/checkout@master
+        with:
+          repository: mirror/ncurses
+          ref: refs/heads/master
+      - name: Make
+        run: |
+         ./configure \
+            --prefix=/usr \
+            --without-cxx \
+            --without-ada \
+            --enable-widec \
+            --enable-pc-files \
+            --with-pkg-config-libdir=/usr/lib/pkgconfig \
+            --with-shared \
+            --with-versioned-syms \
+            --with-xterm-kbs=del \
+            --enable-warnings \
+            --enable-assertions \
+            --disable-macros \
+            --enable-opaque-curses \
+            --enable-opaque-panel \
+            --enable-opaque-menu \
+            --enable-opaque-form \
+            --enable-database \
+            --without-manpages
+          make
+      - name: Upload Artifacts (1)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: '*.so'
+          if-no-files-found: error
+          
   windows-x64:
+    if: ${{ false }}
     runs-on: windows-2019
     defaults:
       run:
