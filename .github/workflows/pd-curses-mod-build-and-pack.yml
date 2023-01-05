@@ -17,9 +17,34 @@ jobs:
          make WIDE=Y DLL=Y CHTYPE_32=Y  
          cd ../fb
          make WIDE=Y DLL=Y CHTYPE_32=Y
-      - name: Store artifacts
+      - name: linux-libpdcurses-vt-x64
         uses: actions/upload-artifact@v3
         with:
           name: built
-          path: '*/libpdcurses.so'
+          path: 'vt/libpdcurses.so'
+          if-no-files-found: error
+      - name: linux-libpdcurses-fb-x64
+        uses: actions/upload-artifact@v3
+        with:
+          name: built
+          path: 'fb/libpdcurses.so'
+          if-no-files-found: error
 
+  macos-x64:
+    runs-on: macOS-latest
+    steps:
+      - name: Clone PDCursesMod master
+        uses: actions/checkout@master
+        with:
+          repository: Bill-Gray/PDCursesMod
+          ref: refs/heads/master
+      - name: make
+        run: |
+         cd vt
+         make WIDE=Y DLL=Y CHTYPE_32=Y  
+      - name: macos-libpdcurses-vt-x64
+        uses: actions/upload-artifact@v3
+        with:
+          name: built
+          path: 'vt/libpdcurses.dylib'
+          if-no-files-found: error
