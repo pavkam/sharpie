@@ -126,9 +126,10 @@ jobs:
             --with-fallbacks=ms-terminal \
             --without-manpages
           make
+          ren /lib/libncursesw.dll /lib/libncursesw-x64.dll
       - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: '*.dll'
+          path: '**/*.dll'
           if-no-files-found: error
