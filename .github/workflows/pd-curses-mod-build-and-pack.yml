@@ -6,45 +6,77 @@ jobs:
   ubuntu-x64:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone PDCursesMod master
+      - name: Clone PDCursesMod Master
         uses: actions/checkout@master
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
-      - name: make
+      - name: Make
         run: |
          cd vt
-         make WIDE=Y DLL=Y CHTYPE_32=Y  
+         make WIDE=Y DLL=Y CHTYPE_32=Y
+         mv libpdcurses.so libpdcurses-vt-x64.so
          cd ../fb
          make WIDE=Y DLL=Y CHTYPE_32=Y
-      - name: linux-libpdcurses-vt-x64
+         mv libpdcurses.so libpdcurses-fb-x64.so
+      - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
-          name: built
-          path: 'vt/libpdcurses.so'
-          if-no-files-found: error
-      - name: linux-libpdcurses-fb-x64
-        uses: actions/upload-artifact@v3
-        with:
-          name: built
-          path: 'fb/libpdcurses.so'
+          name: libraries
+          path: |
+            'vt/*.so'
+            'fb/*.so'
           if-no-files-found: error
 
   macos-x64:
     runs-on: macOS-latest
     steps:
-      - name: Clone PDCursesMod master
+      - name: Clone PDCursesMod Master
         uses: actions/checkout@master
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
-      - name: make
+      - name: Make
         run: |
          cd vt
-         make WIDE=Y DLL=Y CHTYPE_32=Y  
-      - name: macos-libpdcurses-vt-x64
+         make WIDE=Y DLL=Y CHTYPE_32=Y
+         mv libpdcurses.dylib libpdcurses-vt-x64.dylib
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: built
-          path: 'vt/libpdcurses.dylib'
+          name: libraries
+          path: |
+            'vt/*.dylib'
+          if-no-files-found: error
+
+  windowx-x64:
+    runs-on: windows-2019
+
+    steps:
+      - name: Clone PDCursesMod Master
+        uses: actions/checkout@master
+        with:
+          repository: Bill-Gray/PDCursesMod
+          ref: refs/heads/master
+      - name: Make
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          cd wingui
+          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
+          ren pdcurses.dll pdcurses-wingui-x64.dll
+          cd ..\wincon
+          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
+          ren pdcurses.dll pdcurses-wincon-x64.dll
+          cd ..\vt
+          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
+          ren pdcurses.dll pdcurses-vt-x64.dll
+        shell: cmd
+      - name: Upload Artifacts (1)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: |
+            'wingui/*.dll'
+            'wincon/*.dll'
+            'vt/*.dll'
           if-no-files-found: error
