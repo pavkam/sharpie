@@ -6,9 +6,10 @@ jobs:
   ubuntu-x64:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Clone PDCursesMod master
+        uses: actions/checkout@master
         with:
-          name: Bill-Gray/PDCursesMod
+          repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
       - name: make
         run: |
