@@ -33,11 +33,12 @@ jobs:
             --enable-database \
             --without-manpages
           make
+          mv lib/libncursesw.so lib/libncursesw-x64.so
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: '**/*.so'
+          path: 'lib/libncursesw-x64.so'
           if-no-files-found: error
           
   windows-x64:
