@@ -95,6 +95,12 @@ internal class PdCursesMod32Backend: PdCursesBackend
     public override int getmouse(out CursesMouseState state) =>
         CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.nc_getmouse>()(out state);
 
+    public override bool is_immedok(IntPtr window) =>
+        CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.is_immedok>()(window);
+
+    public override bool is_scrollok(IntPtr window) =>
+        CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.is_scrollok>()(window);
+
     public override int getcchar(ComplexChar @char, StringBuilder dest, out VideoAttribute attributes,
         out short colorPair, IntPtr reserved)
     {

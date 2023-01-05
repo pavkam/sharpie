@@ -71,10 +71,11 @@ public class SubPadTests
     {
         var sp = new SubPad(_parent, new(999));
         _cursesMock.MockArea(sp, new Rectangle(5, 6, 100, 200));
-        
-        sp.ToString().ShouldBe("SubPad #000003E7 (100x200 @ 5x6)");
+
+        sp.ToString()
+          .ShouldBe("SubPad #000003E7 (100x200 @ 5x6)");
     }
-    
+
     [TestMethod]
     public void Location_Get_Returns_IfCursesSucceeded()
     {

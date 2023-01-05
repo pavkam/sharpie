@@ -139,7 +139,8 @@ public sealed class SubWindow: Surface, ISubWindow
 
         base.Delete();
     }
-    
-    /// <inheritdoc cref="object.ToString"/>
-    public override string ToString() => $"{GetType().Name} #{Handle:X8} ({Size.Width}x{Size.Height} @ {Location.X}x{Location.Y})";
+
+    /// <inheritdoc cref="object.ToString" />
+    public override string ToString() =>
+        $"{GetType().Name} #{Handle:X8} ({Size.Width}x{Size.Height} @ {Location.X}x{Location.Y})";
 }

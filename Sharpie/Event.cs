@@ -40,7 +40,6 @@ public class Event
     ///     Creates a new instance of the class.
     /// </summary>
     /// <param name="type">The type of the event.</param>
-    
     protected internal Event(EventType type) => Type = type;
 
     /// <summary>

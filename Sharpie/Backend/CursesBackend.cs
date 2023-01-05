@@ -77,15 +77,13 @@ public static class CursesBackend
     }
 
     /// <summary>
-    ///     Internal method that loads the NCurses backend from native libraries (and any other support library that is
-    ///     required).
-    ///     This method uses standard known names for the 'ncurses' and potentially 'libc' libraries.
+    ///     Internal method that loads the Curses backend based on the specified <paramref name="providers" />.
     /// </summary>
     /// <param name="providers">The desired providers.</param>
     /// <param name="dotNetSystemAdapter">Adapter for .NET system.</param>
     /// <returns>The loaded Curses backend.</returns>
+    /// <exception cref="CursesInitializationException">Thrown if no suitable provider was found.</exception>
     /// <exception cref="ArgumentException">Thrown if <paramref name="providers" /> is empty.</exception>
-    /// <exception cref="CursesInitializationException">Thrown if no suitable library was found.</exception>
     [SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
      SupportedOSPlatform("windows")]
     internal static ICursesBackend Load(IDotNetSystemAdapter dotNetSystemAdapter, Provider providers)
@@ -174,6 +172,46 @@ public static class CursesBackend
     }
 
     /// <summary>
+    ///     Internal method that loads the Curses backend based on the specified <paramref name="providers" /> and
+    ///     <paramref name="paths" />.
+    /// </summary>
+    /// <param name="providers">The desired providers.</param>
+    /// <param name="dotNetSystemAdapter">Adapter for .NET system.</param>
+    /// <param name="paths">The list of paths for the library.</param>
+    /// <returns>The loaded Curses backend.</returns>
+    /// <exception cref="CursesInitializationException">Thrown if no suitable provider was found.</exception>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="providers" /> is empty.</exception>
+    [SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
+     SupportedOSPlatform("windows")]
+    internal static ICursesBackend Load(IDotNetSystemAdapter dotNetSystemAdapter, Provider providers,
+        params string[] paths)
+    {
+        ICursesBackend? result = null;
+
+        if (providers.HasFlag(Provider.PdCursesMod32Wide))
+        {
+            result = TryLoad(dotNetSystemAdapter, Provider.PdCursesMod32Wide, paths);
+        }
+
+        if (providers.HasFlag(Provider.PdCurses) && result == null)
+        {
+            result = TryLoad(dotNetSystemAdapter, Provider.PdCurses, paths);
+        }
+
+        if (providers.HasFlag(Provider.NCurses) && result == null)
+        {
+            result = TryLoad(dotNetSystemAdapter, Provider.NCurses, paths);
+        }
+
+        if (result == null)
+        {
+            throw new CursesInitializationException();
+        }
+
+        return result;
+    }
+
+    /// <summary>
     ///     Loads the Curses backend based on the specified <paramref name="providers" />.
     /// </summary>
     /// <param name="providers">The desired providers.</param>
@@ -185,6 +223,20 @@ public static class CursesBackend
      SupportedOSPlatform("windows")]
     public static ICursesBackend Load(Provider providers = Provider.Any) =>
         Load(IDotNetSystemAdapter.Instance, providers);
+
+    /// <summary>
+    ///     Loads the Curses backend based on the specified <paramref name="providers" /> and <paramref name="paths" />.
+    /// </summary>
+    /// <param name="providers">The desired providers.</param>
+    /// <param name="paths">The list of paths for the library.</param>
+    /// <returns>The loaded Curses backend.</returns>
+    /// <exception cref="CursesInitializationException">Thrown if no suitable provider was found.</exception>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="providers" /> is empty.</exception>
+    [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested."),
+     SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
+     SupportedOSPlatform("windows")]
+    public static ICursesBackend Load(Provider providers, params string[] paths) =>
+        Load(IDotNetSystemAdapter.Instance, providers, paths);
 
     private static IEnumerable<(string name, int version)> GetCandidatesInDirectory(
         IDotNetSystemAdapter dotNetSystemAdapter, string directory, Regex pattern)

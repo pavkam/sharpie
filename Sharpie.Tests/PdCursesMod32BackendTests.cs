@@ -48,6 +48,26 @@ public class PdCursesMod32BackendTests
         _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object, null);
     }
 
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void is_scrollok_IsRelayedToLibrary(bool ret)
+    {
+        var h = new IntPtr(999);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.is_scrollok, bool>(s => s(h), ret);
+
+        _backend.is_scrollok(h)
+                .ShouldBe(ret);
+    }
+
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void is_immedok_IsRelayedToLibrary(bool ret)
+    {
+        var h = new IntPtr(999);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.is_immedok, bool>(s => s(h), ret);
+
+        _backend.is_immedok(h)
+                .ShouldBe(ret);
+    }
+
     [TestMethod, DataRow(0), DataRow(-1)]
     public void endwin_IsRelayedToLibrary(int ret)
     {

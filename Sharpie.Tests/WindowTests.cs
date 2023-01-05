@@ -102,9 +102,10 @@ public class WindowTests
     public void ToString_ReturnsFormattedRepresentation()
     {
         var w = new Window(_screen, new(999));
-        _cursesMock.MockArea(w, new Rectangle(5,6, 100, 200));
-        
-        w.ToString().ShouldBe("Window #000003E7 (100x200 @ 5x6)");
+        _cursesMock.MockArea(w, new Rectangle(5, 6, 100, 200));
+
+        w.ToString()
+         .ShouldBe("Window #000003E7 (100x200 @ 5x6)");
     }
 
     [TestMethod]

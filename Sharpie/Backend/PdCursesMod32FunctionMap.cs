@@ -44,6 +44,12 @@ internal abstract class PdCursesMod32FunctionMap: BaseCursesFunctionMap
         out short colorPair, IntPtr reserved);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate bool is_immedok(IntPtr window);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate bool is_scrollok(IntPtr window);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int nc_getmouse(out CursesMouseState state);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
