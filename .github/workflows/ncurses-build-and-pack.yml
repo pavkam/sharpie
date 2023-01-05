@@ -118,14 +118,14 @@ jobs:
             --with-shared \
             --with-normal \
             --without-debug \
+            --enable-widec \
             --with-fallbacks=ms-terminal \
             --without-manpages
           make
-          find . | grep dll
-          mv libncursesw6.dll libncursesw-x64.dll
+          mv lib/libncursesw6.dll lib/libncurses-x64.dll
       - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/libncursesw-x64.dll'
+          path: 'lib/libncurses-x64.dll'
           if-no-files-found: error
