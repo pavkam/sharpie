@@ -23,9 +23,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: |
-            'vt/libpdcurses-vt-x64.so'
-            'fb/libpdcurses-fb-x64.so'
+          path: 'vt/*.so'
           if-no-files-found: error
 
   macos-x64:
