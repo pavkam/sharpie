@@ -109,12 +109,8 @@ jobs:
             --enable-opaque-curses \
             --enable-opaque-panel \
             --enable-opaque-menu \
-            --enable-opaque-form \
-            --enable-database \
-            --enable-sp-funcs \
-            --enable-term-driver \
             --enable-interop \
-            --disable-termcap \
+            --enable-exp-win32 \
             --enable-database \
             --with-progs \
             --without-libtool \
