@@ -24,8 +24,8 @@ jobs:
         with:
           name: libraries
           path: |
-            'vt/*.so'
-            'fb/*.so'
+            'vt/libpdcurses-vt-x64.so'
+            'fb/libpdcurses-fb-x64.so'
           if-no-files-found: error
 
   macos-x64:
