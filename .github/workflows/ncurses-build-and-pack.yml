@@ -39,6 +39,7 @@ jobs:
           if-no-files-found: error
           
   macos-x64:
+    if: ${{ false }}
     runs-on: macOS-latest
     steps:
       - name: Clone NCurses Master
@@ -88,7 +89,7 @@ jobs:
       - name: Install MSys2
         uses: msys2/setup-msys2@v2
         with:
-          install: gcc make diffutils
+          install: gcc make diffutils msys2-w32api-headers msys2-w32api-runtime
       - name: Make
         run: |
           ./configure \
