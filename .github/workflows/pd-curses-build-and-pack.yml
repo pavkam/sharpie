@@ -45,5 +45,6 @@ jobs:
           title: Update PDCurses native library to latest master.
           body: This is an auto-generated PR with native library updates.
           delete-branch: true
+          labels: dependencies
           assignees: pavkam
-          branch: website-updates
+          branch: pdcurses-lib-update
