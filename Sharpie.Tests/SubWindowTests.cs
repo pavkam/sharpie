@@ -81,11 +81,12 @@ public class SubWindowTests
     public void ToString_ReturnsFormattedRepresentation()
     {
         var sw = new SubWindow(_parent, new(999));
-        _cursesMock.MockArea(sw, new Rectangle(5, 6 , 100, 200));
-        
-        sw.ToString().ShouldBe("SubWindow #000003E7 (100x200 @ 5x6)");
+        _cursesMock.MockArea(sw, new Rectangle(5, 6, 100, 200));
+
+        sw.ToString()
+          .ShouldBe("SubWindow #000003E7 (100x200 @ 5x6)");
     }
-    
+
     [TestMethod]
     public void Window_IsInitialized()
     {

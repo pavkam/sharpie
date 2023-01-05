@@ -676,4 +676,65 @@ public class PdCursesBackendTests
         Should.Throw<ArgumentException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
             chs[4], chs[5], chs[6], chs[7]));
     }
+
+    [TestMethod, DataRow(true, 0), DataRow(false, -1)]
+    public void scrollok_RetainsValueInLocalCache(bool yes, int ret)
+    {
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.scrollok, int>(s => s(new(1), yes), ret);
+
+        _backend.scrollok(new(1), yes)
+                .ShouldBe(ret);
+
+        _backend.is_scrollok(new(1))
+                .ShouldBe(ret != -1 && yes);
+
+        _backend.is_immedok(new(1))
+                .ShouldBe(false);
+    }
+
+    [TestMethod, DataRow(true), DataRow(false)]
+    public void immedok_RetainsValueInLocalCache(bool yes)
+    {
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.immedok>()
+                                 .Setup(s => s(new(1), yes));
+
+        _backend.immedok(new(1), yes);
+
+        _backend.is_immedok(new(1))
+                .ShouldBe(yes);
+
+        _backend.is_scrollok(new(1))
+                .ShouldBe(false);
+    }
+
+    [TestMethod]
+    public void scrollok_And_immedok_DoeNotTouchEachOthersValues()
+    {
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.scrollok, int>(
+            s => s(It.IsAny<IntPtr>(), It.IsAny<bool>()), 0);
+
+        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.immedok>()
+                                 .Setup(s => s(It.IsAny<IntPtr>(), It.IsAny<bool>()));
+
+        _backend.scrollok(new(1), true);
+        _backend.immedok(new(1), true);
+
+        _backend.is_scrollok(new(1))
+                .ShouldBe(true);
+
+        _backend.is_immedok(new(1))
+                .ShouldBe(true);
+
+        _backend.scrollok(new(1), false);
+        _backend.immedok(new(1), true);
+
+        _backend.is_immedok(new(1))
+                .ShouldBe(true);
+
+        _backend.scrollok(new(1), true);
+        _backend.immedok(new(1), false);
+
+        _backend.is_scrollok(new(1))
+                .ShouldBe(true);
+    }
 }

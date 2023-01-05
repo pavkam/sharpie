@@ -127,7 +127,7 @@ public class SurfaceTests
 
         Should.Throw<ObjectDisposedException>(() => s.Handle);
     }
-    
+
     [TestMethod]
     public void AssertAlive_DoesNothing_IfNotDisposed()
     {
@@ -149,10 +149,11 @@ public class SurfaceTests
     {
         var s = new Surface(_cursesMock.Object, new(999));
         _cursesMock.MockArea(s, new Size(100, 200));
-        
-        s.ToString().ShouldBe("Surface #000003E7 (100x200)");
+
+        s.ToString()
+         .ShouldBe("Surface #000003E7 (100x200)");
     }
-    
+
     [TestMethod]
     public void Scrollable_Get_Returns_IfCursesSucceeded()
     {

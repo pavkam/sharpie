@@ -129,7 +129,6 @@ internal abstract class BaseCursesFunctionMap
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int intrflush(IntPtr window, bool set);
 
-
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate bool is_leaveok(IntPtr window);
 

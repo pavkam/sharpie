@@ -88,10 +88,11 @@ public class ScreenTests
     public void ToString_ReturnsFormattedRepresentation()
     {
         _cursesMock.MockArea(_screen, new Size(100, 200));
-        
-        _screen.ToString().ShouldBe("Screen #00000064 (100x200)");
+
+        _screen.ToString()
+               .ShouldBe("Screen #00000064 (100x200)");
     }
-    
+
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails()
     {

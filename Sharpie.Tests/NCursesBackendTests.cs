@@ -54,7 +54,7 @@ public class NCursesBackendTests
 
         _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object, null);
     }
-    
+
     [TestMethod, DataRow(true), DataRow(false)]
     public void is_scrollok_IsRelayedToLibrary(bool ret)
     {

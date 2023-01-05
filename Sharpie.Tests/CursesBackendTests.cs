@@ -426,4 +426,26 @@ public class CursesBackendTests
         VerifyLoadLibraryAttempts("/h+ncurses-one+lib+libncurses.1.dylib", "/h+ncurses-2+lib+libncurses.2.dylib",
             "/h+ncurses-one+lib+libncurses.10.dylib", "/h+ncurses-2+lib+libncurses.12.dylib", "ncurses", "ncursesw");
     }
+
+    [TestMethod]
+    public void Load2_TriesToLoadGivenPaths_ForEachProvider()
+    {
+        var actual = CaptureLoadAttempts();
+
+        Should.Throw<CursesInitializationException>(() =>
+            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any, "path1", "path2"));
+
+        actual.ShouldBe(new[] { "path1", "path2", "path1", "path2", "path1", "path2" });
+    }
+
+    [TestMethod]
+    public void Load2_WhenLinux_StopsAtFirstGoodLoad()
+    {
+        MockLoadResult("path2", true);
+
+        CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any, "path1", "path2", "path3")
+                     .ShouldNotBeNull();
+
+        VerifyLoadLibraryAttempts("path1", "path2", "libc");
+    }
 }

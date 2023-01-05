@@ -37,17 +37,17 @@ namespace Sharpie.Backend;
 internal abstract class PdCursesMod32FunctionMap: BaseCursesFunctionMap
 {
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool is_immedok(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate bool is_scrollok(IntPtr window);
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int endwin_w32_4302();
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int getcchar(ref uint @char, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dest, out uint attrs,
         out short colorPair, IntPtr reserved);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate bool is_immedok(IntPtr window);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate bool is_scrollok(IntPtr window);
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int nc_getmouse(out CursesMouseState state);

@@ -745,6 +745,6 @@ public abstract class Surface: ISurface, IDisposable
     /// </summary>
     ~Surface() { Destroy(); }
 
-    /// <inheritdoc cref="object.ToString"/>
+    /// <inheritdoc cref="object.ToString" />
     public override string ToString() => $"{GetType().Name} #{Handle:X8} ({Size.Width}x{Size.Height})";
 }

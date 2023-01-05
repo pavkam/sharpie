@@ -217,9 +217,11 @@ internal class NCursesBackend: BaseCursesBackend
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
-    public override bool is_immedok(IntPtr window) => CursesSymbolResolver.Resolve<NCursesFunctionMap.is_immedok>()(window);
+    public override bool is_immedok(IntPtr window) =>
+        CursesSymbolResolver.Resolve<NCursesFunctionMap.is_immedok>()(window);
 
-    public override bool is_scrollok(IntPtr window) => CursesSymbolResolver.Resolve<NCursesFunctionMap.is_scrollok>()(window);
+    public override bool is_scrollok(IntPtr window) =>
+        CursesSymbolResolver.Resolve<NCursesFunctionMap.is_scrollok>()(window);
 
     public override int endwin() => CursesSymbolResolver.Resolve<NCursesFunctionMap.endwin>()();
 

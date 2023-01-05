@@ -9,7 +9,7 @@ namespace Sharpie.Backend;
 internal class PdCursesBackend: BaseCursesBackend
 {
     private readonly Dictionary<IntPtr, (bool immedOk, bool scrollOk)> _windowStates = new();
-    
+
     /// <summary>
     ///     Creates a new instance of this class.
     /// </summary>
@@ -380,12 +380,13 @@ internal class PdCursesBackend: BaseCursesBackend
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
-    public override bool is_immedok(IntPtr window) => _windowStates.TryGetValue(window, out var state) && state.immedOk; // TODO: test me
+    public override bool is_immedok(IntPtr window) =>
+        _windowStates.TryGetValue(window, out var state) && state.immedOk;
 
     public override bool is_scrollok(IntPtr window) =>
-        _windowStates.TryGetValue(window, out var state) && state.scrollOk; // TODO: test me
-    
-    public override int scrollok(IntPtr window, bool set) // TODO: test me
+        _windowStates.TryGetValue(window, out var state) && state.scrollOk;
+
+    public override int scrollok(IntPtr window, bool set)
     {
         var res = base.scrollok(window, set);
         if (!res.Failed())
@@ -402,7 +403,7 @@ internal class PdCursesBackend: BaseCursesBackend
         return res;
     }
 
-    public override void immedok(IntPtr window, bool set) // TODO: test me
+    public override void immedok(IntPtr window, bool set)
     {
         base.immedok(window, set);
         if (_windowStates.TryGetValue(window, out var state))
