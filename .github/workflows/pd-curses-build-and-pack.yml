@@ -1,6 +1,9 @@
 name: Build PDCurses
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 1 1-12 *'
 
 jobs:
   windows-x64:
