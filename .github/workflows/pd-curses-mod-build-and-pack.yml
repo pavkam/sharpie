@@ -107,6 +107,7 @@ jobs:
         with:
           branch: pd-curses-mod-libs
           create_branch: true
+          push_options: '--force'
           commit_user_name: Alexandru Ciobanu [bot]
           commit_user_email: alex+git[bot]@ciobanu.org
           commit_author: Alexandru Ciobanu <alex+git[bot]@ciobanu.org>
