@@ -25,6 +25,12 @@ jobs:
           name: libraries
           path: 'vt/*.so'
           if-no-files-found: error
+      - name: Upload Artifacts (2)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'fb/*.so'
+          if-no-files-found: error
 
   macos-x64:
     runs-on: macOS-latest
@@ -39,12 +45,11 @@ jobs:
          cd vt
          make WIDE=Y DLL=Y CHTYPE_32=Y
          mv libpdcurses.dylib libpdcurses-vt-x64.dylib
-      - name: Upload Artifacts
+      - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: |
-            'vt/*.dylib'
+          path: 'vt/*.dylib'
           if-no-files-found: error
 
   windowx-x64:
@@ -73,8 +78,17 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: |
-            'wingui/*.dll'
-            'wincon/*.dll'
-            'vt/*.dll'
+          path: 'wingui/*.dll'
+          if-no-files-found: error
+      - name: Upload Artifacts (2)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'wincon/*.dll'
+          if-no-files-found: error
+      - name: Upload Artifacts (3)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'vt/*.dll'
           if-no-files-found: error
