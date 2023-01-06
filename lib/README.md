@@ -1,4 +1,4 @@
-# Unofficial Native Libraries
+# Unofficial Curses Native Libraries
 
 This directory contains unofficial builds of the native libraries supported by **Sharpie**. All libraries are built using GitHub workflows.
 
@@ -54,6 +54,7 @@ This software is provided AS IS with NO WARRANTY whatsoever.
 PDCursesMod libraries are built for Linux, MacOs and Windows using [this workflow](https://github.com/pavkam/sharpie/blob/main/.github/workflows/pd-curses-mod-build-and-pack.yml).
 
 > The `libpdcursesmod-vt-arm64.dylib` library has been built on a Mac M1 locally.
+> The `pdcursesmod-vt-arm64.dll`, `pdcursesmod-wincon-arm64.dll` and `pdcursesmod-wingui-arm64.dll` libraries have been built on a Windows 11 ARM locally.
 
 The original source repository is located [here](https://github.com/Bill-Gray/PDCursesMod)
 
