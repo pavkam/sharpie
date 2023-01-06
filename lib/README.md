@@ -52,6 +52,9 @@ This software is provided AS IS with NO WARRANTY whatsoever.
 
 ## PDCursesMod
 PDCursesMod libraries are built for Linux, MacOs and Windows using [this workflow](https://github.com/pavkam/sharpie/blob/main/.github/workflows/pd-curses-mod-build-and-pack.yml).
+
+> The `libpdcursesmod-vt-arm64.dylib` library has been built on a Mac M1 locally.
+
 The original source repository is located [here](https://github.com/Bill-Gray/PDCursesMod)
 
 ### License
