@@ -43,8 +43,8 @@ The original source repository is located [here](https://github.com/wmcbrine/PDC
 
 # License
 ```
-The core package and most ports are in the public domain, but a few files in the demos and X11 directories are subject to copyright under licenses described there.
-
+The core package and most ports are in the public domain, but a few files 
+in the demos and X11 directories are subject to copyright under licenses described there.
 This software is provided AS IS with NO WARRANTY whatsoever.
 ```
 
@@ -54,9 +54,14 @@ The original source repository is located [here](https://github.com/Bill-Gray/PD
 
 # License
 ```
-The core package is in the public domain, but small portions of PDCursesMod are subject to copyright under various licenses. Each directory contains a README file, with a section titled "Distribution Status" which describes the status of the files in that directory.
+The core package is in the public domain, but small portions of PDCursesMod 
+are subject to copyright under various licenses. Each directory contains a 
+README file, with a section titled "Distribution Status" which describes 
+the status of the files in that directory.
 
-If you use PDCursesMod in an application, an acknowledgement would be appreciated, but is not mandatory. If you make corrections or enhancements to PDCursesMod, please forward them to the current maintainer for the benefit of other users.
+If you use PDCursesMod in an application, an acknowledgement would be appreciated, 
+but is not mandatory. If you make corrections or enhancements to PDCursesMod, 
+please forward them to the current maintainer for the benefit of other users.
 
 This software is provided AS IS with NO WARRANTY whatsoever.
 ```
