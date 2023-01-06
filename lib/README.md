@@ -2,12 +2,14 @@
 
 This directory contains unofficial builds of the native libraries supported by **Sharpie**. All libraries are built using GitHub workflows.
 
+> These libraries are provided AS IS with NO WARRANTY whatsoever from my side.
+
 ## NCurses
 NCurses libraries are built for Linux, MacOs and Windows using [this workflow](https://github.com/pavkam/sharpie/blob/main/.github/workflows/ncurses-build-and-pack.yml).
 You can check it out to see the used compilation settings.
 The original source repository is located [here](https://github.com/mirror/ncurses/)
 
-# License
+### License
 ```
 Copyright 2018-2021,2022 Thomas E. Dickey
 Copyright 1998-2017,2018 Free Software Foundation, Inc.
@@ -41,7 +43,7 @@ authorization.
 NCurses libraries are built for Linux, MacOs and Windows using [this workflow](https://github.com/pavkam/sharpie/blob/main/.github/workflows/pd-curses-build-and-pack.yml).
 The original source repository is located [here](https://github.com/wmcbrine/PDCurses)
 
-# License
+### License
 ```
 The core package and most ports are in the public domain, but a few files 
 in the demos and X11 directories are subject to copyright under licenses described there.
@@ -52,7 +54,7 @@ This software is provided AS IS with NO WARRANTY whatsoever.
 PDCursesMod libraries are built for Linux, MacOs and Windows using [this workflow](https://github.com/pavkam/sharpie/blob/main/.github/workflows/pd-curses-mod-build-and-pack.yml).
 The original source repository is located [here](https://github.com/Bill-Gray/PDCursesMod)
 
-# License
+### License
 ```
 The core package is in the public domain, but small portions of PDCursesMod 
 are subject to copyright under various licenses. Each directory contains a 
