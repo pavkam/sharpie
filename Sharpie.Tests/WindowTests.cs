@@ -542,6 +542,23 @@ public class WindowTests
 
         Should.NotThrow(() => w.AdjustToExplicitArea());
     }
+    
+    
+    [TestMethod]
+    public void AdjustToExplicitArea_UnderstandNegativeHeightAndWidth()
+    {
+        var h = new IntPtr(1);
+        
+        _cursesMock.MockArea(_screen, new Size(10, 10));
+        _cursesMock.MockArea(h, new(5, 5, 2, 2));
+        var w = new Window(_screen, h);
+
+        _cursesMock.MockArea(_screen, new Size(3, 3));
+
+        w.AdjustToExplicitArea();
+
+        _cursesMock.Verify(v => v.wresize(w.Handle, 0, 0), Times.Once);
+    }
 
     [TestMethod]
     public void BringToFront_WhenUnmanaged_Throws()

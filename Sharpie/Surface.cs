@@ -368,32 +368,42 @@ public abstract class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wchgat), "Failed to change style of characters in the surface.");
     }
 
+    /// <inheritdoc cref="ISurface.WriteText(StyledText)" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public void WriteText(StyledText text)
+    {
+        AssertSynchronized();
+
+        foreach (var (str, style) in text.Parts ?? Array.Empty<(string, Style)>())
+        {
+            foreach (var rune in str.EnumerateRunes())
+            {
+                Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, style))
+                      .Check(nameof(Curses.wadd_wch), "Failed to write character to the terminal.");
+            }
+        }
+    }
+
     /// <inheritdoc cref="ISurface.WriteText(string,Sharpie.Style)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void WriteText(string str, Style style)
+    public void WriteText(string text, Style style)
     {
-        if (str == null)
+        if (text == null)
         {
-            throw new ArgumentNullException(nameof(str));
+            throw new ArgumentNullException(nameof(text));
         }
 
-        if (str.Length == 0)
+        if (text.Length == 0)
         {
             return;
         }
 
-        AssertSynchronized();
-
-        foreach (var rune in str.EnumerateRunes())
-        {
-            Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, style))
-                  .Check(nameof(Curses.wadd_wch), "Failed to write character to the terminal.");
-        }
+        WriteText(new StyledText(text, style));
     }
-
+    
     /// <inheritdoc cref="ISurface.WriteText(string)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void WriteText(string str) => WriteText(str, Style.Default);
+    public void WriteText(string text) => WriteText(text, Style.Default);
 
     /// <inheritdoc cref="ISurface.DrawVerticalLine(int,System.Text.Rune,Sharpie.Style)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>

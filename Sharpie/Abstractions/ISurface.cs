@@ -236,29 +236,41 @@ public interface ISurface: IDrawSurface
     /// <summary>
     ///     Writes a text at the caret position at the current surface and advances the caret.
     /// </summary>
-    /// <param name="str">The text to write.</param>
-    /// <param name="style">The style of the text.</param>
-    /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
+    /// <param name="text">The styled text to write.</param>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    void WriteText(string str, Style style);
+    void WriteText(StyledText text);
+    
+    /// <summary>
+    ///     Writes a text at the caret position at the current surface and advances the caret.
+    /// </summary>
+    /// <param name="text">The text to write.</param>
+    /// <param name="style">The style of the text.</param>
+    /// <exception cref="ArgumentNullException">The <paramref name="text" /> is <c>null</c>.</exception>
+    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
+    /// <remarks>This operation is not thread safe.</remarks>
+    void WriteText(string text, Style style);
 
     /// <summary>
     ///     Writes a text at the caret position at the current surface and advances the caret.
     /// </summary>
-    /// <param name="str">The text to write.</param>
-    /// <exception cref="ArgumentNullException">The <paramref name="str" /> is <c>null</c>.</exception>
+    /// <param name="text">The text to write.</param>
+    /// <exception cref="ArgumentNullException">The <paramref name="text" /> is <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    void WriteText(string str);
+    void WriteText(string text);
 
     /// <summary>
     ///     Draws a vertical line from the current caret position downwards.
