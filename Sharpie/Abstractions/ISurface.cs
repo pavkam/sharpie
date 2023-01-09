@@ -244,7 +244,7 @@ public interface ISurface: IDrawSurface
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void WriteText(StyledText text);
-    
+
     /// <summary>
     ///     Writes a text at the caret position at the current surface and advances the caret.
     /// </summary>

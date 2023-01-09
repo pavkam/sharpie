@@ -1,21 +1,21 @@
 namespace Sharpie;
 
 /// <summary>
-/// Describes a text with mixed in styles. Can be used by <see cref="ISurface.WriteText(StyledText)"/>.
+///     Describes a text with mixed in styles. Can be used by <see cref="ISurface.WriteText(StyledText)" />.
 /// </summary>
 [PublicAPI]
 public readonly struct StyledText
 {
     internal (string text, Style style)[]? Parts { get; }
-    
+
     private StyledText((string text, Style style)[] parts) => Parts = parts;
 
     /// <summary>
-    /// Creates a new styled text with the given <paramref name="text"/> and <paramref name="style"/>.
+    ///     Creates a new styled text with the given <paramref name="text" /> and <paramref name="style" />.
     /// </summary>
     /// <param name="text">The text.</param>
     /// <param name="style">The text style.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="text"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="text" /> is <c>null</c>.</exception>
     public StyledText(string text, Style style)
     {
         if (text == null)
@@ -27,12 +27,12 @@ public readonly struct StyledText
     }
 
     /// <summary>
-    /// Combines this styled text with another styled text.
+    ///     Combines this styled text with another styled text.
     /// </summary>
     /// <param name="text">The other text to combine with.</param>
     /// <param name="style">The style of the text to combine with.</param>
     /// <returns>The combined styled text.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="text"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="text" /> is <c>null</c>.</exception>
     public StyledText Plus(string text, Style style)
     {
         if (text == null)
@@ -42,9 +42,9 @@ public readonly struct StyledText
 
         return Plus(new(text, style));
     }
-    
+
     /// <summary>
-    /// Combines this styled text with another styled text.
+    ///     Combines this styled text with another styled text.
     /// </summary>
     /// <param name="rhs">The other styled text to combine with.</param>
     /// <returns>The combined styled text.</returns>
@@ -68,14 +68,14 @@ public readonly struct StyledText
     }
 
     /// <summary>
-    /// Combines two styled texts together.
+    ///     Combines two styled texts together.
     /// </summary>
     /// <param name="lhs">The left hand side styled text to combine.</param>
     /// <param name="rhs">The left right side styled text to combine.</param>
     /// <returns>The combined styled text.</returns>
-    public static StyledText operator+ (StyledText lhs, StyledText rhs) => lhs.Plus(rhs);
+    public static StyledText operator +(StyledText lhs, StyledText rhs) => lhs.Plus(rhs);
 
-    /// <inheritdoc cref="object.Equals(object?)"/>
+    /// <inheritdoc cref="object.Equals(object?)" />
     public override bool Equals(object? obj)
     {
         if (obj?.GetType() != GetType())
@@ -96,7 +96,7 @@ public readonly struct StyledText
         };
     }
 
-    /// <inheritdoc cref="object.GetHashCode"/>
+    /// <inheritdoc cref="object.GetHashCode" />
     public override int GetHashCode()
     {
         var h = new HashCode();
@@ -111,14 +111,14 @@ public readonly struct StyledText
         return h.ToHashCode();
     }
 
-    /// <inheritdoc cref="object.ToString"/>
+    /// <inheritdoc cref="object.ToString" />
     public override string? ToString()
     {
         return Parts == null ? null : string.Join(", ", Parts.Select(p => $"\"{p.text}\" @ {p.style}"));
     }
 
     /// <summary>
-    /// Checks if two styled texts are equal.
+    ///     Checks if two styled texts are equal.
     /// </summary>
     /// <param name="lhs">The left hand side styled text.</param>
     /// <param name="rhs">The left right side styled ..</param>
@@ -126,7 +126,7 @@ public readonly struct StyledText
     public static bool operator ==(StyledText lhs, StyledText rhs) => lhs.Equals(rhs);
 
     /// <summary>
-    /// Checks if two styled texts are not equal.
+    ///     Checks if two styled texts are not equal.
     /// </summary>
     /// <param name="lhs">The left hand side styled text.</param>
     /// <param name="rhs">The left right side styled ..</param>

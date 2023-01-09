@@ -400,7 +400,7 @@ public abstract class Surface: ISurface, IDisposable
 
         WriteText(new StyledText(text, style));
     }
-    
+
     /// <inheritdoc cref="ISurface.WriteText(string)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void WriteText(string text) => WriteText(text, Style.Default);

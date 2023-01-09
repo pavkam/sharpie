@@ -60,7 +60,7 @@ public class StyleTests
     public void Equals_ReturnsFalse_IfNotStyle(object? b)
     {
         _style.Equals(b)
-                    .ShouldBeFalse();
+              .ShouldBeFalse();
     }
 
     [TestMethod]

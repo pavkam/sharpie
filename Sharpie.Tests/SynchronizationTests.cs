@@ -374,7 +374,8 @@ public class SynchronizationTests
 
     [TestMethod] public void Surface_WriteText2() { Check(() => _surface.WriteText("text")); }
 
-    [TestMethod] public void Surface_WriteText3() { Check(() => _surface.WriteText(new StyledText("hello", Style.Default))); }
+    [TestMethod]
+    public void Surface_WriteText3() { Check(() => _surface.WriteText(new StyledText("hello", Style.Default))); }
 
     [TestMethod]
     public void Surface_DrawVerticalLine1() { Check(() => _surface.DrawVerticalLine(1, new('A'), Style.Default)); }
