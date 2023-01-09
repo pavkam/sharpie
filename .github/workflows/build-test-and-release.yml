@@ -1,14 +1,20 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Build, Test and Release
+name: Sharpie Core
 
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'Sharpie.Tests/**'
+      - 'Sharpie/**'
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ "main" ]
+    paths:
+      - 'Sharpie.Tests/**'
+      - 'Sharpie/**'
 
 jobs:
   build_test_deploy:
