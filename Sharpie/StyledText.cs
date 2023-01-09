@@ -11,7 +11,7 @@ public readonly struct StyledText
     private StyledText((string text, Style style)[] parts) => Parts = parts;
 
     /// <summary>
-    /// Creates a new styled text with the given <see cref="text"/> and <see cref="style"/>.
+    /// Creates a new styled text with the given <paramref name="text"/> and <paramref name="style"/>.
     /// </summary>
     /// <param name="text">The text.</param>
     /// <param name="style">The text style.</param>
@@ -84,18 +84,16 @@ public readonly struct StyledText
         }
 
         var op = ((StyledText) obj).Parts;
-        if (op == null && Parts == null)
-        {
-            return true;
-        }
-        
-        if (op == null && Parts != null || op != null && Parts == null || op.Length != Parts.Length)
-        {
-            return false;
-        }
 
-        return !Parts.Where((t, i) => op[i] != t)
-                      .Any();
+        return (op, Parts) switch
+        {
+            (null, null) => true,
+            (null, not null) => false,
+            (not null, null) => false,
+            (var l and not null, var r and not null) when l.Length != r.Length => false,
+            (var l and not null, var r and not null) => !r.Where((t, i) => l[i] != t)
+                                                          .Any()
+        };
     }
 
     /// <inheritdoc cref="object.GetHashCode"/>
