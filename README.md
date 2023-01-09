@@ -15,15 +15,12 @@
 
 ![Demo](media/demo-2.gif)
 
-# Reasons
-There are a number of libraries out there that already offer bindings to *NCurses*. One of the more popular one is [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui); and others such as [dotnet-curses](https://github.com/MV10/dotnet-curses) also exist.
+# Platforms
+**Sharpie** supports any platform that **.NET 6.0+**, **[ncurses](https://github.com/mirror/ncurses)**, **[pdcurses](https://github.com/wmcbrine/PDCurses)** and **[pdcurses-mod](https://github.com/Bill-Gray/PDCursesMod)** support. This essentially means that `Linux`, `Macos` and `Windows` are supported on both `x64` and `ARM64` architectures.
 
-So why another one? The are many reasons, but the most important ones are:
-1. There is no .NET, object-oriented version of NCurses bindings,
-2. Existing versions are old, or are targeting old versions of .NET which do not benefit from numerous advances in the .NET platform,
-3. No other library exposes most of Curses functionality,
-4. Testing is either very limited or completely non-existent.
-5. And finally -- **because I wanted to dabble in Curses**.
+For more information on supported platforms visit [.NET Supported Platforms Page](https://github.com/dotnet/core/blob/main/release-notes/6.0/supported-os.md) and [NCurses Packages Page](https://invisible-island.net/ncurses/#packages).
+
+> If you successfully test the library on other platforms please let me know.
 
 # Features
 Almost all of Curses functionality is exposed through **Sharpie**. What follows is a list of suppoerted features:
@@ -43,12 +40,15 @@ In addition to wrapping NCurses, this library also adds numerous quality-of-life
 5. Supports protected/synchronized or raw access to all classes,
 6. And other small additions here and there...
 
-# Platforms
-**Sharpie** supports any platform that **.NET 6.0+**, **[ncurses](https://github.com/mirror/ncurses)**, **[pdcurses](https://github.com/wmcbrine/PDCurses)** and **[pdcurses-mod](https://github.com/Bill-Gray/PDCursesMod)** support. This essentially means that `Linux`, `Macos` and `Windows` are supported on both `x64` and `ARM64` architectures.
+# Reasons
+There are a number of libraries out there that already offer bindings to *NCurses*. One of the more popular one is [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui); and others such as [dotnet-curses](https://github.com/MV10/dotnet-curses) also exist.
 
-For more information on supported platforms visit [.NET Supported Platforms Page](https://github.com/dotnet/core/blob/main/release-notes/6.0/supported-os.md) and [NCurses Packages Page](https://invisible-island.net/ncurses/#packages).
-
-> If you successfully test the library on other platforms please let me know.
+So why another one? The are many reasons, but the most important ones are:
+1. There is no .NET, object-oriented version of NCurses bindings,
+2. Existing versions are old, or are targeting old versions of .NET which do not benefit from numerous advances in the .NET platform,
+3. No other library exposes most of Curses functionality,
+4. Testing is either very limited or completely non-existent.
+5. And finally -- **because I wanted to dabble in Curses**.
 
 # How To
 What follows is a small example of how to use the library:
