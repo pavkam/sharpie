@@ -279,8 +279,8 @@ public sealed class Window: TerminalSurface, IWindow
         var size = Size;
         var location = Location;
 
-        var w = Math.Min(screenSize.Width - _explicitArea.X, _explicitArea.Width);
-        var h = Math.Min(screenSize.Height - _explicitArea.Y, _explicitArea.Height);
+        var w = Math.Max(0, Math.Min(screenSize.Width - _explicitArea.X, _explicitArea.Width));
+        var h = Math.Max(0, Math.Min(screenSize.Height - _explicitArea.Y, _explicitArea.Height));
 
         if (w != size.Width || h != size.Height)
         {

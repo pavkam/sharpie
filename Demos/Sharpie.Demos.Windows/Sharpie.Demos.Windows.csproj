@@ -5,7 +5,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyName>sharpie-demos-refresh</AssemblyName>
+        <AssemblyName>sharpie-demos-windows</AssemblyName>
         <LangVersion>10</LangVersion>
         <IsPackable>false</IsPackable>
         <Title>A Curses-based terminal manipulation library.</Title>
@@ -22,11 +22,11 @@
         <Authors>Alexandru Ciobanu</Authors>
         <Company>Alexandru Ciobanu</Company>
         <Product>Sharpie</Product>
-        <RootNamespace>Sharpie.Demos.Refresh</RootNamespace>
+        <PackageId>sharpie-demos-windows</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Sharpie\Sharpie.csproj"/>
+        <ProjectReference Include="..\..\Sharpie\Sharpie.csproj" />
     </ItemGroup>
 
 </Project>
