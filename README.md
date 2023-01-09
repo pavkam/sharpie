@@ -20,6 +20,8 @@
 
 For more information on supported platforms visit [.NET Supported Platforms Page](https://github.com/dotnet/core/blob/main/release-notes/6.0/supported-os.md) and [NCurses Packages Page](https://invisible-island.net/ncurses/#packages).
 
+**Sharpie** provides unofficial builds for all the supported libraries located in [the lib directory](https://github.com/pavkam/sharpie/tree/main/lib)
+
 > If you successfully test the library on other platforms please let me know.
 
 # Features
