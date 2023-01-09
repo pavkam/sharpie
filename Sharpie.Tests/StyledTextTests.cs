@@ -34,29 +34,32 @@ namespace Sharpie.Tests;
 public class StyledTextTests
 {
     private readonly Style _style = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 1 } };
-    
+
     [TestMethod]
     public void Ctor_StoresTheTextAndStyle()
     {
         new StyledText("text", _style).Parts.ShouldBe(new[] { ("text", _style) });
     }
-    
+
     [TestMethod]
-    public void Ctor_Throws_IfTextIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => new StyledText(null!, _style));
-    }
+    public void Ctor_Throws_IfTextIsNull() { Should.Throw<ArgumentNullException>(() => new StyledText(null!, _style)); }
 
     [TestMethod]
     public void ToString_ReturnsNullIfUninitialized()
     {
-        new StyledText().ToString().ShouldBeNull();
+        new StyledText().ToString()
+                        .ShouldBeNull();
     }
-    
+
     [TestMethod]
     public void ToString_ProperlyFormats()
     {
-        new StyledText("text", _style).Plus("cool", new() { Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 2 } }).ToString()
+        new StyledText("text", _style).Plus("cool",
+                                          new()
+                                          {
+                                              Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 2 }
+                                          })
+                                      .ToString()
                                       .ShouldBe("\"text\" @ Bold, #0001, \"cool\" @ Blink, #0002");
     }
 
@@ -71,7 +74,7 @@ public class StyledTextTests
     public void Equals_ReturnsFalse_IfLhsNotInitialized()
     {
         new StyledText().Equals(new StyledText("text", _style))
-            .ShouldBeFalse();
+                        .ShouldBeFalse();
     }
 
     [TestMethod]
@@ -107,7 +110,7 @@ public class StyledTextTests
         v1.Equals(v2)
           .ShouldBeTrue();
     }
-    
+
     [TestMethod]
     public void Equals_ReturnsTrue_IfBothAreNotInitialized()
     {
@@ -124,23 +127,26 @@ public class StyledTextTests
         var v1 = new StyledText("text", _style);
         var v2 = new StyledText("text",
             new() { Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 1 } });
-        
-        v1.GetHashCode().ShouldNotBe(v2.GetHashCode());
+
+        v1.GetHashCode()
+          .ShouldNotBe(v2.GetHashCode());
     }
-    
+
     [TestMethod]
     public void GetHashCode_IsDifferent_WhenSomePartsAreDifferent()
     {
         var v1 = new StyledText("text", _style).Plus("2", _style);
         var v2 = new StyledText("text", _style).Plus("3", _style);
-        
-        v1.GetHashCode().ShouldNotBe(v2.GetHashCode());
+
+        v1.GetHashCode()
+          .ShouldNotBe(v2.GetHashCode());
     }
-    
+
     [TestMethod]
     public void GetHashCode_IsZeroWhenNotInitialized()
     {
-        new StyledText().GetHashCode().ShouldNotBe(0);
+        new StyledText().GetHashCode()
+                        .ShouldNotBe(0);
     }
 
     [TestMethod]
@@ -148,8 +154,9 @@ public class StyledTextTests
     {
         var v1 = new StyledText("text", _style).Plus("2", _style);
         var v2 = new StyledText("text", _style).Plus("2", _style);
-        
-        v1.GetHashCode().ShouldBe(v2.GetHashCode());
+
+        v1.GetHashCode()
+          .ShouldBe(v2.GetHashCode());
     }
 
     [TestMethod]
@@ -157,7 +164,7 @@ public class StyledTextTests
     {
         var v1 = new StyledText("text1", _style);
         var v2 = new StyledText("text2", _style);
-                
+
         Assert.IsFalse(v1 == v2);
     }
 
@@ -187,7 +194,7 @@ public class StyledTextTests
 
         Assert.IsFalse(v1 != v2);
     }
-    
+
     [TestMethod]
     public void PlusOperator_Concatenates()
     {
@@ -196,40 +203,45 @@ public class StyledTextTests
 
         (v1 + v2).Parts.ShouldBe(new[] { ("text1", _style), ("text2", _style) });
     }
-    
+
     [TestMethod]
     public void Plus1_Throws_IfTextIsNull()
     {
         Should.Throw<ArgumentNullException>(() => new StyledText("text", _style).Plus(null!, _style));
     }
-    
+
     [TestMethod]
     public void Plus1_UsesOtherText_IfThisIsUninitialized()
     {
-        new StyledText().Plus("text", _style).Parts.ShouldBe(new[] { ("text", _style) });
+        new StyledText().Plus("text", _style)
+                        .Parts.ShouldBe(new[] { ("text", _style) });
     }
-    
+
     [TestMethod]
     public void Plus1_ConcatenatesWithOtherText()
     {
-        new StyledText("text1", _style).Plus("text2", _style).Parts.ShouldBe(new[] { ("text1", _style), ("text2", _style) });
+        new StyledText("text1", _style).Plus("text2", _style)
+                                       .Parts.ShouldBe(new[] { ("text1", _style), ("text2", _style) });
     }
-    
+
     [TestMethod]
     public void Plus2_UsesOtherText_IfThisIsUninitialized()
     {
-        new StyledText().Plus(new("text", _style)).Parts.ShouldBe(new[] { ("text", _style) });
+        new StyledText().Plus(new("text", _style))
+                        .Parts.ShouldBe(new[] { ("text", _style) });
     }
-    
+
     [TestMethod]
     public void Plus2_UsesThisText_IfOtherIsUninitialized()
     {
-        new StyledText("text", _style).Plus(new()).Parts.ShouldBe(new[] { ("text", _style) });
+        new StyledText("text", _style).Plus(new())
+                                      .Parts.ShouldBe(new[] { ("text", _style) });
     }
-    
+
     [TestMethod]
     public void Plus2_ConcatenatesWithOtherText()
     {
-        new StyledText("text1", _style).Plus(new("text2", _style)).Parts.ShouldBe(new[] { ("text1", _style), ("text2", _style) });
+        new StyledText("text1", _style).Plus(new("text2", _style))
+                                       .Parts.ShouldBe(new[] { ("text1", _style), ("text2", _style) });
     }
 }

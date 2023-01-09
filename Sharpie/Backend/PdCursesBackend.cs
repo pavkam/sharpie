@@ -380,8 +380,7 @@ internal class PdCursesBackend: BaseCursesBackend
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming
 
-    public override bool is_immedok(IntPtr window) =>
-        _windowStates.TryGetValue(window, out var state) && state.immedOk;
+    public override bool is_immedok(IntPtr window) => _windowStates.TryGetValue(window, out var state) && state.immedOk;
 
     public override bool is_scrollok(IntPtr window) =>
         _windowStates.TryGetValue(window, out var state) && state.scrollOk;
