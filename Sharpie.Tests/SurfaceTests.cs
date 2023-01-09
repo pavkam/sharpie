@@ -1176,7 +1176,7 @@ public class SurfaceTests
 
         _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
     }
-
+    
     [TestMethod]
     public void WriteText3_DoesNotCallCurse_IfUninitialized()
     {
@@ -1227,6 +1227,18 @@ public class SurfaceTests
               .Operation.ShouldBe("wadd_wch");
     }
 
+    [TestMethod]
+    public void NextLine_Calls_WriteText2()
+    {
+        var s = new Surface(_cursesMock.Object, new(1));
+        s.NextLine();
+        
+        _cursesMock.Verify(
+            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, "\n", VideoAttribute.None, 0, It.IsAny<IntPtr>()),
+            Times.Once);
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Once);
+    }
+    
     [TestMethod]
     public void RemoveText_DoesNothing_IfCountIsLessThanOne()
     {

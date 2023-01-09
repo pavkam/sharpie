@@ -273,6 +273,18 @@ public interface ISurface: IDrawSurface
     void WriteText(string text);
 
     /// <summary>
+    ///     Helper method that moves the caret to the start of the next line. If the surface is <see cref="Scrollable"/>, and the
+    ///     caret if on the last line, it will push the contents of the surface up by one line.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
+    /// <remarks>This operation is not thread safe.</remarks>
+    void NextLine();
+    
+    /// <summary>
     ///     Draws a vertical line from the current caret position downwards.
     /// </summary>
     /// <param name="char">The character to use for the line.</param>
