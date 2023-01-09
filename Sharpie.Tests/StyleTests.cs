@@ -59,7 +59,7 @@ public class StyleTests
     [TestMethod, DataRow(null), DataRow("")]
     public void Equals_ReturnsFalse_IfNotStyle(object? b)
     {
-        ColorMixture.Default.Equals(b)
+        _style.Equals(b)
                     .ShouldBeFalse();
     }
 

@@ -1176,7 +1176,56 @@ public class SurfaceTests
 
         _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
     }
+    
+    [TestMethod]
+    public void WriteText3_DoesNotCallCurse_IfUninitialized()
+    {
+        var s = new Surface(_cursesMock.Object, new(1));
+        s.WriteText(new StyledText());
 
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Never);
+    }
+    
+    [TestMethod]
+    public void WriteText3_DoesNotCallCurse_IfEmpty()
+    {
+        var s = new Surface(_cursesMock.Object, new(1));
+        s.WriteText(new StyledText("", Style.Default));
+
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Never);
+    }
+
+    [TestMethod]
+    public void WriteText3_CallsCursesForEachCharInAllParts()
+    {
+        var sf = new Surface(_cursesMock.Object, new(1));
+        var s1 = new Style { Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 1 } };
+        var s2 = new Style { Attributes = VideoAttribute.Italic, ColorMixture = new() { Handle = 2 } };
+        
+        var text = new StyledText("h", s1).Plus("w", s2);
+        sf.WriteText(text);
+
+        _cursesMock.Verify(
+            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, "h", VideoAttribute.Blink, 1, It.IsAny<IntPtr>()),
+            Times.Once);
+        _cursesMock.Verify(
+            v => v.setcchar(out It.Ref<ComplexChar>.IsAny, "w", VideoAttribute.Italic, 2, It.IsAny<IntPtr>()),
+            Times.Once);  
+        
+        _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(2));
+    }
+
+    [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void WriteText3_Throws_IfCursesFails()
+    {
+        _cursesMock.Setup(s => s.wadd_wch(new(1), It.IsAny<ComplexChar>()))
+                   .Returns(-1);
+
+        var s = new Surface(_cursesMock.Object, new(1));
+        Should.Throw<CursesOperationException>(() => s.WriteText(new StyledText("12345", Style.Default)))
+              .Operation.ShouldBe("wadd_wch");
+    }
+    
     [TestMethod]
     public void RemoveText_DoesNothing_IfCountIsLessThanOne()
     {
