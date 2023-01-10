@@ -115,7 +115,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'sdl/*.so'
+          path: 'sdl1/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v3
@@ -159,13 +159,13 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           cd wingui
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
-          ren pdcurses.dll pdcursesmod-wingui-x64.dll
+          ren pdcurses.dll libpdcursesmod-wingui-x64.dll
           cd ..\wincon
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
-          ren pdcurses.dll pdcursesmod-wincon-x64.dll
+          ren pdcurses.dll libpdcursesmod-wincon-x64.dll
           cd ..\vt
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
-          ren pdcurses.dll pdcursesmod-vt-x64.dll
+          ren pdcurses.dll libpdcursesmod-vt-x64.dll
         shell: cmd
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
@@ -195,7 +195,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: libraries
-          path: lib
+          path: lib/pdcursesmod
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
