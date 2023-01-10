@@ -108,7 +108,7 @@ jobs:
         dotnet nuget push **/sharpie-curses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
         
     - name: Build and Push NuGet Package (Sharpie-Libs-NCurses)
-      if: github.event_name == 'push' && steps.check_version.outputs.sharpie_deployed == 'no'
+      if: github.event_name == 'push' && steps.check_version.outputs.ncurses_deployed == 'no'
       run: |
         dotnet pack NativeLibraries/Sharpie.NativeLibraries.NCurses.csproj
         dotnet nuget push **/sharpie-libs-ncurses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
