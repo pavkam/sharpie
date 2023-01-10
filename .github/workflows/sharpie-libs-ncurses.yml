@@ -19,7 +19,7 @@ on:
       - 'lib/*ncurses*'
 
 jobs:
-  build_test_deploy:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -58,12 +58,15 @@ jobs:
       
     - name: Build
       id: build
-      run: dotnet build --no-restore --configuration Release
+      run: |
+        cd ./NativeLibraries
+        dotnet build Sharpie.NativeLibraries.NCurses.csproj --no-restore --configuration Release
     
     - name: Build NuGet Package
       if: github.event_name == 'push' && steps.check_version.outputs.deployed == 'no'
       run: |
-        dotnet pack ./NativeLibraries/Sharpie.NativeLibraries.NCurses.csproj
+        cd ./NativeLibraries
+        dotnet pack ./Sharpie.NativeLibraries.NCurses.csproj
 
     - name: Push to NuGet.org
       if: github.event_name == 'push' && steps.check_version.outputs.deployed == 'no'
