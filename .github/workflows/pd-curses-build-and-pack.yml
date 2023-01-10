@@ -21,11 +21,13 @@ jobs:
         run: |
          cd sdl1
          make WIDE=Y DLL=Y CHTYPE_32=Y
+         ls
          mv pdcurses.so libpdcurses-sdl1-x64.so
       - name: Make SDL2
         run: |
          cd sdl2
          make WIDE=Y DLL=Y CHTYPE_32=Y
+         ls
          mv pdcurses.so libpdcurses-sdl2-x64.so
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
