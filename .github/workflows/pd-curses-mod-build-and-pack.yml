@@ -84,7 +84,7 @@ jobs:
           ref: refs/heads/master
       - name: Install Deps
         run: |
-         sudo apt install libsdl1.2-dev libsdl-ttf2.0-dev libsdl2-dev libsdl2-ttf-dev
+         sudo apt install libsdl1.2-dev libsdl-ttf2.0-dev libsdl2-dev libsdl2-ttf-dev libx11-dev
       - name: Make
         run: |
          cd vt
@@ -99,6 +99,9 @@ jobs:
          cd ../sdl2
          make WIDE=Y DLL=Y CHTYPE_32=Y
          mv libpdcurses.so libpdcursesmod-sdl2-x64.so
+         cd ../x11
+         make WIDE=Y DLL=Y CHTYPE_32=Y
+         mv libpdcurses.so libpdcursesmod-x11-x64.so
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
