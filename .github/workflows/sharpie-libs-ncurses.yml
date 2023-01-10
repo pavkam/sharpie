@@ -5,7 +5,6 @@
 name: Sharpie-Libs-NCurses Package
 
 on:
-  workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
@@ -65,11 +64,11 @@ jobs:
         dotnet build Sharpie.NativeLibraries.NCurses.csproj --no-restore --configuration Release
     
     - name: Build NuGet Package
-      if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && steps.check_version.outputs.deployed == 'no'
+      if: github.event_name == 'push' && steps.check_version.outputs.deployed == 'no'
       run: |
         cd ./NativeLibraries
         dotnet pack ./Sharpie.NativeLibraries.NCurses.csproj
 
     - name: Push to NuGet.org
-      if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && steps.check_version.outputs.deployed == 'no'
+      if: github.event_name == 'push' && steps.check_version.outputs.deployed == 'no'
       run: dotnet nuget push **/sharpie-libs-ncurses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
