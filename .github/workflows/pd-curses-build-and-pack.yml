@@ -16,13 +16,7 @@ jobs:
           ref: refs/heads/master
       - name: Install SDL1 and SDL2
         run: |
-         sudo apt install libsdl1.2-dev libsdl-ttf2.0-dev libsdl2-dev libsdl2-ttf-dev
-      - name: Make SDL1
-        run: |
-         cd sdl1
-         make WIDE=Y DLL=Y CHTYPE_32=Y
-         ls
-         mv pdcurses.so libpdcurses-sdl1-x64.so
+         sudo apt install libsdl2-dev libsdl2-ttf-dev
       - name: Make SDL2
         run: |
          cd sdl2
@@ -30,12 +24,6 @@ jobs:
          ls
          mv pdcurses.so libpdcurses-sdl2-x64.so
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
-        with:
-          name: libraries
-          path: 'sdl1/*.so'
-          if-no-files-found: error
-      - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v3
         with:
           name: libraries
