@@ -39,7 +39,7 @@ jobs:
           path: 'fb/*.so'
           if-no-files-found: error
           
-  raspios_lite_arm64-arm:
+  raspios_lite-arm64:
     runs-on: ubuntu-latest
     steps:
       - name: Clone PDCursesMod Master
