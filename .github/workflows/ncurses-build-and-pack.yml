@@ -74,7 +74,7 @@ jobs:
               --disable-macros \
               --without-manpages
             make
-            mv lib/libncursesw.so lib/libncursesw-arm.so
+            mv lib/libncursesw.so lib/libncursesw-arm64.so
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
@@ -83,7 +83,6 @@ jobs:
           if-no-files-found: error
           
   ubuntu-x64:
-    if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
     steps:
       - name: Clone NCurses Master
@@ -118,7 +117,6 @@ jobs:
           if-no-files-found: error
           
   macos-x64:
-    if: ${{ false }}  # disable for now
     runs-on: macOS-latest
     steps:
       - name: Clone NCurses Master
@@ -219,7 +217,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: libraries
-          path: lib
+          path: lib/ncurses
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
