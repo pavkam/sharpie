@@ -15,8 +15,8 @@
         <PackageTags>pdcursesmod curses terminal console</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageVersion>1.0.2</PackageVersion>
-        <AssemblyVersion>1.0.2</AssemblyVersion>
-        <FileVersion>1.0.2</FileVersion>
+        <AssemblyVersion>1.0.3</AssemblyVersion>
+        <FileVersion>1.0.3</FileVersion>
         <PackageId>Sharpie-Libs-PdCursesMod</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
         <LangVersion>10</LangVersion>
