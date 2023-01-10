@@ -7,7 +7,6 @@ on:
 
 jobs:
   raspios_lite-arm:
-    if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -41,7 +40,6 @@ jobs:
           if-no-files-found: error
           
   raspios_lite-arm64:
-    if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -75,7 +73,6 @@ jobs:
           if-no-files-found: error
           
   ubuntu-x64:
-    if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -166,7 +163,6 @@ jobs:
           if-no-files-found: error
           
   windows-x64:
-    if: ${{ false }}  # disable for now
     runs-on: windows-2019
     steps:
       - name: Clone PDCursesMod Master
