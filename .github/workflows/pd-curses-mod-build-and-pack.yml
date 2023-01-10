@@ -97,7 +97,7 @@ jobs:
         run: |
          cd sdl1
          make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.so libpdcursesmod-sdl-x64.so
+         mv libpdcurses.so libpdcursesmod-sdl1-x64.so
       - name: Make SDL2
         run: |
          cd sdl2
@@ -121,7 +121,7 @@ jobs:
           name: libraries
           path: 'sdl1/*.so'
           if-no-files-found: error
-      - name: Upload Artifacts (2)
+      - name: Upload Artifacts (4)
         uses: actions/upload-artifact@v3
         with:
           name: libraries
@@ -170,16 +170,22 @@ jobs:
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
-      - name: Make
+      - name: Make WinGUI
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           cd wingui
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wingui-x64.dll
-          cd ..\wincon
+      - name: Make WinCon
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          cd wincon
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wincon-x64.dll
-          cd ..\vt
+      - name: Make VT
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          cd vt
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-vt-x64.dll
         shell: cmd
