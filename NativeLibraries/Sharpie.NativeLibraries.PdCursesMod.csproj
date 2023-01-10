@@ -4,7 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyName>sharpie-libs-PdCursesMod</AssemblyName>
+        <AssemblyName>sharpie-libs-pdcursesmod</AssemblyName>
         <Title>Package containing native versions of PDCursesMod libraries for Sharpie.</Title>
         <Description>A collection of Windows, Linux, MacOS (x64 and arm64) libraries that can be used in conjunction with Sharpie.</Description>
         <Copyright>Alexandru Ciobanu</Copyright>
@@ -41,16 +41,20 @@
     </ItemGroup>
     
     <ItemGroup>
-        <None Include="../lib/libpdcursesmod-fb-x64.so" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/linux-x64/native/libpdcursesmod-fb.so" />
-        <None Include="../lib/libpdcursesmod-vt-x64.so" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/linux-x64/native/libpdcursesmod.so" />
-        <None Include="../lib/libpdcursesmod-vt-arm64.dylib" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/osx-arm64/native/libpdcursesmod.dylib" />
-        <None Include="../lib/libpdcursesmod-vt-x64.dylib" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/osx-x64/native/libpdcursesmod.dylib" />
-        <None Include="../lib/pdcursesmod-vt-x64.dll" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/win-x64/native/pdcursesmod-vt.dll" />
-        <None Include="../lib/pdcursesmod-vt-arm64.dll" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/win-arm64/native/pdcursesmod-vt.dll" />
-        <None Include="../lib/pdcursesmod-wincon-x64.dll" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/win-x64/native/pdcursesmod.dll" />
-        <None Include="../lib/pdcursesmod-wincon-arm64.dll" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/win-arm64/native/pdcursesmod.dll" />
-        <None Include="../lib/pdcursesmod-wingui-x64.dll" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/win-x64/native/pdcursesmod-wingui.dll" />
-        <None Include="../lib/pdcursesmod-wingui-arm64.dll" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/win-arm64/native/pdcursesmod-wingui.dll" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-fb-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libpdcursesmod-fb.so" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-fb-arm.so" Pack="true" PackagePath="runtimes/linux-arm/native/libpdcursesmod-fb.so" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-fb-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libpdcursesmod-fb.so" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-vt-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libpdcursesmod.so" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-vt-arm.so" Pack="true" PackagePath="runtimes/linux-arm/native/libpdcursesmod.so" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-vt-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libpdcursesmod.so" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-vt-arm64.dylib" Pack="true" PackagePath="runtimes/osx-arm64/native/libpdcursesmod.dylib" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-vt-x64.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libpdcursesmod.dylib" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-vt-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/pdcursesmod-vt.dll" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-vt-arm64.dll" Pack="true" PackagePath="runtimes/win-arm64/native/pdcursesmod-vt.dll" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-wincon-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/pdcursesmod.dll" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-wincon-arm64.dll" Pack="true" PackagePath="runtimes/win-arm64/native/pdcursesmod.dll" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-wingui-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/pdcursesmod-wingui.dll" />
+        <None Include="../lib/pdcursesmod/libpdcursesmod-wingui-arm64.dll" Pack="true" PackagePath="runtimes/win-arm64/native/pdcursesmod-wingui.dll" />
     </ItemGroup>
 
 </Project>

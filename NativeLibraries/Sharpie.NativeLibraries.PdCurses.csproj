@@ -42,7 +42,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="../lib/pdcurses-wincon-x64.dll" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/win-x64/native/pdcurses.dll" />
+        <None Include="../lib/pdcurses/libpdcurses-wincon-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/pdcurses.dll" />
     </ItemGroup>
 
 </Project>

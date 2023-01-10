@@ -41,8 +41,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="../lib/libncursesw-x64.dll" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/win-x64/native/ncursesw.dll" />
-        <None Include="../lib/libncursesw-x64.dylib" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/osx-x64/native/libncursesw.dylib" />
-        <None Include="../lib/libncursesw-x64.so" Pack="true" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes/linux-x64/native/libncursesw.so" />
+        <None Include="../lib/ncurses/libncursesw-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/ncursesw.dll" />
+        <None Include="../lib/ncurses/libncursesw-x64.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libncursesw.dylib" />
+        <None Include="../lib/ncurses/libncursesw-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libncursesw.so" />
     </ItemGroup>
 </Project>
