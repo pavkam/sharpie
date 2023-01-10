@@ -14,9 +14,9 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>ncurses pdcurses pdcursesmod curses terminal console</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageVersion>1.6.0</PackageVersion>
-        <AssemblyVersion>1.6.0</AssemblyVersion>
-        <FileVersion>1.6.0</FileVersion>
+        <PackageVersion>1.6.1</PackageVersion>
+        <AssemblyVersion>1.6.1</AssemblyVersion>
+        <FileVersion>1.6.1</FileVersion>
         <PackageId>Sharpie-Curses</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
         <LangVersion>10</LangVersion>
@@ -25,8 +25,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="$(AssemblyName)-tests"/>
-        <InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>
+        <InternalsVisibleTo Include="$(AssemblyName)-tests" />
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     </ItemGroup>
 
     <ItemGroup>
