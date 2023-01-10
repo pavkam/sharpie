@@ -6,7 +6,46 @@ on:
     - cron: '0 9 1 1-12 *'
     
 jobs:
+  raspios_lite-arm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone PDCursesMod Master
+        uses: actions/checkout@master
+        with:
+          repository: Bill-Gray/PDCursesMod
+          ref: refs/heads/master
+      - name: Make
+        uses: pguyot/arm-runner-action@v2
+        with:
+          base_image: raspios_lite:latest
+          bind_mount_repository: yes
+          commands: |
+            ./configure \
+              --prefix=/usr \
+              --enable-pc-files \
+              --without-cxx \
+              --without-ada \
+              --enable-widec \
+              --with-pkg-config-libdir=/usr/lib/pkgconfig \
+              --with-shared \
+              --enable-sigwinch \
+              --with-versioned-syms \
+              --with-xterm-kbs=del \
+              --enable-warnings \
+              --enable-assertions \
+              --disable-macros \
+              --without-manpages
+            make
+            mv lib/libncursesw.so lib/libncursesw-arm.so
+      - name: Upload Artifacts (1)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'lib/*.so'
+          if-no-files-found: error
+          
   ubuntu-x64:
+    if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
     steps:
       - name: Clone NCurses Master
@@ -37,10 +76,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/libncursesw-x64.so'
+          path: 'lib/*.so'
           if-no-files-found: error
           
   macos-x64:
+    if: ${{ false }}  # disable for now
     runs-on: macOS-latest
     steps:
       - name: Clone NCurses Master
@@ -72,10 +112,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/libncursesw-x64.dylib'
+          path: 'lib/*.dylib'
           if-no-files-found: error
           
   windows-x64:
+    if: ${{ false }}  # disable for now
     runs-on: windows-2019
     defaults:
       run:
@@ -128,7 +169,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/libncursesw-x64.dll'
+          path: 'lib/*.dll'
           if-no-files-found: error
           
   create-pr:
