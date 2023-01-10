@@ -17,7 +17,8 @@ jobs:
       - name: Make
         uses: pguyot/arm-runner-action@v2
         with:
-          base_image: raspios_lite:2022-04-04
+          base_image: raspios_lite:latest
+          bind_mount_repository: yes
           commands: |
             cd vt
             make WIDE=Y DLL=Y CHTYPE_32=Y
