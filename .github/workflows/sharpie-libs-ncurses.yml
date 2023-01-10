@@ -2,7 +2,7 @@
 # Builds the Sharpie.NativeLibraries.NCurses library and, optionally, deploys the Nuget package.
 #
 
-name: Sharpie Core
+name: Sharpie-Libs-NCurses Package
 
 on:
   push:
