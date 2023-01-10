@@ -54,7 +54,9 @@ jobs:
         
     - name: Restore dependencies
       id: restore_packages
-      run: dotnet restore
+      run: |
+        cd ./NativeLibraries
+        dotnet restore Sharpie.NativeLibraries.NCurses.csproj
       
     - name: Build
       id: build
