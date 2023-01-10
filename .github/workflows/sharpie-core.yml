@@ -2,7 +2,7 @@
 # Builds the Sharpie library, tests it and, optionally, deploys the Nuget package.
 #
 
-name: Sharpie Core
+name: Sharpie-Curses Library
 
 on:
   push:
