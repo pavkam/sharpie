@@ -7,6 +7,7 @@ on:
 
 jobs:
   raspios_lite-arm:
+    if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -40,6 +41,7 @@ jobs:
           if-no-files-found: error
           
   raspios_lite-arm64:
+    if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -80,6 +82,9 @@ jobs:
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
+      - name: Install Deps
+        run: |
+         apt install sdl-dev sdl2-dev
       - name: Make
         run: |
          cd vt
@@ -88,6 +93,12 @@ jobs:
          cd ../fb
          make WIDE=Y DLL=Y CHTYPE_32=Y
          mv libpdcurses.so libpdcursesmod-fb-x64.so
+         cd ../sdl
+         make WIDE=Y DLL=Y CHTYPE_32=Y
+         mv libpdcurses.so libpdcursesmod-sdl-x64.so
+         cd ../sdl2
+         make WIDE=Y DLL=Y CHTYPE_32=Y
+         mv libpdcurses.so libpdcursesmod-sdl2-x64.so
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
@@ -100,8 +111,21 @@ jobs:
           name: libraries
           path: 'fb/*.so'
           if-no-files-found: error
-
+      - name: Upload Artifacts (3)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'sdl/*.so'
+          if-no-files-found: error
+      - name: Upload Artifacts (2)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'sdl2/*.so'
+          if-no-files-found: error
+          
   macos-x64:
+    if: ${{ false }}  # disable for now
     runs-on: macOS-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -122,8 +146,8 @@ jobs:
           if-no-files-found: error
 
   windows-x64:
+    if: ${{ false }}  # disable for now
     runs-on: windows-2019
-
     steps:
       - name: Clone PDCursesMod Master
         uses: actions/checkout@master
@@ -164,7 +188,7 @@ jobs:
           
   create-pr:
     runs-on: ubuntu-latest
-    needs: [ubuntu-x64, macos-x64, windows-x64, raspios_lite-arm, raspios_lite_arm64-arm]
+    needs: [ubuntu-x64, macos-x64, windows-x64, raspios_lite-arm, raspios_lite-arm64]
     steps:
       - name: Clone Repo
         uses: actions/checkout@v3
