@@ -9,13 +9,13 @@ on:
     branches: [ "main" ]
     paths:
       - 'NativeLibraries/*NCurses*'
-      - 'lib/*ncurses*'
+      - 'lib/*ncurses-*'
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ "main" ]
     paths:
       - 'NativeLibraries/*NCurses*'
-      - 'lib/*ncurses*'
+      - 'lib/*ncurses-*'
 
 jobs:
   build_and_deploy:
