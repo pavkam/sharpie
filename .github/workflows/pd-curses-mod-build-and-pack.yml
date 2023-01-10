@@ -84,7 +84,7 @@ jobs:
           ref: refs/heads/master
       - name: Install Deps
         run: |
-         apt install sdl-dev sdl2-dev
+         sudo apt install sdl-dev sdl2-dev
       - name: Make
         run: |
          cd vt
