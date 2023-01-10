@@ -1,4 +1,4 @@
-[![Build, Test and Release](https://github.com/pavkam/sharpie/actions/workflows/build-test-and-release.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/sharpie-build-test-and-deploy.yml)
+[![Build, Test and Release](https://github.com/pavkam/sharpie/actions/workflows/sharpie-build-test-and-deploy.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/sharpie-build-test-and-deploy.yml)
 [![codecov](https://codecov.io/gh/pavkam/sharpie/branch/main/graph/badge.svg?token=QI3EVFGHUZ)](https://codecov.io/gh/pavkam/sharpie)
 [![Issues](https://img.shields.io/github/issues/pavkam/sharpie)](https://github.com/pavkam/sharpie/issues)
 [![License](https://img.shields.io/github/license/pavkam/sharpie)](https://raw.githubusercontent.com/pavkam/sharpie/main/LICENSE)
