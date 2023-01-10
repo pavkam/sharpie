@@ -23,12 +23,12 @@ For more information on supported platforms visit [.NET Supported Platforms Page
 **Sharpie** provides unofficial builds for all the supported libraries located in [the lib directory](https://github.com/pavkam/sharpie/tree/main/lib)
 
 # Installation
-Install the main library:
+Install the main library by adding the NuGet package:
 ```sh
 dotnet add package Sharpie-Curses
 ```
 
-Aditionally, one could install packages containing prebuilt native libraries. These packages are useful when targeting platforms thaht do not bundle a supported curses library by default (e.g. Windows).
+Additionally, one can install packages containing prebuilt native libraries. These packages are useful when targeting platforms that do not bundle a supported curses library by default (e.g. Windows).
 ```sh
 dotnet add package Sharpie-Libs-PdCurses
 dotnet add package Sharpie-Libs-PdCursesMod
