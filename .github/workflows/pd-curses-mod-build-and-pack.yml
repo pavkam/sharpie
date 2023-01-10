@@ -93,7 +93,7 @@ jobs:
          cd ../fb
          make WIDE=Y DLL=Y CHTYPE_32=Y
          mv libpdcurses.so libpdcursesmod-fb-x64.so
-         cd ../sdl
+         cd ../sdl1
          make WIDE=Y DLL=Y CHTYPE_32=Y
          mv libpdcurses.so libpdcursesmod-sdl-x64.so
          cd ../sdl2
