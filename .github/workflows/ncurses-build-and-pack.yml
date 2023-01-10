@@ -44,6 +44,44 @@ jobs:
           path: 'lib/*.so'
           if-no-files-found: error
           
+  raspios_lite-arm64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone PDCursesMod Master
+        uses: actions/checkout@master
+        with:
+          repository: mirror/ncurses
+          ref: refs/heads/master
+      - name: Make
+        uses: pguyot/arm-runner-action@v2
+        with:
+          base_image: raspios_lite_arm64:latest
+          bind_mount_repository: yes
+          commands: |
+            ./configure \
+              --prefix=/usr \
+              --enable-pc-files \
+              --without-cxx \
+              --without-ada \
+              --enable-widec \
+              --with-pkg-config-libdir=/usr/lib/pkgconfig \
+              --with-shared \
+              --enable-sigwinch \
+              --with-versioned-syms \
+              --with-xterm-kbs=del \
+              --enable-warnings \
+              --enable-assertions \
+              --disable-macros \
+              --without-manpages
+            make
+            mv lib/libncursesw.so lib/libncursesw-arm.so
+      - name: Upload Artifacts (1)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'lib/*.so'
+          if-no-files-found: error
+          
   ubuntu-x64:
     if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
