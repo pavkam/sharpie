@@ -405,7 +405,7 @@ public abstract class Surface: ISurface, IDisposable
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void WriteText(string text) => WriteText(text, Style.Default);
     
-    /// <inheritdoc cref="ISurface.NewLine" />
+    /// <inheritdoc cref="ISurface.NextLine" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void NextLine() => WriteText("\n");
 
