@@ -75,6 +75,7 @@ jobs:
           if-no-files-found: error
           
   ubuntu-x64:
+    if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -131,7 +132,6 @@ jobs:
           if-no-files-found: error
           
   macos-x64:
-    if: ${{ false }}  # disable for now
     runs-on: macOS-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -139,18 +139,32 @@ jobs:
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
+      - name: Install SDL2
+        run: |
+         brew install sdl2 sdl2_ttf
       - name: Make VT
         run: |
          cd vt
          make WIDE=Y DLL=Y CHTYPE_32=Y
          mv libpdcurses.dylib libpdcursesmod-vt-x64.dylib
+      - name: Make SDL2
+        run: |
+         cd sdl2
+         make WIDE=Y DLL=Y CHTYPE_32=Y
+         mv libpdcurses.dylib libpdcursesmod-sdl2-x64.dylib
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v3
         with:
           name: libraries
           path: 'vt/*.dylib'
           if-no-files-found: error
-
+      - name: Upload Artifacts (2)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'sdl2/*.dylib'
+          if-no-files-found: error
+          
   windows-x64:
     if: ${{ false }}  # disable for now
     runs-on: windows-2019
