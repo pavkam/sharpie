@@ -12,7 +12,7 @@ jobs:
       - name: Clone PDCursesMod Master
         uses: actions/checkout@master
         with:
-          repository: Bill-Gray/PDCursesMod
+          repository: mirror/ncurses
           ref: refs/heads/master
       - name: Make
         uses: pguyot/arm-runner-action@v2
