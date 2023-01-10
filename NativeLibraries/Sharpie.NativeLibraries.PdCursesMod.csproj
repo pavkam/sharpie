@@ -22,7 +22,6 @@
         <LangVersion>10</LangVersion>
         <Authors>Alexandru Ciobanu</Authors>
         <Product>Sharpie</Product>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
