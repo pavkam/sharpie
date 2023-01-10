@@ -44,9 +44,9 @@ jobs:
         for LIB in "${PROJECTS[@]}"
         do
           SPLIT=(${LIB//;/ })
-          LIB_PATH=SPLIT[0]
-          LIB_PKG=SPLIT[1]
-          LIB_MONIKER=SPLIT[2]
+          LIB_PATH=${SPLIT[0]}
+          LIB_PKG=${SPLIT[1]}
+          LIB_MONIKER=${SPLIT[2]}
         
           V1=`cat $LIB_PATH | sed -n "s/\s*<FileVersion>\(.*\)<\/FileVersion>$/\1/p"`
           V2=`cat $LIB_PATH | sed -n "s/\s*<AssemblyVersion>\(.*\)<\/AssemblyVersion>$/\1/p"`
