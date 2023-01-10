@@ -70,4 +70,4 @@ jobs:
         dotnet pack ./Sharpie.NativeLibraries.PdCurses.csproj
     - name: Push to NuGet.org
       if: github.event_name == 'push' && steps.check_version.outputs.deployed == 'no'
-      run: dotnet nuget push **/sharpie-libs-ncurses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push **/sharpie-libs-pdcurses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
