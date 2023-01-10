@@ -6,7 +6,40 @@ on:
     - cron: '0 9 1 1-12 *'
 
 jobs:
+  raspios_lite-arm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone PDCursesMod Master
+        uses: actions/checkout@master
+        with:
+          repository: Bill-Gray/PDCursesMod
+          ref: refs/heads/master
+      - name: Make
+        uses: pguyot/arm-runner-action@v2
+        with:
+          base_image: raspios_lite:2022-04-04
+          commands: |
+            cd vt
+            make WIDE=Y DLL=Y CHTYPE_32=Y
+            mv libpdcurses.so libpdcursesmod-vt-arm.so
+            cd ../fb
+            make WIDE=Y DLL=Y CHTYPE_32=Y
+            mv libpdcurses.so libpdcursesmod-fb-arm.so
+      - name: Upload Artifacts (1)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'vt/*.so'
+          if-no-files-found: error
+      - name: Upload Artifacts (2)
+        uses: actions/upload-artifact@v3
+        with:
+          name: libraries
+          path: 'fb/*.so'
+          if-no-files-found: error
+          
   ubuntu-x64:
+    if: ${{ false }}  # disable for now
     runs-on: ubuntu-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -36,6 +69,7 @@ jobs:
           if-no-files-found: error
 
   macos-x64:
+    if: ${{ false }}  # disable for now
     runs-on: macOS-latest
     steps:
       - name: Clone PDCursesMod Master
@@ -56,6 +90,7 @@ jobs:
           if-no-files-found: error
 
   windows-x64:
+    if: ${{ false }}  # disable for now
     runs-on: windows-2019
 
     steps:
