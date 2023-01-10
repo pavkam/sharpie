@@ -84,7 +84,7 @@ jobs:
           ref: refs/heads/master
       - name: Install Deps
         run: |
-         sudo apt install sdl-dev sdl2-dev
+         sudo apt install libsdl-dev libsdl-ttf-dev libsdl2-dev libsdl2-ttf-dev
       - name: Make
         run: |
          cd vt
