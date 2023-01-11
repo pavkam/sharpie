@@ -1,10 +1,10 @@
 namespace Sharpie;
 
 /// <summary>
-///     Allows for the drawing of large ASCII glyphs.
+///     Base class implemented by ASCII font providers.
 /// </summary>
 [PublicAPI]
-public sealed class AsciiGlyph: IDrawable
+public sealed class DosCp866AsciiFont: IAsciiFont
 {
     private const int BitsPerLine = 8;
     private const int Lines = 8;
@@ -15,9 +15,7 @@ public sealed class AsciiGlyph: IDrawable
 
     private static readonly IReadOnlyList<bool[,]> Shapes;
 
-    private readonly Canvas _canvas;
-
-    static AsciiGlyph()
+    static DosCp866AsciiFont()
     {
         Debug.Assert(Raw.Length % CharsPerByte == 0);
         var byteCount = Raw.Length / CharsPerByte;
@@ -34,38 +32,6 @@ public sealed class AsciiGlyph: IDrawable
         Shapes = glyphs.ToArray();
     }
 
-    /// <summary>
-    ///     Creates a new large ASCII glyph for a given <see cref="char" />.
-    /// </summary>
-    /// <param name="char">The character to obtain the glyph of.</param>
-    /// <param name="style">The text style to use.</param>
-    public AsciiGlyph(byte @char, Style style)
-    {
-        _canvas = new(new(BitsPerLine / 2, Lines / 2));
-        _canvas.Fill(new(new(0, 0), _canvas.Size), new Rune(ControlCharacter.Whitespace), style);
-
-        var shape = Shapes[@char];
-
-        for (var x = 0; x < BitsPerLine; x++)
-        {
-            for (var y = 0; y < Lines; y++)
-            {
-                var ap = new PointF(x / 2F, y / 2F);
-                if (shape[x, y])
-                {
-                    _canvas.Point(ap, style);
-                }
-            }
-        }
-    }
-
-    /// <inheritdoc cref="IDrawable.Size" />
-    public Size Size => _canvas.Size;
-
-    /// <inheritdoc cref="IDrawable.DrawOnto" />
-    public void DrawOnto(IDrawSurface destination, Rectangle srcArea, Point destLocation) =>
-        _canvas.DrawOnto(destination, srcArea, destLocation);
-
     private static bool[,] ExtractGlyph(ReadOnlySpan<char> str)
     {
         Debug.Assert(str.Length == Lines * CharsPerByte);
@@ -81,5 +47,42 @@ public sealed class AsciiGlyph: IDrawable
         }
 
         return shape;
+    }
+
+    /// <inheritdoc cref="IAsciiFont.Name"/> 
+    public string Name => "CP866 Block Characters";
+
+    /// <inheritdoc cref="IAsciiFont.HasGlyph"/> 
+    public bool HasGlyph(Rune @char) => @char.Value >= 0 && @char.Value < Shapes.Count;
+
+    /// <inheritdoc cref="IAsciiFont.GetGlyph"/>
+    public IDrawable GetGlyph(Rune @char, Style style)
+    {
+        var canvas = new Canvas(new(BitsPerLine / 2, Lines / 2));
+        var canvasRect = new Rectangle(new(0, 0), canvas.Size);
+        
+        canvas.Fill(canvasRect, new Rune(ControlCharacter.Whitespace), style);
+        
+        if (!HasGlyph(@char))
+        {
+            canvas.Box(canvasRect, Canvas.LineStyle.Light, style);
+        } else
+        {
+            var shape = Shapes[@char.Value];
+
+            for (var x = 0; x < BitsPerLine; x++)
+            {
+                for (var y = 0; y < Lines; y++)
+                {
+                    var ap = new PointF(x / 2F, y / 2F);
+                    if (shape[x, y])
+                    {
+                        canvas.Point(ap, style);
+                    }
+                }
+            }
+        }
+
+        return canvas;
     }
 }

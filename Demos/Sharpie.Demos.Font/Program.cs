@@ -48,6 +48,8 @@ var styles = Enumerable.Range(0, message.Length)
                        })
                        .ToArray();
 
+var font = new DosCp866AsciiFont();
+
 // This method draws the given string and applies color starting with a specific shift.
 void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
 {
@@ -56,7 +58,7 @@ void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
 
     foreach (var ch in str)
     {
-        var gl = new AsciiGlyph((byte) ch, styles[colorShift % styles.Length]);
+        var gl = font.GetGlyph(new(ch), styles[colorShift % styles.Length]);
         t.Screen.Draw(new(x, y), gl);
 
         x += gl.Size.Width;
