@@ -368,25 +368,36 @@ public abstract class Surface: ISurface, IDisposable
               .Check(nameof(Curses.wchgat), "Failed to change style of characters in the surface.");
     }
 
-    /// <inheritdoc cref="ISurface.WriteText(StyledText)" />
+    /// <inheritdoc cref="ISurface.WriteText(StyledText, bool)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void WriteText(StyledText text)
+    public void WriteText(StyledText text, bool wrap = true)
     {
         AssertSynchronized();
 
         foreach (var (str, style) in text.Parts ?? Array.Empty<(string, Style)>())
         {
-            foreach (var rune in str.EnumerateRunes())
+            var runes = str.EnumerateRunes()
+                           .ToArray();
+
+            var count = !wrap ? Math.Min(runes.Length, Size.Width - CaretLocation.X) : runes.Length;
+            foreach (var rune in runes)
             {
+                if (count == 0)
+                {
+                    break;
+                }
+                
                 Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, style))
                       .Check(nameof(Curses.wadd_wch), "Failed to write character to the terminal.");
+                
+                count--;
             }
         }
     }
 
-    /// <inheritdoc cref="ISurface.WriteText(string,Sharpie.Style)" />
+    /// <inheritdoc cref="ISurface.WriteText(string,Sharpie.Style, bool)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void WriteText(string text, Style style)
+    public void WriteText(string text, Style style, bool wrap = true)
     {
         if (text == null)
         {
@@ -398,12 +409,12 @@ public abstract class Surface: ISurface, IDisposable
             return;
         }
 
-        WriteText(new StyledText(text, style));
+        WriteText(new StyledText(text, style), wrap);
     }
 
-    /// <inheritdoc cref="ISurface.WriteText(string)" />
+    /// <inheritdoc cref="ISurface.WriteText(string, bool)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void WriteText(string text) => WriteText(text, Style.Default);
+    public void WriteText(string text, bool wrap = true) => WriteText(text, Style.Default, wrap);
     
     /// <inheritdoc cref="ISurface.NextLine" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>

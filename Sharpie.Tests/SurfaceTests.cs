@@ -1169,12 +1169,34 @@ public class SurfaceTests
     }
 
     [TestMethod]
+    public void WriteText1_StopsAtWidthIfNotWrapping()
+    {
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(3, 1));
+
+        sf.WriteText("1234", Style.Default, false);
+
+        _cursesMock.Verify(v => v.wadd_wch(sf.Handle, It.IsAny<ComplexChar>()), Times.Exactly(3));
+    }
+    
+    [TestMethod]
     public void WriteText2_Calls_WriteText1()
     {
         var s = new Surface(_cursesMock.Object, new(1));
         s.WriteText("12345");
 
         _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
+    }
+    
+    [TestMethod]
+    public void WriteText2_StopsAtWidthIfNotWrapping()
+    {
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(3, 1));
+
+        sf.WriteText("1234", false);
+
+        _cursesMock.Verify(v => v.wadd_wch(sf.Handle, It.IsAny<ComplexChar>()), Times.Exactly(3));
     }
     
     [TestMethod]
@@ -1214,6 +1236,18 @@ public class SurfaceTests
             Times.Once);
 
         _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(2));
+    }
+    
+    [TestMethod]
+    public void WriteText3_StopsAtWidthIfNotWrapping()
+    {
+        var sf = new Surface(_cursesMock.Object, new(1));
+        _cursesMock.MockArea(sf, new Size(3, 1));
+
+        var text = new StyledText("1234", Style.Default);
+        sf.WriteText(text, false);
+
+        _cursesMock.Verify(v => v.wadd_wch(sf.Handle, It.IsAny<ComplexChar>()), Times.Exactly(3));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
