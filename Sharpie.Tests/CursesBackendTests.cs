@@ -293,9 +293,16 @@ public class CursesBackendTests
     }
     
     [TestMethod]
-    public void Load3_Throws_WhenPathsIsNull()
+    public void Load3_Throws_WhenPathIsNull()
     {
         Should.Throw<ArgumentNullException>(() =>
-            CursesBackend.Load(CursesBackendType.NCurses, null!));
+            CursesBackend.Load(CursesBackendType.NCurses, null!, "hello"));
+    }
+    
+    [TestMethod]
+    public void Load3_Throws_WhenOtherPathsIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() =>
+            CursesBackend.Load(CursesBackendType.NCurses, "hello", null!));
     }
 }

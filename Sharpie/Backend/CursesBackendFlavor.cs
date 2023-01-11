@@ -87,7 +87,8 @@ public enum CursesBackendFlavor
     ///     Install <c>Curses-Libs-PdCursesMod</c> package to obtain pre-built versions
     ///     for Windows, Linux and MacOS.
     ///
-    ///     This is version uses Windows GUI, or SDL1/SDL2 protocols.
+    ///     This is version uses Windows GUI, or SDL1/SDL2 protocols. Requires `sdl/sdl2` and `sdl_ttf` to be installed
+    ///     if this protocol is used. 
     /// </summary>
     PdCursesModGui,
     
