@@ -113,7 +113,7 @@ public class CursesBackendTests
     }
 
     [TestMethod]
-    public void TryLoad_ReturnsNull_IfProviderIsInvalid()
+    public void TryLoad_ReturnsNull_IfTypeIsInvalid()
     {
         CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, 0, Array.Empty<string>())
                      .ShouldBeNull();
@@ -130,15 +130,15 @@ public class CursesBackendTests
     public void TryLoad_ReturnsNull_IfNoPathSupplied()
     {
         MockLoadResult("library", false);
-        CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.NCurses, Array.Empty<string>())
+        CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, CursesBackendType.NCurses, Array.Empty<string>())
                      .ShouldBeNull();
     }
 
     [TestMethod]
-    public void TryLoad_ReturnsNull_IfFailedToLoadProvider()
+    public void TryLoad_ReturnsNull_IfFailedToLoadType()
     {
         MockLoadResult("library", false);
-        CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.NCurses, new[] { "library" })
+        CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, CursesBackendType.NCurses, new[] { "library" })
                      .ShouldBeNull();
 
         VerifyLoadLibraryAttempts("library");
@@ -150,28 +150,28 @@ public class CursesBackendTests
         MockLoadResult("library", true);
         MockLoadResult("libc", false);
 
-        CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.NCurses, new[] { "library" })
+        CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, CursesBackendType.NCurses, new[] { "library" })
                      .ShouldNotBeNull();
 
         VerifyLoadLibraryAttempts("library", "libc");
     }
 
-    [TestMethod, DataRow(CursesBackend.Provider.NCurses), DataRow(CursesBackend.Provider.PdCurses),
-     DataRow(CursesBackend.Provider.PdCursesMod32Wide)]
-    public void TryLoad_ReturnsAppropriateBackEnd(CursesBackend.Provider provider)
+    [TestMethod, DataRow(CursesBackendType.NCurses), DataRow(CursesBackendType.PdCurses),
+     DataRow(CursesBackendType.PdCursesMod)]
+    public void TryLoad_ReturnsAppropriateBackEnd(CursesBackendType type)
     {
         MockLoadResult("library", true);
 
-        var backend = CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, provider, new[] { "library" });
-        switch (provider)
+        var backend = CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, type, new[] { "library" });
+        switch (type)
         {
-            case CursesBackend.Provider.NCurses:
+            case CursesBackendType.NCurses:
                 backend.ShouldBeOfType<NCursesBackend>();
                 break;
-            case CursesBackend.Provider.PdCurses:
+            case CursesBackendType.PdCurses:
                 backend.ShouldBeOfType<PdCursesBackend>();
                 break;
-            case CursesBackend.Provider.PdCursesMod32Wide:
+            case CursesBackendType.PdCursesMod:
                 backend.ShouldBeOfType<PdCursesMod32Backend>();
                 break;
         }
@@ -179,23 +179,23 @@ public class CursesBackendTests
         backend?.LibCSymbolResolver.ShouldBeNull();
     }
 
-    [TestMethod, DataRow(CursesBackend.Provider.NCurses), DataRow(CursesBackend.Provider.PdCurses),
-     DataRow(CursesBackend.Provider.PdCursesMod32Wide)]
-    public void TryLoad_WhenUnix_ReturnsAppropriateBackEnd(CursesBackend.Provider provider)
+    [TestMethod, DataRow(CursesBackendType.NCurses), DataRow(CursesBackendType.PdCurses),
+     DataRow(CursesBackendType.PdCursesMod)]
+    public void TryLoad_WhenUnix_ReturnsAppropriateBackEnd(CursesBackendType type)
     {
         MockLoadResult("library", true);
         MockLoadResult("libc", true);
 
-        var backend = CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, provider, new[] { "library" });
-        switch (provider)
+        var backend = CursesBackend.TryLoad(_dotNetSystemAdapterMock.Object, type, new[] { "library" });
+        switch (type)
         {
-            case CursesBackend.Provider.NCurses:
+            case CursesBackendType.NCurses:
                 backend.ShouldBeOfType<NCursesBackend>();
                 break;
-            case CursesBackend.Provider.PdCurses:
+            case CursesBackendType.PdCurses:
                 backend.ShouldBeOfType<PdCursesBackend>();
                 break;
-            case CursesBackend.Provider.PdCursesMod32Wide:
+            case CursesBackendType.PdCursesMod:
                 backend.ShouldBeOfType<PdCursesMod32Backend>();
                 break;
         }
@@ -204,248 +204,105 @@ public class CursesBackendTests
     }
 
     [TestMethod]
-    public void Load1_WhenUnknownOs_Fails()
+    public void Load1_WhenLinux_Fails_IfNoFlavor()
     {
         var actual = CaptureLoadAttempts();
         Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any));
+            CursesBackend.Load(_dotNetSystemAdapterMock.Object, Array.Empty<CursesBackendFlavor>()));
 
         actual.ShouldBe(Array.Empty<string>());
+    }
+    
+    [TestMethod]
+    public void Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded()
+    {
+        Should.Throw<CursesInitializationException>(() =>
+            CursesBackend.Load(_dotNetSystemAdapterMock.Object, new[] { CursesBackendFlavor.Any }));
+    }
+
+    [TestMethod]
+    public void Load1_Throws_WhenUnknownOs()
+    {
+        Should.Throw<PlatformNotSupportedException>(() =>
+            CursesBackend.Load(_dotNetSystemAdapterMock.Object, new[] { CursesBackendFlavor.Any }));
     }
 
     [TestMethod]
     public void Load1_WhenWindows_ReturnsValidBackend()
     {
-        MockLoadResult("ncurses.dll", true);
+        MockLoadResult("ncursesw.dll", true);
 
-        CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any)
+        CursesBackend.Load(_dotNetSystemAdapterMock.Object, new[] { CursesBackendFlavor.Any })
                      .ShouldNotBeNull();
     }
 
     [TestMethod]
     public void Load1_WhenLinux_ReturnsValidBackend()
     {
-        MockLoadResult("ncurses", true);
+        MockLoadResult("libncursesw.so", true);
 
-        CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any)
+        CursesBackend.Load(_dotNetSystemAdapterMock.Object, new[] { CursesBackendFlavor.Any })
                      .ShouldNotBeNull();
     }
 
     [TestMethod]
     public void Load1_WhenFreeBsd_ReturnsValidBackend()
     {
-        MockLoadResult("ncurses", true);
+        MockLoadResult("libncursesw.so", true);
 
-        CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any)
+        CursesBackend.Load(_dotNetSystemAdapterMock.Object, new[] { CursesBackendFlavor.Any })
                      .ShouldNotBeNull();
     }
 
     [TestMethod]
     public void Load1_WhenMacOs_ReturnsValidBackend()
     {
-        MockLoadResult("ncurses", true);
+        MockLoadResult("libncurses.dylib", true);
 
-        CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any)
+        CursesBackend.Load(_dotNetSystemAdapterMock.Object, new[] { CursesBackendFlavor.Any })
                      .ShouldNotBeNull();
     }
-
+    
     [TestMethod]
-    public void Load1_WhenLinux_TriesToLoadManyOptions()
+    public void Load2_Throws_WhenFlavorsIsNull()
     {
-        var options = new[]
-        {
-            "libpdcurses2.so",
-            "libpdcurses.so",
-            "libXCurses.so",
-            "libpdcurses2.so",
-            "libpdcurses.so",
-            "libXCurses.so",
-            "libncursesw.so.6",
-            "libncursesw.so.5",
-            "libncursesw.so",
-            "ncursesw",
-            "libncurses.so.6",
-            "libncurses.so.5",
-            "libncurses.so",
-            "ncurses"
-        };
-
-        var actual = CaptureLoadAttempts();
-        Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any));
-
-        actual.ShouldBe(options);
+        Should.Throw<ArgumentNullException>(() =>
+            CursesBackend.Load(CursesBackendFlavor.AnyGui, null!));
     }
 
     [TestMethod]
-    public void Load1_WhenFreeBsd_TriesToLoadManyOptions()
-    {
-        var options = new[]
-        {
-            "libpdcurses2.so",
-            "libpdcurses.so",
-            "libXCurses.so",
-            "libpdcurses2.so",
-            "libpdcurses.so",
-            "libXCurses.so",
-            "libncursesw.so.6",
-            "libncursesw.so.5",
-            "libncursesw.so",
-            "ncursesw",
-            "libncurses.so.6",
-            "libncurses.so.5",
-            "libncurses.so",
-            "ncurses"
-        };
-
-        var actual = CaptureLoadAttempts();
-        Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any));
-
-        actual.ShouldBe(options);
-    }
-
-    [TestMethod]
-    public void Load1_WhenMacOs_TriesToLoadManyOptions()
-    {
-        var options = new[] { "libpdcurses.dylib", "libpdcurses.dylib", "libpdcurses2.dylib", "ncursesw", "ncurses" };
-
-        var actual = CaptureLoadAttempts();
-        Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any));
-
-        actual.ShouldBe(options);
-    }
-
-    [TestMethod]
-    public void Load1_WhenWindows_TriesToLoadManyOptions()
-    {
-        var options = new[]
-        {
-            "libpdcurses.dll",
-            "pdcurses.dll",
-            "libpdcurses.dll",
-            "pdcurses.dll",
-            "libncursesw.dll",
-            "libncursesw6.dll",
-            "libncursesw5.dll",
-            "ncursesw.dll",
-            "ncursesw6.dll",
-            "ncursesw5.dll",
-            "libncurses.dll",
-            "libncurses6.dll",
-            "libncurses5.dll",
-            "ncurses.dll",
-            "ncurses6.dll",
-            "ncurses5.dll"
-        };
-
-        var actual = CaptureLoadAttempts();
-        Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any));
-
-        actual.ShouldBe(options);
-    }
-
-    [TestMethod]
-    public void Load1_WhenMacOs_ForNCurses_TriesToLoadDefault_IfNoHomeBrewFound()
-    {
-        Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.NCurses));
-
-        VerifyLoadLibraryAttempts("ncurses", "ncursesw");
-    }
-
-    [TestMethod]
-    public void Load1_WhenMacOs_ScansTheLibraryDirectory_IfNoHomeBrewFound()
-    {
-        _dotNetSystemAdapterMock.Setup(s => s.CombinePaths(It.IsAny<string[]>()))
-                                .Returns((string[] ps) => string.Join("+", ps));
-
-        _dotNetSystemAdapterMock.Setup(s => s.GetEnvironmentVariable("HOMEBREW_PREFIX"))
-                                .Returns("/h");
-
-        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+lib"))
-                                .Returns(true);
-
-        _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+lib"))
-                                .Returns(new[]
-                                {
-                                    "dummy.txt",
-                                    "libncurses.10",
-                                    "libncurses.dylib",
-                                    "libncurses.a.dylib",
-                                    "libncurses.1.dylib",
-                                    "libncurses.10.dylib"
-                                });
-
-        Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.NCurses));
-
-        VerifyLoadLibraryAttempts("/h+lib+libncurses.1.dylib", "/h+lib+libncurses.10.dylib", "ncurses", "ncursesw");
-    }
-
-    [TestMethod]
-    public void Load1_WhenMacOs_ScansTheCellarDirectories_IfNoHomeBrewFound()
-    {
-        _dotNetSystemAdapterMock.Setup(s => s.CombinePaths(It.IsAny<string[]>()))
-                                .Returns((string[] ps) => string.Join("+", ps));
-
-        _dotNetSystemAdapterMock.Setup(s => s.GetEnvironmentVariable("HOMEBREW_CELLAR"))
-                                .Returns("/h");
-
-        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses"))
-                                .Returns(true);
-
-        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses-one+lib"))
-                                .Returns(true);
-
-        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses-2+lib"))
-                                .Returns(true);
-
-        _dotNetSystemAdapterMock.Setup(s => s.EnumerateDirectories("/h+ncurses"))
-                                .Returns(new[] { "/h+ncurses-one", "/h+ncurses-2" });
-
-        _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+ncurses-one+lib"))
-                                .Returns(new[]
-                                {
-                                    "dummy.txt",
-                                    "libncurses.10",
-                                    "libncurses.dylib",
-                                    "libncurses.a.dylib",
-                                    "libncurses.1.dylib",
-                                    "libncurses.10.dylib"
-                                });
-
-        _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+ncurses-2+lib"))
-                                .Returns(new[] { "dummy.txt", "libncurses.2.dylib", "libncurses.12.dylib" });
-
-        Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.NCurses));
-
-        VerifyLoadLibraryAttempts("/h+ncurses-one+lib+libncurses.1.dylib", "/h+ncurses-2+lib+libncurses.2.dylib",
-            "/h+ncurses-one+lib+libncurses.10.dylib", "/h+ncurses-2+lib+libncurses.12.dylib", "ncurses", "ncursesw");
-    }
-
-    [TestMethod]
-    public void Load2_TriesToLoadGivenPaths_ForEachProvider()
+    public void Load3_TriesToLoadGivenPaths()
     {
         var actual = CaptureLoadAttempts();
 
         Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any, "path1", "path2"));
+            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackendType.PdCurses, new[] { "path1", "path2" }));
 
-        actual.ShouldBe(new[] { "path1", "path2", "path1", "path2", "path1", "path2" });
+        actual.ShouldBe(new[] { "path1", "path2" });
     }
 
     [TestMethod]
-    public void Load2_WhenLinux_StopsAtFirstGoodLoad()
+    public void Load3_WhenLinux_StopsAtFirstGoodLoad()
     {
         MockLoadResult("path2", true);
 
-        CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackend.Provider.Any, "path1", "path2", "path3")
+        CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackendType.NCurses, new[] { "path1", "path2" })
                      .ShouldNotBeNull();
 
         VerifyLoadLibraryAttempts("path1", "path2", "libc");
+    }
+    
+    [TestMethod]
+    public void Load3_Throws_WhenPathIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() =>
+            CursesBackend.Load(CursesBackendType.NCurses, null!, "hello"));
+    }
+    
+    [TestMethod]
+    public void Load3_Throws_WhenOtherPathsIsNull()
+    {
+        Should.Throw<ArgumentNullException>(() =>
+            CursesBackend.Load(CursesBackendType.NCurses, "hello", null!));
     }
 }
