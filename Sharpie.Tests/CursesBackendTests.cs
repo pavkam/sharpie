@@ -212,7 +212,7 @@ public class CursesBackendTests
 
         actual.ShouldBe(Array.Empty<string>());
     }
-    
+
     [TestMethod]
     public void Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded()
     {
@@ -262,12 +262,11 @@ public class CursesBackendTests
         CursesBackend.Load(_dotNetSystemAdapterMock.Object, new[] { CursesBackendFlavor.Any })
                      .ShouldNotBeNull();
     }
-    
+
     [TestMethod]
     public void Load2_Throws_WhenFlavorsIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
-            CursesBackend.Load(CursesBackendFlavor.AnyGui, null!));
+        Should.Throw<ArgumentNullException>(() => CursesBackend.Load(CursesBackendFlavor.AnyGui, null!));
     }
 
     [TestMethod]
@@ -276,7 +275,8 @@ public class CursesBackendTests
         var actual = CaptureLoadAttempts();
 
         Should.Throw<CursesInitializationException>(() =>
-            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackendType.PdCurses, new[] { "path1", "path2" }));
+            CursesBackend.Load(_dotNetSystemAdapterMock.Object, CursesBackendType.PdCurses,
+                new[] { "path1", "path2" }));
 
         actual.ShouldBe(new[] { "path1", "path2" });
     }
@@ -291,18 +291,16 @@ public class CursesBackendTests
 
         VerifyLoadLibraryAttempts("path1", "path2", "libc");
     }
-    
+
     [TestMethod]
     public void Load3_Throws_WhenPathIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
-            CursesBackend.Load(CursesBackendType.NCurses, null!, "hello"));
+        Should.Throw<ArgumentNullException>(() => CursesBackend.Load(CursesBackendType.NCurses, null!, "hello"));
     }
-    
+
     [TestMethod]
     public void Load3_Throws_WhenOtherPathsIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
-            CursesBackend.Load(CursesBackendType.NCurses, "hello", null!));
+        Should.Throw<ArgumentNullException>(() => CursesBackend.Load(CursesBackendType.NCurses, "hello", null!));
     }
 }

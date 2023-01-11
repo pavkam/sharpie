@@ -1178,7 +1178,7 @@ public class SurfaceTests
 
         _cursesMock.Verify(v => v.wadd_wch(sf.Handle, It.IsAny<ComplexChar>()), Times.Exactly(3));
     }
-    
+
     [TestMethod]
     public void WriteText2_Calls_WriteText1()
     {
@@ -1187,7 +1187,7 @@ public class SurfaceTests
 
         _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(5));
     }
-    
+
     [TestMethod]
     public void WriteText2_StopsAtWidthIfNotWrapping()
     {
@@ -1198,7 +1198,7 @@ public class SurfaceTests
 
         _cursesMock.Verify(v => v.wadd_wch(sf.Handle, It.IsAny<ComplexChar>()), Times.Exactly(3));
     }
-    
+
     [TestMethod]
     public void WriteText3_DoesNotCallCurse_IfUninitialized()
     {
@@ -1237,7 +1237,7 @@ public class SurfaceTests
 
         _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Exactly(2));
     }
-    
+
     [TestMethod]
     public void WriteText3_StopsAtWidthIfNotWrapping()
     {
@@ -1266,13 +1266,14 @@ public class SurfaceTests
     {
         var s = new Surface(_cursesMock.Object, new(1));
         s.NextLine();
-        
+
         _cursesMock.Verify(
             v => v.setcchar(out It.Ref<ComplexChar>.IsAny, "\n", VideoAttribute.None, 0, It.IsAny<IntPtr>()),
             Times.Once);
+
         _cursesMock.Verify(v => v.wadd_wch(new(1), It.IsAny<ComplexChar>()), Times.Once);
     }
-    
+
     [TestMethod]
     public void RemoveText_DoesNothing_IfCountIsLessThanOne()
     {

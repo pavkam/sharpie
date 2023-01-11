@@ -32,37 +32,20 @@ public sealed class DosCp866AsciiFont: IAsciiFont
         Shapes = glyphs.ToArray();
     }
 
-    private static bool[,] ExtractGlyph(ReadOnlySpan<char> str)
-    {
-        Debug.Assert(str.Length == Lines * CharsPerByte);
-
-        var shape = new bool[8, 8];
-        for (var y = 0; y < Lines; y++)
-        {
-            var pb = byte.Parse(str.Slice(y * CharsPerByte, CharsPerByte), NumberStyles.HexNumber);
-            for (var x = 0; x < BitsPerLine; x++)
-            {
-                shape[7 - x, y] = (pb & (1 << x)) != 0;
-            }
-        }
-
-        return shape;
-    }
-
-    /// <inheritdoc cref="IAsciiFont.Name"/> 
+    /// <inheritdoc cref="IAsciiFont.Name" />
     public string Name => "CP866 Block Characters";
 
-    /// <inheritdoc cref="IAsciiFont.HasGlyph"/> 
+    /// <inheritdoc cref="IAsciiFont.HasGlyph" />
     public bool HasGlyph(Rune @char) => @char.Value >= 0 && @char.Value < Shapes.Count;
 
-    /// <inheritdoc cref="IAsciiFont.GetGlyph"/>
+    /// <inheritdoc cref="IAsciiFont.GetGlyph" />
     public IDrawable GetGlyph(Rune @char, Style style)
     {
         var canvas = new Canvas(new(BitsPerLine / 2, Lines / 2));
         var canvasRect = new Rectangle(new(0, 0), canvas.Size);
-        
+
         canvas.Fill(canvasRect, new Rune(ControlCharacter.Whitespace), style);
-        
+
         if (!HasGlyph(@char))
         {
             canvas.Box(canvasRect, Canvas.LineStyle.Light, style);
@@ -84,5 +67,22 @@ public sealed class DosCp866AsciiFont: IAsciiFont
         }
 
         return canvas;
+    }
+
+    private static bool[,] ExtractGlyph(ReadOnlySpan<char> str)
+    {
+        Debug.Assert(str.Length == Lines * CharsPerByte);
+
+        var shape = new bool[8, 8];
+        for (var y = 0; y < Lines; y++)
+        {
+            var pb = byte.Parse(str.Slice(y * CharsPerByte, CharsPerByte), NumberStyles.HexNumber);
+            for (var x = 0; x < BitsPerLine; x++)
+            {
+                shape[7 - x, y] = (pb & (1 << x)) != 0;
+            }
+        }
+
+        return shape;
     }
 }

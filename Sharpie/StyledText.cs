@@ -1,7 +1,7 @@
 namespace Sharpie;
 
 /// <summary>
-///     Describes a text with mixed in styles. Can be used by <see cref="ISurface.WriteText(StyledText)" />.
+///     Describes a text with mixed in styles. Can be used by <see cref="ISurface.WriteText(StyledText,bool)" />.
 /// </summary>
 [PublicAPI]
 public readonly struct StyledText

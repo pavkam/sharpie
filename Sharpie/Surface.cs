@@ -386,10 +386,10 @@ public abstract class Surface: ISurface, IDisposable
                 {
                     break;
                 }
-                
+
                 Curses.wadd_wch(Handle, Curses.ToComplexChar(rune, style))
                       .Check(nameof(Curses.wadd_wch), "Failed to write character to the terminal.");
-                
+
                 count--;
             }
         }
@@ -415,10 +415,72 @@ public abstract class Surface: ISurface, IDisposable
     /// <inheritdoc cref="ISurface.WriteText(string, bool)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void WriteText(string text, bool wrap = true) => WriteText(text, Style.Default, wrap);
-    
+
     /// <inheritdoc cref="ISurface.NextLine" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public void NextLine() => WriteText("\n");
+
+    /// <inheritdoc cref="ISurface.DrawText(IAsciiFont,string,Sharpie.Style,bool,bool)" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public void DrawText(IAsciiFont font, string text, Style style, bool interpretSpecialChars = true,
+        bool wrap = true)
+    {
+        if (font == null)
+        {
+            throw new ArgumentNullException(nameof(font));
+        }
+
+        if (text == null)
+        {
+            throw new ArgumentNullException(nameof(text));
+        }
+
+        if (text.Length == 0)
+        {
+            return;
+        }
+
+        var pos = CaretLocation;
+        foreach (var rune in text.EnumerateRunes())
+        {
+            var gl = font.GetGlyph(rune, style);
+            var newLine = interpretSpecialChars && rune.Value == ControlCharacter.NewLine;
+            
+            if (!newLine)
+            {
+                Draw(pos, gl);
+                pos.Offset(gl.Size.Width, 0);
+            } 
+            else
+            {
+                pos.Offset(-pos.X, gl.Size.Height);
+            }
+
+            if (pos.X >= Size.Width - gl.Size.Width)
+            {
+                if (!wrap)
+                {
+                    break;
+                }
+
+                pos.Offset(-pos.X, gl.Size.Height);
+            }
+
+            var delta = gl.Size.Height - (Size.Height - pos.Y);
+            if (delta > 0 && Scrollable)
+            {
+                ScrollUp(delta);
+                pos.Offset(0, -delta);
+            }
+        }
+
+        CaretLocation = new(Math.Min(Size.Width - 1, pos.X), Math.Min(Size.Height - 1, pos.Y));
+    }
+
+    /// <inheritdoc cref="ISurface.DrawText(IAsciiFont,string,bool,bool)" />
+    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    public void DrawText(IAsciiFont font, string text, bool interpretSpecialChars = true, bool wrap = true) 
+        => DrawText(font, text, Style.Default, interpretSpecialChars, wrap);
 
     /// <inheritdoc cref="ISurface.DrawVerticalLine(int,System.Text.Rune,Sharpie.Style)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>

@@ -35,38 +35,38 @@ internal class CursesBackendFlavorSelector
         var v3 = ver > 0 ? ver.ToString() : string.Empty;
         return $"{name}{v3}.dll";
     }
-   
+
     public IEnumerable<(string path, CursesBackendType type)> GetLibraryPaths(CursesBackendFlavor flavor)
     {
         if (_dotNetSystemAdapter is { IsLinux: false, IsFreeBsd: false, IsMacOs: false, IsWindows: false })
         {
             throw new PlatformNotSupportedException("Current platform is not supported.");
         }
-        
+
         return flavor switch
         {
             CursesBackendFlavor.PdCursesModVirtualTerminal => new[]
             {
-                PlatformDllName("pdcursesmod-vt"), PlatformDllName("pdcursesmod"),
+                PlatformDllName("pdcursesmod-vt"), PlatformDllName("pdcursesmod")
             }.Select(p => (p, CursesBackendType.PdCursesMod)),
             CursesBackendFlavor.PdCursesModGui when _dotNetSystemAdapter.IsWindows => new[]
             {
-                PlatformDllName("pdcursesmod-wingui"),
+                PlatformDllName("pdcursesmod-wingui")
             }.Select(p => (p, CursesBackendType.PdCursesMod)),
             CursesBackendFlavor.PdCursesModGui => new[]
             {
-                PlatformDllName("pdcursesmod-sdl1"), PlatformDllName("pdcursesmod-sdl2"),
+                PlatformDllName("pdcursesmod-sdl1"), PlatformDllName("pdcursesmod-sdl2")
             }.Select(p => (p, CursesBackendType.PdCursesMod)),
             CursesBackendFlavor.PdCursesModWindowsConsole when _dotNetSystemAdapter.IsWindows => new[]
             {
-                PlatformDllName("pdcursesmod-wincon"),
+                PlatformDllName("pdcursesmod-wincon")
             }.Select(p => (p, CursesBackendType.PdCursesMod)),
             CursesBackendFlavor.PdCursesMod => GetLibraryPaths(CursesBackendFlavor.PdCursesModWindowsConsole)
                                                .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesModVirtualTerminal))
                                                .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesModGui)),
             CursesBackendFlavor.PdCursesWindowsConsole when _dotNetSystemAdapter.IsWindows => new[]
             {
-                PlatformDllName("pdcurses-wincon"), PlatformDllName("pdcurses"),
+                PlatformDllName("pdcurses-wincon"), PlatformDllName("pdcurses")
             }.Select(p => (p, CursesBackendType.PdCurses)),
             CursesBackendFlavor.PdCurses => GetLibraryPaths(CursesBackendFlavor.PdCursesWindowsConsole),
             CursesBackendFlavor.NCurses when _dotNetSystemAdapter.IsMacOs => FindMacOsNCursesCandidates()

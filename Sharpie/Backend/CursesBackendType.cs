@@ -17,15 +17,14 @@ public enum CursesBackendType
     ///     The PDCurses back-end. Not available by default on operating systems.
     ///     For some Linuxes and FreeBSD a prebuilt library can be installed from package
     ///     managers.
-    ///
-    ///     Does not support <see cref="SoftLabelKeyManager"/>.
-    ///     Not recommended for use. <see cref="PdCursesMod"/> for a better alternative.
+    ///     Does not support <see cref="SoftLabelKeyManager" />.
+    ///     Not recommended for use. <see cref="PdCursesMod" /> for a better alternative.
     /// </summary>
     PdCurses,
-    
+
     /// <summary>
-    ///     The PDCursesMod back-end. This is an advanced version of <see cref="PdCurses"/> with more
+    ///     The PDCursesMod back-end. This is an advanced version of <see cref="PdCurses" /> with more
     ///     platform availability and support. Not available by default on any operating systems.
     /// </summary>
-    PdCursesMod,
+    PdCursesMod
 }

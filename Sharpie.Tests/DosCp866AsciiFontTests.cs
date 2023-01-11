@@ -68,7 +68,7 @@ public class DosCp866AsciiFontTests
 
         contents.ShouldBe(cols);
     }
-    
+
     [TestMethod]
     public void GetGlyph_ReturnsTheDefault_IfNotFound()
     {
