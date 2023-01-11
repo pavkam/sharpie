@@ -14,9 +14,9 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>pdcurses curses terminal console</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageVersion>1.0.3</PackageVersion>
-        <AssemblyVersion>1.0.3</AssemblyVersion>
-        <FileVersion>1.0.3</FileVersion>
+        <PackageVersion>1.0.4</PackageVersion>
+        <AssemblyVersion>1.0.4</AssemblyVersion>
+        <FileVersion>1.0.4</FileVersion>
         <PackageId>Sharpie-Libs-NCurses</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
         <LangVersion>10</LangVersion>
@@ -44,5 +44,7 @@
         <None Include="../lib/ncurses/libncursesw-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/ncursesw.dll" />
         <None Include="../lib/ncurses/libncursesw-x64.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libncursesw.dylib" />
         <None Include="../lib/ncurses/libncursesw-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libncursesw.so" />
+        <None Include="../lib/ncurses/libncursesw-arm.so" Pack="true" PackagePath="runtimes/linux-arm/native/libncursesw.so" />
+        <None Include="../lib/ncurses/libncursesw-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libncursesw.so" />
     </ItemGroup>
 </Project>
