@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/*.so'
+          path: 'lib/libncursesw*.so'
           if-no-files-found: error
           
   raspios_lite-arm64:
@@ -79,7 +79,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/*.so'
+          path: 'lib/libncursesw*.so'
           if-no-files-found: error
           
   ubuntu-x64:
@@ -113,7 +113,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/*.so'
+          path: 'lib/libncursesw*.so'
           if-no-files-found: error
           
   macos-x64:
@@ -148,7 +148,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/*.dylib'
+          path: 'lib/libncursesw*.dylib'
           if-no-files-found: error
           
   windows-x64:
@@ -204,7 +204,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libraries
-          path: 'lib/*.dll'
+          path: 'lib/libncursesw*.dll'
           if-no-files-found: error
           
   create-pr:
