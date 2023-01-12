@@ -29,7 +29,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 namespace Sharpie.Backend;
-#pragma warning disable CS1591
 
 /// <summary>
 ///     Backend-independent key code classification.
