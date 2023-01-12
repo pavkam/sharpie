@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022, Alexandru Ciobanu
+Copyright (c) 2022-2023, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 namespace Sharpie.Backend;
-#pragma warning disable CS1591
 
 /// <summary>
 ///     Backend-independent key code classification.

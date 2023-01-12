@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022, Alexandru Ciobanu
+Copyright (c) 2022-2023, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,6 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma warning disable CS1591
 namespace Sharpie.Backend;
 
 /// <summary>
