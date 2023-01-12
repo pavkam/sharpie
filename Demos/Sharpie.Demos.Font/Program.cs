@@ -54,7 +54,7 @@ var font = new DosCp866AsciiFont();
 void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
 {
     var pos = t.Screen.CaretLocation;
-    
+
     foreach (var ch in str)
     {
         t.Screen.DrawText(font, ch.ToString(), styles[colorShift % styles.Length]);

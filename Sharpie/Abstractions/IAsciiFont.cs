@@ -7,6 +7,11 @@ namespace Sharpie.Abstractions;
 public interface IAsciiFont
 {
     /// <summary>
+    ///     The font height.
+    /// </summary>
+    int Height { get; }
+
+    /// <summary>
     ///     The font's name.
     /// </summary>
     string Name { get; }

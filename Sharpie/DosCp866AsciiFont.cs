@@ -32,6 +32,9 @@ public sealed class DosCp866AsciiFont: IAsciiFont
         Shapes = glyphs.ToArray();
     }
 
+    /// <inheritdoc cref="IAsciiFont.Height" />
+    public int Height => Lines / 2;
+
     /// <inheritdoc cref="IAsciiFont.Name" />
     public string Name => "CP866 Block Characters";
 

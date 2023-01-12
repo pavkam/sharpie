@@ -445,18 +445,11 @@ public abstract class Surface: ISurface, IDisposable
         {
             var gl = font.GetGlyph(rune, style);
             var newLine = interpretSpecialChars && rune.Value == ControlCharacter.NewLine;
-            
-            if (!newLine)
-            {
-                Draw(pos, gl);
-                pos.Offset(gl.Size.Width, 0);
-            } 
-            else
+
+            if (newLine)
             {
                 pos.Offset(-pos.X, gl.Size.Height);
-            }
-
-            if (pos.X >= Size.Width - gl.Size.Width)
+            } else if (pos.X > Size.Width - gl.Size.Width)
             {
                 if (!wrap)
                 {
@@ -467,10 +460,25 @@ public abstract class Surface: ISurface, IDisposable
             }
 
             var delta = gl.Size.Height - (Size.Height - pos.Y);
-            if (delta > 0 && Scrollable)
+            if (delta > 0 && pos.Y > 0)
             {
-                ScrollUp(delta);
+                if (Scrollable)
+                {
+                    ScrollUp(delta);
+                }
+
                 pos.Offset(0, -delta);
+
+                if (pos.Y < 0)
+                {
+                    pos.Offset(0, -pos.Y);
+                }
+            }
+
+            if (!newLine)
+            {
+                Draw(pos, gl);
+                pos.Offset(gl.Size.Width, 0);
             }
         }
 
@@ -479,8 +487,8 @@ public abstract class Surface: ISurface, IDisposable
 
     /// <inheritdoc cref="ISurface.DrawText(IAsciiFont,string,bool,bool)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public void DrawText(IAsciiFont font, string text, bool interpretSpecialChars = true, bool wrap = true) 
-        => DrawText(font, text, Style.Default, interpretSpecialChars, wrap);
+    public void DrawText(IAsciiFont font, string text, bool interpretSpecialChars = true, bool wrap = true) =>
+        DrawText(font, text, Style.Default, interpretSpecialChars, wrap);
 
     /// <inheritdoc cref="ISurface.DrawVerticalLine(int,System.Text.Rune,Sharpie.Style)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
@@ -778,7 +786,6 @@ public abstract class Surface: ISurface, IDisposable
         }
 
         AssertSynchronized();
-
         drawable.DrawOnto(this, area, location);
     }
 

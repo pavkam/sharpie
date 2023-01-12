@@ -45,6 +45,8 @@ public class DosCp866AsciiFontTests
 
     [TestMethod] public void Name_ReturnsTheExpectedValue() { _font.Name.ShouldBe("CP866 Block Characters"); }
 
+    [TestMethod] public void Height_ReturnsTheExpectedValue() { _font.Height.ShouldBe(4); }
+
     [TestMethod]
     public void GetGlyph_ReturnsA4By4Drawable()
     {

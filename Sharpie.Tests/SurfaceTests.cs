@@ -43,24 +43,6 @@ public class SurfaceTests
                    .Returns(new IntPtr(100));
     }
 
-    private void MockLargeArea(ISurface surface)
-    {
-        _cursesMock.Setup(s => s.getmaxx(surface.Handle))
-                   .Returns(1000);
-
-        _cursesMock.Setup(s => s.getmaxy(surface.Handle))
-                   .Returns(1000);
-    }
-
-    private void MockSmallArea(ISurface surface)
-    {
-        _cursesMock.Setup(s => s.getmaxx(surface.Handle))
-                   .Returns(1);
-
-        _cursesMock.Setup(s => s.getmaxy(surface.Handle))
-                   .Returns(1);
-    }
-
     [TestMethod]
     public void Ctor_Throws_WhenCursesIfNull()
     {
@@ -458,7 +440,7 @@ public class SurfaceTests
     public void CaretLocation_Set_SetsValue_IfCursesSucceeded()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        MockLargeArea(s);
+        _cursesMock.MockArea(s, new Size(100, 100));
 
         s.CaretLocation = new(11, 22);
 
@@ -469,7 +451,7 @@ public class SurfaceTests
     public void CaretLocation_Set_Throws_IfCursesFails()
     {
         var sw = new Surface(_cursesMock.Object, new(1));
-        MockLargeArea(sw);
+        _cursesMock.MockArea(sw, new Size(100, 100));
 
         _cursesMock.Setup(s => s.wmove(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
@@ -482,7 +464,7 @@ public class SurfaceTests
     public void CaretLocation_Set_Throws_IfOutsideArea()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        MockSmallArea(s);
+        _cursesMock.MockArea(s, new Size(1, 1));
 
         Should.Throw<ArgumentOutOfRangeException>(() => s.CaretLocation = new(6, 6));
     }
@@ -491,7 +473,7 @@ public class SurfaceTests
     public void CaretLocation_Set_UpdatesLocation_IfInsideArea()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        MockLargeArea(s);
+        _cursesMock.MockArea(s, new Size(100, 100));
 
         s.CaretLocation = new(5, 5);
         _cursesMock.Verify(v => v.wmove(new(1), 5, 5), Times.Once);
@@ -1483,7 +1465,7 @@ public class SurfaceTests
     public void Replace2_Throws_IfSurfaceIsItself()
     {
         var s = new Surface(_cursesMock.Object, new(1));
-        MockSmallArea(s);
+        _cursesMock.MockArea(s, new Size(1, 1));
 
         Should.Throw<ArgumentException>(() => s.Replace(s, new(0, 0, 1, 1), new(0, 0), ReplaceStrategy.Overlay));
     }
@@ -1543,10 +1525,10 @@ public class SurfaceTests
                    .Returns(-1);
 
         var s1 = new Surface(_cursesMock.Object, new(1));
-        MockLargeArea(s1);
+        _cursesMock.MockArea(s1, new Size(100, 100));
 
         var s2 = new Surface(_cursesMock.Object, new(2));
-        MockLargeArea(s2);
+        _cursesMock.MockArea(s2, new Size(100, 100));
 
         Should.Throw<CursesOperationException>(() =>
               {
@@ -1559,10 +1541,10 @@ public class SurfaceTests
     public void Replace2_CallsCurses_IfCursesOverlay()
     {
         var s1 = new Surface(_cursesMock.Object, new(1));
-        MockLargeArea(s1);
+        _cursesMock.MockArea(s1, new Size(100, 100));
 
         var s2 = new Surface(_cursesMock.Object, new(2));
-        MockLargeArea(s2);
+        _cursesMock.MockArea(s2, new Size(100, 100));
 
         s1.Replace(s2, new(1, 2, 3, 4), new(5, 6), ReplaceStrategy.Overlay);
         _cursesMock.Verify(s => s.copywin(s1.Handle, s2.Handle, 2, 1, 6,
@@ -1573,10 +1555,10 @@ public class SurfaceTests
     public void Replace2_CallsCurses_IfCursesOverwrite()
     {
         var s1 = new Surface(_cursesMock.Object, new(1));
-        MockLargeArea(s1);
+        _cursesMock.MockArea(s1, new Size(100, 100));
 
         var s2 = new Surface(_cursesMock.Object, new(2));
-        MockLargeArea(s2);
+        _cursesMock.MockArea(s2, new Size(100, 100));
 
         s1.Replace(s2, new(1, 2, 3, 4), new(5, 6), ReplaceStrategy.Overwrite);
         _cursesMock.Verify(s => s.copywin(s1.Handle, s2.Handle, 2, 1, 6,
