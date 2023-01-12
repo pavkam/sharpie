@@ -58,12 +58,12 @@ public static class CursesBackend
         IEnumerable<CursesBackendFlavor> flavors)
     {
         Debug.Assert(flavors != null);
-        
+
         if (dotNetSystemAdapter is { IsLinux: false, IsFreeBsd: false, IsMacOs: false, IsWindows: false })
         {
             throw new PlatformNotSupportedException("Current platform is not supported.");
         }
-        
+
         var selector = new CursesBackendFlavorSelector(dotNetSystemAdapter);
         foreach (var f in flavors)
         {
@@ -88,7 +88,8 @@ public static class CursesBackend
     /// <returns>The loaded Curses backend.</returns>
     /// <exception cref="CursesInitializationException">Thrown if no suitable provider was found.</exception>
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested."),
-     SupportedOSPlatform("macos"),SupportedOSPlatform("linux"),SupportedOSPlatform("freebsd"),SupportedOSPlatform("windows")]
+     SupportedOSPlatform("macos"), SupportedOSPlatform("linux"), SupportedOSPlatform("freebsd"),
+     SupportedOSPlatform("windows")]
     public static ICursesBackend Load(CursesBackendFlavor flavor = CursesBackendFlavor.Any,
         params CursesBackendFlavor[] otherFlavors)
     {

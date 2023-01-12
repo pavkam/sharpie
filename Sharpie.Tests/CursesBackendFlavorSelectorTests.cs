@@ -66,22 +66,21 @@ public class CursesBackendFlavorSelectorTests
 
         _provider = new(_dotNetSystemAdapterMock.Object);
     }
-    
+
     [TestMethod]
     public void GetLibraryPaths_WhenUnknownOs_Throws()
     {
-        Should.Throw<PlatformNotSupportedException>(() => 
-            _provider.GetLibraryPaths(CursesBackendFlavor.NCurses));
+        Should.Throw<PlatformNotSupportedException>(() => _provider.GetLibraryPaths(CursesBackendFlavor.NCurses));
     }
-    
+
     [TestMethod]
     public void GetLibraryPaths_WhenLinux_ReturnsExpectedPaths()
     {
         var actual = _provider.GetLibraryPaths(CursesBackendFlavor.NCurses);
         actual.ShouldBe(new[]
         {
-            ("libncursesw.so.6", CursesBackendType.NCurses), 
-            ("libncursesw.so", CursesBackendType.NCurses), 
+            ("libncursesw.so.6", CursesBackendType.NCurses),
+            ("libncursesw.so", CursesBackendType.NCurses),
             ("libncursesw.so.5", CursesBackendType.NCurses)
         });
 
@@ -94,9 +93,9 @@ public class CursesBackendFlavorSelectorTests
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesMod);
         actual.ShouldBe(new[]
         {
-            ("libpdcursesmod-vt.so", CursesBackendType.PdCursesMod), 
-            ("libpdcursesmod.so", CursesBackendType.PdCursesMod), 
-            ("libpdcursesmod-sdl1.so", CursesBackendType.PdCursesMod), 
+            ("libpdcursesmod-vt.so", CursesBackendType.PdCursesMod),
+            ("libpdcursesmod.so", CursesBackendType.PdCursesMod),
+            ("libpdcursesmod-sdl1.so", CursesBackendType.PdCursesMod),
             ("libpdcursesmod-sdl2.so", CursesBackendType.PdCursesMod)
         });
 
@@ -106,14 +105,14 @@ public class CursesBackendFlavorSelectorTests
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesModVirtualTerminal);
         actual.ShouldBe(new[]
         {
-            ("libpdcursesmod-vt.so", CursesBackendType.PdCursesMod), 
+            ("libpdcursesmod-vt.so", CursesBackendType.PdCursesMod),
             ("libpdcursesmod.so", CursesBackendType.PdCursesMod)
         });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesModGui);
         actual.ShouldBe(new[]
         {
-            ("libpdcursesmod-sdl1.so", CursesBackendType.PdCursesMod), 
+            ("libpdcursesmod-sdl1.so", CursesBackendType.PdCursesMod),
             ("libpdcursesmod-sdl2.so", CursesBackendType.PdCursesMod)
         });
 
@@ -138,8 +137,8 @@ public class CursesBackendFlavorSelectorTests
         var actual = _provider.GetLibraryPaths(CursesBackendFlavor.NCurses);
         actual.ShouldBe(new[]
         {
-            ("libncursesw.so.6", CursesBackendType.NCurses), 
-            ("libncursesw.so", CursesBackendType.NCurses), 
+            ("libncursesw.so.6", CursesBackendType.NCurses),
+            ("libncursesw.so", CursesBackendType.NCurses),
             ("libncursesw.so.5", CursesBackendType.NCurses)
         });
 
@@ -152,9 +151,9 @@ public class CursesBackendFlavorSelectorTests
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesMod);
         actual.ShouldBe(new[]
         {
-            ("libpdcursesmod-vt.so", CursesBackendType.PdCursesMod), 
-            ("libpdcursesmod.so", CursesBackendType.PdCursesMod), 
-            ("libpdcursesmod-sdl1.so", CursesBackendType.PdCursesMod), 
+            ("libpdcursesmod-vt.so", CursesBackendType.PdCursesMod),
+            ("libpdcursesmod.so", CursesBackendType.PdCursesMod),
+            ("libpdcursesmod-sdl1.so", CursesBackendType.PdCursesMod),
             ("libpdcursesmod-sdl2.so", CursesBackendType.PdCursesMod)
         });
 
@@ -164,14 +163,14 @@ public class CursesBackendFlavorSelectorTests
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesModVirtualTerminal);
         actual.ShouldBe(new[]
         {
-            ("libpdcursesmod-vt.so", CursesBackendType.PdCursesMod), 
+            ("libpdcursesmod-vt.so", CursesBackendType.PdCursesMod),
             ("libpdcursesmod.so", CursesBackendType.PdCursesMod)
         });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesModGui);
         actual.ShouldBe(new[]
         {
-            ("libpdcursesmod-sdl1.so", CursesBackendType.PdCursesMod), 
+            ("libpdcursesmod-sdl1.so", CursesBackendType.PdCursesMod),
             ("libpdcursesmod-sdl2.so", CursesBackendType.PdCursesMod)
         });
 
@@ -194,10 +193,7 @@ public class CursesBackendFlavorSelectorTests
     public void GetLibraryPaths_WhenMacOs_ReturnsExpectedPaths()
     {
         var actual = _provider.GetLibraryPaths(CursesBackendFlavor.NCurses);
-        actual.ShouldBe(new[]
-        {
-            ("libncurses.dylib", CursesBackendType.NCurses)
-        });
+        actual.ShouldBe(new[] { ("libncurses.dylib", CursesBackendType.NCurses) });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCurses);
         actual.ShouldBe(Array.Empty<(string, CursesBackendType)>());
@@ -208,9 +204,9 @@ public class CursesBackendFlavorSelectorTests
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesMod);
         actual.ShouldBe(new[]
         {
-            ("libpdcursesmod-vt.dylib", CursesBackendType.PdCursesMod), 
-            ("libpdcursesmod.dylib", CursesBackendType.PdCursesMod), 
-            ("libpdcursesmod-sdl1.dylib", CursesBackendType.PdCursesMod), 
+            ("libpdcursesmod-vt.dylib", CursesBackendType.PdCursesMod),
+            ("libpdcursesmod.dylib", CursesBackendType.PdCursesMod),
+            ("libpdcursesmod-sdl1.dylib", CursesBackendType.PdCursesMod),
             ("libpdcursesmod-sdl2.dylib", CursesBackendType.PdCursesMod)
         });
 
@@ -220,14 +216,14 @@ public class CursesBackendFlavorSelectorTests
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesModVirtualTerminal);
         actual.ShouldBe(new[]
         {
-            ("libpdcursesmod-vt.dylib", CursesBackendType.PdCursesMod), 
+            ("libpdcursesmod-vt.dylib", CursesBackendType.PdCursesMod),
             ("libpdcursesmod.dylib", CursesBackendType.PdCursesMod)
         });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesModGui);
         actual.ShouldBe(new[]
         {
-            ("libpdcursesmod-sdl1.dylib", CursesBackendType.PdCursesMod), 
+            ("libpdcursesmod-sdl1.dylib", CursesBackendType.PdCursesMod),
             ("libpdcursesmod-sdl2.dylib", CursesBackendType.PdCursesMod)
         });
 
@@ -252,23 +248,21 @@ public class CursesBackendFlavorSelectorTests
         var actual = _provider.GetLibraryPaths(CursesBackendFlavor.NCurses);
         actual.ShouldBe(new[]
         {
-            ("ncursesw6.dll", CursesBackendType.NCurses), 
-            ("ncursesw.dll", CursesBackendType.NCurses), 
+            ("ncursesw6.dll", CursesBackendType.NCurses),
+            ("ncursesw.dll", CursesBackendType.NCurses),
             ("ncursesw5.dll", CursesBackendType.NCurses)
         });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCurses);
         actual.ShouldBe(new[]
         {
-            ("pdcurses-wincon.dll", CursesBackendType.PdCurses), 
-            ("pdcurses.dll", CursesBackendType.PdCurses)
+            ("pdcurses-wincon.dll", CursesBackendType.PdCurses), ("pdcurses.dll", CursesBackendType.PdCurses)
         });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesWindowsConsole);
         actual.ShouldBe(new[]
         {
-            ("pdcurses-wincon.dll", CursesBackendType.PdCurses), 
-            ("pdcurses.dll", CursesBackendType.PdCurses)
+            ("pdcurses-wincon.dll", CursesBackendType.PdCurses), ("pdcurses.dll", CursesBackendType.PdCurses)
         });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesMod);
@@ -281,29 +275,23 @@ public class CursesBackendFlavorSelectorTests
         });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesModWindowsConsole);
-        actual.ShouldBe(new[]
-        {
-            ("pdcursesmod-wincon.dll", CursesBackendType.PdCursesMod)
-        });
+        actual.ShouldBe(new[] { ("pdcursesmod-wincon.dll", CursesBackendType.PdCursesMod) });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesModVirtualTerminal);
         actual.ShouldBe(new[]
         {
-            ("pdcursesmod-vt.dll", CursesBackendType.PdCursesMod), 
+            ("pdcursesmod-vt.dll", CursesBackendType.PdCursesMod),
             ("pdcursesmod.dll", CursesBackendType.PdCursesMod)
         });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.PdCursesModGui);
-        actual.ShouldBe(new[]
-        {
-            ("pdcursesmod-wingui.dll", CursesBackendType.PdCursesMod)
-        });
+        actual.ShouldBe(new[] { ("pdcursesmod-wingui.dll", CursesBackendType.PdCursesMod) });
 
         actual = _provider.GetLibraryPaths(CursesBackendFlavor.AnyWindowsConsole);
         actual.ShouldBe(new[]
         {
-            ("pdcursesmod-wincon.dll", CursesBackendType.PdCursesMod), 
-            ("pdcurses-wincon.dll", CursesBackendType.PdCurses), 
+            ("pdcursesmod-wincon.dll", CursesBackendType.PdCursesMod),
+            ("pdcurses-wincon.dll", CursesBackendType.PdCurses),
             ("pdcurses.dll", CursesBackendType.PdCurses)
         });
 
@@ -319,15 +307,12 @@ public class CursesBackendFlavorSelectorTests
                                  .Concat(_provider.GetLibraryPaths(CursesBackendFlavor.AnyVirtualTerminal))
                                  .Concat(_provider.GetLibraryPaths(CursesBackendFlavor.AnyGui)));
     }
-    
+
     [TestMethod]
     public void GetLibraryPaths_WhenMacOs_ForNCurses_TriesToLoadDefault_IfNoHomeBrewFound()
     {
         var actual = _provider.GetLibraryPaths(CursesBackendFlavor.NCurses);
-        actual.ShouldBe(new[]
-        {
-            ("libncurses.dylib", CursesBackendType.NCurses)
-        });
+        actual.ShouldBe(new[] { ("libncurses.dylib", CursesBackendType.NCurses) });
     }
 
     [TestMethod]
@@ -356,8 +341,8 @@ public class CursesBackendFlavorSelectorTests
         var actual = _provider.GetLibraryPaths(CursesBackendFlavor.NCurses);
         actual.ShouldBe(new[]
         {
-            ("/h+lib+libncurses.10.dylib", CursesBackendType.NCurses), 
-            ("/h+lib+libncurses.1.dylib", CursesBackendType.NCurses), 
+            ("/h+lib+libncurses.10.dylib", CursesBackendType.NCurses),
+            ("/h+lib+libncurses.1.dylib", CursesBackendType.NCurses),
             ("libncurses.dylib", CursesBackendType.NCurses)
         });
     }
@@ -400,10 +385,10 @@ public class CursesBackendFlavorSelectorTests
         var actual = _provider.GetLibraryPaths(CursesBackendFlavor.NCurses);
         actual.ShouldBe(new[]
         {
-            ("/h+ncurses-2+lib+libncurses.12.dylib", CursesBackendType.NCurses) , 
-            ("/h+ncurses-one+lib+libncurses.10.dylib", CursesBackendType.NCurses), 
-            ("/h+ncurses-2+lib+libncurses.2.dylib", CursesBackendType.NCurses), 
-            ("/h+ncurses-one+lib+libncurses.1.dylib", CursesBackendType.NCurses), 
+            ("/h+ncurses-2+lib+libncurses.12.dylib", CursesBackendType.NCurses),
+            ("/h+ncurses-one+lib+libncurses.10.dylib", CursesBackendType.NCurses),
+            ("/h+ncurses-2+lib+libncurses.2.dylib", CursesBackendType.NCurses),
+            ("/h+ncurses-one+lib+libncurses.1.dylib", CursesBackendType.NCurses),
             ("libncurses.dylib", CursesBackendType.NCurses)
         });
     }

@@ -53,23 +53,15 @@ var font = new DosCp866AsciiFont();
 // This method draws the given string and applies color starting with a specific shift.
 void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
 {
-    var x = 0;
-    var y = 0;
+    var pos = t.Screen.CaretLocation;
 
     foreach (var ch in str)
     {
-        var gl = font.GetGlyph(new(ch), styles[colorShift % styles.Length]);
-        t.Screen.Draw(new(x, y), gl);
-
-        x += gl.Size.Width;
-        if (x >= t.Screen.Size.Width - gl.Size.Width)
-        {
-            x = 0;
-            y += gl.Size.Height;
-        }
-
+        t.Screen.DrawText(font, ch.ToString(), styles[colorShift % styles.Length]);
         colorShift++;
     }
+
+    t.Screen.CaretLocation = pos;
 }
 
 // A repeating timer that draws the message with different colors.

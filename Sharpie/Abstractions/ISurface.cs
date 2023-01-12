@@ -237,19 +237,21 @@ public interface ISurface: IDrawSurface
     ///     Writes a text at the caret position at the current surface and advances the caret.
     /// </summary>
     /// <param name="text">The styled text to write.</param>
+    /// <param name="wrap">If <c>true</c>, text will be wrapped automatically to next line.</param>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
     ///     Thrown if this operation was expected to run on the main
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    void WriteText(StyledText text);
+    void WriteText(StyledText text, bool wrap = true);
 
     /// <summary>
     ///     Writes a text at the caret position at the current surface and advances the caret.
     /// </summary>
     /// <param name="text">The text to write.</param>
     /// <param name="style">The style of the text.</param>
+    /// <param name="wrap">If <c>true</c>, text will be wrapped automatically to next line.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="text" /> is <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
@@ -257,12 +259,13 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    void WriteText(string text, Style style);
+    void WriteText(string text, Style style, bool wrap = true);
 
     /// <summary>
     ///     Writes a text at the caret position at the current surface and advances the caret.
     /// </summary>
     /// <param name="text">The text to write.</param>
+    /// <param name="wrap">If <c>true</c>, text will be wrapped automatically to next line.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="text" /> is <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
     /// <exception cref="CursesSynchronizationException">
@@ -270,10 +273,11 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    void WriteText(string text);
+    void WriteText(string text, bool wrap = true);
 
     /// <summary>
-    ///     Helper method that moves the caret to the start of the next line. If the surface is <see cref="Scrollable"/>, and the
+    ///     Helper method that moves the caret to the start of the next line. If the surface is <see cref="Scrollable" />, and
+    ///     the
     ///     caret if on the last line, it will push the contents of the surface up by one line.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
@@ -283,7 +287,43 @@ public interface ISurface: IDrawSurface
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
     void NextLine();
-    
+
+    /// <summary>
+    ///     Draws text using an ASCII <paramref name="font" /> at the caret position at the current
+    ///     surface and advances the caret.
+    /// </summary>
+    /// <param name="font">The ASCII font to draw with.</param>
+    /// <param name="text">The text to write.</param>
+    /// <param name="style">The style of the text.</param>
+    /// <param name="wrap">If <c>true</c>, text will be wrapped automatically to next line.</param>
+    /// <param name="interpretSpecialChars">If <c>true</c>, special characters will be treated as such (e.g. \n)</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="font" /> or <paramref name="text" /> are <c>null</c>.</exception>
+    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
+    /// <remarks>This operation is not thread safe.</remarks>
+    void DrawText(IAsciiFont font, string text, Style style, bool interpretSpecialChars = true,
+        bool wrap = true);
+
+    /// <summary>
+    ///     Draws text using an ASCII <paramref name="font" /> at the caret position at the current
+    ///     surface and advances the caret.
+    /// </summary>
+    /// <param name="font">The ASCII font to draw with.</param>
+    /// <param name="text">The text to write.</param>
+    /// <param name="wrap">If <c>true</c>, text will be wrapped automatically to next line.</param>
+    /// <param name="interpretSpecialChars">If <c>true</c>, special characters will be treated as such (e.g. \n)</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="font" /> or <paramref name="text" /> are <c>null</c>.</exception>
+    /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
+    /// <exception cref="CursesSynchronizationException">
+    ///     Thrown if this operation was expected to run on the main
+    ///     thread/context but wasn't.
+    /// </exception>
+    /// <remarks>This operation is not thread safe.</remarks>
+    void DrawText(IAsciiFont font, string text, bool interpretSpecialChars = true, bool wrap = true);
+
     /// <summary>
     ///     Draws a vertical line from the current caret position downwards.
     /// </summary>

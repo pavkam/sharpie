@@ -26,10 +26,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="[2022.3.1,]" />
-        <PackageReference Include="Nito.AsyncEx.Context" Version="[5.1.2,6)" />
-        <PackageReference Include="System.Diagnostics.Debug" Version="[4.3.0,5)" />
-        <PackageReference Include="Sharpie-Curses" Version="[1.6.0,]" />
+        <PackageReference Include="JetBrains.Annotations" Version="[2022.3.1,]"/>
+        <PackageReference Include="Nito.AsyncEx.Context" Version="[5.1.2,6)"/>
+        <PackageReference Include="System.Diagnostics.Debug" Version="[4.3.0,5)"/>
+        <PackageReference Include="Sharpie-Curses" Version="[1.6.0,]"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -41,10 +41,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="../lib/ncurses/libncursesw-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/ncursesw.dll" />
-        <None Include="../lib/ncurses/libncursesw-x64.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libncursesw.dylib" />
-        <None Include="../lib/ncurses/libncursesw-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libncursesw.so" />
-        <None Include="../lib/ncurses/libncursesw-arm.so" Pack="true" PackagePath="runtimes/linux-arm/native/libncursesw.so" />
-        <None Include="../lib/ncurses/libncursesw-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libncursesw.so" />
+        <None Include="../lib/ncurses/libncursesw-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/ncursesw.dll"/>
+        <None Include="../lib/ncurses/libncursesw-x64.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libncursesw.dylib"/>
+        <None Include="../lib/ncurses/libncursesw-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libncursesw.so"/>
+        <None Include="../lib/ncurses/libncursesw-arm.so" Pack="true" PackagePath="runtimes/linux-arm/native/libncursesw.so"/>
+        <None Include="../lib/ncurses/libncursesw-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libncursesw.so"/>
     </ItemGroup>
 </Project>
