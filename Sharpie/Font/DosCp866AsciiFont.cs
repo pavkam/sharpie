@@ -28,7 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Sharpie;
+namespace Sharpie.Font;
 
 /// <summary>
 ///     DOS CodePage 866 font. Uncovered in the depths of Alexandru's prehistoric archives.

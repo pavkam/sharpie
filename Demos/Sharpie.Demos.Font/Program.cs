@@ -32,6 +32,7 @@ using System.Diagnostics.CodeAnalysis;
 using Sharpie;
 using Sharpie.Abstractions;
 using Sharpie.Backend;
+using Sharpie.Font;
 
 [assembly: ExcludeFromCodeCoverage]
 
