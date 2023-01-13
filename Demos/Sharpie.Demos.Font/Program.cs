@@ -37,7 +37,7 @@ using Sharpie.Font;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create a new terminal instance with an invisible cursor.
-using var terminal = new Terminal(CursesBackend.Load(), new(CaretMode: CaretMode.Invisible));
+using var terminal = new Terminal(CursesBackend.Load(), new(CaretMode: CaretMode.Invisible, AllocateHeader: true));
 
 // Setup the message and a number of rotating styles that will be applied for each letter of the message.
 var message = "\x001 Let the ASCII fun begin! \x003";
@@ -49,7 +49,25 @@ var styles = Enumerable.Range(0, message.Length)
                        })
                        .ToArray();
 
-var font = new DosCp866AsciiFont();
+// Load all fonts.
+var fonts = new List<IAsciiFont> { new DosCp866AsciiFont() };
+foreach (var path in Directory.EnumerateFiles("Fonts/", "*.flf"))
+{
+    fonts.Add(await FigletFont.LoadAsync(path));
+}
+
+var fontIndex = 0;
+
+// Configure header
+terminal.Header.Background = (new(ControlCharacter.Whitespace),
+    new()
+    {
+        Attributes = VideoAttribute.Bold,
+        ColorMixture = terminal.Colors.MixColors(StandardColor.Cyan, StandardColor.Magenta)
+    });
+
+terminal.Header.WriteText("Press TAB to cycle through fonts.");
+terminal.Header.Refresh();
 
 // This method draws the given string and applies color starting with a specific shift.
 void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
@@ -58,7 +76,7 @@ void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
 
     foreach (var ch in str)
     {
-        t.Screen.DrawText(font, ch.ToString(), styles[colorShift % styles.Length]);
+        t.Screen.DrawText(fonts[fontIndex], ch.ToString(), styles[colorShift % styles.Length]);
         colorShift++;
     }
 
@@ -78,9 +96,15 @@ terminal.Repeat(t =>
 // The main loop -- we need to monitor for resizes.
 terminal.Run((t, e) =>
 {
-    if (e is TerminalResizeEvent)
+    switch (e)
     {
-        t.Screen.Clear();
+        case TerminalResizeEvent:
+            t.Screen.Clear();
+            break;
+        case KeyEvent { Key: Key.Tab }:
+            t.Screen.Clear();
+            fontIndex = (fontIndex + 1) % fonts.Count;
+            break;
     }
 
     return Task.CompletedTask;
