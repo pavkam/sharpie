@@ -58,6 +58,40 @@ public sealed class FigletFont: IAsciiFont
         _figletCharacters = characters;
     }
 
+    /// <summary>
+    ///     The font character base line (on which upper-case letters are drawn).
+    /// </summary>
+    public int Baseline => _header.BaseLine;
+    
+    /// <summary>
+    ///     The default font layout (as desired by the font).
+    /// </summary>
+    public FigletLayout DefaultLayout
+    {
+        get
+        {
+            var res = FigletLayout.FullWidth;
+            if (_header.Attributes.HasFlag(FigletAttribute.HorizontalSmushing))
+            {
+                res |= FigletLayout.HorizontalSmush;
+            }
+            if (_header.Attributes.HasFlag(FigletAttribute.HorizontalFitting))
+            {
+                res |= FigletLayout.HorizontalFit;
+            }
+            if (_header.Attributes.HasFlag(FigletAttribute.VerticalSmushing))
+            {
+                res |= FigletLayout.VerticalSmush;
+            }
+            if (_header.Attributes.HasFlag(FigletAttribute.VerticalFitting))
+            {
+                res |= FigletLayout.VerticalFit;
+            }
+
+            return res;
+        }
+    }
+
     /// <inheritdoc cref="IAsciiFont.Height" />
     public int Height => _header.Height;
 

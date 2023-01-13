@@ -36,7 +36,7 @@ namespace Sharpie.Font;
 /// <param name="HardBlankChar">The hard blank character.</param>
 /// <param name="Height">The font fixed height.</param>
 /// <param name="BaseLine">The font base line.</param>
-/// <param name="Layout">The layout of the font.</param>
+/// <param name="Attributes">The layout of the font.</param>
 /// <param name="Direction">The direction of the font.</param>
-internal sealed record FigletHeader(char HardBlankChar, int Height, int BaseLine, FigletLayout Layout,
+internal sealed record FigletHeader(char HardBlankChar, int Height, int BaseLine, FigletAttribute Attributes,
     FigletScriptDirection Direction);

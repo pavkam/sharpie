@@ -31,10 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Font;
 
 /// <summary>
-///     Defines the possible font layouts.
+///     Defines the possible font layout modes.
 /// </summary>
-[Flags]
-internal enum FigletLayout
+[PublicAPI, Flags]
+public enum FigletLayout
 {
     /// <summary>
     ///     Full-width characters.
@@ -42,77 +42,22 @@ internal enum FigletLayout
     FullWidth = 0,
 
     /// <summary>
-    ///     Apply horizontal smushing rule 1 when smushing.
+    ///     Fit the characters horizontally (kerning).
     /// </summary>
-    HorizontalSmushingRule1 = 1,
+    HorizontalFit = 1,
 
     /// <summary>
-    ///     Apply horizontal smushing rule 2 when smushing.
+    ///     Smush the characters horizontally using font-supplied rules.
     /// </summary>
-    HorizontalSmushingRule2 = 2,
+    HorizontalSmush = 2,
+    
+    /// <summary>
+    ///     Fit the characters vertically (kerning).
+    /// </summary>
+    VerticalFit = 4,
 
     /// <summary>
-    ///     Apply horizontal smushing rule 3 when smushing.
+    ///     Smush the characters vertically using font-supplied rules.
     /// </summary>
-    HorizontalSmushingRule3 = 4,
-
-    /// <summary>
-    ///     Apply horizontal smushing rule 4 when smushing.
-    /// </summary>
-    HorizontalSmushingRule4 = 8,
-
-    /// <summary>
-    ///     Apply horizontal smushing rule 5 when smushing.
-    /// </summary>
-    HorizontalSmushingRule5 = 16,
-
-    /// <summary>
-    ///     Apply horizontal smushing rule 6 when smushing.
-    /// </summary>
-    HorizontalSmushingRule6 = 32,
-
-    /// <summary>
-    ///     Horizontal fitting (kerning) by default.
-    /// </summary>
-    HorizontalFitting = 64,
-
-    /// <summary>
-    ///     Horizontal smushing by default (overrides <see cref="HorizontalFitting" />).
-    /// </summary>
-    HorizontalSmushing = 128,
-
-    /// <summary>
-    ///     Apply vertical smushing rule 1 when smushing.
-    /// </summary>
-    VerticalSmushingRule1 = 256,
-
-    /// <summary>
-    ///     Apply vertical smushing rule 2 when smushing.
-    /// </summary>
-    VerticalSmushingRule2 = 512,
-
-    /// <summary>
-    ///     Apply vertical smushing rule 3 when smushing.
-    /// </summary>
-    VerticalSmushingRule3 = 1024,
-
-    /// <summary>
-    ///     Apply vertical smushing rule 4 when smushing.
-    /// </summary>
-    VerticalSmushingRule4 = 2048,
-
-    /// <summary>
-    ///     Apply vertical smushing rule 5 when smushing.
-    /// </summary>
-    VerticalSmushingRule5 = 4096,
-
-    /// <summary>
-    ///     Vertical fitting by default.
-    /// </summary>
-    VerticalFitting = 8192,
-
-    /// <summary>
-    ///     Vertical smushing by default (overrides <see cref="VerticalFitting" />).
-    /// </summary>
-    VerticalSmushing = 16384
+    VerticalSmush = 8,
 }

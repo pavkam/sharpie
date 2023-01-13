@@ -110,26 +110,26 @@ internal static class FigletFontParser
             throw new FormatException($"Header: Invalid full layout value `{fullLayout}`");
         }
 
-        var layout = FigletLayout.FullWidth;
+        var layout = FigletAttribute.FullWidth;
         if (fullLayout != 0)
         {
-            layout = (FigletLayout) fullLayout;
+            layout = (FigletAttribute) fullLayout;
         } else if (oldLayout == 0)
         {
-            layout = FigletLayout.HorizontalFitting;
+            layout = FigletAttribute.HorizontalFitting;
         } else if (oldLayout != -1)
         {
-            layout = (FigletLayout) oldLayout;
+            layout = (FigletAttribute) oldLayout;
         }
 
-        if (layout.HasFlag(FigletLayout.VerticalSmushing))
+        if (layout.HasFlag(FigletAttribute.VerticalSmushing))
         {
-            layout &= ~FigletLayout.VerticalFitting;
+            layout &= ~FigletAttribute.VerticalFitting;
         }
 
-        if (layout.HasFlag(FigletLayout.HorizontalSmushing))
+        if (layout.HasFlag(FigletAttribute.HorizontalSmushing))
         {
-            layout &= ~FigletLayout.HorizontalFitting;
+            layout &= ~FigletAttribute.HorizontalFitting;
         }
 
         return (new(hardBlank, height, baseLine, layout, (FigletScriptDirection) direction), maxWidth,

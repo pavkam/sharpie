@@ -79,31 +79,31 @@ public class FigletFontParserTests
         var h = FigletFontParser.ParseHeader("flf2a$ 8 6 59 15 10 0 24463");
         h.ShouldBe((
             new FigletHeader('$', 8, 6,
-                FigletLayout.HorizontalSmushingRule1 |
-                FigletLayout.HorizontalSmushingRule2 |
-                FigletLayout.HorizontalSmushingRule3 |
-                FigletLayout.HorizontalSmushingRule4 |
-                FigletLayout.HorizontalSmushing |
-                FigletLayout.VerticalSmushingRule1 |
-                FigletLayout.VerticalSmushingRule2 |
-                FigletLayout.VerticalSmushingRule3 |
-                FigletLayout.VerticalSmushingRule4 |
-                FigletLayout.VerticalSmushingRule5 |
-                FigletLayout.VerticalSmushing, FigletScriptDirection.LeftToRight), 59, 10));
+                FigletAttribute.HorizontalSmushingRule1 |
+                FigletAttribute.HorizontalSmushingRule2 |
+                FigletAttribute.HorizontalSmushingRule3 |
+                FigletAttribute.HorizontalSmushingRule4 |
+                FigletAttribute.HorizontalSmushing |
+                FigletAttribute.VerticalSmushingRule1 |
+                FigletAttribute.VerticalSmushingRule2 |
+                FigletAttribute.VerticalSmushingRule3 |
+                FigletAttribute.VerticalSmushingRule4 |
+                FigletAttribute.VerticalSmushingRule5 |
+                FigletAttribute.VerticalSmushing, FigletScriptDirection.LeftToRight), 59, 10));
     }
 
     [TestMethod]
     public void ParseHeader_ParsesTheHeaderAsExpected_2()
     {
         var h = FigletFontParser.ParseHeader("flf2a. 3 2 4 -1 55 1 0");
-        h.ShouldBe((new('.', 3, 2, FigletLayout.FullWidth, FigletScriptDirection.RightToLeft), 4, 55));
+        h.ShouldBe((new('.', 3, 2, FigletAttribute.FullWidth, FigletScriptDirection.RightToLeft), 4, 55));
     }
 
     [TestMethod]
     public void ParseHeader_ParsesTheHeaderAsExpected_3()
     {
         var h = FigletFontParser.ParseHeader("flf2a 3 2 4 0 0 1 0");
-        h.ShouldBe((new('\0', 3, 2, FigletLayout.HorizontalFitting, FigletScriptDirection.RightToLeft), 4, 0));
+        h.ShouldBe((new('\0', 3, 2, FigletAttribute.HorizontalFitting, FigletScriptDirection.RightToLeft), 4, 0));
     }
 
     [TestMethod]
@@ -112,17 +112,17 @@ public class FigletFontParserTests
         var h = FigletFontParser.ParseHeader("flf2a 3 2 4 15 0 1 0");
         h.ShouldBe((
             new('\0', 3, 2,
-                FigletLayout.HorizontalSmushingRule1 |
-                FigletLayout.HorizontalSmushingRule2 |
-                FigletLayout.HorizontalSmushingRule3 |
-                FigletLayout.HorizontalSmushingRule4, FigletScriptDirection.RightToLeft), 4, 0));
+                FigletAttribute.HorizontalSmushingRule1 |
+                FigletAttribute.HorizontalSmushingRule2 |
+                FigletAttribute.HorizontalSmushingRule3 |
+                FigletAttribute.HorizontalSmushingRule4, FigletScriptDirection.RightToLeft), 4, 0));
     }
 
     [TestMethod]
     public void ParseHeader_ParsesTheHeaderAsExpected_5()
     {
         var h = FigletFontParser.ParseHeader("flf2a 3 2 4 -1 0");
-        h.ShouldBe((new('\0', 3, 2, FigletLayout.FullWidth, FigletScriptDirection.LeftToRight), 4, 0));
+        h.ShouldBe((new('\0', 3, 2, FigletAttribute.FullWidth, FigletScriptDirection.LeftToRight), 4, 0));
     }
 
     [TestMethod]
@@ -303,7 +303,7 @@ public class FigletFontParserTests
 
         var (header, chars) = await FigletFontParser.ParseFontFileAsync(0, 0, new StringReader(fnt));
 
-        header.ShouldBe(new('\0', 3, 2, FigletLayout.FullWidth, FigletScriptDirection.LeftToRight));
+        header.ShouldBe(new('\0', 3, 2, FigletAttribute.FullWidth, FigletScriptDirection.LeftToRight));
 
         chars.ShouldBeEmpty();
     }
@@ -378,17 +378,17 @@ public class FigletFontParserTests
         var (header, chars) = await FigletFontParser.ParseFontFileAsync(reader);
 
         header.ShouldBe(new('$', 8, 6,
-            FigletLayout.HorizontalSmushingRule1 |
-            FigletLayout.HorizontalSmushingRule2 |
-            FigletLayout.HorizontalSmushingRule3 |
-            FigletLayout.HorizontalSmushingRule4 |
-            FigletLayout.HorizontalSmushing |
-            FigletLayout.VerticalSmushingRule1 |
-            FigletLayout.VerticalSmushingRule2 |
-            FigletLayout.VerticalSmushingRule3 |
-            FigletLayout.VerticalSmushingRule4 |
-            FigletLayout.VerticalSmushingRule5 |
-            FigletLayout.VerticalSmushing, FigletScriptDirection.LeftToRight));
+            FigletAttribute.HorizontalSmushingRule1 |
+            FigletAttribute.HorizontalSmushingRule2 |
+            FigletAttribute.HorizontalSmushingRule3 |
+            FigletAttribute.HorizontalSmushingRule4 |
+            FigletAttribute.HorizontalSmushing |
+            FigletAttribute.VerticalSmushingRule1 |
+            FigletAttribute.VerticalSmushingRule2 |
+            FigletAttribute.VerticalSmushingRule3 |
+            FigletAttribute.VerticalSmushingRule4 |
+            FigletAttribute.VerticalSmushingRule5 |
+            FigletAttribute.VerticalSmushing, FigletScriptDirection.LeftToRight));
 
         chars.Count.ShouldBe(255);
 
