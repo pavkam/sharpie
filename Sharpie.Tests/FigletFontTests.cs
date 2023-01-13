@@ -56,20 +56,20 @@ public class FigletFontTests
 
     [TestMethod] public void Baseline_ReturnsTheSuppliedValue() { _font.Baseline.ShouldBe(2); }
 
-    [TestMethod, 
-     DataRow(FigletAttribute.FullWidth, FigletLayout.FullWidth),
+    [TestMethod, DataRow(FigletAttribute.FullWidth, FigletLayout.FullWidth),
      DataRow(0x01000000, FigletLayout.FullWidth),
-     DataRow(FigletAttribute.HorizontalFitting | FigletAttribute.VerticalSmushing, FigletLayout.HorizontalFit | FigletLayout.VerticalSmush),
-     DataRow(FigletAttribute.HorizontalSmushing | FigletAttribute.VerticalFitting, FigletLayout.HorizontalSmush | FigletLayout.VerticalFit),
-    ]
+     DataRow(FigletAttribute.HorizontalFitting | FigletAttribute.VerticalSmushing,
+         FigletLayout.HorizontalFit | FigletLayout.VerticalSmush),
+     DataRow(FigletAttribute.HorizontalSmushing | FigletAttribute.VerticalFitting,
+         FigletLayout.HorizontalSmush | FigletLayout.VerticalFit)]
     public void DefaultLayout_ReturnsTheExpectedCombinations(int attr, FigletLayout exp)
     {
-        var header = Header with { Attributes = (FigletAttribute)attr };
+        var header = Header with { Attributes = (FigletAttribute) attr };
         var font = new FigletFont("name", header, new Dictionary<int, (string[] rows, int width)>());
-        
+
         font.DefaultLayout.ShouldBe(exp);
     }
-    
+
     [TestMethod]
     public void HasGlyph_ReturnsFalse_IfCharNotDefined()
     {

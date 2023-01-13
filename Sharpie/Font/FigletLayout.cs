@@ -50,7 +50,7 @@ public enum FigletLayout
     ///     Smush the characters horizontally using font-supplied rules.
     /// </summary>
     HorizontalSmush = 2,
-    
+
     /// <summary>
     ///     Fit the characters vertically (kerning).
     /// </summary>
@@ -59,5 +59,5 @@ public enum FigletLayout
     /// <summary>
     ///     Smush the characters vertically using font-supplied rules.
     /// </summary>
-    VerticalSmush = 8,
+    VerticalSmush = 8
 }

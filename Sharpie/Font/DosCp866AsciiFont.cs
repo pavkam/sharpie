@@ -63,6 +63,8 @@ public sealed class DosCp866AsciiFont: IAsciiFont
         Shapes = glyphs.ToArray();
     }
 
+    private static int Width => BitsPerLine / 2;
+
     /// <inheritdoc cref="IAsciiFont.Height" />
     public int Height => Lines / 2;
 
@@ -72,11 +74,27 @@ public sealed class DosCp866AsciiFont: IAsciiFont
     /// <inheritdoc cref="IAsciiFont.HasGlyph" />
     public bool HasGlyph(Rune @char) => @char.Value >= 0 && @char.Value < Shapes.Count;
 
-    /// <inheritdoc cref="IAsciiFont.GetGlyph" />
-    public IDrawable GetGlyph(Rune @char, Style style)
+    /// <inheritdoc cref="IAsciiFont.GetGlyphs(ReadOnlySpan{Rune},Style)" />
+    public IDrawable GetGlyphs(ReadOnlySpan<Rune> chars, Style style)
     {
-        var canvas = new Canvas(new(BitsPerLine / 2, Lines / 2));
-        var canvasRect = new Rectangle(new(0, 0), canvas.Size);
+        if (chars.Length == 0)
+        {
+            throw new ArgumentException("Chars cannot be empty.", nameof(chars));
+        }
+
+        var canvas = new Canvas(new(Width * chars.Length, Height));
+
+        for (var i = 0; i < chars.Length; i++)
+        {
+            DrawGlyphOntoCanvas(canvas, i * Width * 2, chars[i], style);
+        }
+
+        return canvas;
+    }
+
+    private void DrawGlyphOntoCanvas(Canvas canvas, int offset, Rune @char, Style style)
+    {
+        var canvasRect = new Rectangle(new(offset, 0), new(Width, Height));
 
         canvas.Fill(canvasRect, new Rune(ControlCharacter.Whitespace), style);
 
@@ -86,12 +104,11 @@ public sealed class DosCp866AsciiFont: IAsciiFont
         } else
         {
             var shape = Shapes[@char.Value];
-
             for (var x = 0; x < BitsPerLine; x++)
             {
                 for (var y = 0; y < Lines; y++)
                 {
-                    var ap = new PointF(x / 2F, y / 2F);
+                    var ap = new PointF((x + offset) / 2F, y / 2F);
                     if (shape[x, y])
                     {
                         canvas.Point(ap, style);
@@ -99,8 +116,6 @@ public sealed class DosCp866AsciiFont: IAsciiFont
                 }
             }
         }
-
-        return canvas;
     }
 
     private static bool[,] ExtractGlyph(ReadOnlySpan<char> str)

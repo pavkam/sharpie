@@ -35,7 +35,7 @@ using Font;
 [TestClass]
 public class DosCp866AsciiFontTests
 {
-    private readonly DosCp866AsciiFont _font = new();
+    private readonly IAsciiFont _font = new DosCp866AsciiFont();
     private readonly Style _style1 = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 99 } };
 
     [TestMethod, DataRow(0, true), DataRow(255, true), DataRow(256, false)]

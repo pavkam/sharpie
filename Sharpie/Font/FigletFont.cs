@@ -39,6 +39,7 @@ public sealed class FigletFont: IAsciiFont
 {
     private readonly IReadOnlyDictionary<int, (string[] rows, int width)> _figletCharacters;
     private readonly FigletHeader _header;
+    private DefaultCharacterHelper? _defaultCharacterHelper;
 
     /// <summary>
     ///     Creates a new instance of this class.
@@ -62,7 +63,7 @@ public sealed class FigletFont: IAsciiFont
     ///     The font character base line (on which upper-case letters are drawn).
     /// </summary>
     public int Baseline => _header.BaseLine;
-    
+
     /// <summary>
     ///     The default font layout (as desired by the font).
     /// </summary>
@@ -75,14 +76,17 @@ public sealed class FigletFont: IAsciiFont
             {
                 res |= FigletLayout.HorizontalSmush;
             }
+
             if (_header.Attributes.HasFlag(FigletAttribute.HorizontalFitting))
             {
                 res |= FigletLayout.HorizontalFit;
             }
+
             if (_header.Attributes.HasFlag(FigletAttribute.VerticalSmushing))
             {
                 res |= FigletLayout.VerticalSmush;
             }
+
             if (_header.Attributes.HasFlag(FigletAttribute.VerticalFitting))
             {
                 res |= FigletLayout.VerticalFit;
@@ -102,46 +106,86 @@ public sealed class FigletFont: IAsciiFont
     public bool HasGlyph(Rune @char) => _figletCharacters.ContainsKey(@char.Value);
 
     /// <inheritdoc cref="IAsciiFont.GetGlyph" />
-    public IDrawable GetGlyph(Rune @char, Style style)
+    public IDrawable GetGlyph(Rune @char, Style style) => GetGlyphs(new[] { @char }, style);
+
+    /// <inheritdoc cref="IAsciiFont.GetGlyphs" />
+    public IDrawable GetGlyphs(ReadOnlySpan<Rune> chars, Style style)
     {
-        if (_figletCharacters.TryGetValue(@char.Value, out var fc) || _figletCharacters.TryGetValue(0, out fc))
+        if (chars.Length == 0)
         {
-            var (rows, width) = fc;
-            Debug.Assert(rows.Length == Height);
+            throw new ArgumentException("Chars cannot be empty.", nameof(chars));
+        }
 
-            var canvas = new Canvas(new(width, Height));
-            for (var x = 0; x < width; x++)
-            {
-                for (var y = 0; y < Height; y++)
-                {
-                    var ch = rows[y][x];
-                    if (ch == _header.HardBlankChar)
-                    {
-                        ch = ControlCharacter.Whitespace;
-                    }
+        char MergeFunc(char l, char r) =>
+            FigletLayoutEvaluator.HorizontalJoin(_header.HardBlankChar, _header.Attributes, l, r);
 
-                    canvas.Glyph(new(x, y), new(ch), style);
-                }
-            }
-
-            return canvas;
-        } else
+        string[]? rep = null;
+        foreach (var @char in chars)
         {
-            var canvas = new Canvas(new(Height, Height));
-
-            if (Height > 1)
+            string[]? rows;
+            if (_figletCharacters.TryGetValue(@char.Value, out var fc) || _figletCharacters.TryGetValue(0, out fc))
             {
-                var rect = new Rectangle(new(0, 0), canvas.Size);
-
-                canvas.Fill(rect, new Rune(ControlCharacter.Whitespace), style);
-                canvas.Box(rect, Canvas.LineStyle.Light, style);
+                (rows, _) = fc;
             } else
             {
-                canvas.Glyph(new(0, 0), new('□'), style);
+                _defaultCharacterHelper ??= new(Height);
+                rows = _defaultCharacterHelper.Rows;
             }
 
-            return canvas;
+            Debug.Assert(rows.Length == Height);
+            Debug.Assert(rows.All(row => row.Length ==
+                rows[0]
+                    .Length));
+
+            if (rep == null)
+            {
+                rep = rows;
+                continue;
+            }
+
+            if (_header.Attributes == FigletAttribute.FullWidth)
+            {
+                rep = rep.Select((row, i) => row + rows[i])
+                         .ToArray();
+            } else
+            {
+                rep = FigletLayoutEvaluator.Join(MergeFunc, rep, rows);
+            }
         }
+
+        Debug.Assert(rep != null);
+
+        return DrawCharacterToCanvas(rep, style);
+    }
+
+    private IDrawable DrawCharacterToCanvas(string[] rows, Style style)
+    {
+        Debug.Assert(rows.Length == Height);
+        var width = rows[0]
+            .Length;
+
+        Debug.Assert(rows.All(row => row.Length == width));
+
+        var canvas = new Canvas(new(width, Height));
+        for (var y = 0; y < Height; y++)
+        {
+            Debug.Assert(rows[y]
+                    .Length ==
+                width);
+
+            for (var x = 0; x < width; x++)
+            {
+                var ch = rows[y][x];
+                if (ch == _header.HardBlankChar)
+                {
+                    ch = ControlCharacter.Whitespace;
+                }
+
+                canvas.Glyph(new(x, y), new(ch), style);
+            }
+        }
+
+        return canvas;
     }
 
     /// <summary>
@@ -200,4 +244,50 @@ public sealed class FigletFont: IAsciiFont
     /// <exception cref="ArgumentException">Thrown if <paramref name="path" /> is <c>null</c> or empty.</exception>
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested.")]
     public static Task<FigletFont> LoadAsync(string path) => LoadAsync(IDotNetSystemAdapter.Instance, path);
+
+    private sealed class DefaultCharacterHelper: IDrawSurface
+    {
+        private readonly char[][] _rows;
+
+        public DefaultCharacterHelper(int size)
+        {
+            var drawable = GetReplacementCharacter(size);
+            Size = drawable.Size;
+
+            _rows = Enumerable.Range(0, Size.Height)
+                              .Select(_ => new char[Size.Width])
+                              .ToArray();
+
+            drawable.DrawOnto(this, new(new(0, 0), drawable.Size), new(0, 0));
+        }
+
+        public string[] Rows =>
+            _rows.Select(r => new string(r))
+                 .ToArray();
+
+        public Size Size { get; }
+
+        public void DrawCell(Point location, Rune rune, Style style)
+        {
+            _rows[location.Y][location.X] = (char) rune.Value;
+        }
+
+        private static IDrawable GetReplacementCharacter(int size)
+        {
+            var canvas = new Canvas(new(size, size));
+
+            if (size > 1)
+            {
+                var rect = new Rectangle(new(0, 0), canvas.Size);
+
+                canvas.Fill(rect, new Rune(ControlCharacter.Whitespace), Style.Default);
+                canvas.Box(rect, Canvas.LineStyle.Light, Style.Default);
+            } else
+            {
+                canvas.Glyph(new(0, 0), new('□'), Style.Default);
+            }
+
+            return canvas;
+        }
+    }
 }

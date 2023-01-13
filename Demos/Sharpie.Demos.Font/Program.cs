@@ -70,17 +70,12 @@ terminal.Header.WriteText("Press TAB to cycle through fonts.");
 terminal.Header.Refresh();
 
 // This method draws the given string and applies color starting with a specific shift.
-void DrawFunAsciiMessage(ITerminal t, string str, int colorShift)
+void DrawFunAsciiMessage(ITerminal t, string str, int cs)
 {
-    var pos = t.Screen.CaretLocation;
+    var d = fonts[fontIndex]
+        .GetGlyphs(str, styles[cs % styles.Length]);
 
-    foreach (var ch in str)
-    {
-        t.Screen.DrawText(fonts[fontIndex], ch.ToString(), styles[colorShift % styles.Length]);
-        colorShift++;
-    }
-
-    t.Screen.CaretLocation = pos;
+    t.Screen.Draw(new(0, 0), d);
 }
 
 // A repeating timer that draws the message with different colors.
