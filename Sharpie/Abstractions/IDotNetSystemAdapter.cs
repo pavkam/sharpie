@@ -138,6 +138,10 @@ internal interface IDotNetSystemAdapter
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     string? GetDirectoryName(string path) => Path.GetDirectoryName(path);
 
+    /// <inheritdoc cref=" System.IO.Path.GetFileName(string)" />
+    [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
+    string? GetFileName(string path) => Path.GetFileName(path);
+
     /// <inheritdoc cref=" System.IO.Path.Combine(string[])" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     string CombinePaths(params string[] paths) => Path.Combine(paths);
@@ -149,6 +153,10 @@ internal interface IDotNetSystemAdapter
     /// <inheritdoc cref=" System.IO.Directory.EnumerateFiles(string)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     IEnumerable<string> EnumerateFiles(string directory) => Directory.EnumerateFiles(directory);
+
+    /// <inheritdoc cref=" System.IO.File.OpenText(string)" />
+    [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
+    TextReader OpenFileAsText(string path) => File.OpenText(path);
 
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop implementation.")]
     private sealed class DotNetSystemAdapter: IDotNetSystemAdapter

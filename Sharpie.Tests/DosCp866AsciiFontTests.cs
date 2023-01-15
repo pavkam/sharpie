@@ -30,10 +30,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Tests;
 
+using Font;
+
 [TestClass]
 public class DosCp866AsciiFontTests
 {
-    private readonly DosCp866AsciiFont _font = new();
+    private readonly IAsciiFont _font = new DosCp866AsciiFont();
     private readonly Style _style1 = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 99 } };
 
     [TestMethod, DataRow(0, true), DataRow(255, true), DataRow(256, false)]
@@ -46,45 +48,50 @@ public class DosCp866AsciiFontTests
     [TestMethod] public void Name_ReturnsTheExpectedValue() { _font.Name.ShouldBe("CP866 Block Characters"); }
 
     [TestMethod] public void Height_ReturnsTheExpectedValue() { _font.Height.ShouldBe(4); }
+    
+    [TestMethod] public void Baseline_ReturnsTheExpectedValue() { _font.Baseline.ShouldBe(4); }
+    
+    [TestMethod] public void Layout_ReturnsTheExpectedValue() { _font.Layout.ShouldBe(AsciiFontLayout.FullWidth); }
 
     [TestMethod]
-    public void GetGlyph_ReturnsA4By4Drawable()
+    public void FullWidth_ReturnsAnInstance()
     {
-        var glyph = _font.GetGlyph(new('A'), _style1);
-        glyph.Size.ShouldBe(new(4, 4));
+        DosCp866AsciiFont.FullWidth.ShouldNotBeNull();
+        DosCp866AsciiFont.FullWidth.ShouldBe(DosCp866AsciiFont.FullWidth);
     }
-
+    
     [TestMethod]
-    public void GetGlyph_ReturnsTheExpectedGlyph_IfFound()
+    public void GetGlyphs_Throws_IfSpanIsEmpty()
     {
-        var glyph = _font.GetGlyph(new('A'), _style1);
-        var contents = glyph.GetContents();
+        Should.Throw<ArgumentException>(() =>
+            _font.GetGlyphs(Array.Empty<Rune>(), _style1));
+    }
+    
+    [TestMethod]
+    public void GetGlyphs_ReturnsTheExpectedGlyphsIncludingDefault()
+    {
+        var k = new[] { new Rune('A'), new Rune(256), new Rune('B') };
+        
+        var glyphs = _font.GetGlyphs(k, _style1);
+        var contents = glyphs.GetContents();
 
         var cols = new[,]
         {
             { (new('▗'), _style1), (new('█'), _style1), (new('█'), _style1), (new('▀'), _style1) },
             { (new('█'), _style1), (new(' '), _style1), (new('▀'), _style1), (new(' '), _style1) },
             { (new('▖'), _style1), (new('█'), _style1), (new('█'), _style1), (new('▀'), _style1) },
-            { (new(' '), _style1), (new(' '), _style1), (new(' '), _style1), (new Rune(' '), _style1) }
-        };
-
-        contents.ShouldBe(cols);
-    }
-
-    [TestMethod]
-    public void GetGlyph_ReturnsTheDefault_IfNotFound()
-    {
-        var glyph = _font.GetGlyph(new(256), _style1);
-        var contents = glyph.GetContents();
-
-        var cols = new[,]
-        {
+            { (new(' '), _style1), (new(' '), _style1), (new(' '), _style1), (new Rune(' '), _style1) },
             { (new('┌'), _style1), (new('│'), _style1), (new('│'), _style1), (new('└'), _style1) },
             { (new('─'), _style1), (new(' '), _style1), (new(' '), _style1), (new('─'), _style1) },
             { (new('─'), _style1), (new(' '), _style1), (new(' '), _style1), (new('─'), _style1) },
-            { (new('┐'), _style1), (new('│'), _style1), (new('│'), _style1), (new Rune('┘'), _style1) }
+            { (new('┐'), _style1), (new('│'), _style1), (new('│'), _style1), (new Rune('┘'), _style1) },
+            { (new('▜'), _style1), (new('▐'), _style1), (new('▐'), _style1), (new('▀'), _style1) },
+            { (new('▛'), _style1), (new('▙'), _style1), (new('▌'), _style1), (new('▀'), _style1) },
+            { (new('▜'), _style1), (new('▟'), _style1), (new('▐'), _style1), (new('▀'), _style1) },
+            { (new('▖'), _style1), (new('▘'), _style1), (new('▌'), _style1), (new Rune(' '), _style1) }
         };
 
+            
         contents.ShouldBe(cols);
     }
 }

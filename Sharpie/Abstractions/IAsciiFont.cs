@@ -30,6 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Abstractions;
 
+using Font;
+
 /// <summary>
 ///     Defines the traits implemented by ASCII font providers.
 /// </summary>
@@ -42,9 +44,19 @@ public interface IAsciiFont
     int Height { get; }
 
     /// <summary>
+    ///     The font baseline.
+    /// </summary>
+    int Baseline { get; }
+    
+    /// <summary>
     ///     The font's name.
     /// </summary>
     string Name { get; }
+
+    /// <summary>
+    ///     The font's layout.
+    /// </summary>
+    AsciiFontLayout Layout { get; }
 
     /// <summary>
     ///     Checks if the font contains a given glyph.
@@ -60,4 +72,22 @@ public interface IAsciiFont
     /// <param name="style">The style to apply to the glyph.</param>
     /// <returns>The output glyph, if found. Otherwise, the font will substitute the glyph with something else.</returns>
     IDrawable GetGlyph(Rune @char, Style style);
+
+    /// <summary>
+    ///     Tries to get a drawing for a given list of <paramref name="chars" />.
+    /// </summary>
+    /// <param name="chars">The characters.</param>
+    /// <param name="style">The style to apply to the glyphs.</param>
+    /// <returns>The output glyphs.</returns>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="chars" /> is empty.</exception>
+    IDrawable GetGlyphs(ReadOnlySpan<Rune> chars, Style style);
+
+    /// <summary>
+    ///     Tries to get a drawing for a given <paramref name="text" />.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <param name="style">The style to apply to the glyphs.</param>
+    /// <returns>The output glyphs.</returns>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="text" /> is empty.</exception>
+    IDrawable GetGlyphs(string text, Style style);
 }
