@@ -85,29 +85,58 @@ public class FigletFontTests
     }
 
     [TestMethod]
-    public void GetGlyph_ReturnsTheProperGlyph_IfFound()
+    public void GetGlyphs_Throws_IfSpanIsEmpty()
     {
-        var glyph = _font.GetGlyph(new(1), Style1);
+        Should.Throw<ArgumentException>(() =>
+            _font.GetGlyphs(Array.Empty<Rune>(), Style1));
+    }
+
+    [TestMethod]
+    public void GetGlyphs_ReturnsTheExpectedGlyphsIncludingDefault_GreaterWidth()
+    {
+        var k = new[] { new Rune(1), new Rune(256), new Rune(3) };
+        
+        var glyph = _font.GetGlyphs(k, Style1);
         var contents = glyph.GetContents();
 
         var cols = new[,]
         {
             { (new Rune('1'), Style1), (new('4'), Style1), (new('7'), Style1) },
             { (new('2'), Style1), (new('5'), Style1), (new('8'), Style1) },
-            { (new('3'), Style1), (new('6'), Style1), (new('9'), Style1) }
+            { (new('3'), Style1), (new('6'), Style1), (new('9'), Style1) },
+            
+            { (new('a'), Style1), (new('d'), Style1), (new('g'), Style1) },
+            { (new('b'), Style1), (new('e'), Style1), (new('h'), Style1) },
+            { (new('c'), Style1), (new('f'), Style1), (new('i'), Style1) },
+            { (new('1'), Style1), (new('2'), Style1), (new('3'), Style1) },
+            
+            { (new('1'), Style1), (new(' '), Style1), (new('3'), Style1) }
         };
-
+        
         contents.ShouldBe(cols);
     }
-
+    
     [TestMethod]
-    public void GetGlyph_ReturnsTheDefaultGlyph_IfNotFound()
+    public void GetGlyphs_ReturnsTheExpectedGlyphsIncludingReplacement_GreaterWidth()
     {
-        var glyph = _font.GetGlyph(new(2), Style1);
-        var contents = glyph.GetContents();
+        var font = new FigletFont("name", Header, new Dictionary<int, (string[] rows, int width)>()
+            { { 1, Char1 }, { 3, Char0 } });
+
+        var k = new[] { new Rune(1), new Rune(256), new Rune(3) };
+
+        var glyphs = font.GetGlyphs(k, Style1);
+        var contents = glyphs.GetContents();
 
         var cols = new[,]
         {
+            { (new Rune('1'), Style1), (new('4'), Style1), (new('7'), Style1) },
+            { (new('2'), Style1), (new('5'), Style1), (new('8'), Style1) },
+            { (new('3'), Style1), (new('6'), Style1), (new('9'), Style1) },
+           
+            { (new('┌'), Style1), (new('│'), Style1), (new('└'), Style1) },
+            { (new('─'), Style1), (new(' '), Style1), (new('─'), Style1) },
+            { (new('┐'), Style1), (new('│'), Style1), (new Rune('┘'), Style1) },
+             
             { (new Rune('a'), Style1), (new('d'), Style1), (new('g'), Style1) },
             { (new('b'), Style1), (new('e'), Style1), (new('h'), Style1) },
             { (new('c'), Style1), (new('f'), Style1), (new('i'), Style1) },
@@ -118,44 +147,67 @@ public class FigletFontTests
     }
 
     [TestMethod]
-    public void GetGlyph_ReturnsReplacesHardBlanksWithWhitespaces()
+    public void GetGlyphs_ReplacesHardBlanksWithWhitespaces()
     {
-        var glyph = _font.GetGlyph(new(3), Style1);
-        var contents = glyph.GetContents();
+        var header = Header with { Height = 1, BaseLine = 1, Attributes = FigletAttribute.HorizontalSmushing };
+        var font = new FigletFont("name", header, new Dictionary<int, (string[] rows, int width)>
+        {
+            { 1, (new[] { "AB" }, 2) }, 
+            { 2, (new[] { "12" }, 2) }
+        });
 
-        var cols = new[,] { { (new Rune('1'), Style1), (new(' '), Style1), (new('3'), Style1) } };
+        var k = new[] { new Rune(1), new Rune(2) };
 
-        contents.ShouldBe(cols);
-    }
-
-    [TestMethod]
-    public void GetGlyph_ReturnsReplacementGlyph_IfNotFoundAndNoDefault_WithHeightGreaterThanOne()
-    {
-        var font = new FigletFont("name", Header, new Dictionary<int, (string[] rows, int width)>());
-
-        var glyph = font.GetGlyph(new(2), Style1);
-        var contents = glyph.GetContents();
+        var glyphs = font.GetGlyphs(k, Style1);
+        var contents = glyphs.GetContents();
 
         var cols = new[,]
         {
-            { (new('┌'), Style1), (new('│'), Style1), (new('└'), Style1) },
-            { (new('─'), Style1), (new(' '), Style1), (new('─'), Style1) },
-            { (new('┐'), Style1), (new('│'), Style1), (new Rune('┘'), Style1) }
+            { (new Rune('A'), Style1) },
+            { (new('1'), Style1) },
+            { (new('2'), Style1) }
         };
 
         contents.ShouldBe(cols);
     }
-
+    
+    
     [TestMethod]
-    public void GetGlyph_ReturnsReplacementGlyph_IfNotFoundAndNoDefault_WithWidthOfOne()
+    public void GetGlyphs_MergesCharactersUsingLayoutRules()
     {
-        var header = Header with { Height = 1, BaseLine = 1 };
-        var font = new FigletFont("name", header, new Dictionary<int, (string[] rows, int width)>());
-
-        var glyph = font.GetGlyph(new(2), Style1);
+        var glyph = _font.GetGlyphs(new[] { new Rune(3) }, Style1);
         var contents = glyph.GetContents();
 
-        var cols = new[,] { { (new Rune('□'), Style1) } };
+        var cols = new[,]
+        {
+            { (new Rune('1'), Style1), (new(' '), Style1), (new('3'), Style1) }
+        };
+
+        contents.ShouldBe(cols);
+    }
+    
+    [TestMethod]
+    public void GetGlyphs_ReturnsChars_WithWidthOfOne()
+    {
+        var header = Header with { Height = 1, BaseLine = 1 };
+        var font = new FigletFont("name", header, 
+            new Dictionary<int, (string[] rows, int width)>()
+            {
+                {'A', (new[] { "A" }, 1)},
+                {'B', (new[] { "B" }, 1)}
+            } );
+
+        var k = new[] { new Rune('A'), new Rune(256), new Rune('B') };
+
+        var glyphs = font.GetGlyphs(k, Style1);
+        var contents = glyphs.GetContents();
+
+        var cols = new[,]
+        {
+            { (new Rune('A'), Style1) },
+            { (new Rune('□'), Style1) },
+            { (new Rune('B'), Style1) },
+        };
 
         contents.ShouldBe(cols);
     }

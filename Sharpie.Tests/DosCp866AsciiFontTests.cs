@@ -54,36 +54,44 @@ public class DosCp866AsciiFontTests
     [TestMethod] public void Layout_ReturnsTheExpectedValue() { _font.Layout.ShouldBe(AsciiFontLayout.FullWidth); }
 
     [TestMethod]
-    public void GetGlyph_ReturnsTheExpectedGlyph_IfFound()
+    public void FullWidth_ReturnsAnInstance()
     {
-        var glyph = _font.GetGlyph(new('A'), _style1);
-        var contents = glyph.GetContents();
+        DosCp866AsciiFont.FullWidth.ShouldNotBeNull();
+        DosCp866AsciiFont.FullWidth.ShouldBe(DosCp866AsciiFont.FullWidth);
+    }
+    
+    [TestMethod]
+    public void GetGlyphs_Throws_IfSpanIsEmpty()
+    {
+        Should.Throw<ArgumentException>(() =>
+            _font.GetGlyphs(Array.Empty<Rune>(), _style1));
+    }
+    
+    [TestMethod]
+    public void GetGlyphs_ReturnsTheExpectedGlyphsIncludingDefault()
+    {
+        var k = new[] { new Rune('A'), new Rune(256), new Rune('B') };
+        
+        var glyphs = _font.GetGlyphs(k, _style1);
+        var contents = glyphs.GetContents();
 
         var cols = new[,]
         {
             { (new('▗'), _style1), (new('█'), _style1), (new('█'), _style1), (new('▀'), _style1) },
             { (new('█'), _style1), (new(' '), _style1), (new('▀'), _style1), (new(' '), _style1) },
             { (new('▖'), _style1), (new('█'), _style1), (new('█'), _style1), (new('▀'), _style1) },
-            { (new(' '), _style1), (new(' '), _style1), (new(' '), _style1), (new Rune(' '), _style1) }
-        };
-
-        contents.ShouldBe(cols);
-    }
-
-    [TestMethod]
-    public void GetGlyph_ReturnsTheDefault_IfNotFound()
-    {
-        var glyph = _font.GetGlyph(new(256), _style1);
-        var contents = glyph.GetContents();
-
-        var cols = new[,]
-        {
+            { (new(' '), _style1), (new(' '), _style1), (new(' '), _style1), (new Rune(' '), _style1) },
             { (new('┌'), _style1), (new('│'), _style1), (new('│'), _style1), (new('└'), _style1) },
             { (new('─'), _style1), (new(' '), _style1), (new(' '), _style1), (new('─'), _style1) },
             { (new('─'), _style1), (new(' '), _style1), (new(' '), _style1), (new('─'), _style1) },
-            { (new('┐'), _style1), (new('│'), _style1), (new('│'), _style1), (new Rune('┘'), _style1) }
+            { (new('┐'), _style1), (new('│'), _style1), (new('│'), _style1), (new Rune('┘'), _style1) },
+            { (new('▜'), _style1), (new('▐'), _style1), (new('▐'), _style1), (new('▀'), _style1) },
+            { (new('▛'), _style1), (new('▙'), _style1), (new('▌'), _style1), (new('▀'), _style1) },
+            { (new('▜'), _style1), (new('▟'), _style1), (new('▐'), _style1), (new('▀'), _style1) },
+            { (new('▖'), _style1), (new('▘'), _style1), (new('▌'), _style1), (new Rune(' '), _style1) }
         };
 
+            
         contents.ShouldBe(cols);
     }
 }

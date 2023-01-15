@@ -88,7 +88,7 @@ public sealed class DosCp866AsciiFont: AsciiFont
 
         for (var i = 0; i < chars.Length; i++)
         {
-            DrawGlyphOntoCanvas(canvas, i * Width * 2, chars[i], style);
+            DrawGlyphOntoCanvas(canvas, i * Width, chars[i], style);
         }
 
         return canvas;
@@ -110,7 +110,7 @@ public sealed class DosCp866AsciiFont: AsciiFont
             {
                 for (var y = 0; y < Lines; y++)
                 {
-                    var ap = new PointF((x + offset) / 2F, y / 2F);
+                    var ap = new PointF((x + offset * 2) / 2F, y / 2F);
                     if (shape[x, y])
                     {
                         canvas.Point(ap, style);

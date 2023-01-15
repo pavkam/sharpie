@@ -40,7 +40,7 @@ using Sharpie.Font;
 using var terminal = new Terminal(CursesBackend.Load(), new(CaretMode: CaretMode.Invisible, AllocateHeader: true));
 
 // Setup the message and a number of rotating styles that will be applied for each letter of the message.
-var message = "\x001 Let the ASCII fun begin! \x003";
+var message = "A\x0100B";
 var styles = Enumerable.Range(0, message.Length)
                        .Select(i => new Style
                        {
