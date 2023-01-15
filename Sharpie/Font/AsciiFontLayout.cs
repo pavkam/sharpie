@@ -34,30 +34,20 @@ namespace Sharpie.Font;
 ///     Defines the possible font layout modes.
 /// </summary>
 [PublicAPI, Flags]
-public enum FigletLayout
+public enum AsciiFontLayout
 {
     /// <summary>
     ///     Full-width characters.
     /// </summary>
-    FullWidth = 0,
+    FullWidth,
 
     /// <summary>
     ///     Fit the characters horizontally (kerning).
     /// </summary>
-    HorizontalFit = 1,
+    Fitted,
 
     /// <summary>
     ///     Smush the characters horizontally using font-supplied rules.
     /// </summary>
-    HorizontalSmush = 2,
-
-    /// <summary>
-    ///     Fit the characters vertically (kerning).
-    /// </summary>
-    VerticalFit = 4,
-
-    /// <summary>
-    ///     Smush the characters vertically using font-supplied rules.
-    /// </summary>
-    VerticalSmush = 8
+    Smushed,
 }

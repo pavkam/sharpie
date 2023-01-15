@@ -48,13 +48,10 @@ public class DosCp866AsciiFontTests
     [TestMethod] public void Name_ReturnsTheExpectedValue() { _font.Name.ShouldBe("CP866 Block Characters"); }
 
     [TestMethod] public void Height_ReturnsTheExpectedValue() { _font.Height.ShouldBe(4); }
-
-    [TestMethod]
-    public void GetGlyph_ReturnsA4By4Drawable()
-    {
-        var glyph = _font.GetGlyph(new('A'), _style1);
-        glyph.Size.ShouldBe(new(4, 4));
-    }
+    
+    [TestMethod] public void Baseline_ReturnsTheExpectedValue() { _font.Baseline.ShouldBe(4); }
+    
+    [TestMethod] public void Layout_ReturnsTheExpectedValue() { _font.Layout.ShouldBe(AsciiFontLayout.FullWidth); }
 
     [TestMethod]
     public void GetGlyph_ReturnsTheExpectedGlyph_IfFound()

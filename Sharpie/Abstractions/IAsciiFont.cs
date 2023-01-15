@@ -30,6 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sharpie.Abstractions;
 
+using Font;
+
 /// <summary>
 ///     Defines the traits implemented by ASCII font providers.
 /// </summary>
@@ -42,9 +44,19 @@ public interface IAsciiFont
     int Height { get; }
 
     /// <summary>
+    ///     The font baseline.
+    /// </summary>
+    int Baseline { get; }
+    
+    /// <summary>
     ///     The font's name.
     /// </summary>
     string Name { get; }
+
+    /// <summary>
+    ///     The font's layout.
+    /// </summary>
+    AsciiFontLayout Layout { get; }
 
     /// <summary>
     ///     Checks if the font contains a given glyph.

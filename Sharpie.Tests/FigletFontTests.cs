@@ -56,18 +56,18 @@ public class FigletFontTests
 
     [TestMethod] public void Baseline_ReturnsTheSuppliedValue() { _font.Baseline.ShouldBe(2); }
 
-    [TestMethod, DataRow(FigletAttribute.FullWidth, FigletLayout.FullWidth),
-     DataRow(0x01000000, FigletLayout.FullWidth),
+    [TestMethod, DataRow(FigletAttribute.FullWidth, AsciiFontLayout.FullWidth),
+     DataRow(0x01000000, AsciiFontLayout.FullWidth),
      DataRow(FigletAttribute.HorizontalFitting | FigletAttribute.VerticalSmushing,
-         FigletLayout.HorizontalFit | FigletLayout.VerticalSmush),
+         AsciiFontLayout.Fitted),
      DataRow(FigletAttribute.HorizontalSmushing | FigletAttribute.VerticalFitting,
-         FigletLayout.HorizontalSmush | FigletLayout.VerticalFit)]
-    public void DefaultLayout_ReturnsTheExpectedCombinations(int attr, FigletLayout exp)
+         AsciiFontLayout.Smushed)]
+    public void DefaultLayout_ReturnsTheExpectedCombinations(int attr, AsciiFontLayout exp)
     {
         var header = Header with { Attributes = (FigletAttribute) attr };
         var font = new FigletFont("name", header, new Dictionary<int, (string[] rows, int width)>());
 
-        font.DefaultLayout.ShouldBe(exp);
+        font.Layout.ShouldBe(exp);
     }
 
     [TestMethod]
@@ -149,7 +149,7 @@ public class FigletFontTests
     [TestMethod]
     public void GetGlyph_ReturnsReplacementGlyph_IfNotFoundAndNoDefault_WithWidthOfOne()
     {
-        var header = Header with { Height = 1 };
+        var header = Header with { Height = 1, BaseLine = 1 };
         var font = new FigletFont("name", header, new Dictionary<int, (string[] rows, int width)>());
 
         var glyph = font.GetGlyph(new(2), Style1);

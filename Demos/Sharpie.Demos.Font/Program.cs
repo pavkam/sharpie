@@ -50,7 +50,7 @@ var styles = Enumerable.Range(0, message.Length)
                        .ToArray();
 
 // Load all fonts.
-var fonts = new List<IAsciiFont> { new DosCp866AsciiFont() };
+var fonts = new List<IAsciiFont> { DosCp866AsciiFont.FullWidth };
 foreach (var path in Directory.EnumerateFiles("Fonts/", "*.flf"))
 {
     fonts.Add(await FigletFont.LoadAsync(path));
@@ -59,7 +59,7 @@ foreach (var path in Directory.EnumerateFiles("Fonts/", "*.flf"))
 var fontIndex = 0;
 
 // Configure header
-terminal.Header.Background = (new(ControlCharacter.Whitespace),
+terminal.Header!.Background = (new(ControlCharacter.Whitespace),
     new()
     {
         Attributes = VideoAttribute.Bold,

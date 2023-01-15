@@ -35,11 +35,27 @@ namespace Sharpie.Font;
 ///     and available fonts.
 /// </summary>
 [PublicAPI]
-public sealed class FigletFont: IAsciiFont
+public sealed class FigletFont: AsciiFont
 {
     private readonly IReadOnlyDictionary<int, (string[] rows, int width)> _figletCharacters;
     private readonly FigletHeader _header;
     private DefaultCharacterHelper? _defaultCharacterHelper;
+
+    private static AsciiFontLayout InterpretLayout(FigletAttribute attributes)
+    {
+        var res = AsciiFontLayout.FullWidth;
+        if (attributes.HasFlag(FigletAttribute.HorizontalSmushing))
+        {
+            res |= AsciiFontLayout.Smushed;
+        }
+
+        if (attributes.HasFlag(FigletAttribute.HorizontalFitting))
+        {
+            res |= AsciiFontLayout.Fitted;
+        }
+
+        return res;
+    }
 
     /// <summary>
     ///     Creates a new instance of this class.
@@ -48,68 +64,22 @@ public sealed class FigletFont: IAsciiFont
     /// <param name="header">The header.</param>
     /// <param name="characters">The characters from the font.</param>
     internal FigletFont(string name, FigletHeader header,
-        IReadOnlyDictionary<int, (string[] rows, int width)> characters)
+        IReadOnlyDictionary<int, (string[] rows, int width)> characters): base(name, 
+        header.Height, header.BaseLine, InterpretLayout(header.Attributes))
     {
         Debug.Assert(!string.IsNullOrEmpty(name));
         Debug.Assert(header != null);
         Debug.Assert(characters != null);
 
-        Name = name;
         _header = header;
         _figletCharacters = characters;
     }
 
-    /// <summary>
-    ///     The font character base line (on which upper-case letters are drawn).
-    /// </summary>
-    public int Baseline => _header.BaseLine;
+    /// <inheritdoc cref="AsciiFont.HasGlyph" />
+    public override bool HasGlyph(Rune @char) => _figletCharacters.ContainsKey(@char.Value);
 
-    /// <summary>
-    ///     The default font layout (as desired by the font).
-    /// </summary>
-    public FigletLayout DefaultLayout
-    {
-        get
-        {
-            var res = FigletLayout.FullWidth;
-            if (_header.Attributes.HasFlag(FigletAttribute.HorizontalSmushing))
-            {
-                res |= FigletLayout.HorizontalSmush;
-            }
-
-            if (_header.Attributes.HasFlag(FigletAttribute.HorizontalFitting))
-            {
-                res |= FigletLayout.HorizontalFit;
-            }
-
-            if (_header.Attributes.HasFlag(FigletAttribute.VerticalSmushing))
-            {
-                res |= FigletLayout.VerticalSmush;
-            }
-
-            if (_header.Attributes.HasFlag(FigletAttribute.VerticalFitting))
-            {
-                res |= FigletLayout.VerticalFit;
-            }
-
-            return res;
-        }
-    }
-
-    /// <inheritdoc cref="IAsciiFont.Height" />
-    public int Height => _header.Height;
-
-    /// <inheritdoc cref="IAsciiFont.Name" />
-    public string Name { get; }
-
-    /// <inheritdoc cref="IAsciiFont.HasGlyph" />
-    public bool HasGlyph(Rune @char) => _figletCharacters.ContainsKey(@char.Value);
-
-    /// <inheritdoc cref="IAsciiFont.GetGlyph" />
-    public IDrawable GetGlyph(Rune @char, Style style) => GetGlyphs(new[] { @char }, style);
-
-    /// <inheritdoc cref="IAsciiFont.GetGlyphs" />
-    public IDrawable GetGlyphs(ReadOnlySpan<Rune> chars, Style style)
+    /// <inheritdoc cref="AsciiFont.GetGlyphs(ReadOnlySpan{Rune}, Sharpie.Style)" />
+    public override IDrawable GetGlyphs(ReadOnlySpan<Rune> chars, Style style)
     {
         if (chars.Length == 0)
         {
