@@ -89,7 +89,7 @@ public sealed class FigletFont: AsciiFont
         char MergeFunc(char l, char r) =>
             FigletLayoutEvaluator.HorizontalJoin(_header.HardBlankChar, _header.Attributes, l, r);
 
-        string[]? rep = null;
+        StringBuilder[]? rep = null;
         foreach (var @char in chars)
         {
             string[]? rows;
@@ -109,17 +109,20 @@ public sealed class FigletFont: AsciiFont
 
             if (rep == null)
             {
-                rep = rows;
+                rep = rows.Select(r => new StringBuilder(r)).ToArray();
                 continue;
             }
 
             if (_header.Attributes == FigletAttribute.FullWidth)
             {
-                rep = rep.Select((row, i) => row + rows[i])
-                         .ToArray();
+                for (var i = 0; i < rows.Length; i++)
+                {
+                    rep[i]
+                        .Append(rows[i]);
+                }
             } else
             {
-                rep = FigletLayoutEvaluator.Join(MergeFunc, rep, rows);
+                FigletLayoutEvaluator.Join(MergeFunc, rep, rows);
             }
         }
 
@@ -128,7 +131,7 @@ public sealed class FigletFont: AsciiFont
         return DrawCharacterToCanvas(rep, style);
     }
 
-    private IDrawable DrawCharacterToCanvas(string[] rows, Style style)
+    private IDrawable DrawCharacterToCanvas(StringBuilder[] rows, Style style)
     {
         Debug.Assert(rows.Length == Height);
         var width = rows[0]

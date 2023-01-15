@@ -106,61 +106,75 @@ public class FigletLayoutEvaluatorTests
     [TestMethod, DataRow(" ", " ", " "), DataRow("  ", " ", "  "), DataRow(" ", "  ", " "), DataRow("  ", "  ", "  ")]
     public void Join_RemovesAllWhiteSpacesFromRight(string ls, string rs, string exp)
     {
-        FigletLayoutEvaluator.Join(Left, new[] { ls }, new[] { rs })
-                             .ShouldBe(new[] { exp });
+        var left = new StringBuilder(ls);
+        FigletLayoutEvaluator.Join(Left, new[] { left }, new[] { rs });
+        
+        left.ToString().ShouldBe(new(exp));
     }
 
     [TestMethod, DataRow("a  ", "   ", "a  "), DataRow("a  ", "  bc", "ac")]
     public void Join_RemovesAllWhiteSpacesFromRightUntilMerge(string ls, string rs, string exp)
     {
-        FigletLayoutEvaluator.Join(Left, new[] { ls }, new[] { rs })
-                             .ShouldBe(new[] { exp });
+        var left = new StringBuilder(ls);
+        FigletLayoutEvaluator.Join(Left, new[] { left }, new[] { rs });
+        
+        left.ToString().ShouldBe(new(exp));
     }
 
     [TestMethod, DataRow("a  b", "   k   z", "a  bk   z"), DataRow("  start", "ed", "  started")]
     public void Join_RemovesAllWhiteSpacesFromRightUntilStop(string ls, string rs, string exp)
     {
-        FigletLayoutEvaluator.Join(None, new[] { ls }, new[] { rs })
-                             .ShouldBe(new[] { exp });
+        var left = new StringBuilder(ls);
+
+        FigletLayoutEvaluator.Join(None, new [] { left }, new[] { rs });
+        
+        left.ToString().ShouldBe(new(exp));
     }
 
     [TestMethod]
     public void Join_FitsTwoFiguresAsExpected_1()
     {
-        var l = new[] { "####", "    " };
-        var r = new[] { "    ", "####" };
-        var e = new[] { "####", "####" };
-        FigletLayoutEvaluator.Join(None, l, r)
-                             .ShouldBe(e);
+        var left = new[] { new StringBuilder("####"), new StringBuilder("    ") };
+        var right = new[] { "    ", "####" };
+        var expected = new[] { "####", "####" };
+
+        FigletLayoutEvaluator.Join(None, left, right);
+
+        left.Select(s => s.ToString()).ShouldBe(expected);
     }
 
     [TestMethod]
     public void Join_FitsTwoFiguresAsExpected_2()
     {
-        var l = new[] { "1234", "|   " };
-        var r = new[] { "   |", "5678" };
-        var e = new[] { "1234|", "|5678" };
-        FigletLayoutEvaluator.Join(None, l, r)
-                             .ShouldBe(e);
+        var left = new[] { new StringBuilder("1234"), new StringBuilder("|   ") };
+        var right = new[] { "   |", "5678" };
+        var expected = new[] { "1234|", "|5678" };
+        FigletLayoutEvaluator.Join(None, left, right);
+                       
+        left.Select(s => s.ToString()).ShouldBe(expected);
     }
 
     [TestMethod]
     public void Join_FitsTwoFiguresAsExpected_3()
     {
-        var l = new[] { "____", "| $ ", "|___" };
-        var r = new[] { "    ", "1234", "    " };
-        var e = new[] { "____   ", "| $1234", "|___   " };
-        FigletLayoutEvaluator.Join(None, l, r)
-                             .ShouldBe(e);
+        var left = new[] { new StringBuilder("____"), new StringBuilder("| $ "), new StringBuilder("|___") };
+        var right = new[] { "    ", "1234", "    " };
+        var expected = new[] { "____   ", "| $1234", "|___   " };
+        FigletLayoutEvaluator.Join(None, left, right);
+        
+        left.Select(s => s.ToString()).ShouldBe(expected);
     }
 
     [TestMethod]
     public void Join_SmushesTwoFiguresAsExpected_1()
     {
-        var l = new[] { "1234", "|   " };
-        var r = new[] { "   |", "5678" };
-        var e = new[] { "123+", "+678" };
-        FigletLayoutEvaluator.Join(Smush, l, r)
-                             .ShouldBe(e);
+        var left = new[] { new StringBuilder("1234"), new StringBuilder("|   ") };
+        var right = new[] { "   |", "5678" };
+        var expected = new[] { "123+", "+678" };
+
+        FigletLayoutEvaluator.Join(Smush, left, right);
+
+        left.Select(s => s.ToString())
+            .ShouldBe(expected);
     }
 }

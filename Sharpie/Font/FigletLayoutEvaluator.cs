@@ -69,10 +69,9 @@ internal static class FigletLayoutEvaluator
     ///     Merges two characters together using a given merge function.
     /// </summary>
     /// <param name="mergeFunc">The merge function.</param>
-    /// <param name="left">The left character.</param>
+    /// <param name="left">The accumulated joined string.</param>
     /// <param name="right">The right character.</param>
-    /// <returns>The merged characters.</returns>
-    public static string[] Join(Func<char, char, char> mergeFunc, string[] left, string[] right)
+    public static void Join(Func<char, char, char> mergeFunc, StringBuilder[] left, string[] right)
     {
         Debug.Assert(mergeFunc != null);
         Debug.Assert(left != null);
@@ -88,67 +87,81 @@ internal static class FigletLayoutEvaluator
 
         // join the character rows and setup touch points.
         var count = left.Length;
-        var merged = left.Select((v, i) => (value: v + right[i], touch: v.Length - 1))
+        var limits = left.Select((v, i) =>
+                         {
+                             var l = v.Length;
+                             v.Append(right[i]);
+                             return l - 1;
+                         })
                          .ToArray();
 
         // merge each set of touching characters.
         var finished = false;
         while (!finished)
         {
-            var reMerged = new (string value, int touch)[count];
+            // check if this iteration is valid.
+            var iterationValid = true;
             for (var y = 0; y < count; y++)
             {
-                var (current, touch) = merged[y];
+                var current = left[y];
+                var touch = limits[y];
                 if (touch == -1 || touch == current.Length - 1)
                 {
-                    reMerged = null;
+                    iterationValid = false;
                     break;
                 }
 
                 var l = current[touch];
                 var r = current[touch + 1];
 
-                if (r == ControlCharacter.Whitespace)
+                if (r != ControlCharacter.Whitespace &&
+                    l != ControlCharacter.Whitespace &&
+                    mergeFunc(l, r) == ControlCharacter.Null)
                 {
-                    current = current.Remove(touch + 1, 1);
-                } else if (l == ControlCharacter.Whitespace)
-                {
-                    current = current.Remove(touch, 1);
-                    touch--;
-                } else
-                {
-                    var m = mergeFunc(l, r);
-                    if (m == ControlCharacter.Null)
-                    {
-                        reMerged = null;
-                        break;
-                    }
-
-                    current = current.Remove(touch, 2)
-                                     .Insert(touch, m.ToString());
-
-                    finished = true;
+                    iterationValid = false;
+                    break;
                 }
-
-                reMerged[y] = (current, touch);
             }
 
-            if (reMerged == null)
+            if (!iterationValid)
             {
                 break;
             }
 
-            merged = reMerged;
+            for (var y = 0; y < count; y++)
+            {
+                var current = left[y];
+                var touch = limits[y];
+                Debug.Assert(touch >= 0 && touch < current.Length - 1);
+
+                var l = current[touch];
+                var r = current[touch + 1];
+
+                if (r == ControlCharacter.Whitespace)
+                {
+                    current.Remove(touch + 1, 1);
+                } else if (l == ControlCharacter.Whitespace)
+                {
+                    current.Remove(touch, 1);
+                    touch--;
+                } else
+                {
+                    var m = mergeFunc(l, r);
+                    Debug.Assert(m != ControlCharacter.Null);
+                    current.Remove(touch, 2)
+                           .Insert(touch, m);
+
+                    finished = true;
+                }
+
+                limits[y] = touch;
+            }
         }
 
-        var result = merged.Select(m => m.value)
-                           .ToArray();
-
-        Debug.Assert(result.All(m => m.Length ==
-            result[0]
+        Debug.Assert(left.All(m => m.Length ==
+            left[0]
                 .Length));
 
-        return result;
     }
 
     /// <summary>
