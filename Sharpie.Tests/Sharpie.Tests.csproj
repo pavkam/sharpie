@@ -14,9 +14,9 @@
         <RepositoryType>git</RepositoryType>
         <AssemblyName>sharpie-tests</AssemblyName>
         <LangVersion>10</LangVersion>
-        <PackageVersion>1.6.0</PackageVersion>
-        <AssemblyVersion>1.6.0</AssemblyVersion>
-        <FileVersion>1.6.0</FileVersion>
+        <PackageVersion>1.7.0</PackageVersion>
+        <AssemblyVersion>1.7.0</AssemblyVersion>
+        <FileVersion>1.7.0</FileVersion>
         <Authors>Alexandru Ciobanu</Authors>
         <Product>Sharpie</Product>
     </PropertyGroup>
