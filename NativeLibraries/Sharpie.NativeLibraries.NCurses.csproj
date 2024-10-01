@@ -14,9 +14,9 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>pdcurses curses terminal console</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageVersion>1.0.4</PackageVersion>
-        <AssemblyVersion>1.0.4</AssemblyVersion>
-        <FileVersion>1.0.4</FileVersion>
+        <PackageVersion>1.0.5</PackageVersion>
+        <AssemblyVersion>1.0.5</AssemblyVersion>
+        <FileVersion>1.0.5</FileVersion>
         <PackageId>Sharpie-Libs-NCurses</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
         <LangVersion>10</LangVersion>
