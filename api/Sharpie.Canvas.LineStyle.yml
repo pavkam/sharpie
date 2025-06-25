@@ -1,0 +1,277 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Canvas.LineStyle
+  commentId: T:Sharpie.Canvas.LineStyle
+  id: Canvas.LineStyle
+  parent: Sharpie
+  children:
+  - Sharpie.Canvas.LineStyle.Double
+  - Sharpie.Canvas.LineStyle.Heavy
+  - Sharpie.Canvas.LineStyle.HeavyDashed
+  - Sharpie.Canvas.LineStyle.Light
+  - Sharpie.Canvas.LineStyle.LightDashed
+  langs:
+  - csharp
+  - vb
+  name: Canvas.LineStyle
+  nameWithType: Canvas.LineStyle
+  fullName: Sharpie.Canvas.LineStyle
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LineStyle
+    path: Sharpie/Canvas.cs
+    startLine: 116
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The possible line styles used in <xref href="Sharpie.Canvas.Line(System.Drawing.PointF%2cSystem.Single%2cSharpie.Canvas.Orientation%2cSharpie.Canvas.LineStyle%2cSharpie.Style)" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public enum Canvas.LineStyle
+    content.vb: Public Enum Canvas.LineStyle
+- uid: Sharpie.Canvas.LineStyle.Light
+  commentId: F:Sharpie.Canvas.LineStyle.Light
+  id: Light
+  parent: Sharpie.Canvas.LineStyle
+  langs:
+  - csharp
+  - vb
+  name: Light
+  nameWithType: Canvas.LineStyle.Light
+  fullName: Sharpie.Canvas.LineStyle.Light
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Light
+    path: Sharpie/Canvas.cs
+    startLine: 121
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Light style (default).
+  example: []
+  syntax:
+    content: Light = 0
+    return:
+      type: Sharpie.Canvas.LineStyle
+- uid: Sharpie.Canvas.LineStyle.Heavy
+  commentId: F:Sharpie.Canvas.LineStyle.Heavy
+  id: Heavy
+  parent: Sharpie.Canvas.LineStyle
+  langs:
+  - csharp
+  - vb
+  name: Heavy
+  nameWithType: Canvas.LineStyle.Heavy
+  fullName: Sharpie.Canvas.LineStyle.Heavy
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Heavy
+    path: Sharpie/Canvas.cs
+    startLine: 126
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Heavy line.
+  example: []
+  syntax:
+    content: Heavy = 1
+    return:
+      type: Sharpie.Canvas.LineStyle
+- uid: Sharpie.Canvas.LineStyle.LightDashed
+  commentId: F:Sharpie.Canvas.LineStyle.LightDashed
+  id: LightDashed
+  parent: Sharpie.Canvas.LineStyle
+  langs:
+  - csharp
+  - vb
+  name: LightDashed
+  nameWithType: Canvas.LineStyle.LightDashed
+  fullName: Sharpie.Canvas.LineStyle.LightDashed
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LightDashed
+    path: Sharpie/Canvas.cs
+    startLine: 131
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Light dashed line.
+  example: []
+  syntax:
+    content: LightDashed = 2
+    return:
+      type: Sharpie.Canvas.LineStyle
+- uid: Sharpie.Canvas.LineStyle.HeavyDashed
+  commentId: F:Sharpie.Canvas.LineStyle.HeavyDashed
+  id: HeavyDashed
+  parent: Sharpie.Canvas.LineStyle
+  langs:
+  - csharp
+  - vb
+  name: HeavyDashed
+  nameWithType: Canvas.LineStyle.HeavyDashed
+  fullName: Sharpie.Canvas.LineStyle.HeavyDashed
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: HeavyDashed
+    path: Sharpie/Canvas.cs
+    startLine: 136
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Heavy dashed line.
+  example: []
+  syntax:
+    content: HeavyDashed = 3
+    return:
+      type: Sharpie.Canvas.LineStyle
+- uid: Sharpie.Canvas.LineStyle.Double
+  commentId: F:Sharpie.Canvas.LineStyle.Double
+  id: Double
+  parent: Sharpie.Canvas.LineStyle
+  langs:
+  - csharp
+  - vb
+  name: Double
+  nameWithType: Canvas.LineStyle.Double
+  fullName: Sharpie.Canvas.LineStyle.Double
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Double
+    path: Sharpie/Canvas.cs
+    startLine: 141
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Double line.
+  example: []
+  syntax:
+    content: Double = 4
+    return:
+      type: Sharpie.Canvas.LineStyle
+references:
+- uid: Sharpie.Canvas.Line(System.Drawing.PointF,System.Single,Sharpie.Canvas.Orientation,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Line(System.Drawing.PointF,System.Single,Sharpie.Canvas.Orientation,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  isExternal: true
+  href: Sharpie.Canvas.html#Sharpie_Canvas_Line_System_Drawing_PointF_System_Single_Sharpie_Canvas_Orientation_Sharpie_Canvas_LineStyle_Sharpie_Style_
+  name: Line(PointF, float, Orientation, LineStyle, Style)
+  nameWithType: Canvas.Line(PointF, float, Canvas.Orientation, Canvas.LineStyle, Style)
+  fullName: Sharpie.Canvas.Line(System.Drawing.PointF, float, Sharpie.Canvas.Orientation, Sharpie.Canvas.LineStyle, Sharpie.Style)
+  nameWithType.vb: Canvas.Line(PointF, Single, Canvas.Orientation, Canvas.LineStyle, Style)
+  fullName.vb: Sharpie.Canvas.Line(System.Drawing.PointF, Single, Sharpie.Canvas.Orientation, Sharpie.Canvas.LineStyle, Sharpie.Style)
+  name.vb: Line(PointF, Single, Orientation, LineStyle, Style)
+  spec.csharp:
+  - uid: Sharpie.Canvas.Line(System.Drawing.PointF,System.Single,Sharpie.Canvas.Orientation,Sharpie.Canvas.LineStyle,Sharpie.Style)
+    name: Line
+    href: Sharpie.Canvas.html#Sharpie_Canvas_Line_System_Drawing_PointF_System_Single_Sharpie_Canvas_Orientation_Sharpie_Canvas_LineStyle_Sharpie_Style_
+  - name: (
+  - uid: System.Drawing.PointF
+    name: PointF
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.pointf
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Canvas.Line(System.Drawing.PointF,System.Single,Sharpie.Canvas.Orientation,Sharpie.Canvas.LineStyle,Sharpie.Style)
+    name: Line
+    href: Sharpie.Canvas.html#Sharpie_Canvas_Line_System_Drawing_PointF_System_Single_Sharpie_Canvas_Orientation_Sharpie_Canvas_LineStyle_Sharpie_Style_
+  - name: (
+  - uid: System.Drawing.PointF
+    name: PointF
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.pointf
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Canvas.LineStyle
+  commentId: T:Sharpie.Canvas.LineStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.LineStyle
+  nameWithType: Canvas.LineStyle
+  fullName: Sharpie.Canvas.LineStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html

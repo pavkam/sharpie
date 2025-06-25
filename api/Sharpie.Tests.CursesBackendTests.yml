@@ -1,0 +1,1315 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Tests.CursesBackendTests
+  commentId: T:Sharpie.Tests.CursesBackendTests
+  id: CursesBackendTests
+  parent: Sharpie.Tests
+  children:
+  - Sharpie.Tests.CursesBackendTests.Load1_Throws_WhenUnknownOs
+  - Sharpie.Tests.CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend
+  - Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor
+  - Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+  - Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend
+  - Sharpie.Tests.CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend
+  - Sharpie.Tests.CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend
+  - Sharpie.Tests.CursesBackendTests.Load2_Throws_WhenFlavorsIsNull
+  - Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull
+  - Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenPathIsNull
+  - Sharpie.Tests.CursesBackendTests.Load3_TriesToLoadGivenPaths
+  - Sharpie.Tests.CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad
+  - Sharpie.Tests.CursesBackendTests.TestContext
+  - Sharpie.Tests.CursesBackendTests.TestInitialize
+  - Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  - Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType
+  - Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied
+  - Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid
+  - Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  - Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+  langs:
+  - csharp
+  - vb
+  name: CursesBackendTests
+  nameWithType: CursesBackendTests
+  fullName: Sharpie.Tests.CursesBackendTests
+  type: Class
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CursesBackendTests
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 35
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestClass]
+
+      public class CursesBackendTests
+    content.vb: >-
+      <TestClass>
+
+      Public Class CursesBackendTests
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.TestContext
+  commentId: P:Sharpie.Tests.CursesBackendTests.TestContext
+  id: TestContext
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: TestContext
+  nameWithType: CursesBackendTests.TestContext
+  fullName: Sharpie.Tests.CursesBackendTests.TestContext
+  type: Property
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestContext
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 40
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [UsedImplicitly]
+
+      public TestContext TestContext { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.VisualStudio.TestTools.UnitTesting.TestContext
+    content.vb: >-
+      <UsedImplicitly>
+
+      Public Property TestContext As TestContext
+  overload: Sharpie.Tests.CursesBackendTests.TestContext*
+  attributes:
+  - type: JetBrains.Annotations.UsedImplicitlyAttribute
+    ctor: JetBrains.Annotations.UsedImplicitlyAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.TestInitialize
+  commentId: M:Sharpie.Tests.CursesBackendTests.TestInitialize
+  id: TestInitialize
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: TestInitialize()
+  nameWithType: CursesBackendTests.TestInitialize()
+  fullName: Sharpie.Tests.CursesBackendTests.TestInitialize()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestInitialize
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 82
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestInitialize]
+
+      public void TestInitialize()
+    content.vb: >-
+      <TestInitialize>
+
+      Public Sub TestInitialize()
+  overload: Sharpie.Tests.CursesBackendTests.TestInitialize*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid
+  commentId: M:Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid
+  id: TryLoad_ReturnsNull_IfTypeIsInvalid
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: TryLoad_ReturnsNull_IfTypeIsInvalid()
+  nameWithType: CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid()
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryLoad_ReturnsNull_IfTypeIsInvalid
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 114
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void TryLoad_ReturnsNull_IfTypeIsInvalid()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub TryLoad_ReturnsNull_IfTypeIsInvalid()
+  overload: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied
+  commentId: M:Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied
+  id: TryLoad_ReturnsNull_IfNoPathSupplied
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: TryLoad_ReturnsNull_IfNoPathSupplied()
+  nameWithType: CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied()
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryLoad_ReturnsNull_IfNoPathSupplied
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 128
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void TryLoad_ReturnsNull_IfNoPathSupplied()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub TryLoad_ReturnsNull_IfNoPathSupplied()
+  overload: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType
+  commentId: M:Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType
+  id: TryLoad_ReturnsNull_IfFailedToLoadType
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: TryLoad_ReturnsNull_IfFailedToLoadType()
+  nameWithType: CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType()
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryLoad_ReturnsNull_IfFailedToLoadType
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 136
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void TryLoad_ReturnsNull_IfFailedToLoadType()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub TryLoad_ReturnsNull_IfFailedToLoadType()
+  overload: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+  commentId: M:Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+  id: TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC()
+  nameWithType: CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC()
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 146
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC()
+  overload: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  commentId: M:Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  id: TryLoad_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: TryLoad_ReturnsAppropriateBackEnd(CursesBackendType)
+  nameWithType: CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd(CursesBackendType)
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryLoad_ReturnsAppropriateBackEnd
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 158
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(CursesBackendType.NCurses)]
+
+      [DataRow(CursesBackendType.PdCurses)]
+
+      [DataRow(CursesBackendType.PdCursesMod)]
+
+      public void TryLoad_ReturnsAppropriateBackEnd(CursesBackendType type)
+    parameters:
+    - id: type
+      type: Sharpie.Backend.CursesBackendType
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(CursesBackendType.NCurses)>
+
+      <DataRow(CursesBackendType.PdCurses)>
+
+      <DataRow(CursesBackendType.PdCursesMod)>
+
+      Public Sub TryLoad_ReturnsAppropriateBackEnd(type As CursesBackendType)
+  overload: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.Backend.CursesBackendType
+      value: 1
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.Backend.CursesBackendType
+      value: 2
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.Backend.CursesBackendType
+      value: 3
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  commentId: M:Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  id: TryLoad_WhenUnix_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: TryLoad_WhenUnix_ReturnsAppropriateBackEnd(CursesBackendType)
+  nameWithType: CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd(CursesBackendType)
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd(Sharpie.Backend.CursesBackendType)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryLoad_WhenUnix_ReturnsAppropriateBackEnd
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 181
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(CursesBackendType.NCurses)]
+
+      [DataRow(CursesBackendType.PdCurses)]
+
+      [DataRow(CursesBackendType.PdCursesMod)]
+
+      public void TryLoad_WhenUnix_ReturnsAppropriateBackEnd(CursesBackendType type)
+    parameters:
+    - id: type
+      type: Sharpie.Backend.CursesBackendType
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(CursesBackendType.NCurses)>
+
+      <DataRow(CursesBackendType.PdCurses)>
+
+      <DataRow(CursesBackendType.PdCursesMod)>
+
+      Public Sub TryLoad_WhenUnix_ReturnsAppropriateBackEnd(type As CursesBackendType)
+  overload: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.Backend.CursesBackendType
+      value: 1
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.Backend.CursesBackendType
+      value: 2
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.Backend.CursesBackendType
+      value: 3
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor
+  id: Load1_WhenLinux_Fails_IfNoFlavor
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load1_WhenLinux_Fails_IfNoFlavor()
+  nameWithType: CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor()
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load1_WhenLinux_Fails_IfNoFlavor
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 205
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load1_WhenLinux_Fails_IfNoFlavor()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load1_WhenLinux_Fails_IfNoFlavor()
+  overload: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+  id: Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded()
+  nameWithType: CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded()
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 215
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded()
+  overload: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load1_Throws_WhenUnknownOs
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load1_Throws_WhenUnknownOs
+  id: Load1_Throws_WhenUnknownOs
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load1_Throws_WhenUnknownOs()
+  nameWithType: CursesBackendTests.Load1_Throws_WhenUnknownOs()
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_Throws_WhenUnknownOs()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load1_Throws_WhenUnknownOs
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 222
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load1_Throws_WhenUnknownOs()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load1_Throws_WhenUnknownOs()
+  overload: Sharpie.Tests.CursesBackendTests.Load1_Throws_WhenUnknownOs*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend
+  id: Load1_WhenWindows_ReturnsValidBackend
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load1_WhenWindows_ReturnsValidBackend()
+  nameWithType: CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend()
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load1_WhenWindows_ReturnsValidBackend
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 229
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load1_WhenWindows_ReturnsValidBackend()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load1_WhenWindows_ReturnsValidBackend()
+  overload: Sharpie.Tests.CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend
+  id: Load1_WhenLinux_ReturnsValidBackend
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load1_WhenLinux_ReturnsValidBackend()
+  nameWithType: CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend()
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load1_WhenLinux_ReturnsValidBackend
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 238
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load1_WhenLinux_ReturnsValidBackend()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load1_WhenLinux_ReturnsValidBackend()
+  overload: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend
+  id: Load1_WhenFreeBsd_ReturnsValidBackend
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load1_WhenFreeBsd_ReturnsValidBackend()
+  nameWithType: CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend()
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load1_WhenFreeBsd_ReturnsValidBackend
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 247
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load1_WhenFreeBsd_ReturnsValidBackend()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load1_WhenFreeBsd_ReturnsValidBackend()
+  overload: Sharpie.Tests.CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend
+  id: Load1_WhenMacOs_ReturnsValidBackend
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load1_WhenMacOs_ReturnsValidBackend()
+  nameWithType: CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend()
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load1_WhenMacOs_ReturnsValidBackend
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 256
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load1_WhenMacOs_ReturnsValidBackend()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load1_WhenMacOs_ReturnsValidBackend()
+  overload: Sharpie.Tests.CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load2_Throws_WhenFlavorsIsNull
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load2_Throws_WhenFlavorsIsNull
+  id: Load2_Throws_WhenFlavorsIsNull
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load2_Throws_WhenFlavorsIsNull()
+  nameWithType: CursesBackendTests.Load2_Throws_WhenFlavorsIsNull()
+  fullName: Sharpie.Tests.CursesBackendTests.Load2_Throws_WhenFlavorsIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load2_Throws_WhenFlavorsIsNull
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 265
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load2_Throws_WhenFlavorsIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load2_Throws_WhenFlavorsIsNull()
+  overload: Sharpie.Tests.CursesBackendTests.Load2_Throws_WhenFlavorsIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load3_TriesToLoadGivenPaths
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load3_TriesToLoadGivenPaths
+  id: Load3_TriesToLoadGivenPaths
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load3_TriesToLoadGivenPaths()
+  nameWithType: CursesBackendTests.Load3_TriesToLoadGivenPaths()
+  fullName: Sharpie.Tests.CursesBackendTests.Load3_TriesToLoadGivenPaths()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load3_TriesToLoadGivenPaths
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 271
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load3_TriesToLoadGivenPaths()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load3_TriesToLoadGivenPaths()
+  overload: Sharpie.Tests.CursesBackendTests.Load3_TriesToLoadGivenPaths*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad
+  id: Load3_WhenLinux_StopsAtFirstGoodLoad
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load3_WhenLinux_StopsAtFirstGoodLoad()
+  nameWithType: CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad()
+  fullName: Sharpie.Tests.CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load3_WhenLinux_StopsAtFirstGoodLoad
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 283
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load3_WhenLinux_StopsAtFirstGoodLoad()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load3_WhenLinux_StopsAtFirstGoodLoad()
+  overload: Sharpie.Tests.CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenPathIsNull
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenPathIsNull
+  id: Load3_Throws_WhenPathIsNull
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load3_Throws_WhenPathIsNull()
+  nameWithType: CursesBackendTests.Load3_Throws_WhenPathIsNull()
+  fullName: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenPathIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load3_Throws_WhenPathIsNull
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 294
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load3_Throws_WhenPathIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load3_Throws_WhenPathIsNull()
+  overload: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenPathIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull
+  commentId: M:Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull
+  id: Load3_Throws_WhenOtherPathsIsNull
+  parent: Sharpie.Tests.CursesBackendTests
+  langs:
+  - csharp
+  - vb
+  name: Load3_Throws_WhenOtherPathsIsNull()
+  nameWithType: CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull()
+  fullName: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CursesBackendTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load3_Throws_WhenOtherPathsIsNull
+    path: Sharpie.Tests/CursesBackendTests.cs
+    startLine: 300
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Load3_Throws_WhenOtherPathsIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Load3_Throws_WhenOtherPathsIsNull()
+  overload: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+references:
+- uid: Sharpie.Tests
+  commentId: N:Sharpie.Tests
+  href: Sharpie.html
+  name: Sharpie.Tests
+  nameWithType: Sharpie.Tests
+  fullName: Sharpie.Tests
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Tests.CursesBackendTests.TestContext*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.TestContext
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_TestContext
+  name: TestContext
+  nameWithType: CursesBackendTests.TestContext
+  fullName: Sharpie.Tests.CursesBackendTests.TestContext
+- uid: Microsoft.VisualStudio.TestTools.UnitTesting.TestContext
+  commentId: T:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext
+  parent: Microsoft.VisualStudio.TestTools.UnitTesting
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.visualstudio.testtools.unittesting.testcontext
+  name: TestContext
+  nameWithType: TestContext
+  fullName: Microsoft.VisualStudio.TestTools.UnitTesting.TestContext
+- uid: Microsoft.VisualStudio.TestTools.UnitTesting
+  commentId: N:Microsoft.VisualStudio.TestTools.UnitTesting
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.VisualStudio.TestTools.UnitTesting
+  nameWithType: Microsoft.VisualStudio.TestTools.UnitTesting
+  fullName: Microsoft.VisualStudio.TestTools.UnitTesting
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.VisualStudio
+    name: VisualStudio
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.visualstudio
+  - name: .
+  - uid: Microsoft.VisualStudio.TestTools
+    name: TestTools
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.visualstudio.testtools
+  - name: .
+  - uid: Microsoft.VisualStudio.TestTools.UnitTesting
+    name: UnitTesting
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.visualstudio.testtools.unittesting
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.VisualStudio
+    name: VisualStudio
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.visualstudio
+  - name: .
+  - uid: Microsoft.VisualStudio.TestTools
+    name: TestTools
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.visualstudio.testtools
+  - name: .
+  - uid: Microsoft.VisualStudio.TestTools.UnitTesting
+    name: UnitTesting
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.visualstudio.testtools.unittesting
+- uid: Sharpie.Tests.CursesBackendTests.TestInitialize*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.TestInitialize
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_TestInitialize
+  name: TestInitialize
+  nameWithType: CursesBackendTests.TestInitialize
+  fullName: Sharpie.Tests.CursesBackendTests.TestInitialize
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_TryLoad_ReturnsNull_IfTypeIsInvalid
+  name: TryLoad_ReturnsNull_IfTypeIsInvalid
+  nameWithType: CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfTypeIsInvalid
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_TryLoad_ReturnsNull_IfNoPathSupplied
+  name: TryLoad_ReturnsNull_IfNoPathSupplied
+  nameWithType: CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfNoPathSupplied
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_TryLoad_ReturnsNull_IfFailedToLoadType
+  name: TryLoad_ReturnsNull_IfFailedToLoadType
+  nameWithType: CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsNull_IfFailedToLoadType
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+  name: TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+  nameWithType: CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsBackend_IfFailedToLoadLibC
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_TryLoad_ReturnsAppropriateBackEnd_Sharpie_Backend_CursesBackendType_
+  name: TryLoad_ReturnsAppropriateBackEnd
+  nameWithType: CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_ReturnsAppropriateBackEnd
+- uid: Sharpie.Backend.CursesBackendType
+  commentId: T:Sharpie.Backend.CursesBackendType
+  parent: Sharpie.Backend
+  href: Sharpie.Backend.CursesBackendType.html
+  name: CursesBackendType
+  nameWithType: CursesBackendType
+  fullName: Sharpie.Backend.CursesBackendType
+- uid: Sharpie.Backend
+  commentId: N:Sharpie.Backend
+  href: Sharpie.html
+  name: Sharpie.Backend
+  nameWithType: Sharpie.Backend
+  fullName: Sharpie.Backend
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Backend
+    name: Backend
+    href: Sharpie.Backend.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Backend
+    name: Backend
+    href: Sharpie.Backend.html
+- uid: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_TryLoad_WhenUnix_ReturnsAppropriateBackEnd_Sharpie_Backend_CursesBackendType_
+  name: TryLoad_WhenUnix_ReturnsAppropriateBackEnd
+  nameWithType: CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd
+  fullName: Sharpie.Tests.CursesBackendTests.TryLoad_WhenUnix_ReturnsAppropriateBackEnd
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load1_WhenLinux_Fails_IfNoFlavor
+  name: Load1_WhenLinux_Fails_IfNoFlavor
+  nameWithType: CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavor
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+  name: Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+  nameWithType: CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_Fails_IfNoFlavorCouldBeLoaded
+- uid: Sharpie.Tests.CursesBackendTests.Load1_Throws_WhenUnknownOs*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load1_Throws_WhenUnknownOs
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load1_Throws_WhenUnknownOs
+  name: Load1_Throws_WhenUnknownOs
+  nameWithType: CursesBackendTests.Load1_Throws_WhenUnknownOs
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_Throws_WhenUnknownOs
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load1_WhenWindows_ReturnsValidBackend
+  name: Load1_WhenWindows_ReturnsValidBackend
+  nameWithType: CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenWindows_ReturnsValidBackend
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load1_WhenLinux_ReturnsValidBackend
+  name: Load1_WhenLinux_ReturnsValidBackend
+  nameWithType: CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenLinux_ReturnsValidBackend
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load1_WhenFreeBsd_ReturnsValidBackend
+  name: Load1_WhenFreeBsd_ReturnsValidBackend
+  nameWithType: CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenFreeBsd_ReturnsValidBackend
+- uid: Sharpie.Tests.CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load1_WhenMacOs_ReturnsValidBackend
+  name: Load1_WhenMacOs_ReturnsValidBackend
+  nameWithType: CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend
+  fullName: Sharpie.Tests.CursesBackendTests.Load1_WhenMacOs_ReturnsValidBackend
+- uid: Sharpie.Tests.CursesBackendTests.Load2_Throws_WhenFlavorsIsNull*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load2_Throws_WhenFlavorsIsNull
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load2_Throws_WhenFlavorsIsNull
+  name: Load2_Throws_WhenFlavorsIsNull
+  nameWithType: CursesBackendTests.Load2_Throws_WhenFlavorsIsNull
+  fullName: Sharpie.Tests.CursesBackendTests.Load2_Throws_WhenFlavorsIsNull
+- uid: Sharpie.Tests.CursesBackendTests.Load3_TriesToLoadGivenPaths*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load3_TriesToLoadGivenPaths
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load3_TriesToLoadGivenPaths
+  name: Load3_TriesToLoadGivenPaths
+  nameWithType: CursesBackendTests.Load3_TriesToLoadGivenPaths
+  fullName: Sharpie.Tests.CursesBackendTests.Load3_TriesToLoadGivenPaths
+- uid: Sharpie.Tests.CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load3_WhenLinux_StopsAtFirstGoodLoad
+  name: Load3_WhenLinux_StopsAtFirstGoodLoad
+  nameWithType: CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad
+  fullName: Sharpie.Tests.CursesBackendTests.Load3_WhenLinux_StopsAtFirstGoodLoad
+- uid: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenPathIsNull*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenPathIsNull
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load3_Throws_WhenPathIsNull
+  name: Load3_Throws_WhenPathIsNull
+  nameWithType: CursesBackendTests.Load3_Throws_WhenPathIsNull
+  fullName: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenPathIsNull
+- uid: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull*
+  commentId: Overload:Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull
+  href: Sharpie.Tests.CursesBackendTests.html#Sharpie_Tests_CursesBackendTests_Load3_Throws_WhenOtherPathsIsNull
+  name: Load3_Throws_WhenOtherPathsIsNull
+  nameWithType: CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull
+  fullName: Sharpie.Tests.CursesBackendTests.Load3_Throws_WhenOtherPathsIsNull

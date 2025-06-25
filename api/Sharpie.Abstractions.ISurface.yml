@@ -1,0 +1,2762 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Abstractions.ISurface
+  commentId: T:Sharpie.Abstractions.ISurface
+  id: ISurface
+  parent: Sharpie.Abstractions
+  children:
+  - Sharpie.Abstractions.ISurface.Background
+  - Sharpie.Abstractions.ISurface.CaretLocation
+  - Sharpie.Abstractions.ISurface.ChangeTextStyle(System.Int32,Sharpie.Style)
+  - Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+  - Sharpie.Abstractions.ISurface.ColorMixture
+  - Sharpie.Abstractions.ISurface.DeleteLines(System.Int32)
+  - Sharpie.Abstractions.ISurface.Destroy
+  - Sharpie.Abstractions.ISurface.Dirty
+  - Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+  - Sharpie.Abstractions.ISurface.Disposed
+  - Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,Sharpie.Abstractions.IDrawable)
+  - Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,System.Drawing.Rectangle,Sharpie.Abstractions.IDrawable)
+  - Sharpie.Abstractions.ISurface.DrawBorder
+  - Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)
+  - Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32)
+  - Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  - Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,Sharpie.Style,System.Boolean,System.Boolean)
+  - Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,System.Boolean,System.Boolean)
+  - Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32)
+  - Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  - Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+  - Sharpie.Abstractions.ISurface.GetText(System.Int32)
+  - Sharpie.Abstractions.ISurface.Handle
+  - Sharpie.Abstractions.ISurface.InsertEmptyLines(System.Int32)
+  - Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+  - Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+  - Sharpie.Abstractions.ISurface.LineDirty(System.Int32)
+  - Sharpie.Abstractions.ISurface.ManagedCaret
+  - Sharpie.Abstractions.ISurface.MarkDirty
+  - Sharpie.Abstractions.ISurface.MarkDirty(System.Int32,System.Int32)
+  - Sharpie.Abstractions.ISurface.NextLine
+  - Sharpie.Abstractions.ISurface.RemoveText(System.Int32)
+  - Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,Sharpie.ReplaceStrategy)
+  - Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,System.Drawing.Rectangle,System.Drawing.Point,Sharpie.ReplaceStrategy)
+  - Sharpie.Abstractions.ISurface.ScrollDown(System.Int32)
+  - Sharpie.Abstractions.ISurface.ScrollUp(System.Int32)
+  - Sharpie.Abstractions.ISurface.Scrollable
+  - Sharpie.Abstractions.ISurface.Size
+  - Sharpie.Abstractions.ISurface.Style
+  - Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText,System.Boolean)
+  - Sharpie.Abstractions.ISurface.WriteText(System.String,Sharpie.Style,System.Boolean)
+  - Sharpie.Abstractions.ISurface.WriteText(System.String,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: ISurface
+  nameWithType: ISurface
+  fullName: Sharpie.Abstractions.ISurface
+  type: Interface
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ISurface
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Defines the base traits required for <xref href="Sharpie.Window" data-throw-if-not-resolved="false"></xref>, <xref href="Sharpie.Screen" data-throw-if-not-resolved="false"></xref> and <xref href="Sharpie.Pad" data-throw-if-not-resolved="false"></xref> classes.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public interface ISurface : IDrawSurface
+    content.vb: >-
+      <PublicAPI>
+
+      Public Interface ISurface Inherits IDrawSurface
+  inheritedMembers:
+  - Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Abstractions.ISurface.Handle
+  commentId: P:Sharpie.Abstractions.ISurface.Handle
+  id: Handle
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Handle
+  nameWithType: ISurface.Handle
+  fullName: Sharpie.Abstractions.ISurface.Handle
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Handle
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 42
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: The Curses handle for the surface.
+  example: []
+  syntax:
+    content: IntPtr Handle { get; }
+    parameters: []
+    return:
+      type: System.IntPtr
+    content.vb: ReadOnly Property Handle As IntPtr
+  overload: Sharpie.Abstractions.ISurface.Handle*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+- uid: Sharpie.Abstractions.ISurface.Disposed
+  commentId: P:Sharpie.Abstractions.ISurface.Disposed
+  id: Disposed
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Disposed
+  nameWithType: ISurface.Disposed
+  fullName: Sharpie.Abstractions.ISurface.Disposed
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Disposed
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 47
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Checks if the surface has been disposed and is no longer usable.
+  example: []
+  syntax:
+    content: bool Disposed { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property Disposed As Boolean
+  overload: Sharpie.Abstractions.ISurface.Disposed*
+- uid: Sharpie.Abstractions.ISurface.Scrollable
+  commentId: P:Sharpie.Abstractions.ISurface.Scrollable
+  id: Scrollable
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Scrollable
+  nameWithType: ISurface.Scrollable
+  fullName: Sharpie.Abstractions.ISurface.Scrollable
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Scrollable
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 59
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: >-
+    Gets or sets the ability of the surface to scroll its contents when writing
+
+    needs a new line.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: bool Scrollable { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property Scrollable As Boolean
+  overload: Sharpie.Abstractions.ISurface.Scrollable*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.Style
+  commentId: P:Sharpie.Abstractions.ISurface.Style
+  id: Style
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Style
+  nameWithType: ISurface.Style
+  fullName: Sharpie.Abstractions.ISurface.Style
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Style
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 70
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Gets or sets the style of the surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: Style Style { get; set; }
+    parameters: []
+    return:
+      type: Sharpie.Style
+    content.vb: Property Style As Style
+  overload: Sharpie.Abstractions.ISurface.Style*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.ColorMixture
+  commentId: P:Sharpie.Abstractions.ISurface.ColorMixture
+  id: ColorMixture
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: ColorMixture
+  nameWithType: ISurface.ColorMixture
+  fullName: Sharpie.Abstractions.ISurface.ColorMixture
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ColorMixture
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 81
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Gets or sets the color mixture of the surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: ColorMixture ColorMixture { get; set; }
+    parameters: []
+    return:
+      type: Sharpie.ColorMixture
+    content.vb: Property ColorMixture As ColorMixture
+  overload: Sharpie.Abstractions.ISurface.ColorMixture*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.Background
+  commentId: P:Sharpie.Abstractions.ISurface.Background
+  id: Background
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Background
+  nameWithType: ISurface.Background
+  fullName: Sharpie.Abstractions.ISurface.Background
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Background
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 92
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Gets or sets the surface background.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: (Rune @char, Style style) Background { get; set; }
+    parameters: []
+    return:
+      type: System.ValueTuple{System.Text.Rune,Sharpie.Style}
+    content.vb: Property Background As ([char] As Rune, style As Style)
+  overload: Sharpie.Abstractions.ISurface.Background*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.Size
+  commentId: P:Sharpie.Abstractions.ISurface.Size
+  id: Size
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Size
+  nameWithType: ISurface.Size
+  fullName: Sharpie.Abstractions.ISurface.Size
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Size
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 103
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Gets the size of the surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: Size Size { get; }
+    parameters: []
+    return:
+      type: System.Drawing.Size
+    content.vb: ReadOnly Property Size As Size
+  overload: Sharpie.Abstractions.ISurface.Size*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.CaretLocation
+  commentId: P:Sharpie.Abstractions.ISurface.CaretLocation
+  id: CaretLocation
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: CaretLocation
+  nameWithType: ISurface.CaretLocation
+  fullName: Sharpie.Abstractions.ISurface.CaretLocation
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CaretLocation
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 115
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Gets or sets the current position of the caret within the surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: Point CaretLocation { get; set; }
+    parameters: []
+    return:
+      type: System.Drawing.Point
+    content.vb: Property CaretLocation As Point
+  overload: Sharpie.Abstractions.ISurface.CaretLocation*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The <code class="paramref">value</code> is outside the surface bounds.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.Dirty
+  commentId: P:Sharpie.Abstractions.ISurface.Dirty
+  id: Dirty
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Dirty
+  nameWithType: ISurface.Dirty
+  fullName: Sharpie.Abstractions.ISurface.Dirty
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Dirty
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 127
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: >-
+    Specifies whether the surface has some "dirty" parts that need to be synchronized
+
+    to the console.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: bool Dirty { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property Dirty As Boolean
+  overload: Sharpie.Abstractions.ISurface.Dirty*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.ManagedCaret
+  commentId: P:Sharpie.Abstractions.ISurface.ManagedCaret
+  id: ManagedCaret
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: ManagedCaret
+  nameWithType: ISurface.ManagedCaret
+  fullName: Sharpie.Abstractions.ISurface.ManagedCaret
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ManagedCaret
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 138
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Controls whether the caret is managed by the application and should not be managed by the hardware.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: bool ManagedCaret { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property ManagedCaret As Boolean
+  overload: Sharpie.Abstractions.ISurface.ManagedCaret*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+  commentId: M:Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+  id: EnableAttributes(Sharpie.VideoAttribute)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: EnableAttributes(VideoAttribute)
+  nameWithType: ISurface.EnableAttributes(VideoAttribute)
+  fullName: Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: EnableAttributes
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 150
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Enables specified attributes and keep the others untouched.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void EnableAttributes(VideoAttribute attributes)
+    parameters:
+    - id: attributes
+      type: Sharpie.VideoAttribute
+      description: The attributes to enable.
+    content.vb: Sub EnableAttributes(attributes As VideoAttribute)
+  overload: Sharpie.Abstractions.ISurface.EnableAttributes*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+  commentId: M:Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+  id: DisableAttributes(Sharpie.VideoAttribute)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DisableAttributes(VideoAttribute)
+  nameWithType: ISurface.DisableAttributes(VideoAttribute)
+  fullName: Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DisableAttributes
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 162
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Disables specified attributes and keep the others untouched.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DisableAttributes(VideoAttribute attributes)
+    parameters:
+    - id: attributes
+      type: Sharpie.VideoAttribute
+      description: The attributes to disable.
+    content.vb: Sub DisableAttributes(attributes As VideoAttribute)
+  overload: Sharpie.Abstractions.ISurface.DisableAttributes*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.ScrollUp(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.ScrollUp(System.Int32)
+  id: ScrollUp(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: ScrollUp(int)
+  nameWithType: ISurface.ScrollUp(int)
+  fullName: Sharpie.Abstractions.ISurface.ScrollUp(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ScrollUp
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 179
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Scrolls the contents of the surface <code class="paramref">lines</code> up. Only works for scrollable surfaces.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void ScrollUp(int lines)
+    parameters:
+    - id: lines
+      type: System.Int32
+      description: Number of lines to scroll.
+    content.vb: Sub ScrollUp(lines As Integer)
+  overload: Sharpie.Abstractions.ISurface.ScrollUp*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: >-
+      The <code class="paramref">lines</code> is less than one or greater than the size
+
+      of the surface.
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: The <xref href="Sharpie.Abstractions.ISurface.Scrollable" data-throw-if-not-resolved="false"></xref> is <code>false</code>.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.ScrollUp(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.ScrollUp(Integer)
+  name.vb: ScrollUp(Integer)
+- uid: Sharpie.Abstractions.ISurface.ScrollDown(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.ScrollDown(System.Int32)
+  id: ScrollDown(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: ScrollDown(int)
+  nameWithType: ISurface.ScrollDown(int)
+  fullName: Sharpie.Abstractions.ISurface.ScrollDown(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ScrollDown
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 192
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Scrolls the contents of the surface <code class="paramref">lines</code> down. Only works for scrollable surfaces.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void ScrollDown(int lines)
+    parameters:
+    - id: lines
+      type: System.Int32
+      description: Number of lines to scroll.
+    content.vb: Sub ScrollDown(lines As Integer)
+  overload: Sharpie.Abstractions.ISurface.ScrollDown*
+  exceptions:
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: The <xref href="Sharpie.Abstractions.ISurface.Scrollable" data-throw-if-not-resolved="false"></xref> is <code>false</code>.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.ScrollDown(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.ScrollDown(Integer)
+  name.vb: ScrollDown(Integer)
+- uid: Sharpie.Abstractions.ISurface.InsertEmptyLines(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.InsertEmptyLines(System.Int32)
+  id: InsertEmptyLines(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: InsertEmptyLines(int)
+  nameWithType: ISurface.InsertEmptyLines(int)
+  fullName: Sharpie.Abstractions.ISurface.InsertEmptyLines(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: InsertEmptyLines
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 204
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Inserts <code class="paramref">lines</code> empty lines at the current caret position.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void InsertEmptyLines(int lines)
+    parameters:
+    - id: lines
+      type: System.Int32
+      description: Number of lines to inserts.
+    content.vb: Sub InsertEmptyLines(lines As Integer)
+  overload: Sharpie.Abstractions.ISurface.InsertEmptyLines*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.InsertEmptyLines(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.InsertEmptyLines(Integer)
+  name.vb: InsertEmptyLines(Integer)
+- uid: Sharpie.Abstractions.ISurface.DeleteLines(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.DeleteLines(System.Int32)
+  id: DeleteLines(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DeleteLines(int)
+  nameWithType: ISurface.DeleteLines(int)
+  fullName: Sharpie.Abstractions.ISurface.DeleteLines(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DeleteLines
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 220
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Deletes <code class="paramref">lines</code> lines starting with the current caret position. All lines below move up.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DeleteLines(int lines)
+    parameters:
+    - id: lines
+      type: System.Int32
+      description: Number of lines to inserts.
+    content.vb: Sub DeleteLines(lines As Integer)
+  overload: Sharpie.Abstractions.ISurface.DeleteLines*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: >-
+      The <code class="paramref">lines</code> is less than one or greater than the size
+
+      of the surface.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.DeleteLines(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.DeleteLines(Integer)
+  name.vb: DeleteLines(Integer)
+- uid: Sharpie.Abstractions.ISurface.ChangeTextStyle(System.Int32,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.ISurface.ChangeTextStyle(System.Int32,Sharpie.Style)
+  id: ChangeTextStyle(System.Int32,Sharpie.Style)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: ChangeTextStyle(int, Style)
+  nameWithType: ISurface.ChangeTextStyle(int, Style)
+  fullName: Sharpie.Abstractions.ISurface.ChangeTextStyle(int, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ChangeTextStyle
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 233
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Changes the style of the text on the current line and starting from the caret position.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void ChangeTextStyle(int width, Style style)
+    parameters:
+    - id: width
+      type: System.Int32
+      description: The number of characters to change.
+    - id: style
+      type: Sharpie.Style
+      description: The applied style.
+    content.vb: Sub ChangeTextStyle(width As Integer, style As Style)
+  overload: Sharpie.Abstractions.ISurface.ChangeTextStyle*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.ChangeTextStyle(Integer, Style)
+  fullName.vb: Sharpie.Abstractions.ISurface.ChangeTextStyle(Integer, Sharpie.Style)
+  name.vb: ChangeTextStyle(Integer, Style)
+- uid: Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText,System.Boolean)
+  id: WriteText(Sharpie.StyledText,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: WriteText(StyledText, bool)
+  nameWithType: ISurface.WriteText(StyledText, bool)
+  fullName: Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText, bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: WriteText
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 246
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Writes a text at the caret position at the current surface and advances the caret.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void WriteText(StyledText text, bool wrap = true)
+    parameters:
+    - id: text
+      type: Sharpie.StyledText
+      description: The styled text to write.
+    - id: wrap
+      type: System.Boolean
+      description: If <code>true</code>, text will be wrapped automatically to next line.
+    content.vb: Sub WriteText(text As StyledText, wrap As Boolean = True)
+  overload: Sharpie.Abstractions.ISurface.WriteText*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.WriteText(StyledText, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText, Boolean)
+  name.vb: WriteText(StyledText, Boolean)
+- uid: Sharpie.Abstractions.ISurface.WriteText(System.String,Sharpie.Style,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.WriteText(System.String,Sharpie.Style,System.Boolean)
+  id: WriteText(System.String,Sharpie.Style,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: WriteText(string, Style, bool)
+  nameWithType: ISurface.WriteText(string, Style, bool)
+  fullName: Sharpie.Abstractions.ISurface.WriteText(string, Sharpie.Style, bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: WriteText
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 261
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Writes a text at the caret position at the current surface and advances the caret.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void WriteText(string text, Style style, bool wrap = true)
+    parameters:
+    - id: text
+      type: System.String
+      description: The text to write.
+    - id: style
+      type: Sharpie.Style
+      description: The style of the text.
+    - id: wrap
+      type: System.Boolean
+      description: If <code>true</code>, text will be wrapped automatically to next line.
+    content.vb: Sub WriteText(text As String, style As Style, wrap As Boolean = True)
+  overload: Sharpie.Abstractions.ISurface.WriteText*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code class="paramref">text</code> is <code>null</code>.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.WriteText(String, Style, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.WriteText(String, Sharpie.Style, Boolean)
+  name.vb: WriteText(String, Style, Boolean)
+- uid: Sharpie.Abstractions.ISurface.WriteText(System.String,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.WriteText(System.String,System.Boolean)
+  id: WriteText(System.String,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: WriteText(string, bool)
+  nameWithType: ISurface.WriteText(string, bool)
+  fullName: Sharpie.Abstractions.ISurface.WriteText(string, bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: WriteText
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 275
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Writes a text at the caret position at the current surface and advances the caret.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void WriteText(string text, bool wrap = true)
+    parameters:
+    - id: text
+      type: System.String
+      description: The text to write.
+    - id: wrap
+      type: System.Boolean
+      description: If <code>true</code>, text will be wrapped automatically to next line.
+    content.vb: Sub WriteText(text As String, wrap As Boolean = True)
+  overload: Sharpie.Abstractions.ISurface.WriteText*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code class="paramref">text</code> is <code>null</code>.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.WriteText(String, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.WriteText(String, Boolean)
+  name.vb: WriteText(String, Boolean)
+- uid: Sharpie.Abstractions.ISurface.NextLine
+  commentId: M:Sharpie.Abstractions.ISurface.NextLine
+  id: NextLine
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: NextLine()
+  nameWithType: ISurface.NextLine()
+  fullName: Sharpie.Abstractions.ISurface.NextLine()
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: NextLine
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 288
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: >-
+    Helper method that moves the caret to the start of the next line. If the surface is <xref href="Sharpie.Abstractions.ISurface.Scrollable" data-throw-if-not-resolved="false"></xref>, and
+
+    the
+
+    caret if on the last line, it will push the contents of the surface up by one line.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void NextLine()
+    content.vb: Sub NextLine()
+  overload: Sharpie.Abstractions.ISurface.NextLine*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,Sharpie.Style,System.Boolean,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,Sharpie.Style,System.Boolean,System.Boolean)
+  id: DrawText(Sharpie.Abstractions.IAsciiFont,System.String,Sharpie.Style,System.Boolean,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DrawText(IAsciiFont, string, Style, bool, bool)
+  nameWithType: ISurface.DrawText(IAsciiFont, string, Style, bool, bool)
+  fullName: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont, string, Sharpie.Style, bool, bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 306
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: >-
+    Draws text using an ASCII <code class="paramref">font</code> at the caret position at the current
+
+    surface and advances the caret.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DrawText(IAsciiFont font, string text, Style style, bool interpretSpecialChars = true, bool wrap = true)
+    parameters:
+    - id: font
+      type: Sharpie.Abstractions.IAsciiFont
+      description: The ASCII font to draw with.
+    - id: text
+      type: System.String
+      description: The text to write.
+    - id: style
+      type: Sharpie.Style
+      description: The style of the text.
+    - id: interpretSpecialChars
+      type: System.Boolean
+      description: If <code>true</code>, special characters will be treated as such (e.g. \n)
+    - id: wrap
+      type: System.Boolean
+      description: If <code>true</code>, text will be wrapped automatically to next line.
+    content.vb: Sub DrawText(font As IAsciiFont, text As String, style As Style, interpretSpecialChars As Boolean = True, wrap As Boolean = True)
+  overload: Sharpie.Abstractions.ISurface.DrawText*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">font</code> or <code class="paramref">text</code> are <code>null</code>.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.DrawText(IAsciiFont, String, Style, Boolean, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont, String, Sharpie.Style, Boolean, Boolean)
+  name.vb: DrawText(IAsciiFont, String, Style, Boolean, Boolean)
+- uid: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,System.Boolean,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,System.Boolean,System.Boolean)
+  id: DrawText(Sharpie.Abstractions.IAsciiFont,System.String,System.Boolean,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DrawText(IAsciiFont, string, bool, bool)
+  nameWithType: ISurface.DrawText(IAsciiFont, string, bool, bool)
+  fullName: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont, string, bool, bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 324
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: >-
+    Draws text using an ASCII <code class="paramref">font</code> at the caret position at the current
+
+    surface and advances the caret.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DrawText(IAsciiFont font, string text, bool interpretSpecialChars = true, bool wrap = true)
+    parameters:
+    - id: font
+      type: Sharpie.Abstractions.IAsciiFont
+      description: The ASCII font to draw with.
+    - id: text
+      type: System.String
+      description: The text to write.
+    - id: interpretSpecialChars
+      type: System.Boolean
+      description: If <code>true</code>, special characters will be treated as such (e.g. \n)
+    - id: wrap
+      type: System.Boolean
+      description: If <code>true</code>, text will be wrapped automatically to next line.
+    content.vb: Sub DrawText(font As IAsciiFont, text As String, interpretSpecialChars As Boolean = True, wrap As Boolean = True)
+  overload: Sharpie.Abstractions.ISurface.DrawText*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">font</code> or <code class="paramref">text</code> are <code>null</code>.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.DrawText(IAsciiFont, String, Boolean, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont, String, Boolean, Boolean)
+  name.vb: DrawText(IAsciiFont, String, Boolean, Boolean)
+- uid: Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  id: DrawVerticalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DrawVerticalLine(int, Rune, Style)
+  nameWithType: ISurface.DrawVerticalLine(int, Rune, Style)
+  fullName: Sharpie.Abstractions.ISurface.DrawVerticalLine(int, System.Text.Rune, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawVerticalLine
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 338
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Draws a vertical line from the current caret position downwards.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DrawVerticalLine(int length, Rune @char, Style style)
+    parameters:
+    - id: length
+      type: System.Int32
+      description: The length of the line.
+    - id: char
+      type: System.Text.Rune
+      description: The character to use for the line.
+    - id: style
+      type: Sharpie.Style
+      description: The style to use.
+    content.vb: Sub DrawVerticalLine(length As Integer, [char] As Rune, style As Style)
+  overload: Sharpie.Abstractions.ISurface.DrawVerticalLine*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.DrawVerticalLine(Integer, Rune, Style)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawVerticalLine(Integer, System.Text.Rune, Sharpie.Style)
+  name.vb: DrawVerticalLine(Integer, Rune, Style)
+- uid: Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32)
+  id: DrawVerticalLine(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DrawVerticalLine(int)
+  nameWithType: ISurface.DrawVerticalLine(int)
+  fullName: Sharpie.Abstractions.ISurface.DrawVerticalLine(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawVerticalLine
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 350
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Draws a vertical line using the standard line character from the current caret position downwards.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DrawVerticalLine(int length)
+    parameters:
+    - id: length
+      type: System.Int32
+      description: The length of the line.
+    content.vb: Sub DrawVerticalLine(length As Integer)
+  overload: Sharpie.Abstractions.ISurface.DrawVerticalLine*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.DrawVerticalLine(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawVerticalLine(Integer)
+  name.vb: DrawVerticalLine(Integer)
+- uid: Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  id: DrawHorizontalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DrawHorizontalLine(int, Rune, Style)
+  nameWithType: ISurface.DrawHorizontalLine(int, Rune, Style)
+  fullName: Sharpie.Abstractions.ISurface.DrawHorizontalLine(int, System.Text.Rune, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawHorizontalLine
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 364
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Draws a horizontal line from the current caret position downwards.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DrawHorizontalLine(int length, Rune @char, Style style)
+    parameters:
+    - id: length
+      type: System.Int32
+      description: The length of the line.
+    - id: char
+      type: System.Text.Rune
+      description: The character to use for the line.
+    - id: style
+      type: Sharpie.Style
+      description: The style to use.
+    content.vb: Sub DrawHorizontalLine(length As Integer, [char] As Rune, style As Style)
+  overload: Sharpie.Abstractions.ISurface.DrawHorizontalLine*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.DrawHorizontalLine(Integer, Rune, Style)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawHorizontalLine(Integer, System.Text.Rune, Sharpie.Style)
+  name.vb: DrawHorizontalLine(Integer, Rune, Style)
+- uid: Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32)
+  id: DrawHorizontalLine(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DrawHorizontalLine(int)
+  nameWithType: ISurface.DrawHorizontalLine(int)
+  fullName: Sharpie.Abstractions.ISurface.DrawHorizontalLine(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawHorizontalLine
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 376
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Draws a horizontal line using the standard line character from the current caret position downwards.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DrawHorizontalLine(int length)
+    parameters:
+    - id: length
+      type: System.Int32
+      description: The length of the line.
+    content.vb: Sub DrawHorizontalLine(length As Integer)
+  overload: Sharpie.Abstractions.ISurface.DrawHorizontalLine*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.DrawHorizontalLine(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawHorizontalLine(Integer)
+  name.vb: DrawHorizontalLine(Integer)
+- uid: Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)
+  id: DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DrawBorder(Rune, Rune, Rune, Rune, Rune, Rune, Rune, Rune, Style)
+  nameWithType: ISurface.DrawBorder(Rune, Rune, Rune, Rune, Rune, Rune, Rune, Rune, Style)
+  fullName: Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawBorder
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 396
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Draws a vertical line from the current caret position downwards.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DrawBorder(Rune leftSideChar, Rune rightSideChar, Rune topSideChar, Rune bottomSideChar, Rune topLeftCornerChar, Rune topRightCornerChar, Rune bottomLeftCornerChar, Rune bottomRightCornerChar, Style style)
+    parameters:
+    - id: leftSideChar
+      type: System.Text.Rune
+      description: The left-side character.
+    - id: rightSideChar
+      type: System.Text.Rune
+      description: The right-side character.
+    - id: topSideChar
+      type: System.Text.Rune
+      description: The top-side character.
+    - id: bottomSideChar
+      type: System.Text.Rune
+      description: The bottom-side character.
+    - id: topLeftCornerChar
+      type: System.Text.Rune
+      description: The top-left corner character.
+    - id: topRightCornerChar
+      type: System.Text.Rune
+      description: The top-right corner character.
+    - id: bottomLeftCornerChar
+      type: System.Text.Rune
+      description: The bottom-left corner character.
+    - id: bottomRightCornerChar
+      type: System.Text.Rune
+      description: The bottom-right corner character.
+    - id: style
+      type: Sharpie.Style
+      description: The style to use.
+    content.vb: Sub DrawBorder(leftSideChar As Rune, rightSideChar As Rune, topSideChar As Rune, bottomSideChar As Rune, topLeftCornerChar As Rune, topRightCornerChar As Rune, bottomLeftCornerChar As Rune, bottomRightCornerChar As Rune, style As Style)
+  overload: Sharpie.Abstractions.ISurface.DrawBorder*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.DrawBorder
+  commentId: M:Sharpie.Abstractions.ISurface.DrawBorder
+  id: DrawBorder
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: DrawBorder()
+  nameWithType: ISurface.DrawBorder()
+  fullName: Sharpie.Abstractions.ISurface.DrawBorder()
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawBorder
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 409
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Draws a border around the surface's edges using standard characters.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void DrawBorder()
+    content.vb: Sub DrawBorder()
+  overload: Sharpie.Abstractions.ISurface.DrawBorder*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.RemoveText(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.RemoveText(System.Int32)
+  id: RemoveText(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: RemoveText(int)
+  nameWithType: ISurface.RemoveText(int)
+  fullName: Sharpie.Abstractions.ISurface.RemoveText(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RemoveText
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 421
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Removes the text under the caret and moves the contents of the line to the left.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void RemoveText(int count)
+    parameters:
+    - id: count
+      type: System.Int32
+      description: The number of characters to remove.
+    content.vb: Sub RemoveText(count As Integer)
+  overload: Sharpie.Abstractions.ISurface.RemoveText*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.RemoveText(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.RemoveText(Integer)
+  name.vb: RemoveText(Integer)
+- uid: Sharpie.Abstractions.ISurface.GetText(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.GetText(System.Int32)
+  id: GetText(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: GetText(int)
+  nameWithType: ISurface.GetText(int)
+  fullName: Sharpie.Abstractions.ISurface.GetText(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: GetText
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 433
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Gets the text from the surface at the caret position to the right.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: (Rune @char, Style style)[] GetText(int count)
+    parameters:
+    - id: count
+      type: System.Int32
+      description: The number of characters to get.
+    return:
+      type: System.ValueTuple{System.Text.Rune,Sharpie.Style}[]
+    content.vb: Function GetText(count As Integer) As ([char] As Rune, style As Style)()
+  overload: Sharpie.Abstractions.ISurface.GetText*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.GetText(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.GetText(Integer)
+  name.vb: GetText(Integer)
+- uid: Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+  commentId: M:Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+  id: Clear(Sharpie.ClearStrategy)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Clear(ClearStrategy)
+  nameWithType: ISurface.Clear(ClearStrategy)
+  fullName: Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Clear
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 445
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Clears the contents of the row/surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void Clear(ClearStrategy strategy = ClearStrategy.Full)
+    parameters:
+    - id: strategy
+      type: Sharpie.ClearStrategy
+      description: The strategy to use.
+    content.vb: Sub Clear(strategy As ClearStrategy = ClearStrategy.Full)
+  overload: Sharpie.Abstractions.ISurface.Clear*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,Sharpie.ReplaceStrategy)
+  commentId: M:Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,Sharpie.ReplaceStrategy)
+  id: Replace(Sharpie.Abstractions.ISurface,Sharpie.ReplaceStrategy)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Replace(ISurface, ReplaceStrategy)
+  nameWithType: ISurface.Replace(ISurface, ReplaceStrategy)
+  fullName: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface, Sharpie.ReplaceStrategy)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Replace
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 460
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Replaces the content of a given surface with the contents of the current surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void Replace(ISurface surface, ReplaceStrategy strategy)
+    parameters:
+    - id: surface
+      type: Sharpie.Abstractions.ISurface
+      description: The surface to copy contents to.
+    - id: strategy
+      type: Sharpie.ReplaceStrategy
+      description: The used strategy.
+    content.vb: Sub Replace(surface As ISurface, strategy As ReplaceStrategy)
+  overload: Sharpie.Abstractions.ISurface.Replace*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code class="paramref">surface</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The contents of <code class="paramref">surface</code> cannot be replaced.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,System.Drawing.Rectangle,System.Drawing.Point,Sharpie.ReplaceStrategy)
+  commentId: M:Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,System.Drawing.Rectangle,System.Drawing.Point,Sharpie.ReplaceStrategy)
+  id: Replace(Sharpie.Abstractions.ISurface,System.Drawing.Rectangle,System.Drawing.Point,Sharpie.ReplaceStrategy)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Replace(ISurface, Rectangle, Point, ReplaceStrategy)
+  nameWithType: ISurface.Replace(ISurface, Rectangle, Point, ReplaceStrategy)
+  fullName: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface, System.Drawing.Rectangle, System.Drawing.Point, Sharpie.ReplaceStrategy)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Replace
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 476
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Replaces the content of a given surface with the contents of the current surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void Replace(ISurface surface, Rectangle srcRect, Point destPos, ReplaceStrategy strategy)
+    parameters:
+    - id: surface
+      type: Sharpie.Abstractions.ISurface
+      description: The surface to copy contents to.
+    - id: srcRect
+      type: System.Drawing.Rectangle
+      description: The source rectangle to copy.
+    - id: destPos
+      type: System.Drawing.Point
+      description: The destination position.
+    - id: strategy
+      type: Sharpie.ReplaceStrategy
+      description: The used strategy.
+    content.vb: Sub Replace(surface As ISurface, srcRect As Rectangle, destPos As Point, strategy As ReplaceStrategy)
+  overload: Sharpie.Abstractions.ISurface.Replace*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code class="paramref">surface</code> is null.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.MarkDirty(System.Int32,System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.MarkDirty(System.Int32,System.Int32)
+  id: MarkDirty(System.Int32,System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: MarkDirty(int, int)
+  nameWithType: ISurface.MarkDirty(int, int)
+  fullName: Sharpie.Abstractions.ISurface.MarkDirty(int, int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MarkDirty
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 489
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Marks a number of lines within the surface as <xref href="Sharpie.Abstractions.ISurface.Dirty" data-throw-if-not-resolved="false"></xref>.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void MarkDirty(int y, int count)
+    parameters:
+    - id: y
+      type: System.Int32
+      description: The line to start with.
+    - id: count
+      type: System.Int32
+      description: The count of lines to mark dirty.
+    content.vb: Sub MarkDirty(y As Integer, count As Integer)
+  overload: Sharpie.Abstractions.ISurface.MarkDirty*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.MarkDirty(Integer, Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.MarkDirty(Integer, Integer)
+  name.vb: MarkDirty(Integer, Integer)
+- uid: Sharpie.Abstractions.ISurface.MarkDirty
+  commentId: M:Sharpie.Abstractions.ISurface.MarkDirty
+  id: MarkDirty
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: MarkDirty()
+  nameWithType: ISurface.MarkDirty()
+  fullName: Sharpie.Abstractions.ISurface.MarkDirty()
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MarkDirty
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 500
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Marks the entire contents of the surface as <xref href="Sharpie.Abstractions.ISurface.Dirty" data-throw-if-not-resolved="false"></xref>.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void MarkDirty()
+    content.vb: Sub MarkDirty()
+  overload: Sharpie.Abstractions.ISurface.MarkDirty*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+  commentId: M:Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+  id: IsPointWithin(System.Drawing.Point)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: IsPointWithin(Point)
+  nameWithType: ISurface.IsPointWithin(Point)
+  fullName: Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: IsPointWithin
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 512
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Checks if a given point fits within the current surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: bool IsPointWithin(Point point)
+    parameters:
+    - id: point
+      type: System.Drawing.Point
+    return:
+      type: System.Boolean
+      description: The result of the check.
+    content.vb: Function IsPointWithin(point As Point) As Boolean
+  overload: Sharpie.Abstractions.ISurface.IsPointWithin*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+  commentId: M:Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+  id: IsRectangleWithin(System.Drawing.Rectangle)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: IsRectangleWithin(Rectangle)
+  nameWithType: ISurface.IsRectangleWithin(Rectangle)
+  fullName: Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: IsRectangleWithin
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 524
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Checks if a given rectangle fits within the current surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: bool IsRectangleWithin(Rectangle rect)
+    parameters:
+    - id: rect
+      type: System.Drawing.Rectangle
+    return:
+      type: System.Boolean
+      description: The result of the check.
+    content.vb: Function IsRectangleWithin(rect As Rectangle) As Boolean
+  overload: Sharpie.Abstractions.ISurface.IsRectangleWithin*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,System.Drawing.Rectangle,Sharpie.Abstractions.IDrawable)
+  commentId: M:Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,System.Drawing.Rectangle,Sharpie.Abstractions.IDrawable)
+  id: Draw(System.Drawing.Point,System.Drawing.Rectangle,Sharpie.Abstractions.IDrawable)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Draw(Point, Rectangle, IDrawable)
+  nameWithType: ISurface.Draw(Point, Rectangle, IDrawable)
+  fullName: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point, System.Drawing.Rectangle, Sharpie.Abstractions.IDrawable)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Draw
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 543
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Draws a given <code class="paramref">drawable</code> to the surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void Draw(Point location, Rectangle area, IDrawable drawable)
+    parameters:
+    - id: location
+      type: System.Drawing.Point
+      description: The location of the drawing.
+    - id: area
+      type: System.Drawing.Rectangle
+      description: The area of the drawing to draw.
+    - id: drawable
+      type: Sharpie.Abstractions.IDrawable
+      description: The drawing to draw.
+    content.vb: Sub Draw(location As Point, area As Rectangle, drawable As IDrawable)
+  overload: Sharpie.Abstractions.ISurface.Draw*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">drawable</code> is <code>null</code>.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: >-
+      Thrown if <code class="paramref">location</code> or  <code class="paramref">area</code> are
+
+      out of bounds.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,Sharpie.Abstractions.IDrawable)
+  commentId: M:Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,Sharpie.Abstractions.IDrawable)
+  id: Draw(System.Drawing.Point,Sharpie.Abstractions.IDrawable)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Draw(Point, IDrawable)
+  nameWithType: ISurface.Draw(Point, IDrawable)
+  fullName: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point, Sharpie.Abstractions.IDrawable)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Draw
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 558
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Draws a given <code class="paramref">drawable</code> to the surface.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void Draw(Point location, IDrawable drawable)
+    parameters:
+    - id: location
+      type: System.Drawing.Point
+      description: The location of the drawing.
+    - id: drawable
+      type: Sharpie.Abstractions.IDrawable
+      description: The drawing to draw.
+    content.vb: Sub Draw(location As Point, drawable As IDrawable)
+  overload: Sharpie.Abstractions.ISurface.Draw*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">drawable</code> is <code>null</code>.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: Thrown if <code class="paramref">location</code> is out of bounds.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.ISurface.LineDirty(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.LineDirty(System.Int32)
+  id: LineDirty(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: LineDirty(int)
+  nameWithType: ISurface.LineDirty(int)
+  fullName: Sharpie.Abstractions.ISurface.LineDirty(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LineDirty
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 569
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Checks if the line at <code class="paramref">y</code> is dirty.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: bool LineDirty(int y)
+    parameters:
+    - id: y
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Function LineDirty(y As Integer) As Boolean
+  overload: Sharpie.Abstractions.ISurface.LineDirty*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Surface is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+  nameWithType.vb: ISurface.LineDirty(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.LineDirty(Integer)
+  name.vb: LineDirty(Integer)
+- uid: Sharpie.Abstractions.ISurface.Destroy
+  commentId: M:Sharpie.Abstractions.ISurface.Destroy
+  id: Destroy
+  parent: Sharpie.Abstractions.ISurface
+  langs:
+  - csharp
+  - vb
+  name: Destroy()
+  nameWithType: ISurface.Destroy()
+  fullName: Sharpie.Abstractions.ISurface.Destroy()
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/ISurface.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Destroy
+    path: Sharpie/Abstractions/ISurface.cs
+    startLine: 579
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Removes the surface form the parent, destroys all children and itself.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: void Destroy()
+    content.vb: Sub Destroy()
+  overload: Sharpie.Abstractions.ISurface.Destroy*
+  exceptions:
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+references:
+- uid: Sharpie.Window
+  commentId: T:Sharpie.Window
+  parent: Sharpie
+  href: Sharpie.Window.html
+  name: Window
+  nameWithType: Window
+  fullName: Sharpie.Window
+- uid: Sharpie.Screen
+  commentId: T:Sharpie.Screen
+  parent: Sharpie
+  href: Sharpie.Screen.html
+  name: Screen
+  nameWithType: Screen
+  fullName: Sharpie.Screen
+- uid: Sharpie.Pad
+  commentId: T:Sharpie.Pad
+  parent: Sharpie
+  href: Sharpie.Pad.html
+  name: Pad
+  nameWithType: Pad
+  fullName: Sharpie.Pad
+- uid: Sharpie.Abstractions
+  commentId: N:Sharpie.Abstractions
+  href: Sharpie.html
+  name: Sharpie.Abstractions
+  nameWithType: Sharpie.Abstractions
+  fullName: Sharpie.Abstractions
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+- uid: Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Abstractions.IDrawSurface
+  isExternal: true
+  href: Sharpie.Abstractions.IDrawSurface.html#Sharpie_Abstractions_IDrawSurface_DrawCell_System_Drawing_Point_System_Text_Rune_Sharpie_Style_
+  name: DrawCell(Point, Rune, Style)
+  nameWithType: IDrawSurface.DrawCell(Point, Rune, Style)
+  fullName: Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point, System.Text.Rune, Sharpie.Style)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+    name: DrawCell
+    href: Sharpie.Abstractions.IDrawSurface.html#Sharpie_Abstractions_IDrawSurface_DrawCell_System_Drawing_Point_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+    name: DrawCell
+    href: Sharpie.Abstractions.IDrawSurface.html#Sharpie_Abstractions_IDrawSurface_DrawCell_System_Drawing_Point_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Abstractions.IDrawSurface
+  commentId: T:Sharpie.Abstractions.IDrawSurface
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IDrawSurface.html
+  name: IDrawSurface
+  nameWithType: IDrawSurface
+  fullName: Sharpie.Abstractions.IDrawSurface
+- uid: System.ObjectDisposedException
+  commentId: T:System.ObjectDisposedException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.objectdisposedexception
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: Sharpie.Abstractions.ISurface.Handle*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Handle
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Handle
+  name: Handle
+  nameWithType: ISurface.Handle
+  fullName: Sharpie.Abstractions.ISurface.Handle
+- uid: System.IntPtr
+  commentId: T:System.IntPtr
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.intptr
+  name: IntPtr
+  nameWithType: IntPtr
+  fullName: System.IntPtr
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Abstractions.ISurface.Disposed*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Disposed
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Disposed
+  name: Disposed
+  nameWithType: ISurface.Disposed
+  fullName: Sharpie.Abstractions.ISurface.Disposed
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Sharpie.CursesSynchronizationException
+  commentId: T:Sharpie.CursesSynchronizationException
+  href: Sharpie.CursesSynchronizationException.html
+  name: CursesSynchronizationException
+  nameWithType: CursesSynchronizationException
+  fullName: Sharpie.CursesSynchronizationException
+- uid: Sharpie.Abstractions.ISurface.Scrollable*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Scrollable
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Scrollable
+  name: Scrollable
+  nameWithType: ISurface.Scrollable
+  fullName: Sharpie.Abstractions.ISurface.Scrollable
+- uid: Sharpie.Abstractions.ISurface.Style*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Style
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Style
+  name: Style
+  nameWithType: ISurface.Style
+  fullName: Sharpie.Abstractions.ISurface.Style
+- uid: Sharpie.Style
+  commentId: T:Sharpie.Style
+  parent: Sharpie
+  href: Sharpie.Style.html
+  name: Style
+  nameWithType: Style
+  fullName: Sharpie.Style
+- uid: Sharpie.Abstractions.ISurface.ColorMixture*
+  commentId: Overload:Sharpie.Abstractions.ISurface.ColorMixture
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ColorMixture
+  name: ColorMixture
+  nameWithType: ISurface.ColorMixture
+  fullName: Sharpie.Abstractions.ISurface.ColorMixture
+- uid: Sharpie.ColorMixture
+  commentId: T:Sharpie.ColorMixture
+  parent: Sharpie
+  href: Sharpie.ColorMixture.html
+  name: ColorMixture
+  nameWithType: ColorMixture
+  fullName: Sharpie.ColorMixture
+- uid: Sharpie.Abstractions.ISurface.Background*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Background
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Background
+  name: Background
+  nameWithType: ISurface.Background
+  fullName: Sharpie.Abstractions.ISurface.Background
+- uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}
+  commentId: T:System.ValueTuple{System.Text.Rune,Sharpie.Style}
+  parent: System
+  definition: System.ValueTuple`2
+  href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  name: (Rune char, Style style)
+  nameWithType: (Rune char, Style style)
+  fullName: (System.Text.Rune char, Sharpie.Style style)
+  nameWithType.vb: (char As Rune, style As Style)
+  fullName.vb: (char As System.Text.Rune, style As Sharpie.Style)
+  name.vb: (char As Rune, style As Style)
+  spec.csharp:
+  - name: (
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: " "
+  - uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}.char
+    name: char
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.text.rune,sharpie.style-.char
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: " "
+  - uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}.style
+    name: style
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.text.rune,sharpie.style-.style
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}.char
+    name: char
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.text.rune,sharpie.style-.char
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}.style
+    name: style
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.text.rune,sharpie.style-.style
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.Size*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Size
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Size
+  name: Size
+  nameWithType: ISurface.Size
+  fullName: Sharpie.Abstractions.ISurface.Size
+- uid: System.Drawing.Size
+  commentId: T:System.Drawing.Size
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.size
+  name: Size
+  nameWithType: Size
+  fullName: System.Drawing.Size
+- uid: System.Drawing
+  commentId: N:System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Drawing
+  nameWithType: System.Drawing
+  fullName: System.Drawing
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Drawing
+    name: Drawing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Drawing
+    name: Drawing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing
+- uid: System.ArgumentOutOfRangeException
+  commentId: T:System.ArgumentOutOfRangeException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: Sharpie.Abstractions.ISurface.CaretLocation*
+  commentId: Overload:Sharpie.Abstractions.ISurface.CaretLocation
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_CaretLocation
+  name: CaretLocation
+  nameWithType: ISurface.CaretLocation
+  fullName: Sharpie.Abstractions.ISurface.CaretLocation
+- uid: System.Drawing.Point
+  commentId: T:System.Drawing.Point
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  name: Point
+  nameWithType: Point
+  fullName: System.Drawing.Point
+- uid: Sharpie.Abstractions.ISurface.Dirty*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Dirty
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Dirty
+  name: Dirty
+  nameWithType: ISurface.Dirty
+  fullName: Sharpie.Abstractions.ISurface.Dirty
+- uid: Sharpie.Abstractions.ISurface.ManagedCaret*
+  commentId: Overload:Sharpie.Abstractions.ISurface.ManagedCaret
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ManagedCaret
+  name: ManagedCaret
+  nameWithType: ISurface.ManagedCaret
+  fullName: Sharpie.Abstractions.ISurface.ManagedCaret
+- uid: Sharpie.Abstractions.ISurface.EnableAttributes*
+  commentId: Overload:Sharpie.Abstractions.ISurface.EnableAttributes
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_EnableAttributes_Sharpie_VideoAttribute_
+  name: EnableAttributes
+  nameWithType: ISurface.EnableAttributes
+  fullName: Sharpie.Abstractions.ISurface.EnableAttributes
+- uid: Sharpie.VideoAttribute
+  commentId: T:Sharpie.VideoAttribute
+  parent: Sharpie
+  href: Sharpie.VideoAttribute.html
+  name: VideoAttribute
+  nameWithType: VideoAttribute
+  fullName: Sharpie.VideoAttribute
+- uid: Sharpie.Abstractions.ISurface.DisableAttributes*
+  commentId: Overload:Sharpie.Abstractions.ISurface.DisableAttributes
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DisableAttributes_Sharpie_VideoAttribute_
+  name: DisableAttributes
+  nameWithType: ISurface.DisableAttributes
+  fullName: Sharpie.Abstractions.ISurface.DisableAttributes
+- uid: Sharpie.Abstractions.ISurface.Scrollable
+  commentId: P:Sharpie.Abstractions.ISurface.Scrollable
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Scrollable
+  name: Scrollable
+  nameWithType: ISurface.Scrollable
+  fullName: Sharpie.Abstractions.ISurface.Scrollable
+- uid: System.NotSupportedException
+  commentId: T:System.NotSupportedException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.notsupportedexception
+  name: NotSupportedException
+  nameWithType: NotSupportedException
+  fullName: System.NotSupportedException
+- uid: Sharpie.Abstractions.ISurface.ScrollUp*
+  commentId: Overload:Sharpie.Abstractions.ISurface.ScrollUp
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ScrollUp_System_Int32_
+  name: ScrollUp
+  nameWithType: ISurface.ScrollUp
+  fullName: Sharpie.Abstractions.ISurface.ScrollUp
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Sharpie.Abstractions.ISurface
+  commentId: T:Sharpie.Abstractions.ISurface
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ISurface.html
+  name: ISurface
+  nameWithType: ISurface
+  fullName: Sharpie.Abstractions.ISurface
+- uid: Sharpie.Abstractions.ISurface.ScrollDown*
+  commentId: Overload:Sharpie.Abstractions.ISurface.ScrollDown
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ScrollDown_System_Int32_
+  name: ScrollDown
+  nameWithType: ISurface.ScrollDown
+  fullName: Sharpie.Abstractions.ISurface.ScrollDown
+- uid: Sharpie.Abstractions.ISurface.InsertEmptyLines*
+  commentId: Overload:Sharpie.Abstractions.ISurface.InsertEmptyLines
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_InsertEmptyLines_System_Int32_
+  name: InsertEmptyLines
+  nameWithType: ISurface.InsertEmptyLines
+  fullName: Sharpie.Abstractions.ISurface.InsertEmptyLines
+- uid: Sharpie.Abstractions.ISurface.DeleteLines*
+  commentId: Overload:Sharpie.Abstractions.ISurface.DeleteLines
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DeleteLines_System_Int32_
+  name: DeleteLines
+  nameWithType: ISurface.DeleteLines
+  fullName: Sharpie.Abstractions.ISurface.DeleteLines
+- uid: Sharpie.Abstractions.ISurface.ChangeTextStyle*
+  commentId: Overload:Sharpie.Abstractions.ISurface.ChangeTextStyle
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ChangeTextStyle_System_Int32_Sharpie_Style_
+  name: ChangeTextStyle
+  nameWithType: ISurface.ChangeTextStyle
+  fullName: Sharpie.Abstractions.ISurface.ChangeTextStyle
+- uid: Sharpie.Abstractions.ISurface.WriteText*
+  commentId: Overload:Sharpie.Abstractions.ISurface.WriteText
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_Sharpie_StyledText_System_Boolean_
+  name: WriteText
+  nameWithType: ISurface.WriteText
+  fullName: Sharpie.Abstractions.ISurface.WriteText
+- uid: Sharpie.StyledText
+  commentId: T:Sharpie.StyledText
+  parent: Sharpie
+  href: Sharpie.StyledText.html
+  name: StyledText
+  nameWithType: StyledText
+  fullName: Sharpie.StyledText
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentnullexception
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Sharpie.Abstractions.ISurface.NextLine*
+  commentId: Overload:Sharpie.Abstractions.ISurface.NextLine
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_NextLine
+  name: NextLine
+  nameWithType: ISurface.NextLine
+  fullName: Sharpie.Abstractions.ISurface.NextLine
+- uid: Sharpie.Abstractions.ISurface.DrawText*
+  commentId: Overload:Sharpie.Abstractions.ISurface.DrawText
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawText_Sharpie_Abstractions_IAsciiFont_System_String_Sharpie_Style_System_Boolean_System_Boolean_
+  name: DrawText
+  nameWithType: ISurface.DrawText
+  fullName: Sharpie.Abstractions.ISurface.DrawText
+- uid: Sharpie.Abstractions.IAsciiFont
+  commentId: T:Sharpie.Abstractions.IAsciiFont
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IAsciiFont.html
+  name: IAsciiFont
+  nameWithType: IAsciiFont
+  fullName: Sharpie.Abstractions.IAsciiFont
+- uid: Sharpie.Abstractions.ISurface.DrawVerticalLine*
+  commentId: Overload:Sharpie.Abstractions.ISurface.DrawVerticalLine
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawVerticalLine_System_Int32_System_Text_Rune_Sharpie_Style_
+  name: DrawVerticalLine
+  nameWithType: ISurface.DrawVerticalLine
+  fullName: Sharpie.Abstractions.ISurface.DrawVerticalLine
+- uid: System.Text.Rune
+  commentId: T:System.Text.Rune
+  parent: System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  name: Rune
+  nameWithType: Rune
+  fullName: System.Text.Rune
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+- uid: Sharpie.Abstractions.ISurface.DrawHorizontalLine*
+  commentId: Overload:Sharpie.Abstractions.ISurface.DrawHorizontalLine
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawHorizontalLine_System_Int32_System_Text_Rune_Sharpie_Style_
+  name: DrawHorizontalLine
+  nameWithType: ISurface.DrawHorizontalLine
+  fullName: Sharpie.Abstractions.ISurface.DrawHorizontalLine
+- uid: Sharpie.Abstractions.ISurface.DrawBorder*
+  commentId: Overload:Sharpie.Abstractions.ISurface.DrawBorder
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawBorder_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_Sharpie_Style_
+  name: DrawBorder
+  nameWithType: ISurface.DrawBorder
+  fullName: Sharpie.Abstractions.ISurface.DrawBorder
+- uid: Sharpie.Abstractions.ISurface.RemoveText*
+  commentId: Overload:Sharpie.Abstractions.ISurface.RemoveText
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_RemoveText_System_Int32_
+  name: RemoveText
+  nameWithType: ISurface.RemoveText
+  fullName: Sharpie.Abstractions.ISurface.RemoveText
+- uid: Sharpie.Abstractions.ISurface.GetText*
+  commentId: Overload:Sharpie.Abstractions.ISurface.GetText
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_GetText_System_Int32_
+  name: GetText
+  nameWithType: ISurface.GetText
+  fullName: Sharpie.Abstractions.ISurface.GetText
+- uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  name: (Rune char, Style style)[]
+  nameWithType: (Rune char, Style style)[]
+  fullName: (System.Text.Rune char, Sharpie.Style style)[]
+  nameWithType.vb: (char As Rune, style As Style)()
+  fullName.vb: (char As System.Text.Rune, style As Sharpie.Style)()
+  name.vb: (char As Rune, style As Style)()
+  spec.csharp:
+  - name: (
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: " "
+  - uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}.char
+    name: char
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.text.rune,sharpie.style-.char
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: " "
+  - uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}.style
+    name: style
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.text.rune,sharpie.style-.style
+  - name: )
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}.char
+    name: char
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.text.rune,sharpie.style-.char
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Text.Rune,Sharpie.Style}.style
+    name: style
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.text.rune,sharpie.style-.style
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  - name: (
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.Clear*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Clear
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Clear_Sharpie_ClearStrategy_
+  name: Clear
+  nameWithType: ISurface.Clear
+  fullName: Sharpie.Abstractions.ISurface.Clear
+- uid: Sharpie.ClearStrategy
+  commentId: T:Sharpie.ClearStrategy
+  parent: Sharpie
+  href: Sharpie.ClearStrategy.html
+  name: ClearStrategy
+  nameWithType: ClearStrategy
+  fullName: Sharpie.ClearStrategy
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: Sharpie.Abstractions.ISurface.Replace*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Replace
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Replace_Sharpie_Abstractions_ISurface_Sharpie_ReplaceStrategy_
+  name: Replace
+  nameWithType: ISurface.Replace
+  fullName: Sharpie.Abstractions.ISurface.Replace
+- uid: Sharpie.ReplaceStrategy
+  commentId: T:Sharpie.ReplaceStrategy
+  parent: Sharpie
+  href: Sharpie.ReplaceStrategy.html
+  name: ReplaceStrategy
+  nameWithType: ReplaceStrategy
+  fullName: Sharpie.ReplaceStrategy
+- uid: System.Drawing.Rectangle
+  commentId: T:System.Drawing.Rectangle
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  name: Rectangle
+  nameWithType: Rectangle
+  fullName: System.Drawing.Rectangle
+- uid: Sharpie.Abstractions.ISurface.Dirty
+  commentId: P:Sharpie.Abstractions.ISurface.Dirty
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Dirty
+  name: Dirty
+  nameWithType: ISurface.Dirty
+  fullName: Sharpie.Abstractions.ISurface.Dirty
+- uid: Sharpie.Abstractions.ISurface.MarkDirty*
+  commentId: Overload:Sharpie.Abstractions.ISurface.MarkDirty
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_MarkDirty_System_Int32_System_Int32_
+  name: MarkDirty
+  nameWithType: ISurface.MarkDirty
+  fullName: Sharpie.Abstractions.ISurface.MarkDirty
+- uid: Sharpie.Abstractions.ISurface.IsPointWithin*
+  commentId: Overload:Sharpie.Abstractions.ISurface.IsPointWithin
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_IsPointWithin_System_Drawing_Point_
+  name: IsPointWithin
+  nameWithType: ISurface.IsPointWithin
+  fullName: Sharpie.Abstractions.ISurface.IsPointWithin
+- uid: Sharpie.Abstractions.ISurface.IsRectangleWithin*
+  commentId: Overload:Sharpie.Abstractions.ISurface.IsRectangleWithin
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_IsRectangleWithin_System_Drawing_Rectangle_
+  name: IsRectangleWithin
+  nameWithType: ISurface.IsRectangleWithin
+  fullName: Sharpie.Abstractions.ISurface.IsRectangleWithin
+- uid: Sharpie.Abstractions.ISurface.Draw*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Draw
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Draw_System_Drawing_Point_System_Drawing_Rectangle_Sharpie_Abstractions_IDrawable_
+  name: Draw
+  nameWithType: ISurface.Draw
+  fullName: Sharpie.Abstractions.ISurface.Draw
+- uid: Sharpie.Abstractions.IDrawable
+  commentId: T:Sharpie.Abstractions.IDrawable
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IDrawable.html
+  name: IDrawable
+  nameWithType: IDrawable
+  fullName: Sharpie.Abstractions.IDrawable
+- uid: Sharpie.Abstractions.ISurface.LineDirty*
+  commentId: Overload:Sharpie.Abstractions.ISurface.LineDirty
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_LineDirty_System_Int32_
+  name: LineDirty
+  nameWithType: ISurface.LineDirty
+  fullName: Sharpie.Abstractions.ISurface.LineDirty
+- uid: Sharpie.Abstractions.ISurface.Destroy*
+  commentId: Overload:Sharpie.Abstractions.ISurface.Destroy
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Destroy
+  name: Destroy
+  nameWithType: ISurface.Destroy
+  fullName: Sharpie.Abstractions.ISurface.Destroy

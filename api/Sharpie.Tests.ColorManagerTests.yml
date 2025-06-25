@@ -1,0 +1,2149 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Tests.ColorManagerTests
+  commentId: T:Sharpie.Tests.ColorManagerTests
+  id: ColorManagerTests
+  parent: Sharpie.Tests
+  children:
+  - Sharpie.Tests.ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds
+  - Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfCursesFails
+  - Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported
+  - Sharpie.Tests.ColorManagerTests.BreakdownColor2_AlsoCallsCurses
+  - Sharpie.Tests.ColorManagerTests.CanRedefineColors_ReturnsCursesResponse(System.Boolean)
+  - Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+  - Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+  - Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+  - Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported
+  - Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+  - Sharpie.Tests.ColorManagerTests.Ctor_Throws_IfCursesIsNull
+  - Sharpie.Tests.ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  - Sharpie.Tests.ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+  - Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode
+  - Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode
+  - Sharpie.Tests.ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  - Sharpie.Tests.ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled
+  - Sharpie.Tests.ColorManagerTests.MixColors2_CallsCursesAsWell
+  - Sharpie.Tests.ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds
+  - Sharpie.Tests.ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  - Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+  - Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode
+  - Sharpie.Tests.ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  - Sharpie.Tests.ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled
+  - Sharpie.Tests.ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds
+  - Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfCursesFails
+  - Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported
+  - Sharpie.Tests.ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+  - Sharpie.Tests.ColorManagerTests.RedefineColor2_AlsoCallsCurses
+  - Sharpie.Tests.ColorManagerTests.RemixColors2_CallsCursesAsWell
+  - Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+  - Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  - Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+  - Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+  - Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  - Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled
+  - Sharpie.Tests.ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell
+  - Sharpie.Tests.ColorManagerTests.Terminal_IsInitialized
+  - Sharpie.Tests.ColorManagerTests.TestCleanup
+  - Sharpie.Tests.ColorManagerTests.TestInitialize
+  - Sharpie.Tests.ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds
+  - Sharpie.Tests.ColorManagerTests.UnMixColors_Throws_IfCursesFails
+  langs:
+  - csharp
+  - vb
+  name: ColorManagerTests
+  nameWithType: ColorManagerTests
+  fullName: Sharpie.Tests.ColorManagerTests
+  type: Class
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ColorManagerTests
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 32
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestClass]
+
+      public class ColorManagerTests
+    content.vb: >-
+      <TestClass>
+
+      Public Class ColorManagerTests
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.TestInitialize
+  commentId: M:Sharpie.Tests.ColorManagerTests.TestInitialize
+  id: TestInitialize
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: TestInitialize()
+  nameWithType: ColorManagerTests.TestInitialize()
+  fullName: Sharpie.Tests.ColorManagerTests.TestInitialize()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestInitialize
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 39
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestInitialize]
+
+      public void TestInitialize()
+    content.vb: >-
+      <TestInitialize>
+
+      Public Sub TestInitialize()
+  overload: Sharpie.Tests.ColorManagerTests.TestInitialize*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.TestCleanup
+  commentId: M:Sharpie.Tests.ColorManagerTests.TestCleanup
+  id: TestCleanup
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: TestCleanup()
+  nameWithType: ColorManagerTests.TestCleanup()
+  fullName: Sharpie.Tests.ColorManagerTests.TestCleanup()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestCleanup
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 56
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestCleanup]
+
+      public void TestCleanup()
+    content.vb: >-
+      <TestCleanup>
+
+      Public Sub TestCleanup()
+  overload: Sharpie.Tests.ColorManagerTests.TestCleanup*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_Throws_IfCursesIsNull
+  commentId: M:Sharpie.Tests.ColorManagerTests.Ctor_Throws_IfCursesIsNull
+  id: Ctor_Throws_IfCursesIsNull
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_IfCursesIsNull()
+  nameWithType: ColorManagerTests.Ctor_Throws_IfCursesIsNull()
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_Throws_IfCursesIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_IfCursesIsNull
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 58
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_IfCursesIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_IfCursesIsNull()
+  overload: Sharpie.Tests.ColorManagerTests.Ctor_Throws_IfCursesIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported
+  commentId: M:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported
+  id: Ctor_SetsColorModeToExtended_IfFullySupported
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_SetsColorModeToExtended_IfFullySupported()
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported()
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_SetsColorModeToExtended_IfFullySupported
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 64
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_SetsColorModeToExtended_IfFullySupported()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_SetsColorModeToExtended_IfFullySupported()
+  overload: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+  commentId: M:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+  id: Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_SetsColorModeToDisabled_IfFailedToStartColors()
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors()
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 71
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_SetsColorModeToDisabled_IfFailedToStartColors()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_SetsColorModeToDisabled_IfFailedToStartColors()
+  overload: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+  commentId: M:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+  id: Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_SetsColorModeToStandard_IfFailedToUseUpper()
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper()
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 81
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_SetsColorModeToStandard_IfFailedToUseUpper()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_SetsColorModeToStandard_IfFailedToUseUpper()
+  overload: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+  commentId: M:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+  id: Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_SetsColorModeToDisabled_IfFailedToUseStandard()
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard()
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 91
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_SetsColorModeToDisabled_IfFailedToUseStandard()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_SetsColorModeToDisabled_IfFailedToUseStandard()
+  overload: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+  commentId: M:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+  id: Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported()
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported()
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 101
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported()
+  overload: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.Terminal_IsInitialized
+  commentId: M:Sharpie.Tests.ColorManagerTests.Terminal_IsInitialized
+  id: Terminal_IsInitialized
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Terminal_IsInitialized()
+  nameWithType: ColorManagerTests.Terminal_IsInitialized()
+  fullName: Sharpie.Tests.ColorManagerTests.Terminal_IsInitialized()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Terminal_IsInitialized
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 111
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Terminal_IsInitialized()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Terminal_IsInitialized()
+  overload: Sharpie.Tests.ColorManagerTests.Terminal_IsInitialized*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.CanRedefineColors_ReturnsCursesResponse(System.Boolean)
+  commentId: M:Sharpie.Tests.ColorManagerTests.CanRedefineColors_ReturnsCursesResponse(System.Boolean)
+  id: CanRedefineColors_ReturnsCursesResponse(System.Boolean)
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: CanRedefineColors_ReturnsCursesResponse(bool)
+  nameWithType: ColorManagerTests.CanRedefineColors_ReturnsCursesResponse(bool)
+  fullName: Sharpie.Tests.ColorManagerTests.CanRedefineColors_ReturnsCursesResponse(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CanRedefineColors_ReturnsCursesResponse
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 118
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void CanRedefineColors_ReturnsCursesResponse(bool value)
+    parameters:
+    - id: value
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub CanRedefineColors_ReturnsCursesResponse(value As Boolean)
+  overload: Sharpie.Tests.ColorManagerTests.CanRedefineColors_ReturnsCursesResponse*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: ColorManagerTests.CanRedefineColors_ReturnsCursesResponse(Boolean)
+  fullName.vb: Sharpie.Tests.ColorManagerTests.CanRedefineColors_ReturnsCursesResponse(Boolean)
+  name.vb: CanRedefineColors_ReturnsCursesResponse(Boolean)
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+  id: MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds()
+  nameWithType: ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds()
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 128
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds()
+  overload: Sharpie.Tests.ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  commentId: M:Sharpie.Tests.ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  id: MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  nameWithType: ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 144
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  overload: Sharpie.Tests.ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled
+  commentId: M:Sharpie.Tests.ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled
+  id: MixColors1_Throws_IfColorModeIsDisabled
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MixColors1_Throws_IfColorModeIsDisabled()
+  nameWithType: ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled()
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MixColors1_Throws_IfColorModeIsDisabled
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 160
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MixColors1_Throws_IfColorModeIsDisabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MixColors1_Throws_IfColorModeIsDisabled()
+  overload: Sharpie.Tests.ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode
+  commentId: M:Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode
+  id: MixColors1_SubstitutesDefaultColors_InIgnorantMode
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MixColors1_SubstitutesDefaultColors_InIgnorantMode()
+  nameWithType: ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode()
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MixColors1_SubstitutesDefaultColors_InIgnorantMode
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 167
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MixColors1_SubstitutesDefaultColors_InIgnorantMode()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MixColors1_SubstitutesDefaultColors_InIgnorantMode()
+  overload: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode
+  commentId: M:Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode
+  id: MixColors1_SubstitutesDefaultColors_InStandardMode
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MixColors1_SubstitutesDefaultColors_InStandardMode()
+  nameWithType: ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode()
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MixColors1_SubstitutesDefaultColors_InStandardMode
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 180
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MixColors1_SubstitutesDefaultColors_InStandardMode()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MixColors1_SubstitutesDefaultColors_InStandardMode()
+  overload: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  commentId: M:Sharpie.Tests.ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  id: MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  nameWithType: ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 192
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  overload: Sharpie.Tests.ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.MixColors2_CallsCursesAsWell
+  commentId: M:Sharpie.Tests.ColorManagerTests.MixColors2_CallsCursesAsWell
+  id: MixColors2_CallsCursesAsWell
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MixColors2_CallsCursesAsWell()
+  nameWithType: ColorManagerTests.MixColors2_CallsCursesAsWell()
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors2_CallsCursesAsWell()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MixColors2_CallsCursesAsWell
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 199
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MixColors2_CallsCursesAsWell()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MixColors2_CallsCursesAsWell()
+  overload: Sharpie.Tests.ColorManagerTests.MixColors2_CallsCursesAsWell*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds
+  id: ReMixColors1_FinishesOK_IfCursesSucceeds
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ReMixColors1_FinishesOK_IfCursesSucceeds()
+  nameWithType: ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds()
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ReMixColors1_FinishesOK_IfCursesSucceeds
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 208
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ReMixColors1_FinishesOK_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ReMixColors1_FinishesOK_IfCursesSucceeds()
+  overload: Sharpie.Tests.ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  commentId: M:Sharpie.Tests.ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  id: ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  nameWithType: ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 218
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  overload: Sharpie.Tests.ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled
+  commentId: M:Sharpie.Tests.ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled
+  id: ReMixColors1_Throws_IfColorModeIsDisabled
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ReMixColors1_Throws_IfColorModeIsDisabled()
+  nameWithType: ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled()
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ReMixColors1_Throws_IfColorModeIsDisabled
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 230
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ReMixColors1_Throws_IfColorModeIsDisabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ReMixColors1_Throws_IfColorModeIsDisabled()
+  overload: Sharpie.Tests.ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+  commentId: M:Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+  id: ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ReMixColors1_SubstitutesDefaultColors_InIgnorantMode()
+  nameWithType: ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode()
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 237
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ReMixColors1_SubstitutesDefaultColors_InIgnorantMode()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ReMixColors1_SubstitutesDefaultColors_InIgnorantMode()
+  overload: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode
+  commentId: M:Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode
+  id: ReMixColors1_SubstitutesDefaultColors_InStandardMode
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ReMixColors1_SubstitutesDefaultColors_InStandardMode()
+  nameWithType: ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode()
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ReMixColors1_SubstitutesDefaultColors_InStandardMode
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 250
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ReMixColors1_SubstitutesDefaultColors_InStandardMode()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ReMixColors1_SubstitutesDefaultColors_InStandardMode()
+  overload: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  commentId: M:Sharpie.Tests.ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  id: ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  nameWithType: ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 262
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  overload: Sharpie.Tests.ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RemixColors2_CallsCursesAsWell
+  commentId: M:Sharpie.Tests.ColorManagerTests.RemixColors2_CallsCursesAsWell
+  id: RemixColors2_CallsCursesAsWell
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RemixColors2_CallsCursesAsWell()
+  nameWithType: ColorManagerTests.RemixColors2_CallsCursesAsWell()
+  fullName: Sharpie.Tests.ColorManagerTests.RemixColors2_CallsCursesAsWell()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RemixColors2_CallsCursesAsWell
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 269
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RemixColors2_CallsCursesAsWell()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RemixColors2_CallsCursesAsWell()
+  overload: Sharpie.Tests.ColorManagerTests.RemixColors2_CallsCursesAsWell*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+  id: RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RemixDefaultColors1_FinishesOK_IfCursesSucceeds()
+  nameWithType: ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds()
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 276
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RemixDefaultColors1_FinishesOK_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RemixDefaultColors1_FinishesOK_IfCursesSucceeds()
+  overload: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  commentId: M:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  id: RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  nameWithType: ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 286
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails()
+  overload: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled
+  commentId: M:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled
+  id: RemixDefaultColors1_Throws_IfColorModeIsDisabled
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RemixDefaultColors1_Throws_IfColorModeIsDisabled()
+  nameWithType: ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled()
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RemixDefaultColors1_Throws_IfColorModeIsDisabled
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 298
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RemixDefaultColors1_Throws_IfColorModeIsDisabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RemixDefaultColors1_Throws_IfColorModeIsDisabled()
+  overload: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+  commentId: M:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+  id: RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode()
+  nameWithType: ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode()
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 305
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode()
+  overload: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+  commentId: M:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+  id: RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode()
+  nameWithType: ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode()
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 318
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode()
+  overload: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  commentId: M:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  id: RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  nameWithType: ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 330
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant()
+  overload: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell
+  commentId: M:Sharpie.Tests.ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell
+  id: RemixDefaultColors2_CallsCursesAsWell
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RemixDefaultColors2_CallsCursesAsWell()
+  nameWithType: ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell()
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RemixDefaultColors2_CallsCursesAsWell
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 337
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RemixDefaultColors2_CallsCursesAsWell()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RemixDefaultColors2_CallsCursesAsWell()
+  overload: Sharpie.Tests.ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported
+  commentId: M:Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported
+  id: RedefineColor1_Throws_IfRedefineColorsNotSupported
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RedefineColor1_Throws_IfRedefineColorsNotSupported()
+  nameWithType: ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported()
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RedefineColor1_Throws_IfRedefineColorsNotSupported
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 345
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RedefineColor1_Throws_IfRedefineColorsNotSupported()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RedefineColor1_Throws_IfRedefineColorsNotSupported()
+  overload: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfCursesFails
+  id: RedefineColor1_Throws_IfCursesFails
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RedefineColor1_Throws_IfCursesFails()
+  nameWithType: ColorManagerTests.RedefineColor1_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RedefineColor1_Throws_IfCursesFails
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 356
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RedefineColor1_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RedefineColor1_Throws_IfCursesFails()
+  overload: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds
+  id: RedefineColor1_Succeeds_IfCursesSucceeds
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RedefineColor1_Succeeds_IfCursesSucceeds()
+  nameWithType: ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds()
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RedefineColor1_Succeeds_IfCursesSucceeds
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 368
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RedefineColor1_Succeeds_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RedefineColor1_Succeeds_IfCursesSucceeds()
+  overload: Sharpie.Tests.ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+  commentId: M:Sharpie.Tests.ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+  id: RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat()
+  nameWithType: ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat()
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 375
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat()
+  overload: Sharpie.Tests.ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor2_AlsoCallsCurses
+  commentId: M:Sharpie.Tests.ColorManagerTests.RedefineColor2_AlsoCallsCurses
+  id: RedefineColor2_AlsoCallsCurses
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: RedefineColor2_AlsoCallsCurses()
+  nameWithType: ColorManagerTests.RedefineColor2_AlsoCallsCurses()
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor2_AlsoCallsCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RedefineColor2_AlsoCallsCurses
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 383
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void RedefineColor2_AlsoCallsCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub RedefineColor2_AlsoCallsCurses()
+  overload: Sharpie.Tests.ColorManagerTests.RedefineColor2_AlsoCallsCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported
+  commentId: M:Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported
+  id: BreakdownColor1_Throws_IfRedefineColorsNotSupported
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: BreakdownColor1_Throws_IfRedefineColorsNotSupported()
+  nameWithType: ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported()
+  fullName: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: BreakdownColor1_Throws_IfRedefineColorsNotSupported
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 390
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void BreakdownColor1_Throws_IfRedefineColorsNotSupported()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub BreakdownColor1_Throws_IfRedefineColorsNotSupported()
+  overload: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfCursesFails
+  id: BreakdownColor1_Throws_IfCursesFails
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: BreakdownColor1_Throws_IfCursesFails()
+  nameWithType: ColorManagerTests.BreakdownColor1_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: BreakdownColor1_Throws_IfCursesFails
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 401
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void BreakdownColor1_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub BreakdownColor1_Throws_IfCursesFails()
+  overload: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds
+  id: BreakdownColor1_ReturnsColors_IfCursesSucceeds
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: BreakdownColor1_ReturnsColors_IfCursesSucceeds()
+  nameWithType: ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds()
+  fullName: Sharpie.Tests.ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: BreakdownColor1_ReturnsColors_IfCursesSucceeds
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 416
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void BreakdownColor1_ReturnsColors_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub BreakdownColor1_ReturnsColors_IfCursesSucceeds()
+  overload: Sharpie.Tests.ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.BreakdownColor2_AlsoCallsCurses
+  commentId: M:Sharpie.Tests.ColorManagerTests.BreakdownColor2_AlsoCallsCurses
+  id: BreakdownColor2_AlsoCallsCurses
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: BreakdownColor2_AlsoCallsCurses()
+  nameWithType: ColorManagerTests.BreakdownColor2_AlsoCallsCurses()
+  fullName: Sharpie.Tests.ColorManagerTests.BreakdownColor2_AlsoCallsCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: BreakdownColor2_AlsoCallsCurses
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 439
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void BreakdownColor2_AlsoCallsCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub BreakdownColor2_AlsoCallsCurses()
+  overload: Sharpie.Tests.ColorManagerTests.BreakdownColor2_AlsoCallsCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.UnMixColors_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.ColorManagerTests.UnMixColors_Throws_IfCursesFails
+  id: UnMixColors_Throws_IfCursesFails
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: UnMixColors_Throws_IfCursesFails()
+  nameWithType: ColorManagerTests.UnMixColors_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.ColorManagerTests.UnMixColors_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: UnMixColors_Throws_IfCursesFails
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 452
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void UnMixColors_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub UnMixColors_Throws_IfCursesFails()
+  overload: Sharpie.Tests.ColorManagerTests.UnMixColors_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds
+  id: UnMixColors_ReturnsColors_IfCursesSucceeds
+  parent: Sharpie.Tests.ColorManagerTests
+  langs:
+  - csharp
+  - vb
+  name: UnMixColors_ReturnsColors_IfCursesSucceeds()
+  nameWithType: ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds()
+  fullName: Sharpie.Tests.ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/ColorManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: UnMixColors_ReturnsColors_IfCursesSucceeds
+    path: Sharpie.Tests/ColorManagerTests.cs
+    startLine: 464
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void UnMixColors_ReturnsColors_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub UnMixColors_ReturnsColors_IfCursesSucceeds()
+  overload: Sharpie.Tests.ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+references:
+- uid: Sharpie.Tests
+  commentId: N:Sharpie.Tests
+  href: Sharpie.html
+  name: Sharpie.Tests
+  nameWithType: Sharpie.Tests
+  fullName: Sharpie.Tests
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Tests.ColorManagerTests.TestInitialize*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.TestInitialize
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_TestInitialize
+  name: TestInitialize
+  nameWithType: ColorManagerTests.TestInitialize
+  fullName: Sharpie.Tests.ColorManagerTests.TestInitialize
+- uid: Sharpie.Tests.ColorManagerTests.TestCleanup*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.TestCleanup
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_TestCleanup
+  name: TestCleanup
+  nameWithType: ColorManagerTests.TestCleanup
+  fullName: Sharpie.Tests.ColorManagerTests.TestCleanup
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_Throws_IfCursesIsNull*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.Ctor_Throws_IfCursesIsNull
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_Ctor_Throws_IfCursesIsNull
+  name: Ctor_Throws_IfCursesIsNull
+  nameWithType: ColorManagerTests.Ctor_Throws_IfCursesIsNull
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_Throws_IfCursesIsNull
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_Ctor_SetsColorModeToExtended_IfFullySupported
+  name: Ctor_SetsColorModeToExtended_IfFullySupported
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToExtended_IfFullySupported
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+  name: Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToStartColors
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+  name: Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToStandard_IfFailedToUseUpper
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+  name: Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfFailedToUseStandard
+- uid: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+  name: Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+  nameWithType: ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+  fullName: Sharpie.Tests.ColorManagerTests.Ctor_SetsColorModeToDisabled_IfCursesDeclaresThemUnsupported
+- uid: Sharpie.Tests.ColorManagerTests.Terminal_IsInitialized*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.Terminal_IsInitialized
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_Terminal_IsInitialized
+  name: Terminal_IsInitialized
+  nameWithType: ColorManagerTests.Terminal_IsInitialized
+  fullName: Sharpie.Tests.ColorManagerTests.Terminal_IsInitialized
+- uid: Sharpie.Tests.ColorManagerTests.CanRedefineColors_ReturnsCursesResponse*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.CanRedefineColors_ReturnsCursesResponse
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_CanRedefineColors_ReturnsCursesResponse_System_Boolean_
+  name: CanRedefineColors_ReturnsCursesResponse
+  nameWithType: ColorManagerTests.CanRedefineColors_ReturnsCursesResponse
+  fullName: Sharpie.Tests.ColorManagerTests.CanRedefineColors_ReturnsCursesResponse
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+  name: MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+  nameWithType: ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_ReturnsColorMixtureAndIncrementsTheHandle_IfCursesSucceeds
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  name: MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  nameWithType: ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_MixColors1_Throws_IfColorModeIsDisabled
+  name: MixColors1_Throws_IfColorModeIsDisabled
+  nameWithType: ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_Throws_IfColorModeIsDisabled
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_MixColors1_SubstitutesDefaultColors_InIgnorantMode
+  name: MixColors1_SubstitutesDefaultColors_InIgnorantMode
+  nameWithType: ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InIgnorantMode
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_MixColors1_SubstitutesDefaultColors_InStandardMode
+  name: MixColors1_SubstitutesDefaultColors_InStandardMode
+  nameWithType: ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_SubstitutesDefaultColors_InStandardMode
+- uid: Sharpie.Tests.ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  name: MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  nameWithType: ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+- uid: Sharpie.Tests.ColorManagerTests.MixColors2_CallsCursesAsWell*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.MixColors2_CallsCursesAsWell
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_MixColors2_CallsCursesAsWell
+  name: MixColors2_CallsCursesAsWell
+  nameWithType: ColorManagerTests.MixColors2_CallsCursesAsWell
+  fullName: Sharpie.Tests.ColorManagerTests.MixColors2_CallsCursesAsWell
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_ReMixColors1_FinishesOK_IfCursesSucceeds
+  name: ReMixColors1_FinishesOK_IfCursesSucceeds
+  nameWithType: ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_FinishesOK_IfCursesSucceeds
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  name: ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  nameWithType: ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_ReMixColors1_Throws_IfColorModeIsDisabled
+  name: ReMixColors1_Throws_IfColorModeIsDisabled
+  nameWithType: ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_Throws_IfColorModeIsDisabled
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+  name: ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+  nameWithType: ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InIgnorantMode
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_ReMixColors1_SubstitutesDefaultColors_InStandardMode
+  name: ReMixColors1_SubstitutesDefaultColors_InStandardMode
+  nameWithType: ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_SubstitutesDefaultColors_InStandardMode
+- uid: Sharpie.Tests.ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  name: ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  nameWithType: ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  fullName: Sharpie.Tests.ColorManagerTests.ReMixColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+- uid: Sharpie.Tests.ColorManagerTests.RemixColors2_CallsCursesAsWell*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RemixColors2_CallsCursesAsWell
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RemixColors2_CallsCursesAsWell
+  name: RemixColors2_CallsCursesAsWell
+  nameWithType: ColorManagerTests.RemixColors2_CallsCursesAsWell
+  fullName: Sharpie.Tests.ColorManagerTests.RemixColors2_CallsCursesAsWell
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+  name: RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+  nameWithType: ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_FinishesOK_IfCursesSucceeds
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  name: RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  nameWithType: ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_ThrowsAndDoesNotIncrementHandle_IfCursesFails
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RemixDefaultColors1_Throws_IfColorModeIsDisabled
+  name: RemixDefaultColors1_Throws_IfColorModeIsDisabled
+  nameWithType: ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_Throws_IfColorModeIsDisabled
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+  name: RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+  nameWithType: ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InIgnorantMode
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+  name: RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+  nameWithType: ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_SubstitutesDefaultColors_InStandardMode
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  name: RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  nameWithType: ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors1_PassesDefaultColorsUnAltered_IfNotIgnorant
+- uid: Sharpie.Tests.ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RemixDefaultColors2_CallsCursesAsWell
+  name: RemixDefaultColors2_CallsCursesAsWell
+  nameWithType: ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell
+  fullName: Sharpie.Tests.ColorManagerTests.RemixDefaultColors2_CallsCursesAsWell
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RedefineColor1_Throws_IfRedefineColorsNotSupported
+  name: RedefineColor1_Throws_IfRedefineColorsNotSupported
+  nameWithType: ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfRedefineColorsNotSupported
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfCursesFails
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RedefineColor1_Throws_IfCursesFails
+  name: RedefineColor1_Throws_IfCursesFails
+  nameWithType: ColorManagerTests.RedefineColor1_Throws_IfCursesFails
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor1_Throws_IfCursesFails
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RedefineColor1_Succeeds_IfCursesSucceeds
+  name: RedefineColor1_Succeeds_IfCursesSucceeds
+  nameWithType: ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor1_Succeeds_IfCursesSucceeds
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+  name: RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+  nameWithType: ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor1_UsesMaximumOf1000_IfColorsExceedThat
+- uid: Sharpie.Tests.ColorManagerTests.RedefineColor2_AlsoCallsCurses*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.RedefineColor2_AlsoCallsCurses
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_RedefineColor2_AlsoCallsCurses
+  name: RedefineColor2_AlsoCallsCurses
+  nameWithType: ColorManagerTests.RedefineColor2_AlsoCallsCurses
+  fullName: Sharpie.Tests.ColorManagerTests.RedefineColor2_AlsoCallsCurses
+- uid: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_BreakdownColor1_Throws_IfRedefineColorsNotSupported
+  name: BreakdownColor1_Throws_IfRedefineColorsNotSupported
+  nameWithType: ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported
+  fullName: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfRedefineColorsNotSupported
+- uid: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfCursesFails
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_BreakdownColor1_Throws_IfCursesFails
+  name: BreakdownColor1_Throws_IfCursesFails
+  nameWithType: ColorManagerTests.BreakdownColor1_Throws_IfCursesFails
+  fullName: Sharpie.Tests.ColorManagerTests.BreakdownColor1_Throws_IfCursesFails
+- uid: Sharpie.Tests.ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_BreakdownColor1_ReturnsColors_IfCursesSucceeds
+  name: BreakdownColor1_ReturnsColors_IfCursesSucceeds
+  nameWithType: ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds
+  fullName: Sharpie.Tests.ColorManagerTests.BreakdownColor1_ReturnsColors_IfCursesSucceeds
+- uid: Sharpie.Tests.ColorManagerTests.BreakdownColor2_AlsoCallsCurses*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.BreakdownColor2_AlsoCallsCurses
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_BreakdownColor2_AlsoCallsCurses
+  name: BreakdownColor2_AlsoCallsCurses
+  nameWithType: ColorManagerTests.BreakdownColor2_AlsoCallsCurses
+  fullName: Sharpie.Tests.ColorManagerTests.BreakdownColor2_AlsoCallsCurses
+- uid: Sharpie.Tests.ColorManagerTests.UnMixColors_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.UnMixColors_Throws_IfCursesFails
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_UnMixColors_Throws_IfCursesFails
+  name: UnMixColors_Throws_IfCursesFails
+  nameWithType: ColorManagerTests.UnMixColors_Throws_IfCursesFails
+  fullName: Sharpie.Tests.ColorManagerTests.UnMixColors_Throws_IfCursesFails
+- uid: Sharpie.Tests.ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds
+  href: Sharpie.Tests.ColorManagerTests.html#Sharpie_Tests_ColorManagerTests_UnMixColors_ReturnsColors_IfCursesSucceeds
+  name: UnMixColors_ReturnsColors_IfCursesSucceeds
+  nameWithType: ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds
+  fullName: Sharpie.Tests.ColorManagerTests.UnMixColors_ReturnsColors_IfCursesSucceeds

@@ -1,0 +1,228 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.MouseButtonState
+  commentId: T:Sharpie.MouseButtonState
+  id: MouseButtonState
+  parent: Sharpie
+  children:
+  - Sharpie.MouseButtonState.Clicked
+  - Sharpie.MouseButtonState.DoubleClicked
+  - Sharpie.MouseButtonState.None
+  - Sharpie.MouseButtonState.Pressed
+  - Sharpie.MouseButtonState.Released
+  - Sharpie.MouseButtonState.TripleClicked
+  langs:
+  - csharp
+  - vb
+  name: MouseButtonState
+  nameWithType: MouseButtonState
+  fullName: Sharpie.MouseButtonState
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/MouseButtonState.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MouseButtonState
+    path: Sharpie/MouseButtonState.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Defines the possible mouse button states.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum MouseButtonState : uint
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum MouseButtonState As UInteger
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.MouseButtonState.None
+  commentId: F:Sharpie.MouseButtonState.None
+  id: None
+  parent: Sharpie.MouseButtonState
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: MouseButtonState.None
+  fullName: Sharpie.MouseButtonState.None
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButtonState.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: None
+    path: Sharpie/MouseButtonState.cs
+    startLine: 41
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: No state to speak of.
+  example: []
+  syntax:
+    content: None = 0
+    return:
+      type: Sharpie.MouseButtonState
+- uid: Sharpie.MouseButtonState.Released
+  commentId: F:Sharpie.MouseButtonState.Released
+  id: Released
+  parent: Sharpie.MouseButtonState
+  langs:
+  - csharp
+  - vb
+  name: Released
+  nameWithType: MouseButtonState.Released
+  fullName: Sharpie.MouseButtonState.Released
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButtonState.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Released
+    path: Sharpie/MouseButtonState.cs
+    startLine: 46
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button has been released.
+  example: []
+  syntax:
+    content: Released = 1
+    return:
+      type: Sharpie.MouseButtonState
+- uid: Sharpie.MouseButtonState.Pressed
+  commentId: F:Sharpie.MouseButtonState.Pressed
+  id: Pressed
+  parent: Sharpie.MouseButtonState
+  langs:
+  - csharp
+  - vb
+  name: Pressed
+  nameWithType: MouseButtonState.Pressed
+  fullName: Sharpie.MouseButtonState.Pressed
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButtonState.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Pressed
+    path: Sharpie/MouseButtonState.cs
+    startLine: 51
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button has been pressed.
+  example: []
+  syntax:
+    content: Pressed = 2
+    return:
+      type: Sharpie.MouseButtonState
+- uid: Sharpie.MouseButtonState.Clicked
+  commentId: F:Sharpie.MouseButtonState.Clicked
+  id: Clicked
+  parent: Sharpie.MouseButtonState
+  langs:
+  - csharp
+  - vb
+  name: Clicked
+  nameWithType: MouseButtonState.Clicked
+  fullName: Sharpie.MouseButtonState.Clicked
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButtonState.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Clicked
+    path: Sharpie/MouseButtonState.cs
+    startLine: 56
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button has been clicked.
+  example: []
+  syntax:
+    content: Clicked = 3
+    return:
+      type: Sharpie.MouseButtonState
+- uid: Sharpie.MouseButtonState.DoubleClicked
+  commentId: F:Sharpie.MouseButtonState.DoubleClicked
+  id: DoubleClicked
+  parent: Sharpie.MouseButtonState
+  langs:
+  - csharp
+  - vb
+  name: DoubleClicked
+  nameWithType: MouseButtonState.DoubleClicked
+  fullName: Sharpie.MouseButtonState.DoubleClicked
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButtonState.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DoubleClicked
+    path: Sharpie/MouseButtonState.cs
+    startLine: 61
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button has been double clicked.
+  example: []
+  syntax:
+    content: DoubleClicked = 4
+    return:
+      type: Sharpie.MouseButtonState
+- uid: Sharpie.MouseButtonState.TripleClicked
+  commentId: F:Sharpie.MouseButtonState.TripleClicked
+  id: TripleClicked
+  parent: Sharpie.MouseButtonState
+  langs:
+  - csharp
+  - vb
+  name: TripleClicked
+  nameWithType: MouseButtonState.TripleClicked
+  fullName: Sharpie.MouseButtonState.TripleClicked
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButtonState.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TripleClicked
+    path: Sharpie/MouseButtonState.cs
+    startLine: 66
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button has been triple clicked.
+  example: []
+  syntax:
+    content: TripleClicked = 5
+    return:
+      type: Sharpie.MouseButtonState
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.MouseButtonState
+  commentId: T:Sharpie.MouseButtonState
+  parent: Sharpie
+  href: Sharpie.MouseButtonState.html
+  name: MouseButtonState
+  nameWithType: MouseButtonState
+  fullName: Sharpie.MouseButtonState

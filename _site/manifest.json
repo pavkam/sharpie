@@ -1,0 +1,2068 @@
+{
+  "source_base_path": "/home/lyndon-gingerich/src/sharpie",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.IAsciiFont.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.IAsciiFont.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.IAsciiFont",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.IAsciiFont.yml\" sourcestartlinenumber=\"1\">Defines the traits implemented by ASCII font providers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.IColorManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.IColorManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.IColorManager",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.IColorManager.yml\" sourcestartlinenumber=\"1\">Defines the traits needed to implement <xref href=\"Sharpie.ColorManager\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.ICursesBackend.ripoffline_callback.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.ICursesBackend.ripoffline_callback.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.ICursesBackend.ripoffline_callback",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.ICursesBackend.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.ICursesBackend.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.ICursesBackend",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.ICursesBackend.yml\" sourcestartlinenumber=\"1\">Interface provides access to the Curses functionality. Use the <xref href=\"Sharpie.Backend.NCursesBackend\" data-throw-if-not-resolved=\"false\"></xref> property to\naccess the actual\nimplementation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.IDrawSurface.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.IDrawSurface.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.IDrawSurface",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.IDrawSurface.yml\" sourcestartlinenumber=\"1\">Defines the traits needed by an object to draw a <xref href=\"Sharpie.Abstractions.IDrawable\" data-throw-if-not-resolved=\"false\"></xref> onto.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.IDrawable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.IDrawable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.IDrawable",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.IDrawable.yml\" sourcestartlinenumber=\"1\">Defines the trains required for an object to be drawable onto a <xref href=\"Sharpie.Abstractions.IDrawSurface\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.IEventPump.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.IEventPump.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.IEventPump",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.IEventPump.yml\" sourcestartlinenumber=\"1\">Defines the traits needed to implement <xref href=\"Sharpie.EventPump\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.IInterval.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.IInterval.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.IInterval",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.IInterval.yml\" sourcestartlinenumber=\"1\">Describes a timed interval.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.IPad.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.IPad.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.IPad",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.IPad.yml\" sourcestartlinenumber=\"1\">Describes the traits specific to the <xref href=\"Sharpie.Pad\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.IScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.IScreen.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.IScreen",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.IScreen.yml\" sourcestartlinenumber=\"1\">Defines the traits that a <xref href=\"Sharpie.Screen\" data-throw-if-not-resolved=\"false\"></xref> implements.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.ISoftLabelKeyManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.ISoftLabelKeyManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.ISoftLabelKeyManager",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.ISoftLabelKeyManager.yml\" sourcestartlinenumber=\"1\">Defines the traits needed to implement <xref href=\"Sharpie.SoftLabelKeyManager\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.ISubPad.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.ISubPad.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.ISubPad",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.ISubPad.yml\" sourcestartlinenumber=\"1\">Describes the traits specific to the <xref href=\"Sharpie.SubPad\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.ISubWindow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.ISubWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.ISubWindow",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.ISubWindow.yml\" sourcestartlinenumber=\"1\">Defines the traits implemented by the <xref href=\"Sharpie.SubWindow\" data-throw-if-not-resolved=\"false\"></xref> class.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.ISurface.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.ISurface.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.ISurface",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.ISurface.yml\" sourcestartlinenumber=\"1\">Defines the base traits required for <xref href=\"Sharpie.Window\" data-throw-if-not-resolved=\"false\"></xref>, <xref href=\"Sharpie.Screen\" data-throw-if-not-resolved=\"false\"></xref> and <xref href=\"Sharpie.Pad\" data-throw-if-not-resolved=\"false\"></xref> classes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.ITerminal.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.ITerminal.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.ITerminal",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.ITerminal.yml\" sourcestartlinenumber=\"1\">Defines the traits needed to implement a terminal. The only existing implementation of this interface is\n<xref href=\"Sharpie.Terminal\" data-throw-if-not-resolved=\"false\"></xref> class.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.ITerminalSurface.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.ITerminalSurface.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.ITerminalSurface",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.ITerminalSurface.yml\" sourcestartlinenumber=\"1\">Defines the base traits required for <xref href=\"Sharpie.TerminalSurface\" data-throw-if-not-resolved=\"false\"></xref> class.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.IWindow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.IWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions.IWindow",
+      "Summary": "<p sourcefile=\"api/Sharpie.Abstractions.IWindow.yml\" sourcestartlinenumber=\"1\">Defines the traits implemented by the <xref href=\"Sharpie.Window\" data-throw-if-not-resolved=\"false\"></xref> class.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Abstractions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Abstractions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Abstractions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.ComplexChar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.ComplexChar.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.ComplexChar",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.ComplexChar.yml\" sourcestartlinenumber=\"1\">A Curses, back-end-specific complex character that encodes the rune and its attributes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.CursesBackend.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.CursesBackend.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.CursesBackend",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.CursesBackend.yml\" sourcestartlinenumber=\"1\">Provides functionality for obtaining <xref href=\"Sharpie.Abstractions.ICursesBackend\" data-throw-if-not-resolved=\"false\"></xref> instances.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.CursesBackendFlavor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.CursesBackendFlavor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.CursesBackendFlavor",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.CursesBackendFlavor.yml\" sourcestartlinenumber=\"1\">Lists the supported backend Curses libraries' flavors.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.CursesBackendType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.CursesBackendType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.CursesBackendType",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.CursesBackendType.yml\" sourcestartlinenumber=\"1\">Lists the supported backend Curses libraries.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.CursesCharEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.CursesCharEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.CursesCharEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.CursesCharEvent.yml\" sourcestartlinenumber=\"1\">Character input event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.CursesEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.CursesEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.CursesEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.CursesEvent.yml\" sourcestartlinenumber=\"1\">The base type for all back-end independent Curses events.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.CursesKeyEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.CursesKeyEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.CursesKeyEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.CursesKeyEvent.yml\" sourcestartlinenumber=\"1\">Key input event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.CursesMouseEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.CursesMouseEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.CursesMouseEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.CursesMouseEvent.yml\" sourcestartlinenumber=\"1\">Mouse input event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.CursesMouseState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.CursesMouseState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.CursesMouseState",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.CursesMouseState.yml\" sourcestartlinenumber=\"1\">Curses mouse event - encapsulates the data sent by the backend related to mouse events.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.CursesResizeEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.CursesResizeEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.CursesResizeEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.CursesResizeEvent.yml\" sourcestartlinenumber=\"1\">Terminal resize event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.NCursesKeyCode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.NCursesKeyCode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.NCursesKeyCode",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.NCursesKeyCode.yml\" sourcestartlinenumber=\"1\">NCurses specific key codes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.PdCursesKeyCode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.PdCursesKeyCode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend.PdCursesKeyCode",
+      "Summary": "<p sourcefile=\"api/Sharpie.Backend.PdCursesKeyCode.yml\" sourcestartlinenumber=\"1\">PDCurses specific key codes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Backend.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Backend.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Backend",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Canvas.CheckGlyphStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Canvas.CheckGlyphStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Canvas.CheckGlyphStyle",
+      "Summary": "<p sourcefile=\"api/Sharpie.Canvas.CheckGlyphStyle.yml\" sourcestartlinenumber=\"1\">The possible shapes used by the check.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Canvas.FillStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Canvas.FillStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Canvas.FillStyle",
+      "Summary": "<p sourcefile=\"api/Sharpie.Canvas.FillStyle.yml\" sourcestartlinenumber=\"1\">The types fills.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Canvas.GlyphSize.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Canvas.GlyphSize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Canvas.GlyphSize",
+      "Summary": "<p sourcefile=\"api/Sharpie.Canvas.GlyphSize.yml\" sourcestartlinenumber=\"1\">Describes the size of a glyph.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Canvas.GradientGlyphStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Canvas.GradientGlyphStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Canvas.GradientGlyphStyle",
+      "Summary": "<p sourcefile=\"api/Sharpie.Canvas.GradientGlyphStyle.yml\" sourcestartlinenumber=\"1\">The gradient style.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Canvas.LineStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Canvas.LineStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Canvas.LineStyle",
+      "Summary": "<p sourcefile=\"api/Sharpie.Canvas.LineStyle.yml\" sourcestartlinenumber=\"1\">The possible line styles used in <xref href=\"Sharpie.Canvas.Line(System.Drawing.PointF%2cSystem.Single%2cSharpie.Canvas.Orientation%2cSharpie.Canvas.LineStyle%2cSharpie.Style)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Canvas.Orientation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Canvas.Orientation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Canvas.Orientation",
+      "Summary": "<p sourcefile=\"api/Sharpie.Canvas.Orientation.yml\" sourcestartlinenumber=\"1\">Describes the available text orientations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Canvas.ShadeGlyphStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Canvas.ShadeGlyphStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Canvas.ShadeGlyphStyle",
+      "Summary": "<p sourcefile=\"api/Sharpie.Canvas.ShadeGlyphStyle.yml\" sourcestartlinenumber=\"1\">The types of possible shades.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Canvas.TriangleGlyphStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Canvas.TriangleGlyphStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Canvas.TriangleGlyphStyle",
+      "Summary": "<p sourcefile=\"api/Sharpie.Canvas.TriangleGlyphStyle.yml\" sourcestartlinenumber=\"1\">Describes the orientation of a glyph.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Canvas.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Canvas.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Canvas",
+      "Summary": "<p sourcefile=\"api/Sharpie.Canvas.yml\" sourcestartlinenumber=\"1\">A general-purpose drawing surface that can be latter draw onto any object that implements\n<xref href=\"Sharpie.Abstractions.IDrawSurface\" data-throw-if-not-resolved=\"false\"></xref>.\nSupports multiple types of drawing operations most commonly used in terminal apps.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.CaretMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.CaretMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.CaretMode",
+      "Summary": "<p sourcefile=\"api/Sharpie.CaretMode.yml\" sourcestartlinenumber=\"1\">Defines the caret mode.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.ClearStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.ClearStrategy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.ClearStrategy",
+      "Summary": "<p sourcefile=\"api/Sharpie.ClearStrategy.yml\" sourcestartlinenumber=\"1\">Defines the possible strategies of clearing contents of a window.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.ColorManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.ColorManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.ColorManager",
+      "Summary": "<p sourcefile=\"api/Sharpie.ColorManager.yml\" sourcestartlinenumber=\"1\">Exposes functionality to manage colors.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.ColorMixture.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.ColorMixture.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.ColorMixture",
+      "Summary": "<p sourcefile=\"api/Sharpie.ColorMixture.yml\" sourcestartlinenumber=\"1\">Defines a color pair (foreground and background colors).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.ColorMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.ColorMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.ColorMode",
+      "Summary": "<p sourcefile=\"api/Sharpie.ColorMode.yml\" sourcestartlinenumber=\"1\">Defines the color mode of the terminal.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.ControlCharacter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.ControlCharacter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.ControlCharacter",
+      "Summary": "<p sourcefile=\"api/Sharpie.ControlCharacter.yml\" sourcestartlinenumber=\"1\">Defines a list of special control characters in ASCII.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.CursesException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.CursesException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.CursesException",
+      "Summary": "<p sourcefile=\"api/Sharpie.CursesException.yml\" sourcestartlinenumber=\"1\">A generic Curses exception, base for all other curses errors.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.CursesInitializationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.CursesInitializationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.CursesInitializationException",
+      "Summary": "<p sourcefile=\"api/Sharpie.CursesInitializationException.yml\" sourcestartlinenumber=\"1\">Exception thrown if Curses failed to initialize.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.CursesOperationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.CursesOperationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.CursesOperationException",
+      "Summary": "<p sourcefile=\"api/Sharpie.CursesOperationException.yml\" sourcestartlinenumber=\"1\">A Curses exception raised when an operation fails.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.CursesSynchronizationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.CursesSynchronizationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.CursesSynchronizationException",
+      "Summary": "<p sourcefile=\"api/Sharpie.CursesSynchronizationException.yml\" sourcestartlinenumber=\"1\">Exception thrown if operation performed in an unauthorized context (such as different thread).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.DelegateEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.DelegateEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.DelegateEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.DelegateEvent.yml\" sourcestartlinenumber=\"1\">Special event that delegates an object to the main application context.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Demos.Snake.Game.Direction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Demos.Snake.Game.Direction.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Demos.Snake.Game.Direction",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Demos.Snake.Game.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Demos.Snake.Game.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Demos.Snake.Game",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Demos.Snake.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Demos.Snake.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Demos.Snake",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Event.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Event.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Event",
+      "Summary": "<p sourcefile=\"api/Sharpie.Event.yml\" sourcestartlinenumber=\"1\">An event from the terminal.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.EventPump.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.EventPump.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.EventPump",
+      "Summary": "<p sourcefile=\"api/Sharpie.EventPump.yml\" sourcestartlinenumber=\"1\">The event &quot;pump&quot; class listens to all events from Curses, processes them and passes them along to\nconsumers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.EventType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.EventType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.EventType",
+      "Summary": "<p sourcefile=\"api/Sharpie.EventType.yml\" sourcestartlinenumber=\"1\">Defines the possible event types.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Font.AsciiFont.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Font.AsciiFont.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Font.AsciiFont",
+      "Summary": "<p sourcefile=\"api/Sharpie.Font.AsciiFont.yml\" sourcestartlinenumber=\"1\">Defines the traits implemented by ASCII font providers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Font.AsciiFontLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Font.AsciiFontLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Font.AsciiFontLayout",
+      "Summary": "<p sourcefile=\"api/Sharpie.Font.AsciiFontLayout.yml\" sourcestartlinenumber=\"1\">Defines the possible font layout modes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Font.DosCp866AsciiFont.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Font.DosCp866AsciiFont.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Font.DosCp866AsciiFont",
+      "Summary": "<p sourcefile=\"api/Sharpie.Font.DosCp866AsciiFont.yml\" sourcestartlinenumber=\"1\">DOS CodePage 866 font. Uncovered in the depths of Alexandru's prehistoric archives.\nOriginal source unknown.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Font.FigletFont.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Font.FigletFont.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Font.FigletFont",
+      "Summary": "<p sourcefile=\"api/Sharpie.Font.FigletFont.yml\" sourcestartlinenumber=\"1\">FIGlet ASCII font. See <a href=\"http://www.jave.de/figlet/figfont.html\" sourcefile=\"api/Sharpie.Font.FigletFont.yml\" sourcestartlinenumber=\"1\">http://www.jave.de/figlet/figfont.html</a> and <a href=\"https://github.com/cmatsuoka/figlet\" sourcefile=\"api/Sharpie.Font.FigletFont.yml\" sourcestartlinenumber=\"1\">https://github.com/cmatsuoka/figlet</a> for details\nand available fonts.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Font.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Font.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Font",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Key.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Key.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Key",
+      "Summary": "<p sourcefile=\"api/Sharpie.Key.yml\" sourcestartlinenumber=\"1\">Defines the possible key types.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.KeyEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.KeyEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.KeyEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.KeyEvent.yml\" sourcestartlinenumber=\"1\">Defines a key event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.KeySequenceResolver.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.KeySequenceResolver.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.KeySequenceResolver",
+      "Summary": "<p sourcefile=\"api/Sharpie.KeySequenceResolver.yml\" sourcestartlinenumber=\"1\">Contains the definitions and implementations of input middlewares.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.ModifierKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.ModifierKey.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.ModifierKey",
+      "Summary": "<p sourcefile=\"api/Sharpie.ModifierKey.yml\" sourcestartlinenumber=\"1\">Defines the possible modifier keys.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.MouseActionEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.MouseActionEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.MouseActionEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.MouseActionEvent.yml\" sourcestartlinenumber=\"1\">Contains the details of a Curses event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.MouseButton.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.MouseButton.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.MouseButton",
+      "Summary": "<p sourcefile=\"api/Sharpie.MouseButton.yml\" sourcestartlinenumber=\"1\">Defines the possible mouse buttons.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.MouseButtonState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.MouseButtonState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.MouseButtonState",
+      "Summary": "<p sourcefile=\"api/Sharpie.MouseButtonState.yml\" sourcestartlinenumber=\"1\">Defines the possible mouse button states.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.MouseMoveEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.MouseMoveEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.MouseMoveEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.MouseMoveEvent.yml\" sourcestartlinenumber=\"1\">Defines a mouse move event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Pad.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Pad.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Pad",
+      "Summary": "<p sourcefile=\"api/Sharpie.Pad.yml\" sourcestartlinenumber=\"1\">Represents a Curses pad, which is a special type of off-screen window.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.ReplaceStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.ReplaceStrategy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.ReplaceStrategy",
+      "Summary": "<p sourcefile=\"api/Sharpie.ReplaceStrategy.yml\" sourcestartlinenumber=\"1\">Defines the possible strategies or replacing the contents of a window with the contents\nof another window.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.ResolveEscapeSequenceFunc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.ResolveEscapeSequenceFunc.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.ResolveEscapeSequenceFunc",
+      "Summary": "<p sourcefile=\"api/Sharpie.ResolveEscapeSequenceFunc.yml\" sourcestartlinenumber=\"1\">Defines the next delegate used to resolve key sequences.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Screen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Screen.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Screen",
+      "Summary": "<p sourcefile=\"api/Sharpie.Screen.yml\" sourcestartlinenumber=\"1\">The main Curses screen class. Implements screen-related functionality.\nOnly one instance of this class can be active at one time.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.SoftLabelKeyAlignment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.SoftLabelKeyAlignment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.SoftLabelKeyAlignment",
+      "Summary": "<p sourcefile=\"api/Sharpie.SoftLabelKeyAlignment.yml\" sourcestartlinenumber=\"1\">Defines the alignment of labels in a <xref href=\"Sharpie.SoftLabelKeyManager\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.SoftLabelKeyManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.SoftLabelKeyManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.SoftLabelKeyManager",
+      "Summary": "<p sourcefile=\"api/Sharpie.SoftLabelKeyManager.yml\" sourcestartlinenumber=\"1\">Adds support for soft function keys.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.SoftLabelKeyMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.SoftLabelKeyMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.SoftLabelKeyMode",
+      "Summary": "<p sourcefile=\"api/Sharpie.SoftLabelKeyMode.yml\" sourcestartlinenumber=\"1\">Defines the possible strategies of clearing contents of a window.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.StandardColor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.StandardColor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.StandardColor",
+      "Summary": "<p sourcefile=\"api/Sharpie.StandardColor.yml\" sourcestartlinenumber=\"1\">Defines the well-known standard video colors.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.StartEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.StartEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.StartEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.StartEvent.yml\" sourcestartlinenumber=\"1\">Generated automatically when <xref href=\"Sharpie.EventPump\" data-throw-if-not-resolved=\"false\"></xref> starts listening for events.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.StopEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.StopEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.StopEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.StopEvent.yml\" sourcestartlinenumber=\"1\">Generated automatically when <xref href=\"Sharpie.EventPump\" data-throw-if-not-resolved=\"false\"></xref> stops listening for events.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Style.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Style.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Style",
+      "Summary": "<p sourcefile=\"api/Sharpie.Style.yml\" sourcestartlinenumber=\"1\">Represents the style of the text (attributes and colors).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.StyledText.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.StyledText.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.StyledText",
+      "Summary": "<p sourcefile=\"api/Sharpie.StyledText.yml\" sourcestartlinenumber=\"1\">Describes a text with mixed in styles. Can be used by <xref href=\"Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText%2cSystem.Boolean)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.SubPad.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.SubPad.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.SubPad",
+      "Summary": "<p sourcefile=\"api/Sharpie.SubPad.yml\" sourcestartlinenumber=\"1\">Represents a Curses sub-pad and contains all it's functionality.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.SubWindow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.SubWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.SubWindow",
+      "Summary": "<p sourcefile=\"api/Sharpie.SubWindow.yml\" sourcestartlinenumber=\"1\">Represents a Curses sub-window and contains all it's functionality.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Surface.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Surface.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Surface",
+      "Summary": "<p sourcefile=\"api/Sharpie.Surface.yml\" sourcestartlinenumber=\"1\">Represents a surface and contains all its functionality.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Terminal.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Terminal.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Terminal",
+      "Summary": "<p sourcefile=\"api/Sharpie.Terminal.yml\" sourcestartlinenumber=\"1\">This class allows the developer to interact with the terminal and its settings. This is the main\nclass that is used in a Curses-based application.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.TerminalOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.TerminalOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.TerminalOptions",
+      "Summary": "<p sourcefile=\"api/Sharpie.TerminalOptions.yml\" sourcestartlinenumber=\"1\">Stores the terminal options.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.TerminalResizeEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.TerminalResizeEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.TerminalResizeEvent",
+      "Summary": "<p sourcefile=\"api/Sharpie.TerminalResizeEvent.yml\" sourcestartlinenumber=\"1\">The terminal resized event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.TerminalSurface.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.TerminalSurface.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.TerminalSurface",
+      "Summary": "<p sourcefile=\"api/Sharpie.TerminalSurface.yml\" sourcestartlinenumber=\"1\">Represents a screen-bound surface and contains all its functionality.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.AsciiFontTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.AsciiFontTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.AsciiFontTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.BaseCursesBackendTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.BaseCursesBackendTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.BaseCursesBackendTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.CanvasTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.CanvasTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.CanvasTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.ColorManagerTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.ColorManagerTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.ColorManagerTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.ColorMixtureTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.ColorMixtureTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.ColorMixtureTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.ComplexCharTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.ComplexCharTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.ComplexCharTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.CursesBackendFlavorSelectorTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.CursesBackendFlavorSelectorTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.CursesBackendFlavorSelectorTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.CursesBackendTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.CursesBackendTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.CursesBackendTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.CursesExceptionTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.CursesExceptionTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.CursesExceptionTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.CursesInitializationExceptionTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.CursesInitializationExceptionTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.CursesInitializationExceptionTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.CursesMouseEventParserTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.CursesMouseEventParserTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.CursesMouseEventParserTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.CursesMouseStateTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.CursesMouseStateTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.CursesMouseStateTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.CursesOperationExceptionTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.CursesOperationExceptionTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.CursesOperationExceptionTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.CursesSynchronizationExceptionTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.CursesSynchronizationExceptionTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.CursesSynchronizationExceptionTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.DelegateEventTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.DelegateEventTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.DelegateEventTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.DosCp866AsciiFontTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.DosCp866AsciiFontTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.DosCp866AsciiFontTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.DotNetSystemAdapterInterfaceTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.DotNetSystemAdapterInterfaceTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.DotNetSystemAdapterInterfaceTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.EventPumpTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.EventPumpTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.EventPumpTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.EventTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.EventTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.EventTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.FigletFontParserTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.FigletFontParserTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.FigletFontParserTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.FigletFontTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.FigletFontTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.FigletFontTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.FigletLayoutEvaluatorTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.FigletLayoutEvaluatorTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.FigletLayoutEvaluatorTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.HelpersTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.HelpersTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.HelpersTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.KeyEventTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.KeyEventTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.KeyEventTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.KeySequenceResolverTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.KeySequenceResolverTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.KeySequenceResolverTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.MouseActionEventTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.MouseActionEventTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.MouseActionEventTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.MouseEventResolverTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.MouseEventResolverTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.MouseEventResolverTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.MouseMoveEventTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.MouseMoveEventTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.MouseMoveEventTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.NCursesBackendTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.NCursesBackendTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.NCursesBackendTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.NCursesComplexCharTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.NCursesComplexCharTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.NCursesComplexCharTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.NativeLibraryWrapperTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.NativeLibraryWrapperTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.NativeLibraryWrapperTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.PadTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.PadTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.PadTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.PdCursesBackendTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.PdCursesBackendTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.PdCursesBackendTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.PdCursesMod32BackendTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.PdCursesMod32BackendTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.PdCursesMod32BackendTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.ScreenTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.ScreenTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.ScreenTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.SoftLabelKeyManagerTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.SoftLabelKeyManagerTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.SoftLabelKeyManagerTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.StartEventTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.StartEventTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.StartEventTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.StopEventTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.StopEventTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.StopEventTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.StyleTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.StyleTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.StyleTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.StyledTextTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.StyledTextTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.StyledTextTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.SubPadTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.SubPadTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.SubPadTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.SubWindowTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.SubWindowTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.SubWindowTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.SurfaceDrawTextTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.SurfaceDrawTextTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.SurfaceDrawTextTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.SurfaceTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.SurfaceTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.SurfaceTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.SynchronizationTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.SynchronizationTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.SynchronizationTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.TerminalMainLoopTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.TerminalMainLoopTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.TerminalMainLoopTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.TerminalOptionsTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.TerminalOptionsTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.TerminalOptionsTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.TerminalResizeEventTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.TerminalResizeEventTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.TerminalResizeEventTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.TerminalSurfaceTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.TerminalSurfaceTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.TerminalSurfaceTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.TerminalTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.TerminalTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.TerminalTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.WindowTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.WindowTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests.WindowTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Tests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Tests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Tests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.VideoAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.VideoAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.VideoAttribute",
+      "Summary": "<p sourcefile=\"api/Sharpie.VideoAttribute.yml\" sourcestartlinenumber=\"1\">Defines the possible video attributes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.Window.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.Window.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie.Window",
+      "Summary": "<p sourcefile=\"api/Sharpie.Window.yml\" sourcestartlinenumber=\"1\">Represents a Curses window and contains all it's functionality.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Sharpie.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Sharpie.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Sharpie",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lib/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "lib/README.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

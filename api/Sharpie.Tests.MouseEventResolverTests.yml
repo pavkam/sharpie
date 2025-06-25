@@ -1,0 +1,910 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Tests.MouseEventResolverTests
+  commentId: T:Sharpie.Tests.MouseEventResolverTests
+  id: MouseEventResolverTests
+  parent: Sharpie.Tests
+  children:
+  - Sharpie.Tests.MouseEventResolverTests.Process1_EatsEvent_IfSamePosition
+  - Sharpie.Tests.MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition
+  - Sharpie.Tests.MouseEventResolverTests.Process1_Throws_IfEventIsNull
+  - Sharpie.Tests.MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+  - Sharpie.Tests.MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents
+  - Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+  - Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition
+  - Sharpie.Tests.MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+  - Sharpie.Tests.MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+  - Sharpie.Tests.MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition
+  - Sharpie.Tests.MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition
+  - Sharpie.Tests.MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition
+  - Sharpie.Tests.MouseEventResolverTests.Process2_Throws_IfEventIsNull
+  - Sharpie.Tests.MouseEventResolverTests.TestInitialize
+  langs:
+  - csharp
+  - vb
+  name: MouseEventResolverTests
+  nameWithType: MouseEventResolverTests
+  fullName: Sharpie.Tests.MouseEventResolverTests
+  type: Class
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MouseEventResolverTests
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 32
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestClass]
+
+      public class MouseEventResolverTests
+    content.vb: >-
+      <TestClass>
+
+      Public Class MouseEventResolverTests
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.TestInitialize
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.TestInitialize
+  id: TestInitialize
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: TestInitialize()
+  nameWithType: MouseEventResolverTests.TestInitialize()
+  fullName: Sharpie.Tests.MouseEventResolverTests.TestInitialize()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestInitialize
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 37
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestInitialize]
+
+      public void TestInitialize()
+    content.vb: >-
+      <TestInitialize>
+
+      Public Sub TestInitialize()
+  overload: Sharpie.Tests.MouseEventResolverTests.TestInitialize*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process1_Throws_IfEventIsNull
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process1_Throws_IfEventIsNull
+  id: Process1_Throws_IfEventIsNull
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process1_Throws_IfEventIsNull()
+  nameWithType: MouseEventResolverTests.Process1_Throws_IfEventIsNull()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process1_Throws_IfEventIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process1_Throws_IfEventIsNull
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 39
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process1_Throws_IfEventIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process1_Throws_IfEventIsNull()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process1_Throws_IfEventIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition
+  id: Process1_ReturnsSameEvent_IfDifferentPosition
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process1_ReturnsSameEvent_IfDifferentPosition()
+  nameWithType: MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process1_ReturnsSameEvent_IfDifferentPosition
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 45
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process1_ReturnsSameEvent_IfDifferentPosition()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process1_ReturnsSameEvent_IfDifferentPosition()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process1_EatsEvent_IfSamePosition
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process1_EatsEvent_IfSamePosition
+  id: Process1_EatsEvent_IfSamePosition
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process1_EatsEvent_IfSamePosition()
+  nameWithType: MouseEventResolverTests.Process1_EatsEvent_IfSamePosition()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process1_EatsEvent_IfSamePosition()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process1_EatsEvent_IfSamePosition
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 54
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process1_EatsEvent_IfSamePosition()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process1_EatsEvent_IfSamePosition()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process1_EatsEvent_IfSamePosition*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_Throws_IfEventIsNull
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_Throws_IfEventIsNull
+  id: Process2_Throws_IfEventIsNull
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_Throws_IfEventIsNull()
+  nameWithType: MouseEventResolverTests.Process2_Throws_IfEventIsNull()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_Throws_IfEventIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_Throws_IfEventIsNull
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 65
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_Throws_IfEventIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_Throws_IfEventIsNull()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_Throws_IfEventIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition
+  id: Process2_IssuesMoveFirst_IfDifferentPosition
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_IssuesMoveFirst_IfDifferentPosition()
+  nameWithType: MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_IssuesMoveFirst_IfDifferentPosition
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 71
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_IssuesMoveFirst_IfDifferentPosition()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_IssuesMoveFirst_IfDifferentPosition()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition
+  id: Process2_DoesNotIssueAMove_IfSamePosition
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_DoesNotIssueAMove_IfSamePosition()
+  nameWithType: MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_DoesNotIssueAMove_IfSamePosition
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 80
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_DoesNotIssueAMove_IfSamePosition()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_DoesNotIssueAMove_IfSamePosition()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition
+  id: Process2_IssuesActionSecond_IfDifferentPosition
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_IssuesActionSecond_IfDifferentPosition()
+  nameWithType: MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_IssuesActionSecond_IfDifferentPosition
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 91
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_IssuesActionSecond_IfDifferentPosition()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_IssuesActionSecond_IfDifferentPosition()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition
+  id: Process2_IssuesOnlyAction_IfSamePosition
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_IssuesOnlyAction_IfSamePosition()
+  nameWithType: MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_IssuesOnlyAction_IfSamePosition
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 100
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_IssuesOnlyAction_IfSamePosition()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_IssuesOnlyAction_IfSamePosition()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+  id: Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged()
+  nameWithType: MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 111
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+  id: Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange()
+  nameWithType: MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 123
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+  id: Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent()
+  nameWithType: MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 135
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+  id: Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore()
+  nameWithType: MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 148
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents
+  commentId: M:Sharpie.Tests.MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents
+  id: Process2_ConvertsClicksIntoPressAndReleaseEvents
+  parent: Sharpie.Tests.MouseEventResolverTests
+  langs:
+  - csharp
+  - vb
+  name: Process2_ConvertsClicksIntoPressAndReleaseEvents()
+  nameWithType: MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents()
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/MouseEventResolverTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Process2_ConvertsClicksIntoPressAndReleaseEvents
+    path: Sharpie.Tests/MouseEventResolverTests.cs
+    startLine: 158
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Process2_ConvertsClicksIntoPressAndReleaseEvents()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Process2_ConvertsClicksIntoPressAndReleaseEvents()
+  overload: Sharpie.Tests.MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+references:
+- uid: Sharpie.Tests
+  commentId: N:Sharpie.Tests
+  href: Sharpie.html
+  name: Sharpie.Tests
+  nameWithType: Sharpie.Tests
+  fullName: Sharpie.Tests
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Tests.MouseEventResolverTests.TestInitialize*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.TestInitialize
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_TestInitialize
+  name: TestInitialize
+  nameWithType: MouseEventResolverTests.TestInitialize
+  fullName: Sharpie.Tests.MouseEventResolverTests.TestInitialize
+- uid: Sharpie.Tests.MouseEventResolverTests.Process1_Throws_IfEventIsNull*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process1_Throws_IfEventIsNull
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process1_Throws_IfEventIsNull
+  name: Process1_Throws_IfEventIsNull
+  nameWithType: MouseEventResolverTests.Process1_Throws_IfEventIsNull
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process1_Throws_IfEventIsNull
+- uid: Sharpie.Tests.MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process1_ReturnsSameEvent_IfDifferentPosition
+  name: Process1_ReturnsSameEvent_IfDifferentPosition
+  nameWithType: MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process1_ReturnsSameEvent_IfDifferentPosition
+- uid: Sharpie.Tests.MouseEventResolverTests.Process1_EatsEvent_IfSamePosition*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process1_EatsEvent_IfSamePosition
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process1_EatsEvent_IfSamePosition
+  name: Process1_EatsEvent_IfSamePosition
+  nameWithType: MouseEventResolverTests.Process1_EatsEvent_IfSamePosition
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process1_EatsEvent_IfSamePosition
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_Throws_IfEventIsNull*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_Throws_IfEventIsNull
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_Throws_IfEventIsNull
+  name: Process2_Throws_IfEventIsNull
+  nameWithType: MouseEventResolverTests.Process2_Throws_IfEventIsNull
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_Throws_IfEventIsNull
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_IssuesMoveFirst_IfDifferentPosition
+  name: Process2_IssuesMoveFirst_IfDifferentPosition
+  nameWithType: MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesMoveFirst_IfDifferentPosition
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_DoesNotIssueAMove_IfSamePosition
+  name: Process2_DoesNotIssueAMove_IfSamePosition
+  nameWithType: MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotIssueAMove_IfSamePosition
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_IssuesActionSecond_IfDifferentPosition
+  name: Process2_IssuesActionSecond_IfDifferentPosition
+  nameWithType: MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesActionSecond_IfDifferentPosition
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_IssuesOnlyAction_IfSamePosition
+  name: Process2_IssuesOnlyAction_IfSamePosition
+  nameWithType: MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_IssuesOnlyAction_IfSamePosition
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+  name: Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+  nameWithType: MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_EatsButtonPress_IfFirstOneNotReleasedYet_AndPositionChanged
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+  name: Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+  nameWithType: MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_DoesNotEatButtonPress_IfFirstOneNotReleasedYet_AndPositionDidNotChange
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+  name: Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+  nameWithType: MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_AssumesFirstButtonReleased_EvenIfSecondIsDifferent
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+  name: Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+  nameWithType: MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_EatsEvent_IfItWasReleaseWithoutAnythingBeingPressedBefore
+- uid: Sharpie.Tests.MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents*
+  commentId: Overload:Sharpie.Tests.MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents
+  href: Sharpie.Tests.MouseEventResolverTests.html#Sharpie_Tests_MouseEventResolverTests_Process2_ConvertsClicksIntoPressAndReleaseEvents
+  name: Process2_ConvertsClicksIntoPressAndReleaseEvents
+  nameWithType: MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents
+  fullName: Sharpie.Tests.MouseEventResolverTests.Process2_ConvertsClicksIntoPressAndReleaseEvents

@@ -1,0 +1,1168 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Tests.SurfaceDrawTextTests
+  commentId: T:Sharpie.Tests.SurfaceDrawTextTests
+  id: SurfaceDrawTextTests
+  parent: Sharpie.Tests
+  children:
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText2_CallsDrawText1
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull
+  - Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull
+  - Sharpie.Tests.SurfaceDrawTextTests.TestInitialize
+  langs:
+  - csharp
+  - vb
+  name: SurfaceDrawTextTests
+  nameWithType: SurfaceDrawTextTests
+  fullName: Sharpie.Tests.SurfaceDrawTextTests
+  type: Class
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SurfaceDrawTextTests
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 32
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestClass]
+
+      public class SurfaceDrawTextTests
+    content.vb: >-
+      <TestClass>
+
+      Public Class SurfaceDrawTextTests
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.TestInitialize
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.TestInitialize
+  id: TestInitialize
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: TestInitialize()
+  nameWithType: SurfaceDrawTextTests.TestInitialize()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.TestInitialize()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestInitialize
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 53
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestInitialize]
+
+      public void TestInitialize()
+    content.vb: >-
+      <TestInitialize>
+
+      Public Sub TestInitialize()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.TestInitialize*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull
+  id: DrawText1_Throws_IfFontIsNull
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Throws_IfFontIsNull()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Throws_IfFontIsNull
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 83
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Throws_IfFontIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Throws_IfFontIsNull()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull
+  id: DrawText1_Throws_IfFontIsStringIsNull
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Throws_IfFontIsStringIsNull()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Throws_IfFontIsStringIsNull
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 89
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Throws_IfFontIsStringIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Throws_IfFontIsStringIsNull()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty
+  id: DrawText1_DoesNothing_IfTextIsEmpty
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_DoesNothing_IfTextIsEmpty()
+  nameWithType: SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_DoesNothing_IfTextIsEmpty
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 95
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_DoesNothing_IfTextIsEmpty()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_DoesNothing_IfTextIsEmpty()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs
+  id: DrawText1_AsksFontForGlyphs
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_AsksFontForGlyphs()
+  nameWithType: SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_AsksFontForGlyphs
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 104
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_AsksFontForGlyphs()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_AsksFontForGlyphs()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+  id: DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 114
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+  id: DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 123
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+  id: DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 132
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+  id: DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 142
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+  id: DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 152
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+  id: DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 161
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked
+  id: DrawText1_Ltr_ProcessesNewLine_IfAsked
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_ProcessesNewLine_IfAsked()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_ProcessesNewLine_IfAsked
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 170
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_ProcessesNewLine_IfAsked()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_ProcessesNewLine_IfAsked()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+  id: DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_DoesNotProcessNewLine_IfAsked()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 182
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_DoesNotProcessNewLine_IfAsked()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_DoesNotProcessNewLine_IfAsked()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+  id: DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 195
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+  id: DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 209
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+  id: DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight()
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 224
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull
+  id: DrawText2_Throws_IfFontIsNull
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText2_Throws_IfFontIsNull()
+  nameWithType: SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText2_Throws_IfFontIsNull
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 239
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText2_Throws_IfFontIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText2_Throws_IfFontIsNull()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull
+  id: DrawText2_Throws_IfFontIsStringIsNull
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText2_Throws_IfFontIsStringIsNull()
+  nameWithType: SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText2_Throws_IfFontIsStringIsNull
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 245
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText2_Throws_IfFontIsStringIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText2_Throws_IfFontIsStringIsNull()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty
+  id: DrawText2_DoesNothing_IfTextIsEmpty
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText2_DoesNothing_IfTextIsEmpty()
+  nameWithType: SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText2_DoesNothing_IfTextIsEmpty
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 251
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText2_DoesNothing_IfTextIsEmpty()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText2_DoesNothing_IfTextIsEmpty()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_CallsDrawText1
+  commentId: M:Sharpie.Tests.SurfaceDrawTextTests.DrawText2_CallsDrawText1
+  id: DrawText2_CallsDrawText1
+  parent: Sharpie.Tests.SurfaceDrawTextTests
+  langs:
+  - csharp
+  - vb
+  name: DrawText2_CallsDrawText1()
+  nameWithType: SurfaceDrawTextTests.DrawText2_CallsDrawText1()
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_CallsDrawText1()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SurfaceDrawTextTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawText2_CallsDrawText1
+    path: Sharpie.Tests/SurfaceDrawTextTests.cs
+    startLine: 260
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawText2_CallsDrawText1()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawText2_CallsDrawText1()
+  overload: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_CallsDrawText1*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+references:
+- uid: Sharpie.Tests
+  commentId: N:Sharpie.Tests
+  href: Sharpie.html
+  name: Sharpie.Tests
+  nameWithType: Sharpie.Tests
+  fullName: Sharpie.Tests
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Tests.SurfaceDrawTextTests.TestInitialize*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.TestInitialize
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_TestInitialize
+  name: TestInitialize
+  nameWithType: SurfaceDrawTextTests.TestInitialize
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.TestInitialize
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Throws_IfFontIsNull
+  name: DrawText1_Throws_IfFontIsNull
+  nameWithType: SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsNull
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Throws_IfFontIsStringIsNull
+  name: DrawText1_Throws_IfFontIsStringIsNull
+  nameWithType: SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Throws_IfFontIsStringIsNull
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_DoesNothing_IfTextIsEmpty
+  name: DrawText1_DoesNothing_IfTextIsEmpty
+  nameWithType: SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_DoesNothing_IfTextIsEmpty
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_AsksFontForGlyphs
+  name: DrawText1_AsksFontForGlyphs
+  nameWithType: SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_AsksFontForGlyphs
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+  name: DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpace_DrawsOnGlyphsAtExpectedLocation
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+  name: DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndNotWrapping_DoesNotDrawGlyphs
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+  name: DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenNotEnoughSpaceOnXAndWrapping_MovesToNextLine
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+  name: DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_WhenEnoughSpaceOnXForOneCharOnlyAndNotWrapping_DrawsOnlyOne
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+  name: DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAfterTheDrawnGlyph_IfFits
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+  name: DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_LeavesTheCaretAtEndOfDrawnGlyph_IfNotFits
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_ProcessesNewLine_IfAsked
+  name: DrawText1_Ltr_ProcessesNewLine_IfAsked
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ProcessesNewLine_IfAsked
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+  name: DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DoesNotProcessNewLine_IfAsked
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+  name: DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+  name: DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+  name: DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+  nameWithType: SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText2_Throws_IfFontIsNull
+  name: DrawText2_Throws_IfFontIsNull
+  nameWithType: SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsNull
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText2_Throws_IfFontIsStringIsNull
+  name: DrawText2_Throws_IfFontIsStringIsNull
+  nameWithType: SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_Throws_IfFontIsStringIsNull
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText2_DoesNothing_IfTextIsEmpty
+  name: DrawText2_DoesNothing_IfTextIsEmpty
+  nameWithType: SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_DoesNothing_IfTextIsEmpty
+- uid: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_CallsDrawText1*
+  commentId: Overload:Sharpie.Tests.SurfaceDrawTextTests.DrawText2_CallsDrawText1
+  href: Sharpie.Tests.SurfaceDrawTextTests.html#Sharpie_Tests_SurfaceDrawTextTests_DrawText2_CallsDrawText1
+  name: DrawText2_CallsDrawText1
+  nameWithType: SurfaceDrawTextTests.DrawText2_CallsDrawText1
+  fullName: Sharpie.Tests.SurfaceDrawTextTests.DrawText2_CallsDrawText1

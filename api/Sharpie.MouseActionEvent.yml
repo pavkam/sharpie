@@ -1,0 +1,635 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.MouseActionEvent
+  commentId: T:Sharpie.MouseActionEvent
+  id: MouseActionEvent
+  parent: Sharpie
+  children:
+  - Sharpie.MouseActionEvent.Button
+  - Sharpie.MouseActionEvent.Equals(System.Object)
+  - Sharpie.MouseActionEvent.GetHashCode
+  - Sharpie.MouseActionEvent.Modifiers
+  - Sharpie.MouseActionEvent.Position
+  - Sharpie.MouseActionEvent.State
+  - Sharpie.MouseActionEvent.ToString
+  langs:
+  - csharp
+  - vb
+  name: MouseActionEvent
+  nameWithType: MouseActionEvent
+  fullName: Sharpie.MouseActionEvent
+  type: Class
+  source:
+    remote:
+      path: Sharpie/MouseActionEvent.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MouseActionEvent
+    path: Sharpie/MouseActionEvent.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Contains the details of a Curses event.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public sealed class MouseActionEvent : Event
+    content.vb: >-
+      <PublicAPI>
+
+      Public NotInheritable Class MouseActionEvent Inherits Event
+  inheritance:
+  - System.Object
+  - Sharpie.Event
+  inheritedMembers:
+  - Sharpie.Event.Type
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.MouseActionEvent.Button
+  commentId: P:Sharpie.MouseActionEvent.Button
+  id: Button
+  parent: Sharpie.MouseActionEvent
+  langs:
+  - csharp
+  - vb
+  name: Button
+  nameWithType: MouseActionEvent.Button
+  fullName: Sharpie.MouseActionEvent.Button
+  type: Property
+  source:
+    remote:
+      path: Sharpie/MouseActionEvent.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Button
+    path: Sharpie/MouseActionEvent.cs
+    startLine: 57
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button that was actioned.
+  example: []
+  syntax:
+    content: public MouseButton Button { get; }
+    parameters: []
+    return:
+      type: Sharpie.MouseButton
+    content.vb: Public ReadOnly Property Button As MouseButton
+  overload: Sharpie.MouseActionEvent.Button*
+- uid: Sharpie.MouseActionEvent.State
+  commentId: P:Sharpie.MouseActionEvent.State
+  id: State
+  parent: Sharpie.MouseActionEvent
+  langs:
+  - csharp
+  - vb
+  name: State
+  nameWithType: MouseActionEvent.State
+  fullName: Sharpie.MouseActionEvent.State
+  type: Property
+  source:
+    remote:
+      path: Sharpie/MouseActionEvent.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: State
+    path: Sharpie/MouseActionEvent.cs
+    startLine: 62
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The state of the action.
+  example: []
+  syntax:
+    content: public MouseButtonState State { get; }
+    parameters: []
+    return:
+      type: Sharpie.MouseButtonState
+    content.vb: Public ReadOnly Property State As MouseButtonState
+  overload: Sharpie.MouseActionEvent.State*
+- uid: Sharpie.MouseActionEvent.Modifiers
+  commentId: P:Sharpie.MouseActionEvent.Modifiers
+  id: Modifiers
+  parent: Sharpie.MouseActionEvent
+  langs:
+  - csharp
+  - vb
+  name: Modifiers
+  nameWithType: MouseActionEvent.Modifiers
+  fullName: Sharpie.MouseActionEvent.Modifiers
+  type: Property
+  source:
+    remote:
+      path: Sharpie/MouseActionEvent.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Modifiers
+    path: Sharpie/MouseActionEvent.cs
+    startLine: 67
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Modifier keys that were present at the time of the action.
+  example: []
+  syntax:
+    content: public ModifierKey Modifiers { get; }
+    parameters: []
+    return:
+      type: Sharpie.ModifierKey
+    content.vb: Public ReadOnly Property Modifiers As ModifierKey
+  overload: Sharpie.MouseActionEvent.Modifiers*
+- uid: Sharpie.MouseActionEvent.Position
+  commentId: P:Sharpie.MouseActionEvent.Position
+  id: Position
+  parent: Sharpie.MouseActionEvent
+  langs:
+  - csharp
+  - vb
+  name: Position
+  nameWithType: MouseActionEvent.Position
+  fullName: Sharpie.MouseActionEvent.Position
+  type: Property
+  source:
+    remote:
+      path: Sharpie/MouseActionEvent.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Position
+    path: Sharpie/MouseActionEvent.cs
+    startLine: 72
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The mouse position at the time of the action.
+  example: []
+  syntax:
+    content: public Point Position { get; }
+    parameters: []
+    return:
+      type: System.Drawing.Point
+    content.vb: Public ReadOnly Property Position As Point
+  overload: Sharpie.MouseActionEvent.Position*
+- uid: Sharpie.MouseActionEvent.ToString
+  commentId: M:Sharpie.MouseActionEvent.ToString
+  id: ToString
+  parent: Sharpie.MouseActionEvent
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: MouseActionEvent.ToString()
+  fullName: Sharpie.MouseActionEvent.ToString()
+  type: Method
+  source:
+    remote:
+      path: Sharpie/MouseActionEvent.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ToString
+    path: Sharpie/MouseActionEvent.cs
+    startLine: 75
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Returns a string that represents the current object.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: A string that represents the current object.
+    content.vb: Public Overrides Function ToString() As String
+  overridden: Sharpie.Event.ToString
+  overload: Sharpie.MouseActionEvent.ToString*
+- uid: Sharpie.MouseActionEvent.Equals(System.Object)
+  commentId: M:Sharpie.MouseActionEvent.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Sharpie.MouseActionEvent
+  langs:
+  - csharp
+  - vb
+  name: Equals(object?)
+  nameWithType: MouseActionEvent.Equals(object?)
+  fullName: Sharpie.MouseActionEvent.Equals(object?)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/MouseActionEvent.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Equals
+    path: Sharpie/MouseActionEvent.cs
+    startLine: 97
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Determines whether the specified object is equal to the current object.
+  example: []
+  syntax:
+    content: public override bool Equals(object? obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare with the current object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: Sharpie.Event.Equals(System.Object)
+  overload: Sharpie.MouseActionEvent.Equals*
+  nameWithType.vb: MouseActionEvent.Equals(Object)
+  fullName.vb: Sharpie.MouseActionEvent.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Sharpie.MouseActionEvent.GetHashCode
+  commentId: M:Sharpie.MouseActionEvent.GetHashCode
+  id: GetHashCode
+  parent: Sharpie.MouseActionEvent
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: MouseActionEvent.GetHashCode()
+  fullName: Sharpie.MouseActionEvent.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Sharpie/MouseActionEvent.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: GetHashCode
+    path: Sharpie/MouseActionEvent.cs
+    startLine: 107
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Serves as the default hash function.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A hash code for the current object.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: Sharpie.Event.GetHashCode
+  overload: Sharpie.MouseActionEvent.GetHashCode*
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Sharpie.Event
+  commentId: T:Sharpie.Event
+  parent: Sharpie
+  href: Sharpie.Event.html
+  name: Event
+  nameWithType: Event
+  fullName: Sharpie.Event
+- uid: Sharpie.Event.Type
+  commentId: P:Sharpie.Event.Type
+  parent: Sharpie.Event
+  href: Sharpie.Event.html#Sharpie_Event_Type
+  name: Type
+  nameWithType: Event.Type
+  fullName: Sharpie.Event.Type
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.MouseActionEvent.Button*
+  commentId: Overload:Sharpie.MouseActionEvent.Button
+  href: Sharpie.MouseActionEvent.html#Sharpie_MouseActionEvent_Button
+  name: Button
+  nameWithType: MouseActionEvent.Button
+  fullName: Sharpie.MouseActionEvent.Button
+- uid: Sharpie.MouseButton
+  commentId: T:Sharpie.MouseButton
+  parent: Sharpie
+  href: Sharpie.MouseButton.html
+  name: MouseButton
+  nameWithType: MouseButton
+  fullName: Sharpie.MouseButton
+- uid: Sharpie.MouseActionEvent.State*
+  commentId: Overload:Sharpie.MouseActionEvent.State
+  href: Sharpie.MouseActionEvent.html#Sharpie_MouseActionEvent_State
+  name: State
+  nameWithType: MouseActionEvent.State
+  fullName: Sharpie.MouseActionEvent.State
+- uid: Sharpie.MouseButtonState
+  commentId: T:Sharpie.MouseButtonState
+  parent: Sharpie
+  href: Sharpie.MouseButtonState.html
+  name: MouseButtonState
+  nameWithType: MouseButtonState
+  fullName: Sharpie.MouseButtonState
+- uid: Sharpie.MouseActionEvent.Modifiers*
+  commentId: Overload:Sharpie.MouseActionEvent.Modifiers
+  href: Sharpie.MouseActionEvent.html#Sharpie_MouseActionEvent_Modifiers
+  name: Modifiers
+  nameWithType: MouseActionEvent.Modifiers
+  fullName: Sharpie.MouseActionEvent.Modifiers
+- uid: Sharpie.ModifierKey
+  commentId: T:Sharpie.ModifierKey
+  parent: Sharpie
+  href: Sharpie.ModifierKey.html
+  name: ModifierKey
+  nameWithType: ModifierKey
+  fullName: Sharpie.ModifierKey
+- uid: Sharpie.MouseActionEvent.Position*
+  commentId: Overload:Sharpie.MouseActionEvent.Position
+  href: Sharpie.MouseActionEvent.html#Sharpie_MouseActionEvent_Position
+  name: Position
+  nameWithType: MouseActionEvent.Position
+  fullName: Sharpie.MouseActionEvent.Position
+- uid: System.Drawing.Point
+  commentId: T:System.Drawing.Point
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  name: Point
+  nameWithType: Point
+  fullName: System.Drawing.Point
+- uid: System.Drawing
+  commentId: N:System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Drawing
+  nameWithType: System.Drawing
+  fullName: System.Drawing
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Drawing
+    name: Drawing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Drawing
+    name: Drawing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing
+- uid: Sharpie.Event.ToString
+  commentId: M:Sharpie.Event.ToString
+  parent: Sharpie.Event
+  href: Sharpie.Event.html#Sharpie_Event_ToString
+  name: ToString()
+  nameWithType: Event.ToString()
+  fullName: Sharpie.Event.ToString()
+  spec.csharp:
+  - uid: Sharpie.Event.ToString
+    name: ToString
+    href: Sharpie.Event.html#Sharpie_Event_ToString
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Event.ToString
+    name: ToString
+    href: Sharpie.Event.html#Sharpie_Event_ToString
+  - name: (
+  - name: )
+- uid: Sharpie.MouseActionEvent.ToString*
+  commentId: Overload:Sharpie.MouseActionEvent.ToString
+  href: Sharpie.MouseActionEvent.html#Sharpie_MouseActionEvent_ToString
+  name: ToString
+  nameWithType: MouseActionEvent.ToString
+  fullName: Sharpie.MouseActionEvent.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Sharpie.Event.Equals(System.Object)
+  commentId: M:Sharpie.Event.Equals(System.Object)
+  parent: Sharpie.Event
+  isExternal: true
+  href: Sharpie.Event.html#Sharpie_Event_Equals_System_Object_
+  name: Equals(object)
+  nameWithType: Event.Equals(object)
+  fullName: Sharpie.Event.Equals(object)
+  nameWithType.vb: Event.Equals(Object)
+  fullName.vb: Sharpie.Event.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: Sharpie.Event.Equals(System.Object)
+    name: Equals
+    href: Sharpie.Event.html#Sharpie_Event_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Event.Equals(System.Object)
+    name: Equals
+    href: Sharpie.Event.html#Sharpie_Event_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Sharpie.MouseActionEvent.Equals*
+  commentId: Overload:Sharpie.MouseActionEvent.Equals
+  href: Sharpie.MouseActionEvent.html#Sharpie_MouseActionEvent_Equals_System_Object_
+  name: Equals
+  nameWithType: MouseActionEvent.Equals
+  fullName: Sharpie.MouseActionEvent.Equals
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Sharpie.Event.GetHashCode
+  commentId: M:Sharpie.Event.GetHashCode
+  parent: Sharpie.Event
+  href: Sharpie.Event.html#Sharpie_Event_GetHashCode
+  name: GetHashCode()
+  nameWithType: Event.GetHashCode()
+  fullName: Sharpie.Event.GetHashCode()
+  spec.csharp:
+  - uid: Sharpie.Event.GetHashCode
+    name: GetHashCode
+    href: Sharpie.Event.html#Sharpie_Event_GetHashCode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Event.GetHashCode
+    name: GetHashCode
+    href: Sharpie.Event.html#Sharpie_Event_GetHashCode
+  - name: (
+  - name: )
+- uid: Sharpie.MouseActionEvent.GetHashCode*
+  commentId: Overload:Sharpie.MouseActionEvent.GetHashCode
+  href: Sharpie.MouseActionEvent.html#Sharpie_MouseActionEvent_GetHashCode
+  name: GetHashCode
+  nameWithType: MouseActionEvent.GetHashCode
+  fullName: Sharpie.MouseActionEvent.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

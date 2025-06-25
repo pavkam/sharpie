@@ -1,0 +1,199 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Backend.CursesBackendType
+  commentId: T:Sharpie.Backend.CursesBackendType
+  id: CursesBackendType
+  parent: Sharpie.Backend
+  children:
+  - Sharpie.Backend.CursesBackendType.NCurses
+  - Sharpie.Backend.CursesBackendType.PdCurses
+  - Sharpie.Backend.CursesBackendType.PdCursesMod
+  langs:
+  - csharp
+  - vb
+  name: CursesBackendType
+  nameWithType: CursesBackendType
+  fullName: Sharpie.Backend.CursesBackendType
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/Backend/CursesBackendType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CursesBackendType
+    path: Sharpie/Backend/CursesBackendType.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  summary: Lists the supported backend Curses libraries.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum CursesBackendType
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum CursesBackendType
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Backend.CursesBackendType.NCurses
+  commentId: F:Sharpie.Backend.CursesBackendType.NCurses
+  id: NCurses
+  parent: Sharpie.Backend.CursesBackendType
+  langs:
+  - csharp
+  - vb
+  name: NCurses
+  nameWithType: CursesBackendType.NCurses
+  fullName: Sharpie.Backend.CursesBackendType.NCurses
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/CursesBackendType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: NCurses
+    path: Sharpie/Backend/CursesBackendType.cs
+    startLine: 43
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  summary: >-
+    The NCurses back-end.
+
+    Available by default on most POSIX-compliant operating systems such as
+
+    Linux, FreeBSD an MacOS. Not available by default on Windows.
+  example: []
+  syntax:
+    content: NCurses = 1
+    return:
+      type: Sharpie.Backend.CursesBackendType
+- uid: Sharpie.Backend.CursesBackendType.PdCurses
+  commentId: F:Sharpie.Backend.CursesBackendType.PdCurses
+  id: PdCurses
+  parent: Sharpie.Backend.CursesBackendType
+  langs:
+  - csharp
+  - vb
+  name: PdCurses
+  nameWithType: CursesBackendType.PdCurses
+  fullName: Sharpie.Backend.CursesBackendType.PdCurses
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/CursesBackendType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: PdCurses
+    path: Sharpie/Backend/CursesBackendType.cs
+    startLine: 52
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  summary: >-
+    The PDCurses back-end. Not available by default on operating systems.
+
+    For some Linuxes and FreeBSD a prebuilt library can be installed from package
+
+    managers.
+
+    Does not support <xref href="Sharpie.SoftLabelKeyManager" data-throw-if-not-resolved="false"></xref>.
+
+    Not recommended for use. <xref href="Sharpie.Backend.CursesBackendType.PdCursesMod" data-throw-if-not-resolved="false"></xref> for a better alternative.
+  example: []
+  syntax:
+    content: PdCurses = 2
+    return:
+      type: Sharpie.Backend.CursesBackendType
+- uid: Sharpie.Backend.CursesBackendType.PdCursesMod
+  commentId: F:Sharpie.Backend.CursesBackendType.PdCursesMod
+  id: PdCursesMod
+  parent: Sharpie.Backend.CursesBackendType
+  langs:
+  - csharp
+  - vb
+  name: PdCursesMod
+  nameWithType: CursesBackendType.PdCursesMod
+  fullName: Sharpie.Backend.CursesBackendType.PdCursesMod
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/CursesBackendType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: PdCursesMod
+    path: Sharpie/Backend/CursesBackendType.cs
+    startLine: 58
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  summary: >-
+    The PDCursesMod back-end. This is an advanced version of <xref href="Sharpie.Backend.CursesBackendType.PdCurses" data-throw-if-not-resolved="false"></xref> with more
+
+    platform availability and support. Not available by default on any operating systems.
+  example: []
+  syntax:
+    content: PdCursesMod = 3
+    return:
+      type: Sharpie.Backend.CursesBackendType
+references:
+- uid: Sharpie.Backend
+  commentId: N:Sharpie.Backend
+  href: Sharpie.html
+  name: Sharpie.Backend
+  nameWithType: Sharpie.Backend
+  fullName: Sharpie.Backend
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Backend
+    name: Backend
+    href: Sharpie.Backend.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Backend
+    name: Backend
+    href: Sharpie.Backend.html
+- uid: Sharpie.Backend.CursesBackendType
+  commentId: T:Sharpie.Backend.CursesBackendType
+  parent: Sharpie.Backend
+  href: Sharpie.Backend.CursesBackendType.html
+  name: CursesBackendType
+  nameWithType: CursesBackendType
+  fullName: Sharpie.Backend.CursesBackendType
+- uid: Sharpie.SoftLabelKeyManager
+  commentId: T:Sharpie.SoftLabelKeyManager
+  parent: Sharpie
+  href: Sharpie.SoftLabelKeyManager.html
+  name: SoftLabelKeyManager
+  nameWithType: SoftLabelKeyManager
+  fullName: Sharpie.SoftLabelKeyManager
+- uid: Sharpie.Backend.CursesBackendType.PdCursesMod
+  commentId: F:Sharpie.Backend.CursesBackendType.PdCursesMod
+  href: Sharpie.Backend.CursesBackendType.html#Sharpie_Backend_CursesBackendType_PdCursesMod
+  name: PdCursesMod
+  nameWithType: CursesBackendType.PdCursesMod
+  fullName: Sharpie.Backend.CursesBackendType.PdCursesMod
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Backend.CursesBackendType.PdCurses
+  commentId: F:Sharpie.Backend.CursesBackendType.PdCurses
+  href: Sharpie.Backend.CursesBackendType.html#Sharpie_Backend_CursesBackendType_PdCurses
+  name: PdCurses
+  nameWithType: CursesBackendType.PdCurses
+  fullName: Sharpie.Backend.CursesBackendType.PdCurses
