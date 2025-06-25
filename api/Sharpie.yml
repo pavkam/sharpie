@@ -1,0 +1,551 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie
+  commentId: N:Sharpie
+  id: Sharpie
+  children:
+  - Sharpie.Canvas
+  - Sharpie.Canvas.CheckGlyphStyle
+  - Sharpie.Canvas.FillStyle
+  - Sharpie.Canvas.GlyphSize
+  - Sharpie.Canvas.GradientGlyphStyle
+  - Sharpie.Canvas.LineStyle
+  - Sharpie.Canvas.Orientation
+  - Sharpie.Canvas.ShadeGlyphStyle
+  - Sharpie.Canvas.TriangleGlyphStyle
+  - Sharpie.CaretMode
+  - Sharpie.ClearStrategy
+  - Sharpie.ColorManager
+  - Sharpie.ColorMixture
+  - Sharpie.ColorMode
+  - Sharpie.ControlCharacter
+  - Sharpie.CursesException
+  - Sharpie.CursesInitializationException
+  - Sharpie.CursesOperationException
+  - Sharpie.CursesSynchronizationException
+  - Sharpie.DelegateEvent
+  - Sharpie.Event
+  - Sharpie.EventPump
+  - Sharpie.EventType
+  - Sharpie.Key
+  - Sharpie.KeyEvent
+  - Sharpie.KeySequenceResolver
+  - Sharpie.ModifierKey
+  - Sharpie.MouseActionEvent
+  - Sharpie.MouseButton
+  - Sharpie.MouseButtonState
+  - Sharpie.MouseMoveEvent
+  - Sharpie.Pad
+  - Sharpie.ReplaceStrategy
+  - Sharpie.ResolveEscapeSequenceFunc
+  - Sharpie.Screen
+  - Sharpie.SoftLabelKeyAlignment
+  - Sharpie.SoftLabelKeyManager
+  - Sharpie.SoftLabelKeyMode
+  - Sharpie.StandardColor
+  - Sharpie.StartEvent
+  - Sharpie.StopEvent
+  - Sharpie.Style
+  - Sharpie.StyledText
+  - Sharpie.SubPad
+  - Sharpie.SubWindow
+  - Sharpie.Surface
+  - Sharpie.Terminal
+  - Sharpie.TerminalOptions
+  - Sharpie.TerminalResizeEvent
+  - Sharpie.TerminalSurface
+  - Sharpie.VideoAttribute
+  - Sharpie.Window
+  langs:
+  - csharp
+  - vb
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+  type: Namespace
+  assemblies:
+  - sharpie
+references:
+- uid: Sharpie.Canvas
+  commentId: T:Sharpie.Canvas
+  href: Sharpie.Canvas.html
+  name: Canvas
+  nameWithType: Canvas
+  fullName: Sharpie.Canvas
+- uid: Sharpie.Canvas.CheckGlyphStyle
+  commentId: T:Sharpie.Canvas.CheckGlyphStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.CheckGlyphStyle
+  nameWithType: Canvas.CheckGlyphStyle
+  fullName: Sharpie.Canvas.CheckGlyphStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.CheckGlyphStyle
+    name: CheckGlyphStyle
+    href: Sharpie.Canvas.CheckGlyphStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.CheckGlyphStyle
+    name: CheckGlyphStyle
+    href: Sharpie.Canvas.CheckGlyphStyle.html
+- uid: Sharpie.Canvas.FillStyle
+  commentId: T:Sharpie.Canvas.FillStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.FillStyle
+  nameWithType: Canvas.FillStyle
+  fullName: Sharpie.Canvas.FillStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.FillStyle
+    name: FillStyle
+    href: Sharpie.Canvas.FillStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.FillStyle
+    name: FillStyle
+    href: Sharpie.Canvas.FillStyle.html
+- uid: Sharpie.Canvas.GlyphSize
+  commentId: T:Sharpie.Canvas.GlyphSize
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.GlyphSize
+  nameWithType: Canvas.GlyphSize
+  fullName: Sharpie.Canvas.GlyphSize
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GlyphSize
+    name: GlyphSize
+    href: Sharpie.Canvas.GlyphSize.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GlyphSize
+    name: GlyphSize
+    href: Sharpie.Canvas.GlyphSize.html
+- uid: Sharpie.Canvas.GradientGlyphStyle
+  commentId: T:Sharpie.Canvas.GradientGlyphStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.GradientGlyphStyle
+  nameWithType: Canvas.GradientGlyphStyle
+  fullName: Sharpie.Canvas.GradientGlyphStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GradientGlyphStyle
+    name: GradientGlyphStyle
+    href: Sharpie.Canvas.GradientGlyphStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GradientGlyphStyle
+    name: GradientGlyphStyle
+    href: Sharpie.Canvas.GradientGlyphStyle.html
+- uid: Sharpie.Canvas.LineStyle
+  commentId: T:Sharpie.Canvas.LineStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.LineStyle
+  nameWithType: Canvas.LineStyle
+  fullName: Sharpie.Canvas.LineStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html
+- uid: Sharpie.Canvas.Orientation
+  commentId: T:Sharpie.Canvas.Orientation
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.Orientation
+  nameWithType: Canvas.Orientation
+  fullName: Sharpie.Canvas.Orientation
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html
+- uid: Sharpie.Canvas.ShadeGlyphStyle
+  commentId: T:Sharpie.Canvas.ShadeGlyphStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.ShadeGlyphStyle
+  nameWithType: Canvas.ShadeGlyphStyle
+  fullName: Sharpie.Canvas.ShadeGlyphStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.ShadeGlyphStyle
+    name: ShadeGlyphStyle
+    href: Sharpie.Canvas.ShadeGlyphStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.ShadeGlyphStyle
+    name: ShadeGlyphStyle
+    href: Sharpie.Canvas.ShadeGlyphStyle.html
+- uid: Sharpie.Canvas.TriangleGlyphStyle
+  commentId: T:Sharpie.Canvas.TriangleGlyphStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.TriangleGlyphStyle
+  nameWithType: Canvas.TriangleGlyphStyle
+  fullName: Sharpie.Canvas.TriangleGlyphStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.TriangleGlyphStyle
+    name: TriangleGlyphStyle
+    href: Sharpie.Canvas.TriangleGlyphStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.TriangleGlyphStyle
+    name: TriangleGlyphStyle
+    href: Sharpie.Canvas.TriangleGlyphStyle.html
+- uid: Sharpie.CaretMode
+  commentId: T:Sharpie.CaretMode
+  parent: Sharpie
+  href: Sharpie.CaretMode.html
+  name: CaretMode
+  nameWithType: CaretMode
+  fullName: Sharpie.CaretMode
+- uid: Sharpie.ClearStrategy
+  commentId: T:Sharpie.ClearStrategy
+  parent: Sharpie
+  href: Sharpie.ClearStrategy.html
+  name: ClearStrategy
+  nameWithType: ClearStrategy
+  fullName: Sharpie.ClearStrategy
+- uid: Sharpie.ColorManager
+  commentId: T:Sharpie.ColorManager
+  parent: Sharpie
+  href: Sharpie.ColorManager.html
+  name: ColorManager
+  nameWithType: ColorManager
+  fullName: Sharpie.ColorManager
+- uid: Sharpie.ColorMixture
+  commentId: T:Sharpie.ColorMixture
+  parent: Sharpie
+  href: Sharpie.ColorMixture.html
+  name: ColorMixture
+  nameWithType: ColorMixture
+  fullName: Sharpie.ColorMixture
+- uid: Sharpie.ColorMode
+  commentId: T:Sharpie.ColorMode
+  parent: Sharpie
+  href: Sharpie.ColorMode.html
+  name: ColorMode
+  nameWithType: ColorMode
+  fullName: Sharpie.ColorMode
+- uid: Sharpie.ControlCharacter
+  commentId: T:Sharpie.ControlCharacter
+  href: Sharpie.ControlCharacter.html
+  name: ControlCharacter
+  nameWithType: ControlCharacter
+  fullName: Sharpie.ControlCharacter
+- uid: Sharpie.CursesException
+  commentId: T:Sharpie.CursesException
+  parent: Sharpie
+  href: Sharpie.CursesException.html
+  name: CursesException
+  nameWithType: CursesException
+  fullName: Sharpie.CursesException
+- uid: Sharpie.CursesInitializationException
+  commentId: T:Sharpie.CursesInitializationException
+  href: Sharpie.CursesInitializationException.html
+  name: CursesInitializationException
+  nameWithType: CursesInitializationException
+  fullName: Sharpie.CursesInitializationException
+- uid: Sharpie.CursesOperationException
+  commentId: T:Sharpie.CursesOperationException
+  href: Sharpie.CursesOperationException.html
+  name: CursesOperationException
+  nameWithType: CursesOperationException
+  fullName: Sharpie.CursesOperationException
+- uid: Sharpie.CursesSynchronizationException
+  commentId: T:Sharpie.CursesSynchronizationException
+  href: Sharpie.CursesSynchronizationException.html
+  name: CursesSynchronizationException
+  nameWithType: CursesSynchronizationException
+  fullName: Sharpie.CursesSynchronizationException
+- uid: Sharpie.DelegateEvent
+  commentId: T:Sharpie.DelegateEvent
+  href: Sharpie.DelegateEvent.html
+  name: DelegateEvent
+  nameWithType: DelegateEvent
+  fullName: Sharpie.DelegateEvent
+- uid: Sharpie.Event
+  commentId: T:Sharpie.Event
+  parent: Sharpie
+  href: Sharpie.Event.html
+  name: Event
+  nameWithType: Event
+  fullName: Sharpie.Event
+- uid: Sharpie.EventPump
+  commentId: T:Sharpie.EventPump
+  parent: Sharpie
+  href: Sharpie.EventPump.html
+  name: EventPump
+  nameWithType: EventPump
+  fullName: Sharpie.EventPump
+- uid: Sharpie.EventType
+  commentId: T:Sharpie.EventType
+  parent: Sharpie
+  href: Sharpie.EventType.html
+  name: EventType
+  nameWithType: EventType
+  fullName: Sharpie.EventType
+- uid: Sharpie.Key
+  commentId: T:Sharpie.Key
+  parent: Sharpie
+  href: Sharpie.Key.html
+  name: Key
+  nameWithType: Key
+  fullName: Sharpie.Key
+- uid: Sharpie.KeyEvent
+  commentId: T:Sharpie.KeyEvent
+  href: Sharpie.KeyEvent.html
+  name: KeyEvent
+  nameWithType: KeyEvent
+  fullName: Sharpie.KeyEvent
+- uid: Sharpie.ResolveEscapeSequenceFunc
+  commentId: T:Sharpie.ResolveEscapeSequenceFunc
+  parent: Sharpie
+  href: Sharpie.ResolveEscapeSequenceFunc.html
+  name: ResolveEscapeSequenceFunc
+  nameWithType: ResolveEscapeSequenceFunc
+  fullName: Sharpie.ResolveEscapeSequenceFunc
+- uid: Sharpie.KeySequenceResolver
+  commentId: T:Sharpie.KeySequenceResolver
+  href: Sharpie.KeySequenceResolver.html
+  name: KeySequenceResolver
+  nameWithType: KeySequenceResolver
+  fullName: Sharpie.KeySequenceResolver
+- uid: Sharpie.ModifierKey
+  commentId: T:Sharpie.ModifierKey
+  parent: Sharpie
+  href: Sharpie.ModifierKey.html
+  name: ModifierKey
+  nameWithType: ModifierKey
+  fullName: Sharpie.ModifierKey
+- uid: Sharpie.MouseActionEvent
+  commentId: T:Sharpie.MouseActionEvent
+  href: Sharpie.MouseActionEvent.html
+  name: MouseActionEvent
+  nameWithType: MouseActionEvent
+  fullName: Sharpie.MouseActionEvent
+- uid: Sharpie.MouseButton
+  commentId: T:Sharpie.MouseButton
+  parent: Sharpie
+  href: Sharpie.MouseButton.html
+  name: MouseButton
+  nameWithType: MouseButton
+  fullName: Sharpie.MouseButton
+- uid: Sharpie.MouseButtonState
+  commentId: T:Sharpie.MouseButtonState
+  parent: Sharpie
+  href: Sharpie.MouseButtonState.html
+  name: MouseButtonState
+  nameWithType: MouseButtonState
+  fullName: Sharpie.MouseButtonState
+- uid: Sharpie.MouseMoveEvent
+  commentId: T:Sharpie.MouseMoveEvent
+  href: Sharpie.MouseMoveEvent.html
+  name: MouseMoveEvent
+  nameWithType: MouseMoveEvent
+  fullName: Sharpie.MouseMoveEvent
+- uid: Sharpie.Pad
+  commentId: T:Sharpie.Pad
+  parent: Sharpie
+  href: Sharpie.Pad.html
+  name: Pad
+  nameWithType: Pad
+  fullName: Sharpie.Pad
+- uid: Sharpie.ReplaceStrategy
+  commentId: T:Sharpie.ReplaceStrategy
+  parent: Sharpie
+  href: Sharpie.ReplaceStrategy.html
+  name: ReplaceStrategy
+  nameWithType: ReplaceStrategy
+  fullName: Sharpie.ReplaceStrategy
+- uid: Sharpie.Screen
+  commentId: T:Sharpie.Screen
+  parent: Sharpie
+  href: Sharpie.Screen.html
+  name: Screen
+  nameWithType: Screen
+  fullName: Sharpie.Screen
+- uid: Sharpie.SoftLabelKeyAlignment
+  commentId: T:Sharpie.SoftLabelKeyAlignment
+  parent: Sharpie
+  href: Sharpie.SoftLabelKeyAlignment.html
+  name: SoftLabelKeyAlignment
+  nameWithType: SoftLabelKeyAlignment
+  fullName: Sharpie.SoftLabelKeyAlignment
+- uid: Sharpie.SoftLabelKeyManager
+  commentId: T:Sharpie.SoftLabelKeyManager
+  parent: Sharpie
+  href: Sharpie.SoftLabelKeyManager.html
+  name: SoftLabelKeyManager
+  nameWithType: SoftLabelKeyManager
+  fullName: Sharpie.SoftLabelKeyManager
+- uid: Sharpie.SoftLabelKeyMode
+  commentId: T:Sharpie.SoftLabelKeyMode
+  parent: Sharpie
+  href: Sharpie.SoftLabelKeyMode.html
+  name: SoftLabelKeyMode
+  nameWithType: SoftLabelKeyMode
+  fullName: Sharpie.SoftLabelKeyMode
+- uid: Sharpie.StandardColor
+  commentId: T:Sharpie.StandardColor
+  parent: Sharpie
+  href: Sharpie.StandardColor.html
+  name: StandardColor
+  nameWithType: StandardColor
+  fullName: Sharpie.StandardColor
+- uid: Sharpie.StartEvent
+  commentId: T:Sharpie.StartEvent
+  href: Sharpie.StartEvent.html
+  name: StartEvent
+  nameWithType: StartEvent
+  fullName: Sharpie.StartEvent
+- uid: Sharpie.StopEvent
+  commentId: T:Sharpie.StopEvent
+  href: Sharpie.StopEvent.html
+  name: StopEvent
+  nameWithType: StopEvent
+  fullName: Sharpie.StopEvent
+- uid: Sharpie.Style
+  commentId: T:Sharpie.Style
+  parent: Sharpie
+  href: Sharpie.Style.html
+  name: Style
+  nameWithType: Style
+  fullName: Sharpie.Style
+- uid: Sharpie.StyledText
+  commentId: T:Sharpie.StyledText
+  parent: Sharpie
+  href: Sharpie.StyledText.html
+  name: StyledText
+  nameWithType: StyledText
+  fullName: Sharpie.StyledText
+- uid: Sharpie.SubPad
+  commentId: T:Sharpie.SubPad
+  href: Sharpie.SubPad.html
+  name: SubPad
+  nameWithType: SubPad
+  fullName: Sharpie.SubPad
+- uid: Sharpie.SubWindow
+  commentId: T:Sharpie.SubWindow
+  href: Sharpie.SubWindow.html
+  name: SubWindow
+  nameWithType: SubWindow
+  fullName: Sharpie.SubWindow
+- uid: Sharpie.Surface
+  commentId: T:Sharpie.Surface
+  parent: Sharpie
+  href: Sharpie.Surface.html
+  name: Surface
+  nameWithType: Surface
+  fullName: Sharpie.Surface
+- uid: Sharpie.Terminal
+  commentId: T:Sharpie.Terminal
+  parent: Sharpie
+  href: Sharpie.Terminal.html
+  name: Terminal
+  nameWithType: Terminal
+  fullName: Sharpie.Terminal
+- uid: Sharpie.TerminalOptions
+  commentId: T:Sharpie.TerminalOptions
+  parent: Sharpie
+  href: Sharpie.TerminalOptions.html
+  name: TerminalOptions
+  nameWithType: TerminalOptions
+  fullName: Sharpie.TerminalOptions
+- uid: Sharpie.TerminalResizeEvent
+  commentId: T:Sharpie.TerminalResizeEvent
+  href: Sharpie.TerminalResizeEvent.html
+  name: TerminalResizeEvent
+  nameWithType: TerminalResizeEvent
+  fullName: Sharpie.TerminalResizeEvent
+- uid: Sharpie.TerminalSurface
+  commentId: T:Sharpie.TerminalSurface
+  parent: Sharpie
+  href: Sharpie.TerminalSurface.html
+  name: TerminalSurface
+  nameWithType: TerminalSurface
+  fullName: Sharpie.TerminalSurface
+- uid: Sharpie.VideoAttribute
+  commentId: T:Sharpie.VideoAttribute
+  parent: Sharpie
+  href: Sharpie.VideoAttribute.html
+  name: VideoAttribute
+  nameWithType: VideoAttribute
+  fullName: Sharpie.VideoAttribute
+- uid: Sharpie.Window
+  commentId: T:Sharpie.Window
+  parent: Sharpie
+  href: Sharpie.Window.html
+  name: Window
+  nameWithType: Window
+  fullName: Sharpie.Window
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie

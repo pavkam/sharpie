@@ -1,0 +1,286 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.EventType
+  commentId: T:Sharpie.EventType
+  id: EventType
+  parent: Sharpie
+  children:
+  - Sharpie.EventType.Delegate
+  - Sharpie.EventType.KeyPress
+  - Sharpie.EventType.MouseAction
+  - Sharpie.EventType.MouseMove
+  - Sharpie.EventType.Start
+  - Sharpie.EventType.Stop
+  - Sharpie.EventType.TerminalResize
+  - Sharpie.EventType.Undefined
+  langs:
+  - csharp
+  - vb
+  name: EventType
+  nameWithType: EventType
+  fullName: Sharpie.EventType
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/EventType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: EventType
+    path: Sharpie/EventType.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Defines the possible event types.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum EventType
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum EventType
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.EventType.Undefined
+  commentId: F:Sharpie.EventType.Undefined
+  id: Undefined
+  parent: Sharpie.EventType
+  langs:
+  - csharp
+  - vb
+  name: Undefined
+  nameWithType: EventType.Undefined
+  fullName: Sharpie.EventType.Undefined
+  type: Field
+  source:
+    remote:
+      path: Sharpie/EventType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Undefined
+    path: Sharpie/EventType.cs
+    startLine: 41
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Undefined event.
+  example: []
+  syntax:
+    content: Undefined = 0
+    return:
+      type: Sharpie.EventType
+- uid: Sharpie.EventType.Start
+  commentId: F:Sharpie.EventType.Start
+  id: Start
+  parent: Sharpie.EventType
+  langs:
+  - csharp
+  - vb
+  name: Start
+  nameWithType: EventType.Start
+  fullName: Sharpie.EventType.Start
+  type: Field
+  source:
+    remote:
+      path: Sharpie/EventType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Start
+    path: Sharpie/EventType.cs
+    startLine: 46
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The listening process has been started.
+  example: []
+  syntax:
+    content: Start = 1
+    return:
+      type: Sharpie.EventType
+- uid: Sharpie.EventType.Stop
+  commentId: F:Sharpie.EventType.Stop
+  id: Stop
+  parent: Sharpie.EventType
+  langs:
+  - csharp
+  - vb
+  name: Stop
+  nameWithType: EventType.Stop
+  fullName: Sharpie.EventType.Stop
+  type: Field
+  source:
+    remote:
+      path: Sharpie/EventType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Stop
+    path: Sharpie/EventType.cs
+    startLine: 51
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The listening process has been stopped.
+  example: []
+  syntax:
+    content: Stop = 2
+    return:
+      type: Sharpie.EventType
+- uid: Sharpie.EventType.TerminalResize
+  commentId: F:Sharpie.EventType.TerminalResize
+  id: TerminalResize
+  parent: Sharpie.EventType
+  langs:
+  - csharp
+  - vb
+  name: TerminalResize
+  nameWithType: EventType.TerminalResize
+  fullName: Sharpie.EventType.TerminalResize
+  type: Field
+  source:
+    remote:
+      path: Sharpie/EventType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TerminalResize
+    path: Sharpie/EventType.cs
+    startLine: 56
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The terminal has been resized.
+  example: []
+  syntax:
+    content: TerminalResize = 3
+    return:
+      type: Sharpie.EventType
+- uid: Sharpie.EventType.KeyPress
+  commentId: F:Sharpie.EventType.KeyPress
+  id: KeyPress
+  parent: Sharpie.EventType
+  langs:
+  - csharp
+  - vb
+  name: KeyPress
+  nameWithType: EventType.KeyPress
+  fullName: Sharpie.EventType.KeyPress
+  type: Field
+  source:
+    remote:
+      path: Sharpie/EventType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPress
+    path: Sharpie/EventType.cs
+    startLine: 61
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: A key has been pressed.
+  example: []
+  syntax:
+    content: KeyPress = 4
+    return:
+      type: Sharpie.EventType
+- uid: Sharpie.EventType.MouseMove
+  commentId: F:Sharpie.EventType.MouseMove
+  id: MouseMove
+  parent: Sharpie.EventType
+  langs:
+  - csharp
+  - vb
+  name: MouseMove
+  nameWithType: EventType.MouseMove
+  fullName: Sharpie.EventType.MouseMove
+  type: Field
+  source:
+    remote:
+      path: Sharpie/EventType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MouseMove
+    path: Sharpie/EventType.cs
+    startLine: 66
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The mouse has moved.
+  example: []
+  syntax:
+    content: MouseMove = 5
+    return:
+      type: Sharpie.EventType
+- uid: Sharpie.EventType.MouseAction
+  commentId: F:Sharpie.EventType.MouseAction
+  id: MouseAction
+  parent: Sharpie.EventType
+  langs:
+  - csharp
+  - vb
+  name: MouseAction
+  nameWithType: EventType.MouseAction
+  fullName: Sharpie.EventType.MouseAction
+  type: Field
+  source:
+    remote:
+      path: Sharpie/EventType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MouseAction
+    path: Sharpie/EventType.cs
+    startLine: 71
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The mouse buttons have been used.
+  example: []
+  syntax:
+    content: MouseAction = 6
+    return:
+      type: Sharpie.EventType
+- uid: Sharpie.EventType.Delegate
+  commentId: F:Sharpie.EventType.Delegate
+  id: Delegate
+  parent: Sharpie.EventType
+  langs:
+  - csharp
+  - vb
+  name: Delegate
+  nameWithType: EventType.Delegate
+  fullName: Sharpie.EventType.Delegate
+  type: Field
+  source:
+    remote:
+      path: Sharpie/EventType.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delegate
+    path: Sharpie/EventType.cs
+    startLine: 76
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Delegated object that needs to be processed on main context.
+  example: []
+  syntax:
+    content: Delegate = 7
+    return:
+      type: Sharpie.EventType
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.EventType
+  commentId: T:Sharpie.EventType
+  parent: Sharpie
+  href: Sharpie.EventType.html
+  name: EventType
+  nameWithType: EventType
+  fullName: Sharpie.EventType

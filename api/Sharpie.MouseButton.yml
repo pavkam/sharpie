@@ -1,0 +1,228 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.MouseButton
+  commentId: T:Sharpie.MouseButton
+  id: MouseButton
+  parent: Sharpie
+  children:
+  - Sharpie.MouseButton.Button1
+  - Sharpie.MouseButton.Button2
+  - Sharpie.MouseButton.Button3
+  - Sharpie.MouseButton.Button4
+  - Sharpie.MouseButton.Button5
+  - Sharpie.MouseButton.Unknown
+  langs:
+  - csharp
+  - vb
+  name: MouseButton
+  nameWithType: MouseButton
+  fullName: Sharpie.MouseButton
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/MouseButton.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MouseButton
+    path: Sharpie/MouseButton.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Defines the possible mouse buttons.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum MouseButton : uint
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum MouseButton As UInteger
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.MouseButton.Unknown
+  commentId: F:Sharpie.MouseButton.Unknown
+  id: Unknown
+  parent: Sharpie.MouseButton
+  langs:
+  - csharp
+  - vb
+  name: Unknown
+  nameWithType: MouseButton.Unknown
+  fullName: Sharpie.MouseButton.Unknown
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButton.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Unknown
+    path: Sharpie/MouseButton.cs
+    startLine: 41
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Unknown button.
+  example: []
+  syntax:
+    content: Unknown = 0
+    return:
+      type: Sharpie.MouseButton
+- uid: Sharpie.MouseButton.Button1
+  commentId: F:Sharpie.MouseButton.Button1
+  id: Button1
+  parent: Sharpie.MouseButton
+  langs:
+  - csharp
+  - vb
+  name: Button1
+  nameWithType: MouseButton.Button1
+  fullName: Sharpie.MouseButton.Button1
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButton.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Button1
+    path: Sharpie/MouseButton.cs
+    startLine: 46
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button 1.
+  example: []
+  syntax:
+    content: Button1 = 1
+    return:
+      type: Sharpie.MouseButton
+- uid: Sharpie.MouseButton.Button2
+  commentId: F:Sharpie.MouseButton.Button2
+  id: Button2
+  parent: Sharpie.MouseButton
+  langs:
+  - csharp
+  - vb
+  name: Button2
+  nameWithType: MouseButton.Button2
+  fullName: Sharpie.MouseButton.Button2
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButton.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Button2
+    path: Sharpie/MouseButton.cs
+    startLine: 51
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button 2.
+  example: []
+  syntax:
+    content: Button2 = 2
+    return:
+      type: Sharpie.MouseButton
+- uid: Sharpie.MouseButton.Button3
+  commentId: F:Sharpie.MouseButton.Button3
+  id: Button3
+  parent: Sharpie.MouseButton
+  langs:
+  - csharp
+  - vb
+  name: Button3
+  nameWithType: MouseButton.Button3
+  fullName: Sharpie.MouseButton.Button3
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButton.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Button3
+    path: Sharpie/MouseButton.cs
+    startLine: 56
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button 3.
+  example: []
+  syntax:
+    content: Button3 = 3
+    return:
+      type: Sharpie.MouseButton
+- uid: Sharpie.MouseButton.Button4
+  commentId: F:Sharpie.MouseButton.Button4
+  id: Button4
+  parent: Sharpie.MouseButton
+  langs:
+  - csharp
+  - vb
+  name: Button4
+  nameWithType: MouseButton.Button4
+  fullName: Sharpie.MouseButton.Button4
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButton.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Button4
+    path: Sharpie/MouseButton.cs
+    startLine: 61
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button 4.
+  example: []
+  syntax:
+    content: Button4 = 4
+    return:
+      type: Sharpie.MouseButton
+- uid: Sharpie.MouseButton.Button5
+  commentId: F:Sharpie.MouseButton.Button5
+  id: Button5
+  parent: Sharpie.MouseButton
+  langs:
+  - csharp
+  - vb
+  name: Button5
+  nameWithType: MouseButton.Button5
+  fullName: Sharpie.MouseButton.Button5
+  type: Field
+  source:
+    remote:
+      path: Sharpie/MouseButton.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Button5
+    path: Sharpie/MouseButton.cs
+    startLine: 66
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The button 5.
+  example: []
+  syntax:
+    content: Button5 = 5
+    return:
+      type: Sharpie.MouseButton
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.MouseButton
+  commentId: T:Sharpie.MouseButton
+  parent: Sharpie
+  href: Sharpie.MouseButton.html
+  name: MouseButton
+  nameWithType: MouseButton
+  fullName: Sharpie.MouseButton

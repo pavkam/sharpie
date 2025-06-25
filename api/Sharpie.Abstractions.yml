@@ -1,0 +1,190 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Abstractions
+  commentId: N:Sharpie.Abstractions
+  id: Sharpie.Abstractions
+  children:
+  - Sharpie.Abstractions.IAsciiFont
+  - Sharpie.Abstractions.IColorManager
+  - Sharpie.Abstractions.ICursesBackend
+  - Sharpie.Abstractions.ICursesBackend.ripoffline_callback
+  - Sharpie.Abstractions.IDrawSurface
+  - Sharpie.Abstractions.IDrawable
+  - Sharpie.Abstractions.IEventPump
+  - Sharpie.Abstractions.IInterval
+  - Sharpie.Abstractions.IPad
+  - Sharpie.Abstractions.IScreen
+  - Sharpie.Abstractions.ISoftLabelKeyManager
+  - Sharpie.Abstractions.ISubPad
+  - Sharpie.Abstractions.ISubWindow
+  - Sharpie.Abstractions.ISurface
+  - Sharpie.Abstractions.ITerminal
+  - Sharpie.Abstractions.ITerminalSurface
+  - Sharpie.Abstractions.IWindow
+  langs:
+  - csharp
+  - vb
+  name: Sharpie.Abstractions
+  nameWithType: Sharpie.Abstractions
+  fullName: Sharpie.Abstractions
+  type: Namespace
+  assemblies:
+  - sharpie
+references:
+- uid: Sharpie.Abstractions.IAsciiFont
+  commentId: T:Sharpie.Abstractions.IAsciiFont
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IAsciiFont.html
+  name: IAsciiFont
+  nameWithType: IAsciiFont
+  fullName: Sharpie.Abstractions.IAsciiFont
+- uid: Sharpie.Abstractions.IColorManager
+  commentId: T:Sharpie.Abstractions.IColorManager
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IColorManager.html
+  name: IColorManager
+  nameWithType: IColorManager
+  fullName: Sharpie.Abstractions.IColorManager
+- uid: Sharpie.Abstractions.ICursesBackend
+  commentId: T:Sharpie.Abstractions.ICursesBackend
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ICursesBackend.html
+  name: ICursesBackend
+  nameWithType: ICursesBackend
+  fullName: Sharpie.Abstractions.ICursesBackend
+- uid: Sharpie.Abstractions.ICursesBackend.ripoffline_callback
+  commentId: T:Sharpie.Abstractions.ICursesBackend.ripoffline_callback
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ICursesBackend.html
+  name: ICursesBackend.ripoffline_callback
+  nameWithType: ICursesBackend.ripoffline_callback
+  fullName: Sharpie.Abstractions.ICursesBackend.ripoffline_callback
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ICursesBackend
+    name: ICursesBackend
+    href: Sharpie.Abstractions.ICursesBackend.html
+  - name: .
+  - uid: Sharpie.Abstractions.ICursesBackend.ripoffline_callback
+    name: ripoffline_callback
+    href: Sharpie.Abstractions.ICursesBackend.ripoffline_callback.html
+  spec.vb:
+  - uid: Sharpie.Abstractions.ICursesBackend
+    name: ICursesBackend
+    href: Sharpie.Abstractions.ICursesBackend.html
+  - name: .
+  - uid: Sharpie.Abstractions.ICursesBackend.ripoffline_callback
+    name: ripoffline_callback
+    href: Sharpie.Abstractions.ICursesBackend.ripoffline_callback.html
+- uid: Sharpie.Abstractions.IDrawable
+  commentId: T:Sharpie.Abstractions.IDrawable
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IDrawable.html
+  name: IDrawable
+  nameWithType: IDrawable
+  fullName: Sharpie.Abstractions.IDrawable
+- uid: Sharpie.Abstractions.IDrawSurface
+  commentId: T:Sharpie.Abstractions.IDrawSurface
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IDrawSurface.html
+  name: IDrawSurface
+  nameWithType: IDrawSurface
+  fullName: Sharpie.Abstractions.IDrawSurface
+- uid: Sharpie.Abstractions.IEventPump
+  commentId: T:Sharpie.Abstractions.IEventPump
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IEventPump.html
+  name: IEventPump
+  nameWithType: IEventPump
+  fullName: Sharpie.Abstractions.IEventPump
+- uid: Sharpie.Abstractions.IInterval
+  commentId: T:Sharpie.Abstractions.IInterval
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IInterval.html
+  name: IInterval
+  nameWithType: IInterval
+  fullName: Sharpie.Abstractions.IInterval
+- uid: Sharpie.Abstractions.IPad
+  commentId: T:Sharpie.Abstractions.IPad
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IPad.html
+  name: IPad
+  nameWithType: IPad
+  fullName: Sharpie.Abstractions.IPad
+- uid: Sharpie.Abstractions.IScreen
+  commentId: T:Sharpie.Abstractions.IScreen
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IScreen.html
+  name: IScreen
+  nameWithType: IScreen
+  fullName: Sharpie.Abstractions.IScreen
+- uid: Sharpie.Abstractions.ISoftLabelKeyManager
+  commentId: T:Sharpie.Abstractions.ISoftLabelKeyManager
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ISoftLabelKeyManager.html
+  name: ISoftLabelKeyManager
+  nameWithType: ISoftLabelKeyManager
+  fullName: Sharpie.Abstractions.ISoftLabelKeyManager
+- uid: Sharpie.Abstractions.ISubPad
+  commentId: T:Sharpie.Abstractions.ISubPad
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ISubPad.html
+  name: ISubPad
+  nameWithType: ISubPad
+  fullName: Sharpie.Abstractions.ISubPad
+- uid: Sharpie.Abstractions.ISubWindow
+  commentId: T:Sharpie.Abstractions.ISubWindow
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ISubWindow.html
+  name: ISubWindow
+  nameWithType: ISubWindow
+  fullName: Sharpie.Abstractions.ISubWindow
+- uid: Sharpie.Abstractions.ISurface
+  commentId: T:Sharpie.Abstractions.ISurface
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ISurface.html
+  name: ISurface
+  nameWithType: ISurface
+  fullName: Sharpie.Abstractions.ISurface
+- uid: Sharpie.Abstractions.ITerminal
+  commentId: T:Sharpie.Abstractions.ITerminal
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ITerminal.html
+  name: ITerminal
+  nameWithType: ITerminal
+  fullName: Sharpie.Abstractions.ITerminal
+- uid: Sharpie.Abstractions.ITerminalSurface
+  commentId: T:Sharpie.Abstractions.ITerminalSurface
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ITerminalSurface.html
+  name: ITerminalSurface
+  nameWithType: ITerminalSurface
+  fullName: Sharpie.Abstractions.ITerminalSurface
+- uid: Sharpie.Abstractions.IWindow
+  commentId: T:Sharpie.Abstractions.IWindow
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IWindow.html
+  name: IWindow
+  nameWithType: IWindow
+  fullName: Sharpie.Abstractions.IWindow
+- uid: Sharpie.Abstractions
+  commentId: N:Sharpie.Abstractions
+  href: Sharpie.html
+  name: Sharpie.Abstractions
+  nameWithType: Sharpie.Abstractions
+  fullName: Sharpie.Abstractions
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html

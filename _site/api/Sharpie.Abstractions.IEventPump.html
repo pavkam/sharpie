@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IEventPump | sharpie </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IEventPump | sharpie ">
+      
+      <meta name="description" content="Defines the traits needed to implement .">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/LyndonGingerich/sharpie/new/docs-project/apiSpec/new?filename=Sharpie_Abstractions_IEventPump.md&amp;value=---%0Auid%3A%20Sharpie.Abstractions.IEventPump%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="sharpie">
+            sharpie
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Sharpie.Abstractions.IEventPump">
+
+
+
+  <h1 id="Sharpie_Abstractions_IEventPump" data-uid="Sharpie.Abstractions.IEventPump" class="text-break">
+Interface IEventPump  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/IEventPump.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Sharpie.html">Sharpie</a>.<a class="xref" href="Sharpie.Abstractions.html">Abstractions</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>sharpie.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines the traits needed to implement <a class="xref" href="Sharpie.EventPump.html">EventPump</a>.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public interface IEventPump</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Sharpie_Abstractions_IEventPump_Terminal_" data-uid="Sharpie.Abstractions.IEventPump.Terminal*"></a>
+
+  <h3 id="Sharpie_Abstractions_IEventPump_Terminal" data-uid="Sharpie.Abstractions.IEventPump.Terminal">
+  Terminal
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/IEventPump.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The terminal this pump belongs to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ITerminal Terminal { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.ITerminal.html">ITerminal</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Sharpie_Abstractions_IEventPump_Listen_" data-uid="Sharpie.Abstractions.IEventPump.Listen*"></a>
+
+  <h3 id="Sharpie_Abstractions_IEventPump_Listen" data-uid="Sharpie.Abstractions.IEventPump.Listen">
+  Listen()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/IEventPump.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets an enumerable that is used to get enumerate events from Curses as they are generated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;Event&gt; Listen()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sharpie.Event.html">Event</a>&gt;</dt>
+    <dd><p>The event listening enumerable.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_IEventPump_Listen_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This operation is not thread safe.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_IEventPump_Listen_" data-uid="Sharpie.Abstractions.IEventPump.Listen*"></a>
+
+  <h3 id="Sharpie_Abstractions_IEventPump_Listen_Sharpie_Abstractions_ISurface_" data-uid="Sharpie.Abstractions.IEventPump.Listen(Sharpie.Abstractions.ISurface)">
+  Listen(ISurface)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/IEventPump.cs/#L69"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets an enumerable that is used to get enumerate events from Curses as they are generated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;Event&gt; Listen(ISurface surface)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>surface</code> <a class="xref" href="Sharpie.Abstractions.ISurface.html">ISurface</a></dt>
+    <dd><p>The surface to refresh during event processing.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sharpie.Event.html">Event</a>&gt;</dt>
+    <dd><p>The event listening enumerable.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_IEventPump_Listen_Sharpie_Abstractions_ISurface__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This operation is not thread safe.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p>Thrown if <code class="paramref">surface</code> is <code>null</code>.</p>
+</dd>
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_IEventPump_Listen_" data-uid="Sharpie.Abstractions.IEventPump.Listen*"></a>
+
+  <h3 id="Sharpie_Abstractions_IEventPump_Listen_Sharpie_Abstractions_ISurface_System_Threading_CancellationToken_" data-uid="Sharpie.Abstractions.IEventPump.Listen(Sharpie.Abstractions.ISurface,System.Threading.CancellationToken)">
+  Listen(ISurface, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/IEventPump.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets an enumerable that is used to get enumerate events from Curses as they are generated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;Event&gt; Listen(ISurface surface, CancellationToken cancellationToken)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>surface</code> <a class="xref" href="Sharpie.Abstractions.ISurface.html">ISurface</a></dt>
+    <dd><p>The surface to refresh during event processing.</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>Cancellation token used to interrupt the process.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sharpie.Event.html">Event</a>&gt;</dt>
+    <dd><p>The event listening enumerable.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_IEventPump_Listen_Sharpie_Abstractions_ISurface_System_Threading_CancellationToken__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This operation is not thread safe.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p>Thrown if <code class="paramref">surface</code> is <code>null</code>.</p>
+</dd>
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_IEventPump_Listen_" data-uid="Sharpie.Abstractions.IEventPump.Listen*"></a>
+
+  <h3 id="Sharpie_Abstractions_IEventPump_Listen_System_Threading_CancellationToken_" data-uid="Sharpie.Abstractions.IEventPump.Listen(System.Threading.CancellationToken)">
+  Listen(CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/IEventPump.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets an enumerable that is used to get enumerate events from Curses as they are generated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;Event&gt; Listen(CancellationToken cancellationToken)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>Cancellation token used to interrupt the process.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Sharpie.Event.html">Event</a>&gt;</dt>
+    <dd><p>The event listening enumerable.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_IEventPump_Listen_System_Threading_CancellationToken__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This operation is not thread safe.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_IEventPump_Use_" data-uid="Sharpie.Abstractions.IEventPump.Use*"></a>
+
+  <h3 id="Sharpie_Abstractions_IEventPump_Use_Sharpie_ResolveEscapeSequenceFunc_" data-uid="Sharpie.Abstractions.IEventPump.Use(Sharpie.ResolveEscapeSequenceFunc)">
+  Use(ResolveEscapeSequenceFunc)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/IEventPump.cs/#L104"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a key sequence resolver into the input pipeline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Use(ResolveEscapeSequenceFunc resolver)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>resolver</code> <a class="xref" href="Sharpie.ResolveEscapeSequenceFunc.html">ResolveEscapeSequenceFunc</a></dt>
+    <dd><p>The resolver to register.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_IEventPump_Use_Sharpie_ResolveEscapeSequenceFunc__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This operation is not thread safe.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p>Thrown is <code class="paramref">resolver</code> is <code>null</code>.</p>
+</dd>
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_IEventPump_Uses_" data-uid="Sharpie.Abstractions.IEventPump.Uses*"></a>
+
+  <h3 id="Sharpie_Abstractions_IEventPump_Uses_Sharpie_ResolveEscapeSequenceFunc_" data-uid="Sharpie.Abstractions.IEventPump.Uses(Sharpie.ResolveEscapeSequenceFunc)">
+  Uses(ResolveEscapeSequenceFunc)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/IEventPump.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the screen has a given key sequence resolver registered.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Uses(ResolveEscapeSequenceFunc resolver)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>resolver</code> <a class="xref" href="Sharpie.ResolveEscapeSequenceFunc.html">ResolveEscapeSequenceFunc</a></dt>
+    <dd><p>The resolver to check.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the resolver is registered; <code>false</code> otherwise.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_IEventPump_Uses_Sharpie_ResolveEscapeSequenceFunc__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This operation is not thread safe.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p>Thrown is <code class="paramref">resolver</code> is <code>null</code>.</p>
+</dd>
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/IEventPump.cs/#L36" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,1960 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Tests.TerminalMainLoopTests
+  commentId: T:Sharpie.Tests.TerminalMainLoopTests
+  id: TerminalMainLoopTests
+  parent: Sharpie.Tests
+  children:
+  - Sharpie.Tests.TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval
+  - Sharpie.Tests.TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce
+  - Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfActionIsNull
+  - Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative
+  - Sharpie.Tests.TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce
+  - Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfActionIsNull
+  - Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative
+  - Sharpie.Tests.TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning
+  - Sharpie.Tests.TerminalMainLoopTests.Delegate_EnqueuesAction
+  - Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfActionIsNull
+  - Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed
+  - Sharpie.Tests.TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers
+  - Sharpie.Tests.TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval
+  - Sharpie.Tests.TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+  - Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull
+  - Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative
+  - Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull
+  - Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative
+  - Sharpie.Tests.TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence
+  - Sharpie.Tests.TerminalMainLoopTests.Run_ReadsEventsFromPump
+  - Sharpie.Tests.TerminalMainLoopTests.Run_ResumesTimersAcrossRuns
+  - Sharpie.Tests.TerminalMainLoopTests.Run_Resumes_IfStopped
+  - Sharpie.Tests.TerminalMainLoopTests.Run_StopsOnCtrlC
+  - Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfActionIsNull
+  - Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready
+  - Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfInternalError
+  - Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfTerminalDisposed
+  - Sharpie.Tests.TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning
+  - Sharpie.Tests.TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun
+  - Sharpie.Tests.TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed
+  - Sharpie.Tests.TerminalMainLoopTests.Stop_WaitsForThingsToFinish
+  - Sharpie.Tests.TerminalMainLoopTests.TestCleanup
+  - Sharpie.Tests.TerminalMainLoopTests.TestInitialize
+  langs:
+  - csharp
+  - vb
+  name: TerminalMainLoopTests
+  nameWithType: TerminalMainLoopTests
+  fullName: Sharpie.Tests.TerminalMainLoopTests
+  type: Class
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TerminalMainLoopTests
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 32
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestClass]
+
+      public class TerminalMainLoopTests
+    content.vb: >-
+      <TestClass>
+
+      Public Class TerminalMainLoopTests
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.TestInitialize
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.TestInitialize
+  id: TestInitialize
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: TestInitialize()
+  nameWithType: TerminalMainLoopTests.TestInitialize()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.TestInitialize()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestInitialize
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 40
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestInitialize]
+
+      public void TestInitialize()
+    content.vb: >-
+      <TestInitialize>
+
+      Public Sub TestInitialize()
+  overload: Sharpie.Tests.TerminalMainLoopTests.TestInitialize*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.TestCleanup
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.TestCleanup
+  id: TestCleanup
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: TestCleanup()
+  nameWithType: TerminalMainLoopTests.TestCleanup()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.TestCleanup()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestCleanup
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 60
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestCleanup]
+
+      public void TestCleanup()
+    content.vb: >-
+      <TestCleanup>
+
+      Public Sub TestCleanup()
+  overload: Sharpie.Tests.TerminalMainLoopTests.TestCleanup*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfActionIsNull
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfActionIsNull
+  id: Delegate_Throws_IfActionIsNull
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delegate_Throws_IfActionIsNull()
+  nameWithType: TerminalMainLoopTests.Delegate_Throws_IfActionIsNull()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfActionIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delegate_Throws_IfActionIsNull
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 76
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Delegate_Throws_IfActionIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Delegate_Throws_IfActionIsNull()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfActionIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed
+  id: Delegate_Throws_IfTerminalDisposed
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delegate_Throws_IfTerminalDisposed()
+  nameWithType: TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delegate_Throws_IfTerminalDisposed
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 82
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Delegate_Throws_IfTerminalDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Delegate_Throws_IfTerminalDisposed()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed
+  id: Stop_Throws_IfTerminalDisposed
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Stop_Throws_IfTerminalDisposed()
+  nameWithType: TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Stop_Throws_IfTerminalDisposed
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 89
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Stop_Throws_IfTerminalDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Stop_Throws_IfTerminalDisposed()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfActionIsNull
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfActionIsNull
+  id: Delay1_Throws_IfActionIsNull
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delay1_Throws_IfActionIsNull()
+  nameWithType: TerminalMainLoopTests.Delay1_Throws_IfActionIsNull()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfActionIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delay1_Throws_IfActionIsNull
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 96
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Delay1_Throws_IfActionIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Delay1_Throws_IfActionIsNull()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfActionIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative
+  id: Delay1_Throws_IfDelayIsNegative
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delay1_Throws_IfDelayIsNegative()
+  nameWithType: TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delay1_Throws_IfDelayIsNegative
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 99
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Delay1_Throws_IfDelayIsNegative()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Delay1_Throws_IfDelayIsNegative()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfActionIsNull
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfActionIsNull
+  id: Delay2_Throws_IfActionIsNull
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delay2_Throws_IfActionIsNull()
+  nameWithType: TerminalMainLoopTests.Delay2_Throws_IfActionIsNull()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfActionIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delay2_Throws_IfActionIsNull
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 105
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Delay2_Throws_IfActionIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Delay2_Throws_IfActionIsNull()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfActionIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative
+  id: Delay2_Throws_IfDelayIsNegative
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delay2_Throws_IfDelayIsNegative()
+  nameWithType: TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delay2_Throws_IfDelayIsNegative
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 111
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Delay2_Throws_IfDelayIsNegative()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Delay2_Throws_IfDelayIsNegative()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull
+  id: Repeat1_Throws_IfActionIsNull
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Repeat1_Throws_IfActionIsNull()
+  nameWithType: TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Repeat1_Throws_IfActionIsNull
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 117
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Repeat1_Throws_IfActionIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Repeat1_Throws_IfActionIsNull()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative
+  id: Repeat1_Throws_IfDelayIsNegative
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Repeat1_Throws_IfDelayIsNegative()
+  nameWithType: TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Repeat1_Throws_IfDelayIsNegative
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 123
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Repeat1_Throws_IfDelayIsNegative()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Repeat1_Throws_IfDelayIsNegative()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull
+  id: Repeat2_Throws_IfActionIsNull
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Repeat2_Throws_IfActionIsNull()
+  nameWithType: TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Repeat2_Throws_IfActionIsNull
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 130
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Repeat2_Throws_IfActionIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Repeat2_Throws_IfActionIsNull()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative
+  id: Repeat2_Throws_IfDelayIsNegative
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Repeat2_Throws_IfDelayIsNegative()
+  nameWithType: TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Repeat2_Throws_IfDelayIsNegative
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 136
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Repeat2_Throws_IfDelayIsNegative()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Repeat2_Throws_IfDelayIsNegative()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfActionIsNull
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfActionIsNull
+  id: Run_Throws_IfActionIsNull
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Run_Throws_IfActionIsNull()
+  nameWithType: TerminalMainLoopTests.Run_Throws_IfActionIsNull()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfActionIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Run_Throws_IfActionIsNull
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 143
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Run_Throws_IfActionIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Run_Throws_IfActionIsNull()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfActionIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfTerminalDisposed
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfTerminalDisposed
+  id: Run_Throws_IfTerminalDisposed
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Run_Throws_IfTerminalDisposed()
+  nameWithType: TerminalMainLoopTests.Run_Throws_IfTerminalDisposed()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfTerminalDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Run_Throws_IfTerminalDisposed
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 146
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Run_Throws_IfTerminalDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Run_Throws_IfTerminalDisposed()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfTerminalDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready
+  id: Run_Throws_IfAnotherRunsAlready
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Run_Throws_IfAnotherRunsAlready()
+  nameWithType: TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Run_Throws_IfAnotherRunsAlready
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 153
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Run_Throws_IfAnotherRunsAlready()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Run_Throws_IfAnotherRunsAlready() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfInternalError
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfInternalError
+  id: Run_Throws_IfInternalError
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Run_Throws_IfInternalError()
+  nameWithType: TerminalMainLoopTests.Run_Throws_IfInternalError()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfInternalError()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Run_Throws_IfInternalError
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 164
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public void Run_Throws_IfInternalError()
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Sub Run_Throws_IfInternalError()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfInternalError*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Resumes_IfStopped
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Run_Resumes_IfStopped
+  id: Run_Resumes_IfStopped
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Run_Resumes_IfStopped()
+  nameWithType: TerminalMainLoopTests.Run_Resumes_IfStopped()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Resumes_IfStopped()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Run_Resumes_IfStopped
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 173
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Run_Resumes_IfStopped()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Run_Resumes_IfStopped() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Run_Resumes_IfStopped*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning
+  id: Delegate_DoesNotEnqueueAction_IfNotRunning
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delegate_DoesNotEnqueueAction_IfNotRunning()
+  nameWithType: TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delegate_DoesNotEnqueueAction_IfNotRunning
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 186
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Delegate_DoesNotEnqueueAction_IfNotRunning()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Delegate_DoesNotEnqueueAction_IfNotRunning() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning
+  id: Stop_DoesNotEnqueueAction_IfNotRunning
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Stop_DoesNotEnqueueAction_IfNotRunning()
+  nameWithType: TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Stop_DoesNotEnqueueAction_IfNotRunning
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 205
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Stop_DoesNotEnqueueAction_IfNotRunning()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Stop_DoesNotEnqueueAction_IfNotRunning() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delegate_EnqueuesAction
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delegate_EnqueuesAction
+  id: Delegate_EnqueuesAction
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delegate_EnqueuesAction()
+  nameWithType: TerminalMainLoopTests.Delegate_EnqueuesAction()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delegate_EnqueuesAction()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delegate_EnqueuesAction
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 226
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Delegate_EnqueuesAction()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Delegate_EnqueuesAction() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delegate_EnqueuesAction*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence
+  id: Run_ExecutesDelegatedActionsInSequence
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Run_ExecutesDelegatedActionsInSequence()
+  nameWithType: TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Run_ExecutesDelegatedActionsInSequence
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 244
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Run_ExecutesDelegatedActionsInSequence()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Run_ExecutesDelegatedActionsInSequence() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_ReadsEventsFromPump
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Run_ReadsEventsFromPump
+  id: Run_ReadsEventsFromPump
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Run_ReadsEventsFromPump()
+  nameWithType: TerminalMainLoopTests.Run_ReadsEventsFromPump()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_ReadsEventsFromPump()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Run_ReadsEventsFromPump
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 268
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public void Run_ReadsEventsFromPump()
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Sub Run_ReadsEventsFromPump()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Run_ReadsEventsFromPump*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun
+  id: Stop_EnqueuesStoppingTheRun
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Stop_EnqueuesStoppingTheRun()
+  nameWithType: TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Stop_EnqueuesStoppingTheRun
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 297
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public void Stop_EnqueuesStoppingTheRun()
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Sub Stop_EnqueuesStoppingTheRun()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Stop_WaitsForThingsToFinish
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Stop_WaitsForThingsToFinish
+  id: Stop_WaitsForThingsToFinish
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Stop_WaitsForThingsToFinish()
+  nameWithType: TerminalMainLoopTests.Stop_WaitsForThingsToFinish()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Stop_WaitsForThingsToFinish()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Stop_WaitsForThingsToFinish
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 321
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Stop_WaitsForThingsToFinish()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Stop_WaitsForThingsToFinish() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Stop_WaitsForThingsToFinish*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_StopsOnCtrlC
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Run_StopsOnCtrlC
+  id: Run_StopsOnCtrlC
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Run_StopsOnCtrlC()
+  nameWithType: TerminalMainLoopTests.Run_StopsOnCtrlC()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_StopsOnCtrlC()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Run_StopsOnCtrlC
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 330
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public void Run_StopsOnCtrlC()
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Sub Run_StopsOnCtrlC()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Run_StopsOnCtrlC*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce
+  id: Delay1_EnqueuesAndExecutesTimerOnce
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delay1_EnqueuesAndExecutesTimerOnce()
+  nameWithType: TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delay1_EnqueuesAndExecutesTimerOnce
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 350
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Delay1_EnqueuesAndExecutesTimerOnce()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Delay1_EnqueuesAndExecutesTimerOnce() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval
+  id: Delay1_CanBeCancelledThroughReturnedInterval
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delay1_CanBeCancelledThroughReturnedInterval()
+  nameWithType: TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delay1_CanBeCancelledThroughReturnedInterval
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 371
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Delay1_CanBeCancelledThroughReturnedInterval()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Delay1_CanBeCancelledThroughReturnedInterval() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce
+  id: Delay2_EnqueuesAndExecutesTimerOnce
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Delay2_EnqueuesAndExecutesTimerOnce()
+  nameWithType: TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delay2_EnqueuesAndExecutesTimerOnce
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 395
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Delay2_EnqueuesAndExecutesTimerOnce()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Delay2_EnqueuesAndExecutesTimerOnce() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+  id: Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Repeat1_EnqueuesAndExecutesTimerMultipleTimes()
+  nameWithType: TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 413
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Repeat1_EnqueuesAndExecutesTimerMultipleTimes()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Repeat1_EnqueuesAndExecutesTimerMultipleTimes() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval
+  id: Repeat1_CanBeCancelledThroughReturnedInterval
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Repeat1_CanBeCancelledThroughReturnedInterval()
+  nameWithType: TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Repeat1_CanBeCancelledThroughReturnedInterval
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 439
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Repeat1_CanBeCancelledThroughReturnedInterval()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Repeat1_CanBeCancelledThroughReturnedInterval() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers
+  id: Dispose_CancelsTheRunning_AndKillsTimers
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Dispose_CancelsTheRunning_AndKillsTimers()
+  nameWithType: TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Dispose_CancelsTheRunning_AndKillsTimers
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 463
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public Task Dispose_CancelsTheRunning_AndKillsTimers()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Function Dispose_CancelsTheRunning_AndKillsTimers() As Task
+  overload: Sharpie.Tests.TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_ResumesTimersAcrossRuns
+  commentId: M:Sharpie.Tests.TerminalMainLoopTests.Run_ResumesTimersAcrossRuns
+  id: Run_ResumesTimersAcrossRuns
+  parent: Sharpie.Tests.TerminalMainLoopTests
+  langs:
+  - csharp
+  - vb
+  name: Run_ResumesTimersAcrossRuns()
+  nameWithType: TerminalMainLoopTests.Run_ResumesTimersAcrossRuns()
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_ResumesTimersAcrossRuns()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalMainLoopTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Run_ResumesTimersAcrossRuns
+    path: Sharpie.Tests/TerminalMainLoopTests.cs
+    startLine: 483
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [Timeout(10000)]
+
+      public void Run_ResumesTimersAcrossRuns()
+    content.vb: >-
+      <TestMethod>
+
+      <Timeout(10000)>
+
+      Public Sub Run_ResumesTimersAcrossRuns()
+  overload: Sharpie.Tests.TerminalMainLoopTests.Run_ResumesTimersAcrossRuns*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.#ctor(System.Int32)
+    arguments:
+    - type: System.Int32
+      value: 10000
+references:
+- uid: Sharpie.Tests
+  commentId: N:Sharpie.Tests
+  href: Sharpie.html
+  name: Sharpie.Tests
+  nameWithType: Sharpie.Tests
+  fullName: Sharpie.Tests
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Tests.TerminalMainLoopTests.TestInitialize*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.TestInitialize
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_TestInitialize
+  name: TestInitialize
+  nameWithType: TerminalMainLoopTests.TestInitialize
+  fullName: Sharpie.Tests.TerminalMainLoopTests.TestInitialize
+- uid: Sharpie.Tests.TerminalMainLoopTests.TestCleanup*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.TestCleanup
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_TestCleanup
+  name: TestCleanup
+  nameWithType: TerminalMainLoopTests.TestCleanup
+  fullName: Sharpie.Tests.TerminalMainLoopTests.TestCleanup
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfActionIsNull*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfActionIsNull
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delegate_Throws_IfActionIsNull
+  name: Delegate_Throws_IfActionIsNull
+  nameWithType: TerminalMainLoopTests.Delegate_Throws_IfActionIsNull
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfActionIsNull
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delegate_Throws_IfTerminalDisposed
+  name: Delegate_Throws_IfTerminalDisposed
+  nameWithType: TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delegate_Throws_IfTerminalDisposed
+- uid: Sharpie.Tests.TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Stop_Throws_IfTerminalDisposed
+  name: Stop_Throws_IfTerminalDisposed
+  nameWithType: TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Stop_Throws_IfTerminalDisposed
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfActionIsNull*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfActionIsNull
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delay1_Throws_IfActionIsNull
+  name: Delay1_Throws_IfActionIsNull
+  nameWithType: TerminalMainLoopTests.Delay1_Throws_IfActionIsNull
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfActionIsNull
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delay1_Throws_IfDelayIsNegative
+  name: Delay1_Throws_IfDelayIsNegative
+  nameWithType: TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay1_Throws_IfDelayIsNegative
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfActionIsNull*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfActionIsNull
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delay2_Throws_IfActionIsNull
+  name: Delay2_Throws_IfActionIsNull
+  nameWithType: TerminalMainLoopTests.Delay2_Throws_IfActionIsNull
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfActionIsNull
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delay2_Throws_IfDelayIsNegative
+  name: Delay2_Throws_IfDelayIsNegative
+  nameWithType: TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay2_Throws_IfDelayIsNegative
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Repeat1_Throws_IfActionIsNull
+  name: Repeat1_Throws_IfActionIsNull
+  nameWithType: TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfActionIsNull
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Repeat1_Throws_IfDelayIsNegative
+  name: Repeat1_Throws_IfDelayIsNegative
+  nameWithType: TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat1_Throws_IfDelayIsNegative
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Repeat2_Throws_IfActionIsNull
+  name: Repeat2_Throws_IfActionIsNull
+  nameWithType: TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfActionIsNull
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Repeat2_Throws_IfDelayIsNegative
+  name: Repeat2_Throws_IfDelayIsNegative
+  nameWithType: TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat2_Throws_IfDelayIsNegative
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfActionIsNull*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfActionIsNull
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Run_Throws_IfActionIsNull
+  name: Run_Throws_IfActionIsNull
+  nameWithType: TerminalMainLoopTests.Run_Throws_IfActionIsNull
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfActionIsNull
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfTerminalDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfTerminalDisposed
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Run_Throws_IfTerminalDisposed
+  name: Run_Throws_IfTerminalDisposed
+  nameWithType: TerminalMainLoopTests.Run_Throws_IfTerminalDisposed
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfTerminalDisposed
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Run_Throws_IfAnotherRunsAlready
+  name: Run_Throws_IfAnotherRunsAlready
+  nameWithType: TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfAnotherRunsAlready
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfInternalError*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfInternalError
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Run_Throws_IfInternalError
+  name: Run_Throws_IfInternalError
+  nameWithType: TerminalMainLoopTests.Run_Throws_IfInternalError
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Throws_IfInternalError
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_Resumes_IfStopped*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Run_Resumes_IfStopped
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Run_Resumes_IfStopped
+  name: Run_Resumes_IfStopped
+  nameWithType: TerminalMainLoopTests.Run_Resumes_IfStopped
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_Resumes_IfStopped
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delegate_DoesNotEnqueueAction_IfNotRunning
+  name: Delegate_DoesNotEnqueueAction_IfNotRunning
+  nameWithType: TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delegate_DoesNotEnqueueAction_IfNotRunning
+- uid: Sharpie.Tests.TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Stop_DoesNotEnqueueAction_IfNotRunning
+  name: Stop_DoesNotEnqueueAction_IfNotRunning
+  nameWithType: TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Stop_DoesNotEnqueueAction_IfNotRunning
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delegate_EnqueuesAction*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delegate_EnqueuesAction
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delegate_EnqueuesAction
+  name: Delegate_EnqueuesAction
+  nameWithType: TerminalMainLoopTests.Delegate_EnqueuesAction
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delegate_EnqueuesAction
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Run_ExecutesDelegatedActionsInSequence
+  name: Run_ExecutesDelegatedActionsInSequence
+  nameWithType: TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_ExecutesDelegatedActionsInSequence
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_ReadsEventsFromPump*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Run_ReadsEventsFromPump
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Run_ReadsEventsFromPump
+  name: Run_ReadsEventsFromPump
+  nameWithType: TerminalMainLoopTests.Run_ReadsEventsFromPump
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_ReadsEventsFromPump
+- uid: Sharpie.Tests.TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Stop_EnqueuesStoppingTheRun
+  name: Stop_EnqueuesStoppingTheRun
+  nameWithType: TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Stop_EnqueuesStoppingTheRun
+- uid: Sharpie.Tests.TerminalMainLoopTests.Stop_WaitsForThingsToFinish*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Stop_WaitsForThingsToFinish
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Stop_WaitsForThingsToFinish
+  name: Stop_WaitsForThingsToFinish
+  nameWithType: TerminalMainLoopTests.Stop_WaitsForThingsToFinish
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Stop_WaitsForThingsToFinish
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_StopsOnCtrlC*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Run_StopsOnCtrlC
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Run_StopsOnCtrlC
+  name: Run_StopsOnCtrlC
+  nameWithType: TerminalMainLoopTests.Run_StopsOnCtrlC
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_StopsOnCtrlC
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delay1_EnqueuesAndExecutesTimerOnce
+  name: Delay1_EnqueuesAndExecutesTimerOnce
+  nameWithType: TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay1_EnqueuesAndExecutesTimerOnce
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delay1_CanBeCancelledThroughReturnedInterval
+  name: Delay1_CanBeCancelledThroughReturnedInterval
+  nameWithType: TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay1_CanBeCancelledThroughReturnedInterval
+- uid: Sharpie.Tests.TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Delay2_EnqueuesAndExecutesTimerOnce
+  name: Delay2_EnqueuesAndExecutesTimerOnce
+  nameWithType: TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Delay2_EnqueuesAndExecutesTimerOnce
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+  name: Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+  nameWithType: TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat1_EnqueuesAndExecutesTimerMultipleTimes
+- uid: Sharpie.Tests.TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Repeat1_CanBeCancelledThroughReturnedInterval
+  name: Repeat1_CanBeCancelledThroughReturnedInterval
+  nameWithType: TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Repeat1_CanBeCancelledThroughReturnedInterval
+- uid: Sharpie.Tests.TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Dispose_CancelsTheRunning_AndKillsTimers
+  name: Dispose_CancelsTheRunning_AndKillsTimers
+  nameWithType: TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Dispose_CancelsTheRunning_AndKillsTimers
+- uid: Sharpie.Tests.TerminalMainLoopTests.Run_ResumesTimersAcrossRuns*
+  commentId: Overload:Sharpie.Tests.TerminalMainLoopTests.Run_ResumesTimersAcrossRuns
+  href: Sharpie.Tests.TerminalMainLoopTests.html#Sharpie_Tests_TerminalMainLoopTests_Run_ResumesTimersAcrossRuns
+  name: Run_ResumesTimersAcrossRuns
+  nameWithType: TerminalMainLoopTests.Run_ResumesTimersAcrossRuns
+  fullName: Sharpie.Tests.TerminalMainLoopTests.Run_ResumesTimersAcrossRuns

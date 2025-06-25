@@ -1,0 +1,141 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.CaretMode
+  commentId: T:Sharpie.CaretMode
+  id: CaretMode
+  parent: Sharpie
+  children:
+  - Sharpie.CaretMode.Invisible
+  - Sharpie.CaretMode.VeryVisible
+  - Sharpie.CaretMode.Visible
+  langs:
+  - csharp
+  - vb
+  name: CaretMode
+  nameWithType: CaretMode
+  fullName: Sharpie.CaretMode
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/CaretMode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CaretMode
+    path: Sharpie/CaretMode.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Defines the caret mode.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum CaretMode
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum CaretMode
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.CaretMode.Invisible
+  commentId: F:Sharpie.CaretMode.Invisible
+  id: Invisible
+  parent: Sharpie.CaretMode
+  langs:
+  - csharp
+  - vb
+  name: Invisible
+  nameWithType: CaretMode.Invisible
+  fullName: Sharpie.CaretMode.Invisible
+  type: Field
+  source:
+    remote:
+      path: Sharpie/CaretMode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Invisible
+    path: Sharpie/CaretMode.cs
+    startLine: 41
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The caret is invisible.
+  example: []
+  syntax:
+    content: Invisible = 0
+    return:
+      type: Sharpie.CaretMode
+- uid: Sharpie.CaretMode.Visible
+  commentId: F:Sharpie.CaretMode.Visible
+  id: Visible
+  parent: Sharpie.CaretMode
+  langs:
+  - csharp
+  - vb
+  name: Visible
+  nameWithType: CaretMode.Visible
+  fullName: Sharpie.CaretMode.Visible
+  type: Field
+  source:
+    remote:
+      path: Sharpie/CaretMode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Visible
+    path: Sharpie/CaretMode.cs
+    startLine: 46
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The caret is visible.
+  example: []
+  syntax:
+    content: Visible = 1
+    return:
+      type: Sharpie.CaretMode
+- uid: Sharpie.CaretMode.VeryVisible
+  commentId: F:Sharpie.CaretMode.VeryVisible
+  id: VeryVisible
+  parent: Sharpie.CaretMode
+  langs:
+  - csharp
+  - vb
+  name: VeryVisible
+  nameWithType: CaretMode.VeryVisible
+  fullName: Sharpie.CaretMode.VeryVisible
+  type: Field
+  source:
+    remote:
+      path: Sharpie/CaretMode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: VeryVisible
+    path: Sharpie/CaretMode.cs
+    startLine: 51
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The caret is very visible.
+  example: []
+  syntax:
+    content: VeryVisible = 2
+    return:
+      type: Sharpie.CaretMode
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.CaretMode
+  commentId: T:Sharpie.CaretMode
+  parent: Sharpie
+  href: Sharpie.CaretMode.html
+  name: CaretMode
+  nameWithType: CaretMode
+  fullName: Sharpie.CaretMode

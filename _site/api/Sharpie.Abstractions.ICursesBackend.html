@@ -1,0 +1,4536 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface ICursesBackend | sharpie </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface ICursesBackend | sharpie ">
+      
+      <meta name="description" content="Interface provides access to the Curses functionality. Use the  property to access the actual implementation.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/LyndonGingerich/sharpie/new/docs-project/apiSpec/new?filename=Sharpie_Abstractions_ICursesBackend.md&amp;value=---%0Auid%3A%20Sharpie.Abstractions.ICursesBackend%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="sharpie">
+            sharpie
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Sharpie.Abstractions.ICursesBackend">
+
+
+
+  <h1 id="Sharpie_Abstractions_ICursesBackend" data-uid="Sharpie.Abstractions.ICursesBackend" class="text-break">
+Interface ICursesBackend  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Sharpie.html">Sharpie</a>.<a class="xref" href="Sharpie.Abstractions.html">Abstractions</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>sharpie.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Interface provides access to the Curses functionality. Use the <span class="xref">Sharpie.Backend.NCursesBackend</span> property to
+access the actual
+implementation.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public interface ICursesBackend</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_assume_default_colors_" data-uid="Sharpie.Abstractions.ICursesBackend.assume_default_colors*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_assume_default_colors_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.assume_default_colors(System.Int32,System.Int32)">
+  assume_default_colors(int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L247"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int assume_default_colors(int fgColor, int bgColor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>fgColor</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>bgColor</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_baudrate_" data-uid="Sharpie.Abstractions.ICursesBackend.baudrate*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_baudrate" data-uid="Sharpie.Abstractions.ICursesBackend.baudrate">
+  baudrate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int baudrate()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_beep_" data-uid="Sharpie.Abstractions.ICursesBackend.beep*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_beep" data-uid="Sharpie.Abstractions.ICursesBackend.beep">
+  beep()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int beep()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_can_change_color_" data-uid="Sharpie.Abstractions.ICursesBackend.can_change_color*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_can_change_color" data-uid="Sharpie.Abstractions.ICursesBackend.can_change_color">
+  can_change_color()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool can_change_color()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_cbreak_" data-uid="Sharpie.Abstractions.ICursesBackend.cbreak*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_cbreak" data-uid="Sharpie.Abstractions.ICursesBackend.cbreak">
+  cbreak()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int cbreak()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_color_content_" data-uid="Sharpie.Abstractions.ICursesBackend.color_content*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_color_content_System_Int16_System_Int16__System_Int16__System_Int16__" data-uid="Sharpie.Abstractions.ICursesBackend.color_content(System.Int16,System.Int16@,System.Int16@,System.Int16@)">
+  color_content(short, out short, out short, out short)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int color_content(short color, out short red, out short green, out short blue)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>color</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>red</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>green</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>blue</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_copywin_" data-uid="Sharpie.Abstractions.ICursesBackend.copywin*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_copywin_System_IntPtr_System_IntPtr_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.copywin(System.IntPtr,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+  copywin(IntPtr, IntPtr, int, int, int, int, int, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int copywin(IntPtr fromWindow, IntPtr toWindow, int srcStartLine, int srcStartCol, int destStartLine, int destStartCol, int destEndLine, int destEndCol, int overlay)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>fromWindow</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>toWindow</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>srcStartLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>srcStartCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>destStartLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>destStartCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>destEndLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>destEndCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>overlay</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_curs_set_" data-uid="Sharpie.Abstractions.ICursesBackend.curs_set*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_curs_set_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.curs_set(System.Int32)">
+  curs_set(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int curs_set(int level)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_curses_version_" data-uid="Sharpie.Abstractions.ICursesBackend.curses_version*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_curses_version" data-uid="Sharpie.Abstractions.ICursesBackend.curses_version">
+  curses_version()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L245"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? curses_version()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_delwin_" data-uid="Sharpie.Abstractions.ICursesBackend.delwin*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_delwin_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.delwin(System.IntPtr)">
+  delwin(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int delwin(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_derwin_" data-uid="Sharpie.Abstractions.ICursesBackend.derwin*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_derwin_System_IntPtr_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.derwin(System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32)">
+  derwin(IntPtr, int, int, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IntPtr derwin(IntPtr window, int lines, int cols, int beginLine, int beginCol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>lines</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>cols</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>beginLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>beginCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_doupdate_" data-uid="Sharpie.Abstractions.ICursesBackend.doupdate*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_doupdate" data-uid="Sharpie.Abstractions.ICursesBackend.doupdate">
+  doupdate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int doupdate()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_dupwin_" data-uid="Sharpie.Abstractions.ICursesBackend.dupwin*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_dupwin_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.dupwin(System.IntPtr)">
+  dupwin(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IntPtr dupwin(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_echo_" data-uid="Sharpie.Abstractions.ICursesBackend.echo*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_echo" data-uid="Sharpie.Abstractions.ICursesBackend.echo">
+  echo()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L69"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int echo()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_endwin_" data-uid="Sharpie.Abstractions.ICursesBackend.endwin*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_endwin" data-uid="Sharpie.Abstractions.ICursesBackend.endwin">
+  endwin()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int endwin()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_erasewchar_" data-uid="Sharpie.Abstractions.ICursesBackend.erasewchar*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_erasewchar_System_UInt32__" data-uid="Sharpie.Abstractions.ICursesBackend.erasewchar(System.UInt32@)">
+  erasewchar(out uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int erasewchar(out uint @char)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>char</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_flash_" data-uid="Sharpie.Abstractions.ICursesBackend.flash*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_flash" data-uid="Sharpie.Abstractions.ICursesBackend.flash">
+  flash()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int flash()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getbegx_" data-uid="Sharpie.Abstractions.ICursesBackend.getbegx*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getbegx_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.getbegx(System.IntPtr)">
+  getbegx(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getbegx(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getbegy_" data-uid="Sharpie.Abstractions.ICursesBackend.getbegy*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getbegy_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.getbegy(System.IntPtr)">
+  getbegy(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getbegy(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getcchar_" data-uid="Sharpie.Abstractions.ICursesBackend.getcchar*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getcchar_Sharpie_Backend_ComplexChar_System_Text_StringBuilder_Sharpie_VideoAttribute__System_Int16__System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.getcchar(Sharpie.Backend.ComplexChar,System.Text.StringBuilder,Sharpie.VideoAttribute@,System.Int16@,System.IntPtr)">
+  getcchar(ComplexChar, StringBuilder, out VideoAttribute, out short, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L253"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getcchar(ComplexChar @char, StringBuilder dest, out VideoAttribute attributes, out short colorPair, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>char</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>dest</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.stringbuilder">StringBuilder</a></dt>
+    <dd></dd>
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getcurx_" data-uid="Sharpie.Abstractions.ICursesBackend.getcurx*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getcurx_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.getcurx(System.IntPtr)">
+  getcurx(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getcurx(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getcury_" data-uid="Sharpie.Abstractions.ICursesBackend.getcury*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getcury_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.getcury(System.IntPtr)">
+  getcury(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getcury(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getmaxx_" data-uid="Sharpie.Abstractions.ICursesBackend.getmaxx*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getmaxx_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.getmaxx(System.IntPtr)">
+  getmaxx(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getmaxx(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getmaxy_" data-uid="Sharpie.Abstractions.ICursesBackend.getmaxy*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getmaxy_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.getmaxy(System.IntPtr)">
+  getmaxy(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getmaxy(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getmouse_" data-uid="Sharpie.Abstractions.ICursesBackend.getmouse*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getmouse_Sharpie_Backend_CursesMouseState__" data-uid="Sharpie.Abstractions.ICursesBackend.getmouse(Sharpie.Backend.CursesMouseState@)">
+  getmouse(out CursesMouseState)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L287"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getmouse(out CursesMouseState state)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>state</code> <a class="xref" href="Sharpie.Backend.CursesMouseState.html">CursesMouseState</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getparx_" data-uid="Sharpie.Abstractions.ICursesBackend.getparx*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getparx_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.getparx(System.IntPtr)">
+  getparx(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getparx(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_getpary_" data-uid="Sharpie.Abstractions.ICursesBackend.getpary*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_getpary_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.getpary(System.IntPtr)">
+  getpary(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int getpary(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_has_colors_" data-uid="Sharpie.Abstractions.ICursesBackend.has_colors*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_has_colors" data-uid="Sharpie.Abstractions.ICursesBackend.has_colors">
+  has_colors()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool has_colors()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_immedok_" data-uid="Sharpie.Abstractions.ICursesBackend.immedok*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_immedok_System_IntPtr_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.immedok(System.IntPtr,System.Boolean)">
+  immedok(IntPtr, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void immedok(IntPtr window, bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_init_color_" data-uid="Sharpie.Abstractions.ICursesBackend.init_color*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_init_color_System_Int16_System_Int16_System_Int16_System_Int16_" data-uid="Sharpie.Abstractions.ICursesBackend.init_color(System.Int16,System.Int16,System.Int16,System.Int16)">
+  init_color(short, short, short, short)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int init_color(short color, short red, short green, short blue)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>color</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>red</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>green</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>blue</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_init_pair_" data-uid="Sharpie.Abstractions.ICursesBackend.init_pair*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_init_pair_System_Int16_System_Int16_System_Int16_" data-uid="Sharpie.Abstractions.ICursesBackend.init_pair(System.Int16,System.Int16,System.Int16)">
+  init_pair(short, short, short)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int init_pair(short colorPair, short fgColor, short bgColor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>fgColor</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>bgColor</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_initscr_" data-uid="Sharpie.Abstractions.ICursesBackend.initscr*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_initscr" data-uid="Sharpie.Abstractions.ICursesBackend.initscr">
+  initscr()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IntPtr initscr()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_intrflush_" data-uid="Sharpie.Abstractions.ICursesBackend.intrflush*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_intrflush_System_IntPtr_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.intrflush(System.IntPtr,System.Boolean)">
+  intrflush(IntPtr, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int intrflush(IntPtr window, bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_is_immedok_" data-uid="Sharpie.Abstractions.ICursesBackend.is_immedok*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_is_immedok_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.is_immedok(System.IntPtr)">
+  is_immedok(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool is_immedok(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_is_leaveok_" data-uid="Sharpie.Abstractions.ICursesBackend.is_leaveok*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_is_leaveok_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.is_leaveok(System.IntPtr)">
+  is_leaveok(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool is_leaveok(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_is_linetouched_" data-uid="Sharpie.Abstractions.ICursesBackend.is_linetouched*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_is_linetouched_System_IntPtr_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.is_linetouched(System.IntPtr,System.Int32)">
+  is_linetouched(IntPtr, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool is_linetouched(IntPtr window, int line)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>line</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_is_scrollok_" data-uid="Sharpie.Abstractions.ICursesBackend.is_scrollok*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_is_scrollok_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.is_scrollok(System.IntPtr)">
+  is_scrollok(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool is_scrollok(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_is_wintouched_" data-uid="Sharpie.Abstractions.ICursesBackend.is_wintouched*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_is_wintouched_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.is_wintouched(System.IntPtr)">
+  is_wintouched(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool is_wintouched(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_key_name_" data-uid="Sharpie.Abstractions.ICursesBackend.key_name*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_key_name_System_UInt32_" data-uid="Sharpie.Abstractions.ICursesBackend.key_name(System.UInt32)">
+  key_name(uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L256"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? key_name(uint @char)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>char</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_keypad_" data-uid="Sharpie.Abstractions.ICursesBackend.keypad*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_keypad_System_IntPtr_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.keypad(System.IntPtr,System.Boolean)">
+  keypad(IntPtr, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int keypad(IntPtr window, bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_killwchar_" data-uid="Sharpie.Abstractions.ICursesBackend.killwchar*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_killwchar_System_UInt32__" data-uid="Sharpie.Abstractions.ICursesBackend.killwchar(System.UInt32@)">
+  killwchar(out uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L258"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int killwchar(out uint @char)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>char</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_leaveok_" data-uid="Sharpie.Abstractions.ICursesBackend.leaveok*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_leaveok_System_IntPtr_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.leaveok(System.IntPtr,System.Boolean)">
+  leaveok(IntPtr, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int leaveok(IntPtr window, bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_longname_" data-uid="Sharpie.Abstractions.ICursesBackend.longname*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_longname" data-uid="Sharpie.Abstractions.ICursesBackend.longname">
+  longname()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? longname()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_meta_" data-uid="Sharpie.Abstractions.ICursesBackend.meta*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_meta_System_IntPtr_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.meta(System.IntPtr,System.Boolean)">
+  meta(IntPtr, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int meta(IntPtr window, bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_mouseinterval_" data-uid="Sharpie.Abstractions.ICursesBackend.mouseinterval*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_mouseinterval_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.mouseinterval(System.Int32)">
+  mouseinterval(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int mouseinterval(int millis)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>millis</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_mousemask_" data-uid="Sharpie.Abstractions.ICursesBackend.mousemask*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_mousemask_System_UInt32_System_UInt32__" data-uid="Sharpie.Abstractions.ICursesBackend.mousemask(System.UInt32,System.UInt32@)">
+  mousemask(uint, out uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L289"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int mousemask(uint newMask, out uint oldMask)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>newMask</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>oldMask</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_mvderwin_" data-uid="Sharpie.Abstractions.ICursesBackend.mvderwin*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_mvderwin_System_IntPtr_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.mvderwin(System.IntPtr,System.Int32,System.Int32)">
+  mvderwin(IntPtr, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int mvderwin(IntPtr window, int parentLine, int parentCol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>parentLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>parentCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_mvwin_" data-uid="Sharpie.Abstractions.ICursesBackend.mvwin*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_mvwin_System_IntPtr_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.mvwin(System.IntPtr,System.Int32,System.Int32)">
+  mvwin(IntPtr, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int mvwin(IntPtr window, int toLine, int toCol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>toLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>toCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_newpad_" data-uid="Sharpie.Abstractions.ICursesBackend.newpad*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_newpad_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.newpad(System.Int32,System.Int32)">
+  newpad(int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IntPtr newpad(int lines, int cols)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>lines</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>cols</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_newwin_" data-uid="Sharpie.Abstractions.ICursesBackend.newwin*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_newwin_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.newwin(System.Int32,System.Int32,System.Int32,System.Int32)">
+  newwin(int, int, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IntPtr newwin(int lines, int cols, int atLine, int atCol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>lines</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>cols</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>atLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>atCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_nl_" data-uid="Sharpie.Abstractions.ICursesBackend.nl*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_nl" data-uid="Sharpie.Abstractions.ICursesBackend.nl">
+  nl()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int nl()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_nocbreak_" data-uid="Sharpie.Abstractions.ICursesBackend.nocbreak*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_nocbreak" data-uid="Sharpie.Abstractions.ICursesBackend.nocbreak">
+  nocbreak()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int nocbreak()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_nodelay_" data-uid="Sharpie.Abstractions.ICursesBackend.nodelay*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_nodelay_System_IntPtr_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.nodelay(System.IntPtr,System.Boolean)">
+  nodelay(IntPtr, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int nodelay(IntPtr window, bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_noecho_" data-uid="Sharpie.Abstractions.ICursesBackend.noecho*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_noecho" data-uid="Sharpie.Abstractions.ICursesBackend.noecho">
+  noecho()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L137"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int noecho()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_nonl_" data-uid="Sharpie.Abstractions.ICursesBackend.nonl*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_nonl" data-uid="Sharpie.Abstractions.ICursesBackend.nonl">
+  nonl()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L139"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int nonl()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_noqiflush_" data-uid="Sharpie.Abstractions.ICursesBackend.noqiflush*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_noqiflush" data-uid="Sharpie.Abstractions.ICursesBackend.noqiflush">
+  noqiflush()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void noqiflush()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_noraw_" data-uid="Sharpie.Abstractions.ICursesBackend.noraw*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_noraw" data-uid="Sharpie.Abstractions.ICursesBackend.noraw">
+  noraw()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int noraw()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_notimeout_" data-uid="Sharpie.Abstractions.ICursesBackend.notimeout*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_notimeout_System_IntPtr_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.notimeout(System.IntPtr,System.Boolean)">
+  notimeout(IntPtr, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L145"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int notimeout(IntPtr window, bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_overlay_" data-uid="Sharpie.Abstractions.ICursesBackend.overlay*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_overlay_System_IntPtr_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.overlay(System.IntPtr,System.IntPtr)">
+  overlay(IntPtr, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int overlay(IntPtr srcWindow, IntPtr destWindow)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>srcWindow</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>destWindow</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_overwrite_" data-uid="Sharpie.Abstractions.ICursesBackend.overwrite*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_overwrite_System_IntPtr_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.overwrite(System.IntPtr,System.IntPtr)">
+  overwrite(IntPtr, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int overwrite(IntPtr srcWindow, IntPtr destWindow)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>srcWindow</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>destWindow</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_pair_content_" data-uid="Sharpie.Abstractions.ICursesBackend.pair_content*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_pair_content_System_Int16_System_Int16__System_Int16__" data-uid="Sharpie.Abstractions.ICursesBackend.pair_content(System.Int16,System.Int16@,System.Int16@)">
+  pair_content(short, out short, out short)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int pair_content(short colorPair, out short fgColor, out short bgColor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>fgColor</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>bgColor</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_pnoutrefresh_" data-uid="Sharpie.Abstractions.ICursesBackend.pnoutrefresh*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_pnoutrefresh_System_IntPtr_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.pnoutrefresh(System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+  pnoutrefresh(IntPtr, int, int, int, int, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L153"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int pnoutrefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine, int scrMinCol, int scrMaxLine, int scrMaxCol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>pad</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>padMinLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>padMinCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>scrMinLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>scrMinCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>scrMaxLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>scrMaxCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_prefresh_" data-uid="Sharpie.Abstractions.ICursesBackend.prefresh*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_prefresh_System_IntPtr_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.prefresh(System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+  prefresh(IntPtr, int, int, int, int, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L156"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int prefresh(IntPtr pad, int padMinLine, int padMinCol, int scrMinLine, int scrMinCol, int scrMaxLine, int scrMaxCol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>pad</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>padMinLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>padMinCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>scrMinLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>scrMinCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>scrMaxLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>scrMaxCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_qiflush_" data-uid="Sharpie.Abstractions.ICursesBackend.qiflush*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_qiflush" data-uid="Sharpie.Abstractions.ICursesBackend.qiflush">
+  qiflush()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void qiflush()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_raw_" data-uid="Sharpie.Abstractions.ICursesBackend.raw*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_raw" data-uid="Sharpie.Abstractions.ICursesBackend.raw">
+  raw()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L161"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int raw()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_ripoffline_" data-uid="Sharpie.Abstractions.ICursesBackend.ripoffline*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_ripoffline_System_Int32_Sharpie_Abstractions_ICursesBackend_ripoffline_callback_" data-uid="Sharpie.Abstractions.ICursesBackend.ripoffline(System.Int32,Sharpie.Abstractions.ICursesBackend.ripoffline_callback)">
+  ripoffline(int, ripoffline_callback)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L163"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int ripoffline(int lines, ICursesBackend.ripoffline_callback callback)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>lines</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>callback</code> <a class="xref" href="Sharpie.Abstractions.ICursesBackend.html">ICursesBackend</a>.<a class="xref" href="Sharpie.Abstractions.ICursesBackend.ripoffline_callback.html">ripoffline_callback</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_scrollok_" data-uid="Sharpie.Abstractions.ICursesBackend.scrollok*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_scrollok_System_IntPtr_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.scrollok(System.IntPtr,System.Boolean)">
+  scrollok(IntPtr, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int scrollok(IntPtr window, bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_set_title_" data-uid="Sharpie.Abstractions.ICursesBackend.set_title*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_set_title_System_String_" data-uid="Sharpie.Abstractions.ICursesBackend.set_title(System.String)">
+  set_title(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L293"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void set_title(string title)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>title</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_setcchar_" data-uid="Sharpie.Abstractions.ICursesBackend.setcchar*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_setcchar_Sharpie_Backend_ComplexChar__System_String_Sharpie_VideoAttribute_System_Int16_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.setcchar(Sharpie.Backend.ComplexChar@,System.String,Sharpie.VideoAttribute,System.Int16,System.IntPtr)">
+  setcchar(out ComplexChar, string, VideoAttribute, short, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L260"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int setcchar(out ComplexChar @char, string text, VideoAttribute attributes, short colorPair, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>char</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>text</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_attr_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_attr*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_attr_Sharpie_VideoAttribute__System_Int16__" data-uid="Sharpie.Abstractions.ICursesBackend.slk_attr(Sharpie.VideoAttribute@,System.Int16@)">
+  slk_attr(out VideoAttribute, out short)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L171"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_attr(out VideoAttribute attributes, out short colorPair)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_attr_off_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_attr_off*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_attr_off_Sharpie_VideoAttribute_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_attr_off(Sharpie.VideoAttribute,System.IntPtr)">
+  slk_attr_off(VideoAttribute, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L167"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_attr_off(VideoAttribute attributes, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_attr_on_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_attr_on*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_attr_on_Sharpie_VideoAttribute_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_attr_on(Sharpie.VideoAttribute,System.IntPtr)">
+  slk_attr_on(VideoAttribute, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L169"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_attr_on(VideoAttribute attributes, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_attr_set_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_attr_set*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_attr_set_Sharpie_VideoAttribute_System_Int16_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_attr_set(Sharpie.VideoAttribute,System.Int16,System.IntPtr)">
+  slk_attr_set(VideoAttribute, short, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_attr_set(VideoAttribute attributes, short colorPair, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_clear_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_clear*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_clear" data-uid="Sharpie.Abstractions.ICursesBackend.slk_clear">
+  slk_clear()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_clear()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_color_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_color*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_color_System_Int16_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_color(System.Int16)">
+  slk_color(short)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_color(short colorPair)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_init_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_init*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_init_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_init(System.Int32)">
+  slk_init(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L179"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_init(int format)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_noutrefresh_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_noutrefresh*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_noutrefresh" data-uid="Sharpie.Abstractions.ICursesBackend.slk_noutrefresh">
+  slk_noutrefresh()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_noutrefresh()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_refresh_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_refresh*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_refresh" data-uid="Sharpie.Abstractions.ICursesBackend.slk_refresh">
+  slk_refresh()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_refresh()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_restore_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_restore*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_restore" data-uid="Sharpie.Abstractions.ICursesBackend.slk_restore">
+  slk_restore()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L185"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_restore()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_set_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_set*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_set_System_Int32_System_String_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_set(System.Int32,System.String,System.Int32)">
+  slk_set(int, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L263"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_set(int labelIndex, string title, int align)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>labelIndex</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>title</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>align</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_slk_touch_" data-uid="Sharpie.Abstractions.ICursesBackend.slk_touch*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_slk_touch" data-uid="Sharpie.Abstractions.ICursesBackend.slk_touch">
+  slk_touch()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L187"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int slk_touch()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_start_color_" data-uid="Sharpie.Abstractions.ICursesBackend.start_color*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_start_color" data-uid="Sharpie.Abstractions.ICursesBackend.start_color">
+  start_color()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int start_color()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_subpad_" data-uid="Sharpie.Abstractions.ICursesBackend.subpad*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_subpad_System_IntPtr_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.subpad(System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32)">
+  subpad(IntPtr, int, int, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L191"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IntPtr subpad(IntPtr pad, int lines, int cols, int atLine, int atCol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>pad</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>lines</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>cols</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>atLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>atCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_syncok_" data-uid="Sharpie.Abstractions.ICursesBackend.syncok*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_syncok_System_IntPtr_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.syncok(System.IntPtr,System.Boolean)">
+  syncok(IntPtr, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L194"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int syncok(IntPtr window, bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_term_attrs_" data-uid="Sharpie.Abstractions.ICursesBackend.term_attrs*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_term_attrs_Sharpie_VideoAttribute__" data-uid="Sharpie.Abstractions.ICursesBackend.term_attrs(Sharpie.VideoAttribute@)">
+  term_attrs(out VideoAttribute)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L265"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int term_attrs(out VideoAttribute attributes)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_termname_" data-uid="Sharpie.Abstractions.ICursesBackend.termname*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_termname" data-uid="Sharpie.Abstractions.ICursesBackend.termname">
+  termname()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? termname()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_use_default_colors_" data-uid="Sharpie.Abstractions.ICursesBackend.use_default_colors*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_use_default_colors" data-uid="Sharpie.Abstractions.ICursesBackend.use_default_colors">
+  use_default_colors()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int use_default_colors()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_use_env_" data-uid="Sharpie.Abstractions.ICursesBackend.use_env*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_use_env_System_Boolean_" data-uid="Sharpie.Abstractions.ICursesBackend.use_env(System.Boolean)">
+  use_env(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void use_env(bool set)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>set</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wadd_wch_" data-uid="Sharpie.Abstractions.ICursesBackend.wadd_wch*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wadd_wch_System_IntPtr_Sharpie_Backend_ComplexChar_" data-uid="Sharpie.Abstractions.ICursesBackend.wadd_wch(System.IntPtr,Sharpie.Backend.ComplexChar)">
+  wadd_wch(IntPtr, ComplexChar)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L267"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wadd_wch(IntPtr window, ComplexChar @char)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>char</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wattr_get_" data-uid="Sharpie.Abstractions.ICursesBackend.wattr_get*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wattr_get_System_IntPtr_Sharpie_VideoAttribute__System_Int16__System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wattr_get(System.IntPtr,Sharpie.VideoAttribute@,System.Int16@,System.IntPtr)">
+  wattr_get(IntPtr, out VideoAttribute, out short, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wattr_get(IntPtr window, out VideoAttribute attributes, out short colorPair, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wattr_off_" data-uid="Sharpie.Abstractions.ICursesBackend.wattr_off*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wattr_off_System_IntPtr_Sharpie_VideoAttribute_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wattr_off(System.IntPtr,Sharpie.VideoAttribute,System.IntPtr)">
+  wattr_off(IntPtr, VideoAttribute, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L206"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wattr_off(IntPtr window, VideoAttribute attributes, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wattr_on_" data-uid="Sharpie.Abstractions.ICursesBackend.wattr_on*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wattr_on_System_IntPtr_Sharpie_VideoAttribute_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wattr_on(System.IntPtr,Sharpie.VideoAttribute,System.IntPtr)">
+  wattr_on(IntPtr, VideoAttribute, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L204"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wattr_on(IntPtr window, VideoAttribute attributes, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wattr_set_" data-uid="Sharpie.Abstractions.ICursesBackend.wattr_set*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wattr_set_System_IntPtr_Sharpie_VideoAttribute_System_Int16_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wattr_set(System.IntPtr,Sharpie.VideoAttribute,System.Int16,System.IntPtr)">
+  wattr_set(IntPtr, VideoAttribute, short, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L202"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wattr_set(IntPtr window, VideoAttribute attributes, short colorPair, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wbkgrnd_" data-uid="Sharpie.Abstractions.ICursesBackend.wbkgrnd*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wbkgrnd_System_IntPtr_Sharpie_Backend_ComplexChar_" data-uid="Sharpie.Abstractions.ICursesBackend.wbkgrnd(System.IntPtr,Sharpie.Backend.ComplexChar)">
+  wbkgrnd(IntPtr, ComplexChar)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L269"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wbkgrnd(IntPtr window, ComplexChar @char)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>char</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wborder_" data-uid="Sharpie.Abstractions.ICursesBackend.wborder*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wborder_System_IntPtr_System_UInt32_System_UInt32_System_UInt32_System_UInt32_System_UInt32_System_UInt32_System_UInt32_System_UInt32_" data-uid="Sharpie.Abstractions.ICursesBackend.wborder(System.IntPtr,System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32)">
+  wborder(IntPtr, uint, uint, uint, uint, uint, uint, uint, uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wborder(IntPtr window, uint leftSide, uint rightSide, uint topSide, uint bottomSide, uint topLeftCorner, uint topRightCorner, uint bottomLeftCorner, uint bottomRightCorner)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>leftSide</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>rightSide</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>topSide</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>bottomSide</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>topLeftCorner</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>topRightCorner</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>bottomLeftCorner</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>bottomRightCorner</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wborder_set_" data-uid="Sharpie.Abstractions.ICursesBackend.wborder_set*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wborder_set_System_IntPtr_Sharpie_Backend_ComplexChar_Sharpie_Backend_ComplexChar_Sharpie_Backend_ComplexChar_Sharpie_Backend_ComplexChar_Sharpie_Backend_ComplexChar_Sharpie_Backend_ComplexChar_Sharpie_Backend_ComplexChar_Sharpie_Backend_ComplexChar_" data-uid="Sharpie.Abstractions.ICursesBackend.wborder_set(System.IntPtr,Sharpie.Backend.ComplexChar,Sharpie.Backend.ComplexChar,Sharpie.Backend.ComplexChar,Sharpie.Backend.ComplexChar,Sharpie.Backend.ComplexChar,Sharpie.Backend.ComplexChar,Sharpie.Backend.ComplexChar,Sharpie.Backend.ComplexChar)">
+  wborder_set(IntPtr, ComplexChar, ComplexChar, ComplexChar, ComplexChar, ComplexChar, ComplexChar, ComplexChar, ComplexChar)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L271"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wborder_set(IntPtr window, ComplexChar leftSide, ComplexChar rightSide, ComplexChar topSide, ComplexChar bottomSide, ComplexChar topLeftCorner, ComplexChar topRightCorner, ComplexChar bottomLeftCorner, ComplexChar bottomRightCorner)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>leftSide</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>rightSide</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>topSide</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>bottomSide</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>topLeftCorner</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>topRightCorner</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>bottomLeftCorner</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>bottomRightCorner</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wchgat_" data-uid="Sharpie.Abstractions.ICursesBackend.wchgat*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wchgat_System_IntPtr_System_Int32_Sharpie_VideoAttribute_System_Int16_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wchgat(System.IntPtr,System.Int32,Sharpie.VideoAttribute,System.Int16,System.IntPtr)">
+  wchgat(IntPtr, int, VideoAttribute, short, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L212"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wchgat(IntPtr window, int count, VideoAttribute attributes, short colorPair, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>attributes</code> <a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wclrtobot_" data-uid="Sharpie.Abstractions.ICursesBackend.wclrtobot*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wclrtobot_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wclrtobot(System.IntPtr)">
+  wclrtobot(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wclrtobot(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wclrtoeol_" data-uid="Sharpie.Abstractions.ICursesBackend.wclrtoeol*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wclrtoeol_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wclrtoeol(System.IntPtr)">
+  wclrtoeol(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L217"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wclrtoeol(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wcolor_set_" data-uid="Sharpie.Abstractions.ICursesBackend.wcolor_set*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wcolor_set_System_IntPtr_System_Int16_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wcolor_set(System.IntPtr,System.Int16,System.IntPtr)">
+  wcolor_set(IntPtr, short, IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wcolor_set(IntPtr window, short colorPair, IntPtr reserved)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>colorPair</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int16">short</a></dt>
+    <dd></dd>
+    <dt><code>reserved</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wdelch_" data-uid="Sharpie.Abstractions.ICursesBackend.wdelch*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wdelch_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wdelch(System.IntPtr)">
+  wdelch(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L221"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wdelch(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_werase_" data-uid="Sharpie.Abstractions.ICursesBackend.werase*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_werase_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.werase(System.IntPtr)">
+  werase(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L223"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int werase(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wget_event_" data-uid="Sharpie.Abstractions.ICursesBackend.wget_event*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wget_event_System_IntPtr_System_Int32_Sharpie_Backend_CursesEvent__" data-uid="Sharpie.Abstractions.ICursesBackend.wget_event(System.IntPtr,System.Int32,Sharpie.Backend.CursesEvent@)">
+  wget_event(IntPtr, int, out CursesEvent?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L277"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wget_event(IntPtr window, int delay, out CursesEvent? @event)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>delay</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>event</code> <a class="xref" href="Sharpie.Backend.CursesEvent.html">CursesEvent</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wget_wch_" data-uid="Sharpie.Abstractions.ICursesBackend.wget_wch*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wget_wch_System_IntPtr_System_UInt32__" data-uid="Sharpie.Abstractions.ICursesBackend.wget_wch(System.IntPtr,System.UInt32@)">
+  wget_wch(IntPtr, out uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L275"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wget_wch(IntPtr window, out uint @char)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>char</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wgetbkgrnd_" data-uid="Sharpie.Abstractions.ICursesBackend.wgetbkgrnd*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wgetbkgrnd_System_IntPtr_Sharpie_Backend_ComplexChar__" data-uid="Sharpie.Abstractions.ICursesBackend.wgetbkgrnd(System.IntPtr,Sharpie.Backend.ComplexChar@)">
+  wgetbkgrnd(IntPtr, out ComplexChar)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L279"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wgetbkgrnd(IntPtr window, out ComplexChar @char)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>char</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_whline_" data-uid="Sharpie.Abstractions.ICursesBackend.whline*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_whline_System_IntPtr_System_UInt32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.whline(System.IntPtr,System.UInt32,System.Int32)">
+  whline(IntPtr, uint, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L225"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int whline(IntPtr window, uint @char, int count)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>char</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_whline_set_" data-uid="Sharpie.Abstractions.ICursesBackend.whline_set*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_whline_set_System_IntPtr_Sharpie_Backend_ComplexChar_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.whline_set(System.IntPtr,Sharpie.Backend.ComplexChar,System.Int32)">
+  whline_set(IntPtr, ComplexChar, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L281"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int whline_set(IntPtr window, ComplexChar @char, int count)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>char</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_win_wch_" data-uid="Sharpie.Abstractions.ICursesBackend.win_wch*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_win_wch_System_IntPtr_Sharpie_Backend_ComplexChar__" data-uid="Sharpie.Abstractions.ICursesBackend.win_wch(System.IntPtr,Sharpie.Backend.ComplexChar@)">
+  win_wch(IntPtr, out ComplexChar)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L283"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int win_wch(IntPtr window, out ComplexChar @char)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>char</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_winsdelln_" data-uid="Sharpie.Abstractions.ICursesBackend.winsdelln*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_winsdelln_System_IntPtr_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.winsdelln(System.IntPtr,System.Int32)">
+  winsdelln(IntPtr, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L227"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int winsdelln(IntPtr window, int count)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wmove_" data-uid="Sharpie.Abstractions.ICursesBackend.wmove*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wmove_System_IntPtr_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.wmove(System.IntPtr,System.Int32,System.Int32)">
+  wmove(IntPtr, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L229"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wmove(IntPtr window, int newLine, int newCol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>newLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>newCol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wnoutrefresh_" data-uid="Sharpie.Abstractions.ICursesBackend.wnoutrefresh*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wnoutrefresh_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wnoutrefresh(System.IntPtr)">
+  wnoutrefresh(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L231"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wnoutrefresh(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wredrawln_" data-uid="Sharpie.Abstractions.ICursesBackend.wredrawln*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wredrawln_System_IntPtr_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.wredrawln(System.IntPtr,System.Int32,System.Int32)">
+  wredrawln(IntPtr, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L233"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wredrawln(IntPtr window, int startLine, int lineCount)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>startLine</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>lineCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wrefresh_" data-uid="Sharpie.Abstractions.ICursesBackend.wrefresh*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wrefresh_System_IntPtr_" data-uid="Sharpie.Abstractions.ICursesBackend.wrefresh(System.IntPtr)">
+  wrefresh(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L235"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wrefresh(IntPtr window)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wresize_" data-uid="Sharpie.Abstractions.ICursesBackend.wresize*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wresize_System_IntPtr_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.wresize(System.IntPtr,System.Int32,System.Int32)">
+  wresize(IntPtr, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L251"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wresize(IntPtr window, int lines, int columns)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>lines</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>columns</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wscrl_" data-uid="Sharpie.Abstractions.ICursesBackend.wscrl*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wscrl_System_IntPtr_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.wscrl(System.IntPtr,System.Int32)">
+  wscrl(IntPtr, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L237"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wscrl(IntPtr window, int count)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wtimeout_" data-uid="Sharpie.Abstractions.ICursesBackend.wtimeout*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wtimeout_System_IntPtr_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.wtimeout(System.IntPtr,System.Int32)">
+  wtimeout(IntPtr, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L239"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void wtimeout(IntPtr window, int delay)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>delay</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wtouchln_" data-uid="Sharpie.Abstractions.ICursesBackend.wtouchln*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wtouchln_System_IntPtr_System_Int32_System_Int32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.wtouchln(System.IntPtr,System.Int32,System.Int32,System.Int32)">
+  wtouchln(IntPtr, int, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L241"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wtouchln(IntPtr window, int line, int count, int changed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>line</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>changed</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wvline_" data-uid="Sharpie.Abstractions.ICursesBackend.wvline*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wvline_System_IntPtr_System_UInt32_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.wvline(System.IntPtr,System.UInt32,System.Int32)">
+  wvline(IntPtr, uint, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L243"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wvline(IntPtr window, uint @char, int count)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>char</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+    <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ICursesBackend_wvline_set_" data-uid="Sharpie.Abstractions.ICursesBackend.wvline_set*"></a>
+
+  <h3 id="Sharpie_Abstractions_ICursesBackend_wvline_set_System_IntPtr_Sharpie_Backend_ComplexChar_System_Int32_" data-uid="Sharpie.Abstractions.ICursesBackend.wvline_set(System.IntPtr,Sharpie.Backend.ComplexChar,System.Int32)">
+  wvline_set(IntPtr, ComplexChar, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L285"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int wvline_set(IntPtr window, ComplexChar @char, int count)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>window</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd></dd>
+    <dt><code>char</code> <a class="xref" href="Sharpie.Backend.ComplexChar.html">ComplexChar</a></dt>
+    <dd></dd>
+    <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ICursesBackend.cs/#L39" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

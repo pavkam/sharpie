@@ -1,0 +1,594 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Abstractions.IAsciiFont
+  commentId: T:Sharpie.Abstractions.IAsciiFont
+  id: IAsciiFont
+  parent: Sharpie.Abstractions
+  children:
+  - Sharpie.Abstractions.IAsciiFont.Baseline
+  - Sharpie.Abstractions.IAsciiFont.GetGlyph(System.Text.Rune,Sharpie.Style)
+  - Sharpie.Abstractions.IAsciiFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  - Sharpie.Abstractions.IAsciiFont.GetGlyphs(System.String,Sharpie.Style)
+  - Sharpie.Abstractions.IAsciiFont.HasGlyph(System.Text.Rune)
+  - Sharpie.Abstractions.IAsciiFont.Height
+  - Sharpie.Abstractions.IAsciiFont.Layout
+  - Sharpie.Abstractions.IAsciiFont.Name
+  langs:
+  - csharp
+  - vb
+  name: IAsciiFont
+  nameWithType: IAsciiFont
+  fullName: Sharpie.Abstractions.IAsciiFont
+  type: Interface
+  source:
+    remote:
+      path: Sharpie/Abstractions/IAsciiFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: IAsciiFont
+    path: Sharpie/Abstractions/IAsciiFont.cs
+    startLine: 37
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Defines the traits implemented by ASCII font providers.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public interface IAsciiFont
+    content.vb: >-
+      <PublicAPI>
+
+      Public Interface IAsciiFont
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Abstractions.IAsciiFont.Height
+  commentId: P:Sharpie.Abstractions.IAsciiFont.Height
+  id: Height
+  parent: Sharpie.Abstractions.IAsciiFont
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: IAsciiFont.Height
+  fullName: Sharpie.Abstractions.IAsciiFont.Height
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/IAsciiFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Height
+    path: Sharpie/Abstractions/IAsciiFont.cs
+    startLine: 43
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: The font height.
+  example: []
+  syntax:
+    content: int Height { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property Height As Integer
+  overload: Sharpie.Abstractions.IAsciiFont.Height*
+- uid: Sharpie.Abstractions.IAsciiFont.Baseline
+  commentId: P:Sharpie.Abstractions.IAsciiFont.Baseline
+  id: Baseline
+  parent: Sharpie.Abstractions.IAsciiFont
+  langs:
+  - csharp
+  - vb
+  name: Baseline
+  nameWithType: IAsciiFont.Baseline
+  fullName: Sharpie.Abstractions.IAsciiFont.Baseline
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/IAsciiFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Baseline
+    path: Sharpie/Abstractions/IAsciiFont.cs
+    startLine: 48
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: The font baseline.
+  example: []
+  syntax:
+    content: int Baseline { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property Baseline As Integer
+  overload: Sharpie.Abstractions.IAsciiFont.Baseline*
+- uid: Sharpie.Abstractions.IAsciiFont.Name
+  commentId: P:Sharpie.Abstractions.IAsciiFont.Name
+  id: Name
+  parent: Sharpie.Abstractions.IAsciiFont
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: IAsciiFont.Name
+  fullName: Sharpie.Abstractions.IAsciiFont.Name
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/IAsciiFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Name
+    path: Sharpie/Abstractions/IAsciiFont.cs
+    startLine: 53
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: The font's name.
+  example: []
+  syntax:
+    content: string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Name As String
+  overload: Sharpie.Abstractions.IAsciiFont.Name*
+- uid: Sharpie.Abstractions.IAsciiFont.Layout
+  commentId: P:Sharpie.Abstractions.IAsciiFont.Layout
+  id: Layout
+  parent: Sharpie.Abstractions.IAsciiFont
+  langs:
+  - csharp
+  - vb
+  name: Layout
+  nameWithType: IAsciiFont.Layout
+  fullName: Sharpie.Abstractions.IAsciiFont.Layout
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/IAsciiFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Layout
+    path: Sharpie/Abstractions/IAsciiFont.cs
+    startLine: 58
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: The font's layout.
+  example: []
+  syntax:
+    content: AsciiFontLayout Layout { get; }
+    parameters: []
+    return:
+      type: Sharpie.Font.AsciiFontLayout
+    content.vb: ReadOnly Property Layout As AsciiFontLayout
+  overload: Sharpie.Abstractions.IAsciiFont.Layout*
+- uid: Sharpie.Abstractions.IAsciiFont.HasGlyph(System.Text.Rune)
+  commentId: M:Sharpie.Abstractions.IAsciiFont.HasGlyph(System.Text.Rune)
+  id: HasGlyph(System.Text.Rune)
+  parent: Sharpie.Abstractions.IAsciiFont
+  langs:
+  - csharp
+  - vb
+  name: HasGlyph(Rune)
+  nameWithType: IAsciiFont.HasGlyph(Rune)
+  fullName: Sharpie.Abstractions.IAsciiFont.HasGlyph(System.Text.Rune)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/IAsciiFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: HasGlyph
+    path: Sharpie/Abstractions/IAsciiFont.cs
+    startLine: 65
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Checks if the font contains a given glyph.
+  example: []
+  syntax:
+    content: bool HasGlyph(Rune @char)
+    parameters:
+    - id: char
+      type: System.Text.Rune
+      description: The character.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the font contains the given glyph; <code>false</code> otherwise.
+    content.vb: Function HasGlyph([char] As Rune) As Boolean
+  overload: Sharpie.Abstractions.IAsciiFont.HasGlyph*
+- uid: Sharpie.Abstractions.IAsciiFont.GetGlyph(System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.IAsciiFont.GetGlyph(System.Text.Rune,Sharpie.Style)
+  id: GetGlyph(System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Abstractions.IAsciiFont
+  langs:
+  - csharp
+  - vb
+  name: GetGlyph(Rune, Style)
+  nameWithType: IAsciiFont.GetGlyph(Rune, Style)
+  fullName: Sharpie.Abstractions.IAsciiFont.GetGlyph(System.Text.Rune, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/IAsciiFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: GetGlyph
+    path: Sharpie/Abstractions/IAsciiFont.cs
+    startLine: 73
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Tries to get a glyph for a given <code class="paramref">char</code>.
+  example: []
+  syntax:
+    content: IDrawable GetGlyph(Rune @char, Style style)
+    parameters:
+    - id: char
+      type: System.Text.Rune
+      description: The character.
+    - id: style
+      type: Sharpie.Style
+      description: The style to apply to the glyph.
+    return:
+      type: Sharpie.Abstractions.IDrawable
+      description: The output glyph, if found. Otherwise, the font will substitute the glyph with something else.
+    content.vb: Function GetGlyph([char] As Rune, style As Style) As IDrawable
+  overload: Sharpie.Abstractions.IAsciiFont.GetGlyph*
+- uid: Sharpie.Abstractions.IAsciiFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.IAsciiFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  id: GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  parent: Sharpie.Abstractions.IAsciiFont
+  langs:
+  - csharp
+  - vb
+  name: GetGlyphs(ReadOnlySpan<Rune>, Style)
+  nameWithType: IAsciiFont.GetGlyphs(ReadOnlySpan<Rune>, Style)
+  fullName: Sharpie.Abstractions.IAsciiFont.GetGlyphs(System.ReadOnlySpan<System.Text.Rune>, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/IAsciiFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: GetGlyphs
+    path: Sharpie/Abstractions/IAsciiFont.cs
+    startLine: 82
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Tries to get a drawing for a given list of <code class="paramref">chars</code>.
+  example: []
+  syntax:
+    content: IDrawable GetGlyphs(ReadOnlySpan<Rune> chars, Style style)
+    parameters:
+    - id: chars
+      type: System.ReadOnlySpan{System.Text.Rune}
+      description: The characters.
+    - id: style
+      type: Sharpie.Style
+      description: The style to apply to the glyphs.
+    return:
+      type: Sharpie.Abstractions.IDrawable
+      description: The output glyphs.
+    content.vb: Function GetGlyphs(chars As ReadOnlySpan(Of Rune), style As Style) As IDrawable
+  overload: Sharpie.Abstractions.IAsciiFont.GetGlyphs*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Thrown if <code class="paramref">chars</code> is empty.
+  nameWithType.vb: IAsciiFont.GetGlyphs(ReadOnlySpan(Of Rune), Style)
+  fullName.vb: Sharpie.Abstractions.IAsciiFont.GetGlyphs(System.ReadOnlySpan(Of System.Text.Rune), Sharpie.Style)
+  name.vb: GetGlyphs(ReadOnlySpan(Of Rune), Style)
+- uid: Sharpie.Abstractions.IAsciiFont.GetGlyphs(System.String,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.IAsciiFont.GetGlyphs(System.String,Sharpie.Style)
+  id: GetGlyphs(System.String,Sharpie.Style)
+  parent: Sharpie.Abstractions.IAsciiFont
+  langs:
+  - csharp
+  - vb
+  name: GetGlyphs(string, Style)
+  nameWithType: IAsciiFont.GetGlyphs(string, Style)
+  fullName: Sharpie.Abstractions.IAsciiFont.GetGlyphs(string, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/IAsciiFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: GetGlyphs
+    path: Sharpie/Abstractions/IAsciiFont.cs
+    startLine: 91
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Tries to get a drawing for a given <code class="paramref">text</code>.
+  example: []
+  syntax:
+    content: IDrawable GetGlyphs(string text, Style style)
+    parameters:
+    - id: text
+      type: System.String
+      description: The text.
+    - id: style
+      type: Sharpie.Style
+      description: The style to apply to the glyphs.
+    return:
+      type: Sharpie.Abstractions.IDrawable
+      description: The output glyphs.
+    content.vb: Function GetGlyphs(text As String, style As Style) As IDrawable
+  overload: Sharpie.Abstractions.IAsciiFont.GetGlyphs*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Thrown if <code class="paramref">text</code> is empty.
+  nameWithType.vb: IAsciiFont.GetGlyphs(String, Style)
+  fullName.vb: Sharpie.Abstractions.IAsciiFont.GetGlyphs(String, Sharpie.Style)
+  name.vb: GetGlyphs(String, Style)
+references:
+- uid: Sharpie.Abstractions
+  commentId: N:Sharpie.Abstractions
+  href: Sharpie.html
+  name: Sharpie.Abstractions
+  nameWithType: Sharpie.Abstractions
+  fullName: Sharpie.Abstractions
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+- uid: Sharpie.Abstractions.IAsciiFont.Height*
+  commentId: Overload:Sharpie.Abstractions.IAsciiFont.Height
+  href: Sharpie.Abstractions.IAsciiFont.html#Sharpie_Abstractions_IAsciiFont_Height
+  name: Height
+  nameWithType: IAsciiFont.Height
+  fullName: Sharpie.Abstractions.IAsciiFont.Height
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Abstractions.IAsciiFont.Baseline*
+  commentId: Overload:Sharpie.Abstractions.IAsciiFont.Baseline
+  href: Sharpie.Abstractions.IAsciiFont.html#Sharpie_Abstractions_IAsciiFont_Baseline
+  name: Baseline
+  nameWithType: IAsciiFont.Baseline
+  fullName: Sharpie.Abstractions.IAsciiFont.Baseline
+- uid: Sharpie.Abstractions.IAsciiFont.Name*
+  commentId: Overload:Sharpie.Abstractions.IAsciiFont.Name
+  href: Sharpie.Abstractions.IAsciiFont.html#Sharpie_Abstractions_IAsciiFont_Name
+  name: Name
+  nameWithType: IAsciiFont.Name
+  fullName: Sharpie.Abstractions.IAsciiFont.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Sharpie.Abstractions.IAsciiFont.Layout*
+  commentId: Overload:Sharpie.Abstractions.IAsciiFont.Layout
+  href: Sharpie.Abstractions.IAsciiFont.html#Sharpie_Abstractions_IAsciiFont_Layout
+  name: Layout
+  nameWithType: IAsciiFont.Layout
+  fullName: Sharpie.Abstractions.IAsciiFont.Layout
+- uid: Sharpie.Font.AsciiFontLayout
+  commentId: T:Sharpie.Font.AsciiFontLayout
+  parent: Sharpie.Font
+  href: Sharpie.Font.AsciiFontLayout.html
+  name: AsciiFontLayout
+  nameWithType: AsciiFontLayout
+  fullName: Sharpie.Font.AsciiFontLayout
+- uid: Sharpie.Font
+  commentId: N:Sharpie.Font
+  href: Sharpie.html
+  name: Sharpie.Font
+  nameWithType: Sharpie.Font
+  fullName: Sharpie.Font
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Font
+    name: Font
+    href: Sharpie.Font.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Font
+    name: Font
+    href: Sharpie.Font.html
+- uid: Sharpie.Abstractions.IAsciiFont.HasGlyph*
+  commentId: Overload:Sharpie.Abstractions.IAsciiFont.HasGlyph
+  href: Sharpie.Abstractions.IAsciiFont.html#Sharpie_Abstractions_IAsciiFont_HasGlyph_System_Text_Rune_
+  name: HasGlyph
+  nameWithType: IAsciiFont.HasGlyph
+  fullName: Sharpie.Abstractions.IAsciiFont.HasGlyph
+- uid: System.Text.Rune
+  commentId: T:System.Text.Rune
+  parent: System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  name: Rune
+  nameWithType: Rune
+  fullName: System.Text.Rune
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+- uid: Sharpie.Abstractions.IAsciiFont.GetGlyph*
+  commentId: Overload:Sharpie.Abstractions.IAsciiFont.GetGlyph
+  href: Sharpie.Abstractions.IAsciiFont.html#Sharpie_Abstractions_IAsciiFont_GetGlyph_System_Text_Rune_Sharpie_Style_
+  name: GetGlyph
+  nameWithType: IAsciiFont.GetGlyph
+  fullName: Sharpie.Abstractions.IAsciiFont.GetGlyph
+- uid: Sharpie.Style
+  commentId: T:Sharpie.Style
+  parent: Sharpie
+  href: Sharpie.Style.html
+  name: Style
+  nameWithType: Style
+  fullName: Sharpie.Style
+- uid: Sharpie.Abstractions.IDrawable
+  commentId: T:Sharpie.Abstractions.IDrawable
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IDrawable.html
+  name: IDrawable
+  nameWithType: IDrawable
+  fullName: Sharpie.Abstractions.IDrawable
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: Sharpie.Abstractions.IAsciiFont.GetGlyphs*
+  commentId: Overload:Sharpie.Abstractions.IAsciiFont.GetGlyphs
+  href: Sharpie.Abstractions.IAsciiFont.html#Sharpie_Abstractions_IAsciiFont_GetGlyphs_System_ReadOnlySpan_System_Text_Rune__Sharpie_Style_
+  name: GetGlyphs
+  nameWithType: IAsciiFont.GetGlyphs
+  fullName: Sharpie.Abstractions.IAsciiFont.GetGlyphs
+- uid: System.ReadOnlySpan{System.Text.Rune}
+  commentId: T:System.ReadOnlySpan{System.Text.Rune}
+  parent: System
+  definition: System.ReadOnlySpan`1
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<Rune>
+  nameWithType: ReadOnlySpan<Rune>
+  fullName: System.ReadOnlySpan<System.Text.Rune>
+  nameWithType.vb: ReadOnlySpan(Of Rune)
+  fullName.vb: System.ReadOnlySpan(Of System.Text.Rune)
+  name.vb: ReadOnlySpan(Of Rune)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: )
+- uid: System.ReadOnlySpan`1
+  commentId: T:System.ReadOnlySpan`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<T>
+  nameWithType: ReadOnlySpan<T>
+  fullName: System.ReadOnlySpan<T>
+  nameWithType.vb: ReadOnlySpan(Of T)
+  fullName.vb: System.ReadOnlySpan(Of T)
+  name.vb: ReadOnlySpan(Of T)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

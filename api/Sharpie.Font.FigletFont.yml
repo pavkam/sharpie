@@ -1,0 +1,1010 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Font.FigletFont
+  commentId: T:Sharpie.Font.FigletFont
+  id: FigletFont
+  parent: Sharpie.Font
+  children:
+  - Sharpie.Font.FigletFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  - Sharpie.Font.FigletFont.HasGlyph(System.Text.Rune)
+  - Sharpie.Font.FigletFont.LoadAsync(System.String)
+  - Sharpie.Font.FigletFont.LoadAsync(System.String,System.IO.TextReader)
+  langs:
+  - csharp
+  - vb
+  name: FigletFont
+  nameWithType: FigletFont
+  fullName: Sharpie.Font.FigletFont
+  type: Class
+  source:
+    remote:
+      path: Sharpie/Font/FigletFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: FigletFont
+    path: Sharpie/Font/FigletFont.cs
+    startLine: 36
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Font
+  summary: >-
+    FIGlet ASCII font. See http://www.jave.de/figlet/figfont.html and https://github.com/cmatsuoka/figlet for details
+
+    and available fonts.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public sealed class FigletFont : AsciiFont, IAsciiFont
+    content.vb: >-
+      <PublicAPI>
+
+      Public NotInheritable Class FigletFont Inherits AsciiFont Implements IAsciiFont
+  inheritance:
+  - System.Object
+  - Sharpie.Font.AsciiFont
+  implements:
+  - Sharpie.Abstractions.IAsciiFont
+  inheritedMembers:
+  - Sharpie.Font.AsciiFont.Baseline
+  - Sharpie.Font.AsciiFont.Height
+  - Sharpie.Font.AsciiFont.Name
+  - Sharpie.Font.AsciiFont.Layout
+  - Sharpie.Font.AsciiFont.GetGlyph(System.Text.Rune,Sharpie.Style)
+  - Sharpie.Font.AsciiFont.GetGlyphs(System.String,Sharpie.Style)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Font.FigletFont.HasGlyph(System.Text.Rune)
+  commentId: M:Sharpie.Font.FigletFont.HasGlyph(System.Text.Rune)
+  id: HasGlyph(System.Text.Rune)
+  parent: Sharpie.Font.FigletFont
+  langs:
+  - csharp
+  - vb
+  name: HasGlyph(Rune)
+  nameWithType: FigletFont.HasGlyph(Rune)
+  fullName: Sharpie.Font.FigletFont.HasGlyph(System.Text.Rune)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Font/FigletFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: HasGlyph
+    path: Sharpie/Font/FigletFont.cs
+    startLine: 78
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Font
+  summary: Checks if the font contains a given glyph.
+  example: []
+  syntax:
+    content: public override bool HasGlyph(Rune @char)
+    parameters:
+    - id: char
+      type: System.Text.Rune
+      description: The character.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the font contains the given glyph; <code>false</code> otherwise.
+    content.vb: Public Overrides Function HasGlyph([char] As Rune) As Boolean
+  overridden: Sharpie.Font.AsciiFont.HasGlyph(System.Text.Rune)
+  overload: Sharpie.Font.FigletFont.HasGlyph*
+- uid: Sharpie.Font.FigletFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  commentId: M:Sharpie.Font.FigletFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  id: GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  parent: Sharpie.Font.FigletFont
+  langs:
+  - csharp
+  - vb
+  name: GetGlyphs(ReadOnlySpan<Rune>, Style)
+  nameWithType: FigletFont.GetGlyphs(ReadOnlySpan<Rune>, Style)
+  fullName: Sharpie.Font.FigletFont.GetGlyphs(System.ReadOnlySpan<System.Text.Rune>, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Font/FigletFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: GetGlyphs
+    path: Sharpie/Font/FigletFont.cs
+    startLine: 81
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Font
+  summary: Tries to get a drawing for a given list of <code class="paramref">chars</code>.
+  example: []
+  syntax:
+    content: public override IDrawable GetGlyphs(ReadOnlySpan<Rune> chars, Style style)
+    parameters:
+    - id: chars
+      type: System.ReadOnlySpan{System.Text.Rune}
+      description: The characters.
+    - id: style
+      type: Sharpie.Style
+      description: The style to apply to the glyphs.
+    return:
+      type: Sharpie.Abstractions.IDrawable
+      description: The output glyphs.
+    content.vb: Public Overrides Function GetGlyphs(chars As ReadOnlySpan(Of Rune), style As Style) As IDrawable
+  overridden: Sharpie.Font.AsciiFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  overload: Sharpie.Font.FigletFont.GetGlyphs*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Thrown if <code class="paramref">chars</code> is empty.
+  nameWithType.vb: FigletFont.GetGlyphs(ReadOnlySpan(Of Rune), Style)
+  fullName.vb: Sharpie.Font.FigletFont.GetGlyphs(System.ReadOnlySpan(Of System.Text.Rune), Sharpie.Style)
+  name.vb: GetGlyphs(ReadOnlySpan(Of Rune), Style)
+- uid: Sharpie.Font.FigletFont.LoadAsync(System.String,System.IO.TextReader)
+  commentId: M:Sharpie.Font.FigletFont.LoadAsync(System.String,System.IO.TextReader)
+  id: LoadAsync(System.String,System.IO.TextReader)
+  parent: Sharpie.Font.FigletFont
+  langs:
+  - csharp
+  - vb
+  name: LoadAsync(string, TextReader)
+  nameWithType: FigletFont.LoadAsync(string, TextReader)
+  fullName: Sharpie.Font.FigletFont.LoadAsync(string, System.IO.TextReader)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Font/FigletFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LoadAsync
+    path: Sharpie/Font/FigletFont.cs
+    startLine: 171
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Font
+  summary: Loads a FIGlet font file from a given <code class="paramref">reader</code>.
+  example: []
+  syntax:
+    content: public static Task<FigletFont> LoadAsync(string name, TextReader reader)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the font.
+    - id: reader
+      type: System.IO.TextReader
+      description: The reader.
+    return:
+      type: System.Threading.Tasks.Task{Sharpie.Font.FigletFont}
+      description: A <xref href="Sharpie.Font.FigletFont" data-throw-if-not-resolved="false"></xref> instance.
+    content.vb: Public Shared Function LoadAsync(name As String, reader As TextReader) As Task(Of FigletFont)
+  overload: Sharpie.Font.FigletFont.LoadAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">reader</code> is <code>null</code>.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Thrown if <code class="paramref">name</code> is <code>null</code> or empty.
+  nameWithType.vb: FigletFont.LoadAsync(String, TextReader)
+  fullName.vb: Sharpie.Font.FigletFont.LoadAsync(String, System.IO.TextReader)
+  name.vb: LoadAsync(String, TextReader)
+- uid: Sharpie.Font.FigletFont.LoadAsync(System.String)
+  commentId: M:Sharpie.Font.FigletFont.LoadAsync(System.String)
+  id: LoadAsync(System.String)
+  parent: Sharpie.Font.FigletFont
+  langs:
+  - csharp
+  - vb
+  name: LoadAsync(string)
+  nameWithType: FigletFont.LoadAsync(string)
+  fullName: Sharpie.Font.FigletFont.LoadAsync(string)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Font/FigletFont.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LoadAsync
+    path: Sharpie/Font/FigletFont.cs
+    startLine: 217
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Font
+  summary: Loads a FIGlet font file from a given file at <code class="paramref">path</code>.
+  example: []
+  syntax:
+    content: public static Task<FigletFont> LoadAsync(string path)
+    parameters:
+    - id: path
+      type: System.String
+      description: The font file name.
+    return:
+      type: System.Threading.Tasks.Task{Sharpie.Font.FigletFont}
+      description: A <xref href="Sharpie.Font.FigletFont" data-throw-if-not-resolved="false"></xref> instance.
+    content.vb: Public Shared Function LoadAsync(path As String) As Task(Of FigletFont)
+  overload: Sharpie.Font.FigletFont.LoadAsync*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Thrown if <code class="paramref">path</code> is <code>null</code> or empty.
+  nameWithType.vb: FigletFont.LoadAsync(String)
+  fullName.vb: Sharpie.Font.FigletFont.LoadAsync(String)
+  name.vb: LoadAsync(String)
+references:
+- uid: Sharpie.Font
+  commentId: N:Sharpie.Font
+  href: Sharpie.html
+  name: Sharpie.Font
+  nameWithType: Sharpie.Font
+  fullName: Sharpie.Font
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Font
+    name: Font
+    href: Sharpie.Font.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Font
+    name: Font
+    href: Sharpie.Font.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Sharpie.Font.AsciiFont
+  commentId: T:Sharpie.Font.AsciiFont
+  parent: Sharpie.Font
+  href: Sharpie.Font.AsciiFont.html
+  name: AsciiFont
+  nameWithType: AsciiFont
+  fullName: Sharpie.Font.AsciiFont
+- uid: Sharpie.Abstractions.IAsciiFont
+  commentId: T:Sharpie.Abstractions.IAsciiFont
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IAsciiFont.html
+  name: IAsciiFont
+  nameWithType: IAsciiFont
+  fullName: Sharpie.Abstractions.IAsciiFont
+- uid: Sharpie.Font.AsciiFont.Baseline
+  commentId: P:Sharpie.Font.AsciiFont.Baseline
+  parent: Sharpie.Font.AsciiFont
+  href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_Baseline
+  name: Baseline
+  nameWithType: AsciiFont.Baseline
+  fullName: Sharpie.Font.AsciiFont.Baseline
+- uid: Sharpie.Font.AsciiFont.Height
+  commentId: P:Sharpie.Font.AsciiFont.Height
+  parent: Sharpie.Font.AsciiFont
+  href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_Height
+  name: Height
+  nameWithType: AsciiFont.Height
+  fullName: Sharpie.Font.AsciiFont.Height
+- uid: Sharpie.Font.AsciiFont.Name
+  commentId: P:Sharpie.Font.AsciiFont.Name
+  parent: Sharpie.Font.AsciiFont
+  href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_Name
+  name: Name
+  nameWithType: AsciiFont.Name
+  fullName: Sharpie.Font.AsciiFont.Name
+- uid: Sharpie.Font.AsciiFont.Layout
+  commentId: P:Sharpie.Font.AsciiFont.Layout
+  parent: Sharpie.Font.AsciiFont
+  href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_Layout
+  name: Layout
+  nameWithType: AsciiFont.Layout
+  fullName: Sharpie.Font.AsciiFont.Layout
+- uid: Sharpie.Font.AsciiFont.GetGlyph(System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Font.AsciiFont.GetGlyph(System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Font.AsciiFont
+  isExternal: true
+  href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_GetGlyph_System_Text_Rune_Sharpie_Style_
+  name: GetGlyph(Rune, Style)
+  nameWithType: AsciiFont.GetGlyph(Rune, Style)
+  fullName: Sharpie.Font.AsciiFont.GetGlyph(System.Text.Rune, Sharpie.Style)
+  spec.csharp:
+  - uid: Sharpie.Font.AsciiFont.GetGlyph(System.Text.Rune,Sharpie.Style)
+    name: GetGlyph
+    href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_GetGlyph_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Font.AsciiFont.GetGlyph(System.Text.Rune,Sharpie.Style)
+    name: GetGlyph
+    href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_GetGlyph_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: Sharpie.Font.AsciiFont.GetGlyphs(System.String,Sharpie.Style)
+  commentId: M:Sharpie.Font.AsciiFont.GetGlyphs(System.String,Sharpie.Style)
+  parent: Sharpie.Font.AsciiFont
+  isExternal: true
+  href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_GetGlyphs_System_String_Sharpie_Style_
+  name: GetGlyphs(string, Style)
+  nameWithType: AsciiFont.GetGlyphs(string, Style)
+  fullName: Sharpie.Font.AsciiFont.GetGlyphs(string, Sharpie.Style)
+  nameWithType.vb: AsciiFont.GetGlyphs(String, Style)
+  fullName.vb: Sharpie.Font.AsciiFont.GetGlyphs(String, Sharpie.Style)
+  name.vb: GetGlyphs(String, Style)
+  spec.csharp:
+  - uid: Sharpie.Font.AsciiFont.GetGlyphs(System.String,Sharpie.Style)
+    name: GetGlyphs
+    href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_GetGlyphs_System_String_Sharpie_Style_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Font.AsciiFont.GetGlyphs(System.String,Sharpie.Style)
+    name: GetGlyphs
+    href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_GetGlyphs_System_String_Sharpie_Style_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Abstractions
+  commentId: N:Sharpie.Abstractions
+  href: Sharpie.html
+  name: Sharpie.Abstractions
+  nameWithType: Sharpie.Abstractions
+  fullName: Sharpie.Abstractions
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+- uid: Sharpie.Font.AsciiFont.HasGlyph(System.Text.Rune)
+  commentId: M:Sharpie.Font.AsciiFont.HasGlyph(System.Text.Rune)
+  parent: Sharpie.Font.AsciiFont
+  isExternal: true
+  href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_HasGlyph_System_Text_Rune_
+  name: HasGlyph(Rune)
+  nameWithType: AsciiFont.HasGlyph(Rune)
+  fullName: Sharpie.Font.AsciiFont.HasGlyph(System.Text.Rune)
+  spec.csharp:
+  - uid: Sharpie.Font.AsciiFont.HasGlyph(System.Text.Rune)
+    name: HasGlyph
+    href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_HasGlyph_System_Text_Rune_
+  - name: (
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Font.AsciiFont.HasGlyph(System.Text.Rune)
+    name: HasGlyph
+    href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_HasGlyph_System_Text_Rune_
+  - name: (
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: )
+- uid: Sharpie.Font.FigletFont.HasGlyph*
+  commentId: Overload:Sharpie.Font.FigletFont.HasGlyph
+  href: Sharpie.Font.FigletFont.html#Sharpie_Font_FigletFont_HasGlyph_System_Text_Rune_
+  name: HasGlyph
+  nameWithType: FigletFont.HasGlyph
+  fullName: Sharpie.Font.FigletFont.HasGlyph
+- uid: System.Text.Rune
+  commentId: T:System.Text.Rune
+  parent: System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  name: Rune
+  nameWithType: Rune
+  fullName: System.Text.Rune
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: Sharpie.Font.AsciiFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  commentId: M:Sharpie.Font.AsciiFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+  parent: Sharpie.Font.AsciiFont
+  isExternal: true
+  href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_GetGlyphs_System_ReadOnlySpan_System_Text_Rune__Sharpie_Style_
+  name: GetGlyphs(ReadOnlySpan<Rune>, Style)
+  nameWithType: AsciiFont.GetGlyphs(ReadOnlySpan<Rune>, Style)
+  fullName: Sharpie.Font.AsciiFont.GetGlyphs(System.ReadOnlySpan<System.Text.Rune>, Sharpie.Style)
+  nameWithType.vb: AsciiFont.GetGlyphs(ReadOnlySpan(Of Rune), Style)
+  fullName.vb: Sharpie.Font.AsciiFont.GetGlyphs(System.ReadOnlySpan(Of System.Text.Rune), Sharpie.Style)
+  name.vb: GetGlyphs(ReadOnlySpan(Of Rune), Style)
+  spec.csharp:
+  - uid: Sharpie.Font.AsciiFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+    name: GetGlyphs
+    href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_GetGlyphs_System_ReadOnlySpan_System_Text_Rune__Sharpie_Style_
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Font.AsciiFont.GetGlyphs(System.ReadOnlySpan{System.Text.Rune},Sharpie.Style)
+    name: GetGlyphs
+    href: Sharpie.Font.AsciiFont.html#Sharpie_Font_AsciiFont_GetGlyphs_System_ReadOnlySpan_System_Text_Rune__Sharpie_Style_
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: Sharpie.Font.FigletFont.GetGlyphs*
+  commentId: Overload:Sharpie.Font.FigletFont.GetGlyphs
+  href: Sharpie.Font.FigletFont.html#Sharpie_Font_FigletFont_GetGlyphs_System_ReadOnlySpan_System_Text_Rune__Sharpie_Style_
+  name: GetGlyphs
+  nameWithType: FigletFont.GetGlyphs
+  fullName: Sharpie.Font.FigletFont.GetGlyphs
+- uid: System.ReadOnlySpan{System.Text.Rune}
+  commentId: T:System.ReadOnlySpan{System.Text.Rune}
+  parent: System
+  definition: System.ReadOnlySpan`1
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<Rune>
+  nameWithType: ReadOnlySpan<Rune>
+  fullName: System.ReadOnlySpan<System.Text.Rune>
+  nameWithType.vb: ReadOnlySpan(Of Rune)
+  fullName.vb: System.ReadOnlySpan(Of System.Text.Rune)
+  name.vb: ReadOnlySpan(Of Rune)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: )
+- uid: Sharpie.Style
+  commentId: T:Sharpie.Style
+  parent: Sharpie
+  href: Sharpie.Style.html
+  name: Style
+  nameWithType: Style
+  fullName: Sharpie.Style
+- uid: Sharpie.Abstractions.IDrawable
+  commentId: T:Sharpie.Abstractions.IDrawable
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IDrawable.html
+  name: IDrawable
+  nameWithType: IDrawable
+  fullName: Sharpie.Abstractions.IDrawable
+- uid: System.ReadOnlySpan`1
+  commentId: T:System.ReadOnlySpan`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<T>
+  nameWithType: ReadOnlySpan<T>
+  fullName: System.ReadOnlySpan<T>
+  nameWithType.vb: ReadOnlySpan(Of T)
+  fullName.vb: System.ReadOnlySpan(Of T)
+  name.vb: ReadOnlySpan(Of T)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Font.FigletFont
+  commentId: T:Sharpie.Font.FigletFont
+  href: Sharpie.Font.FigletFont.html
+  name: FigletFont
+  nameWithType: FigletFont
+  fullName: Sharpie.Font.FigletFont
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentnullexception
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: Sharpie.Font.FigletFont.LoadAsync*
+  commentId: Overload:Sharpie.Font.FigletFont.LoadAsync
+  href: Sharpie.Font.FigletFont.html#Sharpie_Font_FigletFont_LoadAsync_System_String_System_IO_TextReader_
+  name: LoadAsync
+  nameWithType: FigletFont.LoadAsync
+  fullName: Sharpie.Font.FigletFont.LoadAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.IO.TextReader
+  commentId: T:System.IO.TextReader
+  parent: System.IO
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.io.textreader
+  name: TextReader
+  nameWithType: TextReader
+  fullName: System.IO.TextReader
+- uid: System.Threading.Tasks.Task{Sharpie.Font.FigletFont}
+  commentId: T:System.Threading.Tasks.Task{Sharpie.Font.FigletFont}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<FigletFont>
+  nameWithType: Task<FigletFont>
+  fullName: System.Threading.Tasks.Task<Sharpie.Font.FigletFont>
+  nameWithType.vb: Task(Of FigletFont)
+  fullName.vb: System.Threading.Tasks.Task(Of Sharpie.Font.FigletFont)
+  name.vb: Task(Of FigletFont)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Sharpie.Font.FigletFont
+    name: FigletFont
+    href: Sharpie.Font.FigletFont.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Sharpie.Font.FigletFont
+    name: FigletFont
+    href: Sharpie.Font.FigletFont.html
+  - name: )
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.io
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.io
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks

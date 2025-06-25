@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface ITerminal | sharpie </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface ITerminal | sharpie ">
+      
+      <meta name="description" content="Defines the traits needed to implement a terminal. The only existing implementation of this interface is  class.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/LyndonGingerich/sharpie/new/docs-project/apiSpec/new?filename=Sharpie_Abstractions_ITerminal.md&amp;value=---%0Auid%3A%20Sharpie.Abstractions.ITerminal%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="sharpie">
+            sharpie
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Sharpie.Abstractions.ITerminal">
+
+
+
+  <h1 id="Sharpie_Abstractions_ITerminal" data-uid="Sharpie.Abstractions.ITerminal" class="text-break">
+Interface ITerminal  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Sharpie.html">Sharpie</a>.<a class="xref" href="Sharpie.Abstractions.html">Abstractions</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>sharpie.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines the traits needed to implement a terminal. The only existing implementation of this interface is
+<a class="xref" href="Sharpie.Terminal.html">Terminal</a> class.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public interface ITerminal</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Sharpie_Abstractions_ITerminal_BaudRate_" data-uid="Sharpie.Abstractions.ITerminal.BaudRate*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_BaudRate" data-uid="Sharpie.Abstractions.ITerminal.BaudRate">
+  BaudRate
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the terminal's baud rate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int BaudRate { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Colors_" data-uid="Sharpie.Abstractions.ITerminal.Colors*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Colors" data-uid="Sharpie.Abstractions.ITerminal.Colors">
+  Colors
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Provides access to the terminal's color management.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IColorManager Colors { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.IColorManager.html">IColorManager</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></dt>
+    <dd><p>The terminal has been disposed.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_CurrentEraseChar_" data-uid="Sharpie.Abstractions.ITerminal.CurrentEraseChar*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_CurrentEraseChar" data-uid="Sharpie.Abstractions.ITerminal.CurrentEraseChar">
+  CurrentEraseChar
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the currently defined erase character. <code>null</code> is returned if none is defined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Rune? CurrentEraseChar { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.rune">Rune</a>?</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_CurrentKillChar_" data-uid="Sharpie.Abstractions.ITerminal.CurrentKillChar*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_CurrentKillChar" data-uid="Sharpie.Abstractions.ITerminal.CurrentKillChar">
+  CurrentKillChar
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the currently defined kill character. <code>null</code> is returned if none is defined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Rune? CurrentKillChar { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.rune">Rune</a>?</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Curses_" data-uid="Sharpie.Abstractions.ITerminal.Curses*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Curses" data-uid="Sharpie.Abstractions.ITerminal.Curses">
+  Curses
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The Curses backend.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ICursesBackend Curses { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.ICursesBackend.html">ICursesBackend</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_CursesVersion_" data-uid="Sharpie.Abstractions.ITerminal.CursesVersion*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_CursesVersion" data-uid="Sharpie.Abstractions.ITerminal.CursesVersion">
+  CursesVersion
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the version of the Curses library in use.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? CursesVersion { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Description_" data-uid="Sharpie.Abstractions.ITerminal.Description*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Description" data-uid="Sharpie.Abstractions.ITerminal.Description">
+  Description
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the long description of the terminal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? Description { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Disposed_" data-uid="Sharpie.Abstractions.ITerminal.Disposed*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Disposed" data-uid="Sharpie.Abstractions.ITerminal.Disposed">
+  Disposed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks whether the terminal has been disposed of and is no longer usable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Disposed { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Events_" data-uid="Sharpie.Abstractions.ITerminal.Events*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Events" data-uid="Sharpie.Abstractions.ITerminal.Events">
+  Events
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The event pump instance that can be used to read events from the terminal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEventPump Events { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.IEventPump.html">IEventPump</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></dt>
+    <dd><p>The terminal has been disposed.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Footer_" data-uid="Sharpie.Abstractions.ITerminal.Footer*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Footer" data-uid="Sharpie.Abstractions.ITerminal.Footer">
+  Footer
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The footer surface. Only initialized if <a class="xref" href="Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_AllocateFooter">AllocateFooter</a> was set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ITerminalSurface? Footer { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.ITerminalSurface.html">ITerminalSurface</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></dt>
+    <dd><p>The terminal has been disposed.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Header_" data-uid="Sharpie.Abstractions.ITerminal.Header*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Header" data-uid="Sharpie.Abstractions.ITerminal.Header">
+  Header
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The header surface. Only initialized if <a class="xref" href="Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_AllocateHeader">AllocateHeader</a> was set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ITerminalSurface? Header { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.ITerminalSurface.html">ITerminalSurface</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></dt>
+    <dd><p>The terminal has been disposed.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Name_" data-uid="Sharpie.Abstractions.ITerminal.Name*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Name" data-uid="Sharpie.Abstractions.ITerminal.Name">
+  Name
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the name of the terminal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? Name { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Screen_" data-uid="Sharpie.Abstractions.ITerminal.Screen*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Screen" data-uid="Sharpie.Abstractions.ITerminal.Screen">
+  Screen
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The screen instance. Use this property to access the entire screen functionality.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IScreen Screen { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.IScreen.html">IScreen</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></dt>
+    <dd><p>The terminal has been disposed.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_SoftLabelKeys_" data-uid="Sharpie.Abstractions.ITerminal.SoftLabelKeys*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_SoftLabelKeys" data-uid="Sharpie.Abstractions.ITerminal.SoftLabelKeys">
+  SoftLabelKeys
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Provides access to the terminal's color management.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISoftLabelKeyManager SoftLabelKeys { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.ISoftLabelKeyManager.html">ISoftLabelKeyManager</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></dt>
+    <dd><p>The terminal has been disposed.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_SupportedAttributes_" data-uid="Sharpie.Abstractions.ITerminal.SupportedAttributes*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_SupportedAttributes" data-uid="Sharpie.Abstractions.ITerminal.SupportedAttributes">
+  SupportedAttributes
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the combination of supported terminal attributes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">VideoAttribute SupportedAttributes { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.VideoAttribute.html">VideoAttribute</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Alert_" data-uid="Sharpie.Abstractions.ITerminal.Alert*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Alert_System_Boolean_" data-uid="Sharpie.Abstractions.ITerminal.Alert(System.Boolean)">
+  Alert(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L142"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Attempts to notify the user with audio or flashing alert.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Alert(bool silent)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>silent</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>The alert mode.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_ITerminal_Alert_System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The actual notification depends on terminal support.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_AtomicRefresh_" data-uid="Sharpie.Abstractions.ITerminal.AtomicRefresh*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_AtomicRefresh" data-uid="Sharpie.Abstractions.ITerminal.AtomicRefresh">
+  AtomicRefresh()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L153"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a batch update lock. All refreshes are batched together until the batch is disposed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IDisposable AtomicRefresh()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></dt>
+    <dd><p>A disposable object that need to be disposed to release the batch update lock.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_ITerminal_AtomicRefresh_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This operation is not thread safe.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Delay_" data-uid="Sharpie.Abstractions.ITerminal.Delay*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Delay_System_Func_Sharpie_Terminal_System_Threading_Tasks_Task__System_Int32_" data-uid="Sharpie.Abstractions.ITerminal.Delay(System.Func{Sharpie.Terminal,System.Threading.Tasks.Task},System.Int32)">
+  Delay(Func&lt;Terminal, Task&gt;, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets up a delayed action that is to be executed after some time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IInterval Delay(Func&lt;Terminal, Task&gt; action, int delayMillis)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Sharpie.Terminal.html">Terminal</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dd><p>The action to be executed.</p>
+</dd>
+    <dt><code>delayMillis</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The delay in milliseconds.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.IInterval.html">IInterval</a></dt>
+    <dd><p>The interval object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></dt>
+    <dd><p>Thrown if <code class="paramref">delayMillis</code> is negative.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Delay_" data-uid="Sharpie.Abstractions.ITerminal.Delay*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Delay__1_System_Func_Sharpie_Terminal___0_System_Threading_Tasks_Task__System_Int32___0_" data-uid="Sharpie.Abstractions.ITerminal.Delay``1(System.Func{Sharpie.Terminal,``0,System.Threading.Tasks.Task},System.Int32,``0)">
+  Delay&lt;TState&gt;(Func&lt;Terminal, TState?, Task&gt;, int, TState?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L187"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets up a delayed action that is to be executed after some time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IInterval Delay&lt;TState&gt;(Func&lt;Terminal, TState?, Task&gt; action, int delayMillis, TState? state)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="Sharpie.Terminal.html">Terminal</a>, TState, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dd><p>The action to be executed.</p>
+</dd>
+    <dt><code>delayMillis</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The delay in milliseconds.</p>
+</dd>
+    <dt><code>state</code> <span class="xref">TState</span></dt>
+    <dd><p>User-supplied state object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.IInterval.html">IInterval</a></dt>
+    <dd><p>The interval object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TState</code></dt>
+    <dd><p>The type of the state object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></dt>
+    <dd><p>Thrown if <code class="paramref">delayMillis</code> is negative.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Delegate_" data-uid="Sharpie.Abstractions.ITerminal.Delegate*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Delegate_System_Func_System_Threading_Tasks_Task__" data-uid="Sharpie.Abstractions.ITerminal.Delegate(System.Func{System.Threading.Tasks.Task})">
+  Delegate(Func&lt;Task&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Delegates an action to be executed on the main thread.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Delegate(Func&lt;Task&gt; action)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dd><p>The action to execute.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p>Thrown if <code class="paramref">action</code> is <code>null</code>.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></dt>
+    <dd><p>The terminal has been disposed.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Repeat_" data-uid="Sharpie.Abstractions.ITerminal.Repeat*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Repeat_System_Func_Sharpie_Terminal_System_Threading_Tasks_Task__System_Int32_System_Boolean_" data-uid="Sharpie.Abstractions.ITerminal.Repeat(System.Func{Sharpie.Terminal,System.Threading.Tasks.Task},System.Int32,System.Boolean)">
+  Repeat(Func&lt;Terminal, Task&gt;, int, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets up a delayed action that is to be executed after some time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IInterval Repeat(Func&lt;Terminal, Task&gt; action, int intervalMillis, bool immediate = false)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Sharpie.Terminal.html">Terminal</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dd><p>The action to be executed.</p>
+</dd>
+    <dt><code>intervalMillis</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The interval in milliseconds.</p>
+</dd>
+    <dt><code>immediate</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>If <code>true</code>, triggers the execution of the action immediately.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.IInterval.html">IInterval</a></dt>
+    <dd><p>The interval object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></dt>
+    <dd><p>Thrown if <code class="paramref">intervalMillis</code> is negative.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Repeat_" data-uid="Sharpie.Abstractions.ITerminal.Repeat*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Repeat__1_System_Func_Sharpie_Terminal___0_System_Threading_Tasks_Task__System_Int32_System_Boolean___0_" data-uid="Sharpie.Abstractions.ITerminal.Repeat``1(System.Func{Sharpie.Terminal,``0,System.Threading.Tasks.Task},System.Int32,System.Boolean,``0)">
+  Repeat&lt;TState&gt;(Func&lt;Terminal, TState?, Task&gt;, int, bool, TState?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets up a delayed action that is to be executed after some time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IInterval Repeat&lt;TState&gt;(Func&lt;Terminal, TState?, Task&gt; action, int intervalMillis, bool immediate = false, TState? state = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="Sharpie.Terminal.html">Terminal</a>, TState, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dd><p>The action to be executed.</p>
+</dd>
+    <dt><code>intervalMillis</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The interval in milliseconds.</p>
+</dd>
+    <dt><code>immediate</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>If <code>true</code>, triggers the execution of the action immediately.</p>
+</dd>
+    <dt><code>state</code> <span class="xref">TState</span></dt>
+    <dd><p>User-supplied state object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.Abstractions.IInterval.html">IInterval</a></dt>
+    <dd><p>The interval object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TState</code></dt>
+    <dd><p>The type of the state object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></dt>
+    <dd><p>Thrown if <code class="paramref">intervalMillis</code> is negative.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Run_" data-uid="Sharpie.Abstractions.ITerminal.Run*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Run_System_Func_Sharpie_Abstractions_ITerminal_Sharpie_Event_System_Threading_Tasks_Task__System_Boolean_" data-uid="Sharpie.Abstractions.ITerminal.Run(System.Func{Sharpie.Abstractions.ITerminal,Sharpie.Event,System.Threading.Tasks.Task},System.Boolean)">
+  Run(Func&lt;ITerminal, Event, Task&gt;, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L168"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Runs the application main loop and dispatches each event to <code class="paramref">eventAction</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Run(Func&lt;ITerminal, Event, Task&gt; eventAction, bool stopOnCtrlC = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>eventAction</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="Sharpie.Abstractions.ITerminal.html">ITerminal</a>, <a class="xref" href="Sharpie.Event.html">Event</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dd><p>The method to accept the events.</p>
+</dd>
+    <dt><code>stopOnCtrlC</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>Set to <code>true</code> if CTRL+C should interrupt the main loop.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_ITerminal_Run_System_Func_Sharpie_Abstractions_ITerminal_Sharpie_Event_System_Threading_Tasks_Task__System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This operation is not thread safe.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p>Thrown when <code class="paramref">eventAction</code> is <code>null</code>.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></dt>
+    <dd><p>Thrown if another <a class="xref" href="Sharpie.Abstractions.ITerminal.html#Sharpie_Abstractions_ITerminal_Run_System_Func_Sharpie_Abstractions_ITerminal_Sharpie_Event_System_Threading_Tasks_Task__System_Boolean_">Run(Func&lt;ITerminal, Event, Task&gt;, bool)</a> is already running.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></dt>
+    <dd><p>The terminal has been disposed.</p>
+</dd>
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_SetTitle_" data-uid="Sharpie.Abstractions.ITerminal.SetTitle*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_SetTitle_System_String_" data-uid="Sharpie.Abstractions.ITerminal.SetTitle(System.String)">
+  SetTitle(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the terminal title.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetTitle(string title)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>title</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The title of the terminal.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="Sharpie_Abstractions_ITerminal_SetTitle_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This operation is not thread safe.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Sharpie.CursesSynchronizationException.html">CursesSynchronizationException</a></dt>
+    <dd><p>Thrown if this operation was expected to run on the main
+thread/context but wasn't.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Sharpie_Abstractions_ITerminal_Stop_" data-uid="Sharpie.Abstractions.ITerminal.Stop*"></a>
+
+  <h3 id="Sharpie_Abstractions_ITerminal_Stop_System_Boolean_" data-uid="Sharpie.Abstractions.ITerminal.Stop(System.Boolean)">
+  Stop(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L225"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Enqueues a stop signal for the <a class="xref" href="Sharpie.Abstractions.ITerminal.html#Sharpie_Abstractions_ITerminal_Run_System_Func_Sharpie_Abstractions_ITerminal_Sharpie_Event_System_Threading_Tasks_Task__System_Boolean_">Run(Func&lt;ITerminal, Event, Task&gt;, bool)</a> method.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Stop(bool wait = false)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>wait</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>If <code>true</code>, waits until running completes.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Abstractions/ITerminal.cs/#L37" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

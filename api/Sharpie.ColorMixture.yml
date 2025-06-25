@@ -1,0 +1,584 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.ColorMixture
+  commentId: T:Sharpie.ColorMixture
+  id: ColorMixture
+  parent: Sharpie
+  children:
+  - Sharpie.ColorMixture.Default
+  - Sharpie.ColorMixture.Equals(System.Object)
+  - Sharpie.ColorMixture.GetHashCode
+  - Sharpie.ColorMixture.ToString
+  - Sharpie.ColorMixture.op_Equality(Sharpie.ColorMixture,Sharpie.ColorMixture)
+  - Sharpie.ColorMixture.op_Inequality(Sharpie.ColorMixture,Sharpie.ColorMixture)
+  langs:
+  - csharp
+  - vb
+  name: ColorMixture
+  nameWithType: ColorMixture
+  fullName: Sharpie.ColorMixture
+  type: Struct
+  source:
+    remote:
+      path: Sharpie/ColorMixture.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ColorMixture
+    path: Sharpie/ColorMixture.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Defines a color pair (foreground and background colors).
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public struct ColorMixture
+    content.vb: >-
+      <PublicAPI>
+
+      Public Structure ColorMixture
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.ColorMixture.Default
+  commentId: P:Sharpie.ColorMixture.Default
+  id: Default
+  parent: Sharpie.ColorMixture
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: ColorMixture.Default
+  fullName: Sharpie.ColorMixture.Default
+  type: Property
+  source:
+    remote:
+      path: Sharpie/ColorMixture.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Default
+    path: Sharpie/ColorMixture.cs
+    startLine: 41
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The default color mixture of the terminal. Use it to reset to default colors.
+  example: []
+  syntax:
+    content: public static ColorMixture Default { get; }
+    parameters: []
+    return:
+      type: Sharpie.ColorMixture
+    content.vb: Public Shared ReadOnly Property [Default] As ColorMixture
+  overload: Sharpie.ColorMixture.Default*
+- uid: Sharpie.ColorMixture.ToString
+  commentId: M:Sharpie.ColorMixture.ToString
+  id: ToString
+  parent: Sharpie.ColorMixture
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ColorMixture.ToString()
+  fullName: Sharpie.ColorMixture.ToString()
+  type: Method
+  source:
+    remote:
+      path: Sharpie/ColorMixture.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ToString
+    path: Sharpie/ColorMixture.cs
+    startLine: 49
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Returns a string that represents the current object.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: A string that represents the current object.
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Sharpie.ColorMixture.ToString*
+- uid: Sharpie.ColorMixture.Equals(System.Object)
+  commentId: M:Sharpie.ColorMixture.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Sharpie.ColorMixture
+  langs:
+  - csharp
+  - vb
+  name: Equals(object?)
+  nameWithType: ColorMixture.Equals(object?)
+  fullName: Sharpie.ColorMixture.Equals(object?)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/ColorMixture.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Equals
+    path: Sharpie/ColorMixture.cs
+    startLine: 52
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Determines whether the specified object is equal to the current object.
+  example: []
+  syntax:
+    content: public override bool Equals(object? obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare with the current object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: Sharpie.ColorMixture.Equals*
+  nameWithType.vb: ColorMixture.Equals(Object)
+  fullName.vb: Sharpie.ColorMixture.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Sharpie.ColorMixture.GetHashCode
+  commentId: M:Sharpie.ColorMixture.GetHashCode
+  id: GetHashCode
+  parent: Sharpie.ColorMixture
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: ColorMixture.GetHashCode()
+  fullName: Sharpie.ColorMixture.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Sharpie/ColorMixture.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: GetHashCode
+    path: Sharpie/ColorMixture.cs
+    startLine: 55
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Serves as the default hash function.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A hash code for the current object.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Sharpie.ColorMixture.GetHashCode*
+- uid: Sharpie.ColorMixture.op_Equality(Sharpie.ColorMixture,Sharpie.ColorMixture)
+  commentId: M:Sharpie.ColorMixture.op_Equality(Sharpie.ColorMixture,Sharpie.ColorMixture)
+  id: op_Equality(Sharpie.ColorMixture,Sharpie.ColorMixture)
+  parent: Sharpie.ColorMixture
+  langs:
+  - csharp
+  - vb
+  name: operator ==(ColorMixture, ColorMixture)
+  nameWithType: ColorMixture.operator ==(ColorMixture, ColorMixture)
+  fullName: Sharpie.ColorMixture.operator ==(Sharpie.ColorMixture, Sharpie.ColorMixture)
+  type: Operator
+  source:
+    remote:
+      path: Sharpie/ColorMixture.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: op_Equality
+    path: Sharpie/ColorMixture.cs
+    startLine: 63
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The equality operator.
+  example: []
+  syntax:
+    content: public static bool operator ==(ColorMixture left, ColorMixture right)
+    parameters:
+    - id: left
+      type: Sharpie.ColorMixture
+      description: LHS argument.
+    - id: right
+      type: Sharpie.ColorMixture
+      description: RHS argument.
+    return:
+      type: System.Boolean
+      description: The result of the check.
+    content.vb: Public Shared Operator =(left As ColorMixture, right As ColorMixture) As Boolean
+  overload: Sharpie.ColorMixture.op_Equality*
+  nameWithType.vb: ColorMixture.=(ColorMixture, ColorMixture)
+  fullName.vb: Sharpie.ColorMixture.=(Sharpie.ColorMixture, Sharpie.ColorMixture)
+  name.vb: =(ColorMixture, ColorMixture)
+- uid: Sharpie.ColorMixture.op_Inequality(Sharpie.ColorMixture,Sharpie.ColorMixture)
+  commentId: M:Sharpie.ColorMixture.op_Inequality(Sharpie.ColorMixture,Sharpie.ColorMixture)
+  id: op_Inequality(Sharpie.ColorMixture,Sharpie.ColorMixture)
+  parent: Sharpie.ColorMixture
+  langs:
+  - csharp
+  - vb
+  name: operator !=(ColorMixture, ColorMixture)
+  nameWithType: ColorMixture.operator !=(ColorMixture, ColorMixture)
+  fullName: Sharpie.ColorMixture.operator !=(Sharpie.ColorMixture, Sharpie.ColorMixture)
+  type: Operator
+  source:
+    remote:
+      path: Sharpie/ColorMixture.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: op_Inequality
+    path: Sharpie/ColorMixture.cs
+    startLine: 71
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The inequality operator.
+  example: []
+  syntax:
+    content: public static bool operator !=(ColorMixture left, ColorMixture right)
+    parameters:
+    - id: left
+      type: Sharpie.ColorMixture
+      description: LHS argument.
+    - id: right
+      type: Sharpie.ColorMixture
+      description: RHS argument.
+    return:
+      type: System.Boolean
+      description: The result of the check.
+    content.vb: Public Shared Operator <>(left As ColorMixture, right As ColorMixture) As Boolean
+  overload: Sharpie.ColorMixture.op_Inequality*
+  nameWithType.vb: ColorMixture.<>(ColorMixture, ColorMixture)
+  fullName.vb: Sharpie.ColorMixture.<>(Sharpie.ColorMixture, Sharpie.ColorMixture)
+  name.vb: <>(ColorMixture, ColorMixture)
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.ColorMixture.Default*
+  commentId: Overload:Sharpie.ColorMixture.Default
+  href: Sharpie.ColorMixture.html#Sharpie_ColorMixture_Default
+  name: Default
+  nameWithType: ColorMixture.Default
+  fullName: Sharpie.ColorMixture.Default
+- uid: Sharpie.ColorMixture
+  commentId: T:Sharpie.ColorMixture
+  parent: Sharpie
+  href: Sharpie.ColorMixture.html
+  name: ColorMixture
+  nameWithType: ColorMixture
+  fullName: Sharpie.ColorMixture
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: Sharpie.ColorMixture.ToString*
+  commentId: Overload:Sharpie.ColorMixture.ToString
+  href: Sharpie.ColorMixture.html#Sharpie_ColorMixture_ToString
+  name: ToString
+  nameWithType: ColorMixture.ToString
+  fullName: Sharpie.ColorMixture.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Sharpie.ColorMixture.Equals*
+  commentId: Overload:Sharpie.ColorMixture.Equals
+  href: Sharpie.ColorMixture.html#Sharpie_ColorMixture_Equals_System_Object_
+  name: Equals
+  nameWithType: ColorMixture.Equals
+  fullName: Sharpie.ColorMixture.Equals
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: Sharpie.ColorMixture.GetHashCode*
+  commentId: Overload:Sharpie.ColorMixture.GetHashCode
+  href: Sharpie.ColorMixture.html#Sharpie_ColorMixture_GetHashCode
+  name: GetHashCode
+  nameWithType: ColorMixture.GetHashCode
+  fullName: Sharpie.ColorMixture.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Sharpie.ColorMixture.op_Equality*
+  commentId: Overload:Sharpie.ColorMixture.op_Equality
+  href: Sharpie.ColorMixture.html#Sharpie_ColorMixture_op_Equality_Sharpie_ColorMixture_Sharpie_ColorMixture_
+  name: operator ==
+  nameWithType: ColorMixture.operator ==
+  fullName: Sharpie.ColorMixture.operator ==
+  nameWithType.vb: ColorMixture.=
+  fullName.vb: Sharpie.ColorMixture.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Sharpie.ColorMixture.op_Equality*
+    name: ==
+    href: Sharpie.ColorMixture.html#Sharpie_ColorMixture_op_Equality_Sharpie_ColorMixture_Sharpie_ColorMixture_
+- uid: Sharpie.ColorMixture.op_Inequality*
+  commentId: Overload:Sharpie.ColorMixture.op_Inequality
+  href: Sharpie.ColorMixture.html#Sharpie_ColorMixture_op_Inequality_Sharpie_ColorMixture_Sharpie_ColorMixture_
+  name: operator !=
+  nameWithType: ColorMixture.operator !=
+  fullName: Sharpie.ColorMixture.operator !=
+  nameWithType.vb: ColorMixture.<>
+  fullName.vb: Sharpie.ColorMixture.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Sharpie.ColorMixture.op_Inequality*
+    name: '!='
+    href: Sharpie.ColorMixture.html#Sharpie_ColorMixture_op_Inequality_Sharpie_ColorMixture_Sharpie_ColorMixture_

@@ -1,0 +1,148 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.SoftLabelKeyAlignment
+  commentId: T:Sharpie.SoftLabelKeyAlignment
+  id: SoftLabelKeyAlignment
+  parent: Sharpie
+  children:
+  - Sharpie.SoftLabelKeyAlignment.Center
+  - Sharpie.SoftLabelKeyAlignment.Left
+  - Sharpie.SoftLabelKeyAlignment.Right
+  langs:
+  - csharp
+  - vb
+  name: SoftLabelKeyAlignment
+  nameWithType: SoftLabelKeyAlignment
+  fullName: Sharpie.SoftLabelKeyAlignment
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/SoftLabelKeyAlignment.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SoftLabelKeyAlignment
+    path: Sharpie/SoftLabelKeyAlignment.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Defines the alignment of labels in a <xref href="Sharpie.SoftLabelKeyManager" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum SoftLabelKeyAlignment
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum SoftLabelKeyAlignment
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.SoftLabelKeyAlignment.Left
+  commentId: F:Sharpie.SoftLabelKeyAlignment.Left
+  id: Left
+  parent: Sharpie.SoftLabelKeyAlignment
+  langs:
+  - csharp
+  - vb
+  name: Left
+  nameWithType: SoftLabelKeyAlignment.Left
+  fullName: Sharpie.SoftLabelKeyAlignment.Left
+  type: Field
+  source:
+    remote:
+      path: Sharpie/SoftLabelKeyAlignment.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Left
+    path: Sharpie/SoftLabelKeyAlignment.cs
+    startLine: 41
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The label is left-aligned.
+  example: []
+  syntax:
+    content: Left = 0
+    return:
+      type: Sharpie.SoftLabelKeyAlignment
+- uid: Sharpie.SoftLabelKeyAlignment.Center
+  commentId: F:Sharpie.SoftLabelKeyAlignment.Center
+  id: Center
+  parent: Sharpie.SoftLabelKeyAlignment
+  langs:
+  - csharp
+  - vb
+  name: Center
+  nameWithType: SoftLabelKeyAlignment.Center
+  fullName: Sharpie.SoftLabelKeyAlignment.Center
+  type: Field
+  source:
+    remote:
+      path: Sharpie/SoftLabelKeyAlignment.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Center
+    path: Sharpie/SoftLabelKeyAlignment.cs
+    startLine: 46
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The label is center-aligned.
+  example: []
+  syntax:
+    content: Center = 1
+    return:
+      type: Sharpie.SoftLabelKeyAlignment
+- uid: Sharpie.SoftLabelKeyAlignment.Right
+  commentId: F:Sharpie.SoftLabelKeyAlignment.Right
+  id: Right
+  parent: Sharpie.SoftLabelKeyAlignment
+  langs:
+  - csharp
+  - vb
+  name: Right
+  nameWithType: SoftLabelKeyAlignment.Right
+  fullName: Sharpie.SoftLabelKeyAlignment.Right
+  type: Field
+  source:
+    remote:
+      path: Sharpie/SoftLabelKeyAlignment.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Right
+    path: Sharpie/SoftLabelKeyAlignment.cs
+    startLine: 51
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The label is right-aligned.
+  example: []
+  syntax:
+    content: Right = 2
+    return:
+      type: Sharpie.SoftLabelKeyAlignment
+references:
+- uid: Sharpie.SoftLabelKeyManager
+  commentId: T:Sharpie.SoftLabelKeyManager
+  parent: Sharpie
+  href: Sharpie.SoftLabelKeyManager.html
+  name: SoftLabelKeyManager
+  nameWithType: SoftLabelKeyManager
+  fullName: Sharpie.SoftLabelKeyManager
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.SoftLabelKeyAlignment
+  commentId: T:Sharpie.SoftLabelKeyAlignment
+  parent: Sharpie
+  href: Sharpie.SoftLabelKeyAlignment.html
+  name: SoftLabelKeyAlignment
+  nameWithType: SoftLabelKeyAlignment
+  fullName: Sharpie.SoftLabelKeyAlignment

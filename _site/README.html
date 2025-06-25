@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Sharpie | sharpie </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Sharpie | sharpie ">
+      
+      
+      <link rel="icon" href="favicon.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="">
+      <meta name="docfx:tocrel" content="">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/LyndonGingerich/sharpie/blob/docs-project/README.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="logo.svg" alt="sharpie">
+            sharpie
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p><a href="https://github.com/pavkam/sharpie/actions/workflows/sharpie-build-test-and-deploy.yml"><img src="https://github.com/pavkam/sharpie/actions/workflows/sharpie-build-test-and-deploy.yml/badge.svg" alt="Build, Test and Release"></a>
+<a href="https://codecov.io/gh/pavkam/sharpie"><img src="https://codecov.io/gh/pavkam/sharpie/branch/main/graph/badge.svg?token=QI3EVFGHUZ" alt="codecov"></a>
+<a href="https://github.com/pavkam/sharpie/issues"><img src="https://img.shields.io/github/issues/pavkam/sharpie" alt="Issues"></a>
+<a href="https://raw.githubusercontent.com/pavkam/sharpie/main/LICENSE"><img src="https://img.shields.io/github/license/pavkam/sharpie" alt="License"></a>
+<img src="https://img.shields.io/badge/.NET-6.0-orange" alt=".NET 6">
+<a href="https://www.nuget.org/packages/Sharpie-Curses"><img src="https://img.shields.io/nuget/v/Sharpie-Curses" alt="NuGet"></a>
+<img src="https://img.shields.io/nuget/dt/Sharpie-Curses" alt="Downloads"></p>
+<h1 id="sharpie">Sharpie</h1>
+<p><strong>Sharpie</strong> is a terminal manipulation library based on NCurses and targeting .NET 6 (dotnet core) and above.</p>
+<p><img src="media/demo-3.gif" alt="Demo"></p>
+<p><strong>Or, if you prefer the Snake game...</strong></p>
+<p><img src="media/demo-2.gif" alt="Demo"></p>
+<h1 id="platforms">Platforms</h1>
+<p><strong>Sharpie</strong> supports any platform that <strong>.NET 6.0+</strong>, <strong><a href="https://github.com/mirror/ncurses">ncurses</a></strong>, <strong><a href="https://github.com/wmcbrine/PDCurses">pdcurses</a></strong> and <strong><a href="https://github.com/Bill-Gray/PDCursesMod">pdcurses-mod</a></strong> support. This essentially means that <code>Linux</code>, <code>Macos</code> and <code>Windows</code> are supported on both <code>x64</code> and <code>ARM64</code> architectures.</p>
+<p>For more information on supported platforms visit <a href="https://github.com/dotnet/core/blob/main/release-notes/6.0/supported-os.md">.NET Supported Platforms Page</a> and <a href="https://invisible-island.net/ncurses/#packages">NCurses Packages Page</a>.</p>
+<p><strong>Sharpie</strong> provides unofficial builds for all the supported libraries located in <a href="https://github.com/pavkam/sharpie/tree/main/lib">the lib directory</a></p>
+<h1 id="installation">Installation</h1>
+<p>Install the main library by adding the NuGet package:</p>
+<pre><code class="lang-sh">dotnet add package Sharpie-Curses
+</code></pre>
+<p>Additionally, one can install packages containing prebuilt native libraries. These packages are useful when targeting platforms that do not bundle a supported curses library by default (e.g. Windows).</p>
+<pre><code class="lang-sh">dotnet add package Sharpie-Libs-PdCurses
+dotnet add package Sharpie-Libs-PdCursesMod
+dotnet add package Sharpie-Libs-NCurses
+</code></pre>
+<h1 id="features">Features</h1>
+<p>Almost all of Curses functionality is exposed through <strong>Sharpie</strong>. What follows is a list of suppoerted features:</p>
+<ol>
+<li><code>Terminal</code> allows interfacing with terminal functionality exposed by Curses,</li>
+<li><code>Screen</code> abstracts away the screen handling,</li>
+<li><code>Pad</code> abstracts away the off-screen windows (known as pads),</li>
+<li><code>SubPad</code> and <code>SubWindow</code> carves out areas of their respective parents for easy management,</li>
+<li><code>EventPump</code> allows developers to listen for Curses events such as key presses, mouse moves and resizes,</li>
+<li><code>ColorManager</code> abstracts away the management of colors,</li>
+<li>Even <code>SoftLabelKeys</code> are supported (though antiquated),</li>
+</ol>
+<p>In addition to wrapping NCurses, this library also adds numerous quality-of-life improvements such as:</p>
+<ol>
+<li>Management of overlapping <code>Window</code>s within a <code>Screen</code>,</li>
+<li>Proper <code>Window</code> resizing and placement during terminal resizing events,</li>
+<li>Automatic <code>Screen</code> refresh management and support for <em>atomic</em> refreshes,</li>
+<li>Supports <code>SynchronizationContext</code>-type execution,</li>
+<li>Supports protected/synchronized or raw access to all classes,</li>
+<li>And other small additions here and there...</li>
+</ol>
+<h1 id="reasons">Reasons</h1>
+<p>There are a number of libraries out there that already offer bindings to <em>NCurses</em>. One of the more popular one is <a href="https://github.com/gui-cs/Terminal.Gui">Terminal.Gui</a>; and others such as <a href="https://github.com/MV10/dotnet-curses">dotnet-curses</a> also exist.</p>
+<p>So why another one? The are many reasons, but the most important ones are:</p>
+<ol>
+<li>There is no .NET, object-oriented version of NCurses bindings,</li>
+<li>Existing versions are old, or are targeting old versions of .NET which do not benefit from numerous advances in the .NET platform,</li>
+<li>No other library exposes most of Curses functionality,</li>
+<li>Testing is either very limited or completely non-existent.</li>
+<li>And finally -- <strong>because I wanted to dabble in Curses</strong>.</li>
+</ol>
+<h1 id="how-to">How To</h1>
+<p>What follows is a small example of how to use the library:
+<img src="media/demo-1.gif" alt="Demo"></p>
+<pre><code class="lang-csharp">
+// Create the terminal instance without any non-standard settings.
+using var terminal = new Terminal(CursesBackend.Load(), new(ManagedWindows: true));
+
+// Set the main screen attributes for text and drawings.
+terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, StandardColor.Blue);
+
+// Draw a border on the screen.
+terminal.Screen.DrawBorder();
+
+// Force a refresh so that all drawings will be actually pushed to teh screen.
+terminal.Screen.Refresh();
+
+// Create a child window within the terminal to operate within.
+// The other cells contain the border so we don't want to overwrite those.
+var subWindow = terminal.Screen.SubWindow(
+    new(1, 1, terminal.Screen.Size.Width - 2, terminal.Screen.Size.Height - 2));
+
+// Process all events coming from the terminal.
+foreach (var @event in terminal.Events.Listen(subWindow))
+{
+    // Write the  event that occured.
+    subWindow.WriteText($&quot;{@event}\n&quot;);
+    
+    // If the event is a resize, change the size of the child window
+    // to allow for the screen to maintain its border.
+    // And then redraw the border of the main screen.
+    if (@event is TerminalResizeEvent re)
+    {
+        subWindow.Size = new(re.Size.Width - 2, re.Size.Height - 2);
+        terminal.Screen.DrawBorder();
+    }
+    
+    // If the user pressed CTRL+C, break the loop.
+    if (@event is KeyEvent { Key: Key.Character, Char.IsAscii: true, Char.Value: 'C', Modifiers: ModifierKey.Ctrl })
+    {
+        break;
+    }
+}
+</code></pre>
+<p>As you can imagine, there are numerous other uses built into the library. Start out by reading <a href="https://github.com/pavkam/sharpie/wiki/Setting-Up-the-Terminal">Setting Up The Terminal</a> wiki page.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/README.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

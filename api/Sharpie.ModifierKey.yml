@@ -1,0 +1,177 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.ModifierKey
+  commentId: T:Sharpie.ModifierKey
+  id: ModifierKey
+  parent: Sharpie
+  children:
+  - Sharpie.ModifierKey.Alt
+  - Sharpie.ModifierKey.Ctrl
+  - Sharpie.ModifierKey.None
+  - Sharpie.ModifierKey.Shift
+  langs:
+  - csharp
+  - vb
+  name: ModifierKey
+  nameWithType: ModifierKey
+  fullName: Sharpie.ModifierKey
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/ModifierKey.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ModifierKey
+    path: Sharpie/ModifierKey.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Defines the possible modifier keys.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      [Flags]
+
+      public enum ModifierKey
+    content.vb: >-
+      <PublicAPI>
+
+      <Flags>
+
+      Public Enum ModifierKey
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Sharpie.ModifierKey.None
+  commentId: F:Sharpie.ModifierKey.None
+  id: None
+  parent: Sharpie.ModifierKey
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: ModifierKey.None
+  fullName: Sharpie.ModifierKey.None
+  type: Field
+  source:
+    remote:
+      path: Sharpie/ModifierKey.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: None
+    path: Sharpie/ModifierKey.cs
+    startLine: 41
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: No modifier key was pressed.
+  example: []
+  syntax:
+    content: None = 0
+    return:
+      type: Sharpie.ModifierKey
+- uid: Sharpie.ModifierKey.Shift
+  commentId: F:Sharpie.ModifierKey.Shift
+  id: Shift
+  parent: Sharpie.ModifierKey
+  langs:
+  - csharp
+  - vb
+  name: Shift
+  nameWithType: ModifierKey.Shift
+  fullName: Sharpie.ModifierKey.Shift
+  type: Field
+  source:
+    remote:
+      path: Sharpie/ModifierKey.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Shift
+    path: Sharpie/ModifierKey.cs
+    startLine: 46
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Shift key.
+  example: []
+  syntax:
+    content: Shift = 1
+    return:
+      type: Sharpie.ModifierKey
+- uid: Sharpie.ModifierKey.Alt
+  commentId: F:Sharpie.ModifierKey.Alt
+  id: Alt
+  parent: Sharpie.ModifierKey
+  langs:
+  - csharp
+  - vb
+  name: Alt
+  nameWithType: ModifierKey.Alt
+  fullName: Sharpie.ModifierKey.Alt
+  type: Field
+  source:
+    remote:
+      path: Sharpie/ModifierKey.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt
+    path: Sharpie/ModifierKey.cs
+    startLine: 51
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Alt key.
+  example: []
+  syntax:
+    content: Alt = 2
+    return:
+      type: Sharpie.ModifierKey
+- uid: Sharpie.ModifierKey.Ctrl
+  commentId: F:Sharpie.ModifierKey.Ctrl
+  id: Ctrl
+  parent: Sharpie.ModifierKey
+  langs:
+  - csharp
+  - vb
+  name: Ctrl
+  nameWithType: ModifierKey.Ctrl
+  fullName: Sharpie.ModifierKey.Ctrl
+  type: Field
+  source:
+    remote:
+      path: Sharpie/ModifierKey.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctrl
+    path: Sharpie/ModifierKey.cs
+    startLine: 56
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Ctrl key.
+  example: []
+  syntax:
+    content: Ctrl = 4
+    return:
+      type: Sharpie.ModifierKey
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.ModifierKey
+  commentId: T:Sharpie.ModifierKey
+  parent: Sharpie
+  href: Sharpie.ModifierKey.html
+  name: ModifierKey
+  nameWithType: ModifierKey
+  fullName: Sharpie.ModifierKey

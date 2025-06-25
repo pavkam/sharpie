@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Enum CursesBackendFlavor | sharpie </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Enum CursesBackendFlavor | sharpie ">
+      
+      <meta name="description" content="Lists the supported backend Curses libraries&#39; flavors.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/LyndonGingerich/sharpie/new/docs-project/apiSpec/new?filename=Sharpie_Backend_CursesBackendFlavor.md&amp;value=---%0Auid%3A%20Sharpie.Backend.CursesBackendFlavor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="sharpie">
+            sharpie
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Sharpie.Backend.CursesBackendFlavor">
+
+
+
+
+  <h1 id="Sharpie_Backend_CursesBackendFlavor" data-uid="Sharpie.Backend.CursesBackendFlavor" class="text-break">
+Enum CursesBackendFlavor  <a class="header-action link-secondary" title="View source" href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Backend/CursesBackendFlavor.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Sharpie.html">Sharpie</a>.<a class="xref" href="Sharpie.Backend.html">Backend</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>sharpie.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Lists the supported backend Curses libraries' flavors.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public enum CursesBackendFlavor</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h2 id="fields">Fields
+</h2>
+  <dl class="parameters">
+    <dt id="Sharpie_Backend_CursesBackendFlavor_Any"><code>Any = 11</code></dt>
+  
+  <dd><p>Any available back-end. Will select the best option available on the platform.
+Install <code>Curses-Libs-PdCursesMod</code>, <code>Curses-Libs-NCurses</code> or <code>Curses-Libs-PdCurses</code> packages
+to maximize the number of supported platform combinations.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_AnyGui"><code>AnyGui = 10</code></dt>
+  
+  <dd><p>Any back-end that uses Windows GUI, or SDL1/SDL2 protocols. Will select the best option available on the platform.
+Install <code>Curses-Libs-PdCursesMod</code>, <code>Curses-Libs-NCurses</code> or <code>Curses-Libs-PdCurses</code> packages
+to maximize the number of supported platform combinations.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_AnyVirtualTerminal"><code>AnyVirtualTerminal = 9</code></dt>
+  
+  <dd><p>Any back-end that uses Virtual Terminal (xt) protocol. Will select the best option available on the platform.
+Install <code>Curses-Libs-PdCursesMod</code>, <code>Curses-Libs-NCurses</code> or <code>Curses-Libs-PdCurses</code> packages
+to maximize the number of supported platform combinations.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_AnyWindowsConsole"><code>AnyWindowsConsole = 8</code></dt>
+  
+  <dd><p>Any back-end that uses Windows Console protocol. Will select the best option available on the platform.
+Install <code>Curses-Libs-PdCursesMod</code>, <code>Curses-Libs-NCurses</code> or <code>Curses-Libs-PdCurses</code> packages
+to maximize the number of supported platform combinations.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_NCurses"><code>NCurses = 1</code></dt>
+  
+  <dd><p>The NCurses back-end.
+Available by default on most POSIX-compliant operating systems such as
+Linux, FreeBSD an MacOS. Not available by default on Windows.
+Install <code>Curses-Libs-NCurses</code> package to obtain pre-built versions
+that includes Windows.
+This is version uses whatever available protocol is built into the found library.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_PdCurses"><code>PdCurses = 2</code></dt>
+  
+  <dd><p>The PDCurses back-end. Not available by default on operating systems.
+For some Linuxes and FreeBSD a prebuilt library can be installed from package
+managers.
+Install <code>Curses-Libs-PdCurses</code> package to obtain pre-built versions
+that add Windows Console support.
+Does not support <a class="xref" href="Sharpie.SoftLabelKeyManager.html">SoftLabelKeyManager</a>.
+Not recommended for use. <a class="xref" href="Sharpie.Backend.CursesBackendFlavor.html#Sharpie_Backend_CursesBackendFlavor_PdCursesMod">PdCursesMod</a> for a better alternative.
+This is version uses whatever available protocol is built into the found library.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_PdCursesMod"><code>PdCursesMod = 4</code></dt>
+  
+  <dd><p>The PDCursesMod back-end. This is an advanced version of <a class="xref" href="Sharpie.Backend.CursesBackendFlavor.html#Sharpie_Backend_CursesBackendFlavor_PdCurses">PdCurses</a> with more
+platform availability and support. Not available by default on any operating systems.
+Install <code>Curses-Libs-PdCursesMod</code> package to obtain pre-built versions
+for Windows.
+This is version uses whatever available protocol is built into the found library.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_PdCursesModGui"><code>PdCursesModGui = 7</code></dt>
+  
+  <dd><p>The PDCursesMod back-end. This is an advanced version of <a class="xref" href="Sharpie.Backend.CursesBackendFlavor.html#Sharpie_Backend_CursesBackendFlavor_PdCurses">PdCurses</a> with more
+platform availability and support. Not available by default on any operating systems.
+Install <code>Curses-Libs-PdCursesMod</code> package to obtain pre-built versions
+for Windows, Linux and MacOS.
+This is version uses Windows GUI, or SDL1/SDL2 protocols. Requires <code>sdl/sdl2</code> and <code>sdl_ttf</code> to be installed
+if this protocol is used.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_PdCursesModVirtualTerminal"><code>PdCursesModVirtualTerminal = 6</code></dt>
+  
+  <dd><p>The PDCursesMod back-end. This is an advanced version of <a class="xref" href="Sharpie.Backend.CursesBackendFlavor.html#Sharpie_Backend_CursesBackendFlavor_PdCurses">PdCurses</a> with more
+platform availability and support. Not available by default on any operating systems.
+Install <code>Curses-Libs-PdCursesMod</code> package to obtain pre-built versions
+for Windows, Linux and MacOS.
+This is version uses Virtual Terminal (xt) protocol.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_PdCursesModWindowsConsole"><code>PdCursesModWindowsConsole = 5</code></dt>
+  
+  <dd><p>The PDCursesMod back-end. This is an advanced version of <a class="xref" href="Sharpie.Backend.CursesBackendFlavor.html#Sharpie_Backend_CursesBackendFlavor_PdCurses">PdCurses</a> with more
+platform availability and support. Not available by default on any operating systems.
+Install <code>Curses-Libs-PdCursesMod</code> package to obtain pre-built versions
+for Windows.
+This is version uses Windows Console protocol.</p>
+</dd>
+    <dt id="Sharpie_Backend_CursesBackendFlavor_PdCursesWindowsConsole"><code>PdCursesWindowsConsole = 3</code></dt>
+  
+  <dd><p>The PDCurses back-end. Not available by default on operating systems.
+For some Linuxes and FreeBSD a prebuilt library can be installed from package
+managers.
+Install <code>Curses-Libs-PdCurses</code> package to obtain pre-built versions
+that add Windows Console support.
+Does not support <a class="xref" href="Sharpie.SoftLabelKeyManager.html">SoftLabelKeyManager</a>.
+Not recommended for use. <a class="xref" href="Sharpie.Backend.CursesBackendFlavor.html#Sharpie_Backend_CursesBackendFlavor_PdCursesModWindowsConsole">PdCursesModWindowsConsole</a> for a better alternative.
+This is version uses Windows Console protocol.</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/LyndonGingerich/sharpie/blob/docs-project/Sharpie/Backend/CursesBackendFlavor.cs/#L36" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

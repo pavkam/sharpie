@@ -1,0 +1,77 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Demos.Snake
+  commentId: N:Sharpie.Demos.Snake
+  id: Sharpie.Demos.Snake
+  children:
+  - Sharpie.Demos.Snake.Game
+  - Sharpie.Demos.Snake.Game.Direction
+  langs:
+  - csharp
+  - vb
+  name: Sharpie.Demos.Snake
+  nameWithType: Sharpie.Demos.Snake
+  fullName: Sharpie.Demos.Snake
+  type: Namespace
+  assemblies:
+  - sharpie-demos-snake
+references:
+- uid: Sharpie.Demos.Snake.Game
+  commentId: T:Sharpie.Demos.Snake.Game
+  href: Sharpie.Demos.Snake.Game.html
+  name: Game
+  nameWithType: Game
+  fullName: Sharpie.Demos.Snake.Game
+- uid: Sharpie.Demos.Snake.Game.Direction
+  commentId: T:Sharpie.Demos.Snake.Game.Direction
+  parent: Sharpie.Demos.Snake
+  href: Sharpie.Demos.Snake.Game.html
+  name: Game.Direction
+  nameWithType: Game.Direction
+  fullName: Sharpie.Demos.Snake.Game.Direction
+  spec.csharp:
+  - uid: Sharpie.Demos.Snake.Game
+    name: Game
+    href: Sharpie.Demos.Snake.Game.html
+  - name: .
+  - uid: Sharpie.Demos.Snake.Game.Direction
+    name: Direction
+    href: Sharpie.Demos.Snake.Game.Direction.html
+  spec.vb:
+  - uid: Sharpie.Demos.Snake.Game
+    name: Game
+    href: Sharpie.Demos.Snake.Game.html
+  - name: .
+  - uid: Sharpie.Demos.Snake.Game.Direction
+    name: Direction
+    href: Sharpie.Demos.Snake.Game.Direction.html
+- uid: Sharpie.Demos.Snake
+  commentId: N:Sharpie.Demos.Snake
+  href: Sharpie.html
+  name: Sharpie.Demos.Snake
+  nameWithType: Sharpie.Demos.Snake
+  fullName: Sharpie.Demos.Snake
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Demos
+    name: Demos
+    href: Sharpie.Demos.html
+  - name: .
+  - uid: Sharpie.Demos.Snake
+    name: Snake
+    href: Sharpie.Demos.Snake.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Demos
+    name: Demos
+    href: Sharpie.Demos.html
+  - name: .
+  - uid: Sharpie.Demos.Snake
+    name: Snake
+    href: Sharpie.Demos.Snake.html

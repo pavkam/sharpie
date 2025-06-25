@@ -1,0 +1,128 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Canvas.GlyphSize
+  commentId: T:Sharpie.Canvas.GlyphSize
+  id: Canvas.GlyphSize
+  parent: Sharpie
+  children:
+  - Sharpie.Canvas.GlyphSize.Normal
+  - Sharpie.Canvas.GlyphSize.Small
+  langs:
+  - csharp
+  - vb
+  name: Canvas.GlyphSize
+  nameWithType: Canvas.GlyphSize
+  fullName: Sharpie.Canvas.GlyphSize
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: GlyphSize
+    path: Sharpie/Canvas.cs
+    startLine: 82
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Describes the size of a glyph.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum Canvas.GlyphSize
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum Canvas.GlyphSize
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Canvas.GlyphSize.Normal
+  commentId: F:Sharpie.Canvas.GlyphSize.Normal
+  id: Normal
+  parent: Sharpie.Canvas.GlyphSize
+  langs:
+  - csharp
+  - vb
+  name: Normal
+  nameWithType: Canvas.GlyphSize.Normal
+  fullName: Sharpie.Canvas.GlyphSize.Normal
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Normal
+    path: Sharpie/Canvas.cs
+    startLine: 88
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Normal size.
+  example: []
+  syntax:
+    content: Normal = 0
+    return:
+      type: Sharpie.Canvas.GlyphSize
+- uid: Sharpie.Canvas.GlyphSize.Small
+  commentId: F:Sharpie.Canvas.GlyphSize.Small
+  id: Small
+  parent: Sharpie.Canvas.GlyphSize
+  langs:
+  - csharp
+  - vb
+  name: Small
+  nameWithType: Canvas.GlyphSize.Small
+  fullName: Sharpie.Canvas.GlyphSize.Small
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Small
+    path: Sharpie/Canvas.cs
+    startLine: 93
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Small size.
+  example: []
+  syntax:
+    content: Small = 1
+    return:
+      type: Sharpie.Canvas.GlyphSize
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Canvas.GlyphSize
+  commentId: T:Sharpie.Canvas.GlyphSize
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.GlyphSize
+  nameWithType: Canvas.GlyphSize
+  fullName: Sharpie.Canvas.GlyphSize
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GlyphSize
+    name: GlyphSize
+    href: Sharpie.Canvas.GlyphSize.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GlyphSize
+    name: GlyphSize
+    href: Sharpie.Canvas.GlyphSize.html
