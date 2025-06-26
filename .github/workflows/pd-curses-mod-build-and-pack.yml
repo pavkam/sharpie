@@ -27,18 +27,18 @@ jobs:
             make WIDE=Y DLL=Y CHTYPE_32=Y
             mv libpdcurses.so libpdcursesmod-fb-arm.so
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'vt/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (2)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'fb/*.so'
           if-no-files-found: error
-          
+
   raspios_lite-arm64:
     runs-on: ubuntu-latest
     steps:
@@ -60,18 +60,18 @@ jobs:
             make WIDE=Y DLL=Y CHTYPE_32=Y
             mv libpdcurses.so libpdcursesmod-fb-arm64.so
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'vt/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (2)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'fb/*.so'
           if-no-files-found: error
-          
+
   ubuntu-x64:
     runs-on: ubuntu-latest
     steps:
@@ -104,30 +104,30 @@ jobs:
          make WIDE=Y DLL=Y CHTYPE_32=Y
          mv libpdcurses.so libpdcursesmod-sdl2-x64.so
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'vt/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (2)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'fb/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (3)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'sdl1/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (4)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'sdl2/*.so'
           if-no-files-found: error
-          
+
   macos-x64:
     runs-on: macOS-latest
     steps:
@@ -150,18 +150,18 @@ jobs:
          make WIDE=Y DLL=Y CHTYPE_32=Y
          mv libpdcurses.dylib libpdcursesmod-sdl2-x64.dylib
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'vt/*.dylib'
           if-no-files-found: error
       - name: Upload Artifacts (2)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'sdl2/*.dylib'
           if-no-files-found: error
-          
+
   windows-x64:
     runs-on: windows-2019
     steps:
@@ -192,24 +192,24 @@ jobs:
           ren pdcurses.dll libpdcursesmod-vt-x64.dll
         shell: cmd
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'wingui/*.dll'
           if-no-files-found: error
       - name: Upload Artifacts (2)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'wincon/*.dll'
           if-no-files-found: error
       - name: Upload Artifacts (3)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'vt/*.dll'
           if-no-files-found: error
-          
+
   create-pr:
     runs-on: ubuntu-latest
     needs: [ubuntu-x64, macos-x64, windows-x64, raspios_lite-arm, raspios_lite-arm64]

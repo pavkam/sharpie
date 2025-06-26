@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 9 1 1-12 *'
-    
+
 jobs:
   raspios_lite-arm:
     runs-on: ubuntu-latest
@@ -38,12 +38,12 @@ jobs:
             make
             mv lib/libncursesw.so lib/libncursesw-arm.so
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'lib/libncursesw*.so'
           if-no-files-found: error
-          
+
   raspios_lite-arm64:
     runs-on: ubuntu-latest
     steps:
@@ -76,12 +76,12 @@ jobs:
             make
             mv lib/libncursesw.so lib/libncursesw-arm64.so
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'lib/libncursesw*.so'
           if-no-files-found: error
-          
+
   ubuntu-x64:
     runs-on: ubuntu-latest
     steps:
@@ -110,12 +110,12 @@ jobs:
           make
           mv lib/libncursesw.so lib/libncursesw-x64.so
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'lib/libncursesw*.so'
           if-no-files-found: error
-          
+
   macos-x64:
     runs-on: macOS-latest
     steps:
@@ -145,12 +145,12 @@ jobs:
           make
           mv lib/libncursesw.dylib lib/libncursesw-x64.dylib
       - name: Upload Artifacts (1)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'lib/libncursesw*.dylib'
           if-no-files-found: error
-          
+
   windows-x64:
     runs-on: windows-2019
     defaults:
@@ -201,12 +201,12 @@ jobs:
           make
           mv lib/libncursesw6.dll lib/libncursesw-x64.dll
       - name: Upload Artifacts (2)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libraries
           path: 'lib/libncursesw*.dll'
           if-no-files-found: error
-          
+
   create-pr:
     runs-on: ubuntu-latest
     needs: [ubuntu-x64, macos-x64, windows-x64, raspios_lite-arm, raspios_lite-arm64]
