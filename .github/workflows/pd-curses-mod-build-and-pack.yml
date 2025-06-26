@@ -29,13 +29,13 @@ jobs:
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-raspios_lite-arm-vt
           path: 'vt/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-raspios_lite-arm-fb
           path: 'fb/*.so'
           if-no-files-found: error
 
@@ -62,13 +62,13 @@ jobs:
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-raspios_lite-arm64-vt
           path: 'vt/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-raspios_lite-arm64-fb
           path: 'fb/*.so'
           if-no-files-found: error
 
@@ -106,25 +106,25 @@ jobs:
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-ubuntu-x64-vt
           path: 'vt/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-ubuntu-x64-fb
           path: 'fb/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (3)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-ubuntu-x64-sdl1
           path: 'sdl1/*.so'
           if-no-files-found: error
       - name: Upload Artifacts (4)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-ubuntu-x64-sdl2
           path: 'sdl2/*.so'
           if-no-files-found: error
 
@@ -152,13 +152,13 @@ jobs:
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-macos-x64-vt
           path: 'vt/*.dylib'
           if-no-files-found: error
       - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-macos-x64-sdl2
           path: 'sdl2/*.dylib'
           if-no-files-found: error
 
@@ -194,19 +194,19 @@ jobs:
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-windows-x64-wingui
           path: 'wingui/*.dll'
           if-no-files-found: error
       - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-windows-x64-wincon
           path: 'wincon/*.dll'
           if-no-files-found: error
       - name: Upload Artifacts (3)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-windows-x64-vt
           path: 'vt/*.dll'
           if-no-files-found: error
 
@@ -218,7 +218,8 @@ jobs:
         uses: actions/checkout@v3
       - uses: actions/download-artifact@v4.1.7
         with:
-          name: libraries
+          pattern: libraries*
+          merge-multiple: true
           path: lib/pdcursesmod
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6

@@ -40,7 +40,7 @@ jobs:
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-raspios_lite-arm-vt
           path: 'lib/libncursesw*.so'
           if-no-files-found: error
 
@@ -78,7 +78,7 @@ jobs:
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-raspios_lite-arm64-vt
           path: 'lib/libncursesw*.so'
           if-no-files-found: error
 
@@ -112,7 +112,7 @@ jobs:
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-ubuntu-x64-vt
           path: 'lib/libncursesw*.so'
           if-no-files-found: error
 
@@ -147,7 +147,7 @@ jobs:
       - name: Upload Artifacts (1)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-macos-x64-vt
           path: 'lib/libncursesw*.dylib'
           if-no-files-found: error
 
@@ -203,7 +203,7 @@ jobs:
       - name: Upload Artifacts (2)
         uses: actions/upload-artifact@v4
         with:
-          name: libraries
+          name: libraries-windows-x64-vt
           path: 'lib/libncursesw*.dll'
           if-no-files-found: error
 
@@ -215,7 +215,8 @@ jobs:
         uses: actions/checkout@v3
       - uses: actions/download-artifact@v4.1.7
         with:
-          name: libraries
+          pattern: libraries*
+          merge-multiple: true
           path: lib/ncurses
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
