@@ -82,6 +82,7 @@ jobs:
           ref: refs/heads/master
       - name: Install SDL1 and SDL2
         run: |
+         sudo apt update
          sudo apt install libsdl1.2-dev libsdl-ttf2.0-dev libsdl2-dev libsdl2-ttf-dev
       - name: Make VT
         run: |
