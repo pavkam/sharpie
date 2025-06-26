@@ -1,0 +1,2017 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Abstractions.IScreen
+  commentId: T:Sharpie.Abstractions.IScreen
+  id: IScreen
+  parent: Sharpie.Abstractions
+  children:
+  - Sharpie.Abstractions.IScreen.Pad(System.Drawing.Size)
+  - Sharpie.Abstractions.IScreen.Pads
+  - Sharpie.Abstractions.IScreen.Window(System.Drawing.Rectangle)
+  - Sharpie.Abstractions.IScreen.Windows
+  langs:
+  - csharp
+  - vb
+  name: IScreen
+  nameWithType: IScreen
+  fullName: Sharpie.Abstractions.IScreen
+  type: Interface
+  source:
+    remote:
+      path: Sharpie/Abstractions/IScreen.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: IScreen
+    path: Sharpie/Abstractions/IScreen.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Defines the traits that a <xref href="Sharpie.Screen" data-throw-if-not-resolved="false"></xref> implements.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public interface IScreen : ITerminalSurface, ISurface, IDrawSurface
+    content.vb: >-
+      <PublicAPI>
+
+      Public Interface IScreen Inherits ITerminalSurface, ISurface, IDrawSurface
+  inheritedMembers:
+  - Sharpie.Abstractions.ITerminalSurface.Terminal
+  - Sharpie.Abstractions.ITerminalSurface.ImmediateRefresh
+  - Sharpie.Abstractions.ITerminalSurface.Refresh
+  - Sharpie.Abstractions.ITerminalSurface.Refresh(System.Int32,System.Int32)
+  - Sharpie.Abstractions.ISurface.Handle
+  - Sharpie.Abstractions.ISurface.Disposed
+  - Sharpie.Abstractions.ISurface.Scrollable
+  - Sharpie.Abstractions.ISurface.Style
+  - Sharpie.Abstractions.ISurface.ColorMixture
+  - Sharpie.Abstractions.ISurface.Background
+  - Sharpie.Abstractions.ISurface.Size
+  - Sharpie.Abstractions.ISurface.CaretLocation
+  - Sharpie.Abstractions.ISurface.Dirty
+  - Sharpie.Abstractions.ISurface.ManagedCaret
+  - Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+  - Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+  - Sharpie.Abstractions.ISurface.ScrollUp(System.Int32)
+  - Sharpie.Abstractions.ISurface.ScrollDown(System.Int32)
+  - Sharpie.Abstractions.ISurface.InsertEmptyLines(System.Int32)
+  - Sharpie.Abstractions.ISurface.DeleteLines(System.Int32)
+  - Sharpie.Abstractions.ISurface.ChangeTextStyle(System.Int32,Sharpie.Style)
+  - Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText,System.Boolean)
+  - Sharpie.Abstractions.ISurface.WriteText(System.String,Sharpie.Style,System.Boolean)
+  - Sharpie.Abstractions.ISurface.WriteText(System.String,System.Boolean)
+  - Sharpie.Abstractions.ISurface.NextLine
+  - Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,Sharpie.Style,System.Boolean,System.Boolean)
+  - Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,System.Boolean,System.Boolean)
+  - Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  - Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32)
+  - Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  - Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32)
+  - Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)
+  - Sharpie.Abstractions.ISurface.DrawBorder
+  - Sharpie.Abstractions.ISurface.RemoveText(System.Int32)
+  - Sharpie.Abstractions.ISurface.GetText(System.Int32)
+  - Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+  - Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,Sharpie.ReplaceStrategy)
+  - Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,System.Drawing.Rectangle,System.Drawing.Point,Sharpie.ReplaceStrategy)
+  - Sharpie.Abstractions.ISurface.MarkDirty(System.Int32,System.Int32)
+  - Sharpie.Abstractions.ISurface.MarkDirty
+  - Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+  - Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+  - Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,System.Drawing.Rectangle,Sharpie.Abstractions.IDrawable)
+  - Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,Sharpie.Abstractions.IDrawable)
+  - Sharpie.Abstractions.ISurface.LineDirty(System.Int32)
+  - Sharpie.Abstractions.ISurface.Destroy
+  - Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Abstractions.IScreen.Windows
+  commentId: P:Sharpie.Abstractions.IScreen.Windows
+  id: Windows
+  parent: Sharpie.Abstractions.IScreen
+  langs:
+  - csharp
+  - vb
+  name: Windows
+  nameWithType: IScreen.Windows
+  fullName: Sharpie.Abstractions.IScreen.Windows
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/IScreen.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Windows
+    path: Sharpie/Abstractions/IScreen.cs
+    startLine: 47
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Gets all child windows on this screen.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: IEnumerable<IWindow> Windows { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerable{Sharpie.Abstractions.IWindow}
+    content.vb: ReadOnly Property Windows As IEnumerable(Of IWindow)
+  overload: Sharpie.Abstractions.IScreen.Windows*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Screen is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.IScreen.Pads
+  commentId: P:Sharpie.Abstractions.IScreen.Pads
+  id: Pads
+  parent: Sharpie.Abstractions.IScreen
+  langs:
+  - csharp
+  - vb
+  name: Pads
+  nameWithType: IScreen.Pads
+  fullName: Sharpie.Abstractions.IScreen.Pads
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Abstractions/IScreen.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Pads
+    path: Sharpie/Abstractions/IScreen.cs
+    startLine: 58
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Gets all child pads on this screen.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: IEnumerable<IPad> Pads { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerable{Sharpie.Abstractions.IPad}
+    content.vb: ReadOnly Property Pads As IEnumerable(Of IPad)
+  overload: Sharpie.Abstractions.IScreen.Pads*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Screen is no longer usable.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.IScreen.Window(System.Drawing.Rectangle)
+  commentId: M:Sharpie.Abstractions.IScreen.Window(System.Drawing.Rectangle)
+  id: Window(System.Drawing.Rectangle)
+  parent: Sharpie.Abstractions.IScreen
+  langs:
+  - csharp
+  - vb
+  name: Window(Rectangle)
+  nameWithType: IScreen.Window(Rectangle)
+  fullName: Sharpie.Abstractions.IScreen.Window(System.Drawing.Rectangle)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/IScreen.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Window
+    path: Sharpie/Abstractions/IScreen.cs
+    startLine: 74
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Creates a new sub-window in the parent window.
+  remarks: ''
+  example: []
+  syntax:
+    content: IWindow Window(Rectangle area)
+    parameters:
+    - id: area
+      type: System.Drawing.Rectangle
+      description: The area of the window to put the sub-window in.
+    return:
+      type: Sharpie.Abstractions.IWindow
+      description: A new window object.
+    content.vb: Function Window(area As Rectangle) As IWindow
+  overload: Sharpie.Abstractions.IScreen.Window*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Screen is no longer usable.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The <code class="paramref">area</code> is outside the bounds of the parent.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+- uid: Sharpie.Abstractions.IScreen.Pad(System.Drawing.Size)
+  commentId: M:Sharpie.Abstractions.IScreen.Pad(System.Drawing.Size)
+  id: Pad(System.Drawing.Size)
+  parent: Sharpie.Abstractions.IScreen
+  langs:
+  - csharp
+  - vb
+  name: Pad(Size)
+  nameWithType: IScreen.Pad(Size)
+  fullName: Sharpie.Abstractions.IScreen.Pad(System.Drawing.Size)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Abstractions/IScreen.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Pad
+    path: Sharpie/Abstractions/IScreen.cs
+    startLine: 88
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Abstractions
+  summary: Creates a new pad.
+  remarks: This operation is not thread safe.
+  example: []
+  syntax:
+    content: IPad Pad(Size size)
+    parameters:
+    - id: size
+      type: System.Drawing.Size
+      description: The pad size.
+    return:
+      type: Sharpie.Abstractions.IPad
+      description: A new pad object.
+    content.vb: Function Pad(size As Size) As IPad
+  overload: Sharpie.Abstractions.IScreen.Pad*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: Screen is no longer usable.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The <code class="paramref">size</code> is invalid.
+  - type: Sharpie.CursesSynchronizationException
+    commentId: T:Sharpie.CursesSynchronizationException
+    description: >-
+      Thrown if this operation was expected to run on the main
+
+      thread/context but wasn't.
+references:
+- uid: Sharpie.Screen
+  commentId: T:Sharpie.Screen
+  parent: Sharpie
+  href: Sharpie.Screen.html
+  name: Screen
+  nameWithType: Screen
+  fullName: Sharpie.Screen
+- uid: Sharpie.Abstractions
+  commentId: N:Sharpie.Abstractions
+  href: Sharpie.html
+  name: Sharpie.Abstractions
+  nameWithType: Sharpie.Abstractions
+  fullName: Sharpie.Abstractions
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+- uid: Sharpie.Abstractions.ITerminalSurface.Terminal
+  commentId: P:Sharpie.Abstractions.ITerminalSurface.Terminal
+  parent: Sharpie.Abstractions.ITerminalSurface
+  href: Sharpie.Abstractions.ITerminalSurface.html#Sharpie_Abstractions_ITerminalSurface_Terminal
+  name: Terminal
+  nameWithType: ITerminalSurface.Terminal
+  fullName: Sharpie.Abstractions.ITerminalSurface.Terminal
+- uid: Sharpie.Abstractions.ITerminalSurface.ImmediateRefresh
+  commentId: P:Sharpie.Abstractions.ITerminalSurface.ImmediateRefresh
+  parent: Sharpie.Abstractions.ITerminalSurface
+  href: Sharpie.Abstractions.ITerminalSurface.html#Sharpie_Abstractions_ITerminalSurface_ImmediateRefresh
+  name: ImmediateRefresh
+  nameWithType: ITerminalSurface.ImmediateRefresh
+  fullName: Sharpie.Abstractions.ITerminalSurface.ImmediateRefresh
+- uid: Sharpie.Abstractions.ITerminalSurface.Refresh
+  commentId: M:Sharpie.Abstractions.ITerminalSurface.Refresh
+  parent: Sharpie.Abstractions.ITerminalSurface
+  href: Sharpie.Abstractions.ITerminalSurface.html#Sharpie_Abstractions_ITerminalSurface_Refresh
+  name: Refresh()
+  nameWithType: ITerminalSurface.Refresh()
+  fullName: Sharpie.Abstractions.ITerminalSurface.Refresh()
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ITerminalSurface.Refresh
+    name: Refresh
+    href: Sharpie.Abstractions.ITerminalSurface.html#Sharpie_Abstractions_ITerminalSurface_Refresh
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ITerminalSurface.Refresh
+    name: Refresh
+    href: Sharpie.Abstractions.ITerminalSurface.html#Sharpie_Abstractions_ITerminalSurface_Refresh
+  - name: (
+  - name: )
+- uid: Sharpie.Abstractions.ITerminalSurface.Refresh(System.Int32,System.Int32)
+  commentId: M:Sharpie.Abstractions.ITerminalSurface.Refresh(System.Int32,System.Int32)
+  parent: Sharpie.Abstractions.ITerminalSurface
+  isExternal: true
+  href: Sharpie.Abstractions.ITerminalSurface.html#Sharpie_Abstractions_ITerminalSurface_Refresh_System_Int32_System_Int32_
+  name: Refresh(int, int)
+  nameWithType: ITerminalSurface.Refresh(int, int)
+  fullName: Sharpie.Abstractions.ITerminalSurface.Refresh(int, int)
+  nameWithType.vb: ITerminalSurface.Refresh(Integer, Integer)
+  fullName.vb: Sharpie.Abstractions.ITerminalSurface.Refresh(Integer, Integer)
+  name.vb: Refresh(Integer, Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ITerminalSurface.Refresh(System.Int32,System.Int32)
+    name: Refresh
+    href: Sharpie.Abstractions.ITerminalSurface.html#Sharpie_Abstractions_ITerminalSurface_Refresh_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ITerminalSurface.Refresh(System.Int32,System.Int32)
+    name: Refresh
+    href: Sharpie.Abstractions.ITerminalSurface.html#Sharpie_Abstractions_ITerminalSurface_Refresh_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.Handle
+  commentId: P:Sharpie.Abstractions.ISurface.Handle
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Handle
+  name: Handle
+  nameWithType: ISurface.Handle
+  fullName: Sharpie.Abstractions.ISurface.Handle
+- uid: Sharpie.Abstractions.ISurface.Disposed
+  commentId: P:Sharpie.Abstractions.ISurface.Disposed
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Disposed
+  name: Disposed
+  nameWithType: ISurface.Disposed
+  fullName: Sharpie.Abstractions.ISurface.Disposed
+- uid: Sharpie.Abstractions.ISurface.Scrollable
+  commentId: P:Sharpie.Abstractions.ISurface.Scrollable
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Scrollable
+  name: Scrollable
+  nameWithType: ISurface.Scrollable
+  fullName: Sharpie.Abstractions.ISurface.Scrollable
+- uid: Sharpie.Abstractions.ISurface.Style
+  commentId: P:Sharpie.Abstractions.ISurface.Style
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Style
+  name: Style
+  nameWithType: ISurface.Style
+  fullName: Sharpie.Abstractions.ISurface.Style
+- uid: Sharpie.Abstractions.ISurface.ColorMixture
+  commentId: P:Sharpie.Abstractions.ISurface.ColorMixture
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ColorMixture
+  name: ColorMixture
+  nameWithType: ISurface.ColorMixture
+  fullName: Sharpie.Abstractions.ISurface.ColorMixture
+- uid: Sharpie.Abstractions.ISurface.Background
+  commentId: P:Sharpie.Abstractions.ISurface.Background
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Background
+  name: Background
+  nameWithType: ISurface.Background
+  fullName: Sharpie.Abstractions.ISurface.Background
+- uid: Sharpie.Abstractions.ISurface.Size
+  commentId: P:Sharpie.Abstractions.ISurface.Size
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Size
+  name: Size
+  nameWithType: ISurface.Size
+  fullName: Sharpie.Abstractions.ISurface.Size
+- uid: Sharpie.Abstractions.ISurface.CaretLocation
+  commentId: P:Sharpie.Abstractions.ISurface.CaretLocation
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_CaretLocation
+  name: CaretLocation
+  nameWithType: ISurface.CaretLocation
+  fullName: Sharpie.Abstractions.ISurface.CaretLocation
+- uid: Sharpie.Abstractions.ISurface.Dirty
+  commentId: P:Sharpie.Abstractions.ISurface.Dirty
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Dirty
+  name: Dirty
+  nameWithType: ISurface.Dirty
+  fullName: Sharpie.Abstractions.ISurface.Dirty
+- uid: Sharpie.Abstractions.ISurface.ManagedCaret
+  commentId: P:Sharpie.Abstractions.ISurface.ManagedCaret
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ManagedCaret
+  name: ManagedCaret
+  nameWithType: ISurface.ManagedCaret
+  fullName: Sharpie.Abstractions.ISurface.ManagedCaret
+- uid: Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+  commentId: M:Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_EnableAttributes_Sharpie_VideoAttribute_
+  name: EnableAttributes(VideoAttribute)
+  nameWithType: ISurface.EnableAttributes(VideoAttribute)
+  fullName: Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+    name: EnableAttributes
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_EnableAttributes_Sharpie_VideoAttribute_
+  - name: (
+  - uid: Sharpie.VideoAttribute
+    name: VideoAttribute
+    href: Sharpie.VideoAttribute.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.EnableAttributes(Sharpie.VideoAttribute)
+    name: EnableAttributes
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_EnableAttributes_Sharpie_VideoAttribute_
+  - name: (
+  - uid: Sharpie.VideoAttribute
+    name: VideoAttribute
+    href: Sharpie.VideoAttribute.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+  commentId: M:Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DisableAttributes_Sharpie_VideoAttribute_
+  name: DisableAttributes(VideoAttribute)
+  nameWithType: ISurface.DisableAttributes(VideoAttribute)
+  fullName: Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+    name: DisableAttributes
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DisableAttributes_Sharpie_VideoAttribute_
+  - name: (
+  - uid: Sharpie.VideoAttribute
+    name: VideoAttribute
+    href: Sharpie.VideoAttribute.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DisableAttributes(Sharpie.VideoAttribute)
+    name: DisableAttributes
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DisableAttributes_Sharpie_VideoAttribute_
+  - name: (
+  - uid: Sharpie.VideoAttribute
+    name: VideoAttribute
+    href: Sharpie.VideoAttribute.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.ScrollUp(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.ScrollUp(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ScrollUp_System_Int32_
+  name: ScrollUp(int)
+  nameWithType: ISurface.ScrollUp(int)
+  fullName: Sharpie.Abstractions.ISurface.ScrollUp(int)
+  nameWithType.vb: ISurface.ScrollUp(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.ScrollUp(Integer)
+  name.vb: ScrollUp(Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.ScrollUp(System.Int32)
+    name: ScrollUp
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ScrollUp_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.ScrollUp(System.Int32)
+    name: ScrollUp
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ScrollUp_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.ScrollDown(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.ScrollDown(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ScrollDown_System_Int32_
+  name: ScrollDown(int)
+  nameWithType: ISurface.ScrollDown(int)
+  fullName: Sharpie.Abstractions.ISurface.ScrollDown(int)
+  nameWithType.vb: ISurface.ScrollDown(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.ScrollDown(Integer)
+  name.vb: ScrollDown(Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.ScrollDown(System.Int32)
+    name: ScrollDown
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ScrollDown_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.ScrollDown(System.Int32)
+    name: ScrollDown
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ScrollDown_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.InsertEmptyLines(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.InsertEmptyLines(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_InsertEmptyLines_System_Int32_
+  name: InsertEmptyLines(int)
+  nameWithType: ISurface.InsertEmptyLines(int)
+  fullName: Sharpie.Abstractions.ISurface.InsertEmptyLines(int)
+  nameWithType.vb: ISurface.InsertEmptyLines(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.InsertEmptyLines(Integer)
+  name.vb: InsertEmptyLines(Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.InsertEmptyLines(System.Int32)
+    name: InsertEmptyLines
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_InsertEmptyLines_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.InsertEmptyLines(System.Int32)
+    name: InsertEmptyLines
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_InsertEmptyLines_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DeleteLines(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.DeleteLines(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DeleteLines_System_Int32_
+  name: DeleteLines(int)
+  nameWithType: ISurface.DeleteLines(int)
+  fullName: Sharpie.Abstractions.ISurface.DeleteLines(int)
+  nameWithType.vb: ISurface.DeleteLines(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.DeleteLines(Integer)
+  name.vb: DeleteLines(Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DeleteLines(System.Int32)
+    name: DeleteLines
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DeleteLines_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DeleteLines(System.Int32)
+    name: DeleteLines
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DeleteLines_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.ChangeTextStyle(System.Int32,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.ISurface.ChangeTextStyle(System.Int32,Sharpie.Style)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ChangeTextStyle_System_Int32_Sharpie_Style_
+  name: ChangeTextStyle(int, Style)
+  nameWithType: ISurface.ChangeTextStyle(int, Style)
+  fullName: Sharpie.Abstractions.ISurface.ChangeTextStyle(int, Sharpie.Style)
+  nameWithType.vb: ISurface.ChangeTextStyle(Integer, Style)
+  fullName.vb: Sharpie.Abstractions.ISurface.ChangeTextStyle(Integer, Sharpie.Style)
+  name.vb: ChangeTextStyle(Integer, Style)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.ChangeTextStyle(System.Int32,Sharpie.Style)
+    name: ChangeTextStyle
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ChangeTextStyle_System_Int32_Sharpie_Style_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.ChangeTextStyle(System.Int32,Sharpie.Style)
+    name: ChangeTextStyle
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_ChangeTextStyle_System_Int32_Sharpie_Style_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_Sharpie_StyledText_System_Boolean_
+  name: WriteText(StyledText, bool)
+  nameWithType: ISurface.WriteText(StyledText, bool)
+  fullName: Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText, bool)
+  nameWithType.vb: ISurface.WriteText(StyledText, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText, Boolean)
+  name.vb: WriteText(StyledText, Boolean)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText,System.Boolean)
+    name: WriteText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_Sharpie_StyledText_System_Boolean_
+  - name: (
+  - uid: Sharpie.StyledText
+    name: StyledText
+    href: Sharpie.StyledText.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.WriteText(Sharpie.StyledText,System.Boolean)
+    name: WriteText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_Sharpie_StyledText_System_Boolean_
+  - name: (
+  - uid: Sharpie.StyledText
+    name: StyledText
+    href: Sharpie.StyledText.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.WriteText(System.String,Sharpie.Style,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.WriteText(System.String,Sharpie.Style,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_System_String_Sharpie_Style_System_Boolean_
+  name: WriteText(string, Style, bool)
+  nameWithType: ISurface.WriteText(string, Style, bool)
+  fullName: Sharpie.Abstractions.ISurface.WriteText(string, Sharpie.Style, bool)
+  nameWithType.vb: ISurface.WriteText(String, Style, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.WriteText(String, Sharpie.Style, Boolean)
+  name.vb: WriteText(String, Style, Boolean)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.WriteText(System.String,Sharpie.Style,System.Boolean)
+    name: WriteText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_System_String_Sharpie_Style_System_Boolean_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.WriteText(System.String,Sharpie.Style,System.Boolean)
+    name: WriteText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_System_String_Sharpie_Style_System_Boolean_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.WriteText(System.String,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.WriteText(System.String,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_System_String_System_Boolean_
+  name: WriteText(string, bool)
+  nameWithType: ISurface.WriteText(string, bool)
+  fullName: Sharpie.Abstractions.ISurface.WriteText(string, bool)
+  nameWithType.vb: ISurface.WriteText(String, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.WriteText(String, Boolean)
+  name.vb: WriteText(String, Boolean)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.WriteText(System.String,System.Boolean)
+    name: WriteText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_System_String_System_Boolean_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.WriteText(System.String,System.Boolean)
+    name: WriteText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_WriteText_System_String_System_Boolean_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.NextLine
+  commentId: M:Sharpie.Abstractions.ISurface.NextLine
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_NextLine
+  name: NextLine()
+  nameWithType: ISurface.NextLine()
+  fullName: Sharpie.Abstractions.ISurface.NextLine()
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.NextLine
+    name: NextLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_NextLine
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.NextLine
+    name: NextLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_NextLine
+  - name: (
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,Sharpie.Style,System.Boolean,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,Sharpie.Style,System.Boolean,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawText_Sharpie_Abstractions_IAsciiFont_System_String_Sharpie_Style_System_Boolean_System_Boolean_
+  name: DrawText(IAsciiFont, string, Style, bool, bool)
+  nameWithType: ISurface.DrawText(IAsciiFont, string, Style, bool, bool)
+  fullName: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont, string, Sharpie.Style, bool, bool)
+  nameWithType.vb: ISurface.DrawText(IAsciiFont, String, Style, Boolean, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont, String, Sharpie.Style, Boolean, Boolean)
+  name.vb: DrawText(IAsciiFont, String, Style, Boolean, Boolean)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,Sharpie.Style,System.Boolean,System.Boolean)
+    name: DrawText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawText_Sharpie_Abstractions_IAsciiFont_System_String_Sharpie_Style_System_Boolean_System_Boolean_
+  - name: (
+  - uid: Sharpie.Abstractions.IAsciiFont
+    name: IAsciiFont
+    href: Sharpie.Abstractions.IAsciiFont.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,Sharpie.Style,System.Boolean,System.Boolean)
+    name: DrawText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawText_Sharpie_Abstractions_IAsciiFont_System_String_Sharpie_Style_System_Boolean_System_Boolean_
+  - name: (
+  - uid: Sharpie.Abstractions.IAsciiFont
+    name: IAsciiFont
+    href: Sharpie.Abstractions.IAsciiFont.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,System.Boolean,System.Boolean)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,System.Boolean,System.Boolean)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawText_Sharpie_Abstractions_IAsciiFont_System_String_System_Boolean_System_Boolean_
+  name: DrawText(IAsciiFont, string, bool, bool)
+  nameWithType: ISurface.DrawText(IAsciiFont, string, bool, bool)
+  fullName: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont, string, bool, bool)
+  nameWithType.vb: ISurface.DrawText(IAsciiFont, String, Boolean, Boolean)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont, String, Boolean, Boolean)
+  name.vb: DrawText(IAsciiFont, String, Boolean, Boolean)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,System.Boolean,System.Boolean)
+    name: DrawText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawText_Sharpie_Abstractions_IAsciiFont_System_String_System_Boolean_System_Boolean_
+  - name: (
+  - uid: Sharpie.Abstractions.IAsciiFont
+    name: IAsciiFont
+    href: Sharpie.Abstractions.IAsciiFont.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DrawText(Sharpie.Abstractions.IAsciiFont,System.String,System.Boolean,System.Boolean)
+    name: DrawText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawText_Sharpie_Abstractions_IAsciiFont_System_String_System_Boolean_System_Boolean_
+  - name: (
+  - uid: Sharpie.Abstractions.IAsciiFont
+    name: IAsciiFont
+    href: Sharpie.Abstractions.IAsciiFont.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawVerticalLine_System_Int32_System_Text_Rune_Sharpie_Style_
+  name: DrawVerticalLine(int, Rune, Style)
+  nameWithType: ISurface.DrawVerticalLine(int, Rune, Style)
+  fullName: Sharpie.Abstractions.ISurface.DrawVerticalLine(int, System.Text.Rune, Sharpie.Style)
+  nameWithType.vb: ISurface.DrawVerticalLine(Integer, Rune, Style)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawVerticalLine(Integer, System.Text.Rune, Sharpie.Style)
+  name.vb: DrawVerticalLine(Integer, Rune, Style)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+    name: DrawVerticalLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawVerticalLine_System_Int32_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+    name: DrawVerticalLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawVerticalLine_System_Int32_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawVerticalLine_System_Int32_
+  name: DrawVerticalLine(int)
+  nameWithType: ISurface.DrawVerticalLine(int)
+  fullName: Sharpie.Abstractions.ISurface.DrawVerticalLine(int)
+  nameWithType.vb: ISurface.DrawVerticalLine(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawVerticalLine(Integer)
+  name.vb: DrawVerticalLine(Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32)
+    name: DrawVerticalLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawVerticalLine_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DrawVerticalLine(System.Int32)
+    name: DrawVerticalLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawVerticalLine_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawHorizontalLine_System_Int32_System_Text_Rune_Sharpie_Style_
+  name: DrawHorizontalLine(int, Rune, Style)
+  nameWithType: ISurface.DrawHorizontalLine(int, Rune, Style)
+  fullName: Sharpie.Abstractions.ISurface.DrawHorizontalLine(int, System.Text.Rune, Sharpie.Style)
+  nameWithType.vb: ISurface.DrawHorizontalLine(Integer, Rune, Style)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawHorizontalLine(Integer, System.Text.Rune, Sharpie.Style)
+  name.vb: DrawHorizontalLine(Integer, Rune, Style)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+    name: DrawHorizontalLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawHorizontalLine_System_Int32_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32,System.Text.Rune,Sharpie.Style)
+    name: DrawHorizontalLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawHorizontalLine_System_Int32_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawHorizontalLine_System_Int32_
+  name: DrawHorizontalLine(int)
+  nameWithType: ISurface.DrawHorizontalLine(int)
+  fullName: Sharpie.Abstractions.ISurface.DrawHorizontalLine(int)
+  nameWithType.vb: ISurface.DrawHorizontalLine(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.DrawHorizontalLine(Integer)
+  name.vb: DrawHorizontalLine(Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32)
+    name: DrawHorizontalLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawHorizontalLine_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DrawHorizontalLine(System.Int32)
+    name: DrawHorizontalLine
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawHorizontalLine_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawBorder_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_Sharpie_Style_
+  name: DrawBorder(Rune, Rune, Rune, Rune, Rune, Rune, Rune, Rune, Style)
+  nameWithType: ISurface.DrawBorder(Rune, Rune, Rune, Rune, Rune, Rune, Rune, Rune, Style)
+  fullName: Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, System.Text.Rune, Sharpie.Style)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)
+    name: DrawBorder
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawBorder_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DrawBorder(System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,System.Text.Rune,Sharpie.Style)
+    name: DrawBorder
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawBorder_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.DrawBorder
+  commentId: M:Sharpie.Abstractions.ISurface.DrawBorder
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawBorder
+  name: DrawBorder()
+  nameWithType: ISurface.DrawBorder()
+  fullName: Sharpie.Abstractions.ISurface.DrawBorder()
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.DrawBorder
+    name: DrawBorder
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawBorder
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.DrawBorder
+    name: DrawBorder
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_DrawBorder
+  - name: (
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.RemoveText(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.RemoveText(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_RemoveText_System_Int32_
+  name: RemoveText(int)
+  nameWithType: ISurface.RemoveText(int)
+  fullName: Sharpie.Abstractions.ISurface.RemoveText(int)
+  nameWithType.vb: ISurface.RemoveText(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.RemoveText(Integer)
+  name.vb: RemoveText(Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.RemoveText(System.Int32)
+    name: RemoveText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_RemoveText_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.RemoveText(System.Int32)
+    name: RemoveText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_RemoveText_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.GetText(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.GetText(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_GetText_System_Int32_
+  name: GetText(int)
+  nameWithType: ISurface.GetText(int)
+  fullName: Sharpie.Abstractions.ISurface.GetText(int)
+  nameWithType.vb: ISurface.GetText(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.GetText(Integer)
+  name.vb: GetText(Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.GetText(System.Int32)
+    name: GetText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_GetText_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.GetText(System.Int32)
+    name: GetText
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_GetText_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+  commentId: M:Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Clear_Sharpie_ClearStrategy_
+  name: Clear(ClearStrategy)
+  nameWithType: ISurface.Clear(ClearStrategy)
+  fullName: Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+    name: Clear
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Clear_Sharpie_ClearStrategy_
+  - name: (
+  - uid: Sharpie.ClearStrategy
+    name: ClearStrategy
+    href: Sharpie.ClearStrategy.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.Clear(Sharpie.ClearStrategy)
+    name: Clear
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Clear_Sharpie_ClearStrategy_
+  - name: (
+  - uid: Sharpie.ClearStrategy
+    name: ClearStrategy
+    href: Sharpie.ClearStrategy.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,Sharpie.ReplaceStrategy)
+  commentId: M:Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,Sharpie.ReplaceStrategy)
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Replace_Sharpie_Abstractions_ISurface_Sharpie_ReplaceStrategy_
+  name: Replace(ISurface, ReplaceStrategy)
+  nameWithType: ISurface.Replace(ISurface, ReplaceStrategy)
+  fullName: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface, Sharpie.ReplaceStrategy)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,Sharpie.ReplaceStrategy)
+    name: Replace
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Replace_Sharpie_Abstractions_ISurface_Sharpie_ReplaceStrategy_
+  - name: (
+  - uid: Sharpie.Abstractions.ISurface
+    name: ISurface
+    href: Sharpie.Abstractions.ISurface.html
+  - name: ','
+  - name: " "
+  - uid: Sharpie.ReplaceStrategy
+    name: ReplaceStrategy
+    href: Sharpie.ReplaceStrategy.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,Sharpie.ReplaceStrategy)
+    name: Replace
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Replace_Sharpie_Abstractions_ISurface_Sharpie_ReplaceStrategy_
+  - name: (
+  - uid: Sharpie.Abstractions.ISurface
+    name: ISurface
+    href: Sharpie.Abstractions.ISurface.html
+  - name: ','
+  - name: " "
+  - uid: Sharpie.ReplaceStrategy
+    name: ReplaceStrategy
+    href: Sharpie.ReplaceStrategy.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,System.Drawing.Rectangle,System.Drawing.Point,Sharpie.ReplaceStrategy)
+  commentId: M:Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,System.Drawing.Rectangle,System.Drawing.Point,Sharpie.ReplaceStrategy)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Replace_Sharpie_Abstractions_ISurface_System_Drawing_Rectangle_System_Drawing_Point_Sharpie_ReplaceStrategy_
+  name: Replace(ISurface, Rectangle, Point, ReplaceStrategy)
+  nameWithType: ISurface.Replace(ISurface, Rectangle, Point, ReplaceStrategy)
+  fullName: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface, System.Drawing.Rectangle, System.Drawing.Point, Sharpie.ReplaceStrategy)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,System.Drawing.Rectangle,System.Drawing.Point,Sharpie.ReplaceStrategy)
+    name: Replace
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Replace_Sharpie_Abstractions_ISurface_System_Drawing_Rectangle_System_Drawing_Point_Sharpie_ReplaceStrategy_
+  - name: (
+  - uid: Sharpie.Abstractions.ISurface
+    name: ISurface
+    href: Sharpie.Abstractions.ISurface.html
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Rectangle
+    name: Rectangle
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: Sharpie.ReplaceStrategy
+    name: ReplaceStrategy
+    href: Sharpie.ReplaceStrategy.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.Replace(Sharpie.Abstractions.ISurface,System.Drawing.Rectangle,System.Drawing.Point,Sharpie.ReplaceStrategy)
+    name: Replace
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Replace_Sharpie_Abstractions_ISurface_System_Drawing_Rectangle_System_Drawing_Point_Sharpie_ReplaceStrategy_
+  - name: (
+  - uid: Sharpie.Abstractions.ISurface
+    name: ISurface
+    href: Sharpie.Abstractions.ISurface.html
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Rectangle
+    name: Rectangle
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: Sharpie.ReplaceStrategy
+    name: ReplaceStrategy
+    href: Sharpie.ReplaceStrategy.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.MarkDirty(System.Int32,System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.MarkDirty(System.Int32,System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_MarkDirty_System_Int32_System_Int32_
+  name: MarkDirty(int, int)
+  nameWithType: ISurface.MarkDirty(int, int)
+  fullName: Sharpie.Abstractions.ISurface.MarkDirty(int, int)
+  nameWithType.vb: ISurface.MarkDirty(Integer, Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.MarkDirty(Integer, Integer)
+  name.vb: MarkDirty(Integer, Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.MarkDirty(System.Int32,System.Int32)
+    name: MarkDirty
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_MarkDirty_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.MarkDirty(System.Int32,System.Int32)
+    name: MarkDirty
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_MarkDirty_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.MarkDirty
+  commentId: M:Sharpie.Abstractions.ISurface.MarkDirty
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_MarkDirty
+  name: MarkDirty()
+  nameWithType: ISurface.MarkDirty()
+  fullName: Sharpie.Abstractions.ISurface.MarkDirty()
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.MarkDirty
+    name: MarkDirty
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_MarkDirty
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.MarkDirty
+    name: MarkDirty
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_MarkDirty
+  - name: (
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+  commentId: M:Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_IsPointWithin_System_Drawing_Point_
+  name: IsPointWithin(Point)
+  nameWithType: ISurface.IsPointWithin(Point)
+  fullName: Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+    name: IsPointWithin
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_IsPointWithin_System_Drawing_Point_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.IsPointWithin(System.Drawing.Point)
+    name: IsPointWithin
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_IsPointWithin_System_Drawing_Point_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+  commentId: M:Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_IsRectangleWithin_System_Drawing_Rectangle_
+  name: IsRectangleWithin(Rectangle)
+  nameWithType: ISurface.IsRectangleWithin(Rectangle)
+  fullName: Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+    name: IsRectangleWithin
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_IsRectangleWithin_System_Drawing_Rectangle_
+  - name: (
+  - uid: System.Drawing.Rectangle
+    name: Rectangle
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.IsRectangleWithin(System.Drawing.Rectangle)
+    name: IsRectangleWithin
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_IsRectangleWithin_System_Drawing_Rectangle_
+  - name: (
+  - uid: System.Drawing.Rectangle
+    name: Rectangle
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,System.Drawing.Rectangle,Sharpie.Abstractions.IDrawable)
+  commentId: M:Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,System.Drawing.Rectangle,Sharpie.Abstractions.IDrawable)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Draw_System_Drawing_Point_System_Drawing_Rectangle_Sharpie_Abstractions_IDrawable_
+  name: Draw(Point, Rectangle, IDrawable)
+  nameWithType: ISurface.Draw(Point, Rectangle, IDrawable)
+  fullName: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point, System.Drawing.Rectangle, Sharpie.Abstractions.IDrawable)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,System.Drawing.Rectangle,Sharpie.Abstractions.IDrawable)
+    name: Draw
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Draw_System_Drawing_Point_System_Drawing_Rectangle_Sharpie_Abstractions_IDrawable_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Rectangle
+    name: Rectangle
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Abstractions.IDrawable
+    name: IDrawable
+    href: Sharpie.Abstractions.IDrawable.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,System.Drawing.Rectangle,Sharpie.Abstractions.IDrawable)
+    name: Draw
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Draw_System_Drawing_Point_System_Drawing_Rectangle_Sharpie_Abstractions_IDrawable_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Rectangle
+    name: Rectangle
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Abstractions.IDrawable
+    name: IDrawable
+    href: Sharpie.Abstractions.IDrawable.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,Sharpie.Abstractions.IDrawable)
+  commentId: M:Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,Sharpie.Abstractions.IDrawable)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Draw_System_Drawing_Point_Sharpie_Abstractions_IDrawable_
+  name: Draw(Point, IDrawable)
+  nameWithType: ISurface.Draw(Point, IDrawable)
+  fullName: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point, Sharpie.Abstractions.IDrawable)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,Sharpie.Abstractions.IDrawable)
+    name: Draw
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Draw_System_Drawing_Point_Sharpie_Abstractions_IDrawable_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Abstractions.IDrawable
+    name: IDrawable
+    href: Sharpie.Abstractions.IDrawable.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.Draw(System.Drawing.Point,Sharpie.Abstractions.IDrawable)
+    name: Draw
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Draw_System_Drawing_Point_Sharpie_Abstractions_IDrawable_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Abstractions.IDrawable
+    name: IDrawable
+    href: Sharpie.Abstractions.IDrawable.html
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.LineDirty(System.Int32)
+  commentId: M:Sharpie.Abstractions.ISurface.LineDirty(System.Int32)
+  parent: Sharpie.Abstractions.ISurface
+  isExternal: true
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_LineDirty_System_Int32_
+  name: LineDirty(int)
+  nameWithType: ISurface.LineDirty(int)
+  fullName: Sharpie.Abstractions.ISurface.LineDirty(int)
+  nameWithType.vb: ISurface.LineDirty(Integer)
+  fullName.vb: Sharpie.Abstractions.ISurface.LineDirty(Integer)
+  name.vb: LineDirty(Integer)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.LineDirty(System.Int32)
+    name: LineDirty
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_LineDirty_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.LineDirty(System.Int32)
+    name: LineDirty
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_LineDirty_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Sharpie.Abstractions.ISurface.Destroy
+  commentId: M:Sharpie.Abstractions.ISurface.Destroy
+  parent: Sharpie.Abstractions.ISurface
+  href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Destroy
+  name: Destroy()
+  nameWithType: ISurface.Destroy()
+  fullName: Sharpie.Abstractions.ISurface.Destroy()
+  spec.csharp:
+  - uid: Sharpie.Abstractions.ISurface.Destroy
+    name: Destroy
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Destroy
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.ISurface.Destroy
+    name: Destroy
+    href: Sharpie.Abstractions.ISurface.html#Sharpie_Abstractions_ISurface_Destroy
+  - name: (
+  - name: )
+- uid: Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Abstractions.IDrawSurface
+  isExternal: true
+  href: Sharpie.Abstractions.IDrawSurface.html#Sharpie_Abstractions_IDrawSurface_DrawCell_System_Drawing_Point_System_Text_Rune_Sharpie_Style_
+  name: DrawCell(Point, Rune, Style)
+  nameWithType: IDrawSurface.DrawCell(Point, Rune, Style)
+  fullName: Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point, System.Text.Rune, Sharpie.Style)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+    name: DrawCell
+    href: Sharpie.Abstractions.IDrawSurface.html#Sharpie_Abstractions_IDrawSurface_DrawCell_System_Drawing_Point_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.IDrawSurface.DrawCell(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+    name: DrawCell
+    href: Sharpie.Abstractions.IDrawSurface.html#Sharpie_Abstractions_IDrawSurface_DrawCell_System_Drawing_Point_System_Text_Rune_Sharpie_Style_
+  - name: (
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: ','
+  - name: " "
+  - uid: System.Text.Rune
+    name: Rune
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  - name: ','
+  - name: " "
+  - uid: Sharpie.Style
+    name: Style
+    href: Sharpie.Style.html
+  - name: )
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Abstractions.ITerminalSurface
+  commentId: T:Sharpie.Abstractions.ITerminalSurface
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ITerminalSurface.html
+  name: ITerminalSurface
+  nameWithType: ITerminalSurface
+  fullName: Sharpie.Abstractions.ITerminalSurface
+- uid: Sharpie.Abstractions.ISurface
+  commentId: T:Sharpie.Abstractions.ISurface
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ISurface.html
+  name: ISurface
+  nameWithType: ISurface
+  fullName: Sharpie.Abstractions.ISurface
+- uid: Sharpie.Abstractions.IDrawSurface
+  commentId: T:Sharpie.Abstractions.IDrawSurface
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IDrawSurface.html
+  name: IDrawSurface
+  nameWithType: IDrawSurface
+  fullName: Sharpie.Abstractions.IDrawSurface
+- uid: System.ObjectDisposedException
+  commentId: T:System.ObjectDisposedException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.objectdisposedexception
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: Sharpie.CursesSynchronizationException
+  commentId: T:Sharpie.CursesSynchronizationException
+  href: Sharpie.CursesSynchronizationException.html
+  name: CursesSynchronizationException
+  nameWithType: CursesSynchronizationException
+  fullName: Sharpie.CursesSynchronizationException
+- uid: Sharpie.Abstractions.IScreen.Windows*
+  commentId: Overload:Sharpie.Abstractions.IScreen.Windows
+  href: Sharpie.Abstractions.IScreen.html#Sharpie_Abstractions_IScreen_Windows
+  name: Windows
+  nameWithType: IScreen.Windows
+  fullName: Sharpie.Abstractions.IScreen.Windows
+- uid: System.Collections.Generic.IEnumerable{Sharpie.Abstractions.IWindow}
+  commentId: T:System.Collections.Generic.IEnumerable{Sharpie.Abstractions.IWindow}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<IWindow>
+  nameWithType: IEnumerable<IWindow>
+  fullName: System.Collections.Generic.IEnumerable<Sharpie.Abstractions.IWindow>
+  nameWithType.vb: IEnumerable(Of IWindow)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Sharpie.Abstractions.IWindow)
+  name.vb: IEnumerable(Of IWindow)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Sharpie.Abstractions.IWindow
+    name: IWindow
+    href: Sharpie.Abstractions.IWindow.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Sharpie.Abstractions.IWindow
+    name: IWindow
+    href: Sharpie.Abstractions.IWindow.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Sharpie.Abstractions.IScreen.Pads*
+  commentId: Overload:Sharpie.Abstractions.IScreen.Pads
+  href: Sharpie.Abstractions.IScreen.html#Sharpie_Abstractions_IScreen_Pads
+  name: Pads
+  nameWithType: IScreen.Pads
+  fullName: Sharpie.Abstractions.IScreen.Pads
+- uid: System.Collections.Generic.IEnumerable{Sharpie.Abstractions.IPad}
+  commentId: T:System.Collections.Generic.IEnumerable{Sharpie.Abstractions.IPad}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<IPad>
+  nameWithType: IEnumerable<IPad>
+  fullName: System.Collections.Generic.IEnumerable<Sharpie.Abstractions.IPad>
+  nameWithType.vb: IEnumerable(Of IPad)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Sharpie.Abstractions.IPad)
+  name.vb: IEnumerable(Of IPad)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Sharpie.Abstractions.IPad
+    name: IPad
+    href: Sharpie.Abstractions.IPad.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Sharpie.Abstractions.IPad
+    name: IPad
+    href: Sharpie.Abstractions.IPad.html
+  - name: )
+- uid: System.ArgumentOutOfRangeException
+  commentId: T:System.ArgumentOutOfRangeException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: Sharpie.Abstractions.IScreen.Window*
+  commentId: Overload:Sharpie.Abstractions.IScreen.Window
+  href: Sharpie.Abstractions.IScreen.html#Sharpie_Abstractions_IScreen_Window_System_Drawing_Rectangle_
+  name: Window
+  nameWithType: IScreen.Window
+  fullName: Sharpie.Abstractions.IScreen.Window
+- uid: System.Drawing.Rectangle
+  commentId: T:System.Drawing.Rectangle
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  name: Rectangle
+  nameWithType: Rectangle
+  fullName: System.Drawing.Rectangle
+- uid: Sharpie.Abstractions.IWindow
+  commentId: T:Sharpie.Abstractions.IWindow
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IWindow.html
+  name: IWindow
+  nameWithType: IWindow
+  fullName: Sharpie.Abstractions.IWindow
+- uid: System.Drawing
+  commentId: N:System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Drawing
+  nameWithType: System.Drawing
+  fullName: System.Drawing
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Drawing
+    name: Drawing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Drawing
+    name: Drawing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing
+- uid: Sharpie.Abstractions.IScreen.Pad*
+  commentId: Overload:Sharpie.Abstractions.IScreen.Pad
+  href: Sharpie.Abstractions.IScreen.html#Sharpie_Abstractions_IScreen_Pad_System_Drawing_Size_
+  name: Pad
+  nameWithType: IScreen.Pad
+  fullName: Sharpie.Abstractions.IScreen.Pad
+- uid: System.Drawing.Size
+  commentId: T:System.Drawing.Size
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.size
+  name: Size
+  nameWithType: Size
+  fullName: System.Drawing.Size
+- uid: Sharpie.Abstractions.IPad
+  commentId: T:Sharpie.Abstractions.IPad
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IPad.html
+  name: IPad
+  nameWithType: IPad
+  fullName: Sharpie.Abstractions.IPad

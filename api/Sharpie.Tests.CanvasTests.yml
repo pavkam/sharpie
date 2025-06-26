@@ -1,0 +1,3196 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Tests.CanvasTests
+  commentId: T:Sharpie.Tests.CanvasTests
+  id: CanvasTests
+  parent: Sharpie.Tests
+  children:
+  - Sharpie.Tests.CanvasTests.Box_DoesNothing_WhenOutsideArea
+  - Sharpie.Tests.CanvasTests.Box_DrawsBox_When1X2
+  - Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X1
+  - Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X2
+  - Sharpie.Tests.CanvasTests.Box_DrawsBox_When3X3
+  - Sharpie.Tests.CanvasTests.Box_DrawsCross_When1X1
+  - Sharpie.Tests.CanvasTests.Ctor_InitializesTheSize
+  - Sharpie.Tests.CanvasTests.Ctor_Throws_IfSizeIsInvalid(System.Int32,System.Int32)
+  - Sharpie.Tests.CanvasTests.DrawCell_DoesNothing_IfOutside
+  - Sharpie.Tests.CanvasTests.DrawCell_DrawsGlyph
+  - Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutside
+  - Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination
+  - Sharpie.Tests.CanvasTests.DrawOnto_DrawsTheAdjustedArea
+  - Sharpie.Tests.CanvasTests.DrawOnto_SkipsEmptyCells
+  - Sharpie.Tests.CanvasTests.DrawOnto_Throws_IfTheDestinationINull
+  - Sharpie.Tests.CanvasTests.Fill1_FillsArea
+  - Sharpie.Tests.CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty
+  - Sharpie.Tests.CanvasTests.Fill2_FillsArea
+  - Sharpie.Tests.CanvasTests.Fill2_Throws_IfShadeIsInvalid
+  - Sharpie.Tests.CanvasTests.Glyph1_DoesNothing_IfOutside
+  - Sharpie.Tests.CanvasTests.Glyph1_DrawsGlyph
+  - Sharpie.Tests.CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace
+  - Sharpie.Tests.CanvasTests.Glyph2_DrawsGlyph
+  - Sharpie.Tests.CanvasTests.Glyph2_Throws_IfStyleIsInvalid
+  - Sharpie.Tests.CanvasTests.Glyph3_DrawsGlyph
+  - Sharpie.Tests.CanvasTests.Glyph3_Throws_IfStyleIsInvalid
+  - Sharpie.Tests.CanvasTests.Glyph4_DrawsGlyph
+  - Sharpie.Tests.CanvasTests.Glyph4_Throws_IfFillIsInvalid(System.Int32)
+  - Sharpie.Tests.CanvasTests.Line1_CombinesLineRunes
+  - Sharpie.Tests.CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf
+  - Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfLengthLessThanZero
+  - Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+  - Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+  - Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Horizontal(Sharpie.Canvas.LineStyle,System.Char)
+  - Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Vertical(Sharpie.Canvas.LineStyle,System.Char)
+  - Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd(System.Single)
+  - Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart(System.Single)
+  - Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd(System.Single)
+  - Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart(System.Single)
+  - Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnX
+  - Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnY
+  - Sharpie.Tests.CanvasTests.Line1_StopsAtHeight
+  - Sharpie.Tests.CanvasTests.Line1_StopsAtWidth
+  - Sharpie.Tests.CanvasTests.Line1_Throws_IfStyleIsInvalid(Sharpie.Canvas.Orientation)
+  - Sharpie.Tests.CanvasTests.Line2_DrawsLine
+  - Sharpie.Tests.CanvasTests.Point_CombinesPoints
+  - Sharpie.Tests.CanvasTests.Point_DoesNothing_IfOutside
+  - Sharpie.Tests.CanvasTests.Point_DrawsSinglePoint(System.Single,System.Single,System.Char)
+  - Sharpie.Tests.CanvasTests.Rectangle_DoesNothing_IfAreaOutside
+  - Sharpie.Tests.CanvasTests.Rectangle_DrawsRectangle
+  - Sharpie.Tests.CanvasTests.TestInitialize
+  - Sharpie.Tests.CanvasTests.Text_DoesNothingIfTextIsEmpty
+  - Sharpie.Tests.CanvasTests.Text_DrawsEmoji
+  - Sharpie.Tests.CanvasTests.Text_TextThatFits_Horizontal
+  - Sharpie.Tests.CanvasTests.Text_TextThatFits_Vertical
+  - Sharpie.Tests.CanvasTests.Text_Throws_IfTextIsNull
+  langs:
+  - csharp
+  - vb
+  name: CanvasTests
+  nameWithType: CanvasTests
+  fullName: Sharpie.Tests.CanvasTests
+  type: Class
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CanvasTests
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 32
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestClass]
+
+      public class CanvasTests
+    content.vb: >-
+      <TestClass>
+
+      Public Class CanvasTests
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.TestInitialize
+  commentId: M:Sharpie.Tests.CanvasTests.TestInitialize
+  id: TestInitialize
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: TestInitialize()
+  nameWithType: CanvasTests.TestInitialize()
+  fullName: Sharpie.Tests.CanvasTests.TestInitialize()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestInitialize
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 41
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestInitialize]
+
+      public void TestInitialize()
+    content.vb: >-
+      <TestInitialize>
+
+      Public Sub TestInitialize()
+  overload: Sharpie.Tests.CanvasTests.TestInitialize*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Ctor_Throws_IfSizeIsInvalid(System.Int32,System.Int32)
+  commentId: M:Sharpie.Tests.CanvasTests.Ctor_Throws_IfSizeIsInvalid(System.Int32,System.Int32)
+  id: Ctor_Throws_IfSizeIsInvalid(System.Int32,System.Int32)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_IfSizeIsInvalid(int, int)
+  nameWithType: CanvasTests.Ctor_Throws_IfSizeIsInvalid(int, int)
+  fullName: Sharpie.Tests.CanvasTests.Ctor_Throws_IfSizeIsInvalid(int, int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_IfSizeIsInvalid
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 50
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(0, 1)]
+
+      [DataRow(1, 0)]
+
+      public void Ctor_Throws_IfSizeIsInvalid(int width, int height)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(0, 1)>
+
+      <DataRow(1, 0)>
+
+      Public Sub Ctor_Throws_IfSizeIsInvalid(width As Integer, height As Integer)
+  overload: Sharpie.Tests.CanvasTests.Ctor_Throws_IfSizeIsInvalid*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: System.Int32
+      value: 0
+    - type: System.Int32
+      value: 1
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: System.Int32
+      value: 1
+    - type: System.Int32
+      value: 0
+  nameWithType.vb: CanvasTests.Ctor_Throws_IfSizeIsInvalid(Integer, Integer)
+  fullName.vb: Sharpie.Tests.CanvasTests.Ctor_Throws_IfSizeIsInvalid(Integer, Integer)
+  name.vb: Ctor_Throws_IfSizeIsInvalid(Integer, Integer)
+- uid: Sharpie.Tests.CanvasTests.Ctor_InitializesTheSize
+  commentId: M:Sharpie.Tests.CanvasTests.Ctor_InitializesTheSize
+  id: Ctor_InitializesTheSize
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_InitializesTheSize()
+  nameWithType: CanvasTests.Ctor_InitializesTheSize()
+  fullName: Sharpie.Tests.CanvasTests.Ctor_InitializesTheSize()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_InitializesTheSize
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 57
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_InitializesTheSize()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_InitializesTheSize()
+  overload: Sharpie.Tests.CanvasTests.Ctor_InitializesTheSize*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_Throws_IfTheDestinationINull
+  commentId: M:Sharpie.Tests.CanvasTests.DrawOnto_Throws_IfTheDestinationINull
+  id: DrawOnto_Throws_IfTheDestinationINull
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: DrawOnto_Throws_IfTheDestinationINull()
+  nameWithType: CanvasTests.DrawOnto_Throws_IfTheDestinationINull()
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_Throws_IfTheDestinationINull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawOnto_Throws_IfTheDestinationINull
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 65
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawOnto_Throws_IfTheDestinationINull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawOnto_Throws_IfTheDestinationINull()
+  overload: Sharpie.Tests.CanvasTests.DrawOnto_Throws_IfTheDestinationINull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutside
+  commentId: M:Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutside
+  id: DrawOnto_DoesNothing_IfAreaOutside
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: DrawOnto_DoesNothing_IfAreaOutside()
+  nameWithType: CanvasTests.DrawOnto_DoesNothing_IfAreaOutside()
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutside()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawOnto_DoesNothing_IfAreaOutside
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 71
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawOnto_DoesNothing_IfAreaOutside()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawOnto_DoesNothing_IfAreaOutside()
+  overload: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutside*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination
+  commentId: M:Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination
+  id: DrawOnto_DoesNothing_IfAreaOutsideDestination
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: DrawOnto_DoesNothing_IfAreaOutsideDestination()
+  nameWithType: CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination()
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawOnto_DoesNothing_IfAreaOutsideDestination
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 80
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawOnto_DoesNothing_IfAreaOutsideDestination()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawOnto_DoesNothing_IfAreaOutsideDestination()
+  overload: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_DrawsTheAdjustedArea
+  commentId: M:Sharpie.Tests.CanvasTests.DrawOnto_DrawsTheAdjustedArea
+  id: DrawOnto_DrawsTheAdjustedArea
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: DrawOnto_DrawsTheAdjustedArea()
+  nameWithType: CanvasTests.DrawOnto_DrawsTheAdjustedArea()
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_DrawsTheAdjustedArea()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawOnto_DrawsTheAdjustedArea
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 92
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawOnto_DrawsTheAdjustedArea()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawOnto_DrawsTheAdjustedArea()
+  overload: Sharpie.Tests.CanvasTests.DrawOnto_DrawsTheAdjustedArea*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_SkipsEmptyCells
+  commentId: M:Sharpie.Tests.CanvasTests.DrawOnto_SkipsEmptyCells
+  id: DrawOnto_SkipsEmptyCells
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: DrawOnto_SkipsEmptyCells()
+  nameWithType: CanvasTests.DrawOnto_SkipsEmptyCells()
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_SkipsEmptyCells()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawOnto_SkipsEmptyCells
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 111
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawOnto_SkipsEmptyCells()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawOnto_SkipsEmptyCells()
+  overload: Sharpie.Tests.CanvasTests.DrawOnto_SkipsEmptyCells*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.DrawCell_DoesNothing_IfOutside
+  commentId: M:Sharpie.Tests.CanvasTests.DrawCell_DoesNothing_IfOutside
+  id: DrawCell_DoesNothing_IfOutside
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: DrawCell_DoesNothing_IfOutside()
+  nameWithType: CanvasTests.DrawCell_DoesNothing_IfOutside()
+  fullName: Sharpie.Tests.CanvasTests.DrawCell_DoesNothing_IfOutside()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawCell_DoesNothing_IfOutside
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 124
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawCell_DoesNothing_IfOutside()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawCell_DoesNothing_IfOutside()
+  overload: Sharpie.Tests.CanvasTests.DrawCell_DoesNothing_IfOutside*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.DrawCell_DrawsGlyph
+  commentId: M:Sharpie.Tests.CanvasTests.DrawCell_DrawsGlyph
+  id: DrawCell_DrawsGlyph
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: DrawCell_DrawsGlyph()
+  nameWithType: CanvasTests.DrawCell_DrawsGlyph()
+  fullName: Sharpie.Tests.CanvasTests.DrawCell_DrawsGlyph()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawCell_DrawsGlyph
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 132
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DrawCell_DrawsGlyph()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DrawCell_DrawsGlyph()
+  overload: Sharpie.Tests.CanvasTests.DrawCell_DrawsGlyph*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Glyph1_DoesNothing_IfOutside
+  commentId: M:Sharpie.Tests.CanvasTests.Glyph1_DoesNothing_IfOutside
+  id: Glyph1_DoesNothing_IfOutside
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Glyph1_DoesNothing_IfOutside()
+  nameWithType: CanvasTests.Glyph1_DoesNothing_IfOutside()
+  fullName: Sharpie.Tests.CanvasTests.Glyph1_DoesNothing_IfOutside()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph1_DoesNothing_IfOutside
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 140
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Glyph1_DoesNothing_IfOutside()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Glyph1_DoesNothing_IfOutside()
+  overload: Sharpie.Tests.CanvasTests.Glyph1_DoesNothing_IfOutside*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Glyph1_DrawsGlyph
+  commentId: M:Sharpie.Tests.CanvasTests.Glyph1_DrawsGlyph
+  id: Glyph1_DrawsGlyph
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Glyph1_DrawsGlyph()
+  nameWithType: CanvasTests.Glyph1_DrawsGlyph()
+  fullName: Sharpie.Tests.CanvasTests.Glyph1_DrawsGlyph()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph1_DrawsGlyph
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 148
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Glyph1_DrawsGlyph()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Glyph1_DrawsGlyph()
+  overload: Sharpie.Tests.CanvasTests.Glyph1_DrawsGlyph*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace
+  commentId: M:Sharpie.Tests.CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace
+  id: Glyph1_ReplacesSpecialChars_WithWhitespace
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Glyph1_ReplacesSpecialChars_WithWhitespace()
+  nameWithType: CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace()
+  fullName: Sharpie.Tests.CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph1_ReplacesSpecialChars_WithWhitespace
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 156
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Glyph1_ReplacesSpecialChars_WithWhitespace()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Glyph1_ReplacesSpecialChars_WithWhitespace()
+  overload: Sharpie.Tests.CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Glyph2_Throws_IfStyleIsInvalid
+  commentId: M:Sharpie.Tests.CanvasTests.Glyph2_Throws_IfStyleIsInvalid
+  id: Glyph2_Throws_IfStyleIsInvalid
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Glyph2_Throws_IfStyleIsInvalid()
+  nameWithType: CanvasTests.Glyph2_Throws_IfStyleIsInvalid()
+  fullName: Sharpie.Tests.CanvasTests.Glyph2_Throws_IfStyleIsInvalid()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph2_Throws_IfStyleIsInvalid
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 167
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Glyph2_Throws_IfStyleIsInvalid()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Glyph2_Throws_IfStyleIsInvalid()
+  overload: Sharpie.Tests.CanvasTests.Glyph2_Throws_IfStyleIsInvalid*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Glyph2_DrawsGlyph
+  commentId: M:Sharpie.Tests.CanvasTests.Glyph2_DrawsGlyph
+  id: Glyph2_DrawsGlyph
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Glyph2_DrawsGlyph()
+  nameWithType: CanvasTests.Glyph2_DrawsGlyph()
+  fullName: Sharpie.Tests.CanvasTests.Glyph2_DrawsGlyph()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph2_DrawsGlyph
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 176
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Glyph2_DrawsGlyph()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Glyph2_DrawsGlyph()
+  overload: Sharpie.Tests.CanvasTests.Glyph2_DrawsGlyph*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Glyph3_Throws_IfStyleIsInvalid
+  commentId: M:Sharpie.Tests.CanvasTests.Glyph3_Throws_IfStyleIsInvalid
+  id: Glyph3_Throws_IfStyleIsInvalid
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Glyph3_Throws_IfStyleIsInvalid()
+  nameWithType: CanvasTests.Glyph3_Throws_IfStyleIsInvalid()
+  fullName: Sharpie.Tests.CanvasTests.Glyph3_Throws_IfStyleIsInvalid()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph3_Throws_IfStyleIsInvalid
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 184
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Glyph3_Throws_IfStyleIsInvalid()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Glyph3_Throws_IfStyleIsInvalid()
+  overload: Sharpie.Tests.CanvasTests.Glyph3_Throws_IfStyleIsInvalid*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Glyph3_DrawsGlyph
+  commentId: M:Sharpie.Tests.CanvasTests.Glyph3_DrawsGlyph
+  id: Glyph3_DrawsGlyph
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Glyph3_DrawsGlyph()
+  nameWithType: CanvasTests.Glyph3_DrawsGlyph()
+  fullName: Sharpie.Tests.CanvasTests.Glyph3_DrawsGlyph()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph3_DrawsGlyph
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 194
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Glyph3_DrawsGlyph()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Glyph3_DrawsGlyph()
+  overload: Sharpie.Tests.CanvasTests.Glyph3_DrawsGlyph*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Glyph4_Throws_IfFillIsInvalid(System.Int32)
+  commentId: M:Sharpie.Tests.CanvasTests.Glyph4_Throws_IfFillIsInvalid(System.Int32)
+  id: Glyph4_Throws_IfFillIsInvalid(System.Int32)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Glyph4_Throws_IfFillIsInvalid(int)
+  nameWithType: CanvasTests.Glyph4_Throws_IfFillIsInvalid(int)
+  fullName: Sharpie.Tests.CanvasTests.Glyph4_Throws_IfFillIsInvalid(int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph4_Throws_IfFillIsInvalid
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 204
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(-1)]
+
+      [DataRow(9)]
+
+      public void Glyph4_Throws_IfFillIsInvalid(int fill)
+    parameters:
+    - id: fill
+      type: System.Int32
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(-1)>
+
+      <DataRow(9)>
+
+      Public Sub Glyph4_Throws_IfFillIsInvalid(fill As Integer)
+  overload: Sharpie.Tests.CanvasTests.Glyph4_Throws_IfFillIsInvalid*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Int32
+      value: -1
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Int32
+      value: 9
+  nameWithType.vb: CanvasTests.Glyph4_Throws_IfFillIsInvalid(Integer)
+  fullName.vb: Sharpie.Tests.CanvasTests.Glyph4_Throws_IfFillIsInvalid(Integer)
+  name.vb: Glyph4_Throws_IfFillIsInvalid(Integer)
+- uid: Sharpie.Tests.CanvasTests.Glyph4_DrawsGlyph
+  commentId: M:Sharpie.Tests.CanvasTests.Glyph4_DrawsGlyph
+  id: Glyph4_DrawsGlyph
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Glyph4_DrawsGlyph()
+  nameWithType: CanvasTests.Glyph4_DrawsGlyph()
+  fullName: Sharpie.Tests.CanvasTests.Glyph4_DrawsGlyph()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph4_DrawsGlyph
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 213
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Glyph4_DrawsGlyph()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Glyph4_DrawsGlyph()
+  overload: Sharpie.Tests.CanvasTests.Glyph4_DrawsGlyph*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Fill1_FillsArea
+  commentId: M:Sharpie.Tests.CanvasTests.Fill1_FillsArea
+  id: Fill1_FillsArea
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Fill1_FillsArea()
+  nameWithType: CanvasTests.Fill1_FillsArea()
+  fullName: Sharpie.Tests.CanvasTests.Fill1_FillsArea()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Fill1_FillsArea
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 221
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Fill1_FillsArea()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Fill1_FillsArea()
+  overload: Sharpie.Tests.CanvasTests.Fill1_FillsArea*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty
+  commentId: M:Sharpie.Tests.CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty
+  id: Fill1_FillsNothing_IfAreaIsEmpty
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Fill1_FillsNothing_IfAreaIsEmpty()
+  nameWithType: CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty()
+  fullName: Sharpie.Tests.CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Fill1_FillsNothing_IfAreaIsEmpty
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 239
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Fill1_FillsNothing_IfAreaIsEmpty()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Fill1_FillsNothing_IfAreaIsEmpty()
+  overload: Sharpie.Tests.CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Fill2_Throws_IfShadeIsInvalid
+  commentId: M:Sharpie.Tests.CanvasTests.Fill2_Throws_IfShadeIsInvalid
+  id: Fill2_Throws_IfShadeIsInvalid
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Fill2_Throws_IfShadeIsInvalid()
+  nameWithType: CanvasTests.Fill2_Throws_IfShadeIsInvalid()
+  fullName: Sharpie.Tests.CanvasTests.Fill2_Throws_IfShadeIsInvalid()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Fill2_Throws_IfShadeIsInvalid
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 257
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Fill2_Throws_IfShadeIsInvalid()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Fill2_Throws_IfShadeIsInvalid()
+  overload: Sharpie.Tests.CanvasTests.Fill2_Throws_IfShadeIsInvalid*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Fill2_FillsArea
+  commentId: M:Sharpie.Tests.CanvasTests.Fill2_FillsArea
+  id: Fill2_FillsArea
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Fill2_FillsArea()
+  nameWithType: CanvasTests.Fill2_FillsArea()
+  fullName: Sharpie.Tests.CanvasTests.Fill2_FillsArea()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Fill2_FillsArea
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 266
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Fill2_FillsArea()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Fill2_FillsArea()
+  overload: Sharpie.Tests.CanvasTests.Fill2_FillsArea*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Text_Throws_IfTextIsNull
+  commentId: M:Sharpie.Tests.CanvasTests.Text_Throws_IfTextIsNull
+  id: Text_Throws_IfTextIsNull
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Text_Throws_IfTextIsNull()
+  nameWithType: CanvasTests.Text_Throws_IfTextIsNull()
+  fullName: Sharpie.Tests.CanvasTests.Text_Throws_IfTextIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Text_Throws_IfTextIsNull
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 284
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Text_Throws_IfTextIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Text_Throws_IfTextIsNull()
+  overload: Sharpie.Tests.CanvasTests.Text_Throws_IfTextIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Text_DoesNothingIfTextIsEmpty
+  commentId: M:Sharpie.Tests.CanvasTests.Text_DoesNothingIfTextIsEmpty
+  id: Text_DoesNothingIfTextIsEmpty
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Text_DoesNothingIfTextIsEmpty()
+  nameWithType: CanvasTests.Text_DoesNothingIfTextIsEmpty()
+  fullName: Sharpie.Tests.CanvasTests.Text_DoesNothingIfTextIsEmpty()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Text_DoesNothingIfTextIsEmpty
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 293
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Text_DoesNothingIfTextIsEmpty()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Text_DoesNothingIfTextIsEmpty()
+  overload: Sharpie.Tests.CanvasTests.Text_DoesNothingIfTextIsEmpty*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Text_DrawsEmoji
+  commentId: M:Sharpie.Tests.CanvasTests.Text_DrawsEmoji
+  id: Text_DrawsEmoji
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Text_DrawsEmoji()
+  nameWithType: CanvasTests.Text_DrawsEmoji()
+  fullName: Sharpie.Tests.CanvasTests.Text_DrawsEmoji()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Text_DrawsEmoji
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 301
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Text_DrawsEmoji()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Text_DrawsEmoji()
+  overload: Sharpie.Tests.CanvasTests.Text_DrawsEmoji*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Text_TextThatFits_Horizontal
+  commentId: M:Sharpie.Tests.CanvasTests.Text_TextThatFits_Horizontal
+  id: Text_TextThatFits_Horizontal
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Text_TextThatFits_Horizontal()
+  nameWithType: CanvasTests.Text_TextThatFits_Horizontal()
+  fullName: Sharpie.Tests.CanvasTests.Text_TextThatFits_Horizontal()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Text_TextThatFits_Horizontal
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 312
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Text_TextThatFits_Horizontal()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Text_TextThatFits_Horizontal()
+  overload: Sharpie.Tests.CanvasTests.Text_TextThatFits_Horizontal*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Text_TextThatFits_Vertical
+  commentId: M:Sharpie.Tests.CanvasTests.Text_TextThatFits_Vertical
+  id: Text_TextThatFits_Vertical
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Text_TextThatFits_Vertical()
+  nameWithType: CanvasTests.Text_TextThatFits_Vertical()
+  fullName: Sharpie.Tests.CanvasTests.Text_TextThatFits_Vertical()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Text_TextThatFits_Vertical
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 330
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Text_TextThatFits_Vertical()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Text_TextThatFits_Vertical()
+  overload: Sharpie.Tests.CanvasTests.Text_TextThatFits_Vertical*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Point_DoesNothing_IfOutside
+  commentId: M:Sharpie.Tests.CanvasTests.Point_DoesNothing_IfOutside
+  id: Point_DoesNothing_IfOutside
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Point_DoesNothing_IfOutside()
+  nameWithType: CanvasTests.Point_DoesNothing_IfOutside()
+  fullName: Sharpie.Tests.CanvasTests.Point_DoesNothing_IfOutside()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Point_DoesNothing_IfOutside
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 348
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Point_DoesNothing_IfOutside()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Point_DoesNothing_IfOutside()
+  overload: Sharpie.Tests.CanvasTests.Point_DoesNothing_IfOutside*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Point_DrawsSinglePoint(System.Single,System.Single,System.Char)
+  commentId: M:Sharpie.Tests.CanvasTests.Point_DrawsSinglePoint(System.Single,System.Single,System.Char)
+  id: Point_DrawsSinglePoint(System.Single,System.Single,System.Char)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Point_DrawsSinglePoint(float, float, char)
+  nameWithType: CanvasTests.Point_DrawsSinglePoint(float, float, char)
+  fullName: Sharpie.Tests.CanvasTests.Point_DrawsSinglePoint(float, float, char)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Point_DrawsSinglePoint
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 356
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(0.4, 0.4, '▘')]
+
+      [DataRow(0.5, 0.4, '▝')]
+
+      [DataRow(0.4, 0.5, '▖')]
+
+      [DataRow(0.5, 0.5, '▗')]
+
+      public void Point_DrawsSinglePoint(float x, float y, char c)
+    parameters:
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    - id: c
+      type: System.Char
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(0.4, 0.4, "▘"c)>
+
+      <DataRow(0.5, 0.4, "▝"c)>
+
+      <DataRow(0.4, 0.5, "▖"c)>
+
+      <DataRow(0.5, 0.5, "▗"c)>
+
+      Public Sub Point_DrawsSinglePoint(x As Single, y As Single, c As Char)
+  overload: Sharpie.Tests.CanvasTests.Point_DrawsSinglePoint*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object,System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.4
+    - type: System.Single
+      value: 0.4
+    - type: System.Char
+      value: ▘
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object,System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.5
+    - type: System.Single
+      value: 0.4
+    - type: System.Char
+      value: ▝
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object,System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.4
+    - type: System.Single
+      value: 0.5
+    - type: System.Char
+      value: ▖
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object,System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.5
+    - type: System.Single
+      value: 0.5
+    - type: System.Char
+      value: ▗
+  nameWithType.vb: CanvasTests.Point_DrawsSinglePoint(Single, Single, Char)
+  fullName.vb: Sharpie.Tests.CanvasTests.Point_DrawsSinglePoint(Single, Single, Char)
+  name.vb: Point_DrawsSinglePoint(Single, Single, Char)
+- uid: Sharpie.Tests.CanvasTests.Point_CombinesPoints
+  commentId: M:Sharpie.Tests.CanvasTests.Point_CombinesPoints
+  id: Point_CombinesPoints
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Point_CombinesPoints()
+  nameWithType: CanvasTests.Point_CombinesPoints()
+  fullName: Sharpie.Tests.CanvasTests.Point_CombinesPoints()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Point_CombinesPoints
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 364
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Point_CombinesPoints()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Point_CombinesPoints()
+  overload: Sharpie.Tests.CanvasTests.Point_CombinesPoints*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Rectangle_DoesNothing_IfAreaOutside
+  commentId: M:Sharpie.Tests.CanvasTests.Rectangle_DoesNothing_IfAreaOutside
+  id: Rectangle_DoesNothing_IfAreaOutside
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Rectangle_DoesNothing_IfAreaOutside()
+  nameWithType: CanvasTests.Rectangle_DoesNothing_IfAreaOutside()
+  fullName: Sharpie.Tests.CanvasTests.Rectangle_DoesNothing_IfAreaOutside()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Rectangle_DoesNothing_IfAreaOutside
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 384
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Rectangle_DoesNothing_IfAreaOutside()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Rectangle_DoesNothing_IfAreaOutside()
+  overload: Sharpie.Tests.CanvasTests.Rectangle_DoesNothing_IfAreaOutside*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Rectangle_DrawsRectangle
+  commentId: M:Sharpie.Tests.CanvasTests.Rectangle_DrawsRectangle
+  id: Rectangle_DrawsRectangle
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Rectangle_DrawsRectangle()
+  nameWithType: CanvasTests.Rectangle_DrawsRectangle()
+  fullName: Sharpie.Tests.CanvasTests.Rectangle_DrawsRectangle()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Rectangle_DrawsRectangle
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 402
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Rectangle_DrawsRectangle()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Rectangle_DrawsRectangle()
+  overload: Sharpie.Tests.CanvasTests.Rectangle_DrawsRectangle*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Box_DoesNothing_WhenOutsideArea
+  commentId: M:Sharpie.Tests.CanvasTests.Box_DoesNothing_WhenOutsideArea
+  id: Box_DoesNothing_WhenOutsideArea
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Box_DoesNothing_WhenOutsideArea()
+  nameWithType: CanvasTests.Box_DoesNothing_WhenOutsideArea()
+  fullName: Sharpie.Tests.CanvasTests.Box_DoesNothing_WhenOutsideArea()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Box_DoesNothing_WhenOutsideArea
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 420
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Box_DoesNothing_WhenOutsideArea()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Box_DoesNothing_WhenOutsideArea()
+  overload: Sharpie.Tests.CanvasTests.Box_DoesNothing_WhenOutsideArea*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsCross_When1X1
+  commentId: M:Sharpie.Tests.CanvasTests.Box_DrawsCross_When1X1
+  id: Box_DrawsCross_When1X1
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Box_DrawsCross_When1X1()
+  nameWithType: CanvasTests.Box_DrawsCross_When1X1()
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsCross_When1X1()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Box_DrawsCross_When1X1
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 428
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Box_DrawsCross_When1X1()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Box_DrawsCross_When1X1()
+  overload: Sharpie.Tests.CanvasTests.Box_DrawsCross_When1X1*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X1
+  commentId: M:Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X1
+  id: Box_DrawsBox_When2X1
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Box_DrawsBox_When2X1()
+  nameWithType: CanvasTests.Box_DrawsBox_When2X1()
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X1()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Box_DrawsBox_When2X1
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 436
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Box_DrawsBox_When2X1()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Box_DrawsBox_When2X1()
+  overload: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X1*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsBox_When1X2
+  commentId: M:Sharpie.Tests.CanvasTests.Box_DrawsBox_When1X2
+  id: Box_DrawsBox_When1X2
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Box_DrawsBox_When1X2()
+  nameWithType: CanvasTests.Box_DrawsBox_When1X2()
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsBox_When1X2()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Box_DrawsBox_When1X2
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 454
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Box_DrawsBox_When1X2()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Box_DrawsBox_When1X2()
+  overload: Sharpie.Tests.CanvasTests.Box_DrawsBox_When1X2*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X2
+  commentId: M:Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X2
+  id: Box_DrawsBox_When2X2
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Box_DrawsBox_When2X2()
+  nameWithType: CanvasTests.Box_DrawsBox_When2X2()
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X2()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Box_DrawsBox_When2X2
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 472
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Box_DrawsBox_When2X2()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Box_DrawsBox_When2X2()
+  overload: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X2*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsBox_When3X3
+  commentId: M:Sharpie.Tests.CanvasTests.Box_DrawsBox_When3X3
+  id: Box_DrawsBox_When3X3
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Box_DrawsBox_When3X3()
+  nameWithType: CanvasTests.Box_DrawsBox_When3X3()
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsBox_When3X3()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Box_DrawsBox_When3X3
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 490
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Box_DrawsBox_When3X3()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Box_DrawsBox_When3X3()
+  overload: Sharpie.Tests.CanvasTests.Box_DrawsBox_When3X3*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfLengthLessThanZero
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfLengthLessThanZero
+  id: Line1_DoesNothing_IfLengthLessThanZero
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DoesNothing_IfLengthLessThanZero()
+  nameWithType: CanvasTests.Line1_DoesNothing_IfLengthLessThanZero()
+  fullName: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfLengthLessThanZero()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DoesNothing_IfLengthLessThanZero
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 520
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line1_DoesNothing_IfLengthLessThanZero()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line1_DoesNothing_IfLengthLessThanZero()
+  overload: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfLengthLessThanZero*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+  id: Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DoesNothing_IfXPlusLengthIsLessThanZero()
+  nameWithType: CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero()
+  fullName: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 528
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line1_DoesNothing_IfXPlusLengthIsLessThanZero()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line1_DoesNothing_IfXPlusLengthIsLessThanZero()
+  overload: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+  id: Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DoesNothing_IfYPlusLengthIsLessThanZero()
+  nameWithType: CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero()
+  fullName: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 536
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line1_DoesNothing_IfYPlusLengthIsLessThanZero()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line1_DoesNothing_IfYPlusLengthIsLessThanZero()
+  overload: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_StopsAtWidth
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_StopsAtWidth
+  id: Line1_StopsAtWidth
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_StopsAtWidth()
+  nameWithType: CanvasTests.Line1_StopsAtWidth()
+  fullName: Sharpie.Tests.CanvasTests.Line1_StopsAtWidth()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_StopsAtWidth
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 544
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line1_StopsAtWidth()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line1_StopsAtWidth()
+  overload: Sharpie.Tests.CanvasTests.Line1_StopsAtWidth*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_StopsAtHeight
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_StopsAtHeight
+  id: Line1_StopsAtHeight
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_StopsAtHeight()
+  nameWithType: CanvasTests.Line1_StopsAtHeight()
+  fullName: Sharpie.Tests.CanvasTests.Line1_StopsAtHeight()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_StopsAtHeight
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 553
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line1_StopsAtHeight()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line1_StopsAtHeight()
+  overload: Sharpie.Tests.CanvasTests.Line1_StopsAtHeight*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnX
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnX
+  id: Line1_ExitsNegative_OnX
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_ExitsNegative_OnX()
+  nameWithType: CanvasTests.Line1_ExitsNegative_OnX()
+  fullName: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnX()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_ExitsNegative_OnX
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 562
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line1_ExitsNegative_OnX()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line1_ExitsNegative_OnX()
+  overload: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnX*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnY
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnY
+  id: Line1_ExitsNegative_OnY
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_ExitsNegative_OnY()
+  nameWithType: CanvasTests.Line1_ExitsNegative_OnY()
+  fullName: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnY()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_ExitsNegative_OnY
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 571
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line1_ExitsNegative_OnY()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line1_ExitsNegative_OnY()
+  overload: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnY*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart(System.Single)
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart(System.Single)
+  id: Line1_DrawsHalfLine1_Horizontal_AtStart(System.Single)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DrawsHalfLine1_Horizontal_AtStart(float)
+  nameWithType: CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart(float)
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart(float)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DrawsHalfLine1_Horizontal_AtStart
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 580
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(0)]
+
+      [DataRow(0.5)]
+
+      [DataRow(0.9)]
+
+      public void Line1_DrawsHalfLine1_Horizontal_AtStart(float y)
+    parameters:
+    - id: y
+      type: System.Single
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(0)>
+
+      <DataRow(0.5)>
+
+      <DataRow(0.9)>
+
+      Public Sub Line1_DrawsHalfLine1_Horizontal_AtStart(y As Single)
+  overload: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.5
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.9
+  nameWithType.vb: CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart(Single)
+  fullName.vb: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart(Single)
+  name.vb: Line1_DrawsHalfLine1_Horizontal_AtStart(Single)
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd(System.Single)
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd(System.Single)
+  id: Line1_DrawsHalfLine1_Horizontal_AtEnd(System.Single)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DrawsHalfLine1_Horizontal_AtEnd(float)
+  nameWithType: CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd(float)
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd(float)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DrawsHalfLine1_Horizontal_AtEnd
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 589
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(0)]
+
+      [DataRow(0.5)]
+
+      [DataRow(0.9)]
+
+      public void Line1_DrawsHalfLine1_Horizontal_AtEnd(float y)
+    parameters:
+    - id: y
+      type: System.Single
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(0)>
+
+      <DataRow(0.5)>
+
+      <DataRow(0.9)>
+
+      Public Sub Line1_DrawsHalfLine1_Horizontal_AtEnd(y As Single)
+  overload: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.5
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.9
+  nameWithType.vb: CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd(Single)
+  fullName.vb: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd(Single)
+  name.vb: Line1_DrawsHalfLine1_Horizontal_AtEnd(Single)
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Horizontal(Sharpie.Canvas.LineStyle,System.Char)
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Horizontal(Sharpie.Canvas.LineStyle,System.Char)
+  id: Line1_DrawsFullLine1_Horizontal(Sharpie.Canvas.LineStyle,System.Char)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DrawsFullLine1_Horizontal(LineStyle, char)
+  nameWithType: CanvasTests.Line1_DrawsFullLine1_Horizontal(Canvas.LineStyle, char)
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Horizontal(Sharpie.Canvas.LineStyle, char)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DrawsFullLine1_Horizontal
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 598
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(Canvas.LineStyle.Light, '─')]
+
+      [DataRow(Canvas.LineStyle.Heavy, '━')]
+
+      [DataRow(Canvas.LineStyle.LightDashed, '┄')]
+
+      [DataRow(Canvas.LineStyle.HeavyDashed, '┅')]
+
+      [DataRow(Canvas.LineStyle.Double, '═')]
+
+      public void Line1_DrawsFullLine1_Horizontal(Canvas.LineStyle style, char exp)
+    parameters:
+    - id: style
+      type: Sharpie.Canvas.LineStyle
+    - id: exp
+      type: System.Char
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(Canvas.LineStyle.Light, "─"c)>
+
+      <DataRow(Canvas.LineStyle.Heavy, "━"c)>
+
+      <DataRow(Canvas.LineStyle.LightDashed, "┄"c)>
+
+      <DataRow(Canvas.LineStyle.HeavyDashed, "┅"c)>
+
+      <DataRow(Canvas.LineStyle.Double, "═"c)>
+
+      Public Sub Line1_DrawsFullLine1_Horizontal(style As Canvas.LineStyle, exp As Char)
+  overload: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Horizontal*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 0
+    - type: System.Char
+      value: ─
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 1
+    - type: System.Char
+      value: ━
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 2
+    - type: System.Char
+      value: ┄
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 3
+    - type: System.Char
+      value: ┅
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 4
+    - type: System.Char
+      value: ═
+  nameWithType.vb: CanvasTests.Line1_DrawsFullLine1_Horizontal(Canvas.LineStyle, Char)
+  fullName.vb: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Horizontal(Sharpie.Canvas.LineStyle, Char)
+  name.vb: Line1_DrawsFullLine1_Horizontal(LineStyle, Char)
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart(System.Single)
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart(System.Single)
+  id: Line1_DrawsHalfLine1_Vertical_AtStart(System.Single)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DrawsHalfLine1_Vertical_AtStart(float)
+  nameWithType: CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart(float)
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart(float)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DrawsHalfLine1_Vertical_AtStart
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 609
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(0)]
+
+      [DataRow(0.5)]
+
+      [DataRow(0.9)]
+
+      public void Line1_DrawsHalfLine1_Vertical_AtStart(float x)
+    parameters:
+    - id: x
+      type: System.Single
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(0)>
+
+      <DataRow(0.5)>
+
+      <DataRow(0.9)>
+
+      Public Sub Line1_DrawsHalfLine1_Vertical_AtStart(x As Single)
+  overload: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.5
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.9
+  nameWithType.vb: CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart(Single)
+  fullName.vb: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart(Single)
+  name.vb: Line1_DrawsHalfLine1_Vertical_AtStart(Single)
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd(System.Single)
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd(System.Single)
+  id: Line1_DrawsHalfLine1_Vertical_AtEnd(System.Single)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DrawsHalfLine1_Vertical_AtEnd(float)
+  nameWithType: CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd(float)
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd(float)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DrawsHalfLine1_Vertical_AtEnd
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 618
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(0)]
+
+      [DataRow(0.5)]
+
+      [DataRow(0.9)]
+
+      public void Line1_DrawsHalfLine1_Vertical_AtEnd(float x)
+    parameters:
+    - id: x
+      type: System.Single
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(0)>
+
+      <DataRow(0.5)>
+
+      <DataRow(0.9)>
+
+      Public Sub Line1_DrawsHalfLine1_Vertical_AtEnd(x As Single)
+  overload: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.5
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Single
+      value: 0.9
+  nameWithType.vb: CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd(Single)
+  fullName.vb: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd(Single)
+  name.vb: Line1_DrawsHalfLine1_Vertical_AtEnd(Single)
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Vertical(Sharpie.Canvas.LineStyle,System.Char)
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Vertical(Sharpie.Canvas.LineStyle,System.Char)
+  id: Line1_DrawsFullLine1_Vertical(Sharpie.Canvas.LineStyle,System.Char)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DrawsFullLine1_Vertical(LineStyle, char)
+  nameWithType: CanvasTests.Line1_DrawsFullLine1_Vertical(Canvas.LineStyle, char)
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Vertical(Sharpie.Canvas.LineStyle, char)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DrawsFullLine1_Vertical
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 627
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(Canvas.LineStyle.Light, '│')]
+
+      [DataRow(Canvas.LineStyle.Heavy, '┃')]
+
+      [DataRow(Canvas.LineStyle.LightDashed, '┆')]
+
+      [DataRow(Canvas.LineStyle.HeavyDashed, '┇')]
+
+      [DataRow(Canvas.LineStyle.Double, '║')]
+
+      public void Line1_DrawsFullLine1_Vertical(Canvas.LineStyle style, char exp)
+    parameters:
+    - id: style
+      type: Sharpie.Canvas.LineStyle
+    - id: exp
+      type: System.Char
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(Canvas.LineStyle.Light, "│"c)>
+
+      <DataRow(Canvas.LineStyle.Heavy, "┃"c)>
+
+      <DataRow(Canvas.LineStyle.LightDashed, "┆"c)>
+
+      <DataRow(Canvas.LineStyle.HeavyDashed, "┇"c)>
+
+      <DataRow(Canvas.LineStyle.Double, "║"c)>
+
+      Public Sub Line1_DrawsFullLine1_Vertical(style As Canvas.LineStyle, exp As Char)
+  overload: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Vertical*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 0
+    - type: System.Char
+      value: │
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 1
+    - type: System.Char
+      value: ┃
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 2
+    - type: System.Char
+      value: ┆
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 3
+    - type: System.Char
+      value: ┇
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.Canvas.LineStyle
+      value: 4
+    - type: System.Char
+      value: ║
+  nameWithType.vb: CanvasTests.Line1_DrawsFullLine1_Vertical(Canvas.LineStyle, Char)
+  fullName.vb: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Vertical(Sharpie.Canvas.LineStyle, Char)
+  name.vb: Line1_DrawsFullLine1_Vertical(LineStyle, Char)
+- uid: Sharpie.Tests.CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf
+  id: Line1_DoesNotDraw_IfLengthNotHalf
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_DoesNotDraw_IfLengthNotHalf()
+  nameWithType: CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf()
+  fullName: Sharpie.Tests.CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_DoesNotDraw_IfLengthNotHalf
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 638
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line1_DoesNotDraw_IfLengthNotHalf()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line1_DoesNotDraw_IfLengthNotHalf()
+  overload: Sharpie.Tests.CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_CombinesLineRunes
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_CombinesLineRunes
+  id: Line1_CombinesLineRunes
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_CombinesLineRunes()
+  nameWithType: CanvasTests.Line1_CombinesLineRunes()
+  fullName: Sharpie.Tests.CanvasTests.Line1_CombinesLineRunes()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_CombinesLineRunes
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 647
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line1_CombinesLineRunes()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line1_CombinesLineRunes()
+  overload: Sharpie.Tests.CanvasTests.Line1_CombinesLineRunes*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.CanvasTests.Line1_Throws_IfStyleIsInvalid(Sharpie.Canvas.Orientation)
+  commentId: M:Sharpie.Tests.CanvasTests.Line1_Throws_IfStyleIsInvalid(Sharpie.Canvas.Orientation)
+  id: Line1_Throws_IfStyleIsInvalid(Sharpie.Canvas.Orientation)
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line1_Throws_IfStyleIsInvalid(Orientation)
+  nameWithType: CanvasTests.Line1_Throws_IfStyleIsInvalid(Canvas.Orientation)
+  fullName: Sharpie.Tests.CanvasTests.Line1_Throws_IfStyleIsInvalid(Sharpie.Canvas.Orientation)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line1_Throws_IfStyleIsInvalid
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 657
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(Canvas.Orientation.Horizontal)]
+
+      [DataRow(Canvas.Orientation.Vertical)]
+
+      public void Line1_Throws_IfStyleIsInvalid(Canvas.Orientation orientation)
+    parameters:
+    - id: orientation
+      type: Sharpie.Canvas.Orientation
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(Canvas.Orientation.Horizontal)>
+
+      <DataRow(Canvas.Orientation.Vertical)>
+
+      Public Sub Line1_Throws_IfStyleIsInvalid(orientation As Canvas.Orientation)
+  overload: Sharpie.Tests.CanvasTests.Line1_Throws_IfStyleIsInvalid*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.Canvas.Orientation
+      value: 0
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.Canvas.Orientation
+      value: 1
+- uid: Sharpie.Tests.CanvasTests.Line2_DrawsLine
+  commentId: M:Sharpie.Tests.CanvasTests.Line2_DrawsLine
+  id: Line2_DrawsLine
+  parent: Sharpie.Tests.CanvasTests
+  langs:
+  - csharp
+  - vb
+  name: Line2_DrawsLine()
+  nameWithType: CanvasTests.Line2_DrawsLine()
+  fullName: Sharpie.Tests.CanvasTests.Line2_DrawsLine()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/CanvasTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line2_DrawsLine
+    path: Sharpie.Tests/CanvasTests.cs
+    startLine: 666
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Line2_DrawsLine()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Line2_DrawsLine()
+  overload: Sharpie.Tests.CanvasTests.Line2_DrawsLine*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+references:
+- uid: Sharpie.Tests
+  commentId: N:Sharpie.Tests
+  href: Sharpie.html
+  name: Sharpie.Tests
+  nameWithType: Sharpie.Tests
+  fullName: Sharpie.Tests
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Tests.CanvasTests.TestInitialize*
+  commentId: Overload:Sharpie.Tests.CanvasTests.TestInitialize
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_TestInitialize
+  name: TestInitialize
+  nameWithType: CanvasTests.TestInitialize
+  fullName: Sharpie.Tests.CanvasTests.TestInitialize
+- uid: Sharpie.Tests.CanvasTests.Ctor_Throws_IfSizeIsInvalid*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Ctor_Throws_IfSizeIsInvalid
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Ctor_Throws_IfSizeIsInvalid_System_Int32_System_Int32_
+  name: Ctor_Throws_IfSizeIsInvalid
+  nameWithType: CanvasTests.Ctor_Throws_IfSizeIsInvalid
+  fullName: Sharpie.Tests.CanvasTests.Ctor_Throws_IfSizeIsInvalid
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Sharpie.Tests.CanvasTests.Ctor_InitializesTheSize*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Ctor_InitializesTheSize
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Ctor_InitializesTheSize
+  name: Ctor_InitializesTheSize
+  nameWithType: CanvasTests.Ctor_InitializesTheSize
+  fullName: Sharpie.Tests.CanvasTests.Ctor_InitializesTheSize
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_Throws_IfTheDestinationINull*
+  commentId: Overload:Sharpie.Tests.CanvasTests.DrawOnto_Throws_IfTheDestinationINull
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_DrawOnto_Throws_IfTheDestinationINull
+  name: DrawOnto_Throws_IfTheDestinationINull
+  nameWithType: CanvasTests.DrawOnto_Throws_IfTheDestinationINull
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_Throws_IfTheDestinationINull
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutside*
+  commentId: Overload:Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutside
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_DrawOnto_DoesNothing_IfAreaOutside
+  name: DrawOnto_DoesNothing_IfAreaOutside
+  nameWithType: CanvasTests.DrawOnto_DoesNothing_IfAreaOutside
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutside
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination*
+  commentId: Overload:Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_DrawOnto_DoesNothing_IfAreaOutsideDestination
+  name: DrawOnto_DoesNothing_IfAreaOutsideDestination
+  nameWithType: CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_DoesNothing_IfAreaOutsideDestination
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_DrawsTheAdjustedArea*
+  commentId: Overload:Sharpie.Tests.CanvasTests.DrawOnto_DrawsTheAdjustedArea
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_DrawOnto_DrawsTheAdjustedArea
+  name: DrawOnto_DrawsTheAdjustedArea
+  nameWithType: CanvasTests.DrawOnto_DrawsTheAdjustedArea
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_DrawsTheAdjustedArea
+- uid: Sharpie.Tests.CanvasTests.DrawOnto_SkipsEmptyCells*
+  commentId: Overload:Sharpie.Tests.CanvasTests.DrawOnto_SkipsEmptyCells
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_DrawOnto_SkipsEmptyCells
+  name: DrawOnto_SkipsEmptyCells
+  nameWithType: CanvasTests.DrawOnto_SkipsEmptyCells
+  fullName: Sharpie.Tests.CanvasTests.DrawOnto_SkipsEmptyCells
+- uid: Sharpie.Tests.CanvasTests.DrawCell_DoesNothing_IfOutside*
+  commentId: Overload:Sharpie.Tests.CanvasTests.DrawCell_DoesNothing_IfOutside
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_DrawCell_DoesNothing_IfOutside
+  name: DrawCell_DoesNothing_IfOutside
+  nameWithType: CanvasTests.DrawCell_DoesNothing_IfOutside
+  fullName: Sharpie.Tests.CanvasTests.DrawCell_DoesNothing_IfOutside
+- uid: Sharpie.Tests.CanvasTests.DrawCell_DrawsGlyph*
+  commentId: Overload:Sharpie.Tests.CanvasTests.DrawCell_DrawsGlyph
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_DrawCell_DrawsGlyph
+  name: DrawCell_DrawsGlyph
+  nameWithType: CanvasTests.DrawCell_DrawsGlyph
+  fullName: Sharpie.Tests.CanvasTests.DrawCell_DrawsGlyph
+- uid: Sharpie.Tests.CanvasTests.Glyph1_DoesNothing_IfOutside*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Glyph1_DoesNothing_IfOutside
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Glyph1_DoesNothing_IfOutside
+  name: Glyph1_DoesNothing_IfOutside
+  nameWithType: CanvasTests.Glyph1_DoesNothing_IfOutside
+  fullName: Sharpie.Tests.CanvasTests.Glyph1_DoesNothing_IfOutside
+- uid: Sharpie.Tests.CanvasTests.Glyph1_DrawsGlyph*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Glyph1_DrawsGlyph
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Glyph1_DrawsGlyph
+  name: Glyph1_DrawsGlyph
+  nameWithType: CanvasTests.Glyph1_DrawsGlyph
+  fullName: Sharpie.Tests.CanvasTests.Glyph1_DrawsGlyph
+- uid: Sharpie.Tests.CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Glyph1_ReplacesSpecialChars_WithWhitespace
+  name: Glyph1_ReplacesSpecialChars_WithWhitespace
+  nameWithType: CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace
+  fullName: Sharpie.Tests.CanvasTests.Glyph1_ReplacesSpecialChars_WithWhitespace
+- uid: Sharpie.Tests.CanvasTests.Glyph2_Throws_IfStyleIsInvalid*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Glyph2_Throws_IfStyleIsInvalid
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Glyph2_Throws_IfStyleIsInvalid
+  name: Glyph2_Throws_IfStyleIsInvalid
+  nameWithType: CanvasTests.Glyph2_Throws_IfStyleIsInvalid
+  fullName: Sharpie.Tests.CanvasTests.Glyph2_Throws_IfStyleIsInvalid
+- uid: Sharpie.Tests.CanvasTests.Glyph2_DrawsGlyph*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Glyph2_DrawsGlyph
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Glyph2_DrawsGlyph
+  name: Glyph2_DrawsGlyph
+  nameWithType: CanvasTests.Glyph2_DrawsGlyph
+  fullName: Sharpie.Tests.CanvasTests.Glyph2_DrawsGlyph
+- uid: Sharpie.Tests.CanvasTests.Glyph3_Throws_IfStyleIsInvalid*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Glyph3_Throws_IfStyleIsInvalid
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Glyph3_Throws_IfStyleIsInvalid
+  name: Glyph3_Throws_IfStyleIsInvalid
+  nameWithType: CanvasTests.Glyph3_Throws_IfStyleIsInvalid
+  fullName: Sharpie.Tests.CanvasTests.Glyph3_Throws_IfStyleIsInvalid
+- uid: Sharpie.Tests.CanvasTests.Glyph3_DrawsGlyph*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Glyph3_DrawsGlyph
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Glyph3_DrawsGlyph
+  name: Glyph3_DrawsGlyph
+  nameWithType: CanvasTests.Glyph3_DrawsGlyph
+  fullName: Sharpie.Tests.CanvasTests.Glyph3_DrawsGlyph
+- uid: Sharpie.Tests.CanvasTests.Glyph4_Throws_IfFillIsInvalid*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Glyph4_Throws_IfFillIsInvalid
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Glyph4_Throws_IfFillIsInvalid_System_Int32_
+  name: Glyph4_Throws_IfFillIsInvalid
+  nameWithType: CanvasTests.Glyph4_Throws_IfFillIsInvalid
+  fullName: Sharpie.Tests.CanvasTests.Glyph4_Throws_IfFillIsInvalid
+- uid: Sharpie.Tests.CanvasTests.Glyph4_DrawsGlyph*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Glyph4_DrawsGlyph
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Glyph4_DrawsGlyph
+  name: Glyph4_DrawsGlyph
+  nameWithType: CanvasTests.Glyph4_DrawsGlyph
+  fullName: Sharpie.Tests.CanvasTests.Glyph4_DrawsGlyph
+- uid: Sharpie.Tests.CanvasTests.Fill1_FillsArea*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Fill1_FillsArea
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Fill1_FillsArea
+  name: Fill1_FillsArea
+  nameWithType: CanvasTests.Fill1_FillsArea
+  fullName: Sharpie.Tests.CanvasTests.Fill1_FillsArea
+- uid: Sharpie.Tests.CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Fill1_FillsNothing_IfAreaIsEmpty
+  name: Fill1_FillsNothing_IfAreaIsEmpty
+  nameWithType: CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty
+  fullName: Sharpie.Tests.CanvasTests.Fill1_FillsNothing_IfAreaIsEmpty
+- uid: Sharpie.Tests.CanvasTests.Fill2_Throws_IfShadeIsInvalid*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Fill2_Throws_IfShadeIsInvalid
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Fill2_Throws_IfShadeIsInvalid
+  name: Fill2_Throws_IfShadeIsInvalid
+  nameWithType: CanvasTests.Fill2_Throws_IfShadeIsInvalid
+  fullName: Sharpie.Tests.CanvasTests.Fill2_Throws_IfShadeIsInvalid
+- uid: Sharpie.Tests.CanvasTests.Fill2_FillsArea*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Fill2_FillsArea
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Fill2_FillsArea
+  name: Fill2_FillsArea
+  nameWithType: CanvasTests.Fill2_FillsArea
+  fullName: Sharpie.Tests.CanvasTests.Fill2_FillsArea
+- uid: Sharpie.Tests.CanvasTests.Text_Throws_IfTextIsNull*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Text_Throws_IfTextIsNull
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Text_Throws_IfTextIsNull
+  name: Text_Throws_IfTextIsNull
+  nameWithType: CanvasTests.Text_Throws_IfTextIsNull
+  fullName: Sharpie.Tests.CanvasTests.Text_Throws_IfTextIsNull
+- uid: Sharpie.Tests.CanvasTests.Text_DoesNothingIfTextIsEmpty*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Text_DoesNothingIfTextIsEmpty
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Text_DoesNothingIfTextIsEmpty
+  name: Text_DoesNothingIfTextIsEmpty
+  nameWithType: CanvasTests.Text_DoesNothingIfTextIsEmpty
+  fullName: Sharpie.Tests.CanvasTests.Text_DoesNothingIfTextIsEmpty
+- uid: Sharpie.Tests.CanvasTests.Text_DrawsEmoji*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Text_DrawsEmoji
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Text_DrawsEmoji
+  name: Text_DrawsEmoji
+  nameWithType: CanvasTests.Text_DrawsEmoji
+  fullName: Sharpie.Tests.CanvasTests.Text_DrawsEmoji
+- uid: Sharpie.Tests.CanvasTests.Text_TextThatFits_Horizontal*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Text_TextThatFits_Horizontal
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Text_TextThatFits_Horizontal
+  name: Text_TextThatFits_Horizontal
+  nameWithType: CanvasTests.Text_TextThatFits_Horizontal
+  fullName: Sharpie.Tests.CanvasTests.Text_TextThatFits_Horizontal
+- uid: Sharpie.Tests.CanvasTests.Text_TextThatFits_Vertical*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Text_TextThatFits_Vertical
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Text_TextThatFits_Vertical
+  name: Text_TextThatFits_Vertical
+  nameWithType: CanvasTests.Text_TextThatFits_Vertical
+  fullName: Sharpie.Tests.CanvasTests.Text_TextThatFits_Vertical
+- uid: Sharpie.Tests.CanvasTests.Point_DoesNothing_IfOutside*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Point_DoesNothing_IfOutside
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Point_DoesNothing_IfOutside
+  name: Point_DoesNothing_IfOutside
+  nameWithType: CanvasTests.Point_DoesNothing_IfOutside
+  fullName: Sharpie.Tests.CanvasTests.Point_DoesNothing_IfOutside
+- uid: Sharpie.Tests.CanvasTests.Point_DrawsSinglePoint*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Point_DrawsSinglePoint
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Point_DrawsSinglePoint_System_Single_System_Single_System_Char_
+  name: Point_DrawsSinglePoint
+  nameWithType: CanvasTests.Point_DrawsSinglePoint
+  fullName: Sharpie.Tests.CanvasTests.Point_DrawsSinglePoint
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Char
+  commentId: T:System.Char
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.char
+  name: char
+  nameWithType: char
+  fullName: char
+  nameWithType.vb: Char
+  fullName.vb: Char
+  name.vb: Char
+- uid: Sharpie.Tests.CanvasTests.Point_CombinesPoints*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Point_CombinesPoints
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Point_CombinesPoints
+  name: Point_CombinesPoints
+  nameWithType: CanvasTests.Point_CombinesPoints
+  fullName: Sharpie.Tests.CanvasTests.Point_CombinesPoints
+- uid: Sharpie.Tests.CanvasTests.Rectangle_DoesNothing_IfAreaOutside*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Rectangle_DoesNothing_IfAreaOutside
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Rectangle_DoesNothing_IfAreaOutside
+  name: Rectangle_DoesNothing_IfAreaOutside
+  nameWithType: CanvasTests.Rectangle_DoesNothing_IfAreaOutside
+  fullName: Sharpie.Tests.CanvasTests.Rectangle_DoesNothing_IfAreaOutside
+- uid: Sharpie.Tests.CanvasTests.Rectangle_DrawsRectangle*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Rectangle_DrawsRectangle
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Rectangle_DrawsRectangle
+  name: Rectangle_DrawsRectangle
+  nameWithType: CanvasTests.Rectangle_DrawsRectangle
+  fullName: Sharpie.Tests.CanvasTests.Rectangle_DrawsRectangle
+- uid: Sharpie.Tests.CanvasTests.Box_DoesNothing_WhenOutsideArea*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Box_DoesNothing_WhenOutsideArea
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Box_DoesNothing_WhenOutsideArea
+  name: Box_DoesNothing_WhenOutsideArea
+  nameWithType: CanvasTests.Box_DoesNothing_WhenOutsideArea
+  fullName: Sharpie.Tests.CanvasTests.Box_DoesNothing_WhenOutsideArea
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsCross_When1X1*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Box_DrawsCross_When1X1
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Box_DrawsCross_When1X1
+  name: Box_DrawsCross_When1X1
+  nameWithType: CanvasTests.Box_DrawsCross_When1X1
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsCross_When1X1
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X1*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X1
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Box_DrawsBox_When2X1
+  name: Box_DrawsBox_When2X1
+  nameWithType: CanvasTests.Box_DrawsBox_When2X1
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X1
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsBox_When1X2*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Box_DrawsBox_When1X2
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Box_DrawsBox_When1X2
+  name: Box_DrawsBox_When1X2
+  nameWithType: CanvasTests.Box_DrawsBox_When1X2
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsBox_When1X2
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X2*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X2
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Box_DrawsBox_When2X2
+  name: Box_DrawsBox_When2X2
+  nameWithType: CanvasTests.Box_DrawsBox_When2X2
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsBox_When2X2
+- uid: Sharpie.Tests.CanvasTests.Box_DrawsBox_When3X3*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Box_DrawsBox_When3X3
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Box_DrawsBox_When3X3
+  name: Box_DrawsBox_When3X3
+  nameWithType: CanvasTests.Box_DrawsBox_When3X3
+  fullName: Sharpie.Tests.CanvasTests.Box_DrawsBox_When3X3
+- uid: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfLengthLessThanZero*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfLengthLessThanZero
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DoesNothing_IfLengthLessThanZero
+  name: Line1_DoesNothing_IfLengthLessThanZero
+  nameWithType: CanvasTests.Line1_DoesNothing_IfLengthLessThanZero
+  fullName: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfLengthLessThanZero
+- uid: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+  name: Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+  nameWithType: CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+  fullName: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfXPlusLengthIsLessThanZero
+- uid: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+  name: Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+  nameWithType: CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+  fullName: Sharpie.Tests.CanvasTests.Line1_DoesNothing_IfYPlusLengthIsLessThanZero
+- uid: Sharpie.Tests.CanvasTests.Line1_StopsAtWidth*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_StopsAtWidth
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_StopsAtWidth
+  name: Line1_StopsAtWidth
+  nameWithType: CanvasTests.Line1_StopsAtWidth
+  fullName: Sharpie.Tests.CanvasTests.Line1_StopsAtWidth
+- uid: Sharpie.Tests.CanvasTests.Line1_StopsAtHeight*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_StopsAtHeight
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_StopsAtHeight
+  name: Line1_StopsAtHeight
+  nameWithType: CanvasTests.Line1_StopsAtHeight
+  fullName: Sharpie.Tests.CanvasTests.Line1_StopsAtHeight
+- uid: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnX*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnX
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_ExitsNegative_OnX
+  name: Line1_ExitsNegative_OnX
+  nameWithType: CanvasTests.Line1_ExitsNegative_OnX
+  fullName: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnX
+- uid: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnY*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnY
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_ExitsNegative_OnY
+  name: Line1_ExitsNegative_OnY
+  nameWithType: CanvasTests.Line1_ExitsNegative_OnY
+  fullName: Sharpie.Tests.CanvasTests.Line1_ExitsNegative_OnY
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DrawsHalfLine1_Horizontal_AtStart_System_Single_
+  name: Line1_DrawsHalfLine1_Horizontal_AtStart
+  nameWithType: CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtStart
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DrawsHalfLine1_Horizontal_AtEnd_System_Single_
+  name: Line1_DrawsHalfLine1_Horizontal_AtEnd
+  nameWithType: CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Horizontal_AtEnd
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Horizontal*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Horizontal
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DrawsFullLine1_Horizontal_Sharpie_Canvas_LineStyle_System_Char_
+  name: Line1_DrawsFullLine1_Horizontal
+  nameWithType: CanvasTests.Line1_DrawsFullLine1_Horizontal
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Horizontal
+- uid: Sharpie.Canvas.LineStyle
+  commentId: T:Sharpie.Canvas.LineStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.LineStyle
+  nameWithType: Canvas.LineStyle
+  fullName: Sharpie.Canvas.LineStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DrawsHalfLine1_Vertical_AtStart_System_Single_
+  name: Line1_DrawsHalfLine1_Vertical_AtStart
+  nameWithType: CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtStart
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DrawsHalfLine1_Vertical_AtEnd_System_Single_
+  name: Line1_DrawsHalfLine1_Vertical_AtEnd
+  nameWithType: CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsHalfLine1_Vertical_AtEnd
+- uid: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Vertical*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Vertical
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DrawsFullLine1_Vertical_Sharpie_Canvas_LineStyle_System_Char_
+  name: Line1_DrawsFullLine1_Vertical
+  nameWithType: CanvasTests.Line1_DrawsFullLine1_Vertical
+  fullName: Sharpie.Tests.CanvasTests.Line1_DrawsFullLine1_Vertical
+- uid: Sharpie.Tests.CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_DoesNotDraw_IfLengthNotHalf
+  name: Line1_DoesNotDraw_IfLengthNotHalf
+  nameWithType: CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf
+  fullName: Sharpie.Tests.CanvasTests.Line1_DoesNotDraw_IfLengthNotHalf
+- uid: Sharpie.Tests.CanvasTests.Line1_CombinesLineRunes*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_CombinesLineRunes
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_CombinesLineRunes
+  name: Line1_CombinesLineRunes
+  nameWithType: CanvasTests.Line1_CombinesLineRunes
+  fullName: Sharpie.Tests.CanvasTests.Line1_CombinesLineRunes
+- uid: Sharpie.Tests.CanvasTests.Line1_Throws_IfStyleIsInvalid*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line1_Throws_IfStyleIsInvalid
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line1_Throws_IfStyleIsInvalid_Sharpie_Canvas_Orientation_
+  name: Line1_Throws_IfStyleIsInvalid
+  nameWithType: CanvasTests.Line1_Throws_IfStyleIsInvalid
+  fullName: Sharpie.Tests.CanvasTests.Line1_Throws_IfStyleIsInvalid
+- uid: Sharpie.Canvas.Orientation
+  commentId: T:Sharpie.Canvas.Orientation
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.Orientation
+  nameWithType: Canvas.Orientation
+  fullName: Sharpie.Canvas.Orientation
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html
+- uid: Sharpie.Tests.CanvasTests.Line2_DrawsLine*
+  commentId: Overload:Sharpie.Tests.CanvasTests.Line2_DrawsLine
+  href: Sharpie.Tests.CanvasTests.html#Sharpie_Tests_CanvasTests_Line2_DrawsLine
+  name: Line2_DrawsLine
+  nameWithType: CanvasTests.Line2_DrawsLine
+  fullName: Sharpie.Tests.CanvasTests.Line2_DrawsLine

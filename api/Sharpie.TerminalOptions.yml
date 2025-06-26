@@ -1,0 +1,1092 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.TerminalOptions
+  commentId: T:Sharpie.TerminalOptions
+  id: TerminalOptions
+  parent: Sharpie
+  children:
+  - Sharpie.TerminalOptions.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Boolean,Sharpie.CaretMode,System.Boolean,System.Boolean,Sharpie.SoftLabelKeyMode,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  - Sharpie.TerminalOptions.AllocateFooter
+  - Sharpie.TerminalOptions.AllocateHeader
+  - Sharpie.TerminalOptions.CaretMode
+  - Sharpie.TerminalOptions.EchoInput
+  - Sharpie.TerminalOptions.ManagedWindows
+  - Sharpie.TerminalOptions.ManualFlush
+  - Sharpie.TerminalOptions.MouseClickInterval
+  - Sharpie.TerminalOptions.SoftLabelKeyMode
+  - Sharpie.TerminalOptions.SuppressControlKeys
+  - Sharpie.TerminalOptions.UseColors
+  - Sharpie.TerminalOptions.UseEnvironmentOverrides
+  - Sharpie.TerminalOptions.UseInputBuffering
+  - Sharpie.TerminalOptions.UseMouse
+  - Sharpie.TerminalOptions.UseStandardKeySequenceResolvers
+  langs:
+  - csharp
+  - vb
+  name: TerminalOptions
+  nameWithType: TerminalOptions
+  fullName: Sharpie.TerminalOptions
+  type: Class
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TerminalOptions
+    path: Sharpie/TerminalOptions.cs
+    startLine: 58
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Stores the terminal options.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public record TerminalOptions : IEquatable<TerminalOptions>
+    content.vb: >-
+      <PublicAPI>
+
+      Public Class TerminalOptions Implements IEquatable(Of TerminalOptions)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Sharpie.TerminalOptions}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.TerminalOptions.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Boolean,Sharpie.CaretMode,System.Boolean,System.Boolean,Sharpie.SoftLabelKeyMode,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  commentId: M:Sharpie.TerminalOptions.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Boolean,Sharpie.CaretMode,System.Boolean,System.Boolean,Sharpie.SoftLabelKeyMode,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  id: '#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Boolean,Sharpie.CaretMode,System.Boolean,System.Boolean,Sharpie.SoftLabelKeyMode,System.Boolean,System.Boolean,System.Boolean,System.Boolean)'
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: TerminalOptions(bool, bool, bool, bool, int?, bool, CaretMode, bool, bool, SoftLabelKeyMode, bool, bool, bool, bool)
+  nameWithType: TerminalOptions.TerminalOptions(bool, bool, bool, bool, int?, bool, CaretMode, bool, bool, SoftLabelKeyMode, bool, bool, bool, bool)
+  fullName: Sharpie.TerminalOptions.TerminalOptions(bool, bool, bool, bool, int?, bool, Sharpie.CaretMode, bool, bool, Sharpie.SoftLabelKeyMode, bool, bool, bool, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: .ctor
+    path: Sharpie/TerminalOptions.cs
+    startLine: 58
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Stores the terminal options.
+  example: []
+  syntax:
+    content: public TerminalOptions(bool UseColors = true, bool EchoInput = false, bool UseInputBuffering = false, bool UseMouse = true, int? MouseClickInterval = null, bool SuppressControlKeys = true, CaretMode CaretMode = CaretMode.Visible, bool ManualFlush = false, bool ManagedWindows = false, SoftLabelKeyMode SoftLabelKeyMode = SoftLabelKeyMode.Disabled, bool AllocateHeader = false, bool AllocateFooter = false, bool UseEnvironmentOverrides = true, bool UseStandardKeySequenceResolvers = true)
+    parameters:
+    - id: UseColors
+      type: System.Boolean
+      description: Toggle the use of colors. Default is <code>true</code>.
+    - id: EchoInput
+      type: System.Boolean
+      description: Toggle the input echoing. Default is <code>false</code>.
+    - id: UseInputBuffering
+      type: System.Boolean
+      description: Toggles buffering input. Default is <code>false</code>.
+    - id: UseMouse
+      type: System.Boolean
+      description: Toggles the use of mouse. Default is <code>true</code>.
+    - id: MouseClickInterval
+      type: System.Nullable{System.Int32}
+      description: >-
+        The mouse click delay. Default is <code>null</code> which disables Curses handling of
+
+        clicks.
+    - id: SuppressControlKeys
+      type: System.Boolean
+      description: Toggles the suppression of control keys such as CTRL+C. Default is <code>true</code>.
+    - id: CaretMode
+      type: Sharpie.CaretMode
+      description: Specifies the caret mode. Default is <xref href="Sharpie.CaretMode.Visible" data-throw-if-not-resolved="false"></xref>.
+    - id: ManualFlush
+      type: System.Boolean
+      description: Toggle the ability to manually flush the terminal. Default is <code>false</code>.
+    - id: ManagedWindows
+      type: System.Boolean
+      description: >-
+        Specifies whether the <xref href="Sharpie.Screen" data-throw-if-not-resolved="false"></xref> manages overlapping windows. Default is
+
+        <code>false</code>.
+    - id: SoftLabelKeyMode
+      type: Sharpie.SoftLabelKeyMode
+      description: Specifies the SLK mode. Default is <xref href="Sharpie.SoftLabelKeyMode.Disabled" data-throw-if-not-resolved="false"></xref>.
+    - id: AllocateHeader
+      type: System.Boolean
+      description: If <code>true</code>, allocates one line at the top as a header.
+    - id: AllocateFooter
+      type: System.Boolean
+      description: If <code>true</code>, allocates one line at the bottom as a footer.
+    - id: UseEnvironmentOverrides
+      type: System.Boolean
+      description: Toggles the use of environment LINE/COL overrides. Default is <code>true</code>.
+    - id: UseStandardKeySequenceResolvers
+      type: System.Boolean
+      description: >-
+        Registers the standard key sequence resolvers defined in
+
+        <xref href="Sharpie.KeySequenceResolver" data-throw-if-not-resolved="false"></xref>.
+    content.vb: Public Sub New(UseColors As Boolean = True, EchoInput As Boolean = False, UseInputBuffering As Boolean = False, UseMouse As Boolean = True, MouseClickInterval As Integer? = Nothing, SuppressControlKeys As Boolean = True, CaretMode As CaretMode = CaretMode.Visible, ManualFlush As Boolean = False, ManagedWindows As Boolean = False, SoftLabelKeyMode As SoftLabelKeyMode = SoftLabelKeyMode.Disabled, AllocateHeader As Boolean = False, AllocateFooter As Boolean = False, UseEnvironmentOverrides As Boolean = True, UseStandardKeySequenceResolvers As Boolean = True)
+  overload: Sharpie.TerminalOptions.#ctor*
+  nameWithType.vb: TerminalOptions.New(Boolean, Boolean, Boolean, Boolean, Integer?, Boolean, CaretMode, Boolean, Boolean, SoftLabelKeyMode, Boolean, Boolean, Boolean, Boolean)
+  fullName.vb: Sharpie.TerminalOptions.New(Boolean, Boolean, Boolean, Boolean, Integer?, Boolean, Sharpie.CaretMode, Boolean, Boolean, Sharpie.SoftLabelKeyMode, Boolean, Boolean, Boolean, Boolean)
+  name.vb: New(Boolean, Boolean, Boolean, Boolean, Integer?, Boolean, CaretMode, Boolean, Boolean, SoftLabelKeyMode, Boolean, Boolean, Boolean, Boolean)
+- uid: Sharpie.TerminalOptions.UseColors
+  commentId: P:Sharpie.TerminalOptions.UseColors
+  id: UseColors
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: UseColors
+  nameWithType: TerminalOptions.UseColors
+  fullName: Sharpie.TerminalOptions.UseColors
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: UseColors
+    path: Sharpie/TerminalOptions.cs
+    startLine: 59
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Toggle the use of colors. Default is <code>true</code>.
+  example: []
+  syntax:
+    content: public bool UseColors { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property UseColors As Boolean
+  overload: Sharpie.TerminalOptions.UseColors*
+- uid: Sharpie.TerminalOptions.EchoInput
+  commentId: P:Sharpie.TerminalOptions.EchoInput
+  id: EchoInput
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: EchoInput
+  nameWithType: TerminalOptions.EchoInput
+  fullName: Sharpie.TerminalOptions.EchoInput
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: EchoInput
+    path: Sharpie/TerminalOptions.cs
+    startLine: 59
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Toggle the input echoing. Default is <code>false</code>.
+  example: []
+  syntax:
+    content: public bool EchoInput { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property EchoInput As Boolean
+  overload: Sharpie.TerminalOptions.EchoInput*
+- uid: Sharpie.TerminalOptions.UseInputBuffering
+  commentId: P:Sharpie.TerminalOptions.UseInputBuffering
+  id: UseInputBuffering
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: UseInputBuffering
+  nameWithType: TerminalOptions.UseInputBuffering
+  fullName: Sharpie.TerminalOptions.UseInputBuffering
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: UseInputBuffering
+    path: Sharpie/TerminalOptions.cs
+    startLine: 59
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Toggles buffering input. Default is <code>false</code>.
+  example: []
+  syntax:
+    content: public bool UseInputBuffering { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property UseInputBuffering As Boolean
+  overload: Sharpie.TerminalOptions.UseInputBuffering*
+- uid: Sharpie.TerminalOptions.UseMouse
+  commentId: P:Sharpie.TerminalOptions.UseMouse
+  id: UseMouse
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: UseMouse
+  nameWithType: TerminalOptions.UseMouse
+  fullName: Sharpie.TerminalOptions.UseMouse
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: UseMouse
+    path: Sharpie/TerminalOptions.cs
+    startLine: 60
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Toggles the use of mouse. Default is <code>true</code>.
+  example: []
+  syntax:
+    content: public bool UseMouse { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property UseMouse As Boolean
+  overload: Sharpie.TerminalOptions.UseMouse*
+- uid: Sharpie.TerminalOptions.MouseClickInterval
+  commentId: P:Sharpie.TerminalOptions.MouseClickInterval
+  id: MouseClickInterval
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: MouseClickInterval
+  nameWithType: TerminalOptions.MouseClickInterval
+  fullName: Sharpie.TerminalOptions.MouseClickInterval
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MouseClickInterval
+    path: Sharpie/TerminalOptions.cs
+    startLine: 60
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: >-
+    The mouse click delay. Default is <code>null</code> which disables Curses handling of
+
+    clicks.
+  example: []
+  syntax:
+    content: public int? MouseClickInterval { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property MouseClickInterval As Integer?
+  overload: Sharpie.TerminalOptions.MouseClickInterval*
+- uid: Sharpie.TerminalOptions.SuppressControlKeys
+  commentId: P:Sharpie.TerminalOptions.SuppressControlKeys
+  id: SuppressControlKeys
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: SuppressControlKeys
+  nameWithType: TerminalOptions.SuppressControlKeys
+  fullName: Sharpie.TerminalOptions.SuppressControlKeys
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SuppressControlKeys
+    path: Sharpie/TerminalOptions.cs
+    startLine: 60
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Toggles the suppression of control keys such as CTRL+C. Default is <code>true</code>.
+  example: []
+  syntax:
+    content: public bool SuppressControlKeys { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property SuppressControlKeys As Boolean
+  overload: Sharpie.TerminalOptions.SuppressControlKeys*
+- uid: Sharpie.TerminalOptions.CaretMode
+  commentId: P:Sharpie.TerminalOptions.CaretMode
+  id: CaretMode
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: CaretMode
+  nameWithType: TerminalOptions.CaretMode
+  fullName: Sharpie.TerminalOptions.CaretMode
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CaretMode
+    path: Sharpie/TerminalOptions.cs
+    startLine: 61
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Specifies the caret mode. Default is <xref href="Sharpie.CaretMode.Visible" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public CaretMode CaretMode { get; init; }
+    parameters: []
+    return:
+      type: Sharpie.CaretMode
+    content.vb: Public Property CaretMode As CaretMode
+  overload: Sharpie.TerminalOptions.CaretMode*
+- uid: Sharpie.TerminalOptions.ManualFlush
+  commentId: P:Sharpie.TerminalOptions.ManualFlush
+  id: ManualFlush
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: ManualFlush
+  nameWithType: TerminalOptions.ManualFlush
+  fullName: Sharpie.TerminalOptions.ManualFlush
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ManualFlush
+    path: Sharpie/TerminalOptions.cs
+    startLine: 61
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Toggle the ability to manually flush the terminal. Default is <code>false</code>.
+  example: []
+  syntax:
+    content: public bool ManualFlush { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property ManualFlush As Boolean
+  overload: Sharpie.TerminalOptions.ManualFlush*
+- uid: Sharpie.TerminalOptions.ManagedWindows
+  commentId: P:Sharpie.TerminalOptions.ManagedWindows
+  id: ManagedWindows
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: ManagedWindows
+  nameWithType: TerminalOptions.ManagedWindows
+  fullName: Sharpie.TerminalOptions.ManagedWindows
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ManagedWindows
+    path: Sharpie/TerminalOptions.cs
+    startLine: 61
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: >-
+    Specifies whether the <xref href="Sharpie.Screen" data-throw-if-not-resolved="false"></xref> manages overlapping windows. Default is
+
+    <code>false</code>.
+  example: []
+  syntax:
+    content: public bool ManagedWindows { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property ManagedWindows As Boolean
+  overload: Sharpie.TerminalOptions.ManagedWindows*
+- uid: Sharpie.TerminalOptions.SoftLabelKeyMode
+  commentId: P:Sharpie.TerminalOptions.SoftLabelKeyMode
+  id: SoftLabelKeyMode
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: SoftLabelKeyMode
+  nameWithType: TerminalOptions.SoftLabelKeyMode
+  fullName: Sharpie.TerminalOptions.SoftLabelKeyMode
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SoftLabelKeyMode
+    path: Sharpie/TerminalOptions.cs
+    startLine: 62
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Specifies the SLK mode. Default is <xref href="Sharpie.SoftLabelKeyMode.Disabled" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public SoftLabelKeyMode SoftLabelKeyMode { get; init; }
+    parameters: []
+    return:
+      type: Sharpie.SoftLabelKeyMode
+    content.vb: Public Property SoftLabelKeyMode As SoftLabelKeyMode
+  overload: Sharpie.TerminalOptions.SoftLabelKeyMode*
+- uid: Sharpie.TerminalOptions.AllocateHeader
+  commentId: P:Sharpie.TerminalOptions.AllocateHeader
+  id: AllocateHeader
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: AllocateHeader
+  nameWithType: TerminalOptions.AllocateHeader
+  fullName: Sharpie.TerminalOptions.AllocateHeader
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AllocateHeader
+    path: Sharpie/TerminalOptions.cs
+    startLine: 62
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: If <code>true</code>, allocates one line at the top as a header.
+  example: []
+  syntax:
+    content: public bool AllocateHeader { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AllocateHeader As Boolean
+  overload: Sharpie.TerminalOptions.AllocateHeader*
+- uid: Sharpie.TerminalOptions.AllocateFooter
+  commentId: P:Sharpie.TerminalOptions.AllocateFooter
+  id: AllocateFooter
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: AllocateFooter
+  nameWithType: TerminalOptions.AllocateFooter
+  fullName: Sharpie.TerminalOptions.AllocateFooter
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AllocateFooter
+    path: Sharpie/TerminalOptions.cs
+    startLine: 63
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: If <code>true</code>, allocates one line at the bottom as a footer.
+  example: []
+  syntax:
+    content: public bool AllocateFooter { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AllocateFooter As Boolean
+  overload: Sharpie.TerminalOptions.AllocateFooter*
+- uid: Sharpie.TerminalOptions.UseEnvironmentOverrides
+  commentId: P:Sharpie.TerminalOptions.UseEnvironmentOverrides
+  id: UseEnvironmentOverrides
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: UseEnvironmentOverrides
+  nameWithType: TerminalOptions.UseEnvironmentOverrides
+  fullName: Sharpie.TerminalOptions.UseEnvironmentOverrides
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: UseEnvironmentOverrides
+    path: Sharpie/TerminalOptions.cs
+    startLine: 63
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Toggles the use of environment LINE/COL overrides. Default is <code>true</code>.
+  example: []
+  syntax:
+    content: public bool UseEnvironmentOverrides { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property UseEnvironmentOverrides As Boolean
+  overload: Sharpie.TerminalOptions.UseEnvironmentOverrides*
+- uid: Sharpie.TerminalOptions.UseStandardKeySequenceResolvers
+  commentId: P:Sharpie.TerminalOptions.UseStandardKeySequenceResolvers
+  id: UseStandardKeySequenceResolvers
+  parent: Sharpie.TerminalOptions
+  langs:
+  - csharp
+  - vb
+  name: UseStandardKeySequenceResolvers
+  nameWithType: TerminalOptions.UseStandardKeySequenceResolvers
+  fullName: Sharpie.TerminalOptions.UseStandardKeySequenceResolvers
+  type: Property
+  source:
+    remote:
+      path: Sharpie/TerminalOptions.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: UseStandardKeySequenceResolvers
+    path: Sharpie/TerminalOptions.cs
+    startLine: 63
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: >-
+    Registers the standard key sequence resolvers defined in
+
+    <xref href="Sharpie.KeySequenceResolver" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public bool UseStandardKeySequenceResolvers { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property UseStandardKeySequenceResolvers As Boolean
+  overload: Sharpie.TerminalOptions.UseStandardKeySequenceResolvers*
+references:
+- uid: Sharpie.CaretMode.Visible
+  commentId: F:Sharpie.CaretMode.Visible
+  href: Sharpie.CaretMode.html#Sharpie_CaretMode_Visible
+  name: Visible
+  nameWithType: CaretMode.Visible
+  fullName: Sharpie.CaretMode.Visible
+- uid: Sharpie.Screen
+  commentId: T:Sharpie.Screen
+  parent: Sharpie
+  href: Sharpie.Screen.html
+  name: Screen
+  nameWithType: Screen
+  fullName: Sharpie.Screen
+- uid: Sharpie.SoftLabelKeyMode.Disabled
+  commentId: F:Sharpie.SoftLabelKeyMode.Disabled
+  href: Sharpie.SoftLabelKeyMode.html#Sharpie_SoftLabelKeyMode_Disabled
+  name: Disabled
+  nameWithType: SoftLabelKeyMode.Disabled
+  fullName: Sharpie.SoftLabelKeyMode.Disabled
+- uid: Sharpie.KeySequenceResolver
+  commentId: T:Sharpie.KeySequenceResolver
+  href: Sharpie.KeySequenceResolver.html
+  name: KeySequenceResolver
+  nameWithType: KeySequenceResolver
+  fullName: Sharpie.KeySequenceResolver
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Sharpie.TerminalOptions}
+  commentId: T:System.IEquatable{Sharpie.TerminalOptions}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<TerminalOptions>
+  nameWithType: IEquatable<TerminalOptions>
+  fullName: System.IEquatable<Sharpie.TerminalOptions>
+  nameWithType.vb: IEquatable(Of TerminalOptions)
+  fullName.vb: System.IEquatable(Of Sharpie.TerminalOptions)
+  name.vb: IEquatable(Of TerminalOptions)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Sharpie.TerminalOptions
+    name: TerminalOptions
+    href: Sharpie.TerminalOptions.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Sharpie.TerminalOptions
+    name: TerminalOptions
+    href: Sharpie.TerminalOptions.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Sharpie.TerminalOptions.#ctor*
+  commentId: Overload:Sharpie.TerminalOptions.#ctor
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions__ctor_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Nullable_System_Int32__System_Boolean_Sharpie_CaretMode_System_Boolean_System_Boolean_Sharpie_SoftLabelKeyMode_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
+  name: TerminalOptions
+  nameWithType: TerminalOptions.TerminalOptions
+  fullName: Sharpie.TerminalOptions.TerminalOptions
+  nameWithType.vb: TerminalOptions.New
+  fullName.vb: Sharpie.TerminalOptions.New
+  name.vb: New
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: Sharpie.CaretMode
+  commentId: T:Sharpie.CaretMode
+  parent: Sharpie
+  href: Sharpie.CaretMode.html
+  name: CaretMode
+  nameWithType: CaretMode
+  fullName: Sharpie.CaretMode
+- uid: Sharpie.SoftLabelKeyMode
+  commentId: T:Sharpie.SoftLabelKeyMode
+  parent: Sharpie
+  href: Sharpie.SoftLabelKeyMode.html
+  name: SoftLabelKeyMode
+  nameWithType: SoftLabelKeyMode
+  fullName: Sharpie.SoftLabelKeyMode
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Sharpie.TerminalOptions.UseColors*
+  commentId: Overload:Sharpie.TerminalOptions.UseColors
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_UseColors
+  name: UseColors
+  nameWithType: TerminalOptions.UseColors
+  fullName: Sharpie.TerminalOptions.UseColors
+- uid: Sharpie.TerminalOptions.EchoInput*
+  commentId: Overload:Sharpie.TerminalOptions.EchoInput
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_EchoInput
+  name: EchoInput
+  nameWithType: TerminalOptions.EchoInput
+  fullName: Sharpie.TerminalOptions.EchoInput
+- uid: Sharpie.TerminalOptions.UseInputBuffering*
+  commentId: Overload:Sharpie.TerminalOptions.UseInputBuffering
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_UseInputBuffering
+  name: UseInputBuffering
+  nameWithType: TerminalOptions.UseInputBuffering
+  fullName: Sharpie.TerminalOptions.UseInputBuffering
+- uid: Sharpie.TerminalOptions.UseMouse*
+  commentId: Overload:Sharpie.TerminalOptions.UseMouse
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_UseMouse
+  name: UseMouse
+  nameWithType: TerminalOptions.UseMouse
+  fullName: Sharpie.TerminalOptions.UseMouse
+- uid: Sharpie.TerminalOptions.MouseClickInterval*
+  commentId: Overload:Sharpie.TerminalOptions.MouseClickInterval
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_MouseClickInterval
+  name: MouseClickInterval
+  nameWithType: TerminalOptions.MouseClickInterval
+  fullName: Sharpie.TerminalOptions.MouseClickInterval
+- uid: Sharpie.TerminalOptions.SuppressControlKeys*
+  commentId: Overload:Sharpie.TerminalOptions.SuppressControlKeys
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_SuppressControlKeys
+  name: SuppressControlKeys
+  nameWithType: TerminalOptions.SuppressControlKeys
+  fullName: Sharpie.TerminalOptions.SuppressControlKeys
+- uid: Sharpie.TerminalOptions.CaretMode*
+  commentId: Overload:Sharpie.TerminalOptions.CaretMode
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_CaretMode
+  name: CaretMode
+  nameWithType: TerminalOptions.CaretMode
+  fullName: Sharpie.TerminalOptions.CaretMode
+- uid: Sharpie.TerminalOptions.ManualFlush*
+  commentId: Overload:Sharpie.TerminalOptions.ManualFlush
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_ManualFlush
+  name: ManualFlush
+  nameWithType: TerminalOptions.ManualFlush
+  fullName: Sharpie.TerminalOptions.ManualFlush
+- uid: Sharpie.TerminalOptions.ManagedWindows*
+  commentId: Overload:Sharpie.TerminalOptions.ManagedWindows
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_ManagedWindows
+  name: ManagedWindows
+  nameWithType: TerminalOptions.ManagedWindows
+  fullName: Sharpie.TerminalOptions.ManagedWindows
+- uid: Sharpie.TerminalOptions.SoftLabelKeyMode*
+  commentId: Overload:Sharpie.TerminalOptions.SoftLabelKeyMode
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_SoftLabelKeyMode
+  name: SoftLabelKeyMode
+  nameWithType: TerminalOptions.SoftLabelKeyMode
+  fullName: Sharpie.TerminalOptions.SoftLabelKeyMode
+- uid: Sharpie.TerminalOptions.AllocateHeader*
+  commentId: Overload:Sharpie.TerminalOptions.AllocateHeader
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_AllocateHeader
+  name: AllocateHeader
+  nameWithType: TerminalOptions.AllocateHeader
+  fullName: Sharpie.TerminalOptions.AllocateHeader
+- uid: Sharpie.TerminalOptions.AllocateFooter*
+  commentId: Overload:Sharpie.TerminalOptions.AllocateFooter
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_AllocateFooter
+  name: AllocateFooter
+  nameWithType: TerminalOptions.AllocateFooter
+  fullName: Sharpie.TerminalOptions.AllocateFooter
+- uid: Sharpie.TerminalOptions.UseEnvironmentOverrides*
+  commentId: Overload:Sharpie.TerminalOptions.UseEnvironmentOverrides
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_UseEnvironmentOverrides
+  name: UseEnvironmentOverrides
+  nameWithType: TerminalOptions.UseEnvironmentOverrides
+  fullName: Sharpie.TerminalOptions.UseEnvironmentOverrides
+- uid: Sharpie.TerminalOptions.UseStandardKeySequenceResolvers*
+  commentId: Overload:Sharpie.TerminalOptions.UseStandardKeySequenceResolvers
+  href: Sharpie.TerminalOptions.html#Sharpie_TerminalOptions_UseStandardKeySequenceResolvers
+  name: UseStandardKeySequenceResolvers
+  nameWithType: TerminalOptions.UseStandardKeySequenceResolvers
+  fullName: Sharpie.TerminalOptions.UseStandardKeySequenceResolvers

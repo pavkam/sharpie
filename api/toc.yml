@@ -1,0 +1,441 @@
+### YamlMime:TableOfContent
+items:
+- uid: Sharpie
+  name: Sharpie
+  type: Namespace
+  items:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    type: Class
+  - uid: Sharpie.Canvas.CheckGlyphStyle
+    name: Canvas.CheckGlyphStyle
+    type: Enum
+  - uid: Sharpie.Canvas.FillStyle
+    name: Canvas.FillStyle
+    type: Enum
+  - uid: Sharpie.Canvas.GlyphSize
+    name: Canvas.GlyphSize
+    type: Enum
+  - uid: Sharpie.Canvas.GradientGlyphStyle
+    name: Canvas.GradientGlyphStyle
+    type: Enum
+  - uid: Sharpie.Canvas.LineStyle
+    name: Canvas.LineStyle
+    type: Enum
+  - uid: Sharpie.Canvas.Orientation
+    name: Canvas.Orientation
+    type: Enum
+  - uid: Sharpie.Canvas.ShadeGlyphStyle
+    name: Canvas.ShadeGlyphStyle
+    type: Enum
+  - uid: Sharpie.Canvas.TriangleGlyphStyle
+    name: Canvas.TriangleGlyphStyle
+    type: Enum
+  - uid: Sharpie.CaretMode
+    name: CaretMode
+    type: Enum
+  - uid: Sharpie.ClearStrategy
+    name: ClearStrategy
+    type: Enum
+  - uid: Sharpie.ColorManager
+    name: ColorManager
+    type: Class
+  - uid: Sharpie.ColorMixture
+    name: ColorMixture
+    type: Struct
+  - uid: Sharpie.ColorMode
+    name: ColorMode
+    type: Enum
+  - uid: Sharpie.ControlCharacter
+    name: ControlCharacter
+    type: Class
+  - uid: Sharpie.CursesException
+    name: CursesException
+    type: Class
+  - uid: Sharpie.CursesInitializationException
+    name: CursesInitializationException
+    type: Class
+  - uid: Sharpie.CursesOperationException
+    name: CursesOperationException
+    type: Class
+  - uid: Sharpie.CursesSynchronizationException
+    name: CursesSynchronizationException
+    type: Class
+  - uid: Sharpie.DelegateEvent
+    name: DelegateEvent
+    type: Class
+  - uid: Sharpie.Event
+    name: Event
+    type: Class
+  - uid: Sharpie.EventPump
+    name: EventPump
+    type: Class
+  - uid: Sharpie.EventType
+    name: EventType
+    type: Enum
+  - uid: Sharpie.Key
+    name: Key
+    type: Enum
+  - uid: Sharpie.KeyEvent
+    name: KeyEvent
+    type: Class
+  - uid: Sharpie.KeySequenceResolver
+    name: KeySequenceResolver
+    type: Class
+  - uid: Sharpie.ModifierKey
+    name: ModifierKey
+    type: Enum
+  - uid: Sharpie.MouseActionEvent
+    name: MouseActionEvent
+    type: Class
+  - uid: Sharpie.MouseButton
+    name: MouseButton
+    type: Enum
+  - uid: Sharpie.MouseButtonState
+    name: MouseButtonState
+    type: Enum
+  - uid: Sharpie.MouseMoveEvent
+    name: MouseMoveEvent
+    type: Class
+  - uid: Sharpie.Pad
+    name: Pad
+    type: Class
+  - uid: Sharpie.ReplaceStrategy
+    name: ReplaceStrategy
+    type: Enum
+  - uid: Sharpie.ResolveEscapeSequenceFunc
+    name: ResolveEscapeSequenceFunc
+    type: Delegate
+  - uid: Sharpie.Screen
+    name: Screen
+    type: Class
+  - uid: Sharpie.SoftLabelKeyAlignment
+    name: SoftLabelKeyAlignment
+    type: Enum
+  - uid: Sharpie.SoftLabelKeyManager
+    name: SoftLabelKeyManager
+    type: Class
+  - uid: Sharpie.SoftLabelKeyMode
+    name: SoftLabelKeyMode
+    type: Enum
+  - uid: Sharpie.StandardColor
+    name: StandardColor
+    type: Enum
+  - uid: Sharpie.StartEvent
+    name: StartEvent
+    type: Class
+  - uid: Sharpie.StopEvent
+    name: StopEvent
+    type: Class
+  - uid: Sharpie.Style
+    name: Style
+    type: Struct
+  - uid: Sharpie.StyledText
+    name: StyledText
+    type: Struct
+  - uid: Sharpie.SubPad
+    name: SubPad
+    type: Class
+  - uid: Sharpie.SubWindow
+    name: SubWindow
+    type: Class
+  - uid: Sharpie.Surface
+    name: Surface
+    type: Class
+  - uid: Sharpie.Terminal
+    name: Terminal
+    type: Class
+  - uid: Sharpie.TerminalOptions
+    name: TerminalOptions
+    type: Class
+  - uid: Sharpie.TerminalResizeEvent
+    name: TerminalResizeEvent
+    type: Class
+  - uid: Sharpie.TerminalSurface
+    name: TerminalSurface
+    type: Class
+  - uid: Sharpie.VideoAttribute
+    name: VideoAttribute
+    type: Enum
+  - uid: Sharpie.Window
+    name: Window
+    type: Class
+- uid: Sharpie.Abstractions
+  name: Sharpie.Abstractions
+  type: Namespace
+  items:
+  - uid: Sharpie.Abstractions.IAsciiFont
+    name: IAsciiFont
+    type: Interface
+  - uid: Sharpie.Abstractions.IColorManager
+    name: IColorManager
+    type: Interface
+  - uid: Sharpie.Abstractions.ICursesBackend
+    name: ICursesBackend
+    type: Interface
+  - uid: Sharpie.Abstractions.ICursesBackend.ripoffline_callback
+    name: ICursesBackend.ripoffline_callback
+    type: Delegate
+  - uid: Sharpie.Abstractions.IDrawSurface
+    name: IDrawSurface
+    type: Interface
+  - uid: Sharpie.Abstractions.IDrawable
+    name: IDrawable
+    type: Interface
+  - uid: Sharpie.Abstractions.IEventPump
+    name: IEventPump
+    type: Interface
+  - uid: Sharpie.Abstractions.IInterval
+    name: IInterval
+    type: Interface
+  - uid: Sharpie.Abstractions.IPad
+    name: IPad
+    type: Interface
+  - uid: Sharpie.Abstractions.IScreen
+    name: IScreen
+    type: Interface
+  - uid: Sharpie.Abstractions.ISoftLabelKeyManager
+    name: ISoftLabelKeyManager
+    type: Interface
+  - uid: Sharpie.Abstractions.ISubPad
+    name: ISubPad
+    type: Interface
+  - uid: Sharpie.Abstractions.ISubWindow
+    name: ISubWindow
+    type: Interface
+  - uid: Sharpie.Abstractions.ISurface
+    name: ISurface
+    type: Interface
+  - uid: Sharpie.Abstractions.ITerminal
+    name: ITerminal
+    type: Interface
+  - uid: Sharpie.Abstractions.ITerminalSurface
+    name: ITerminalSurface
+    type: Interface
+  - uid: Sharpie.Abstractions.IWindow
+    name: IWindow
+    type: Interface
+- uid: Sharpie.Backend
+  name: Sharpie.Backend
+  type: Namespace
+  items:
+  - uid: Sharpie.Backend.ComplexChar
+    name: ComplexChar
+    type: Class
+  - uid: Sharpie.Backend.CursesBackend
+    name: CursesBackend
+    type: Class
+  - uid: Sharpie.Backend.CursesBackendFlavor
+    name: CursesBackendFlavor
+    type: Enum
+  - uid: Sharpie.Backend.CursesBackendType
+    name: CursesBackendType
+    type: Enum
+  - uid: Sharpie.Backend.CursesCharEvent
+    name: CursesCharEvent
+    type: Class
+  - uid: Sharpie.Backend.CursesEvent
+    name: CursesEvent
+    type: Class
+  - uid: Sharpie.Backend.CursesKeyEvent
+    name: CursesKeyEvent
+    type: Class
+  - uid: Sharpie.Backend.CursesMouseEvent
+    name: CursesMouseEvent
+    type: Class
+  - uid: Sharpie.Backend.CursesMouseState
+    name: CursesMouseState
+    type: Struct
+  - uid: Sharpie.Backend.CursesResizeEvent
+    name: CursesResizeEvent
+    type: Class
+  - uid: Sharpie.Backend.NCursesKeyCode
+    name: NCursesKeyCode
+    type: Enum
+  - uid: Sharpie.Backend.PdCursesKeyCode
+    name: PdCursesKeyCode
+    type: Enum
+- uid: Sharpie.Demos.Snake
+  name: Sharpie.Demos.Snake
+  type: Namespace
+  items:
+  - uid: Sharpie.Demos.Snake.Game
+    name: Game
+    type: Class
+  - uid: Sharpie.Demos.Snake.Game.Direction
+    name: Game.Direction
+    type: Enum
+- uid: Sharpie.Font
+  name: Sharpie.Font
+  type: Namespace
+  items:
+  - uid: Sharpie.Font.AsciiFont
+    name: AsciiFont
+    type: Class
+  - uid: Sharpie.Font.AsciiFontLayout
+    name: AsciiFontLayout
+    type: Enum
+  - uid: Sharpie.Font.DosCp866AsciiFont
+    name: DosCp866AsciiFont
+    type: Class
+  - uid: Sharpie.Font.FigletFont
+    name: FigletFont
+    type: Class
+- uid: Sharpie.Tests
+  name: Sharpie.Tests
+  type: Namespace
+  items:
+  - uid: Sharpie.Tests.AsciiFontTests
+    name: AsciiFontTests
+    type: Class
+  - uid: Sharpie.Tests.BaseCursesBackendTests
+    name: BaseCursesBackendTests
+    type: Class
+  - uid: Sharpie.Tests.CanvasTests
+    name: CanvasTests
+    type: Class
+  - uid: Sharpie.Tests.ColorManagerTests
+    name: ColorManagerTests
+    type: Class
+  - uid: Sharpie.Tests.ColorMixtureTests
+    name: ColorMixtureTests
+    type: Class
+  - uid: Sharpie.Tests.ComplexCharTests
+    name: ComplexCharTests
+    type: Class
+  - uid: Sharpie.Tests.CursesBackendFlavorSelectorTests
+    name: CursesBackendFlavorSelectorTests
+    type: Class
+  - uid: Sharpie.Tests.CursesBackendTests
+    name: CursesBackendTests
+    type: Class
+  - uid: Sharpie.Tests.CursesExceptionTests
+    name: CursesExceptionTests
+    type: Class
+  - uid: Sharpie.Tests.CursesInitializationExceptionTests
+    name: CursesInitializationExceptionTests
+    type: Class
+  - uid: Sharpie.Tests.CursesMouseEventParserTests
+    name: CursesMouseEventParserTests
+    type: Class
+  - uid: Sharpie.Tests.CursesMouseStateTests
+    name: CursesMouseStateTests
+    type: Class
+  - uid: Sharpie.Tests.CursesOperationExceptionTests
+    name: CursesOperationExceptionTests
+    type: Class
+  - uid: Sharpie.Tests.CursesSynchronizationExceptionTests
+    name: CursesSynchronizationExceptionTests
+    type: Class
+  - uid: Sharpie.Tests.DelegateEventTests
+    name: DelegateEventTests
+    type: Class
+  - uid: Sharpie.Tests.DosCp866AsciiFontTests
+    name: DosCp866AsciiFontTests
+    type: Class
+  - uid: Sharpie.Tests.DotNetSystemAdapterInterfaceTests
+    name: DotNetSystemAdapterInterfaceTests
+    type: Class
+  - uid: Sharpie.Tests.EventPumpTests
+    name: EventPumpTests
+    type: Class
+  - uid: Sharpie.Tests.EventTests
+    name: EventTests
+    type: Class
+  - uid: Sharpie.Tests.FigletFontParserTests
+    name: FigletFontParserTests
+    type: Class
+  - uid: Sharpie.Tests.FigletFontTests
+    name: FigletFontTests
+    type: Class
+  - uid: Sharpie.Tests.FigletLayoutEvaluatorTests
+    name: FigletLayoutEvaluatorTests
+    type: Class
+  - uid: Sharpie.Tests.HelpersTests
+    name: HelpersTests
+    type: Class
+  - uid: Sharpie.Tests.KeyEventTests
+    name: KeyEventTests
+    type: Class
+  - uid: Sharpie.Tests.KeySequenceResolverTests
+    name: KeySequenceResolverTests
+    type: Class
+  - uid: Sharpie.Tests.MouseActionEventTests
+    name: MouseActionEventTests
+    type: Class
+  - uid: Sharpie.Tests.MouseEventResolverTests
+    name: MouseEventResolverTests
+    type: Class
+  - uid: Sharpie.Tests.MouseMoveEventTests
+    name: MouseMoveEventTests
+    type: Class
+  - uid: Sharpie.Tests.NCursesBackendTests
+    name: NCursesBackendTests
+    type: Class
+  - uid: Sharpie.Tests.NCursesComplexCharTests
+    name: NCursesComplexCharTests
+    type: Class
+  - uid: Sharpie.Tests.NativeLibraryWrapperTests
+    name: NativeLibraryWrapperTests
+    type: Class
+  - uid: Sharpie.Tests.PadTests
+    name: PadTests
+    type: Class
+  - uid: Sharpie.Tests.PdCursesBackendTests
+    name: PdCursesBackendTests
+    type: Class
+  - uid: Sharpie.Tests.PdCursesMod32BackendTests
+    name: PdCursesMod32BackendTests
+    type: Class
+  - uid: Sharpie.Tests.ScreenTests
+    name: ScreenTests
+    type: Class
+  - uid: Sharpie.Tests.SoftLabelKeyManagerTests
+    name: SoftLabelKeyManagerTests
+    type: Class
+  - uid: Sharpie.Tests.StartEventTests
+    name: StartEventTests
+    type: Class
+  - uid: Sharpie.Tests.StopEventTests
+    name: StopEventTests
+    type: Class
+  - uid: Sharpie.Tests.StyleTests
+    name: StyleTests
+    type: Class
+  - uid: Sharpie.Tests.StyledTextTests
+    name: StyledTextTests
+    type: Class
+  - uid: Sharpie.Tests.SubPadTests
+    name: SubPadTests
+    type: Class
+  - uid: Sharpie.Tests.SubWindowTests
+    name: SubWindowTests
+    type: Class
+  - uid: Sharpie.Tests.SurfaceDrawTextTests
+    name: SurfaceDrawTextTests
+    type: Class
+  - uid: Sharpie.Tests.SurfaceTests
+    name: SurfaceTests
+    type: Class
+  - uid: Sharpie.Tests.SynchronizationTests
+    name: SynchronizationTests
+    type: Class
+  - uid: Sharpie.Tests.TerminalMainLoopTests
+    name: TerminalMainLoopTests
+    type: Class
+  - uid: Sharpie.Tests.TerminalOptionsTests
+    name: TerminalOptionsTests
+    type: Class
+  - uid: Sharpie.Tests.TerminalResizeEventTests
+    name: TerminalResizeEventTests
+    type: Class
+  - uid: Sharpie.Tests.TerminalSurfaceTests
+    name: TerminalSurfaceTests
+    type: Class
+  - uid: Sharpie.Tests.TerminalTests
+    name: TerminalTests
+    type: Class
+  - uid: Sharpie.Tests.WindowTests
+    name: WindowTests
+    type: Class
+memberLayout: SamePage

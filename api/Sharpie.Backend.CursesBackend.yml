@@ -1,0 +1,515 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Backend.CursesBackend
+  commentId: T:Sharpie.Backend.CursesBackend
+  id: CursesBackend
+  parent: Sharpie.Backend
+  children:
+  - Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendFlavor,Sharpie.Backend.CursesBackendFlavor[])
+  - Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendType,System.String,System.String[])
+  langs:
+  - csharp
+  - vb
+  name: CursesBackend
+  nameWithType: CursesBackend
+  fullName: Sharpie.Backend.CursesBackend
+  type: Class
+  source:
+    remote:
+      path: Sharpie/Backend/CursesBackend.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CursesBackend
+    path: Sharpie/Backend/CursesBackend.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  summary: Provides functionality for obtaining <xref href="Sharpie.Abstractions.ICursesBackend" data-throw-if-not-resolved="false"></xref> instances.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static class CursesBackend
+    content.vb: >-
+      <PublicAPI>
+
+      Public Module CursesBackend
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendFlavor,Sharpie.Backend.CursesBackendFlavor[])
+  commentId: M:Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendFlavor,Sharpie.Backend.CursesBackendFlavor[])
+  id: Load(Sharpie.Backend.CursesBackendFlavor,Sharpie.Backend.CursesBackendFlavor[])
+  parent: Sharpie.Backend.CursesBackend
+  langs:
+  - csharp
+  - vb
+  name: Load(CursesBackendFlavor, params CursesBackendFlavor[])
+  nameWithType: CursesBackend.Load(CursesBackendFlavor, params CursesBackendFlavor[])
+  fullName: Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendFlavor, params Sharpie.Backend.CursesBackendFlavor[])
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Backend/CursesBackend.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load
+    path: Sharpie/Backend/CursesBackend.cs
+    startLine: 119
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  summary: Looks up and loads the Curses backend based on the specified <code class="paramref">flavor</code>.
+  example: []
+  syntax:
+    content: public static ICursesBackend Load(CursesBackendFlavor flavor = CursesBackendFlavor.Any, params CursesBackendFlavor[] otherFlavors)
+    parameters:
+    - id: flavor
+      type: Sharpie.Backend.CursesBackendFlavor
+      description: The desired Curses flavor.
+    - id: otherFlavors
+      type: Sharpie.Backend.CursesBackendFlavor[]
+      description: Additional desired Curses flavors.
+    return:
+      type: Sharpie.Abstractions.ICursesBackend
+      description: The loaded Curses backend.
+    content.vb: Public Shared Function Load(flavor As CursesBackendFlavor = CursesBackendFlavor.Any, ParamArray otherFlavors As CursesBackendFlavor()) As ICursesBackend
+  overload: Sharpie.Backend.CursesBackend.Load*
+  exceptions:
+  - type: Sharpie.CursesInitializationException
+    commentId: T:Sharpie.CursesInitializationException
+    description: Thrown if no suitable provider was found.
+  nameWithType.vb: CursesBackend.Load(CursesBackendFlavor, ParamArray CursesBackendFlavor())
+  fullName.vb: Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendFlavor, ParamArray Sharpie.Backend.CursesBackendFlavor())
+  name.vb: Load(CursesBackendFlavor, ParamArray CursesBackendFlavor())
+- uid: Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendType,System.String,System.String[])
+  commentId: M:Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendType,System.String,System.String[])
+  id: Load(Sharpie.Backend.CursesBackendType,System.String,System.String[])
+  parent: Sharpie.Backend.CursesBackend
+  langs:
+  - csharp
+  - vb
+  name: Load(CursesBackendType, string, params string[])
+  nameWithType: CursesBackend.Load(CursesBackendType, string, params string[])
+  fullName: Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendType, string, params string[])
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Backend/CursesBackend.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Load
+    path: Sharpie/Backend/CursesBackend.cs
+    startLine: 161
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  summary: Loads the Curses backend based on the specified <code class="paramref">type</code>.
+  example: []
+  syntax:
+    content: public static ICursesBackend Load(CursesBackendType type, string path, params string[] otherPaths)
+    parameters:
+    - id: type
+      type: Sharpie.Backend.CursesBackendType
+      description: The backend type.
+    - id: path
+      type: System.String
+      description: The path for the library.
+    - id: otherPaths
+      type: System.String[]
+      description: The list of additional paths for the library.
+    return:
+      type: Sharpie.Abstractions.ICursesBackend
+      description: The loaded Curses backend.
+    content.vb: Public Shared Function Load(type As CursesBackendType, path As String, ParamArray otherPaths As String()) As ICursesBackend
+  overload: Sharpie.Backend.CursesBackend.Load*
+  exceptions:
+  - type: Sharpie.CursesInitializationException
+    commentId: T:Sharpie.CursesInitializationException
+    description: Thrown if no suitable provider was found.
+  nameWithType.vb: CursesBackend.Load(CursesBackendType, String, ParamArray String())
+  fullName.vb: Sharpie.Backend.CursesBackend.Load(Sharpie.Backend.CursesBackendType, String, ParamArray String())
+  name.vb: Load(CursesBackendType, String, ParamArray String())
+references:
+- uid: Sharpie.Abstractions.ICursesBackend
+  commentId: T:Sharpie.Abstractions.ICursesBackend
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.ICursesBackend.html
+  name: ICursesBackend
+  nameWithType: ICursesBackend
+  fullName: Sharpie.Abstractions.ICursesBackend
+- uid: Sharpie.Backend
+  commentId: N:Sharpie.Backend
+  href: Sharpie.html
+  name: Sharpie.Backend
+  nameWithType: Sharpie.Backend
+  fullName: Sharpie.Backend
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Backend
+    name: Backend
+    href: Sharpie.Backend.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Backend
+    name: Backend
+    href: Sharpie.Backend.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Sharpie.Abstractions
+  commentId: N:Sharpie.Abstractions
+  href: Sharpie.html
+  name: Sharpie.Abstractions
+  nameWithType: Sharpie.Abstractions
+  fullName: Sharpie.Abstractions
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.CursesInitializationException
+  commentId: T:Sharpie.CursesInitializationException
+  href: Sharpie.CursesInitializationException.html
+  name: CursesInitializationException
+  nameWithType: CursesInitializationException
+  fullName: Sharpie.CursesInitializationException
+- uid: Sharpie.Backend.CursesBackend.Load*
+  commentId: Overload:Sharpie.Backend.CursesBackend.Load
+  href: Sharpie.Backend.CursesBackend.html#Sharpie_Backend_CursesBackend_Load_Sharpie_Backend_CursesBackendFlavor_Sharpie_Backend_CursesBackendFlavor___
+  name: Load
+  nameWithType: CursesBackend.Load
+  fullName: Sharpie.Backend.CursesBackend.Load
+- uid: Sharpie.Backend.CursesBackendFlavor
+  commentId: T:Sharpie.Backend.CursesBackendFlavor
+  parent: Sharpie.Backend
+  href: Sharpie.Backend.CursesBackendFlavor.html
+  name: CursesBackendFlavor
+  nameWithType: CursesBackendFlavor
+  fullName: Sharpie.Backend.CursesBackendFlavor
+- uid: Sharpie.Backend.CursesBackendFlavor[]
+  isExternal: true
+  href: Sharpie.Backend.CursesBackendFlavor.html
+  name: CursesBackendFlavor[]
+  nameWithType: CursesBackendFlavor[]
+  fullName: Sharpie.Backend.CursesBackendFlavor[]
+  nameWithType.vb: CursesBackendFlavor()
+  fullName.vb: Sharpie.Backend.CursesBackendFlavor()
+  name.vb: CursesBackendFlavor()
+  spec.csharp:
+  - uid: Sharpie.Backend.CursesBackendFlavor
+    name: CursesBackendFlavor
+    href: Sharpie.Backend.CursesBackendFlavor.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Sharpie.Backend.CursesBackendFlavor
+    name: CursesBackendFlavor
+    href: Sharpie.Backend.CursesBackendFlavor.html
+  - name: (
+  - name: )
+- uid: Sharpie.Backend.CursesBackendType
+  commentId: T:Sharpie.Backend.CursesBackendType
+  parent: Sharpie.Backend
+  href: Sharpie.Backend.CursesBackendType.html
+  name: CursesBackendType
+  nameWithType: CursesBackendType
+  fullName: Sharpie.Backend.CursesBackendType
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.String[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )

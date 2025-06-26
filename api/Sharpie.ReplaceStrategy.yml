@@ -1,0 +1,118 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.ReplaceStrategy
+  commentId: T:Sharpie.ReplaceStrategy
+  id: ReplaceStrategy
+  parent: Sharpie
+  children:
+  - Sharpie.ReplaceStrategy.Overlay
+  - Sharpie.ReplaceStrategy.Overwrite
+  langs:
+  - csharp
+  - vb
+  name: ReplaceStrategy
+  nameWithType: ReplaceStrategy
+  fullName: Sharpie.ReplaceStrategy
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/ReplaceStrategy.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ReplaceStrategy
+    path: Sharpie/ReplaceStrategy.cs
+    startLine: 36
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: >-
+    Defines the possible strategies or replacing the contents of a window with the contents
+
+    of another window.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum ReplaceStrategy
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum ReplaceStrategy
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.ReplaceStrategy.Overwrite
+  commentId: F:Sharpie.ReplaceStrategy.Overwrite
+  id: Overwrite
+  parent: Sharpie.ReplaceStrategy
+  langs:
+  - csharp
+  - vb
+  name: Overwrite
+  nameWithType: ReplaceStrategy.Overwrite
+  fullName: Sharpie.ReplaceStrategy.Overwrite
+  type: Field
+  source:
+    remote:
+      path: Sharpie/ReplaceStrategy.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Overwrite
+    path: Sharpie/ReplaceStrategy.cs
+    startLine: 42
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Overwrites the contents of the the window including blank space.
+  example: []
+  syntax:
+    content: Overwrite = 0
+    return:
+      type: Sharpie.ReplaceStrategy
+- uid: Sharpie.ReplaceStrategy.Overlay
+  commentId: F:Sharpie.ReplaceStrategy.Overlay
+  id: Overlay
+  parent: Sharpie.ReplaceStrategy
+  langs:
+  - csharp
+  - vb
+  name: Overlay
+  nameWithType: ReplaceStrategy.Overlay
+  fullName: Sharpie.ReplaceStrategy.Overlay
+  type: Field
+  source:
+    remote:
+      path: Sharpie/ReplaceStrategy.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Overlay
+    path: Sharpie/ReplaceStrategy.cs
+    startLine: 48
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: >-
+    Overwrites the contents of the the window excluding blank space (the contents of the destination are preserved in
+
+    that case).
+  example: []
+  syntax:
+    content: Overlay = 1
+    return:
+      type: Sharpie.ReplaceStrategy
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.ReplaceStrategy
+  commentId: T:Sharpie.ReplaceStrategy
+  parent: Sharpie
+  href: Sharpie.ReplaceStrategy.html
+  name: ReplaceStrategy
+  nameWithType: ReplaceStrategy
+  fullName: Sharpie.ReplaceStrategy

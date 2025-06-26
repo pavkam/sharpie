@@ -1,0 +1,128 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Canvas.Orientation
+  commentId: T:Sharpie.Canvas.Orientation
+  id: Canvas.Orientation
+  parent: Sharpie
+  children:
+  - Sharpie.Canvas.Orientation.Horizontal
+  - Sharpie.Canvas.Orientation.Vertical
+  langs:
+  - csharp
+  - vb
+  name: Canvas.Orientation
+  nameWithType: Canvas.Orientation
+  fullName: Sharpie.Canvas.Orientation
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Orientation
+    path: Sharpie/Canvas.cs
+    startLine: 147
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Describes the available text orientations.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum Canvas.Orientation
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum Canvas.Orientation
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Canvas.Orientation.Horizontal
+  commentId: F:Sharpie.Canvas.Orientation.Horizontal
+  id: Horizontal
+  parent: Sharpie.Canvas.Orientation
+  langs:
+  - csharp
+  - vb
+  name: Horizontal
+  nameWithType: Canvas.Orientation.Horizontal
+  fullName: Sharpie.Canvas.Orientation.Horizontal
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Horizontal
+    path: Sharpie/Canvas.cs
+    startLine: 153
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Horizontal text.
+  example: []
+  syntax:
+    content: Horizontal = 0
+    return:
+      type: Sharpie.Canvas.Orientation
+- uid: Sharpie.Canvas.Orientation.Vertical
+  commentId: F:Sharpie.Canvas.Orientation.Vertical
+  id: Vertical
+  parent: Sharpie.Canvas.Orientation
+  langs:
+  - csharp
+  - vb
+  name: Vertical
+  nameWithType: Canvas.Orientation.Vertical
+  fullName: Sharpie.Canvas.Orientation.Vertical
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Vertical
+    path: Sharpie/Canvas.cs
+    startLine: 158
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Vertical text.
+  example: []
+  syntax:
+    content: Vertical = 1
+    return:
+      type: Sharpie.Canvas.Orientation
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Canvas.Orientation
+  commentId: T:Sharpie.Canvas.Orientation
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.Orientation
+  nameWithType: Canvas.Orientation
+  fullName: Sharpie.Canvas.Orientation
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html

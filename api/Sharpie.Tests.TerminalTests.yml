@@ -1,0 +1,4147 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Tests.TerminalTests
+  commentId: T:Sharpie.Tests.TerminalTests
+  id: TerminalTests
+  parent: Sharpie.Tests
+  children:
+  - Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified
+  - Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified
+  - Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesBeepFails
+  - Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesFlashFails
+  - Sharpie.Tests.TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+  - Sharpie.Tests.TerminalTests.AtomicRefresh_IsReentrant
+  - Sharpie.Tests.TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+  - Sharpie.Tests.TerminalTests.BaudRate_Returns_IfCursesSucceeds
+  - Sharpie.Tests.TerminalTests.BaudRate_Throws_IfCursesFails
+  - Sharpie.Tests.TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive
+  - Sharpie.Tests.TerminalTests.Colors_Throws_IfTerminalDisposed
+  - Sharpie.Tests.TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses
+  - Sharpie.Tests.TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+  - Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+  - Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+  - Sharpie.Tests.TerminalTests.Ctor_Initializes_ColorManager(System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_Initializes_SoftLabelKeyManager(Sharpie.SoftLabelKeyMode)
+  - Sharpie.Tests.TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses(System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesFooter_ByAskingCurses
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesHeader_ByAskingCurses
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesInput_ByAskingCurses(System.Boolean,System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses(System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesMeta_ByAskingCurses
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses(System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+  - Sharpie.Tests.TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesIsNull
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput(System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(System.Boolean)
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails
+  - Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+  - Sharpie.Tests.TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+  - Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  - Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+  - Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  - Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+  - Sharpie.Tests.TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull
+  - Sharpie.Tests.TerminalTests.Curses_ReturnsTheCursesBackend
+  - Sharpie.Tests.TerminalTests.Description_ReturnsNull_IfCursesReturnsNull
+  - Sharpie.Tests.TerminalTests.Description_Returns_IfCursesSucceeds
+  - Sharpie.Tests.TerminalTests.Dispose_DisposesTheScreen
+  - Sharpie.Tests.TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+  - Sharpie.Tests.TerminalTests.Dispose_DoesNotThrow_IfCursesFails
+  - Sharpie.Tests.TerminalTests.Dispose_RestoresCursesDefaults
+  - Sharpie.Tests.TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive
+  - Sharpie.Tests.TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled
+  - Sharpie.Tests.TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive
+  - Sharpie.Tests.TerminalTests.Events_Throws_IfTerminalDisposed
+  - Sharpie.Tests.TerminalTests.Footer_Throws_IfTerminalDisposed
+  - Sharpie.Tests.TerminalTests.Header_Throws_IfTerminalDisposed
+  - Sharpie.Tests.TerminalTests.Name_ReturnsNull_IfCursesReturnsNull
+  - Sharpie.Tests.TerminalTests.Name_Returns_IfCursesSucceeds
+  - Sharpie.Tests.TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive
+  - Sharpie.Tests.TerminalTests.Screen_Throws_IfTerminalDisposed
+  - Sharpie.Tests.TerminalTests.SetTitle_AsksCurses
+  - Sharpie.Tests.TerminalTests.SetTitle_Throws_IfTitleIsNull
+  - Sharpie.Tests.TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+  - Sharpie.Tests.TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed
+  - Sharpie.Tests.TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns
+  - Sharpie.Tests.TerminalTests.SupportedAttributes_Throws_IfCursesFails
+  - Sharpie.Tests.TerminalTests.TestCleanup
+  - Sharpie.Tests.TerminalTests.TestInitialize
+  - Sharpie.Tests.TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+  - Sharpie.Tests.TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+  - Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfCursesFails
+  - Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed
+  - Sharpie.Tests.TerminalTests.Version_Returns_IfCursesSucceeds
+  langs:
+  - csharp
+  - vb
+  name: TerminalTests
+  nameWithType: TerminalTests
+  fullName: Sharpie.Tests.TerminalTests
+  type: Class
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TerminalTests
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 32
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestClass]
+
+      public class TerminalTests
+    content.vb: >-
+      <TestClass>
+
+      Public Class TerminalTests
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.TestInitialize
+  commentId: M:Sharpie.Tests.TerminalTests.TestInitialize
+  id: TestInitialize
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: TestInitialize()
+  nameWithType: TerminalTests.TestInitialize()
+  fullName: Sharpie.Tests.TerminalTests.TestInitialize()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestInitialize
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 39
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestInitialize]
+
+      public void TestInitialize()
+    content.vb: >-
+      <TestInitialize>
+
+      Public Sub TestInitialize()
+  overload: Sharpie.Tests.TerminalTests.TestInitialize*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.TestCleanup
+  commentId: M:Sharpie.Tests.TerminalTests.TestCleanup
+  id: TestCleanup
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: TestCleanup()
+  nameWithType: TerminalTests.TestCleanup()
+  fullName: Sharpie.Tests.TerminalTests.TestCleanup()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestCleanup
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 49
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestCleanup]
+
+      public void TestCleanup()
+    content.vb: >-
+      <TestCleanup>
+
+      Public Sub TestCleanup()
+  overload: Sharpie.Tests.TerminalTests.TestCleanup*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+  id: Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_IfAnotherTerminalInstanceIsAlive()
+  nameWithType: TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 51
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_IfAnotherTerminalInstanceIsAlive()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_IfAnotherTerminalInstanceIsAlive()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesIsNull
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesIsNull
+  id: Ctor_Throws_IfCursesIsNull
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_IfCursesIsNull()
+  nameWithType: TerminalTests.Ctor_Throws_IfCursesIsNull()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_IfCursesIsNull
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 58
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_IfCursesIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_IfCursesIsNull()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative
+  id: Ctor_Throws_IfMouseClickIntervalNegative
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_IfMouseClickIntervalNegative()
+  nameWithType: TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_IfMouseClickIntervalNegative
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 61
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_IfMouseClickIntervalNegative()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_IfMouseClickIntervalNegative()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(System.Boolean)
+  id: Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(bool)
+  nameWithType: TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_NotifiesCurses_AboutUseEnvironmentOverrides
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 67
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(bool enable)
+    parameters:
+    - id: enable
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(enable As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(Boolean)
+  name.vb: Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses
+  id: Ctor_CreatesNewScreen_ByAskingCurses
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_CreatesNewScreen_ByAskingCurses()
+  nameWithType: TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_CreatesNewScreen_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 75
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_CreatesNewScreen_ByAskingCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_CreatesNewScreen_ByAskingCurses()
+  overload: Sharpie.Tests.TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+  id: Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled()
+  nameWithType: TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 85
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled()
+  overload: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+  id: Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled()
+  nameWithType: TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 93
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled()
+  overload: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen
+  id: Ctor_Throws_IfCursesFails_WhenCreatingScreen
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_IfCursesFails_WhenCreatingScreen()
+  nameWithType: TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_IfCursesFails_WhenCreatingScreen
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 100
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_IfCursesFails_WhenCreatingScreen()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_IfCursesFails_WhenCreatingScreen()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Initializes_ColorManager(System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Initializes_ColorManager(System.Boolean)
+  id: Ctor_Initializes_ColorManager(System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Initializes_ColorManager(bool)
+  nameWithType: TerminalTests.Ctor_Initializes_ColorManager(bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Initializes_ColorManager(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Initializes_ColorManager
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 110
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void Ctor_Initializes_ColorManager(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub Ctor_Initializes_ColorManager(enabled As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_Initializes_ColorManager*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: TerminalTests.Ctor_Initializes_ColorManager(Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_Initializes_ColorManager(Boolean)
+  name.vb: Ctor_Initializes_ColorManager(Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_Initializes_SoftLabelKeyManager(Sharpie.SoftLabelKeyMode)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Initializes_SoftLabelKeyManager(Sharpie.SoftLabelKeyMode)
+  id: Ctor_Initializes_SoftLabelKeyManager(Sharpie.SoftLabelKeyMode)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Initializes_SoftLabelKeyManager(SoftLabelKeyMode)
+  nameWithType: TerminalTests.Ctor_Initializes_SoftLabelKeyManager(SoftLabelKeyMode)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Initializes_SoftLabelKeyManager(Sharpie.SoftLabelKeyMode)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Initializes_SoftLabelKeyManager
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 122
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(SoftLabelKeyMode.Disabled)]
+
+      [DataRow(SoftLabelKeyMode.ThreeTwoThree)]
+
+      public void Ctor_Initializes_SoftLabelKeyManager(SoftLabelKeyMode mode)
+    parameters:
+    - id: mode
+      type: Sharpie.SoftLabelKeyMode
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(SoftLabelKeyMode.Disabled)>
+
+      <DataRow(SoftLabelKeyMode.ThreeTwoThree)>
+
+      Public Sub Ctor_Initializes_SoftLabelKeyManager(mode As SoftLabelKeyMode)
+  overload: Sharpie.Tests.TerminalTests.Ctor_Initializes_SoftLabelKeyManager*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.SoftLabelKeyMode
+      value: -1
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: Sharpie.SoftLabelKeyMode
+      value: 0
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses(System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses(System.Boolean)
+  id: Ctor_PreparesManualFlushMode_ByAskingCurses(System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesManualFlushMode_ByAskingCurses(bool)
+  nameWithType: TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses(bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesManualFlushMode_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 131
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void Ctor_PreparesManualFlushMode_ByAskingCurses(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub Ctor_PreparesManualFlushMode_ByAskingCurses(enabled As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses(Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses(Boolean)
+  name.vb: Ctor_PreparesManualFlushMode_ByAskingCurses(Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(System.Boolean)
+  id: Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(bool)
+  nameWithType: TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 140
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(enabled As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(Boolean)
+  name.vb: Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses(System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses(System.Boolean)
+  id: Ctor_PreparesEchoInput_ByAskingCurses(System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesEchoInput_ByAskingCurses(bool)
+  nameWithType: TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses(bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesEchoInput_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 150
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void Ctor_PreparesEchoInput_ByAskingCurses(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub Ctor_PreparesEchoInput_ByAskingCurses(enabled As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses(Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses(Boolean)
+  name.vb: Ctor_PreparesEchoInput_ByAskingCurses(Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput(System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput(System.Boolean)
+  id: Ctor_Throws_WhenCursesFailsToPreparesEchoInput(System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenCursesFailsToPreparesEchoInput(bool)
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput(bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenCursesFailsToPreparesEchoInput
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 158
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void Ctor_Throws_WhenCursesFailsToPreparesEchoInput(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub Ctor_Throws_WhenCursesFailsToPreparesEchoInput(enabled As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput(Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput(Boolean)
+  name.vb: Ctor_Throws_WhenCursesFailsToPreparesEchoInput(Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+  id: Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses()
+  nameWithType: TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 171
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses()
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesHeader_ByAskingCurses
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesHeader_ByAskingCurses
+  id: Ctor_PreparesHeader_ByAskingCurses
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesHeader_ByAskingCurses()
+  nameWithType: TerminalTests.Ctor_PreparesHeader_ByAskingCurses()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesHeader_ByAskingCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesHeader_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 180
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_PreparesHeader_ByAskingCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_PreparesHeader_ByAskingCurses()
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesHeader_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails
+  id: Ctor_Throws_WhenPreparingHeader_IfCursesFails
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenPreparingHeader_IfCursesFails()
+  nameWithType: TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenPreparingHeader_IfCursesFails
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 197
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_WhenPreparingHeader_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_WhenPreparingHeader_IfCursesFails()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+  id: Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle()
+  nameWithType: TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 207
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesFooter_ByAskingCurses
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesFooter_ByAskingCurses
+  id: Ctor_PreparesFooter_ByAskingCurses
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesFooter_ByAskingCurses()
+  nameWithType: TerminalTests.Ctor_PreparesFooter_ByAskingCurses()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesFooter_ByAskingCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesFooter_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 217
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_PreparesFooter_ByAskingCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_PreparesFooter_ByAskingCurses()
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesFooter_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails
+  id: Ctor_Throws_WhenPreparingFooter_IfCursesFails
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenPreparingFooter_IfCursesFails()
+  nameWithType: TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenPreparingFooter_IfCursesFails
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 234
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_WhenPreparingFooter_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_WhenPreparingFooter_IfCursesFails()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+  id: Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle()
+  nameWithType: TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 244
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+  id: Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar()
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 254
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses
+  id: Ctor_PreparesCaretMode_ByAskingCurses
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesCaretMode_ByAskingCurses()
+  nameWithType: TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesCaretMode_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 264
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_PreparesCaretMode_ByAskingCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_PreparesCaretMode_ByAskingCurses()
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses(System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses(System.Boolean)
+  id: Ctor_PreparesUseMouse_ByAskingCurses(System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesUseMouse_ByAskingCurses(bool)
+  nameWithType: TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses(bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesUseMouse_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 272
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void Ctor_PreparesUseMouse_ByAskingCurses(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub Ctor_PreparesUseMouse_ByAskingCurses(enabled As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses(Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses(Boolean)
+  name.vb: Ctor_PreparesUseMouse_ByAskingCurses(Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+  id: Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses()
+  nameWithType: TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 285
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses()
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(System.Boolean)
+  id: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(bool)
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 294
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(enabled As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(Boolean)
+  name.vb: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1(Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(System.Boolean)
+  id: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(bool)
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 304
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(true)]
+
+      [DataRow(false)]
+
+      public void Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(True)>
+
+      <DataRow(False)>
+
+      Public Sub Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(enabled As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+  nameWithType.vb: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(Boolean)
+  name.vb: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2(Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesInput_ByAskingCurses(System.Boolean,System.Boolean)
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesInput_ByAskingCurses(System.Boolean,System.Boolean)
+  id: Ctor_PreparesInput_ByAskingCurses(System.Boolean,System.Boolean)
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesInput_ByAskingCurses(bool, bool)
+  nameWithType: TerminalTests.Ctor_PreparesInput_ByAskingCurses(bool, bool)
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesInput_ByAskingCurses(bool, bool)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesInput_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 314
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(false, false)]
+
+      [DataRow(false, true)]
+
+      [DataRow(true, false)]
+
+      [DataRow(true, true)]
+
+      public void Ctor_PreparesInput_ByAskingCurses(bool useInputBuffering, bool suppressControlKeys)
+    parameters:
+    - id: useInputBuffering
+      type: System.Boolean
+    - id: suppressControlKeys
+      type: System.Boolean
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(False, False)>
+
+      <DataRow(False, True)>
+
+      <DataRow(True, False)>
+
+      <DataRow(True, True)>
+
+      Public Sub Ctor_PreparesInput_ByAskingCurses(useInputBuffering As Boolean, suppressControlKeys As Boolean)
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesInput_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+    - type: System.Boolean
+      value: false
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: System.Boolean
+      value: false
+    - type: System.Boolean
+      value: true
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+    - type: System.Boolean
+      value: false
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: System.Boolean
+      value: true
+    - type: System.Boolean
+      value: true
+  nameWithType.vb: TerminalTests.Ctor_PreparesInput_ByAskingCurses(Boolean, Boolean)
+  fullName.vb: Sharpie.Tests.TerminalTests.Ctor_PreparesInput_ByAskingCurses(Boolean, Boolean)
+  name.vb: Ctor_PreparesInput_ByAskingCurses(Boolean, Boolean)
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1
+  id: Ctor_Throws_WhenCursesFailsToPrepareInput_1
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenCursesFailsToPrepareInput_1()
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenCursesFailsToPrepareInput_1
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 326
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_WhenCursesFailsToPrepareInput_1()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_WhenCursesFailsToPrepareInput_1()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2
+  id: Ctor_Throws_WhenCursesFailsToPrepareInput_2
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenCursesFailsToPrepareInput_2()
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenCursesFailsToPrepareInput_2
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 336
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_WhenCursesFailsToPrepareInput_2()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_WhenCursesFailsToPrepareInput_2()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3
+  id: Ctor_Throws_WhenCursesFailsToPrepareInput_3
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenCursesFailsToPrepareInput_3()
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenCursesFailsToPrepareInput_3
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 346
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_WhenCursesFailsToPrepareInput_3()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_WhenCursesFailsToPrepareInput_3()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4
+  id: Ctor_Throws_WhenCursesFailsToPrepareInput_4
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_WhenCursesFailsToPrepareInput_4()
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_WhenCursesFailsToPrepareInput_4
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 357
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_WhenCursesFailsToPrepareInput_4()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_WhenCursesFailsToPrepareInput_4()
+  overload: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesMeta_ByAskingCurses
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_PreparesMeta_ByAskingCurses
+  id: Ctor_PreparesMeta_ByAskingCurses
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_PreparesMeta_ByAskingCurses()
+  nameWithType: TerminalTests.Ctor_PreparesMeta_ByAskingCurses()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesMeta_ByAskingCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_PreparesMeta_ByAskingCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 368
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_PreparesMeta_ByAskingCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_PreparesMeta_ByAskingCurses()
+  overload: Sharpie.Tests.TerminalTests.Ctor_PreparesMeta_ByAskingCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+  id: Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_WillNotThrow_IfCursesFailsToPrepareMeta()
+  nameWithType: TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 376
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_WillNotThrow_IfCursesFailsToPrepareMeta()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_WillNotThrow_IfCursesFailsToPrepareMeta()
+  overload: Sharpie.Tests.TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+  id: Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_RegistersStandardKeySequenceResolvers_IfAsked()
+  nameWithType: TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 385
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_RegistersStandardKeySequenceResolvers_IfAsked()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_RegistersStandardKeySequenceResolvers_IfAsked()
+  overload: Sharpie.Tests.TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+  commentId: M:Sharpie.Tests.TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+  id: Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked()
+  nameWithType: TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked()
+  fullName: Sharpie.Tests.TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 402
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked()
+  overload: Sharpie.Tests.TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.BaudRate_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.TerminalTests.BaudRate_Throws_IfCursesFails
+  id: BaudRate_Throws_IfCursesFails
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: BaudRate_Throws_IfCursesFails()
+  nameWithType: TerminalTests.BaudRate_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.TerminalTests.BaudRate_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: BaudRate_Throws_IfCursesFails
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 420
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void BaudRate_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub BaudRate_Throws_IfCursesFails()
+  overload: Sharpie.Tests.TerminalTests.BaudRate_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.BaudRate_Returns_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.TerminalTests.BaudRate_Returns_IfCursesSucceeds
+  id: BaudRate_Returns_IfCursesSucceeds
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: BaudRate_Returns_IfCursesSucceeds()
+  nameWithType: TerminalTests.BaudRate_Returns_IfCursesSucceeds()
+  fullName: Sharpie.Tests.TerminalTests.BaudRate_Returns_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: BaudRate_Returns_IfCursesSucceeds
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 432
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void BaudRate_Returns_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub BaudRate_Returns_IfCursesSucceeds()
+  overload: Sharpie.Tests.TerminalTests.BaudRate_Returns_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Colors_Throws_IfTerminalDisposed
+  commentId: M:Sharpie.Tests.TerminalTests.Colors_Throws_IfTerminalDisposed
+  id: Colors_Throws_IfTerminalDisposed
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Colors_Throws_IfTerminalDisposed()
+  nameWithType: TerminalTests.Colors_Throws_IfTerminalDisposed()
+  fullName: Sharpie.Tests.TerminalTests.Colors_Throws_IfTerminalDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Colors_Throws_IfTerminalDisposed
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 443
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Colors_Throws_IfTerminalDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Colors_Throws_IfTerminalDisposed()
+  overload: Sharpie.Tests.TerminalTests.Colors_Throws_IfTerminalDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive
+  commentId: M:Sharpie.Tests.TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive
+  id: Colors_ReturnsTheColorManager_IfTerminalAlive
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Colors_ReturnsTheColorManager_IfTerminalAlive()
+  nameWithType: TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive()
+  fullName: Sharpie.Tests.TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Colors_ReturnsTheColorManager_IfTerminalAlive
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 452
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Colors_ReturnsTheColorManager_IfTerminalAlive()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Colors_ReturnsTheColorManager_IfTerminalAlive()
+  overload: Sharpie.Tests.TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed
+  commentId: M:Sharpie.Tests.TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed
+  id: SoftLabelKeys_Throws_IfTerminalDisposed
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: SoftLabelKeys_Throws_IfTerminalDisposed()
+  nameWithType: TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed()
+  fullName: Sharpie.Tests.TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SoftLabelKeys_Throws_IfTerminalDisposed
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 459
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SoftLabelKeys_Throws_IfTerminalDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SoftLabelKeys_Throws_IfTerminalDisposed()
+  overload: Sharpie.Tests.TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+  commentId: M:Sharpie.Tests.TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+  id: SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive()
+  nameWithType: TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive()
+  fullName: Sharpie.Tests.TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 468
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive()
+  overload: Sharpie.Tests.TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Header_Throws_IfTerminalDisposed
+  commentId: M:Sharpie.Tests.TerminalTests.Header_Throws_IfTerminalDisposed
+  id: Header_Throws_IfTerminalDisposed
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Header_Throws_IfTerminalDisposed()
+  nameWithType: TerminalTests.Header_Throws_IfTerminalDisposed()
+  fullName: Sharpie.Tests.TerminalTests.Header_Throws_IfTerminalDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Header_Throws_IfTerminalDisposed
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 475
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Header_Throws_IfTerminalDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Header_Throws_IfTerminalDisposed()
+  overload: Sharpie.Tests.TerminalTests.Header_Throws_IfTerminalDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Footer_Throws_IfTerminalDisposed
+  commentId: M:Sharpie.Tests.TerminalTests.Footer_Throws_IfTerminalDisposed
+  id: Footer_Throws_IfTerminalDisposed
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Footer_Throws_IfTerminalDisposed()
+  nameWithType: TerminalTests.Footer_Throws_IfTerminalDisposed()
+  fullName: Sharpie.Tests.TerminalTests.Footer_Throws_IfTerminalDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Footer_Throws_IfTerminalDisposed
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 484
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Footer_Throws_IfTerminalDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Footer_Throws_IfTerminalDisposed()
+  overload: Sharpie.Tests.TerminalTests.Footer_Throws_IfTerminalDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Screen_Throws_IfTerminalDisposed
+  commentId: M:Sharpie.Tests.TerminalTests.Screen_Throws_IfTerminalDisposed
+  id: Screen_Throws_IfTerminalDisposed
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Screen_Throws_IfTerminalDisposed()
+  nameWithType: TerminalTests.Screen_Throws_IfTerminalDisposed()
+  fullName: Sharpie.Tests.TerminalTests.Screen_Throws_IfTerminalDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Screen_Throws_IfTerminalDisposed
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 493
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Screen_Throws_IfTerminalDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Screen_Throws_IfTerminalDisposed()
+  overload: Sharpie.Tests.TerminalTests.Screen_Throws_IfTerminalDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive
+  commentId: M:Sharpie.Tests.TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive
+  id: Screen_ReturnsTheInstance_IfTerminalAlive
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Screen_ReturnsTheInstance_IfTerminalAlive()
+  nameWithType: TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive()
+  fullName: Sharpie.Tests.TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Screen_ReturnsTheInstance_IfTerminalAlive
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 501
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Screen_ReturnsTheInstance_IfTerminalAlive()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Screen_ReturnsTheInstance_IfTerminalAlive()
+  overload: Sharpie.Tests.TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Events_Throws_IfTerminalDisposed
+  commentId: M:Sharpie.Tests.TerminalTests.Events_Throws_IfTerminalDisposed
+  id: Events_Throws_IfTerminalDisposed
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Events_Throws_IfTerminalDisposed()
+  nameWithType: TerminalTests.Events_Throws_IfTerminalDisposed()
+  fullName: Sharpie.Tests.TerminalTests.Events_Throws_IfTerminalDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Events_Throws_IfTerminalDisposed
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 509
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Events_Throws_IfTerminalDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Events_Throws_IfTerminalDisposed()
+  overload: Sharpie.Tests.TerminalTests.Events_Throws_IfTerminalDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive
+  commentId: M:Sharpie.Tests.TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive
+  id: Events_ReturnsTheInstance_IfTerminalAlive
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Events_ReturnsTheInstance_IfTerminalAlive()
+  nameWithType: TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive()
+  fullName: Sharpie.Tests.TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Events_ReturnsTheInstance_IfTerminalAlive
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 517
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Events_ReturnsTheInstance_IfTerminalAlive()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Events_ReturnsTheInstance_IfTerminalAlive()
+  overload: Sharpie.Tests.TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Name_Returns_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.TerminalTests.Name_Returns_IfCursesSucceeds
+  id: Name_Returns_IfCursesSucceeds
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Name_Returns_IfCursesSucceeds()
+  nameWithType: TerminalTests.Name_Returns_IfCursesSucceeds()
+  fullName: Sharpie.Tests.TerminalTests.Name_Returns_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Name_Returns_IfCursesSucceeds
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 525
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Name_Returns_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Name_Returns_IfCursesSucceeds()
+  overload: Sharpie.Tests.TerminalTests.Name_Returns_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Name_ReturnsNull_IfCursesReturnsNull
+  commentId: M:Sharpie.Tests.TerminalTests.Name_ReturnsNull_IfCursesReturnsNull
+  id: Name_ReturnsNull_IfCursesReturnsNull
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Name_ReturnsNull_IfCursesReturnsNull()
+  nameWithType: TerminalTests.Name_ReturnsNull_IfCursesReturnsNull()
+  fullName: Sharpie.Tests.TerminalTests.Name_ReturnsNull_IfCursesReturnsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Name_ReturnsNull_IfCursesReturnsNull
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 536
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Name_ReturnsNull_IfCursesReturnsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Name_ReturnsNull_IfCursesReturnsNull()
+  overload: Sharpie.Tests.TerminalTests.Name_ReturnsNull_IfCursesReturnsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Description_Returns_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.TerminalTests.Description_Returns_IfCursesSucceeds
+  id: Description_Returns_IfCursesSucceeds
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Description_Returns_IfCursesSucceeds()
+  nameWithType: TerminalTests.Description_Returns_IfCursesSucceeds()
+  fullName: Sharpie.Tests.TerminalTests.Description_Returns_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Description_Returns_IfCursesSucceeds
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 547
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Description_Returns_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Description_Returns_IfCursesSucceeds()
+  overload: Sharpie.Tests.TerminalTests.Description_Returns_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Description_ReturnsNull_IfCursesReturnsNull
+  commentId: M:Sharpie.Tests.TerminalTests.Description_ReturnsNull_IfCursesReturnsNull
+  id: Description_ReturnsNull_IfCursesReturnsNull
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Description_ReturnsNull_IfCursesReturnsNull()
+  nameWithType: TerminalTests.Description_ReturnsNull_IfCursesReturnsNull()
+  fullName: Sharpie.Tests.TerminalTests.Description_ReturnsNull_IfCursesReturnsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Description_ReturnsNull_IfCursesReturnsNull
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 558
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Description_ReturnsNull_IfCursesReturnsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Description_ReturnsNull_IfCursesReturnsNull()
+  overload: Sharpie.Tests.TerminalTests.Description_ReturnsNull_IfCursesReturnsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Version_Returns_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.TerminalTests.Version_Returns_IfCursesSucceeds
+  id: Version_Returns_IfCursesSucceeds
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Version_Returns_IfCursesSucceeds()
+  nameWithType: TerminalTests.Version_Returns_IfCursesSucceeds()
+  fullName: Sharpie.Tests.TerminalTests.Version_Returns_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Version_Returns_IfCursesSucceeds
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 569
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Version_Returns_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Version_Returns_IfCursesSucceeds()
+  overload: Sharpie.Tests.TerminalTests.Version_Returns_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull
+  commentId: M:Sharpie.Tests.TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull
+  id: CursesVersion_ReturnsNull_IfCursesReturnsNull
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: CursesVersion_ReturnsNull_IfCursesReturnsNull()
+  nameWithType: TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull()
+  fullName: Sharpie.Tests.TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CursesVersion_ReturnsNull_IfCursesReturnsNull
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 580
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void CursesVersion_ReturnsNull_IfCursesReturnsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub CursesVersion_ReturnsNull_IfCursesReturnsNull()
+  overload: Sharpie.Tests.TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.SupportedAttributes_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.TerminalTests.SupportedAttributes_Throws_IfCursesFails
+  id: SupportedAttributes_Throws_IfCursesFails
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: SupportedAttributes_Throws_IfCursesFails()
+  nameWithType: TerminalTests.SupportedAttributes_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.TerminalTests.SupportedAttributes_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SupportedAttributes_Throws_IfCursesFails
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 591
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SupportedAttributes_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SupportedAttributes_Throws_IfCursesFails()
+  overload: Sharpie.Tests.TerminalTests.SupportedAttributes_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns
+  commentId: M:Sharpie.Tests.TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns
+  id: SupportedAttributes_Returns_WhateverCursesReturns
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: SupportedAttributes_Returns_WhateverCursesReturns()
+  nameWithType: TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns()
+  fullName: Sharpie.Tests.TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SupportedAttributes_Returns_WhateverCursesReturns
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 603
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SupportedAttributes_Returns_WhateverCursesReturns()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SupportedAttributes_Returns_WhateverCursesReturns()
+  overload: Sharpie.Tests.TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+  commentId: M:Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+  id: CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined()
+  nameWithType: TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined()
+  fullName: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 618
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined()
+  overload: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  commentId: M:Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  id: CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+  nameWithType: TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+  fullName: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 633
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+  overload: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+  commentId: M:Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+  id: CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined()
+  nameWithType: TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined()
+  fullName: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 648
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined()
+  overload: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  commentId: M:Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  id: CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+  nameWithType: TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+  fullName: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 663
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined()
+  overload: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Curses_ReturnsTheCursesBackend
+  commentId: M:Sharpie.Tests.TerminalTests.Curses_ReturnsTheCursesBackend
+  id: Curses_ReturnsTheCursesBackend
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Curses_ReturnsTheCursesBackend()
+  nameWithType: TerminalTests.Curses_ReturnsTheCursesBackend()
+  fullName: Sharpie.Tests.TerminalTests.Curses_ReturnsTheCursesBackend()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Curses_ReturnsTheCursesBackend
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 678
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Curses_ReturnsTheCursesBackend()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Curses_ReturnsTheCursesBackend()
+  overload: Sharpie.Tests.TerminalTests.Curses_ReturnsTheCursesBackend*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified
+  commentId: M:Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified
+  id: Alert_ShouldDoCursesBeep_IfSpecified
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Alert_ShouldDoCursesBeep_IfSpecified()
+  nameWithType: TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified()
+  fullName: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alert_ShouldDoCursesBeep_IfSpecified
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 685
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Alert_ShouldDoCursesBeep_IfSpecified()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Alert_ShouldDoCursesBeep_IfSpecified()
+  overload: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesBeepFails
+  commentId: M:Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesBeepFails
+  id: Alert_Throws_IfCursesBeepFails
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Alert_Throws_IfCursesBeepFails()
+  nameWithType: TerminalTests.Alert_Throws_IfCursesBeepFails()
+  fullName: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesBeepFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alert_Throws_IfCursesBeepFails
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 694
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Alert_Throws_IfCursesBeepFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Alert_Throws_IfCursesBeepFails()
+  overload: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesBeepFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified
+  commentId: M:Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified
+  id: Alert_ShouldDoCursesFlash_IfSpecified
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Alert_ShouldDoCursesFlash_IfSpecified()
+  nameWithType: TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified()
+  fullName: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alert_ShouldDoCursesFlash_IfSpecified
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 705
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Alert_ShouldDoCursesFlash_IfSpecified()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Alert_ShouldDoCursesFlash_IfSpecified()
+  overload: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesFlashFails
+  commentId: M:Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesFlashFails
+  id: Alert_Throws_IfCursesFlashFails
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Alert_Throws_IfCursesFlashFails()
+  nameWithType: TerminalTests.Alert_Throws_IfCursesFlashFails()
+  fullName: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesFlashFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alert_Throws_IfCursesFlashFails
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 714
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Alert_Throws_IfCursesFlashFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Alert_Throws_IfCursesFlashFails()
+  overload: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesFlashFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+  commentId: M:Sharpie.Tests.TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+  id: AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: AtomicRefresh_UpdatesScreenWhenObjectIsDisposed()
+  nameWithType: TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed()
+  fullName: Sharpie.Tests.TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 725
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void AtomicRefresh_UpdatesScreenWhenObjectIsDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub AtomicRefresh_UpdatesScreenWhenObjectIsDisposed()
+  overload: Sharpie.Tests.TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.AtomicRefresh_IsReentrant
+  commentId: M:Sharpie.Tests.TerminalTests.AtomicRefresh_IsReentrant
+  id: AtomicRefresh_IsReentrant
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: AtomicRefresh_IsReentrant()
+  nameWithType: TerminalTests.AtomicRefresh_IsReentrant()
+  fullName: Sharpie.Tests.TerminalTests.AtomicRefresh_IsReentrant()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AtomicRefresh_IsReentrant
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 736
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void AtomicRefresh_IsReentrant()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub AtomicRefresh_IsReentrant()
+  overload: Sharpie.Tests.TerminalTests.AtomicRefresh_IsReentrant*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+  commentId: M:Sharpie.Tests.TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+  id: AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks()
+  nameWithType: TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks()
+  fullName: Sharpie.Tests.TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 750
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks()
+  overload: Sharpie.Tests.TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+  commentId: M:Sharpie.Tests.TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+  id: TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch()
+  nameWithType: TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch()
+  fullName: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 769
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch()
+  overload: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+  commentId: M:Sharpie.Tests.TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+  id: TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch()
+  nameWithType: TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch()
+  fullName: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 779
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch()
+  overload: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed
+  commentId: M:Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed
+  id: TryUpdate_Throws_IfTerminalIsDisposed
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: TryUpdate_Throws_IfTerminalIsDisposed()
+  nameWithType: TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed()
+  fullName: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryUpdate_Throws_IfTerminalIsDisposed
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 792
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void TryUpdate_Throws_IfTerminalIsDisposed()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub TryUpdate_Throws_IfTerminalIsDisposed()
+  overload: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfCursesFails
+  id: TryUpdate_Throws_IfCursesFails
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: TryUpdate_Throws_IfCursesFails()
+  nameWithType: TerminalTests.TryUpdate_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TryUpdate_Throws_IfCursesFails
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 801
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void TryUpdate_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub TryUpdate_Throws_IfCursesFails()
+  overload: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive
+  commentId: M:Sharpie.Tests.TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive
+  id: Disposed_ReturnsFalse_IfTerminalIsAlive
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Disposed_ReturnsFalse_IfTerminalIsAlive()
+  nameWithType: TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive()
+  fullName: Sharpie.Tests.TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Disposed_ReturnsFalse_IfTerminalIsAlive
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 812
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Disposed_ReturnsFalse_IfTerminalIsAlive()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Disposed_ReturnsFalse_IfTerminalIsAlive()
+  overload: Sharpie.Tests.TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled
+  commentId: M:Sharpie.Tests.TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled
+  id: Disposed_ReturnsTrue_IfDisposeIsCalled
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Disposed_ReturnsTrue_IfDisposeIsCalled()
+  nameWithType: TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled()
+  fullName: Sharpie.Tests.TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Disposed_ReturnsTrue_IfDisposeIsCalled
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 820
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Disposed_ReturnsTrue_IfDisposeIsCalled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Disposed_ReturnsTrue_IfDisposeIsCalled()
+  overload: Sharpie.Tests.TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Dispose_DisposesTheScreen
+  commentId: M:Sharpie.Tests.TerminalTests.Dispose_DisposesTheScreen
+  id: Dispose_DisposesTheScreen
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Dispose_DisposesTheScreen()
+  nameWithType: TerminalTests.Dispose_DisposesTheScreen()
+  fullName: Sharpie.Tests.TerminalTests.Dispose_DisposesTheScreen()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Dispose_DisposesTheScreen
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 828
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Dispose_DisposesTheScreen()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Dispose_DisposesTheScreen()
+  overload: Sharpie.Tests.TerminalTests.Dispose_DisposesTheScreen*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Dispose_RestoresCursesDefaults
+  commentId: M:Sharpie.Tests.TerminalTests.Dispose_RestoresCursesDefaults
+  id: Dispose_RestoresCursesDefaults
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Dispose_RestoresCursesDefaults()
+  nameWithType: TerminalTests.Dispose_RestoresCursesDefaults()
+  fullName: Sharpie.Tests.TerminalTests.Dispose_RestoresCursesDefaults()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Dispose_RestoresCursesDefaults
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 838
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Dispose_RestoresCursesDefaults()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Dispose_RestoresCursesDefaults()
+  overload: Sharpie.Tests.TerminalTests.Dispose_RestoresCursesDefaults*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Dispose_DoesNotThrow_IfCursesFails
+  commentId: M:Sharpie.Tests.TerminalTests.Dispose_DoesNotThrow_IfCursesFails
+  id: Dispose_DoesNotThrow_IfCursesFails
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Dispose_DoesNotThrow_IfCursesFails()
+  nameWithType: TerminalTests.Dispose_DoesNotThrow_IfCursesFails()
+  fullName: Sharpie.Tests.TerminalTests.Dispose_DoesNotThrow_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Dispose_DoesNotThrow_IfCursesFails
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 863
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Dispose_DoesNotThrow_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Dispose_DoesNotThrow_IfCursesFails()
+  overload: Sharpie.Tests.TerminalTests.Dispose_DoesNotThrow_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+  commentId: M:Sharpie.Tests.TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+  id: Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode()
+  nameWithType: TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode()
+  fullName: Sharpie.Tests.TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 884
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode()
+  overload: Sharpie.Tests.TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.SetTitle_Throws_IfTitleIsNull
+  commentId: M:Sharpie.Tests.TerminalTests.SetTitle_Throws_IfTitleIsNull
+  id: SetTitle_Throws_IfTitleIsNull
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: SetTitle_Throws_IfTitleIsNull()
+  nameWithType: TerminalTests.SetTitle_Throws_IfTitleIsNull()
+  fullName: Sharpie.Tests.TerminalTests.SetTitle_Throws_IfTitleIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SetTitle_Throws_IfTitleIsNull
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 896
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SetTitle_Throws_IfTitleIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SetTitle_Throws_IfTitleIsNull()
+  overload: Sharpie.Tests.TerminalTests.SetTitle_Throws_IfTitleIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.TerminalTests.SetTitle_AsksCurses
+  commentId: M:Sharpie.Tests.TerminalTests.SetTitle_AsksCurses
+  id: SetTitle_AsksCurses
+  parent: Sharpie.Tests.TerminalTests
+  langs:
+  - csharp
+  - vb
+  name: SetTitle_AsksCurses()
+  nameWithType: TerminalTests.SetTitle_AsksCurses()
+  fullName: Sharpie.Tests.TerminalTests.SetTitle_AsksCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/TerminalTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SetTitle_AsksCurses
+    path: Sharpie.Tests/TerminalTests.cs
+    startLine: 903
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SetTitle_AsksCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SetTitle_AsksCurses()
+  overload: Sharpie.Tests.TerminalTests.SetTitle_AsksCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+references:
+- uid: Sharpie.Tests
+  commentId: N:Sharpie.Tests
+  href: Sharpie.html
+  name: Sharpie.Tests
+  nameWithType: Sharpie.Tests
+  fullName: Sharpie.Tests
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Tests.TerminalTests.TestInitialize*
+  commentId: Overload:Sharpie.Tests.TerminalTests.TestInitialize
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_TestInitialize
+  name: TestInitialize
+  nameWithType: TerminalTests.TestInitialize
+  fullName: Sharpie.Tests.TerminalTests.TestInitialize
+- uid: Sharpie.Tests.TerminalTests.TestCleanup*
+  commentId: Overload:Sharpie.Tests.TerminalTests.TestCleanup
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_TestCleanup
+  name: TestCleanup
+  nameWithType: TerminalTests.TestCleanup
+  fullName: Sharpie.Tests.TerminalTests.TestCleanup
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+  name: Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+  nameWithType: TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfAnotherTerminalInstanceIsAlive
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesIsNull*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesIsNull
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_IfCursesIsNull
+  name: Ctor_Throws_IfCursesIsNull
+  nameWithType: TerminalTests.Ctor_Throws_IfCursesIsNull
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesIsNull
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_IfMouseClickIntervalNegative
+  name: Ctor_Throws_IfMouseClickIntervalNegative
+  nameWithType: TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfMouseClickIntervalNegative
+- uid: Sharpie.Tests.TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_NotifiesCurses_AboutUseEnvironmentOverrides_System_Boolean_
+  name: Ctor_NotifiesCurses_AboutUseEnvironmentOverrides
+  nameWithType: TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides
+  fullName: Sharpie.Tests.TerminalTests.Ctor_NotifiesCurses_AboutUseEnvironmentOverrides
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Sharpie.Tests.TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_CreatesNewScreen_ByAskingCurses
+  name: Ctor_CreatesNewScreen_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_CreatesNewScreen_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+  name: Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+  nameWithType: TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+  fullName: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretDisabled
+- uid: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+  name: Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+  nameWithType: TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+  fullName: Sharpie.Tests.TerminalTests.Ctor_InitializesScreenIgnoreHardwareCaret_IfCaretEnabled
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_IfCursesFails_WhenCreatingScreen
+  name: Ctor_Throws_IfCursesFails_WhenCreatingScreen
+  nameWithType: TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenCreatingScreen
+- uid: Sharpie.Tests.TerminalTests.Ctor_Initializes_ColorManager*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Initializes_ColorManager
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Initializes_ColorManager_System_Boolean_
+  name: Ctor_Initializes_ColorManager
+  nameWithType: TerminalTests.Ctor_Initializes_ColorManager
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Initializes_ColorManager
+- uid: Sharpie.Tests.TerminalTests.Ctor_Initializes_SoftLabelKeyManager*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Initializes_SoftLabelKeyManager
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Initializes_SoftLabelKeyManager_Sharpie_SoftLabelKeyMode_
+  name: Ctor_Initializes_SoftLabelKeyManager
+  nameWithType: TerminalTests.Ctor_Initializes_SoftLabelKeyManager
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Initializes_SoftLabelKeyManager
+- uid: Sharpie.SoftLabelKeyMode
+  commentId: T:Sharpie.SoftLabelKeyMode
+  parent: Sharpie
+  href: Sharpie.SoftLabelKeyMode.html
+  name: SoftLabelKeyMode
+  nameWithType: SoftLabelKeyMode
+  fullName: Sharpie.SoftLabelKeyMode
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesManualFlushMode_ByAskingCurses_System_Boolean_
+  name: Ctor_PreparesManualFlushMode_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesManualFlushMode_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush_System_Boolean_
+  name: Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush
+  nameWithType: TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesEchoInput_ByAskingCurses_System_Boolean_
+  name: Ctor_PreparesEchoInput_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesEchoInput_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenCursesFailsToPreparesEchoInput_System_Boolean_
+  name: Ctor_Throws_WhenCursesFailsToPreparesEchoInput
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesEchoInput
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+  name: Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesTranslateReturnToNewLineChar_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesHeader_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesHeader_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesHeader_ByAskingCurses
+  name: Ctor_PreparesHeader_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesHeader_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesHeader_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenPreparingHeader_IfCursesFails
+  name: Ctor_Throws_WhenPreparingHeader_IfCursesFails
+  nameWithType: TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFails
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+  name: Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+  nameWithType: TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingHeader_IfCursesFailsToProvideValidHandle
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesFooter_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesFooter_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesFooter_ByAskingCurses
+  name: Ctor_PreparesFooter_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesFooter_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesFooter_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenPreparingFooter_IfCursesFails
+  name: Ctor_Throws_WhenPreparingFooter_IfCursesFails
+  nameWithType: TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFails
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+  name: Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+  nameWithType: TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenPreparingFooter_IfCursesFailsToProvideValidHandle
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+  name: Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesTranslateReturnToNewLineChar
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesCaretMode_ByAskingCurses
+  name: Ctor_PreparesCaretMode_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesCaretMode_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesUseMouse_ByAskingCurses_System_Boolean_
+  name: Ctor_PreparesUseMouse_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+  name: Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesUseMouse_WithoutClickInterval_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1_System_Boolean_
+  name: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_1
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2_System_Boolean_
+  name: Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPreparesUseMouse_2
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesInput_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesInput_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesInput_ByAskingCurses_System_Boolean_System_Boolean_
+  name: Ctor_PreparesInput_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesInput_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesInput_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenCursesFailsToPrepareInput_1
+  name: Ctor_Throws_WhenCursesFailsToPrepareInput_1
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_1
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenCursesFailsToPrepareInput_2
+  name: Ctor_Throws_WhenCursesFailsToPrepareInput_2
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_2
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenCursesFailsToPrepareInput_3
+  name: Ctor_Throws_WhenCursesFailsToPrepareInput_3
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_3
+- uid: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_Throws_WhenCursesFailsToPrepareInput_4
+  name: Ctor_Throws_WhenCursesFailsToPrepareInput_4
+  nameWithType: TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4
+  fullName: Sharpie.Tests.TerminalTests.Ctor_Throws_WhenCursesFailsToPrepareInput_4
+- uid: Sharpie.Tests.TerminalTests.Ctor_PreparesMeta_ByAskingCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_PreparesMeta_ByAskingCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_PreparesMeta_ByAskingCurses
+  name: Ctor_PreparesMeta_ByAskingCurses
+  nameWithType: TerminalTests.Ctor_PreparesMeta_ByAskingCurses
+  fullName: Sharpie.Tests.TerminalTests.Ctor_PreparesMeta_ByAskingCurses
+- uid: Sharpie.Tests.TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+  name: Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+  nameWithType: TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+  fullName: Sharpie.Tests.TerminalTests.Ctor_WillNotThrow_IfCursesFailsToPrepareMeta
+- uid: Sharpie.Tests.TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+  name: Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+  nameWithType: TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+  fullName: Sharpie.Tests.TerminalTests.Ctor_RegistersStandardKeySequenceResolvers_IfAsked
+- uid: Sharpie.Tests.TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+  name: Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+  nameWithType: TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+  fullName: Sharpie.Tests.TerminalTests.Ctor_DoesNotRegisterStandardKeySequenceResolvers_IfAsked
+- uid: Sharpie.Tests.TerminalTests.BaudRate_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.TerminalTests.BaudRate_Throws_IfCursesFails
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_BaudRate_Throws_IfCursesFails
+  name: BaudRate_Throws_IfCursesFails
+  nameWithType: TerminalTests.BaudRate_Throws_IfCursesFails
+  fullName: Sharpie.Tests.TerminalTests.BaudRate_Throws_IfCursesFails
+- uid: Sharpie.Tests.TerminalTests.BaudRate_Returns_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.TerminalTests.BaudRate_Returns_IfCursesSucceeds
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_BaudRate_Returns_IfCursesSucceeds
+  name: BaudRate_Returns_IfCursesSucceeds
+  nameWithType: TerminalTests.BaudRate_Returns_IfCursesSucceeds
+  fullName: Sharpie.Tests.TerminalTests.BaudRate_Returns_IfCursesSucceeds
+- uid: Sharpie.Tests.TerminalTests.Colors_Throws_IfTerminalDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Colors_Throws_IfTerminalDisposed
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Colors_Throws_IfTerminalDisposed
+  name: Colors_Throws_IfTerminalDisposed
+  nameWithType: TerminalTests.Colors_Throws_IfTerminalDisposed
+  fullName: Sharpie.Tests.TerminalTests.Colors_Throws_IfTerminalDisposed
+- uid: Sharpie.Tests.TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Colors_ReturnsTheColorManager_IfTerminalAlive
+  name: Colors_ReturnsTheColorManager_IfTerminalAlive
+  nameWithType: TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive
+  fullName: Sharpie.Tests.TerminalTests.Colors_ReturnsTheColorManager_IfTerminalAlive
+- uid: Sharpie.Tests.TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_SoftLabelKeys_Throws_IfTerminalDisposed
+  name: SoftLabelKeys_Throws_IfTerminalDisposed
+  nameWithType: TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed
+  fullName: Sharpie.Tests.TerminalTests.SoftLabelKeys_Throws_IfTerminalDisposed
+- uid: Sharpie.Tests.TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive*
+  commentId: Overload:Sharpie.Tests.TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+  name: SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+  nameWithType: TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+  fullName: Sharpie.Tests.TerminalTests.SoftLabelKeys_ReturnsTheColorManager_IfTerminalAlive
+- uid: Sharpie.Tests.TerminalTests.Header_Throws_IfTerminalDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Header_Throws_IfTerminalDisposed
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Header_Throws_IfTerminalDisposed
+  name: Header_Throws_IfTerminalDisposed
+  nameWithType: TerminalTests.Header_Throws_IfTerminalDisposed
+  fullName: Sharpie.Tests.TerminalTests.Header_Throws_IfTerminalDisposed
+- uid: Sharpie.Tests.TerminalTests.Footer_Throws_IfTerminalDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Footer_Throws_IfTerminalDisposed
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Footer_Throws_IfTerminalDisposed
+  name: Footer_Throws_IfTerminalDisposed
+  nameWithType: TerminalTests.Footer_Throws_IfTerminalDisposed
+  fullName: Sharpie.Tests.TerminalTests.Footer_Throws_IfTerminalDisposed
+- uid: Sharpie.Tests.TerminalTests.Screen_Throws_IfTerminalDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Screen_Throws_IfTerminalDisposed
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Screen_Throws_IfTerminalDisposed
+  name: Screen_Throws_IfTerminalDisposed
+  nameWithType: TerminalTests.Screen_Throws_IfTerminalDisposed
+  fullName: Sharpie.Tests.TerminalTests.Screen_Throws_IfTerminalDisposed
+- uid: Sharpie.Tests.TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Screen_ReturnsTheInstance_IfTerminalAlive
+  name: Screen_ReturnsTheInstance_IfTerminalAlive
+  nameWithType: TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive
+  fullName: Sharpie.Tests.TerminalTests.Screen_ReturnsTheInstance_IfTerminalAlive
+- uid: Sharpie.Tests.TerminalTests.Events_Throws_IfTerminalDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Events_Throws_IfTerminalDisposed
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Events_Throws_IfTerminalDisposed
+  name: Events_Throws_IfTerminalDisposed
+  nameWithType: TerminalTests.Events_Throws_IfTerminalDisposed
+  fullName: Sharpie.Tests.TerminalTests.Events_Throws_IfTerminalDisposed
+- uid: Sharpie.Tests.TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Events_ReturnsTheInstance_IfTerminalAlive
+  name: Events_ReturnsTheInstance_IfTerminalAlive
+  nameWithType: TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive
+  fullName: Sharpie.Tests.TerminalTests.Events_ReturnsTheInstance_IfTerminalAlive
+- uid: Sharpie.Tests.TerminalTests.Name_Returns_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Name_Returns_IfCursesSucceeds
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Name_Returns_IfCursesSucceeds
+  name: Name_Returns_IfCursesSucceeds
+  nameWithType: TerminalTests.Name_Returns_IfCursesSucceeds
+  fullName: Sharpie.Tests.TerminalTests.Name_Returns_IfCursesSucceeds
+- uid: Sharpie.Tests.TerminalTests.Name_ReturnsNull_IfCursesReturnsNull*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Name_ReturnsNull_IfCursesReturnsNull
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Name_ReturnsNull_IfCursesReturnsNull
+  name: Name_ReturnsNull_IfCursesReturnsNull
+  nameWithType: TerminalTests.Name_ReturnsNull_IfCursesReturnsNull
+  fullName: Sharpie.Tests.TerminalTests.Name_ReturnsNull_IfCursesReturnsNull
+- uid: Sharpie.Tests.TerminalTests.Description_Returns_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Description_Returns_IfCursesSucceeds
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Description_Returns_IfCursesSucceeds
+  name: Description_Returns_IfCursesSucceeds
+  nameWithType: TerminalTests.Description_Returns_IfCursesSucceeds
+  fullName: Sharpie.Tests.TerminalTests.Description_Returns_IfCursesSucceeds
+- uid: Sharpie.Tests.TerminalTests.Description_ReturnsNull_IfCursesReturnsNull*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Description_ReturnsNull_IfCursesReturnsNull
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Description_ReturnsNull_IfCursesReturnsNull
+  name: Description_ReturnsNull_IfCursesReturnsNull
+  nameWithType: TerminalTests.Description_ReturnsNull_IfCursesReturnsNull
+  fullName: Sharpie.Tests.TerminalTests.Description_ReturnsNull_IfCursesReturnsNull
+- uid: Sharpie.Tests.TerminalTests.Version_Returns_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Version_Returns_IfCursesSucceeds
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Version_Returns_IfCursesSucceeds
+  name: Version_Returns_IfCursesSucceeds
+  nameWithType: TerminalTests.Version_Returns_IfCursesSucceeds
+  fullName: Sharpie.Tests.TerminalTests.Version_Returns_IfCursesSucceeds
+- uid: Sharpie.Tests.TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull*
+  commentId: Overload:Sharpie.Tests.TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_CursesVersion_ReturnsNull_IfCursesReturnsNull
+  name: CursesVersion_ReturnsNull_IfCursesReturnsNull
+  nameWithType: TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull
+  fullName: Sharpie.Tests.TerminalTests.CursesVersion_ReturnsNull_IfCursesReturnsNull
+- uid: Sharpie.Tests.TerminalTests.SupportedAttributes_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.TerminalTests.SupportedAttributes_Throws_IfCursesFails
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_SupportedAttributes_Throws_IfCursesFails
+  name: SupportedAttributes_Throws_IfCursesFails
+  nameWithType: TerminalTests.SupportedAttributes_Throws_IfCursesFails
+  fullName: Sharpie.Tests.TerminalTests.SupportedAttributes_Throws_IfCursesFails
+- uid: Sharpie.Tests.TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns*
+  commentId: Overload:Sharpie.Tests.TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_SupportedAttributes_Returns_WhateverCursesReturns
+  name: SupportedAttributes_Returns_WhateverCursesReturns
+  nameWithType: TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns
+  fullName: Sharpie.Tests.TerminalTests.SupportedAttributes_Returns_WhateverCursesReturns
+- uid: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined*
+  commentId: Overload:Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+  name: CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+  nameWithType: TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+  fullName: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheRune_IfCursesHasCharDefined
+- uid: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined*
+  commentId: Overload:Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  name: CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  nameWithType: TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  fullName: Sharpie.Tests.TerminalTests.CurrentKillChar_ReturnsTheNull_IfCursesHasNoCharDefined
+- uid: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined*
+  commentId: Overload:Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+  name: CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+  nameWithType: TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+  fullName: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheRune_IfCursesHasCharDefined
+- uid: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined*
+  commentId: Overload:Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  name: CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  nameWithType: TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+  fullName: Sharpie.Tests.TerminalTests.CurrentEraseChar_ReturnsTheNull_IfCursesHasNoCharDefined
+- uid: Sharpie.Tests.TerminalTests.Curses_ReturnsTheCursesBackend*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Curses_ReturnsTheCursesBackend
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Curses_ReturnsTheCursesBackend
+  name: Curses_ReturnsTheCursesBackend
+  nameWithType: TerminalTests.Curses_ReturnsTheCursesBackend
+  fullName: Sharpie.Tests.TerminalTests.Curses_ReturnsTheCursesBackend
+- uid: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Alert_ShouldDoCursesBeep_IfSpecified
+  name: Alert_ShouldDoCursesBeep_IfSpecified
+  nameWithType: TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified
+  fullName: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesBeep_IfSpecified
+- uid: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesBeepFails*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesBeepFails
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Alert_Throws_IfCursesBeepFails
+  name: Alert_Throws_IfCursesBeepFails
+  nameWithType: TerminalTests.Alert_Throws_IfCursesBeepFails
+  fullName: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesBeepFails
+- uid: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Alert_ShouldDoCursesFlash_IfSpecified
+  name: Alert_ShouldDoCursesFlash_IfSpecified
+  nameWithType: TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified
+  fullName: Sharpie.Tests.TerminalTests.Alert_ShouldDoCursesFlash_IfSpecified
+- uid: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesFlashFails*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesFlashFails
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Alert_Throws_IfCursesFlashFails
+  name: Alert_Throws_IfCursesFlashFails
+  nameWithType: TerminalTests.Alert_Throws_IfCursesFlashFails
+  fullName: Sharpie.Tests.TerminalTests.Alert_Throws_IfCursesFlashFails
+- uid: Sharpie.Tests.TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+  name: AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+  nameWithType: TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+  fullName: Sharpie.Tests.TerminalTests.AtomicRefresh_UpdatesScreenWhenObjectIsDisposed
+- uid: Sharpie.Tests.TerminalTests.AtomicRefresh_IsReentrant*
+  commentId: Overload:Sharpie.Tests.TerminalTests.AtomicRefresh_IsReentrant
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_AtomicRefresh_IsReentrant
+  name: AtomicRefresh_IsReentrant
+  nameWithType: TerminalTests.AtomicRefresh_IsReentrant
+  fullName: Sharpie.Tests.TerminalTests.AtomicRefresh_IsReentrant
+- uid: Sharpie.Tests.TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks*
+  commentId: Overload:Sharpie.Tests.TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+  name: AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+  nameWithType: TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+  fullName: Sharpie.Tests.TerminalTests.AtomicRefreshOpen_ProperlyIdentifiesAtomicBlocks
+- uid: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch*
+  commentId: Overload:Sharpie.Tests.TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+  name: TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+  nameWithType: TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+  fullName: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsTrueAndCallsCursesIfNotBatch
+- uid: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch*
+  commentId: Overload:Sharpie.Tests.TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+  name: TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+  nameWithType: TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+  fullName: Sharpie.Tests.TerminalTests.TryUpdate_ReturnsFalseAndDoesNotCallCursesIfBatch
+- uid: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed*
+  commentId: Overload:Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_TryUpdate_Throws_IfTerminalIsDisposed
+  name: TryUpdate_Throws_IfTerminalIsDisposed
+  nameWithType: TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed
+  fullName: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfTerminalIsDisposed
+- uid: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfCursesFails
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_TryUpdate_Throws_IfCursesFails
+  name: TryUpdate_Throws_IfCursesFails
+  nameWithType: TerminalTests.TryUpdate_Throws_IfCursesFails
+  fullName: Sharpie.Tests.TerminalTests.TryUpdate_Throws_IfCursesFails
+- uid: Sharpie.Tests.TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Disposed_ReturnsFalse_IfTerminalIsAlive
+  name: Disposed_ReturnsFalse_IfTerminalIsAlive
+  nameWithType: TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive
+  fullName: Sharpie.Tests.TerminalTests.Disposed_ReturnsFalse_IfTerminalIsAlive
+- uid: Sharpie.Tests.TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Disposed_ReturnsTrue_IfDisposeIsCalled
+  name: Disposed_ReturnsTrue_IfDisposeIsCalled
+  nameWithType: TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled
+  fullName: Sharpie.Tests.TerminalTests.Disposed_ReturnsTrue_IfDisposeIsCalled
+- uid: Sharpie.Tests.TerminalTests.Dispose_DisposesTheScreen*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Dispose_DisposesTheScreen
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Dispose_DisposesTheScreen
+  name: Dispose_DisposesTheScreen
+  nameWithType: TerminalTests.Dispose_DisposesTheScreen
+  fullName: Sharpie.Tests.TerminalTests.Dispose_DisposesTheScreen
+- uid: Sharpie.Tests.TerminalTests.Dispose_RestoresCursesDefaults*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Dispose_RestoresCursesDefaults
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Dispose_RestoresCursesDefaults
+  name: Dispose_RestoresCursesDefaults
+  nameWithType: TerminalTests.Dispose_RestoresCursesDefaults
+  fullName: Sharpie.Tests.TerminalTests.Dispose_RestoresCursesDefaults
+- uid: Sharpie.Tests.TerminalTests.Dispose_DoesNotThrow_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Dispose_DoesNotThrow_IfCursesFails
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Dispose_DoesNotThrow_IfCursesFails
+  name: Dispose_DoesNotThrow_IfCursesFails
+  nameWithType: TerminalTests.Dispose_DoesNotThrow_IfCursesFails
+  fullName: Sharpie.Tests.TerminalTests.Dispose_DoesNotThrow_IfCursesFails
+- uid: Sharpie.Tests.TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode*
+  commentId: Overload:Sharpie.Tests.TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+  name: Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+  nameWithType: TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+  fullName: Sharpie.Tests.TerminalTests.Dispose_DoesNotRestoreCaret_IfCursesFailsToPreparesCaretMode
+- uid: Sharpie.Tests.TerminalTests.SetTitle_Throws_IfTitleIsNull*
+  commentId: Overload:Sharpie.Tests.TerminalTests.SetTitle_Throws_IfTitleIsNull
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_SetTitle_Throws_IfTitleIsNull
+  name: SetTitle_Throws_IfTitleIsNull
+  nameWithType: TerminalTests.SetTitle_Throws_IfTitleIsNull
+  fullName: Sharpie.Tests.TerminalTests.SetTitle_Throws_IfTitleIsNull
+- uid: Sharpie.Tests.TerminalTests.SetTitle_AsksCurses*
+  commentId: Overload:Sharpie.Tests.TerminalTests.SetTitle_AsksCurses
+  href: Sharpie.Tests.TerminalTests.html#Sharpie_Tests_TerminalTests_SetTitle_AsksCurses
+  name: SetTitle_AsksCurses
+  nameWithType: TerminalTests.SetTitle_AsksCurses
+  fullName: Sharpie.Tests.TerminalTests.SetTitle_AsksCurses

@@ -1,0 +1,554 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.VideoAttribute
+  commentId: T:Sharpie.VideoAttribute
+  id: VideoAttribute
+  parent: Sharpie
+  children:
+  - Sharpie.VideoAttribute.AltCharset
+  - Sharpie.VideoAttribute.Blink
+  - Sharpie.VideoAttribute.Bold
+  - Sharpie.VideoAttribute.Dim
+  - Sharpie.VideoAttribute.HorizontalHighlight
+  - Sharpie.VideoAttribute.Invisible
+  - Sharpie.VideoAttribute.Italic
+  - Sharpie.VideoAttribute.LeftHighlight
+  - Sharpie.VideoAttribute.LowHighlight
+  - Sharpie.VideoAttribute.None
+  - Sharpie.VideoAttribute.Protect
+  - Sharpie.VideoAttribute.Reverse
+  - Sharpie.VideoAttribute.RightHighlight
+  - Sharpie.VideoAttribute.StandOut
+  - Sharpie.VideoAttribute.TopHighlight
+  - Sharpie.VideoAttribute.Underline
+  - Sharpie.VideoAttribute.VerticalHighlight
+  langs:
+  - csharp
+  - vb
+  name: VideoAttribute
+  nameWithType: VideoAttribute
+  fullName: Sharpie.VideoAttribute
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: VideoAttribute
+    path: Sharpie/VideoAttribute.cs
+    startLine: 35
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Defines the possible video attributes.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      [Flags]
+
+      public enum VideoAttribute : uint
+    content.vb: >-
+      <PublicAPI>
+
+      <Flags>
+
+      Public Enum VideoAttribute As UInteger
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Sharpie.VideoAttribute.None
+  commentId: F:Sharpie.VideoAttribute.None
+  id: None
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: VideoAttribute.None
+  fullName: Sharpie.VideoAttribute.None
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: None
+    path: Sharpie/VideoAttribute.cs
+    startLine: 41
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: No attributes, default text style.
+  example: []
+  syntax:
+    content: None = 0
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.StandOut
+  commentId: F:Sharpie.VideoAttribute.StandOut
+  id: StandOut
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: StandOut
+  nameWithType: VideoAttribute.StandOut
+  fullName: Sharpie.VideoAttribute.StandOut
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: StandOut
+    path: Sharpie/VideoAttribute.cs
+    startLine: 46
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The best highlighting mode available.
+  example: []
+  syntax:
+    content: StandOut = 1
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.Underline
+  commentId: F:Sharpie.VideoAttribute.Underline
+  id: Underline
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: Underline
+  nameWithType: VideoAttribute.Underline
+  fullName: Sharpie.VideoAttribute.Underline
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Underline
+    path: Sharpie/VideoAttribute.cs
+    startLine: 51
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Underlined text.
+  example: []
+  syntax:
+    content: Underline = 2
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.Reverse
+  commentId: F:Sharpie.VideoAttribute.Reverse
+  id: Reverse
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: Reverse
+  nameWithType: VideoAttribute.Reverse
+  fullName: Sharpie.VideoAttribute.Reverse
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Reverse
+    path: Sharpie/VideoAttribute.cs
+    startLine: 56
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Reverse-video text.
+  example: []
+  syntax:
+    content: Reverse = 4
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.Blink
+  commentId: F:Sharpie.VideoAttribute.Blink
+  id: Blink
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: Blink
+  nameWithType: VideoAttribute.Blink
+  fullName: Sharpie.VideoAttribute.Blink
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Blink
+    path: Sharpie/VideoAttribute.cs
+    startLine: 61
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Blinking text
+  example: []
+  syntax:
+    content: Blink = 8
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.Dim
+  commentId: F:Sharpie.VideoAttribute.Dim
+  id: Dim
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: Dim
+  nameWithType: VideoAttribute.Dim
+  fullName: Sharpie.VideoAttribute.Dim
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Dim
+    path: Sharpie/VideoAttribute.cs
+    startLine: 66
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Half bright text.
+  example: []
+  syntax:
+    content: Dim = 16
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.Bold
+  commentId: F:Sharpie.VideoAttribute.Bold
+  id: Bold
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: Bold
+  nameWithType: VideoAttribute.Bold
+  fullName: Sharpie.VideoAttribute.Bold
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Bold
+    path: Sharpie/VideoAttribute.cs
+    startLine: 71
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Extra bright or bold text.
+  example: []
+  syntax:
+    content: Bold = 32
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.AltCharset
+  commentId: F:Sharpie.VideoAttribute.AltCharset
+  id: AltCharset
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: AltCharset
+  nameWithType: VideoAttribute.AltCharset
+  fullName: Sharpie.VideoAttribute.AltCharset
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltCharset
+    path: Sharpie/VideoAttribute.cs
+    startLine: 76
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Alternate character set.
+  example: []
+  syntax:
+    content: AltCharset = 64
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.Invisible
+  commentId: F:Sharpie.VideoAttribute.Invisible
+  id: Invisible
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: Invisible
+  nameWithType: VideoAttribute.Invisible
+  fullName: Sharpie.VideoAttribute.Invisible
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Invisible
+    path: Sharpie/VideoAttribute.cs
+    startLine: 81
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Invisible or blank mode.
+  example: []
+  syntax:
+    content: Invisible = 128
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.Protect
+  commentId: F:Sharpie.VideoAttribute.Protect
+  id: Protect
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: Protect
+  nameWithType: VideoAttribute.Protect
+  fullName: Sharpie.VideoAttribute.Protect
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Protect
+    path: Sharpie/VideoAttribute.cs
+    startLine: 86
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Protected mode.
+  example: []
+  syntax:
+    content: Protect = 256
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.HorizontalHighlight
+  commentId: F:Sharpie.VideoAttribute.HorizontalHighlight
+  id: HorizontalHighlight
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: HorizontalHighlight
+  nameWithType: VideoAttribute.HorizontalHighlight
+  fullName: Sharpie.VideoAttribute.HorizontalHighlight
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: HorizontalHighlight
+    path: Sharpie/VideoAttribute.cs
+    startLine: 91
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Horizontal highlight.
+  example: []
+  syntax:
+    content: HorizontalHighlight = 512
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.LeftHighlight
+  commentId: F:Sharpie.VideoAttribute.LeftHighlight
+  id: LeftHighlight
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: LeftHighlight
+  nameWithType: VideoAttribute.LeftHighlight
+  fullName: Sharpie.VideoAttribute.LeftHighlight
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LeftHighlight
+    path: Sharpie/VideoAttribute.cs
+    startLine: 96
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Left highlight.
+  example: []
+  syntax:
+    content: LeftHighlight = 1024
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.LowHighlight
+  commentId: F:Sharpie.VideoAttribute.LowHighlight
+  id: LowHighlight
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: LowHighlight
+  nameWithType: VideoAttribute.LowHighlight
+  fullName: Sharpie.VideoAttribute.LowHighlight
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LowHighlight
+    path: Sharpie/VideoAttribute.cs
+    startLine: 101
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Low highlight.
+  example: []
+  syntax:
+    content: LowHighlight = 2048
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.RightHighlight
+  commentId: F:Sharpie.VideoAttribute.RightHighlight
+  id: RightHighlight
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: RightHighlight
+  nameWithType: VideoAttribute.RightHighlight
+  fullName: Sharpie.VideoAttribute.RightHighlight
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RightHighlight
+    path: Sharpie/VideoAttribute.cs
+    startLine: 106
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Right highlight.
+  example: []
+  syntax:
+    content: RightHighlight = 4096
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.TopHighlight
+  commentId: F:Sharpie.VideoAttribute.TopHighlight
+  id: TopHighlight
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: TopHighlight
+  nameWithType: VideoAttribute.TopHighlight
+  fullName: Sharpie.VideoAttribute.TopHighlight
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TopHighlight
+    path: Sharpie/VideoAttribute.cs
+    startLine: 111
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Top highlight.
+  example: []
+  syntax:
+    content: TopHighlight = 8192
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.VerticalHighlight
+  commentId: F:Sharpie.VideoAttribute.VerticalHighlight
+  id: VerticalHighlight
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: VerticalHighlight
+  nameWithType: VideoAttribute.VerticalHighlight
+  fullName: Sharpie.VideoAttribute.VerticalHighlight
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: VerticalHighlight
+    path: Sharpie/VideoAttribute.cs
+    startLine: 116
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Vertical highlight.
+  example: []
+  syntax:
+    content: VerticalHighlight = 16384
+    return:
+      type: Sharpie.VideoAttribute
+- uid: Sharpie.VideoAttribute.Italic
+  commentId: F:Sharpie.VideoAttribute.Italic
+  id: Italic
+  parent: Sharpie.VideoAttribute
+  langs:
+  - csharp
+  - vb
+  name: Italic
+  nameWithType: VideoAttribute.Italic
+  fullName: Sharpie.VideoAttribute.Italic
+  type: Field
+  source:
+    remote:
+      path: Sharpie/VideoAttribute.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Italic
+    path: Sharpie/VideoAttribute.cs
+    startLine: 121
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Italic highlight.
+  example: []
+  syntax:
+    content: Italic = 32768
+    return:
+      type: Sharpie.VideoAttribute
+references:
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.VideoAttribute
+  commentId: T:Sharpie.VideoAttribute
+  parent: Sharpie
+  href: Sharpie.VideoAttribute.html
+  name: VideoAttribute
+  nameWithType: VideoAttribute
+  fullName: Sharpie.VideoAttribute

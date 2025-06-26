@@ -1,0 +1,2233 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests
+  commentId: T:Sharpie.Tests.SoftLabelKeyManagerTests
+  id: SoftLabelKeyManagerTests
+  parent: Sharpie.Tests
+  children:
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses
+  - Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds
+  - Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull
+  - Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds
+  - Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds
+  - Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode(Sharpie.SoftLabelKeyMode,System.Int32)
+  - Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds
+  - Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds
+  - Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid
+  - Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull
+  - Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses
+  - Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_CallsCurses
+  - Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled
+  - Sharpie.Tests.SoftLabelKeyManagerTests.Terminal_IsInitialized
+  - Sharpie.Tests.SoftLabelKeyManagerTests.TestCleanup
+  - Sharpie.Tests.SoftLabelKeyManagerTests.TestInitialize
+  langs:
+  - csharp
+  - vb
+  name: SoftLabelKeyManagerTests
+  nameWithType: SoftLabelKeyManagerTests
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests
+  type: Class
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SoftLabelKeyManagerTests
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 32
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestClass]
+
+      public class SoftLabelKeyManagerTests
+    content.vb: >-
+      <TestClass>
+
+      Public Class SoftLabelKeyManagerTests
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.TestInitialize
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.TestInitialize
+  id: TestInitialize
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: TestInitialize()
+  nameWithType: SoftLabelKeyManagerTests.TestInitialize()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.TestInitialize()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestInitialize
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 40
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestInitialize]
+
+      public void TestInitialize()
+    content.vb: >-
+      <TestInitialize>
+
+      Public Sub TestInitialize()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.TestInitialize*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.TestCleanup
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.TestCleanup
+  id: TestCleanup
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: TestCleanup()
+  nameWithType: SoftLabelKeyManagerTests.TestCleanup()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.TestCleanup()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: TestCleanup
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 53
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestCleanup]
+
+      public void TestCleanup()
+    content.vb: >-
+      <TestCleanup>
+
+      Public Sub TestCleanup()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.TestCleanup*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull
+  id: Ctor_Throws_IfCursesIsNull
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Ctor_Throws_IfCursesIsNull()
+  nameWithType: SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Ctor_Throws_IfCursesIsNull
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 55
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Ctor_Throws_IfCursesIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Ctor_Throws_IfCursesIsNull()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Terminal_IsInitialized
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Terminal_IsInitialized
+  id: Terminal_IsInitialized
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Terminal_IsInitialized()
+  nameWithType: SoftLabelKeyManagerTests.Terminal_IsInitialized()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Terminal_IsInitialized()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Terminal_IsInitialized
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 62
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Terminal_IsInitialized()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Terminal_IsInitialized()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Terminal_IsInitialized*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode(Sharpie.SoftLabelKeyMode,System.Int32)
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode(Sharpie.SoftLabelKeyMode,System.Int32)
+  id: LabelCount_ReturnsTheCorrectNumberBasedOnMode(Sharpie.SoftLabelKeyMode,System.Int32)
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: LabelCount_ReturnsTheCorrectNumberBasedOnMode(SoftLabelKeyMode, int)
+  nameWithType: SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode(SoftLabelKeyMode, int)
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode(Sharpie.SoftLabelKeyMode, int)
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LabelCount_ReturnsTheCorrectNumberBasedOnMode
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 69
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      [DataRow(SoftLabelKeyMode.FourFour, 8)]
+
+      [DataRow(SoftLabelKeyMode.FourFourFour, 12)]
+
+      [DataRow(SoftLabelKeyMode.ThreeTwoThree, 8)]
+
+      [DataRow(SoftLabelKeyMode.FourFourFourWithIndex, 12)]
+
+      public void LabelCount_ReturnsTheCorrectNumberBasedOnMode(SoftLabelKeyMode mode, int expected)
+    parameters:
+    - id: mode
+      type: Sharpie.SoftLabelKeyMode
+    - id: expected
+      type: System.Int32
+    content.vb: >-
+      <TestMethod>
+
+      <DataRow(SoftLabelKeyMode.FourFour, 8)>
+
+      <DataRow(SoftLabelKeyMode.FourFourFour, 12)>
+
+      <DataRow(SoftLabelKeyMode.ThreeTwoThree, 8)>
+
+      <DataRow(SoftLabelKeyMode.FourFourFourWithIndex, 12)>
+
+      Public Sub LabelCount_ReturnsTheCorrectNumberBasedOnMode(mode As SoftLabelKeyMode, expected As Integer)
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.SoftLabelKeyMode
+      value: 1
+    - type: System.Int32
+      value: 8
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.SoftLabelKeyMode
+      value: 2
+    - type: System.Int32
+      value: 12
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.SoftLabelKeyMode
+      value: 0
+    - type: System.Int32
+      value: 8
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute.#ctor(System.Object,System.Object)
+    arguments:
+    - type: Sharpie.SoftLabelKeyMode
+      value: 3
+    - type: System.Int32
+      value: 12
+  nameWithType.vb: SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode(SoftLabelKeyMode, Integer)
+  fullName.vb: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode(Sharpie.SoftLabelKeyMode, Integer)
+  name.vb: LabelCount_ReturnsTheCorrectNumberBasedOnMode(SoftLabelKeyMode, Integer)
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled
+  id: LabelCount_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: LabelCount_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LabelCount_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 77
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void LabelCount_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub LabelCount_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled
+  id: Enabled_IsTrue_IfModeIsNotDisabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Enabled_IsTrue_IfModeIsNotDisabled()
+  nameWithType: SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Enabled_IsTrue_IfModeIsNotDisabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 86
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Enabled_IsTrue_IfModeIsNotDisabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Enabled_IsTrue_IfModeIsNotDisabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled
+  id: Enabled_IsFalse_IfModeIsDisabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Enabled_IsFalse_IfModeIsDisabled()
+  nameWithType: SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Enabled_IsFalse_IfModeIsDisabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 88
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Enabled_IsFalse_IfModeIsDisabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Enabled_IsFalse_IfModeIsDisabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled
+  id: Style_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Style_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Style_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 90
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Style_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Style_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails
+  id: StyleGet_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: StyleGet_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: StyleGet_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 101
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void StyleGet_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub StyleGet_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails
+  id: StyleSet_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: StyleSet_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: StyleSet_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 114
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void StyleSet_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub StyleSet_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses
+  id: StyleGet_ReturnsStyle_FromCurses
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: StyleGet_ReturnsStyle_FromCurses()
+  nameWithType: SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: StyleGet_ReturnsStyle_FromCurses
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 124
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void StyleGet_ReturnsStyle_FromCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub StyleGet_ReturnsStyle_FromCurses()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_CallsCurses
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_CallsCurses
+  id: StyleSet_CallsCurses
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: StyleSet_CallsCurses()
+  nameWithType: SoftLabelKeyManagerTests.StyleSet_CallsCurses()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_CallsCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: StyleSet_CallsCurses
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 142
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void StyleSet_CallsCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub StyleSet_CallsCurses()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_CallsCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled
+  id: ColorMixture_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ColorMixture_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ColorMixture_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 150
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ColorMixture_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ColorMixture_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails
+  id: ColorMixtureGet_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ColorMixtureGet_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ColorMixtureGet_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 161
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ColorMixtureGet_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ColorMixtureGet_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses
+  id: ColorMixtureGet_ReturnsStyle_FromCurses
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ColorMixtureGet_ReturnsStyle_FromCurses()
+  nameWithType: SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ColorMixtureGet_ReturnsStyle_FromCurses
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 174
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ColorMixtureGet_ReturnsStyle_FromCurses()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ColorMixtureGet_ReturnsStyle_FromCurses()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails
+  id: ColorMixtureSet_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ColorMixtureSet_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ColorMixtureSet_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 190
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ColorMixtureSet_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ColorMixtureSet_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds
+  id: ColorMixtureSet_Succeeds_IfCursesSucceeds
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: ColorMixtureSet_Succeeds_IfCursesSucceeds()
+  nameWithType: SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ColorMixtureSet_Succeeds_IfCursesSucceeds
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 200
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void ColorMixtureSet_Succeeds_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub ColorMixtureSet_Succeeds_IfCursesSucceeds()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull
+  id: SetLabel_Throws_IfTitleIsNull
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: SetLabel_Throws_IfTitleIsNull()
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SetLabel_Throws_IfTitleIsNull
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 208
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SetLabel_Throws_IfTitleIsNull()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SetLabel_Throws_IfTitleIsNull()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid
+  id: SetLabel_Throws_IfIndexIsInvalid
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: SetLabel_Throws_IfIndexIsInvalid()
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SetLabel_Throws_IfIndexIsInvalid
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 214
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SetLabel_Throws_IfIndexIsInvalid()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SetLabel_Throws_IfIndexIsInvalid()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled
+  id: SetLabel_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: SetLabel_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SetLabel_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 228
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SetLabel_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SetLabel_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails
+  id: SetLabel_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: SetLabel_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SetLabel_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 234
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SetLabel_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SetLabel_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds
+  id: SetLabel_Succeeds_IfCursesSucceeds
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: SetLabel_Succeeds_IfCursesSucceeds()
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: SetLabel_Succeeds_IfCursesSucceeds
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 244
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void SetLabel_Succeeds_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub SetLabel_Succeeds_IfCursesSucceeds()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled
+  id: EnableAttributes_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: EnableAttributes_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: EnableAttributes_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 255
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void EnableAttributes_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub EnableAttributes_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails
+  id: EnableAttributes_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: EnableAttributes_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: EnableAttributes_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 261
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void EnableAttributes_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub EnableAttributes_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds
+  id: EnableAttributes_Succeeds_IfCursesSucceeds
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: EnableAttributes_Succeeds_IfCursesSucceeds()
+  nameWithType: SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: EnableAttributes_Succeeds_IfCursesSucceeds
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 271
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void EnableAttributes_Succeeds_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub EnableAttributes_Succeeds_IfCursesSucceeds()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled
+  id: DisableAttributes_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: DisableAttributes_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DisableAttributes_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 282
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DisableAttributes_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DisableAttributes_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails
+  id: DisableAttributes_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: DisableAttributes_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DisableAttributes_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 288
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DisableAttributes_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DisableAttributes_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds
+  id: DisableAttributes_Succeeds_IfCursesSucceeds
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: DisableAttributes_Succeeds_IfCursesSucceeds()
+  nameWithType: SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DisableAttributes_Succeeds_IfCursesSucceeds
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 298
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void DisableAttributes_Succeeds_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub DisableAttributes_Succeeds_IfCursesSucceeds()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled
+  id: Clear_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Clear_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Clear_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 309
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Clear_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Clear_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails
+  id: Clear_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Clear_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Clear_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 312
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Clear_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Clear_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds
+  id: Clear_Succeeds_IfCursesSucceeds
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Clear_Succeeds_IfCursesSucceeds()
+  nameWithType: SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Clear_Succeeds_IfCursesSucceeds
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 322
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Clear_Succeeds_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Clear_Succeeds_IfCursesSucceeds()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled
+  id: Restore_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Restore_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Restore_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 333
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Restore_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Restore_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails
+  id: Restore_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Restore_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Restore_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 336
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Restore_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Restore_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds
+  id: Restore_Succeeds_IfCursesSucceeds
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Restore_Succeeds_IfCursesSucceeds()
+  nameWithType: SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Restore_Succeeds_IfCursesSucceeds
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 346
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Restore_Succeeds_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Restore_Succeeds_IfCursesSucceeds()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled
+  id: MarkDirty_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MarkDirty_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MarkDirty_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 357
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MarkDirty_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MarkDirty_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails
+  id: MarkDirty_Throws_IfCursesFails
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MarkDirty_Throws_IfCursesFails()
+  nameWithType: SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MarkDirty_Throws_IfCursesFails
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 360
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MarkDirty_Throws_IfCursesFails()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MarkDirty_Throws_IfCursesFails()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds
+  id: MarkDirty_Succeeds_IfCursesSucceeds
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: MarkDirty_Succeeds_IfCursesSucceeds()
+  nameWithType: SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: MarkDirty_Succeeds_IfCursesSucceeds
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 370
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void MarkDirty_Succeeds_IfCursesSucceeds()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub MarkDirty_Succeeds_IfCursesSucceeds()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled
+  id: Refresh_Throws_IfNotEnabled
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Refresh_Throws_IfNotEnabled()
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Refresh_Throws_IfNotEnabled
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 378
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Refresh_Throws_IfNotEnabled()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Refresh_Throws_IfNotEnabled()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue
+  id: Refresh_Throws_IfCursesFails_NoQueue
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Refresh_Throws_IfCursesFails_NoQueue()
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Refresh_Throws_IfCursesFails_NoQueue
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 381
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Refresh_Throws_IfCursesFails_NoQueue()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Refresh_Throws_IfCursesFails_NoQueue()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch
+  id: Refresh_Throws_IfCursesFails_InBatch
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Refresh_Throws_IfCursesFails_InBatch()
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Refresh_Throws_IfCursesFails_InBatch
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 391
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Refresh_Throws_IfCursesFails_InBatch()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Refresh_Throws_IfCursesFails_InBatch()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch
+  id: Refresh_Succeeds_IfCursesSucceeds_InBatch
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Refresh_Succeeds_IfCursesSucceeds_InBatch()
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Refresh_Succeeds_IfCursesSucceeds_InBatch
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 404
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Refresh_Succeeds_IfCursesSucceeds_InBatch()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Refresh_Succeeds_IfCursesSucceeds_InBatch()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch
+  commentId: M:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch
+  id: Refresh_Succeeds_IfCursesSucceeds_NoBatch
+  parent: Sharpie.Tests.SoftLabelKeyManagerTests
+  langs:
+  - csharp
+  - vb
+  name: Refresh_Succeeds_IfCursesSucceeds_NoBatch()
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch()
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch()
+  type: Method
+  source:
+    remote:
+      path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Refresh_Succeeds_IfCursesSucceeds_NoBatch
+    path: Sharpie.Tests/SoftLabelKeyManagerTests.cs
+    startLine: 415
+  assemblies:
+  - sharpie-tests
+  namespace: Sharpie.Tests
+  syntax:
+    content: >-
+      [TestMethod]
+
+      public void Refresh_Succeeds_IfCursesSucceeds_NoBatch()
+    content.vb: >-
+      <TestMethod>
+
+      Public Sub Refresh_Succeeds_IfCursesSucceeds_NoBatch()
+  overload: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch*
+  attributes:
+  - type: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute
+    ctor: Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute.#ctor
+    arguments: []
+references:
+- uid: Sharpie.Tests
+  commentId: N:Sharpie.Tests
+  href: Sharpie.html
+  name: Sharpie.Tests
+  nameWithType: Sharpie.Tests
+  fullName: Sharpie.Tests
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Tests
+    name: Tests
+    href: Sharpie.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.TestInitialize*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.TestInitialize
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_TestInitialize
+  name: TestInitialize
+  nameWithType: SoftLabelKeyManagerTests.TestInitialize
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.TestInitialize
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.TestCleanup*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.TestCleanup
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_TestCleanup
+  name: TestCleanup
+  nameWithType: SoftLabelKeyManagerTests.TestCleanup
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.TestCleanup
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Ctor_Throws_IfCursesIsNull
+  name: Ctor_Throws_IfCursesIsNull
+  nameWithType: SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Ctor_Throws_IfCursesIsNull
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Terminal_IsInitialized*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Terminal_IsInitialized
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Terminal_IsInitialized
+  name: Terminal_IsInitialized
+  nameWithType: SoftLabelKeyManagerTests.Terminal_IsInitialized
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Terminal_IsInitialized
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_LabelCount_ReturnsTheCorrectNumberBasedOnMode_Sharpie_SoftLabelKeyMode_System_Int32_
+  name: LabelCount_ReturnsTheCorrectNumberBasedOnMode
+  nameWithType: SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_ReturnsTheCorrectNumberBasedOnMode
+- uid: Sharpie.SoftLabelKeyMode
+  commentId: T:Sharpie.SoftLabelKeyMode
+  parent: Sharpie
+  href: Sharpie.SoftLabelKeyMode.html
+  name: SoftLabelKeyMode
+  nameWithType: SoftLabelKeyMode
+  fullName: Sharpie.SoftLabelKeyMode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_LabelCount_Throws_IfNotEnabled
+  name: LabelCount_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.LabelCount_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Enabled_IsTrue_IfModeIsNotDisabled
+  name: Enabled_IsTrue_IfModeIsNotDisabled
+  nameWithType: SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsTrue_IfModeIsNotDisabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Enabled_IsFalse_IfModeIsDisabled
+  name: Enabled_IsFalse_IfModeIsDisabled
+  nameWithType: SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Enabled_IsFalse_IfModeIsDisabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Style_Throws_IfNotEnabled
+  name: Style_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Style_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_StyleGet_Throws_IfCursesFails
+  name: StyleGet_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_StyleSet_Throws_IfCursesFails
+  name: StyleSet_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_StyleGet_ReturnsStyle_FromCurses
+  name: StyleGet_ReturnsStyle_FromCurses
+  nameWithType: SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.StyleGet_ReturnsStyle_FromCurses
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_CallsCurses*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_CallsCurses
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_StyleSet_CallsCurses
+  name: StyleSet_CallsCurses
+  nameWithType: SoftLabelKeyManagerTests.StyleSet_CallsCurses
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.StyleSet_CallsCurses
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_ColorMixture_Throws_IfNotEnabled
+  name: ColorMixture_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixture_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_ColorMixtureGet_Throws_IfCursesFails
+  name: ColorMixtureGet_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_ColorMixtureGet_ReturnsStyle_FromCurses
+  name: ColorMixtureGet_ReturnsStyle_FromCurses
+  nameWithType: SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureGet_ReturnsStyle_FromCurses
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_ColorMixtureSet_Throws_IfCursesFails
+  name: ColorMixtureSet_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_ColorMixtureSet_Succeeds_IfCursesSucceeds
+  name: ColorMixtureSet_Succeeds_IfCursesSucceeds
+  nameWithType: SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.ColorMixtureSet_Succeeds_IfCursesSucceeds
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_SetLabel_Throws_IfTitleIsNull
+  name: SetLabel_Throws_IfTitleIsNull
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfTitleIsNull
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_SetLabel_Throws_IfIndexIsInvalid
+  name: SetLabel_Throws_IfIndexIsInvalid
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfIndexIsInvalid
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_SetLabel_Throws_IfNotEnabled
+  name: SetLabel_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_SetLabel_Throws_IfCursesFails
+  name: SetLabel_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_SetLabel_Succeeds_IfCursesSucceeds
+  name: SetLabel_Succeeds_IfCursesSucceeds
+  nameWithType: SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.SetLabel_Succeeds_IfCursesSucceeds
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_EnableAttributes_Throws_IfNotEnabled
+  name: EnableAttributes_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_EnableAttributes_Throws_IfCursesFails
+  name: EnableAttributes_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_EnableAttributes_Succeeds_IfCursesSucceeds
+  name: EnableAttributes_Succeeds_IfCursesSucceeds
+  nameWithType: SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.EnableAttributes_Succeeds_IfCursesSucceeds
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_DisableAttributes_Throws_IfNotEnabled
+  name: DisableAttributes_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_DisableAttributes_Throws_IfCursesFails
+  name: DisableAttributes_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_DisableAttributes_Succeeds_IfCursesSucceeds
+  name: DisableAttributes_Succeeds_IfCursesSucceeds
+  nameWithType: SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.DisableAttributes_Succeeds_IfCursesSucceeds
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Clear_Throws_IfNotEnabled
+  name: Clear_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Clear_Throws_IfCursesFails
+  name: Clear_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Clear_Succeeds_IfCursesSucceeds
+  name: Clear_Succeeds_IfCursesSucceeds
+  nameWithType: SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Clear_Succeeds_IfCursesSucceeds
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Restore_Throws_IfNotEnabled
+  name: Restore_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Restore_Throws_IfCursesFails
+  name: Restore_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Restore_Succeeds_IfCursesSucceeds
+  name: Restore_Succeeds_IfCursesSucceeds
+  nameWithType: SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Restore_Succeeds_IfCursesSucceeds
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_MarkDirty_Throws_IfNotEnabled
+  name: MarkDirty_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_MarkDirty_Throws_IfCursesFails
+  name: MarkDirty_Throws_IfCursesFails
+  nameWithType: SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Throws_IfCursesFails
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_MarkDirty_Succeeds_IfCursesSucceeds
+  name: MarkDirty_Succeeds_IfCursesSucceeds
+  nameWithType: SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.MarkDirty_Succeeds_IfCursesSucceeds
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Refresh_Throws_IfNotEnabled
+  name: Refresh_Throws_IfNotEnabled
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfNotEnabled
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Refresh_Throws_IfCursesFails_NoQueue
+  name: Refresh_Throws_IfCursesFails_NoQueue
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_NoQueue
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Refresh_Throws_IfCursesFails_InBatch
+  name: Refresh_Throws_IfCursesFails_InBatch
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Throws_IfCursesFails_InBatch
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Refresh_Succeeds_IfCursesSucceeds_InBatch
+  name: Refresh_Succeeds_IfCursesSucceeds_InBatch
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_InBatch
+- uid: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch*
+  commentId: Overload:Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch
+  href: Sharpie.Tests.SoftLabelKeyManagerTests.html#Sharpie_Tests_SoftLabelKeyManagerTests_Refresh_Succeeds_IfCursesSucceeds_NoBatch
+  name: Refresh_Succeeds_IfCursesSucceeds_NoBatch
+  nameWithType: SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch
+  fullName: Sharpie.Tests.SoftLabelKeyManagerTests.Refresh_Succeeds_IfCursesSucceeds_NoBatch

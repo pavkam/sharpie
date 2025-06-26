@@ -1,0 +1,5784 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Backend.PdCursesKeyCode
+  commentId: T:Sharpie.Backend.PdCursesKeyCode
+  id: PdCursesKeyCode
+  parent: Sharpie.Backend
+  children:
+  - Sharpie.Backend.PdCursesKeyCode.Alt0
+  - Sharpie.Backend.PdCursesKeyCode.Alt1
+  - Sharpie.Backend.PdCursesKeyCode.Alt2
+  - Sharpie.Backend.PdCursesKeyCode.Alt3
+  - Sharpie.Backend.PdCursesKeyCode.Alt4
+  - Sharpie.Backend.PdCursesKeyCode.Alt5
+  - Sharpie.Backend.PdCursesKeyCode.Alt6
+  - Sharpie.Backend.PdCursesKeyCode.Alt7
+  - Sharpie.Backend.PdCursesKeyCode.Alt8
+  - Sharpie.Backend.PdCursesKeyCode.Alt9
+  - Sharpie.Backend.PdCursesKeyCode.AltA
+  - Sharpie.Backend.PdCursesKeyCode.AltB
+  - Sharpie.Backend.PdCursesKeyCode.AltBackQuote
+  - Sharpie.Backend.PdCursesKeyCode.AltBackSlash
+  - Sharpie.Backend.PdCursesKeyCode.AltBackspace
+  - Sharpie.Backend.PdCursesKeyCode.AltC
+  - Sharpie.Backend.PdCursesKeyCode.AltComma
+  - Sharpie.Backend.PdCursesKeyCode.AltD
+  - Sharpie.Backend.PdCursesKeyCode.AltDelete
+  - Sharpie.Backend.PdCursesKeyCode.AltDown
+  - Sharpie.Backend.PdCursesKeyCode.AltE
+  - Sharpie.Backend.PdCursesKeyCode.AltEnd
+  - Sharpie.Backend.PdCursesKeyCode.AltEnter
+  - Sharpie.Backend.PdCursesKeyCode.AltEqual
+  - Sharpie.Backend.PdCursesKeyCode.AltEscape
+  - Sharpie.Backend.PdCursesKeyCode.AltF
+  - Sharpie.Backend.PdCursesKeyCode.AltF1
+  - Sharpie.Backend.PdCursesKeyCode.AltF10
+  - Sharpie.Backend.PdCursesKeyCode.AltF11
+  - Sharpie.Backend.PdCursesKeyCode.AltF12
+  - Sharpie.Backend.PdCursesKeyCode.AltF2
+  - Sharpie.Backend.PdCursesKeyCode.AltF3
+  - Sharpie.Backend.PdCursesKeyCode.AltF4
+  - Sharpie.Backend.PdCursesKeyCode.AltF5
+  - Sharpie.Backend.PdCursesKeyCode.AltF6
+  - Sharpie.Backend.PdCursesKeyCode.AltF7
+  - Sharpie.Backend.PdCursesKeyCode.AltF8
+  - Sharpie.Backend.PdCursesKeyCode.AltF9
+  - Sharpie.Backend.PdCursesKeyCode.AltForwardQuote
+  - Sharpie.Backend.PdCursesKeyCode.AltForwardSlash
+  - Sharpie.Backend.PdCursesKeyCode.AltG
+  - Sharpie.Backend.PdCursesKeyCode.AltH
+  - Sharpie.Backend.PdCursesKeyCode.AltHome
+  - Sharpie.Backend.PdCursesKeyCode.AltI
+  - Sharpie.Backend.PdCursesKeyCode.AltInsert
+  - Sharpie.Backend.PdCursesKeyCode.AltJ
+  - Sharpie.Backend.PdCursesKeyCode.AltK
+  - Sharpie.Backend.PdCursesKeyCode.AltL
+  - Sharpie.Backend.PdCursesKeyCode.AltLeft
+  - Sharpie.Backend.PdCursesKeyCode.AltLeftBracket
+  - Sharpie.Backend.PdCursesKeyCode.AltM
+  - Sharpie.Backend.PdCursesKeyCode.AltMinus
+  - Sharpie.Backend.PdCursesKeyCode.AltN
+  - Sharpie.Backend.PdCursesKeyCode.AltO
+  - Sharpie.Backend.PdCursesKeyCode.AltP
+  - Sharpie.Backend.PdCursesKeyCode.AltPageDown
+  - Sharpie.Backend.PdCursesKeyCode.AltPageUp
+  - Sharpie.Backend.PdCursesKeyCode.AltQ
+  - Sharpie.Backend.PdCursesKeyCode.AltR
+  - Sharpie.Backend.PdCursesKeyCode.AltRight
+  - Sharpie.Backend.PdCursesKeyCode.AltRightBracket
+  - Sharpie.Backend.PdCursesKeyCode.AltS
+  - Sharpie.Backend.PdCursesKeyCode.AltSemicolon
+  - Sharpie.Backend.PdCursesKeyCode.AltStop
+  - Sharpie.Backend.PdCursesKeyCode.AltT
+  - Sharpie.Backend.PdCursesKeyCode.AltTab
+  - Sharpie.Backend.PdCursesKeyCode.AltU
+  - Sharpie.Backend.PdCursesKeyCode.AltUp
+  - Sharpie.Backend.PdCursesKeyCode.AltV
+  - Sharpie.Backend.PdCursesKeyCode.AltW
+  - Sharpie.Backend.PdCursesKeyCode.AltX
+  - Sharpie.Backend.PdCursesKeyCode.AltY
+  - Sharpie.Backend.PdCursesKeyCode.AltZ
+  - Sharpie.Backend.PdCursesKeyCode.BackTab
+  - Sharpie.Backend.PdCursesKeyCode.Backspace
+  - Sharpie.Backend.PdCursesKeyCode.CtrlBackspace
+  - Sharpie.Backend.PdCursesKeyCode.CtrlDelete
+  - Sharpie.Backend.PdCursesKeyCode.CtrlDown
+  - Sharpie.Backend.PdCursesKeyCode.CtrlEnd
+  - Sharpie.Backend.PdCursesKeyCode.CtrlEnter
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF1
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF10
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF11
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF12
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF2
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF3
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF4
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF5
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF6
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF7
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF8
+  - Sharpie.Backend.PdCursesKeyCode.CtrlF9
+  - Sharpie.Backend.PdCursesKeyCode.CtrlHome
+  - Sharpie.Backend.PdCursesKeyCode.CtrlInsert
+  - Sharpie.Backend.PdCursesKeyCode.CtrlLeft
+  - Sharpie.Backend.PdCursesKeyCode.CtrlPageDown
+  - Sharpie.Backend.PdCursesKeyCode.CtrlPageUp
+  - Sharpie.Backend.PdCursesKeyCode.CtrlRight
+  - Sharpie.Backend.PdCursesKeyCode.CtrlTab
+  - Sharpie.Backend.PdCursesKeyCode.CtrlUp
+  - Sharpie.Backend.PdCursesKeyCode.Delete
+  - Sharpie.Backend.PdCursesKeyCode.Down
+  - Sharpie.Backend.PdCursesKeyCode.End
+  - Sharpie.Backend.PdCursesKeyCode.F1
+  - Sharpie.Backend.PdCursesKeyCode.F10
+  - Sharpie.Backend.PdCursesKeyCode.F11
+  - Sharpie.Backend.PdCursesKeyCode.F12
+  - Sharpie.Backend.PdCursesKeyCode.F2
+  - Sharpie.Backend.PdCursesKeyCode.F3
+  - Sharpie.Backend.PdCursesKeyCode.F4
+  - Sharpie.Backend.PdCursesKeyCode.F5
+  - Sharpie.Backend.PdCursesKeyCode.F6
+  - Sharpie.Backend.PdCursesKeyCode.F7
+  - Sharpie.Backend.PdCursesKeyCode.F8
+  - Sharpie.Backend.PdCursesKeyCode.F9
+  - Sharpie.Backend.PdCursesKeyCode.Home
+  - Sharpie.Backend.PdCursesKeyCode.Insert
+  - Sharpie.Backend.PdCursesKeyCode.KeyPad0
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt0
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt1
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt2
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt3
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt4
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt5
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt6
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt7
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt8
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadAlt9
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl0
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl1
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl2
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl3
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl4
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl5
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl6
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl7
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl8
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl9
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadShiftAsterisk
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadShiftDelete
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadShiftDown
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadShiftEnter
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadShiftInsert
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadShiftMinus
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadShiftPlus
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadShiftSlash
+  - Sharpie.Backend.PdCursesKeyCode.KeyPadShiftUp
+  - Sharpie.Backend.PdCursesKeyCode.KeypadAltAsterisk
+  - Sharpie.Backend.PdCursesKeyCode.KeypadAltEnter
+  - Sharpie.Backend.PdCursesKeyCode.KeypadAltMinus
+  - Sharpie.Backend.PdCursesKeyCode.KeypadAltPlus
+  - Sharpie.Backend.PdCursesKeyCode.KeypadAltSlash
+  - Sharpie.Backend.PdCursesKeyCode.KeypadAltStop
+  - Sharpie.Backend.PdCursesKeyCode.KeypadAsterisk
+  - Sharpie.Backend.PdCursesKeyCode.KeypadCtrlAsterisk
+  - Sharpie.Backend.PdCursesKeyCode.KeypadCtrlEnter
+  - Sharpie.Backend.PdCursesKeyCode.KeypadCtrlMiddle
+  - Sharpie.Backend.PdCursesKeyCode.KeypadCtrlMinus
+  - Sharpie.Backend.PdCursesKeyCode.KeypadCtrlPlus
+  - Sharpie.Backend.PdCursesKeyCode.KeypadCtrlSlash
+  - Sharpie.Backend.PdCursesKeyCode.KeypadCtrlStop
+  - Sharpie.Backend.PdCursesKeyCode.KeypadEnter
+  - Sharpie.Backend.PdCursesKeyCode.KeypadMinus
+  - Sharpie.Backend.PdCursesKeyCode.KeypadPlus
+  - Sharpie.Backend.PdCursesKeyCode.KeypadSlash
+  - Sharpie.Backend.PdCursesKeyCode.KeypadStop
+  - Sharpie.Backend.PdCursesKeyCode.Left
+  - Sharpie.Backend.PdCursesKeyCode.LeftAlt
+  - Sharpie.Backend.PdCursesKeyCode.LeftCtrl
+  - Sharpie.Backend.PdCursesKeyCode.LeftShift
+  - Sharpie.Backend.PdCursesKeyCode.Mouse
+  - Sharpie.Backend.PdCursesKeyCode.PageDown
+  - Sharpie.Backend.PdCursesKeyCode.PageUp
+  - Sharpie.Backend.PdCursesKeyCode.Resize
+  - Sharpie.Backend.PdCursesKeyCode.Right
+  - Sharpie.Backend.PdCursesKeyCode.RightAlt
+  - Sharpie.Backend.PdCursesKeyCode.RightCtrl
+  - Sharpie.Backend.PdCursesKeyCode.RightShift
+  - Sharpie.Backend.PdCursesKeyCode.ScrollDown
+  - Sharpie.Backend.PdCursesKeyCode.ScrollUp
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF1
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF10
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF11
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF12
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF2
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF3
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF4
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF5
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF6
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF7
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF8
+  - Sharpie.Backend.PdCursesKeyCode.ShiftAltF9
+  - Sharpie.Backend.PdCursesKeyCode.ShiftDown
+  - Sharpie.Backend.PdCursesKeyCode.ShiftEnd
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF1
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF10
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF11
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF12
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF2
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF3
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF4
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF5
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF6
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF7
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF8
+  - Sharpie.Backend.PdCursesKeyCode.ShiftF9
+  - Sharpie.Backend.PdCursesKeyCode.ShiftHome
+  - Sharpie.Backend.PdCursesKeyCode.ShiftLeft
+  - Sharpie.Backend.PdCursesKeyCode.ShiftRight
+  - Sharpie.Backend.PdCursesKeyCode.ShiftUp
+  - Sharpie.Backend.PdCursesKeyCode.Up
+  - Sharpie.Backend.PdCursesKeyCode.Yes
+  langs:
+  - csharp
+  - vb
+  name: PdCursesKeyCode
+  nameWithType: PdCursesKeyCode
+  fullName: Sharpie.Backend.PdCursesKeyCode
+  type: Enum
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: PdCursesKeyCode
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 36
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  summary: PDCurses specific key codes.
+  example: []
+  syntax:
+    content: 'public enum PdCursesKeyCode : uint'
+    content.vb: Public Enum PdCursesKeyCode As UInteger
+- uid: Sharpie.Backend.PdCursesKeyCode.Yes
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Yes
+  id: Yes
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Yes
+  nameWithType: PdCursesKeyCode.Yes
+  fullName: Sharpie.Backend.PdCursesKeyCode.Yes
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Yes
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 38
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Yes = 256
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Down
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Down
+  id: Down
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Down
+  nameWithType: PdCursesKeyCode.Down
+  fullName: Sharpie.Backend.PdCursesKeyCode.Down
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Down
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 39
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Down = 258
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Up
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Up
+  id: Up
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Up
+  nameWithType: PdCursesKeyCode.Up
+  fullName: Sharpie.Backend.PdCursesKeyCode.Up
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Up
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 40
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Up = 259
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Left
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Left
+  id: Left
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Left
+  nameWithType: PdCursesKeyCode.Left
+  fullName: Sharpie.Backend.PdCursesKeyCode.Left
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Left
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 41
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Left = 260
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Right
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Right
+  id: Right
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Right
+  nameWithType: PdCursesKeyCode.Right
+  fullName: Sharpie.Backend.PdCursesKeyCode.Right
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Right
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 42
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Right = 261
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Home
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Home
+  id: Home
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Home
+  nameWithType: PdCursesKeyCode.Home
+  fullName: Sharpie.Backend.PdCursesKeyCode.Home
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Home
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 43
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Home = 262
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Backspace
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Backspace
+  id: Backspace
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Backspace
+  nameWithType: PdCursesKeyCode.Backspace
+  fullName: Sharpie.Backend.PdCursesKeyCode.Backspace
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Backspace
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 44
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Backspace = 263
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Delete
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Delete
+  id: Delete
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Delete
+  nameWithType: PdCursesKeyCode.Delete
+  fullName: Sharpie.Backend.PdCursesKeyCode.Delete
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Delete
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 45
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Delete = 330
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Insert
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Insert
+  id: Insert
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Insert
+  nameWithType: PdCursesKeyCode.Insert
+  fullName: Sharpie.Backend.PdCursesKeyCode.Insert
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Insert
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 46
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Insert = 331
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F1
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F1
+  id: F1
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F1
+  nameWithType: PdCursesKeyCode.F1
+  fullName: Sharpie.Backend.PdCursesKeyCode.F1
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F1
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 47
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F1 = 265
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F2
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F2
+  id: F2
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F2
+  nameWithType: PdCursesKeyCode.F2
+  fullName: Sharpie.Backend.PdCursesKeyCode.F2
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F2
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 48
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F2 = 266
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F3
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F3
+  id: F3
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F3
+  nameWithType: PdCursesKeyCode.F3
+  fullName: Sharpie.Backend.PdCursesKeyCode.F3
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F3
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 49
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F3 = 267
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F4
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F4
+  id: F4
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F4
+  nameWithType: PdCursesKeyCode.F4
+  fullName: Sharpie.Backend.PdCursesKeyCode.F4
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F4
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 50
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F4 = 268
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F5
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F5
+  id: F5
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F5
+  nameWithType: PdCursesKeyCode.F5
+  fullName: Sharpie.Backend.PdCursesKeyCode.F5
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F5
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 51
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F5 = 269
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F6
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F6
+  id: F6
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F6
+  nameWithType: PdCursesKeyCode.F6
+  fullName: Sharpie.Backend.PdCursesKeyCode.F6
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F6
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 52
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F6 = 270
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F7
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F7
+  id: F7
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F7
+  nameWithType: PdCursesKeyCode.F7
+  fullName: Sharpie.Backend.PdCursesKeyCode.F7
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F7
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 53
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F7 = 271
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F8
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F8
+  id: F8
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F8
+  nameWithType: PdCursesKeyCode.F8
+  fullName: Sharpie.Backend.PdCursesKeyCode.F8
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F8
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 54
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F8 = 272
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F9
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F9
+  id: F9
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F9
+  nameWithType: PdCursesKeyCode.F9
+  fullName: Sharpie.Backend.PdCursesKeyCode.F9
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F9
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 55
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F9 = 273
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F10
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F10
+  id: F10
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F10
+  nameWithType: PdCursesKeyCode.F10
+  fullName: Sharpie.Backend.PdCursesKeyCode.F10
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F10
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 56
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F10 = 274
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F11
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F11
+  id: F11
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F11
+  nameWithType: PdCursesKeyCode.F11
+  fullName: Sharpie.Backend.PdCursesKeyCode.F11
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F11
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 57
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F11 = 275
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.F12
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.F12
+  id: F12
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: F12
+  nameWithType: PdCursesKeyCode.F12
+  fullName: Sharpie.Backend.PdCursesKeyCode.F12
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: F12
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 58
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: F12 = 276
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF1
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF1
+  id: ShiftF1
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF1
+  nameWithType: PdCursesKeyCode.ShiftF1
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF1
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF1
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 59
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF1 = 277
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF2
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF2
+  id: ShiftF2
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF2
+  nameWithType: PdCursesKeyCode.ShiftF2
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF2
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF2
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 60
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF2 = 278
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF3
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF3
+  id: ShiftF3
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF3
+  nameWithType: PdCursesKeyCode.ShiftF3
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF3
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF3
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 61
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF3 = 279
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF4
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF4
+  id: ShiftF4
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF4
+  nameWithType: PdCursesKeyCode.ShiftF4
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF4
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF4
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 62
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF4 = 280
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF5
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF5
+  id: ShiftF5
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF5
+  nameWithType: PdCursesKeyCode.ShiftF5
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF5
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF5
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 63
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF5 = 281
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF6
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF6
+  id: ShiftF6
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF6
+  nameWithType: PdCursesKeyCode.ShiftF6
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF6
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF6
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 64
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF6 = 282
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF7
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF7
+  id: ShiftF7
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF7
+  nameWithType: PdCursesKeyCode.ShiftF7
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF7
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF7
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 65
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF7 = 283
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF8
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF8
+  id: ShiftF8
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF8
+  nameWithType: PdCursesKeyCode.ShiftF8
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF8
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF8
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 66
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF8 = 284
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF9
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF9
+  id: ShiftF9
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF9
+  nameWithType: PdCursesKeyCode.ShiftF9
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF9
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF9
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 67
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF9 = 285
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF10
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF10
+  id: ShiftF10
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF10
+  nameWithType: PdCursesKeyCode.ShiftF10
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF10
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF10
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 68
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF10 = 286
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF11
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF11
+  id: ShiftF11
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF11
+  nameWithType: PdCursesKeyCode.ShiftF11
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF11
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF11
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 69
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF11 = 287
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftF12
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftF12
+  id: ShiftF12
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftF12
+  nameWithType: PdCursesKeyCode.ShiftF12
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftF12
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftF12
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 70
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftF12 = 288
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF1
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF1
+  id: CtrlF1
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF1
+  nameWithType: PdCursesKeyCode.CtrlF1
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF1
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF1
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 71
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF1 = 289
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF2
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF2
+  id: CtrlF2
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF2
+  nameWithType: PdCursesKeyCode.CtrlF2
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF2
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF2
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 72
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF2 = 290
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF3
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF3
+  id: CtrlF3
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF3
+  nameWithType: PdCursesKeyCode.CtrlF3
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF3
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF3
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 73
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF3 = 291
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF4
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF4
+  id: CtrlF4
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF4
+  nameWithType: PdCursesKeyCode.CtrlF4
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF4
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF4
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 74
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF4 = 292
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF5
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF5
+  id: CtrlF5
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF5
+  nameWithType: PdCursesKeyCode.CtrlF5
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF5
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF5
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 75
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF5 = 293
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF6
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF6
+  id: CtrlF6
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF6
+  nameWithType: PdCursesKeyCode.CtrlF6
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF6
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF6
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 76
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF6 = 294
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF7
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF7
+  id: CtrlF7
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF7
+  nameWithType: PdCursesKeyCode.CtrlF7
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF7
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF7
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 77
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF7 = 295
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF8
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF8
+  id: CtrlF8
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF8
+  nameWithType: PdCursesKeyCode.CtrlF8
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF8
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF8
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 78
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF8 = 296
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF9
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF9
+  id: CtrlF9
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF9
+  nameWithType: PdCursesKeyCode.CtrlF9
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF9
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF9
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 79
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF9 = 297
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF10
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF10
+  id: CtrlF10
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF10
+  nameWithType: PdCursesKeyCode.CtrlF10
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF10
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF10
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 80
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF10 = 298
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF11
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF11
+  id: CtrlF11
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF11
+  nameWithType: PdCursesKeyCode.CtrlF11
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF11
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF11
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 81
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF11 = 299
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlF12
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlF12
+  id: CtrlF12
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlF12
+  nameWithType: PdCursesKeyCode.CtrlF12
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlF12
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlF12
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 82
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlF12 = 300
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF1
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF1
+  id: AltF1
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF1
+  nameWithType: PdCursesKeyCode.AltF1
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF1
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF1
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 83
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF1 = 301
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF2
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF2
+  id: AltF2
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF2
+  nameWithType: PdCursesKeyCode.AltF2
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF2
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF2
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 84
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF2 = 302
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF3
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF3
+  id: AltF3
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF3
+  nameWithType: PdCursesKeyCode.AltF3
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF3
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF3
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 85
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF3 = 303
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF4
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF4
+  id: AltF4
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF4
+  nameWithType: PdCursesKeyCode.AltF4
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF4
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF4
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 86
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF4 = 304
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF5
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF5
+  id: AltF5
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF5
+  nameWithType: PdCursesKeyCode.AltF5
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF5
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF5
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 87
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF5 = 305
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF6
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF6
+  id: AltF6
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF6
+  nameWithType: PdCursesKeyCode.AltF6
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF6
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF6
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 88
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF6 = 306
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF7
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF7
+  id: AltF7
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF7
+  nameWithType: PdCursesKeyCode.AltF7
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF7
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF7
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 89
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF7 = 307
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF8
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF8
+  id: AltF8
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF8
+  nameWithType: PdCursesKeyCode.AltF8
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF8
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF8
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 90
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF8 = 308
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF9
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF9
+  id: AltF9
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF9
+  nameWithType: PdCursesKeyCode.AltF9
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF9
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF9
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 91
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF9 = 309
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF10
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF10
+  id: AltF10
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF10
+  nameWithType: PdCursesKeyCode.AltF10
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF10
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF10
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 92
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF10 = 310
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF11
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF11
+  id: AltF11
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF11
+  nameWithType: PdCursesKeyCode.AltF11
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF11
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF11
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 93
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF11 = 311
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF12
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF12
+  id: AltF12
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF12
+  nameWithType: PdCursesKeyCode.AltF12
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF12
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF12
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 94
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF12 = 312
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF1
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF1
+  id: ShiftAltF1
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF1
+  nameWithType: PdCursesKeyCode.ShiftAltF1
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF1
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF1
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 95
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF1 = 313
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF2
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF2
+  id: ShiftAltF2
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF2
+  nameWithType: PdCursesKeyCode.ShiftAltF2
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF2
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF2
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 96
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF2 = 314
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF3
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF3
+  id: ShiftAltF3
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF3
+  nameWithType: PdCursesKeyCode.ShiftAltF3
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF3
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF3
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 97
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF3 = 315
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF4
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF4
+  id: ShiftAltF4
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF4
+  nameWithType: PdCursesKeyCode.ShiftAltF4
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF4
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF4
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 98
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF4 = 316
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF5
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF5
+  id: ShiftAltF5
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF5
+  nameWithType: PdCursesKeyCode.ShiftAltF5
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF5
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF5
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 99
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF5 = 317
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF6
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF6
+  id: ShiftAltF6
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF6
+  nameWithType: PdCursesKeyCode.ShiftAltF6
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF6
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF6
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 100
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF6 = 318
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF7
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF7
+  id: ShiftAltF7
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF7
+  nameWithType: PdCursesKeyCode.ShiftAltF7
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF7
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF7
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 101
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF7 = 319
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF8
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF8
+  id: ShiftAltF8
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF8
+  nameWithType: PdCursesKeyCode.ShiftAltF8
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF8
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF8
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 102
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF8 = 320
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF9
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF9
+  id: ShiftAltF9
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF9
+  nameWithType: PdCursesKeyCode.ShiftAltF9
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF9
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF9
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 103
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF9 = 321
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF10
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF10
+  id: ShiftAltF10
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF10
+  nameWithType: PdCursesKeyCode.ShiftAltF10
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF10
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF10
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 104
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF10 = 322
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF11
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF11
+  id: ShiftAltF11
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF11
+  nameWithType: PdCursesKeyCode.ShiftAltF11
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF11
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF11
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 105
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF11 = 323
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftAltF12
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftAltF12
+  id: ShiftAltF12
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftAltF12
+  nameWithType: PdCursesKeyCode.ShiftAltF12
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftAltF12
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftAltF12
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 106
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftAltF12 = 324
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ScrollDown
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ScrollDown
+  id: ScrollDown
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ScrollDown
+  nameWithType: PdCursesKeyCode.ScrollDown
+  fullName: Sharpie.Backend.PdCursesKeyCode.ScrollDown
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ScrollDown
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 107
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ScrollDown = 336
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ScrollUp
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ScrollUp
+  id: ScrollUp
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ScrollUp
+  nameWithType: PdCursesKeyCode.ScrollUp
+  fullName: Sharpie.Backend.PdCursesKeyCode.ScrollUp
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ScrollUp
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 108
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ScrollUp = 337
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.PageDown
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.PageDown
+  id: PageDown
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: PageDown
+  nameWithType: PdCursesKeyCode.PageDown
+  fullName: Sharpie.Backend.PdCursesKeyCode.PageDown
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: PageDown
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 109
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: PageDown = 338
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.PageUp
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.PageUp
+  id: PageUp
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: PageUp
+  nameWithType: PdCursesKeyCode.PageUp
+  fullName: Sharpie.Backend.PdCursesKeyCode.PageUp
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: PageUp
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 110
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: PageUp = 339
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.BackTab
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.BackTab
+  id: BackTab
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: BackTab
+  nameWithType: PdCursesKeyCode.BackTab
+  fullName: Sharpie.Backend.PdCursesKeyCode.BackTab
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: BackTab
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 111
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: BackTab = 351
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.End
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.End
+  id: End
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: End
+  nameWithType: PdCursesKeyCode.End
+  fullName: Sharpie.Backend.PdCursesKeyCode.End
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: End
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 112
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: End = 358
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftEnd
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftEnd
+  id: ShiftEnd
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftEnd
+  nameWithType: PdCursesKeyCode.ShiftEnd
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftEnd
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftEnd
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 113
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftEnd = 384
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftHome
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftHome
+  id: ShiftHome
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftHome
+  nameWithType: PdCursesKeyCode.ShiftHome
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftHome
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftHome
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 114
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftHome = 388
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftLeft
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftLeft
+  id: ShiftLeft
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftLeft
+  nameWithType: PdCursesKeyCode.ShiftLeft
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftLeft
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftLeft
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 115
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftLeft = 391
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftRight
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftRight
+  id: ShiftRight
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftRight
+  nameWithType: PdCursesKeyCode.ShiftRight
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftRight
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftRight
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 116
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftRight = 400
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt0
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt0
+  id: Alt0
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt0
+  nameWithType: PdCursesKeyCode.Alt0
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt0
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt0
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 117
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt0 = 407
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt1
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt1
+  id: Alt1
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt1
+  nameWithType: PdCursesKeyCode.Alt1
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt1
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt1
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 118
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt1 = 408
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt2
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt2
+  id: Alt2
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt2
+  nameWithType: PdCursesKeyCode.Alt2
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt2
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt2
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 119
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt2 = 409
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt3
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt3
+  id: Alt3
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt3
+  nameWithType: PdCursesKeyCode.Alt3
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt3
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt3
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 120
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt3 = 410
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt4
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt4
+  id: Alt4
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt4
+  nameWithType: PdCursesKeyCode.Alt4
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt4
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt4
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 121
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt4 = 411
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt5
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt5
+  id: Alt5
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt5
+  nameWithType: PdCursesKeyCode.Alt5
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt5
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt5
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 122
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt5 = 412
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt6
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt6
+  id: Alt6
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt6
+  nameWithType: PdCursesKeyCode.Alt6
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt6
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt6
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 123
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt6 = 413
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt7
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt7
+  id: Alt7
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt7
+  nameWithType: PdCursesKeyCode.Alt7
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt7
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt7
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 124
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt7 = 414
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt8
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt8
+  id: Alt8
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt8
+  nameWithType: PdCursesKeyCode.Alt8
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt8
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt8
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 125
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt8 = 415
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Alt9
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Alt9
+  id: Alt9
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Alt9
+  nameWithType: PdCursesKeyCode.Alt9
+  fullName: Sharpie.Backend.PdCursesKeyCode.Alt9
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Alt9
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 126
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Alt9 = 416
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltA
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltA
+  id: AltA
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltA
+  nameWithType: PdCursesKeyCode.AltA
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltA
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltA
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 127
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltA = 417
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltB
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltB
+  id: AltB
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltB
+  nameWithType: PdCursesKeyCode.AltB
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltB
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltB
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 128
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltB = 418
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltC
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltC
+  id: AltC
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltC
+  nameWithType: PdCursesKeyCode.AltC
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltC
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltC
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 129
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltC = 419
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltD
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltD
+  id: AltD
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltD
+  nameWithType: PdCursesKeyCode.AltD
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltD
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltD
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 130
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltD = 420
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltE
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltE
+  id: AltE
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltE
+  nameWithType: PdCursesKeyCode.AltE
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltE
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltE
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 131
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltE = 421
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltF
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltF
+  id: AltF
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltF
+  nameWithType: PdCursesKeyCode.AltF
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltF
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltF
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 132
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltF = 422
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltG
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltG
+  id: AltG
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltG
+  nameWithType: PdCursesKeyCode.AltG
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltG
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltG
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 133
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltG = 423
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltH
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltH
+  id: AltH
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltH
+  nameWithType: PdCursesKeyCode.AltH
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltH
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltH
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 134
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltH = 424
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltI
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltI
+  id: AltI
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltI
+  nameWithType: PdCursesKeyCode.AltI
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltI
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltI
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 135
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltI = 425
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltJ
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltJ
+  id: AltJ
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltJ
+  nameWithType: PdCursesKeyCode.AltJ
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltJ
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltJ
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 136
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltJ = 426
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltK
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltK
+  id: AltK
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltK
+  nameWithType: PdCursesKeyCode.AltK
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltK
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltK
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 137
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltK = 427
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltL
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltL
+  id: AltL
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltL
+  nameWithType: PdCursesKeyCode.AltL
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltL
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltL
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 138
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltL = 428
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltM
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltM
+  id: AltM
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltM
+  nameWithType: PdCursesKeyCode.AltM
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltM
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltM
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 139
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltM = 429
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltN
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltN
+  id: AltN
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltN
+  nameWithType: PdCursesKeyCode.AltN
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltN
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltN
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 140
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltN = 430
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltO
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltO
+  id: AltO
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltO
+  nameWithType: PdCursesKeyCode.AltO
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltO
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltO
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 141
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltO = 431
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltP
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltP
+  id: AltP
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltP
+  nameWithType: PdCursesKeyCode.AltP
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltP
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltP
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 142
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltP = 432
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltQ
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltQ
+  id: AltQ
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltQ
+  nameWithType: PdCursesKeyCode.AltQ
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltQ
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltQ
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 143
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltQ = 433
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltR
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltR
+  id: AltR
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltR
+  nameWithType: PdCursesKeyCode.AltR
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltR
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltR
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 144
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltR = 434
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltS
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltS
+  id: AltS
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltS
+  nameWithType: PdCursesKeyCode.AltS
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltS
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltS
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 145
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltS = 435
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltT
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltT
+  id: AltT
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltT
+  nameWithType: PdCursesKeyCode.AltT
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltT
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltT
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 146
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltT = 436
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltU
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltU
+  id: AltU
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltU
+  nameWithType: PdCursesKeyCode.AltU
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltU
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltU
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 147
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltU = 437
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltV
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltV
+  id: AltV
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltV
+  nameWithType: PdCursesKeyCode.AltV
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltV
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltV
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 148
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltV = 438
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltW
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltW
+  id: AltW
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltW
+  nameWithType: PdCursesKeyCode.AltW
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltW
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltW
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 149
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltW = 439
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltX
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltX
+  id: AltX
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltX
+  nameWithType: PdCursesKeyCode.AltX
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltX
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltX
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 150
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltX = 440
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltY
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltY
+  id: AltY
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltY
+  nameWithType: PdCursesKeyCode.AltY
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltY
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltY
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 151
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltY = 441
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltZ
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltZ
+  id: AltZ
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltZ
+  nameWithType: PdCursesKeyCode.AltZ
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltZ
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltZ
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 152
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltZ = 442
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlLeft
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlLeft
+  id: CtrlLeft
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlLeft
+  nameWithType: PdCursesKeyCode.CtrlLeft
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlLeft
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlLeft
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 153
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlLeft = 443
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlRight
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlRight
+  id: CtrlRight
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlRight
+  nameWithType: PdCursesKeyCode.CtrlRight
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlRight
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlRight
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 154
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlRight = 444
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlPageUp
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlPageUp
+  id: CtrlPageUp
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlPageUp
+  nameWithType: PdCursesKeyCode.CtrlPageUp
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlPageUp
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlPageUp
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 155
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlPageUp = 445
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlPageDown
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlPageDown
+  id: CtrlPageDown
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlPageDown
+  nameWithType: PdCursesKeyCode.CtrlPageDown
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlPageDown
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlPageDown
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 156
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlPageDown = 446
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlHome
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlHome
+  id: CtrlHome
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlHome
+  nameWithType: PdCursesKeyCode.CtrlHome
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlHome
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlHome
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 157
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlHome = 447
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlEnd
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlEnd
+  id: CtrlEnd
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlEnd
+  nameWithType: PdCursesKeyCode.CtrlEnd
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlEnd
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlEnd
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 158
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlEnd = 448
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadSlash
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadSlash
+  id: KeypadSlash
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadSlash
+  nameWithType: PdCursesKeyCode.KeypadSlash
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadSlash
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadSlash
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 159
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadSlash = 458
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadEnter
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadEnter
+  id: KeypadEnter
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadEnter
+  nameWithType: PdCursesKeyCode.KeypadEnter
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadEnter
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadEnter
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 160
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadEnter = 459
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlEnter
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadCtrlEnter
+  id: KeypadCtrlEnter
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadCtrlEnter
+  nameWithType: PdCursesKeyCode.KeypadCtrlEnter
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlEnter
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadCtrlEnter
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 161
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadCtrlEnter = 460
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadAltEnter
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadAltEnter
+  id: KeypadAltEnter
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadAltEnter
+  nameWithType: PdCursesKeyCode.KeypadAltEnter
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadAltEnter
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadAltEnter
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 162
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadAltEnter = 461
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadStop
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadStop
+  id: KeypadStop
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadStop
+  nameWithType: PdCursesKeyCode.KeypadStop
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadStop
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadStop
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 163
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadStop = 462
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadAsterisk
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadAsterisk
+  id: KeypadAsterisk
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadAsterisk
+  nameWithType: PdCursesKeyCode.KeypadAsterisk
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadAsterisk
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadAsterisk
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 164
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadAsterisk = 463
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadMinus
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadMinus
+  id: KeypadMinus
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadMinus
+  nameWithType: PdCursesKeyCode.KeypadMinus
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadMinus
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadMinus
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 165
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadMinus = 464
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadPlus
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadPlus
+  id: KeypadPlus
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadPlus
+  nameWithType: PdCursesKeyCode.KeypadPlus
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadPlus
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadPlus
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 166
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadPlus = 465
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlStop
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadCtrlStop
+  id: KeypadCtrlStop
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadCtrlStop
+  nameWithType: PdCursesKeyCode.KeypadCtrlStop
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlStop
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadCtrlStop
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 167
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadCtrlStop = 466
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlMiddle
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadCtrlMiddle
+  id: KeypadCtrlMiddle
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadCtrlMiddle
+  nameWithType: PdCursesKeyCode.KeypadCtrlMiddle
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlMiddle
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadCtrlMiddle
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 168
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadCtrlMiddle = 467
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlPlus
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadCtrlPlus
+  id: KeypadCtrlPlus
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadCtrlPlus
+  nameWithType: PdCursesKeyCode.KeypadCtrlPlus
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlPlus
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadCtrlPlus
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 169
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadCtrlPlus = 468
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlMinus
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadCtrlMinus
+  id: KeypadCtrlMinus
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadCtrlMinus
+  nameWithType: PdCursesKeyCode.KeypadCtrlMinus
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlMinus
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadCtrlMinus
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 170
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadCtrlMinus = 469
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlSlash
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadCtrlSlash
+  id: KeypadCtrlSlash
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadCtrlSlash
+  nameWithType: PdCursesKeyCode.KeypadCtrlSlash
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlSlash
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadCtrlSlash
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 171
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadCtrlSlash = 470
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlAsterisk
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadCtrlAsterisk
+  id: KeypadCtrlAsterisk
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadCtrlAsterisk
+  nameWithType: PdCursesKeyCode.KeypadCtrlAsterisk
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadCtrlAsterisk
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadCtrlAsterisk
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 172
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadCtrlAsterisk = 471
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadAltPlus
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadAltPlus
+  id: KeypadAltPlus
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadAltPlus
+  nameWithType: PdCursesKeyCode.KeypadAltPlus
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadAltPlus
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadAltPlus
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 173
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadAltPlus = 472
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadAltMinus
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadAltMinus
+  id: KeypadAltMinus
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadAltMinus
+  nameWithType: PdCursesKeyCode.KeypadAltMinus
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadAltMinus
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadAltMinus
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 174
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadAltMinus = 473
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadAltSlash
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadAltSlash
+  id: KeypadAltSlash
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadAltSlash
+  nameWithType: PdCursesKeyCode.KeypadAltSlash
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadAltSlash
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadAltSlash
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 175
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadAltSlash = 474
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadAltAsterisk
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadAltAsterisk
+  id: KeypadAltAsterisk
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadAltAsterisk
+  nameWithType: PdCursesKeyCode.KeypadAltAsterisk
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadAltAsterisk
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadAltAsterisk
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 176
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadAltAsterisk = 475
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeypadAltStop
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeypadAltStop
+  id: KeypadAltStop
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeypadAltStop
+  nameWithType: PdCursesKeyCode.KeypadAltStop
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeypadAltStop
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeypadAltStop
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 177
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeypadAltStop = 476
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlInsert
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlInsert
+  id: CtrlInsert
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlInsert
+  nameWithType: PdCursesKeyCode.CtrlInsert
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlInsert
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlInsert
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 178
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlInsert = 477
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltDelete
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltDelete
+  id: AltDelete
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltDelete
+  nameWithType: PdCursesKeyCode.AltDelete
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltDelete
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltDelete
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 179
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltDelete = 478
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltInsert
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltInsert
+  id: AltInsert
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltInsert
+  nameWithType: PdCursesKeyCode.AltInsert
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltInsert
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltInsert
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 180
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltInsert = 479
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlUp
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlUp
+  id: CtrlUp
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlUp
+  nameWithType: PdCursesKeyCode.CtrlUp
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlUp
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlUp
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 181
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlUp = 480
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlDown
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlDown
+  id: CtrlDown
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlDown
+  nameWithType: PdCursesKeyCode.CtrlDown
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlDown
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlDown
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 182
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlDown = 481
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlTab
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlTab
+  id: CtrlTab
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlTab
+  nameWithType: PdCursesKeyCode.CtrlTab
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlTab
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlTab
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 183
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlTab = 482
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltTab
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltTab
+  id: AltTab
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltTab
+  nameWithType: PdCursesKeyCode.AltTab
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltTab
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltTab
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 184
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltTab = 483
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltMinus
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltMinus
+  id: AltMinus
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltMinus
+  nameWithType: PdCursesKeyCode.AltMinus
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltMinus
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltMinus
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 185
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltMinus = 484
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltEqual
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltEqual
+  id: AltEqual
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltEqual
+  nameWithType: PdCursesKeyCode.AltEqual
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltEqual
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltEqual
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 186
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltEqual = 485
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltHome
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltHome
+  id: AltHome
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltHome
+  nameWithType: PdCursesKeyCode.AltHome
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltHome
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltHome
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 187
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltHome = 486
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltPageUp
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltPageUp
+  id: AltPageUp
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltPageUp
+  nameWithType: PdCursesKeyCode.AltPageUp
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltPageUp
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltPageUp
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 188
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltPageUp = 487
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltPageDown
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltPageDown
+  id: AltPageDown
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltPageDown
+  nameWithType: PdCursesKeyCode.AltPageDown
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltPageDown
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltPageDown
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 189
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltPageDown = 488
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltEnd
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltEnd
+  id: AltEnd
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltEnd
+  nameWithType: PdCursesKeyCode.AltEnd
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltEnd
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltEnd
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 190
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltEnd = 489
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltUp
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltUp
+  id: AltUp
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltUp
+  nameWithType: PdCursesKeyCode.AltUp
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltUp
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltUp
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 191
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltUp = 490
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltDown
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltDown
+  id: AltDown
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltDown
+  nameWithType: PdCursesKeyCode.AltDown
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltDown
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltDown
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 192
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltDown = 491
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltRight
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltRight
+  id: AltRight
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltRight
+  nameWithType: PdCursesKeyCode.AltRight
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltRight
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltRight
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 193
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltRight = 492
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltLeft
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltLeft
+  id: AltLeft
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltLeft
+  nameWithType: PdCursesKeyCode.AltLeft
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltLeft
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltLeft
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 194
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltLeft = 493
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltEnter
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltEnter
+  id: AltEnter
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltEnter
+  nameWithType: PdCursesKeyCode.AltEnter
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltEnter
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltEnter
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 195
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltEnter = 494
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltEscape
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltEscape
+  id: AltEscape
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltEscape
+  nameWithType: PdCursesKeyCode.AltEscape
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltEscape
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltEscape
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 196
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltEscape = 495
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltBackQuote
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltBackQuote
+  id: AltBackQuote
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltBackQuote
+  nameWithType: PdCursesKeyCode.AltBackQuote
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltBackQuote
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltBackQuote
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 197
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltBackQuote = 496
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltLeftBracket
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltLeftBracket
+  id: AltLeftBracket
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltLeftBracket
+  nameWithType: PdCursesKeyCode.AltLeftBracket
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltLeftBracket
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltLeftBracket
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 198
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltLeftBracket = 497
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltRightBracket
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltRightBracket
+  id: AltRightBracket
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltRightBracket
+  nameWithType: PdCursesKeyCode.AltRightBracket
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltRightBracket
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltRightBracket
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 199
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltRightBracket = 498
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltSemicolon
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltSemicolon
+  id: AltSemicolon
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltSemicolon
+  nameWithType: PdCursesKeyCode.AltSemicolon
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltSemicolon
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltSemicolon
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 200
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltSemicolon = 499
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltForwardQuote
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltForwardQuote
+  id: AltForwardQuote
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltForwardQuote
+  nameWithType: PdCursesKeyCode.AltForwardQuote
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltForwardQuote
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltForwardQuote
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 201
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltForwardQuote = 500
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltComma
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltComma
+  id: AltComma
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltComma
+  nameWithType: PdCursesKeyCode.AltComma
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltComma
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltComma
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 202
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltComma = 501
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltStop
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltStop
+  id: AltStop
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltStop
+  nameWithType: PdCursesKeyCode.AltStop
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltStop
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltStop
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 203
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltStop = 502
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltForwardSlash
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltForwardSlash
+  id: AltForwardSlash
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltForwardSlash
+  nameWithType: PdCursesKeyCode.AltForwardSlash
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltForwardSlash
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltForwardSlash
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 204
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltForwardSlash = 503
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltBackspace
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltBackspace
+  id: AltBackspace
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltBackspace
+  nameWithType: PdCursesKeyCode.AltBackspace
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltBackspace
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltBackspace
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 205
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltBackspace = 504
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlBackspace
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlBackspace
+  id: CtrlBackspace
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlBackspace
+  nameWithType: PdCursesKeyCode.CtrlBackspace
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlBackspace
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlBackspace
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 206
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlBackspace = 505
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPad0
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPad0
+  id: KeyPad0
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPad0
+  nameWithType: PdCursesKeyCode.KeyPad0
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPad0
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPad0
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 207
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPad0 = 506
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl0
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl0
+  id: KeyPadCtrl0
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl0
+  nameWithType: PdCursesKeyCode.KeyPadCtrl0
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl0
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl0
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 208
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl0 = 507
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl1
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl1
+  id: KeyPadCtrl1
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl1
+  nameWithType: PdCursesKeyCode.KeyPadCtrl1
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl1
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl1
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 209
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl1 = 508
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl2
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl2
+  id: KeyPadCtrl2
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl2
+  nameWithType: PdCursesKeyCode.KeyPadCtrl2
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl2
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl2
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 210
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl2 = 509
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl3
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl3
+  id: KeyPadCtrl3
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl3
+  nameWithType: PdCursesKeyCode.KeyPadCtrl3
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl3
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl3
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 211
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl3 = 510
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl4
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl4
+  id: KeyPadCtrl4
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl4
+  nameWithType: PdCursesKeyCode.KeyPadCtrl4
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl4
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl4
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 212
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl4 = 511
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl5
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl5
+  id: KeyPadCtrl5
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl5
+  nameWithType: PdCursesKeyCode.KeyPadCtrl5
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl5
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl5
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 213
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl5 = 512
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl6
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl6
+  id: KeyPadCtrl6
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl6
+  nameWithType: PdCursesKeyCode.KeyPadCtrl6
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl6
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl6
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 214
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl6 = 513
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl7
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl7
+  id: KeyPadCtrl7
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl7
+  nameWithType: PdCursesKeyCode.KeyPadCtrl7
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl7
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl7
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 215
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl7 = 514
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl8
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl8
+  id: KeyPadCtrl8
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl8
+  nameWithType: PdCursesKeyCode.KeyPadCtrl8
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl8
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl8
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 216
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl8 = 515
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl9
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl9
+  id: KeyPadCtrl9
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadCtrl9
+  nameWithType: PdCursesKeyCode.KeyPadCtrl9
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadCtrl9
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadCtrl9
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 217
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadCtrl9 = 516
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt0
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt0
+  id: KeyPadAlt0
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt0
+  nameWithType: PdCursesKeyCode.KeyPadAlt0
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt0
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt0
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 218
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt0 = 517
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt1
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt1
+  id: KeyPadAlt1
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt1
+  nameWithType: PdCursesKeyCode.KeyPadAlt1
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt1
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt1
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 219
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt1 = 518
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt2
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt2
+  id: KeyPadAlt2
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt2
+  nameWithType: PdCursesKeyCode.KeyPadAlt2
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt2
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt2
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 220
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt2 = 519
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt3
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt3
+  id: KeyPadAlt3
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt3
+  nameWithType: PdCursesKeyCode.KeyPadAlt3
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt3
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt3
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 221
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt3 = 520
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt4
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt4
+  id: KeyPadAlt4
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt4
+  nameWithType: PdCursesKeyCode.KeyPadAlt4
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt4
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt4
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 222
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt4 = 521
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt5
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt5
+  id: KeyPadAlt5
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt5
+  nameWithType: PdCursesKeyCode.KeyPadAlt5
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt5
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt5
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 223
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt5 = 522
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt6
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt6
+  id: KeyPadAlt6
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt6
+  nameWithType: PdCursesKeyCode.KeyPadAlt6
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt6
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt6
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 224
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt6 = 523
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt7
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt7
+  id: KeyPadAlt7
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt7
+  nameWithType: PdCursesKeyCode.KeyPadAlt7
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt7
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt7
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 225
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt7 = 524
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt8
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt8
+  id: KeyPadAlt8
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt8
+  nameWithType: PdCursesKeyCode.KeyPadAlt8
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt8
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt8
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 226
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt8 = 525
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt9
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadAlt9
+  id: KeyPadAlt9
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadAlt9
+  nameWithType: PdCursesKeyCode.KeyPadAlt9
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadAlt9
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadAlt9
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 227
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadAlt9 = 526
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlDelete
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlDelete
+  id: CtrlDelete
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlDelete
+  nameWithType: PdCursesKeyCode.CtrlDelete
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlDelete
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlDelete
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 228
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlDelete = 527
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.AltBackSlash
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.AltBackSlash
+  id: AltBackSlash
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: AltBackSlash
+  nameWithType: PdCursesKeyCode.AltBackSlash
+  fullName: Sharpie.Backend.PdCursesKeyCode.AltBackSlash
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: AltBackSlash
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 229
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: AltBackSlash = 528
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.CtrlEnter
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.CtrlEnter
+  id: CtrlEnter
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: CtrlEnter
+  nameWithType: PdCursesKeyCode.CtrlEnter
+  fullName: Sharpie.Backend.PdCursesKeyCode.CtrlEnter
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: CtrlEnter
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 230
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: CtrlEnter = 529
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftEnter
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadShiftEnter
+  id: KeyPadShiftEnter
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadShiftEnter
+  nameWithType: PdCursesKeyCode.KeyPadShiftEnter
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftEnter
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadShiftEnter
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 231
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadShiftEnter = 530
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftSlash
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadShiftSlash
+  id: KeyPadShiftSlash
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadShiftSlash
+  nameWithType: PdCursesKeyCode.KeyPadShiftSlash
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftSlash
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadShiftSlash
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 232
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadShiftSlash = 531
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftAsterisk
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadShiftAsterisk
+  id: KeyPadShiftAsterisk
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadShiftAsterisk
+  nameWithType: PdCursesKeyCode.KeyPadShiftAsterisk
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftAsterisk
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadShiftAsterisk
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 233
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadShiftAsterisk = 532
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftPlus
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadShiftPlus
+  id: KeyPadShiftPlus
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadShiftPlus
+  nameWithType: PdCursesKeyCode.KeyPadShiftPlus
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftPlus
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadShiftPlus
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 234
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadShiftPlus = 533
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftMinus
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadShiftMinus
+  id: KeyPadShiftMinus
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadShiftMinus
+  nameWithType: PdCursesKeyCode.KeyPadShiftMinus
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftMinus
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadShiftMinus
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 235
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadShiftMinus = 534
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftUp
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadShiftUp
+  id: KeyPadShiftUp
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadShiftUp
+  nameWithType: PdCursesKeyCode.KeyPadShiftUp
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftUp
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadShiftUp
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 236
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadShiftUp = 535
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftDown
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadShiftDown
+  id: KeyPadShiftDown
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadShiftDown
+  nameWithType: PdCursesKeyCode.KeyPadShiftDown
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftDown
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadShiftDown
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 237
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadShiftDown = 536
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftInsert
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadShiftInsert
+  id: KeyPadShiftInsert
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadShiftInsert
+  nameWithType: PdCursesKeyCode.KeyPadShiftInsert
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftInsert
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadShiftInsert
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 238
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadShiftInsert = 537
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftDelete
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.KeyPadShiftDelete
+  id: KeyPadShiftDelete
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: KeyPadShiftDelete
+  nameWithType: PdCursesKeyCode.KeyPadShiftDelete
+  fullName: Sharpie.Backend.PdCursesKeyCode.KeyPadShiftDelete
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: KeyPadShiftDelete
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 239
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: KeyPadShiftDelete = 538
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Mouse
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Mouse
+  id: Mouse
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Mouse
+  nameWithType: PdCursesKeyCode.Mouse
+  fullName: Sharpie.Backend.PdCursesKeyCode.Mouse
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Mouse
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 240
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Mouse = 539
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.LeftShift
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.LeftShift
+  id: LeftShift
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: LeftShift
+  nameWithType: PdCursesKeyCode.LeftShift
+  fullName: Sharpie.Backend.PdCursesKeyCode.LeftShift
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LeftShift
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 241
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: LeftShift = 540
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.RightShift
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.RightShift
+  id: RightShift
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: RightShift
+  nameWithType: PdCursesKeyCode.RightShift
+  fullName: Sharpie.Backend.PdCursesKeyCode.RightShift
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RightShift
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 242
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: RightShift = 541
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.LeftCtrl
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.LeftCtrl
+  id: LeftCtrl
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: LeftCtrl
+  nameWithType: PdCursesKeyCode.LeftCtrl
+  fullName: Sharpie.Backend.PdCursesKeyCode.LeftCtrl
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LeftCtrl
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 243
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: LeftCtrl = 542
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.RightCtrl
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.RightCtrl
+  id: RightCtrl
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: RightCtrl
+  nameWithType: PdCursesKeyCode.RightCtrl
+  fullName: Sharpie.Backend.PdCursesKeyCode.RightCtrl
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RightCtrl
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 244
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: RightCtrl = 543
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.LeftAlt
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.LeftAlt
+  id: LeftAlt
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: LeftAlt
+  nameWithType: PdCursesKeyCode.LeftAlt
+  fullName: Sharpie.Backend.PdCursesKeyCode.LeftAlt
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: LeftAlt
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 245
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: LeftAlt = 544
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.RightAlt
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.RightAlt
+  id: RightAlt
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: RightAlt
+  nameWithType: PdCursesKeyCode.RightAlt
+  fullName: Sharpie.Backend.PdCursesKeyCode.RightAlt
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: RightAlt
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 246
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: RightAlt = 545
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.Resize
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.Resize
+  id: Resize
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: Resize
+  nameWithType: PdCursesKeyCode.Resize
+  fullName: Sharpie.Backend.PdCursesKeyCode.Resize
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Resize
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 247
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: Resize = 546
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftUp
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftUp
+  id: ShiftUp
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftUp
+  nameWithType: PdCursesKeyCode.ShiftUp
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftUp
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftUp
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 248
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftUp = 547
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+- uid: Sharpie.Backend.PdCursesKeyCode.ShiftDown
+  commentId: F:Sharpie.Backend.PdCursesKeyCode.ShiftDown
+  id: ShiftDown
+  parent: Sharpie.Backend.PdCursesKeyCode
+  langs:
+  - csharp
+  - vb
+  name: ShiftDown
+  nameWithType: PdCursesKeyCode.ShiftDown
+  fullName: Sharpie.Backend.PdCursesKeyCode.ShiftDown
+  type: Field
+  source:
+    remote:
+      path: Sharpie/Backend/PdCursesKeyCode.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: ShiftDown
+    path: Sharpie/Backend/PdCursesKeyCode.cs
+    startLine: 249
+  assemblies:
+  - sharpie
+  namespace: Sharpie.Backend
+  syntax:
+    content: ShiftDown = 548
+    return:
+      type: Sharpie.Backend.PdCursesKeyCode
+references:
+- uid: Sharpie.Backend
+  commentId: N:Sharpie.Backend
+  href: Sharpie.html
+  name: Sharpie.Backend
+  nameWithType: Sharpie.Backend
+  fullName: Sharpie.Backend
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Backend
+    name: Backend
+    href: Sharpie.Backend.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Backend
+    name: Backend
+    href: Sharpie.Backend.html
+- uid: Sharpie.Backend.PdCursesKeyCode
+  commentId: T:Sharpie.Backend.PdCursesKeyCode
+  parent: Sharpie.Backend
+  href: Sharpie.Backend.PdCursesKeyCode.html
+  name: PdCursesKeyCode
+  nameWithType: PdCursesKeyCode
+  fullName: Sharpie.Backend.PdCursesKeyCode

@@ -1,0 +1,1430 @@
+### YamlMime:ManagedReference
+items:
+- uid: Sharpie.Canvas
+  commentId: T:Sharpie.Canvas
+  id: Canvas
+  parent: Sharpie
+  children:
+  - Sharpie.Canvas.#ctor(System.Drawing.Size)
+  - Sharpie.Canvas.Box(System.Drawing.Rectangle,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  - Sharpie.Canvas.DrawOnto(Sharpie.Abstractions.IDrawSurface,System.Drawing.Rectangle,System.Drawing.Point)
+  - Sharpie.Canvas.Fill(System.Drawing.Rectangle,Sharpie.Canvas.ShadeGlyphStyle,Sharpie.Style)
+  - Sharpie.Canvas.Fill(System.Drawing.Rectangle,System.Text.Rune,Sharpie.Style)
+  - Sharpie.Canvas.Glyph(System.Drawing.Point,Sharpie.Canvas.CheckGlyphStyle,Sharpie.Canvas.FillStyle,Sharpie.Style)
+  - Sharpie.Canvas.Glyph(System.Drawing.Point,Sharpie.Canvas.GradientGlyphStyle,System.Int32,Sharpie.Style)
+  - Sharpie.Canvas.Glyph(System.Drawing.Point,Sharpie.Canvas.TriangleGlyphStyle,Sharpie.Canvas.GlyphSize,Sharpie.Canvas.FillStyle,Sharpie.Style)
+  - Sharpie.Canvas.Glyph(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  - Sharpie.Canvas.Line(System.Drawing.PointF,System.Drawing.PointF,Sharpie.Style)
+  - Sharpie.Canvas.Line(System.Drawing.PointF,System.Single,Sharpie.Canvas.Orientation,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  - Sharpie.Canvas.Point(System.Drawing.PointF,Sharpie.Style)
+  - Sharpie.Canvas.Rectangle(System.Drawing.RectangleF,Sharpie.Style)
+  - Sharpie.Canvas.Size
+  - Sharpie.Canvas.Text(System.Drawing.Point,System.String,Sharpie.Canvas.Orientation,Sharpie.Style)
+  langs:
+  - csharp
+  - vb
+  name: Canvas
+  nameWithType: Canvas
+  fullName: Sharpie.Canvas
+  type: Class
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Canvas
+    path: Sharpie/Canvas.cs
+    startLine: 37
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: >-
+    A general-purpose drawing surface that can be latter draw onto any object that implements
+
+    <xref href="Sharpie.Abstractions.IDrawSurface" data-throw-if-not-resolved="false"></xref>.
+
+    Supports multiple types of drawing operations most commonly used in terminal apps.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public sealed class Canvas : IDrawable, IDrawSurface
+    content.vb: >-
+      <PublicAPI>
+
+      Public NotInheritable Class Canvas Implements IDrawable, IDrawSurface
+  inheritance:
+  - System.Object
+  implements:
+  - Sharpie.Abstractions.IDrawable
+  - Sharpie.Abstractions.IDrawSurface
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: Sharpie.Canvas.#ctor(System.Drawing.Size)
+  commentId: M:Sharpie.Canvas.#ctor(System.Drawing.Size)
+  id: '#ctor(System.Drawing.Size)'
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Canvas(Size)
+  nameWithType: Canvas.Canvas(Size)
+  fullName: Sharpie.Canvas.Canvas(System.Drawing.Size)
+  type: Constructor
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: .ctor
+    path: Sharpie/Canvas.cs
+    startLine: 579
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Creates a new instances of this class with a given surface <code class="paramref">size</code>.
+  example: []
+  syntax:
+    content: public Canvas(Size size)
+    parameters:
+    - id: size
+      type: System.Drawing.Size
+      description: The size of the drawing.
+    content.vb: Public Sub New(size As Size)
+  overload: Sharpie.Canvas.#ctor*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: Thrown if <code class="paramref">size</code> is invalid.
+  nameWithType.vb: Canvas.New(Size)
+  fullName.vb: Sharpie.Canvas.New(System.Drawing.Size)
+  name.vb: New(Size)
+- uid: Sharpie.Canvas.Size
+  commentId: P:Sharpie.Canvas.Size
+  id: Size
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Size
+  nameWithType: Canvas.Size
+  fullName: Sharpie.Canvas.Size
+  type: Property
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Size
+    path: Sharpie/Canvas.cs
+    startLine: 591
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: The size of the drawable.
+  example: []
+  syntax:
+    content: public Size Size { get; }
+    parameters: []
+    return:
+      type: System.Drawing.Size
+    content.vb: Public ReadOnly Property Size As Size
+  overload: Sharpie.Canvas.Size*
+  implements:
+  - Sharpie.Abstractions.IDrawable.Size
+  - Sharpie.Abstractions.IDrawSurface.Size
+- uid: Sharpie.Canvas.DrawOnto(Sharpie.Abstractions.IDrawSurface,System.Drawing.Rectangle,System.Drawing.Point)
+  commentId: M:Sharpie.Canvas.DrawOnto(Sharpie.Abstractions.IDrawSurface,System.Drawing.Rectangle,System.Drawing.Point)
+  id: DrawOnto(Sharpie.Abstractions.IDrawSurface,System.Drawing.Rectangle,System.Drawing.Point)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: DrawOnto(IDrawSurface, Rectangle, Point)
+  nameWithType: Canvas.DrawOnto(IDrawSurface, Rectangle, Point)
+  fullName: Sharpie.Canvas.DrawOnto(Sharpie.Abstractions.IDrawSurface, System.Drawing.Rectangle, System.Drawing.Point)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: DrawOnto
+    path: Sharpie/Canvas.cs
+    startLine: 594
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Draws the drawable onto a given surface.
+  example: []
+  syntax:
+    content: public void DrawOnto(IDrawSurface destination, Rectangle srcArea, Point destLocation)
+    parameters:
+    - id: destination
+      type: Sharpie.Abstractions.IDrawSurface
+      description: The surface to draw on.
+    - id: srcArea
+      type: System.Drawing.Rectangle
+      description: The source area to draw.
+    - id: destLocation
+      type: System.Drawing.Point
+      description: The destination location.
+    content.vb: Public Sub DrawOnto(destination As IDrawSurface, srcArea As Rectangle, destLocation As Point)
+  overload: Sharpie.Canvas.DrawOnto*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">destination</code> is <code>null</code>.
+  implements:
+  - Sharpie.Abstractions.IDrawable.DrawOnto(Sharpie.Abstractions.IDrawSurface,System.Drawing.Rectangle,System.Drawing.Point)
+- uid: Sharpie.Canvas.Fill(System.Drawing.Rectangle,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Fill(System.Drawing.Rectangle,System.Text.Rune,Sharpie.Style)
+  id: Fill(System.Drawing.Rectangle,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Fill(Rectangle, Rune, Style)
+  nameWithType: Canvas.Fill(Rectangle, Rune, Style)
+  fullName: Sharpie.Canvas.Fill(System.Drawing.Rectangle, System.Text.Rune, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Fill
+    path: Sharpie/Canvas.cs
+    startLine: 713
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Fills a given <code class="paramref">area</code> with a given <code class="paramref">rune</code> and <code class="paramref">style</code>.
+  example: []
+  syntax:
+    content: public void Fill(Rectangle area, Rune rune, Style style)
+    parameters:
+    - id: area
+      type: System.Drawing.Rectangle
+      description: The area to fill.
+    - id: rune
+      type: System.Text.Rune
+      description: The rune to draw.
+    - id: style
+      type: Sharpie.Style
+      description: The cell style.
+    content.vb: Public Sub Fill(area As Rectangle, rune As Rune, style As Style)
+  overload: Sharpie.Canvas.Fill*
+- uid: Sharpie.Canvas.Fill(System.Drawing.Rectangle,Sharpie.Canvas.ShadeGlyphStyle,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Fill(System.Drawing.Rectangle,Sharpie.Canvas.ShadeGlyphStyle,Sharpie.Style)
+  id: Fill(System.Drawing.Rectangle,Sharpie.Canvas.ShadeGlyphStyle,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Fill(Rectangle, ShadeGlyphStyle, Style)
+  nameWithType: Canvas.Fill(Rectangle, Canvas.ShadeGlyphStyle, Style)
+  fullName: Sharpie.Canvas.Fill(System.Drawing.Rectangle, Sharpie.Canvas.ShadeGlyphStyle, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Fill
+    path: Sharpie/Canvas.cs
+    startLine: 736
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: >-
+    Fills a given <code class="paramref">area</code> with a given <code class="paramref">shadeGlyph</code> and
+
+    <code class="paramref">style</code>.
+  example: []
+  syntax:
+    content: public void Fill(Rectangle area, Canvas.ShadeGlyphStyle shadeGlyph, Style style)
+    parameters:
+    - id: area
+      type: System.Drawing.Rectangle
+      description: The area to fill.
+    - id: shadeGlyph
+      type: Sharpie.Canvas.ShadeGlyphStyle
+      description: The share to draw.
+    - id: style
+      type: Sharpie.Style
+      description: The cell style.
+    content.vb: Public Sub Fill(area As Rectangle, shadeGlyph As Canvas.ShadeGlyphStyle, style As Style)
+  overload: Sharpie.Canvas.Fill*
+- uid: Sharpie.Canvas.Text(System.Drawing.Point,System.String,Sharpie.Canvas.Orientation,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Text(System.Drawing.Point,System.String,Sharpie.Canvas.Orientation,Sharpie.Style)
+  id: Text(System.Drawing.Point,System.String,Sharpie.Canvas.Orientation,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Text(Point, string, Orientation, Style)
+  nameWithType: Canvas.Text(Point, string, Canvas.Orientation, Style)
+  fullName: Sharpie.Canvas.Text(System.Drawing.Point, string, Sharpie.Canvas.Orientation, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Text
+    path: Sharpie/Canvas.cs
+    startLine: 756
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: >-
+    Writes a given <code class="paramref">text</code> into the drawing. If the text length exceed the available space,
+
+    it is cropped.
+  example: []
+  syntax:
+    content: public void Text(Point location, string text, Canvas.Orientation orientation, Style style)
+    parameters:
+    - id: location
+      type: System.Drawing.Point
+      description: The start location of the text.
+    - id: text
+      type: System.String
+      description: The text.
+    - id: orientation
+      type: Sharpie.Canvas.Orientation
+      description: The orientation for the text.
+    - id: style
+      type: Sharpie.Style
+      description: The text style.
+    content.vb: Public Sub Text(location As Point, text As String, orientation As Canvas.Orientation, style As Style)
+  overload: Sharpie.Canvas.Text*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">text</code> is <code>null</code>.
+  nameWithType.vb: Canvas.Text(Point, String, Canvas.Orientation, Style)
+  fullName.vb: Sharpie.Canvas.Text(System.Drawing.Point, String, Sharpie.Canvas.Orientation, Sharpie.Style)
+  name.vb: Text(Point, String, Orientation, Style)
+- uid: Sharpie.Canvas.Glyph(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Glyph(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  id: Glyph(System.Drawing.Point,System.Text.Rune,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Glyph(Point, Rune, Style)
+  nameWithType: Canvas.Glyph(Point, Rune, Style)
+  fullName: Sharpie.Canvas.Glyph(System.Drawing.Point, System.Text.Rune, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph
+    path: Sharpie/Canvas.cs
+    startLine: 796
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Draws a glyph at a given <code class="paramref">location</code> using the given text style.
+  example: []
+  syntax:
+    content: public void Glyph(Point location, Rune rune, Style style)
+    parameters:
+    - id: location
+      type: System.Drawing.Point
+      description: The cell location.
+    - id: rune
+      type: System.Text.Rune
+      description: The rune to draw.
+    - id: style
+      type: Sharpie.Style
+      description: The text style.
+    content.vb: Public Sub Glyph(location As Point, rune As Rune, style As Style)
+  overload: Sharpie.Canvas.Glyph*
+- uid: Sharpie.Canvas.Glyph(System.Drawing.Point,Sharpie.Canvas.CheckGlyphStyle,Sharpie.Canvas.FillStyle,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Glyph(System.Drawing.Point,Sharpie.Canvas.CheckGlyphStyle,Sharpie.Canvas.FillStyle,Sharpie.Style)
+  id: Glyph(System.Drawing.Point,Sharpie.Canvas.CheckGlyphStyle,Sharpie.Canvas.FillStyle,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Glyph(Point, CheckGlyphStyle, FillStyle, Style)
+  nameWithType: Canvas.Glyph(Point, Canvas.CheckGlyphStyle, Canvas.FillStyle, Style)
+  fullName: Sharpie.Canvas.Glyph(System.Drawing.Point, Sharpie.Canvas.CheckGlyphStyle, Sharpie.Canvas.FillStyle, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph
+    path: Sharpie/Canvas.cs
+    startLine: 809
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Draws a glyph at a given <code class="paramref">location</code> using the provide styles.
+  example: []
+  syntax:
+    content: public void Glyph(Point location, Canvas.CheckGlyphStyle checkGlyphStyle, Canvas.FillStyle fillStyle, Style style)
+    parameters:
+    - id: location
+      type: System.Drawing.Point
+      description: The cell location.
+    - id: checkGlyphStyle
+      type: Sharpie.Canvas.CheckGlyphStyle
+      description: The check style of the glyph.
+    - id: fillStyle
+      type: Sharpie.Canvas.FillStyle
+      description: The fill style of the glyph.
+    - id: style
+      type: Sharpie.Style
+      description: The cell style.
+    content.vb: Public Sub Glyph(location As Point, checkGlyphStyle As Canvas.CheckGlyphStyle, fillStyle As Canvas.FillStyle, style As Style)
+  overload: Sharpie.Canvas.Glyph*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: >-
+      Thrown if <code class="paramref">checkGlyphStyle</code> or <code class="paramref">fillStyle</code> are
+
+      invalid.
+- uid: Sharpie.Canvas.Glyph(System.Drawing.Point,Sharpie.Canvas.TriangleGlyphStyle,Sharpie.Canvas.GlyphSize,Sharpie.Canvas.FillStyle,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Glyph(System.Drawing.Point,Sharpie.Canvas.TriangleGlyphStyle,Sharpie.Canvas.GlyphSize,Sharpie.Canvas.FillStyle,Sharpie.Style)
+  id: Glyph(System.Drawing.Point,Sharpie.Canvas.TriangleGlyphStyle,Sharpie.Canvas.GlyphSize,Sharpie.Canvas.FillStyle,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Glyph(Point, TriangleGlyphStyle, GlyphSize, FillStyle, Style)
+  nameWithType: Canvas.Glyph(Point, Canvas.TriangleGlyphStyle, Canvas.GlyphSize, Canvas.FillStyle, Style)
+  fullName: Sharpie.Canvas.Glyph(System.Drawing.Point, Sharpie.Canvas.TriangleGlyphStyle, Sharpie.Canvas.GlyphSize, Sharpie.Canvas.FillStyle, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph
+    path: Sharpie/Canvas.cs
+    startLine: 832
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Draws a glyph at a given <code class="paramref">location</code> using the provide styles.
+  example: []
+  syntax:
+    content: public void Glyph(Point location, Canvas.TriangleGlyphStyle triangleGlyphStyle, Canvas.GlyphSize glyphSize, Canvas.FillStyle fillStyle, Style style)
+    parameters:
+    - id: location
+      type: System.Drawing.Point
+      description: The cell location.
+    - id: triangleGlyphStyle
+      type: Sharpie.Canvas.TriangleGlyphStyle
+      description: The orientation of the glyph.
+    - id: glyphSize
+      type: Sharpie.Canvas.GlyphSize
+      description: The glyph size.
+    - id: fillStyle
+      type: Sharpie.Canvas.FillStyle
+      description: The fill style of the glyph.
+    - id: style
+      type: Sharpie.Style
+      description: The cell style.
+    content.vb: Public Sub Glyph(location As Point, triangleGlyphStyle As Canvas.TriangleGlyphStyle, glyphSize As Canvas.GlyphSize, fillStyle As Canvas.FillStyle, style As Style)
+  overload: Sharpie.Canvas.Glyph*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: >-
+      Thrown if <code class="paramref">triangleGlyphStyle</code> or <code class="paramref">glyphSize</code>
+
+      or <code class="paramref">fillStyle</code> are invalid.
+- uid: Sharpie.Canvas.Glyph(System.Drawing.Point,Sharpie.Canvas.GradientGlyphStyle,System.Int32,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Glyph(System.Drawing.Point,Sharpie.Canvas.GradientGlyphStyle,System.Int32,Sharpie.Style)
+  id: Glyph(System.Drawing.Point,Sharpie.Canvas.GradientGlyphStyle,System.Int32,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Glyph(Point, GradientGlyphStyle, int, Style)
+  nameWithType: Canvas.Glyph(Point, Canvas.GradientGlyphStyle, int, Style)
+  fullName: Sharpie.Canvas.Glyph(System.Drawing.Point, Sharpie.Canvas.GradientGlyphStyle, int, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Glyph
+    path: Sharpie/Canvas.cs
+    startLine: 853
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Draws a glyph at a given <code class="paramref">location</code> using the provide gradient style and fill count.
+  example: []
+  syntax:
+    content: public void Glyph(Point location, Canvas.GradientGlyphStyle gradientGlyphStyle, int fill, Style style)
+    parameters:
+    - id: location
+      type: System.Drawing.Point
+      description: The cell location.
+    - id: gradientGlyphStyle
+      type: Sharpie.Canvas.GradientGlyphStyle
+      description: The gradient style.
+    - id: fill
+      type: System.Int32
+      description: The glyph fill count.
+    - id: style
+      type: Sharpie.Style
+      description: The cell style.
+    content.vb: Public Sub Glyph(location As Point, gradientGlyphStyle As Canvas.GradientGlyphStyle, fill As Integer, style As Style)
+  overload: Sharpie.Canvas.Glyph*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: Thrown if <code class="paramref">fill</code> is invalid.
+  nameWithType.vb: Canvas.Glyph(Point, Canvas.GradientGlyphStyle, Integer, Style)
+  fullName.vb: Sharpie.Canvas.Glyph(System.Drawing.Point, Sharpie.Canvas.GradientGlyphStyle, Integer, Sharpie.Style)
+  name.vb: Glyph(Point, GradientGlyphStyle, Integer, Style)
+- uid: Sharpie.Canvas.Line(System.Drawing.PointF,System.Single,Sharpie.Canvas.Orientation,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Line(System.Drawing.PointF,System.Single,Sharpie.Canvas.Orientation,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  id: Line(System.Drawing.PointF,System.Single,Sharpie.Canvas.Orientation,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Line(PointF, float, Orientation, LineStyle, Style)
+  nameWithType: Canvas.Line(PointF, float, Canvas.Orientation, Canvas.LineStyle, Style)
+  fullName: Sharpie.Canvas.Line(System.Drawing.PointF, float, Sharpie.Canvas.Orientation, Sharpie.Canvas.LineStyle, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line
+    path: Sharpie/Canvas.cs
+    startLine: 876
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: >-
+    Draws a line starting at a given starting at a given point vertically or horizontally using line drawing
+
+    characters.
+  example: []
+  syntax:
+    content: public void Line(PointF location, float length, Canvas.Orientation orientation, Canvas.LineStyle lineStyle, Style style)
+    parameters:
+    - id: location
+      type: System.Drawing.PointF
+      description: The start location.
+    - id: length
+      type: System.Single
+      description: The length of the line.
+    - id: orientation
+      type: Sharpie.Canvas.Orientation
+      description: The line orientation.
+    - id: lineStyle
+      type: Sharpie.Canvas.LineStyle
+      description: The line style.
+    - id: style
+      type: Sharpie.Style
+      description: The cell style.
+    content.vb: Public Sub Line(location As PointF, length As Single, orientation As Canvas.Orientation, lineStyle As Canvas.LineStyle, style As Style)
+  overload: Sharpie.Canvas.Line*
+  nameWithType.vb: Canvas.Line(PointF, Single, Canvas.Orientation, Canvas.LineStyle, Style)
+  fullName.vb: Sharpie.Canvas.Line(System.Drawing.PointF, Single, Sharpie.Canvas.Orientation, Sharpie.Canvas.LineStyle, Sharpie.Style)
+  name.vb: Line(PointF, Single, Orientation, LineStyle, Style)
+- uid: Sharpie.Canvas.Line(System.Drawing.PointF,System.Drawing.PointF,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Line(System.Drawing.PointF,System.Drawing.PointF,Sharpie.Style)
+  id: Line(System.Drawing.PointF,System.Drawing.PointF,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Line(PointF, PointF, Style)
+  nameWithType: Canvas.Line(PointF, PointF, Style)
+  fullName: Sharpie.Canvas.Line(System.Drawing.PointF, System.Drawing.PointF, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Line
+    path: Sharpie/Canvas.cs
+    startLine: 959
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Draws a line between two points in the drawing using block characters.
+  example: []
+  syntax:
+    content: public void Line(PointF startLocation, PointF endLocation, Style style)
+    parameters:
+    - id: startLocation
+      type: System.Drawing.PointF
+      description: The starting cell.
+    - id: endLocation
+      type: System.Drawing.PointF
+      description: The ending cell.
+    - id: style
+      type: Sharpie.Style
+      description: The cell style.
+    content.vb: Public Sub Line(startLocation As PointF, endLocation As PointF, style As Style)
+  overload: Sharpie.Canvas.Line*
+- uid: Sharpie.Canvas.Box(System.Drawing.Rectangle,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Box(System.Drawing.Rectangle,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  id: Box(System.Drawing.Rectangle,Sharpie.Canvas.LineStyle,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Box(Rectangle, LineStyle, Style)
+  nameWithType: Canvas.Box(Rectangle, Canvas.LineStyle, Style)
+  fullName: Sharpie.Canvas.Box(System.Drawing.Rectangle, Sharpie.Canvas.LineStyle, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Box
+    path: Sharpie/Canvas.cs
+    startLine: 970
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Draws a rectangle starting in a given <code class="paramref">perimeter</code>.
+  example: []
+  syntax:
+    content: public void Box(Rectangle perimeter, Canvas.LineStyle lineStyle, Style style)
+    parameters:
+    - id: perimeter
+      type: System.Drawing.Rectangle
+      description: The box perimeter.
+    - id: lineStyle
+      type: Sharpie.Canvas.LineStyle
+      description: The line style.
+    - id: style
+      type: Sharpie.Style
+      description: The text style.
+    content.vb: Public Sub Box(perimeter As Rectangle, lineStyle As Canvas.LineStyle, style As Style)
+  overload: Sharpie.Canvas.Box*
+- uid: Sharpie.Canvas.Rectangle(System.Drawing.RectangleF,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Rectangle(System.Drawing.RectangleF,Sharpie.Style)
+  id: Rectangle(System.Drawing.RectangleF,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Rectangle(RectangleF, Style)
+  nameWithType: Canvas.Rectangle(RectangleF, Style)
+  fullName: Sharpie.Canvas.Rectangle(System.Drawing.RectangleF, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Rectangle
+    path: Sharpie/Canvas.cs
+    startLine: 995
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Draws a block-based rectangle in the given <code class="paramref">area</code>.
+  example: []
+  syntax:
+    content: public void Rectangle(RectangleF area, Style style)
+    parameters:
+    - id: area
+      type: System.Drawing.RectangleF
+      description: The area of the rectangle.
+    - id: style
+      type: Sharpie.Style
+      description: The text style to use.
+    content.vb: Public Sub Rectangle(area As RectangleF, style As Style)
+  overload: Sharpie.Canvas.Rectangle*
+- uid: Sharpie.Canvas.Point(System.Drawing.PointF,Sharpie.Style)
+  commentId: M:Sharpie.Canvas.Point(System.Drawing.PointF,Sharpie.Style)
+  id: Point(System.Drawing.PointF,Sharpie.Style)
+  parent: Sharpie.Canvas
+  langs:
+  - csharp
+  - vb
+  name: Point(PointF, Style)
+  nameWithType: Canvas.Point(PointF, Style)
+  fullName: Sharpie.Canvas.Point(System.Drawing.PointF, Sharpie.Style)
+  type: Method
+  source:
+    remote:
+      path: Sharpie/Canvas.cs
+      branch: docs-project
+      repo: https://github.com/LyndonGingerich/sharpie.git
+    id: Point
+    path: Sharpie/Canvas.cs
+    startLine: 1024
+  assemblies:
+  - sharpie
+  namespace: Sharpie
+  summary: Draws a block-based point in the given <code class="paramref">location</code>.
+  example: []
+  syntax:
+    content: public void Point(PointF location, Style style)
+    parameters:
+    - id: location
+      type: System.Drawing.PointF
+      description: The location of the point.
+    - id: style
+      type: Sharpie.Style
+      description: The text style to use.
+    content.vb: Public Sub Point(location As PointF, style As Style)
+  overload: Sharpie.Canvas.Point*
+references:
+- uid: Sharpie.Abstractions.IDrawSurface
+  commentId: T:Sharpie.Abstractions.IDrawSurface
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IDrawSurface.html
+  name: IDrawSurface
+  nameWithType: IDrawSurface
+  fullName: Sharpie.Abstractions.IDrawSurface
+- uid: Sharpie
+  commentId: N:Sharpie
+  href: Sharpie.html
+  name: Sharpie
+  nameWithType: Sharpie
+  fullName: Sharpie
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Sharpie.Abstractions.IDrawable
+  commentId: T:Sharpie.Abstractions.IDrawable
+  parent: Sharpie.Abstractions
+  href: Sharpie.Abstractions.IDrawable.html
+  name: IDrawable
+  nameWithType: IDrawable
+  fullName: Sharpie.Abstractions.IDrawable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Sharpie.Abstractions
+  commentId: N:Sharpie.Abstractions
+  href: Sharpie.html
+  name: Sharpie.Abstractions
+  nameWithType: Sharpie.Abstractions
+  fullName: Sharpie.Abstractions
+  spec.csharp:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+  spec.vb:
+  - uid: Sharpie
+    name: Sharpie
+    href: Sharpie.html
+  - name: .
+  - uid: Sharpie.Abstractions
+    name: Abstractions
+    href: Sharpie.Abstractions.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ArgumentOutOfRangeException
+  commentId: T:System.ArgumentOutOfRangeException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: Sharpie.Canvas.#ctor*
+  commentId: Overload:Sharpie.Canvas.#ctor
+  href: Sharpie.Canvas.html#Sharpie_Canvas__ctor_System_Drawing_Size_
+  name: Canvas
+  nameWithType: Canvas.Canvas
+  fullName: Sharpie.Canvas.Canvas
+  nameWithType.vb: Canvas.New
+  fullName.vb: Sharpie.Canvas.New
+  name.vb: New
+- uid: System.Drawing.Size
+  commentId: T:System.Drawing.Size
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.size
+  name: Size
+  nameWithType: Size
+  fullName: System.Drawing.Size
+- uid: System.Drawing
+  commentId: N:System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Drawing
+  nameWithType: System.Drawing
+  fullName: System.Drawing
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Drawing
+    name: Drawing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Drawing
+    name: Drawing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing
+- uid: Sharpie.Canvas.Size*
+  commentId: Overload:Sharpie.Canvas.Size
+  href: Sharpie.Canvas.html#Sharpie_Canvas_Size
+  name: Size
+  nameWithType: Canvas.Size
+  fullName: Sharpie.Canvas.Size
+- uid: Sharpie.Abstractions.IDrawable.Size
+  commentId: P:Sharpie.Abstractions.IDrawable.Size
+  parent: Sharpie.Abstractions.IDrawable
+  href: Sharpie.Abstractions.IDrawable.html#Sharpie_Abstractions_IDrawable_Size
+  name: Size
+  nameWithType: IDrawable.Size
+  fullName: Sharpie.Abstractions.IDrawable.Size
+- uid: Sharpie.Abstractions.IDrawSurface.Size
+  commentId: P:Sharpie.Abstractions.IDrawSurface.Size
+  parent: Sharpie.Abstractions.IDrawSurface
+  href: Sharpie.Abstractions.IDrawSurface.html#Sharpie_Abstractions_IDrawSurface_Size
+  name: Size
+  nameWithType: IDrawSurface.Size
+  fullName: Sharpie.Abstractions.IDrawSurface.Size
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentnullexception
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: Sharpie.Canvas.DrawOnto*
+  commentId: Overload:Sharpie.Canvas.DrawOnto
+  href: Sharpie.Canvas.html#Sharpie_Canvas_DrawOnto_Sharpie_Abstractions_IDrawSurface_System_Drawing_Rectangle_System_Drawing_Point_
+  name: DrawOnto
+  nameWithType: Canvas.DrawOnto
+  fullName: Sharpie.Canvas.DrawOnto
+- uid: Sharpie.Abstractions.IDrawable.DrawOnto(Sharpie.Abstractions.IDrawSurface,System.Drawing.Rectangle,System.Drawing.Point)
+  commentId: M:Sharpie.Abstractions.IDrawable.DrawOnto(Sharpie.Abstractions.IDrawSurface,System.Drawing.Rectangle,System.Drawing.Point)
+  parent: Sharpie.Abstractions.IDrawable
+  isExternal: true
+  href: Sharpie.Abstractions.IDrawable.html#Sharpie_Abstractions_IDrawable_DrawOnto_Sharpie_Abstractions_IDrawSurface_System_Drawing_Rectangle_System_Drawing_Point_
+  name: DrawOnto(IDrawSurface, Rectangle, Point)
+  nameWithType: IDrawable.DrawOnto(IDrawSurface, Rectangle, Point)
+  fullName: Sharpie.Abstractions.IDrawable.DrawOnto(Sharpie.Abstractions.IDrawSurface, System.Drawing.Rectangle, System.Drawing.Point)
+  spec.csharp:
+  - uid: Sharpie.Abstractions.IDrawable.DrawOnto(Sharpie.Abstractions.IDrawSurface,System.Drawing.Rectangle,System.Drawing.Point)
+    name: DrawOnto
+    href: Sharpie.Abstractions.IDrawable.html#Sharpie_Abstractions_IDrawable_DrawOnto_Sharpie_Abstractions_IDrawSurface_System_Drawing_Rectangle_System_Drawing_Point_
+  - name: (
+  - uid: Sharpie.Abstractions.IDrawSurface
+    name: IDrawSurface
+    href: Sharpie.Abstractions.IDrawSurface.html
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Rectangle
+    name: Rectangle
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: )
+  spec.vb:
+  - uid: Sharpie.Abstractions.IDrawable.DrawOnto(Sharpie.Abstractions.IDrawSurface,System.Drawing.Rectangle,System.Drawing.Point)
+    name: DrawOnto
+    href: Sharpie.Abstractions.IDrawable.html#Sharpie_Abstractions_IDrawable_DrawOnto_Sharpie_Abstractions_IDrawSurface_System_Drawing_Rectangle_System_Drawing_Point_
+  - name: (
+  - uid: Sharpie.Abstractions.IDrawSurface
+    name: IDrawSurface
+    href: Sharpie.Abstractions.IDrawSurface.html
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Rectangle
+    name: Rectangle
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  - name: ','
+  - name: " "
+  - uid: System.Drawing.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  - name: )
+- uid: System.Drawing.Rectangle
+  commentId: T:System.Drawing.Rectangle
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.rectangle
+  name: Rectangle
+  nameWithType: Rectangle
+  fullName: System.Drawing.Rectangle
+- uid: System.Drawing.Point
+  commentId: T:System.Drawing.Point
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.point
+  name: Point
+  nameWithType: Point
+  fullName: System.Drawing.Point
+- uid: Sharpie.Canvas.Fill*
+  commentId: Overload:Sharpie.Canvas.Fill
+  href: Sharpie.Canvas.html#Sharpie_Canvas_Fill_System_Drawing_Rectangle_System_Text_Rune_Sharpie_Style_
+  name: Fill
+  nameWithType: Canvas.Fill
+  fullName: Sharpie.Canvas.Fill
+- uid: System.Text.Rune
+  commentId: T:System.Text.Rune
+  parent: System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.rune
+  name: Rune
+  nameWithType: Rune
+  fullName: System.Text.Rune
+- uid: Sharpie.Style
+  commentId: T:Sharpie.Style
+  parent: Sharpie
+  href: Sharpie.Style.html
+  name: Style
+  nameWithType: Style
+  fullName: Sharpie.Style
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+- uid: Sharpie.Canvas.ShadeGlyphStyle
+  commentId: T:Sharpie.Canvas.ShadeGlyphStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.ShadeGlyphStyle
+  nameWithType: Canvas.ShadeGlyphStyle
+  fullName: Sharpie.Canvas.ShadeGlyphStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.ShadeGlyphStyle
+    name: ShadeGlyphStyle
+    href: Sharpie.Canvas.ShadeGlyphStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.ShadeGlyphStyle
+    name: ShadeGlyphStyle
+    href: Sharpie.Canvas.ShadeGlyphStyle.html
+- uid: Sharpie.Canvas.Text*
+  commentId: Overload:Sharpie.Canvas.Text
+  href: Sharpie.Canvas.html#Sharpie_Canvas_Text_System_Drawing_Point_System_String_Sharpie_Canvas_Orientation_Sharpie_Style_
+  name: Text
+  nameWithType: Canvas.Text
+  fullName: Sharpie.Canvas.Text
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Sharpie.Canvas.Orientation
+  commentId: T:Sharpie.Canvas.Orientation
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.Orientation
+  nameWithType: Canvas.Orientation
+  fullName: Sharpie.Canvas.Orientation
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.Orientation
+    name: Orientation
+    href: Sharpie.Canvas.Orientation.html
+- uid: Sharpie.Canvas.Glyph*
+  commentId: Overload:Sharpie.Canvas.Glyph
+  href: Sharpie.Canvas.html#Sharpie_Canvas_Glyph_System_Drawing_Point_System_Text_Rune_Sharpie_Style_
+  name: Glyph
+  nameWithType: Canvas.Glyph
+  fullName: Sharpie.Canvas.Glyph
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: Sharpie.Canvas.CheckGlyphStyle
+  commentId: T:Sharpie.Canvas.CheckGlyphStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.CheckGlyphStyle
+  nameWithType: Canvas.CheckGlyphStyle
+  fullName: Sharpie.Canvas.CheckGlyphStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.CheckGlyphStyle
+    name: CheckGlyphStyle
+    href: Sharpie.Canvas.CheckGlyphStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.CheckGlyphStyle
+    name: CheckGlyphStyle
+    href: Sharpie.Canvas.CheckGlyphStyle.html
+- uid: Sharpie.Canvas.FillStyle
+  commentId: T:Sharpie.Canvas.FillStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.FillStyle
+  nameWithType: Canvas.FillStyle
+  fullName: Sharpie.Canvas.FillStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.FillStyle
+    name: FillStyle
+    href: Sharpie.Canvas.FillStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.FillStyle
+    name: FillStyle
+    href: Sharpie.Canvas.FillStyle.html
+- uid: Sharpie.Canvas.TriangleGlyphStyle
+  commentId: T:Sharpie.Canvas.TriangleGlyphStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.TriangleGlyphStyle
+  nameWithType: Canvas.TriangleGlyphStyle
+  fullName: Sharpie.Canvas.TriangleGlyphStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.TriangleGlyphStyle
+    name: TriangleGlyphStyle
+    href: Sharpie.Canvas.TriangleGlyphStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.TriangleGlyphStyle
+    name: TriangleGlyphStyle
+    href: Sharpie.Canvas.TriangleGlyphStyle.html
+- uid: Sharpie.Canvas.GlyphSize
+  commentId: T:Sharpie.Canvas.GlyphSize
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.GlyphSize
+  nameWithType: Canvas.GlyphSize
+  fullName: Sharpie.Canvas.GlyphSize
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GlyphSize
+    name: GlyphSize
+    href: Sharpie.Canvas.GlyphSize.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GlyphSize
+    name: GlyphSize
+    href: Sharpie.Canvas.GlyphSize.html
+- uid: Sharpie.Canvas.GradientGlyphStyle
+  commentId: T:Sharpie.Canvas.GradientGlyphStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.GradientGlyphStyle
+  nameWithType: Canvas.GradientGlyphStyle
+  fullName: Sharpie.Canvas.GradientGlyphStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GradientGlyphStyle
+    name: GradientGlyphStyle
+    href: Sharpie.Canvas.GradientGlyphStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.GradientGlyphStyle
+    name: GradientGlyphStyle
+    href: Sharpie.Canvas.GradientGlyphStyle.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Sharpie.Canvas.Line*
+  commentId: Overload:Sharpie.Canvas.Line
+  href: Sharpie.Canvas.html#Sharpie_Canvas_Line_System_Drawing_PointF_System_Single_Sharpie_Canvas_Orientation_Sharpie_Canvas_LineStyle_Sharpie_Style_
+  name: Line
+  nameWithType: Canvas.Line
+  fullName: Sharpie.Canvas.Line
+- uid: System.Drawing.PointF
+  commentId: T:System.Drawing.PointF
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.pointf
+  name: PointF
+  nameWithType: PointF
+  fullName: System.Drawing.PointF
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Sharpie.Canvas.LineStyle
+  commentId: T:Sharpie.Canvas.LineStyle
+  parent: Sharpie
+  href: Sharpie.Canvas.html
+  name: Canvas.LineStyle
+  nameWithType: Canvas.LineStyle
+  fullName: Sharpie.Canvas.LineStyle
+  spec.csharp:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html
+  spec.vb:
+  - uid: Sharpie.Canvas
+    name: Canvas
+    href: Sharpie.Canvas.html
+  - name: .
+  - uid: Sharpie.Canvas.LineStyle
+    name: LineStyle
+    href: Sharpie.Canvas.LineStyle.html
+- uid: Sharpie.Canvas.Box*
+  commentId: Overload:Sharpie.Canvas.Box
+  href: Sharpie.Canvas.html#Sharpie_Canvas_Box_System_Drawing_Rectangle_Sharpie_Canvas_LineStyle_Sharpie_Style_
+  name: Box
+  nameWithType: Canvas.Box
+  fullName: Sharpie.Canvas.Box
+- uid: Sharpie.Canvas.Rectangle*
+  commentId: Overload:Sharpie.Canvas.Rectangle
+  href: Sharpie.Canvas.html#Sharpie_Canvas_Rectangle_System_Drawing_RectangleF_Sharpie_Style_
+  name: Rectangle
+  nameWithType: Canvas.Rectangle
+  fullName: Sharpie.Canvas.Rectangle
+- uid: System.Drawing.RectangleF
+  commentId: T:System.Drawing.RectangleF
+  parent: System.Drawing
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.drawing.rectanglef
+  name: RectangleF
+  nameWithType: RectangleF
+  fullName: System.Drawing.RectangleF
+- uid: Sharpie.Canvas.Point*
+  commentId: Overload:Sharpie.Canvas.Point
+  href: Sharpie.Canvas.html#Sharpie_Canvas_Point_System_Drawing_PointF_Sharpie_Style_
+  name: Point
+  nameWithType: Canvas.Point
+  fullName: Sharpie.Canvas.Point
