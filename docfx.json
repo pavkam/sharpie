@@ -10,7 +10,7 @@
           ]
         }
     ],
-    "dest": "artifacts/api"
+    "dest": "artifacts/_site/api"
     }
   ],
   "build": {
