@@ -1,3 +1,5 @@
+name: Build & Publish Documentation
+
 on:
   workflow_dispatch:
   push:
@@ -36,7 +38,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: ./generated/_site
+        path: ./artifacts/_site
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
