@@ -40,20 +40,20 @@ using Nito.Disposables;
 [PublicAPI]
 public sealed class Terminal: ITerminal, IDisposable
 {
-    private static object _stopSignal = new();
+    private static readonly object _stopSignal = new();
     private static bool _terminalInstanceActive;
     private int _batchUpdateLocks;
     private SynchronizationContext? _boundSynchronizationContext;
-    private ColorManager _colorManager;
-    private EventPump _eventPump;
+    private readonly ColorManager _colorManager;
+    private readonly EventPump _eventPump;
     private TerminalSurface? _footer;
     private TerminalSurface? _header;
-    private int? _initialCaretMode;
-    private int? _initialMouseClickDelay;
-    private uint? _initialMouseMask;
+    private readonly int? _initialCaretMode;
+    private readonly int? _initialMouseClickDelay;
+    private readonly uint? _initialMouseMask;
     private ManualResetEventSlim? _runCompletedEvent;
-    private Screen _screen;
-    private SoftLabelKeyManager _softLabelKeyManager;
+    private readonly Screen _screen;
+    private readonly SoftLabelKeyManager _softLabelKeyManager;
 
     /// <summary>
     ///     Creates a new instance
@@ -64,7 +64,7 @@ public sealed class Terminal: ITerminal, IDisposable
     /// <exception cref="ArgumentOutOfRangeException">Some of the options are invalid.</exception>
     /// <exception cref="InvalidOperationException">Another terminal instance is active.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="curses" /> is <c>null</c>.</exception>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public Terminal(ICursesBackend curses, TerminalOptions options)
     {
         Options = options;
@@ -89,7 +89,7 @@ public sealed class Terminal: ITerminal, IDisposable
         _softLabelKeyManager = new(this, Options.SoftLabelKeyMode);
         if (Options.AllocateHeader)
         {
-            curses.ripoffline(1, (handle, _) =>
+            _ = curses.ripoffline(1, (handle, _) =>
                   {
                       _header = handle != IntPtr.Zero
                           ? new TerminalSurface(this, handle) { ManagedCaret = managedCaret }
@@ -102,7 +102,7 @@ public sealed class Terminal: ITerminal, IDisposable
 
         if (Options.AllocateFooter)
         {
-            curses.ripoffline(-1, (handle, _) =>
+            _ = curses.ripoffline(-1, (handle, _) =>
                   {
                       _footer = handle != IntPtr.Zero
                           ? new TerminalSurface(this, handle) { ManagedCaret = managedCaret }
@@ -116,7 +116,10 @@ public sealed class Terminal: ITerminal, IDisposable
         var screenHandle = curses.initscr()
                                  .Check(nameof(curses.initscr), "Failed to create the screen window.");
 
-        _screen = new(this, screenHandle) { ManagedCaret = Options.CaretMode == CaretMode.Invisible };
+        _screen = new(this, screenHandle)
+        {
+            ManagedCaret = Options.CaretMode == CaretMode.Invisible
+        };
 
         if (Options.AllocateHeader && _header == null)
         {
@@ -132,45 +135,42 @@ public sealed class Terminal: ITerminal, IDisposable
         _colorManager = new(this, Options.UseColors);
 
         // After screen creation.
-        curses.intrflush(IntPtr.Zero, Options.ManualFlush)
+        _ = curses.intrflush(IntPtr.Zero, Options.ManualFlush)
               .Check(nameof(curses.intrflush), "Failed to initialize manual flush.");
 
         if (Options.ManualFlush)
         {
             curses.noqiflush();
-        } else
+        }
+        else
         {
             curses.qiflush();
         }
 
-        if (Options.EchoInput)
-        {
-            curses.echo()
-                  .Check(nameof(curses.echo), "Failed to setup terminal's echo mode.");
-        } else
-        {
-            curses.noecho()
+        _ = Options.EchoInput
+            ? curses.echo()
+                  .Check(nameof(curses.echo), "Failed to setup terminal's echo mode.")
+            : curses.noecho()
                   .Check(nameof(curses.noecho), "Failed to setup terminal's no-echo mode.");
-        }
 
         if (Options.UseInputBuffering)
         {
-            curses.noraw()
+            _ = curses.noraw()
                   .Check(nameof(curses.noraw), "Failed to setup terminal's no-raw mode.");
 
-            curses.nocbreak()
+            _ = curses.nocbreak()
                   .Check(nameof(curses.nocbreak), "Failed to setup terminal buffered mode.");
-        } else if (Options.SuppressControlKeys)
+        }
+        else
         {
-            curses.raw()
-                  .Check(nameof(curses.raw), "Failed to setup terminal's raw mode.");
-        } else
-        {
-            curses.cbreak()
-                  .Check(nameof(curses.cbreak), "Failed to setup terminal's non-buffered mode.");
+            _ = Options.SuppressControlKeys
+                ? curses.raw()
+                              .Check(nameof(curses.raw), "Failed to setup terminal's raw mode.")
+                : curses.cbreak()
+                              .Check(nameof(curses.cbreak), "Failed to setup terminal's non-buffered mode.");
         }
 
-        curses.nonl()
+        _ = curses.nonl()
               .Check(nameof(curses.nonl), "Failed to disable new line translation.");
 
         // Caret configuration
@@ -187,14 +187,15 @@ public sealed class Terminal: ITerminal, IDisposable
                                             .Check(nameof(Curses.mouseinterval),
                                                 "Failed to set the mouse click interval.");
 
-            Curses.mousemask(0xffffffff, out var initialMouseMask)
+            _ = Curses.mousemask(0xffffffff, out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
             _eventPump.UseInternalMouseEventResolver = Options.MouseClickInterval == null;
             _initialMouseMask = initialMouseMask;
-        } else
+        }
+        else
         {
-            Curses.mousemask(0, out var initialMouseMask)
+            _ = Curses.mousemask(0, out var initialMouseMask)
                   .Check(nameof(Curses.mousemask), "Failed to enable the mouse.");
 
             _initialMouseMask = initialMouseMask;
@@ -204,7 +205,7 @@ public sealed class Terminal: ITerminal, IDisposable
         }
 
         // Disable meta interpretation and ignore the result.
-        curses.meta(IntPtr.Zero, false);
+        _ = curses.meta(IntPtr.Zero, false);
         _terminalInstanceActive = true;
 
         if (options.UseStandardKeySequenceResolvers)
@@ -220,7 +221,10 @@ public sealed class Terminal: ITerminal, IDisposable
     /// <summary>
     ///     Gets the options that are used by this terminal instance.
     /// </summary>
-    public TerminalOptions Options { get; }
+    public TerminalOptions Options
+    {
+        get;
+    }
 
     /// <inheritdoc cref="ITerminal.Colors" />
     public ColorManager Colors
@@ -309,17 +313,17 @@ public sealed class Terminal: ITerminal, IDisposable
 
         if (_initialMouseMask != null)
         {
-            Curses.mousemask(_initialMouseMask.Value, out var _);
+            _ = Curses.mousemask(_initialMouseMask.Value, out var _);
         }
 
         if (_initialMouseClickDelay != null)
         {
-            Curses.mouseinterval(_initialMouseClickDelay.Value);
+            _ = Curses.mouseinterval(_initialMouseClickDelay.Value);
         }
 
         if (_initialCaretMode != null)
         {
-            Curses.curs_set(_initialCaretMode.Value);
+            _ = Curses.curs_set(_initialCaretMode.Value);
         }
 
         _terminalInstanceActive = false;
@@ -328,7 +332,7 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <inheritdoc cref="ITerminal.BaudRate" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public int BaudRate =>
         Curses.baudrate()
               .Check(nameof(Curses.baudrate), "Failed to obtain the baud rate of the terminal.");
@@ -353,7 +357,7 @@ public sealed class Terminal: ITerminal, IDisposable
     {
         get
         {
-            Curses.term_attrs(out var attributes)
+            _ = Curses.term_attrs(out var attributes)
                   .Check(nameof(Curses.term_attrs), "Failed to get the terminal attributes");
 
             return attributes;
@@ -387,10 +391,16 @@ public sealed class Terminal: ITerminal, IDisposable
             : new(@char);
 
     /// <inheritdoc cref="ITerminal.Curses" />
-    public ICursesBackend Curses { get; }
+    public ICursesBackend Curses
+    {
+        get;
+    }
 
     /// <inheritdoc cref="ITerminal.Disposed" />
-    public bool Disposed { get; private set; }
+    public bool Disposed
+    {
+        get; private set;
+    }
 
     /// <inheritdoc cref="ITerminal.SetTitle" />
     public void SetTitle(string title)
@@ -405,20 +415,16 @@ public sealed class Terminal: ITerminal, IDisposable
     }
 
     /// <inheritdoc cref="ITerminal.Alert" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Alert(bool silent)
     {
         AssertSynchronized();
 
-        if (silent)
-        {
-            Curses.flash()
-                  .Check(nameof(Curses.flash), "Failed to flash the terminal.");
-        } else
-        {
-            Curses.beep()
+        _ = silent
+            ? Curses.flash()
+                  .Check(nameof(Curses.flash), "Failed to flash the terminal.")
+            : Curses.beep()
                   .Check(nameof(Curses.beep), "Failed to beep the terminal.");
-        }
     }
 
     /// <summary>
@@ -429,7 +435,7 @@ public sealed class Terminal: ITerminal, IDisposable
     {
         AssertSynchronized();
 
-        Interlocked.Increment(ref _batchUpdateLocks);
+        _ = Interlocked.Increment(ref _batchUpdateLocks);
         return new Disposable(() =>
         {
             Debug.Assert(_batchUpdateLocks > 0);
@@ -437,7 +443,7 @@ public sealed class Terminal: ITerminal, IDisposable
             {
                 if (!Disposed)
                 {
-                    Curses.doupdate()
+                    _ = Curses.doupdate()
                           .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
                 }
             }
@@ -476,21 +482,25 @@ public sealed class Terminal: ITerminal, IDisposable
                         @event is KeyEvent { Char.Value: 'C', Key: Key.Character, Modifiers: ModifierKey.Ctrl })
                     {
                         cts.Cancel();
-                    } else if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
+                    }
+                    else if (@event is DelegateEvent { Object: var stp } && stp == _stopSignal)
                     {
                         cts.Cancel();
-                    } else if (@event is DelegateEvent { Object: ActionWrapper aw })
+                    }
+                    else if (@event is DelegateEvent { Object: ActionWrapper aw })
                     {
                         Debug.Assert(aw.Action != null);
 
                         await aw.Action();
-                    } else
+                    }
+                    else
                     {
                         await eventAction(this, @event);
                     }
                 }
             });
-        } finally
+        }
+        finally
         {
             Debug.Assert(_runCompletedEvent != null);
             Debug.Assert(_boundSynchronizationContext != null);
@@ -520,50 +530,33 @@ public sealed class Terminal: ITerminal, IDisposable
     /// <inheritdoc cref="ITerminal.Delay" />
     public IInterval Delay<TState>(Func<Terminal, TState?, Task> action, int delayMillis, TState? state)
     {
-        if (delayMillis < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(delayMillis));
-        }
-
-        return NewInterval(action, delayMillis, Timeout.Infinite, state);
+        return delayMillis < 0
+            ? throw new ArgumentOutOfRangeException(nameof(delayMillis))
+            : (IInterval) NewInterval(action, delayMillis, Timeout.Infinite, state);
     }
 
     /// <inheritdoc cref="ITerminal.Delay" />
-    public IInterval Delay(Func<Terminal, Task> action, int delayMillis)
-    {
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
-
-        return Delay((t, _) => action(t), delayMillis, DBNull.Value);
-    }
+    public IInterval Delay(Func<Terminal, Task> action, int delayMillis) =>
+        action == null ? throw new ArgumentNullException(nameof(action)) : Delay((t, _) => action(t), delayMillis, DBNull.Value);
 
     /// <inheritdoc cref="ITerminal.Repeat" />
     public IInterval Repeat<TState>(Func<Terminal, TState?, Task> action, int intervalMillis, bool immediate = false,
         TState? state = default)
     {
-        if (intervalMillis < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(intervalMillis));
-        }
-
-        return NewInterval(action, immediate ? 0 : intervalMillis, intervalMillis, state);
+        return intervalMillis < 0
+            ? throw new ArgumentOutOfRangeException(nameof(intervalMillis))
+            : (IInterval) NewInterval(action, immediate ? 0 : intervalMillis, intervalMillis, state);
     }
 
     /// <inheritdoc cref="ITerminal.Repeat" />
     public IInterval Repeat(Func<Terminal, Task> action, int intervalMillis, bool immediate = false)
     {
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
-
-        return Repeat<DBNull>((t, _) => action(t), intervalMillis, immediate);
+        return action == null
+            ? throw new ArgumentNullException(nameof(action))
+            : Repeat<DBNull>((t, _) => action(t), intervalMillis, immediate);
     }
 
     /// <inheritdoc cref="ITerminal.Stop" />
-    /// <param name="wait">If <c>true</c>, waits until running completes.</param>
     public void Stop(bool wait = false)
     {
         AssertAlive();
@@ -574,7 +567,7 @@ public sealed class Terminal: ITerminal, IDisposable
     ///     Attempts to update the terminal.
     /// </summary>
     /// <returns><c>true</c> if the attempt was successful. <c>false</c> otherwise.</returns>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     internal bool TryUpdate()
     {
         AssertAlive();
@@ -583,7 +576,7 @@ public sealed class Terminal: ITerminal, IDisposable
         Debug.Assert(_batchUpdateLocks >= 0);
         if (_batchUpdateLocks == 0)
         {
-            Curses.doupdate()
+            _ = Curses.doupdate()
                   .Check(nameof(Curses.doupdate), "Failed to update the main screen.");
 
             return true;
@@ -633,7 +626,8 @@ public sealed class Terminal: ITerminal, IDisposable
             if (((Interval) i).Stopped || Disposed)
             {
                 ((Interval) i).Timer?.Dispose();
-            } else
+            }
+            else
             {
                 Delegate(() => action(this, initialState));
             }
@@ -659,14 +653,17 @@ public sealed class Terminal: ITerminal, IDisposable
     ///     The destructor. Calls <see cref="Dispose" /> method.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    ~Terminal() { Dispose(); }
+    ~Terminal()
+    {
+        Dispose();
+    }
 
     private sealed class Interval: IInterval
     {
         public bool Stopped;
         public Timer? Timer;
 
-        public void Dispose() { Stopped = true; }
+        public void Dispose() => Stopped = true;
     }
 
     private sealed class ActionWrapper

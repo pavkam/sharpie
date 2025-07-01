@@ -10,17 +10,19 @@
           ]
         }
     ],
-    "dest": "api"
+    "dest": "artifacts/api"
     }
   ],
   "build": {
     "content": [
       {
         "files": [
-          "**/*.{md,yml}"
+        "**/*.md",
+        "**/LICENSE",
+        "**/media/**"
         ],
         "exclude": [
-        "docs/**"
+        "_site/**"
         ]
       }
     ],
@@ -38,8 +40,8 @@
       "statictoc"
     ],
     "globalMetadata": {
-      "_appName": "sharpie",
-      "_appTitle": "sharpie",
+    "_appName": "Sharpie",
+    "_appTitle": "Sharpie",
       "_enableSearch": true,
       "pdf": false
     }
