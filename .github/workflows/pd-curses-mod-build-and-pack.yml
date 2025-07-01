@@ -173,21 +173,21 @@ jobs:
           ref: refs/heads/master
       - name: Make WinGUI
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           cd wingui
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wingui-x64.dll
         shell: cmd
       - name: Make WinCon
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           cd wincon
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wincon-x64.dll
         shell: cmd
       - name: Make VT
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           cd vt
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-vt-x64.dll
