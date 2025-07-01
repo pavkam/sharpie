@@ -16,6 +16,10 @@
 
 ![Demo](./media/demo-2.gif)
 
+> 📚 **[📖 Complete Documentation Available Here](https://pavkam.dev/sharpie/api/Sharpie.html)** 📚
+>
+> Get started with comprehensive guides, API references, and examples!
+
 ## Supported platforms
 
 **Sharpie** supports any platform that **.NET 6.0+**, **[ncurses](https://github.com/mirror/ncurses)**, **[pdcurses](https://github.com/wmcbrine/PDCurses)** and **[pdcurses-mod](https://github.com/Bill-Gray/PDCursesMod)** support. This essentially means that `Linux`, `Macos` and `Windows` are supported on both `x64` and `ARM64` architectures.
