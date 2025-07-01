@@ -22,7 +22,7 @@
         "**/media/**"
         ],
         "exclude": [
-        "_site/**"
+        "artifacts/**"
         ]
       }
     ],
@@ -33,7 +33,7 @@
         ]
       }
     ],
-    "output": "_site",
+    "output": "artifacts/_site",
     "template": [
       "default",
       "modern",
