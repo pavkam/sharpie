@@ -32,6 +32,11 @@ jobs:
 
     - name: Install DocFX
       run: dotnet tool update -g docfx
+    - name: Prepare environment
+      run: |
+          mv ./README.md ./index.md
+          mv ./LICENSE ./LICENSE.md
+          sed -i 's/LICENSE/LICENSE.md/g' index.md
     - name: Build documentation
       run: docfx ./docfx.json
 
