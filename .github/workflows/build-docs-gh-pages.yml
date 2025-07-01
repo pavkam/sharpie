@@ -6,6 +6,8 @@ on:
     branches: [ "main" ]
     paths:
         - 'Sharpie/**'
+        - 'README.md'
+        - 'LICENSE'
 
 permissions:
   actions: read
