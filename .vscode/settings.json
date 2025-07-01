@@ -1,0 +1,26 @@
+{
+    "cSpell.words": [
+        "Alexandru",
+        "baudrate",
+        "cbreak",
+        "Ciobanu",
+        "doupdate",
+        "erasewchar",
+        "initscr",
+        "intrflush",
+        "killwchar",
+        "longname",
+        "Millis",
+        "mouseinterval",
+        "mousemask",
+        "Nito",
+        "nocbreak",
+        "noecho",
+        "nonl",
+        "noqiflush",
+        "noraw",
+        "qiflush",
+        "ripoffline",
+        "termname"
+    ]
+}
