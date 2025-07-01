@@ -9,7 +9,8 @@
             "Sharpie/*.csproj"
           ]
         }
-    ]
+    ],
+    "dest": "api"
     }
   ],
   "build": {
