@@ -71,7 +71,7 @@ public class PdCursesMod32BackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void endwin_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.endwin_w32_4302, int>(s => s(), ret);
+        _nativeSymbolResolverMock.MockResolve<PdCursesMod32FunctionMap.endwin_w32_4400, int>(s => s(), ret);
 
         _backend.endwin()
                 .ShouldBe(ret);
