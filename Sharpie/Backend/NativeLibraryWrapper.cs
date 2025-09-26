@@ -98,7 +98,7 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
         Debug.Assert(dotNetSystemAdapter != null);
 
         if (string.IsNullOrEmpty(dotNetSystemAdapter.GetDirectoryName(libraryNameOrPath)) &&
-            dotNetSystemAdapter.TryLoadNativeLibrary(libraryNameOrPath, Assembly.GetCallingAssembly(), null,
+            dotNetSystemAdapter.TryLoadNativeLibrary(libraryNameOrPath, Assembly.GetExecutingAssembly(), null,
                 out var libHandle) ||
             dotNetSystemAdapter.TryLoadNativeLibrary(libraryNameOrPath, out libHandle))
         {
