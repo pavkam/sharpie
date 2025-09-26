@@ -118,7 +118,7 @@ internal class PdCursesMod32Backend: PdCursesBackend
 
     public override int slk_touch() => CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.slk_touch>()();
 
-    public override int endwin() => CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.endwin_w32_4302>()();
+    public override int endwin() => CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.endwin_w32_4400>()();
 
     public override int getmouse(out CursesMouseState state) =>
         CursesSymbolResolver.Resolve<PdCursesMod32FunctionMap.nc_getmouse>()(out state);
