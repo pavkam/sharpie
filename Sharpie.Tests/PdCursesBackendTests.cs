@@ -310,9 +310,9 @@ public class PdCursesBackendTests
     }
 
     [TestMethod]
-    public void CursesMouseEventParser_ReturnsMouseParserAbi2()
+    public void CursesMouseEventParser_ReturnsMouseParserPdCursesAbi()
     {
-        _backend.CursesMouseEventParser.ShouldBe(CursesMouseEventParser.Get(2));
+        _backend.CursesMouseEventParser.ShouldBe(CursesMouseEventParser.Get(CursesAbiVersion.PdCurses));
     }
 
     [TestMethod, DataRow(VideoAttribute.None, 0), DataRow(VideoAttribute.StandOut, 0x00A00000),

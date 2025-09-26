@@ -35,8 +35,9 @@ namespace Sharpie.Backend;
 /// </summary>
 internal abstract class CursesMouseEventParser
 {
-    private static readonly CursesMouseEventParser V1 = new CursesMouseV1EventParser();
-    private static readonly CursesMouseEventParser V2 = new CursesMouseV2EventParser();
+    private static readonly CursesMouseEventParser NCurses5 = new CursesMouseV1EventParser();
+    private static readonly CursesMouseEventParser NCurses6 = new CursesMouseV2EventParser();
+    private static readonly CursesMouseEventParser PdCurses = new PdCursesModMouseEventParser();
 
     [SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
     protected CursesMouseEventParser()
@@ -187,11 +188,26 @@ internal abstract class CursesMouseEventParser
     /// </summary>
     /// <param name="abiVersion">The ABI version.</param>
     /// <returns>The mouse event parser.</returns>
+    [Obsolete("Use the overload that takes CursesAbiVersion instead.")]
     public static CursesMouseEventParser Get(int abiVersion) =>
         abiVersion switch
         {
-            2 => V2,
-            var _ => V1
+            3 => PdCurses,
+            2 => NCurses6,
+            var _ => NCurses5
+        };
+
+    /// <summary>
+    ///     Gets the mouse event parser based on the provided ABI version.
+    /// </summary>
+    /// <param name="abiVersion">The ABI version.</param>
+    /// <returns>The mouse event parser.</returns>
+    public static CursesMouseEventParser Get(CursesAbiVersion abiVersion) =>
+        abiVersion switch
+        {
+            CursesAbiVersion.PdCurses => PdCurses,
+            CursesAbiVersion.NCurses6 => NCurses6,
+            var _ => NCurses5
         };
 
     private sealed class CursesMouseV1EventParser: CursesMouseEventParser
@@ -212,6 +228,24 @@ internal abstract class CursesMouseEventParser
             (uint) action << (((int) button - 1) * 5);
 
         protected override uint CalculateModifierState(Modifier modifier) => (uint) modifier << 25;
+    }
+
+    private sealed class PdCursesModMouseEventParser: CursesMouseEventParser
+    {
+        protected override uint CalculateButtonState(Action action, Button button) =>
+            (uint) action << (((int) button - 1) * 5);
+
+        protected override uint CalculateModifierState(Modifier modifier)
+        {
+            return modifier switch
+            {
+                Modifier.Shift => 1 << 26,
+                Modifier.Ctrl => 1 << 27,
+                Modifier.Alt => 1 << 28,
+                Modifier.ReportPosition => 1 << 29,
+                _ => 0
+            };
+        }
     }
 
     protected enum Action
