@@ -394,8 +394,8 @@ public class NCursesBackendTests
                                  .Returns(h);
 
         _backend.CursesMouseEventParser.ShouldBe(m == 2
-            ? CursesMouseEventParser.Get(2)
-            : CursesMouseEventParser.Get(1));
+            ? CursesMouseEventParser.Get(CursesAbiVersion.NCurses6)
+            : CursesMouseEventParser.Get(CursesAbiVersion.NCurses5));
     }
 
     [TestMethod]

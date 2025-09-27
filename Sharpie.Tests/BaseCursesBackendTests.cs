@@ -89,7 +89,7 @@ public class BaseCursesBackendTests
     public void DecodeRawMouseButtonState_ParsesUsingMouseParser()
     {
         _backendMock.Setup(s => s.CursesMouseEventParser)
-                    .Returns(CursesMouseEventParser.Get(2));
+                    .Returns(CursesMouseEventParser.Get(CursesAbiVersion.NCurses6));
 
         _backendMock.Setup(s => s.DecodeRawMouseButtonState(It.IsAny<uint>()))
                     .CallBase();
@@ -104,7 +104,7 @@ public class BaseCursesBackendTests
     public void DecodeRawMouseButtonState_ReturnsDefault_IfNotParsed()
     {
         _backendMock.Setup(s => s.CursesMouseEventParser)
-                    .Returns(CursesMouseEventParser.Get(2));
+                    .Returns(CursesMouseEventParser.Get(CursesAbiVersion.NCurses6));
 
         _backendMock.Setup(s => s.DecodeRawMouseButtonState(It.IsAny<uint>()))
                     .CallBase();
@@ -1139,7 +1139,7 @@ public class BaseCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void mousemask_IsRelayedToLibrary(int ret)
     {
-        var p = CursesMouseEventParser.Get(2);
+        var p = CursesMouseEventParser.Get(CursesAbiVersion.NCurses6);
         _backendMock.Setup(s => s.CursesMouseEventParser)
                     .Returns(p);
 
@@ -1165,7 +1165,7 @@ public class BaseCursesBackendTests
     public void mousemask_WhenUnix_CallsCursesButNotConsole_IfCursesFails()
     {
         _backendMock.Setup(s => s.CursesMouseEventParser)
-                    .Returns(CursesMouseEventParser.Get(1));
+                    .Returns(CursesMouseEventParser.Get(CursesAbiVersion.NCurses5));
 
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask>()
                                  .Setup(s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny))
@@ -1183,8 +1183,8 @@ public class BaseCursesBackendTests
         _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush(It.IsAny<string>()), Times.Never);
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"), DataRow(1), DataRow(2)]
-    public void mousemask_WhenUnix_OutsToConsole_WhenReportingPosition(int abi)
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"), DataRow(CursesAbiVersion.NCurses5), DataRow(CursesAbiVersion.NCurses6)]
+    public void mousemask_WhenUnix_OutsToConsole_WhenReportingPosition(CursesAbiVersion abi)
     {
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask, int>(
             s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
@@ -1199,8 +1199,8 @@ public class BaseCursesBackendTests
         _dotNetSystemAdapterMock.Verify(v => v.OutAndFlush("\x1b[?1003h"), Times.Once);
     }
 
-    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"), DataRow(1), DataRow(2)]
-    public void mousemask_WhenUnix_OutsToConsole_WhenAll(int abi)
+    [TestMethod, SuppressMessage("ReSharper", "IdentifierTypo"), DataRow(CursesAbiVersion.NCurses5), DataRow(CursesAbiVersion.NCurses6)]
+    public void mousemask_WhenUnix_OutsToConsole_WhenAll(CursesAbiVersion abi)
     {
         _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.mousemask, int>(
             s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
@@ -1222,7 +1222,7 @@ public class BaseCursesBackendTests
             s => s(It.IsAny<uint>(), out It.Ref<uint>.IsAny), 0);
 
         _backendMock.Setup(s => s.CursesMouseEventParser)
-                    .Returns(CursesMouseEventParser.Get(1));
+                    .Returns(CursesMouseEventParser.Get(CursesAbiVersion.NCurses5));
 
         _backend.mousemask(0, out var _)
                 .ShouldBe(0);
