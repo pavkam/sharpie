@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu, Jordan Hemming
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
