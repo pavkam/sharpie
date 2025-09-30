@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu, Jordan Hemming
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -310,9 +310,9 @@ public class PdCursesBackendTests
     }
 
     [TestMethod]
-    public void CursesMouseEventParser_ReturnsMouseParserAbi2()
+    public void CursesMouseEventParser_ReturnsMouseParserPdCursesAbi()
     {
-        _backend.CursesMouseEventParser.ShouldBe(CursesMouseEventParser.Get(2));
+        _backend.CursesMouseEventParser.ShouldBe(CursesMouseEventParser.Get(CursesAbiVersion.PdCurses));
     }
 
     [TestMethod, DataRow(VideoAttribute.None, 0), DataRow(VideoAttribute.StandOut, 0x00A00000),

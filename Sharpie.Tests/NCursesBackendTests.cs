@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu, Jordan Hemming
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -394,8 +394,8 @@ public class NCursesBackendTests
                                  .Returns(h);
 
         _backend.CursesMouseEventParser.ShouldBe(m == 2
-            ? CursesMouseEventParser.Get(2)
-            : CursesMouseEventParser.Get(1));
+            ? CursesMouseEventParser.Get(CursesAbiVersion.NCurses6)
+            : CursesMouseEventParser.Get(CursesAbiVersion.NCurses5));
     }
 
     [TestMethod]

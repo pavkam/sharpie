@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu, Jordan Hemming
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -47,7 +47,7 @@ internal class PdCursesBackend: BaseCursesBackend
     internal PdCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver pdCursesSymbolResolver,
         INativeSymbolResolver? libCSymbolResolver): base(dotNetSystemAdapter, pdCursesSymbolResolver,
         libCSymbolResolver) =>
-        CursesMouseEventParser = CursesMouseEventParser.Get(2);
+        CursesMouseEventParser = CursesMouseEventParser.Get(CursesAbiVersion.PdCurses);
 
     /// <inheritdoc cref="BaseCursesBackend.CursesMouseEventParser" />
     protected internal override CursesMouseEventParser CursesMouseEventParser { get; }

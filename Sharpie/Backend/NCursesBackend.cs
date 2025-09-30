@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu, Jordan Hemming
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -59,7 +59,7 @@ internal class NCursesBackend: BaseCursesBackend
             if (_cursesMouseEventParser == null)
             {
                 var ver = curses_version();
-                var abi = -1;
+                var abi = CursesAbiVersion.NCurses5;
                 if (ver != null)
                 {
                     var versionParser = new Regex(@".*(\d+)\.(\d+)\.(\d+)");
@@ -71,8 +71,8 @@ internal class NCursesBackend: BaseCursesBackend
 
                         abi = major switch
                         {
-                            >= 6 => 2,
-                            5 => 1,
+                            >= 6 => CursesAbiVersion.NCurses6,
+                            5 => CursesAbiVersion.NCurses5,
                             var _ => abi
                         };
                     }
