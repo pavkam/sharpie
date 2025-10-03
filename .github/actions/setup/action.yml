@@ -26,3 +26,9 @@ runs:
         key: ${{ runner.os }}-dotnet-${{ hashFiles('**/packages.lock.json', '**/packages.config', '**/*.csproj', '**/.config/dotnet-tools.json') }}
         restore-keys: |
           ${{ runner.os }}-dotnet-
+
+    - name: ⚙️ Restore tools
+      id: restore_tools
+      shell: bash
+      run: |
+        make check-tools
