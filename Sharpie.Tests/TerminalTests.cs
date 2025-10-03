@@ -598,7 +598,7 @@ public class TerminalTests
         _ = _cursesMock.Setup(s => s.term_attrs(out It.Ref<VideoAttribute>.IsAny))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(_terminal.SupportedAttributes.ToString)
+        Should.Throw<CursesOperationException>(() => _ = _terminal.SupportedAttributes.ToString())
               .Operation.ShouldBe("term_attrs");
     }
 

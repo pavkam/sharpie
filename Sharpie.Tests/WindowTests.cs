@@ -858,7 +858,7 @@ public class WindowTests
     {
         var w = new Window(_screen, IntPtr.MaxValue);
 
-        _ = Should.Throw<InvalidOperationException>(w.Visible.ToString);
+        _ = Should.Throw<InvalidOperationException>(() => _ = w.Visible.ToString());
     }
 
     [TestMethod]
