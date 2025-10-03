@@ -70,7 +70,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-ubuntu-${{ matrix.arch }}-vt
-          path: "vt/*.so"
+          path: "vt/libpdcursesmod-vt-${{ matrix.arch }}.so"
           if-no-files-found: error
 
       - name: ⬆️ Upload artifacts (FB)
@@ -78,7 +78,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-ubuntu-${{ matrix.arch }}-fb
-          path: "fb/*.so"
+          path: "fb/libpdcursesmod-fb-${{ matrix.arch }}.so"
           if-no-files-found: error
 
       - name: ⬆️ Upload artifacts (SDL1)
@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-ubuntu-${{ matrix.arch }}-sdl1
-          path: "sdl1/*.so"
+          path: "sdl1/libpdcursesmod-sdl1-${{ matrix.arch }}.so"
           if-no-files-found: error
 
       - name: ⬆️ Upload artifacts (SDL2)
@@ -94,7 +94,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-ubuntu-${{ matrix.arch }}-sdl2
-          path: "sdl2/*.so"
+          path: "sdl2/libpdcursesmod-sdl2-${{ matrix.arch }}.so"
           if-no-files-found: error
 
   macos:
@@ -147,7 +147,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-macos-${{ matrix.arch }}-vt
-          path: "vt/*.dylib"
+          path: "vt/libpdcursesmod-vt-${{ matrix.arch }}.dylib"
           if-no-files-found: error
 
       - name: ⬆️ Upload artifacts (SDL2)
@@ -155,7 +155,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-macos-${{ matrix.arch }}-sdl2
-          path: "sdl2/*.dylib"
+          path: "sdl2/libpdcursesmod-sdl2-${{ matrix.arch }}.dylib"
           if-no-files-found: error
 
   windows:
@@ -223,7 +223,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-windows-${{ matrix.arch }}-wingui
-          path: "wingui/*.dll"
+          path: "wingui/libpdcursesmod-wingui-${{ matrix.arch }}.dll"
           if-no-files-found: error
 
       - name: ⬆️ Upload artifacts (WinCon)
@@ -231,7 +231,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-windows-${{ matrix.arch }}-wincon
-          path: "wincon/*.dll"
+          path: "wincon/libpdcursesmod-wincon-${{ matrix.arch }}.dll"
           if-no-files-found: error
 
       - name: ⬆️ Upload artifacts (VT)
@@ -239,7 +239,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-windows-${{ matrix.arch }}-vt
-          path: "vt/*.dll"
+          path: "vt/libpdcursesmod-vt-${{ matrix.arch }}.dll"
           if-no-files-found: error
 
   create-pr:

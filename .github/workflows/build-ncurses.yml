@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-ubuntu-${{ matrix.arch }}-vt
-          path: "lib/libncursesw*.so"
+          path: "lib/libncursesw-${{ matrix.arch }}.so"
           if-no-files-found: error
 
   macos:
@@ -96,7 +96,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-macos-${{ matrix.arch }}-vt
-          path: "lib/libncursesw*.dylib"
+          path: "lib/libncursesw-${{ matrix.arch }}.dylib"
           if-no-files-found: error
 
   windows-x64:
@@ -161,7 +161,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-windows-x64-vt
-          path: "lib/libncursesw*.dll"
+          path: "lib/libncursesw-x64.dll"
           if-no-files-found: error
 
   create-pr:

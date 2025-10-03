@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libraries-windows-x64-wincon
-          path: "wincon/*.dll"
+          path: "wincon/libpdcurses-wincon-x64.dll"
           if-no-files-found: error
 
   create-pr:
