@@ -18,7 +18,7 @@ SUMMARY_FILE = $(REPORT_DIR)/Summary.md
 # Targets
 # =============================================================================
 
-.PHONY: check-tools build run lint format test test-and-report generate-docs
+.PHONY: check-tools build lint format test test-report docs
 
 # Ensure all tools are installed locally
 check-tools:
@@ -51,8 +51,5 @@ test-report: check-tools
 	@[ -f $(SUMMARY_FILE) ] && cat $(SUMMARY_FILE) || echo " 🚨 Summary not found"
 
 # Generate documentation
-generate-docs: check-tools build
-	mv "./README.md" "./index.md"
-	@mv ./LICENSE ./LICENSE.md
-	@sed -i 's/LICENSE/LICENSE.md/g' index.md
-	@dotnet docfx ./docfx.json
+docs: check-tools build
+	dotnet docfx ./docfx.json

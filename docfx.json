@@ -31,11 +31,25 @@
       },
       {
         "files": [
+          "README.md"
+        ],
+        "dest": "index.md"
+      },
+      {
+        "files": [
+          "CONTRIBUTORS.md"
+        ],
+        "dest": "CONTRIBUTORS.md"
+      },
+      {
+        "files": [
           "*.md",
           "toc.yml"
         ],
         "exclude": [
-          "lib/**"
+          "lib/**",
+          "README.md",
+          "LICENSE"
         ]
       },
       {
@@ -43,7 +57,9 @@
           "**/*.md"
         ],
         "exclude": [
-          "artifacts/**"
+          "artifacts/**",
+          "README.md",
+          "LICENSE"
         ]
       }
     ],
@@ -52,6 +68,12 @@
         "files": [
           "media/**"
         ]
+      },
+      {
+        "files": [
+          "LICENSE"
+        ],
+        "dest": "LICENSE.md"
       }
     ],
     "dest": "artifacts/_site",
@@ -63,6 +85,22 @@
     "markdownEngineName": "markdig",
     "xrefService": [
       "https://xref.docs.microsoft.com/query?uid={uid}"
+    ],
+    "transforms": [
+      {
+        "type": "Transform",
+        "source": "index.md",
+        "transform": "replace",
+        "pattern": "\\(LICENSE\\)",
+        "replacement": "(LICENSE.md)"
+      },
+      {
+        "type": "Transform",
+        "source": "index.md",
+        "transform": "replace",
+        "pattern": "\\./LICENSE",
+        "replacement": "./LICENSE.md"
+      }
     ],
     "globalMetadata": {
       "_appName": "Sharpie",

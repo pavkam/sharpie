@@ -128,4 +128,5 @@ As you can imagine, there are numerous other uses built into the library. Start 
 
 ## License
 
+[Contributors] [./CONTRIBUTORS.md]
 [BSD 3-Clause License](./LICENSE)

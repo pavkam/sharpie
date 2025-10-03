@@ -27,6 +27,8 @@ jobs:
       url: ${{ steps.deploy-to-github-pages.outputs.page_url }}
 
     runs-on: ubuntu-latest
+    outputs:
+      page_url: ${{ steps.deploy-to-github-pages.outputs.page_url }}
     steps:
       - name: ☁️ Checkout repository
         id: checkout-repository
@@ -39,7 +41,7 @@ jobs:
       - name: 📚 Gather documentation
         id: generate-documentation
         shell: bash
-        run: make generate-docs
+        run: make docs
 
       - name: ⬆️ Upload artifact
         id: upload-artifact
