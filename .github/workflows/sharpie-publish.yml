@@ -11,7 +11,10 @@ jobs:
     name: 🌍 Publish all packages
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.published-versions.outputs.version }}
+      sharpie_version: ${{ steps.published-versions.outputs.sharpie_version }}
+      ncurses_version: ${{ steps.published-versions.outputs.ncurses_version }}
+      pdcurses_version: ${{ steps.published-versions.outputs.pdcurses_version }}
+      pdcursesmod_version: ${{ steps.published-versions.outputs.pdcursesmod_version }}
       sharpie_deployed: ${{ steps.published-versions.outputs.sharpie_deployed }}
       ncurses_deployed: ${{ steps.published-versions.outputs.ncurses_deployed }}
       pdcurses_deployed: ${{ steps.published-versions.outputs.pdcurses_deployed }}
@@ -45,7 +48,7 @@ jobs:
 
             VERSION=`cat $LIB_PATH | sed -n "s/\s*<OverallVersion>\(.*\)<\/OverallVersion>$/\1/p"`
 
-            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "${LIB_MONIKER}_version=$VERSION" >> $GITHUB_OUTPUT
             DEP=`wget -q https://www.nuget.org/api/v2/package/$LIB_PKG/$VERSION -O /dev/null || echo NO`
 
             if [ "$DEP" = "NO" ]; then
@@ -65,7 +68,7 @@ jobs:
 
       - name: 📦 Publish NCurses package
         id: publish-ncurses
-        if: steps.published-versions.outputs.ncurses-deployed == 'no'
+        if: steps.published-versions.outputs.ncurses_deployed == 'no'
         shell: bash
         run: |
           dotnet pack NativeLibraries/Sharpie.NativeLibraries.NCurses.csproj
@@ -73,7 +76,7 @@ jobs:
 
       - name: 📦 Publish PDCurses package
         id: publish-pdcurses
-        if: steps.published-versions.outputs.pdcurses-deployed == 'no'
+        if: steps.published-versions.outputs.pdcurses_deployed == 'no'
         shell: bash
         run: |
           dotnet pack NativeLibraries/Sharpie.NativeLibraries.PdCurses.csproj
@@ -81,7 +84,7 @@ jobs:
 
       - name: 📦 Publish PDCursesMod package
         id: publish-pdcursesmod
-        if: steps.published-versions.outputs.pdcursesmod-deployed == 'no'
+        if: steps.published-versions.outputs.pdcursesmod_deployed == 'no'
         shell: bash
         run: |
           dotnet pack NativeLibraries/Sharpie.NativeLibraries.PdCursesMod.csproj
@@ -104,35 +107,32 @@ jobs:
             echo "| Package | Status | Version |" >> $GITHUB_STEP_SUMMARY
             echo "|---------|--------|---------|" >> $GITHUB_STEP_SUMMARY
 
-            # Get version from the publish-all job outputs
-            VERSION="${{ needs.publish-all.outputs.version }}"
-
             # Sharpie package
             if [ "${{ needs.publish-all.outputs.sharpie_deployed }}" = "no" ]; then
-              echo "| Sharpie | ✅ Uploaded | $VERSION |" >> $GITHUB_STEP_SUMMARY
+              echo "| Sharpie | ✅ Uploaded | ${{ needs.publish-all.outputs.sharpie_version }} |" >> $GITHUB_STEP_SUMMARY
             else
-              echo "| Sharpie | ⏭️ Already published | $VERSION |" >> $GITHUB_STEP_SUMMARY
+              echo "| Sharpie | ⏭️ Already published | ${{ needs.publish-all.outputs.sharpie_version }} |" >> $GITHUB_STEP_SUMMARY
             fi
 
             # NCurses package
             if [ "${{ needs.publish-all.outputs.ncurses_deployed }}" = "no" ]; then
-              echo "| NCurses | ✅ Uploaded | $VERSION |" >> $GITHUB_STEP_SUMMARY
+              echo "| NCurses | ✅ Uploaded | ${{ needs.publish-all.outputs.ncurses_version }} |" >> $GITHUB_STEP_SUMMARY
             else
-              echo "| NCurses | ⏭️ Already published | $VERSION |" >> $GITHUB_STEP_SUMMARY
+              echo "| NCurses | ⏭️ Already published | ${{ needs.publish-all.outputs.ncurses_version }} |" >> $GITHUB_STEP_SUMMARY
             fi
 
             # PDCurses package
             if [ "${{ needs.publish-all.outputs.pdcurses_deployed }}" = "no" ]; then
-              echo "| PDCurses | ✅ Uploaded | $VERSION |" >> $GITHUB_STEP_SUMMARY
+              echo "| PDCurses | ✅ Uploaded | ${{ needs.publish-all.outputs.pdcurses_version }} |" >> $GITHUB_STEP_SUMMARY
             else
-              echo "| PDCurses | ⏭️ Already published | $VERSION |" >> $GITHUB_STEP_SUMMARY
+              echo "| PDCurses | ⏭️ Already published | ${{ needs.publish-all.outputs.pdcurses_version }} |" >> $GITHUB_STEP_SUMMARY
             fi
 
             # PDCursesMod package
             if [ "${{ needs.publish-all.outputs.pdcursesmod_deployed }}" = "no" ]; then
-              echo "| PDCursesMod | ✅ Uploaded | $VERSION |" >> $GITHUB_STEP_SUMMARY
+              echo "| PDCursesMod | ✅ Uploaded | ${{ needs.publish-all.outputs.pdcursesmod_version }} |" >> $GITHUB_STEP_SUMMARY
             else
-              echo "| PDCursesMod | ⏭️ Already published | $VERSION |" >> $GITHUB_STEP_SUMMARY
+              echo "| PDCursesMod | ⏭️ Already published | ${{ needs.publish-all.outputs.pdcursesmod_version }} |" >> $GITHUB_STEP_SUMMARY
             fi
           else
             echo "## ❌ Publish Job Failed" >> $GITHUB_STEP_SUMMARY
