@@ -21,13 +21,13 @@ runs:
   using: composite
   steps:
     - name: ⚙️ Setup environment
-      id: setup_environment
+      id: setup-environment
       uses: ./.github/actions/setup
       with:
         dotnet-version: ${{ inputs.dotnet-version }}
 
     - name: 🔍 Check formatting & code style
-      id: check_formatting_and_code_style
+      id: check-formatting
       shell: bash
       run: make lint
 
@@ -37,13 +37,13 @@ runs:
       run: make build CONFIGURATION=${{ inputs.configuration }}
 
     - name: 🧪 Test with coverage
-      id: test_with_coverage
+      id: test
       shell: bash
       run: |
-        make test-and-report CONFIGURATION=${{ inputs.configuration }} COVERAGE_REPORT_PATH=${{ inputs.coverage-report-path }}
+        make test CONFIGURATION=${{ inputs.configuration }}
 
     - name: 📝 Generate code coverage report
-      id: generate_code_coverage_report
+      id: coverage-report
       uses: danielpalme/ReportGenerator-GitHub-Action@5.2.3
       with:
         reports: "**/TestResults/**/*.cobertura.xml"
@@ -51,28 +51,34 @@ runs:
         reporttypes: "HtmlInline;Cobertura;Badges"
 
     - name: ⬆️ Upload coverage report artifact
-      id: upload_coverage_report_artifact
+      id: upload-coverage-report
       uses: actions/upload-artifact@v4
       with:
         name: CoverageReport-${{ matrix.os }}
         path: ${{ inputs.coverage-report-path }}
 
-    - name: 📝 Publish test results (Linux)
-      id: publish_test_results_linux
+    - name: ⬆️ Publish test results
+      id: publish-test-results
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: ${{ always() && runner.os == 'Linux' }}
       with:
         files: "**/TestResults/**/test-results.trx"
 
-    - name: 📝 Publish test result summary (macOS & Linux)
-      id: publish_test_results_macos
+    - name: 📝 Summarize test results
+      id: summarize-test-results
+      shell: bash
+      run: |
+        make test-report COVERAGE_REPORT_PATH=${{ inputs.coverage-report-path }}
+
+    - name: ⬆️ Publish test result summary (macOS & Linux)
+      id: publish-test-summary-macos-and-linux
       if: always() && (runner.os == 'macOS' || runner.os == 'Linux')
       shell: bash
       run: |
         cat ${{ inputs.coverage-report-path }}/Summary.md >> $GITHUB_STEP_SUMMARY
 
-    - name: 📝 Publish test results (Windows)
-      id: publish_test_results_windows
+    - name: ⬆️ Publish test results (Windows)
+      id: publish-test-results-windows
       if: always() && runner.os == 'Windows'
       shell: pwsh
       run: |

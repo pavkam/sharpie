@@ -44,8 +44,8 @@ format: check-tools
 test: build
 	dotnet test --configuration $(CONFIGURATION) --verbosity normal --blame-hang --blame-hang-timeout $(BLAME_HANG_TIMEOUT) --collect:"Code Coverage;Format=cobertura" --logger "trx;LogFileName=test-results.trx"
 
-# Test with code coverage and generate report
-test-and-report: check-tools test
+# Test report
+test-report: check-tools
 	dotnet reportgenerator -reports:"**/TestResults/**/*.cobertura.xml" -targetdir:"$(REPORT_DIR)" -reporttypes:"HtmlInline;Cobertura;Badges;MarkdownSummary"
 	@echo "✅ Test report generated in '$(REPORT_DIR)' directory"
 	@[ -f $(SUMMARY_FILE) ] && cat $(SUMMARY_FILE) || echo " 🚨 Summary not found"
