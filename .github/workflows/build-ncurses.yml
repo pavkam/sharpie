@@ -6,48 +6,6 @@ on:
     - cron: "0 9 1 1-12 *"
 
 jobs:
-  raspios_lite-arm:
-    name: 🐧 Raspberry Pi OS Lite ARM
-    runs-on: ubuntu-latest
-    steps:
-      - name: ☁️ Clone repository
-        id: checkout-repository
-        uses: actions/checkout@master
-        with:
-          repository: mirror/ncurses
-          ref: refs/heads/master
-      - name: 🛠️ Build library
-        id: build-library
-        uses: pguyot/arm-runner-action@v2
-        with:
-          base_image: raspios_lite:latest
-          bind_mount_repository: yes
-          commands: |
-            ./configure \
-              --prefix=/usr \
-              --enable-pc-files \
-              --without-cxx \
-              --without-ada \
-              --enable-widec \
-              --with-pkg-config-libdir=/usr/lib/pkgconfig \
-              --with-shared \
-              --enable-sigwinch \
-              --with-versioned-syms \
-              --with-xterm-kbs=del \
-              --enable-warnings \
-              --enable-assertions \
-              --disable-macros \
-              --without-manpages
-            make
-            mv lib/libncursesw.so lib/libncursesw-arm.so
-      - name: ⬆️ Upload artifacts
-        id: upload-artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: libraries-raspios_lite-arm-vt
-          path: "lib/libncursesw*.so"
-          if-no-files-found: error
-
   ubuntu:
     strategy:
       matrix:
@@ -210,7 +168,7 @@ jobs:
     name: 📝 Create pull request
     runs-on: ubuntu-latest
     needs:
-      [ubuntu, macos, windows-x64, raspios_lite-arm]
+      [ubuntu, macos, windows-x64]
     outputs:
       pr_created: ${{ steps.create-pull-request.outputs.pull-request-number != '' }}
       pr_number: ${{ steps.create-pull-request.outputs.pull-request-number }}
@@ -261,7 +219,7 @@ jobs:
   summary:
     name: ✔︎ Generate summary
     runs-on: ubuntu-latest
-    needs: [ubuntu, macos, windows-x64, raspios_lite-arm, create-pr]
+    needs: [ubuntu, macos, windows-x64, create-pr]
     if: always()
     steps:
       - name: 📝 Create summary
@@ -290,12 +248,6 @@ jobs:
             echo "| Windows x64 | ✅ Success |" >> $GITHUB_STEP_SUMMARY
           else
             echo "| Windows x64 | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
-          fi
-
-          if [ "${{ needs.raspios_lite-arm.result }}" = "success" ]; then
-            echo "| Raspberry Pi OS ARM | ✅ Success |" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "| Raspberry Pi OS ARM | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
           fi
 
           echo "" >> $GITHUB_STEP_SUMMARY

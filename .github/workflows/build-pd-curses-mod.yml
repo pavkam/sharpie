@@ -6,55 +6,6 @@ on:
     - cron: "0 9 1 1-12 *"
 
 jobs:
-  raspios-lite-arm:
-    runs-on: ubuntu-latest
-    name: 🐧 Raspberry Pi OS Lite ARM
-    steps:
-      - name: ☁️ Clone repository
-        id: checkout-repository
-        uses: actions/checkout@master
-        with:
-          repository: Bill-Gray/PDCursesMod
-          ref: refs/heads/master
-
-      - name: 🛠️ Patch "curses.h"
-        id: patch-curses
-        run: |
-          echo -e "#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
-          cat curses.h >> curses.h.new && \
-          rm curses.h && \
-          mv curses.h.new curses.h
-
-      - name: 🛠️ Build library
-        id: build-library
-        uses: pguyot/arm-runner-action@v2
-        with:
-          base_image: raspios_lite:latest
-          bind_mount_repository: yes
-          commands: |
-            cd vt
-            make WIDE=Y DLL=Y CHTYPE_32=Y
-            mv libpdcurses.so libpdcursesmod-vt-arm.so
-            cd ../fb
-            make WIDE=Y DLL=Y CHTYPE_32=Y
-            mv libpdcurses.so libpdcursesmod-fb-arm.so
-
-      - name: ⬆️ Upload artifacts (VT)
-        id: upload-artifacts-vt
-        uses: actions/upload-artifact@v4
-        with:
-          name: libraries-raspios_lite-arm-vt
-          path: "vt/*.so"
-          if-no-files-found: error
-
-      - name: ⬆️ Upload artifacts (FB)
-        id: upload-artifacts-fb
-        uses: actions/upload-artifact@v4
-        with:
-          name: libraries-raspios_lite-arm-fb
-          path: "fb/*.so"
-          if-no-files-found: error
-
   ubuntu:
     strategy:
       matrix:
@@ -295,7 +246,7 @@ jobs:
     name: 📝 Create pull request
     runs-on: ubuntu-latest
     needs:
-      [ubuntu, macos, windows, raspios-lite-arm]
+      [ubuntu, macos, windows]
     outputs:
       pr_created: ${{ steps.create-pull-request.outputs.pull-request-number != '' }}
       pr_number: ${{ steps.create-pull-request.outputs.pull-request-number }}
@@ -345,7 +296,7 @@ jobs:
   summary:
     name: ✔︎ Generate summary
     runs-on: ubuntu-latest
-    needs: [ubuntu, macos, windows, raspios-lite-arm, create-pr]
+    needs: [ubuntu, macos, windows, create-pr]
     if: always()
     steps:
       - name: 📝 Create summary
@@ -374,12 +325,6 @@ jobs:
             echo "| Windows | ✅ Success |" >> $GITHUB_STEP_SUMMARY
           else
             echo "| Windows | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
-          fi
-
-          if [ "${{ needs.raspios-lite-arm.result }}" = "success" ]; then
-            echo "| Raspberry Pi ARM | ✅ Success |" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "| Raspberry Pi ARM | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
           fi
 
           echo "" >> $GITHUB_STEP_SUMMARY

@@ -19,7 +19,6 @@
         <None Include="../lib/ncurses/libncursesw-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/ncursesw.dll"/>
         <None Include="../lib/ncurses/libncursesw-x64.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libncursesw.dylib"/>
         <None Include="../lib/ncurses/libncursesw-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libncursesw.so"/>
-        <None Include="../lib/ncurses/libncursesw-arm.so" Pack="true" PackagePath="runtimes/linux-arm/native/libncursesw.so"/>
         <None Include="../lib/ncurses/libncursesw-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libncursesw.so"/>
     </ItemGroup>
 </Project>

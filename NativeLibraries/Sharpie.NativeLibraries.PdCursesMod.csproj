@@ -17,12 +17,10 @@
 
     <ItemGroup>
         <None Include="../lib/pdcursesmod/libpdcursesmod-fb-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libpdcursesmod-fb.so"/>
-        <None Include="../lib/pdcursesmod/libpdcursesmod-fb-arm.so" Pack="true" PackagePath="runtimes/linux-arm/native/libpdcursesmod-fb.so"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-fb-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libpdcursesmod-fb.so"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-vt-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libpdcursesmod.so"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-vt-x64.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libpdcursesmod.dylib"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-vt-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/pdcursesmod-vt.dll"/>
-        <None Include="../lib/pdcursesmod/libpdcursesmod-vt-arm.so" Pack="true" PackagePath="runtimes/linux-arm/native/libpdcursesmod.so"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-vt-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libpdcursesmod.so"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-vt-arm64.dylib" Pack="true" PackagePath="runtimes/osx-arm64/native/libpdcursesmod.dylib"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-vt-arm64.dll" Pack="true" PackagePath="runtimes/win-arm64/native/pdcursesmod-vt.dll"/>
