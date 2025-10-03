@@ -213,8 +213,6 @@ jobs:
         include:
           - cross: amd64
             arch: x64
-          - cross: amd64_arm
-            arch: arm
           - cross: amd64_arm64
             arch: arm64
     name: 🪟 Windows (${{ matrix.arch }})
