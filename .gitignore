@@ -2,7 +2,7 @@ _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
 
-**/TestResults/**
+**/TestResults/
 coverage_report/
-**/bin/**
-**/artifacts/**
+**/bin/
+artifacts/
