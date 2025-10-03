@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!-- Central version properties for Sharpie -->
-    <SharpieVersion>1.7.0</SharpieVersion>
+    <OverallVersion>1.7.0</OverallVersion>
 
     <!-- Common technical properties -->
     <TargetFramework>net9.0</TargetFramework>
@@ -25,9 +25,9 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>logo-128.png</PackageIcon>
 
-    <PackageVersion>$(SharpieVersion)</PackageVersion>
-    <AssemblyVersion>$(SharpieVersion)</AssemblyVersion>
-    <FileVersion>$(SharpieVersion)</FileVersion>
+    <PackageVersion>$(OverallVersion)</PackageVersion>
+    <AssemblyVersion>$(OverallVersion)</AssemblyVersion>
+    <FileVersion>$(OverallVersion)</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
