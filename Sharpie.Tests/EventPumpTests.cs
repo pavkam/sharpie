@@ -74,7 +74,7 @@ public class EventPumpTests
             }
         }
 
-        return result.ToArray();
+        return [.. result];
     }
 
     private Event? SimulateActualEvent(ISurface sf, params CursesEvent?[] cursesEvents) =>
@@ -458,7 +458,7 @@ public class EventPumpTests
         _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
 
         var events = SimulateActualEvents(_terminal.Screen, 1, new CursesResizeEvent());
-        events.ShouldBe(new Event[] { new TerminalResizeEvent(new(20, 10)) });
+        events.ShouldBe([new TerminalResizeEvent(new(20, 10))]);
     }
 
     [TestMethod, Timeout(_timeout)]
@@ -498,12 +498,12 @@ public class EventPumpTests
         var ce = new CursesMouseEvent(5, 6, MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Alt);
         var e = SimulateActualEvents(_terminal.Screen, 2, ce, ce);
 
-        e.ShouldBe(new Event[]
-        {
+        e.ShouldBe(
+        [
             new MouseMoveEvent(new(5, 6)),
             new MouseActionEvent(new(5, 6), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.Alt),
             new MouseActionEvent(new(5, 6), MouseButton.Button1, MouseButtonState.Released, ModifierKey.Alt)
-        });
+        ]);
     }
 
     [TestMethod, Timeout(_timeout)]
@@ -558,11 +558,11 @@ public class EventPumpTests
             new CursesCharEvent(null, ControlCharacter.Escape, ModifierKey.None),
             new CursesCharEvent(null, 'a', ModifierKey.None));
 
-        e.ShouldBe(new Event[]
-        {
+        e.ShouldBe(
+        [
             new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
             new KeyEvent(Key.Character, new('a'), null, ModifierKey.None)
-        });
+        ]);
     }
 
     [TestMethod, Timeout(_timeout)]
@@ -589,11 +589,11 @@ public class EventPumpTests
             new CursesCharEvent(null, ControlCharacter.Escape, ModifierKey.None),
             new CursesCharEvent(null, ControlCharacter.Escape, ModifierKey.None));
 
-        e.ShouldBe(new Event[]
-        {
+        e.ShouldBe(
+        [
             new KeyEvent(Key.Escape, new(ControlCharacter.Null), null, ModifierKey.None),
             new KeyEvent(Key.Escape, new(ControlCharacter.Null), null, ModifierKey.None)
-        });
+        ]);
     }
 
     [TestMethod, Timeout(_timeout)]
@@ -606,12 +606,12 @@ public class EventPumpTests
             new CursesMouseEvent(1, 2, MouseButton.Unknown, MouseButtonState.None, ModifierKey.None),
             new CursesCharEvent(null, 'A', ModifierKey.None));
 
-        e.ShouldBe(new Event[]
-        {
+        e.ShouldBe(
+        [
             new KeyEvent(Key.Character, new(ControlCharacter.Escape), null, ModifierKey.None),
             new MouseMoveEvent(new(1, 2)),
             new KeyEvent(Key.Character, new('A'), null, ModifierKey.None)
-        });
+        ]);
     }
 
     [TestMethod, Timeout(_timeout)]
@@ -622,12 +622,12 @@ public class EventPumpTests
 
         var e = SimulateActualEvents(_terminal.Screen, 3, new CursesCharEvent(null, 'A', ModifierKey.None));
 
-        e.ShouldBe(new Event[]
-        {
+        e.ShouldBe(
+        [
             new DelegateEvent("hello"),
             new DelegateEvent("world"),
             new KeyEvent(Key.Character, new('A'), null, ModifierKey.None)
-        });
+        ]);
     }
 
     [TestMethod, Timeout(_timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]

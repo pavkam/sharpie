@@ -33,14 +33,13 @@ namespace Sharpie;
 /// <summary>
 ///     Defines a mouse move event.
 /// </summary>
+/// <remarks>
+///     Creates a new instance of the class.
+/// </remarks>
+/// <param name="point">The location of the mouse.</param>
 [PublicAPI, DebuggerDisplay("{ToString(), nq}")]
-public sealed class MouseMoveEvent: Event
+public sealed class MouseMoveEvent(Point point): Event(EventType.MouseMove)
 {
-    /// <summary>
-    ///     Creates a new instance of the class.
-    /// </summary>
-    /// <param name="point">The location of the mouse.</param>
-    public MouseMoveEvent(Point point) : base(EventType.MouseMove) => Position = point;
 
     /// <summary>
     ///     The mouse position.
@@ -48,7 +47,7 @@ public sealed class MouseMoveEvent: Event
     public Point Position
     {
         get;
-    }
+    } = point;
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => $"Mouse @ {Position.X}x{Position.Y}";

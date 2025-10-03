@@ -167,7 +167,7 @@ public class NativeLibraryWrapperTests
     {
         var w = new NativeLibraryWrapper<DummyFunctionMap>(_dotNetSystemAdapterMock.Object, new(100));
 
-        _ = Should.Throw<MissingMethodException>(() => w.Resolve<LibCFunctionMap.setlocale>());
+        _ = Should.Throw<MissingMethodException>(w.Resolve<LibCFunctionMap.setlocale>);
     }
 
     [TestMethod]

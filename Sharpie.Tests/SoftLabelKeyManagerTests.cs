@@ -317,7 +317,7 @@ public class SoftLabelKeyManagerTests
     }
 
     [TestMethod]
-    public void Clear_Throws_IfNotEnabled() => Should.Throw<NotSupportedException>(() => { _mgr2.Clear(); });
+    public void Clear_Throws_IfNotEnabled() => Should.Throw<NotSupportedException>(_mgr2.Clear);
 
     [TestMethod]
     public void Clear_Throws_IfCursesFails()
@@ -325,7 +325,7 @@ public class SoftLabelKeyManagerTests
         _ = _cursesMock.Setup(s => s.slk_clear())
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _mgr1.Clear(); })
+        Should.Throw<CursesOperationException>(_mgr1.Clear)
               .Operation.ShouldBe("slk_clear");
     }
 
@@ -341,7 +341,7 @@ public class SoftLabelKeyManagerTests
     }
 
     [TestMethod]
-    public void Restore_Throws_IfNotEnabled() => Should.Throw<NotSupportedException>(() => { _mgr2.Restore(); });
+    public void Restore_Throws_IfNotEnabled() => Should.Throw<NotSupportedException>(_mgr2.Restore);
 
     [TestMethod]
     public void Restore_Throws_IfCursesFails()
@@ -349,7 +349,7 @@ public class SoftLabelKeyManagerTests
         _ = _cursesMock.Setup(s => s.slk_restore())
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _mgr1.Restore(); })
+        Should.Throw<CursesOperationException>(_mgr1.Restore)
               .Operation.ShouldBe("slk_restore");
     }
 
@@ -365,7 +365,7 @@ public class SoftLabelKeyManagerTests
     }
 
     [TestMethod]
-    public void MarkDirty_Throws_IfNotEnabled() => Should.Throw<NotSupportedException>(() => { _mgr2.MarkDirty(); });
+    public void MarkDirty_Throws_IfNotEnabled() => Should.Throw<NotSupportedException>(_mgr2.MarkDirty);
 
     [TestMethod]
     public void MarkDirty_Throws_IfCursesFails()
@@ -373,7 +373,7 @@ public class SoftLabelKeyManagerTests
         _ = _cursesMock.Setup(s => s.slk_touch())
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _mgr1.MarkDirty(); })
+        Should.Throw<CursesOperationException>(_mgr1.MarkDirty)
               .Operation.ShouldBe("slk_touch");
     }
 
@@ -387,7 +387,7 @@ public class SoftLabelKeyManagerTests
 
     [TestMethod]
     public void Refresh_Throws_IfNotEnabled() =>
-        Should.Throw<NotSupportedException>(() => { _mgr2.Refresh(); });
+        Should.Throw<NotSupportedException>(_mgr2.Refresh);
 
     [TestMethod]
     public void Refresh_Throws_IfCursesFails_NoQueue()
@@ -395,7 +395,7 @@ public class SoftLabelKeyManagerTests
         _ = _cursesMock.Setup(s => s.slk_refresh())
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => { _mgr1.Refresh(); })
+        Should.Throw<CursesOperationException>(_mgr1.Refresh)
               .Operation.ShouldBe("slk_refresh");
     }
 
@@ -407,7 +407,7 @@ public class SoftLabelKeyManagerTests
 
         using (_terminal.AtomicRefresh())
         {
-            Should.Throw<CursesOperationException>(() => { _mgr1.Refresh(); })
+            Should.Throw<CursesOperationException>(_mgr1.Refresh)
                   .Operation.ShouldBe("slk_noutrefresh");
         }
     }

@@ -39,7 +39,7 @@ using System.Collections.Concurrent;
 [PublicAPI]
 public sealed class EventPump: IEventPump
 {
-    private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
+    private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = [];
     private readonly ConcurrentQueue<object> _delegatedObjects = new();
     private MouseEventResolver? _mouseEventResolver;
 

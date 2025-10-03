@@ -103,7 +103,7 @@ public class ScreenTests
         _ = _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => _screen.Refresh())
+        Should.Throw<CursesOperationException>(_screen.Refresh)
               .Operation.ShouldBe("wrefresh");
     }
 

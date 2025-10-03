@@ -110,7 +110,7 @@ public class SurfaceTests
     public void AssertAlive_DoesNothing_IfNotDisposed()
     {
         var s = new Surface(_cursesMock.Object, new(22));
-        Should.NotThrow(() => s.AssertAlive());
+        Should.NotThrow(s.AssertAlive);
     }
 
     [TestMethod]
@@ -119,7 +119,7 @@ public class SurfaceTests
         var s = new Surface(_cursesMock.Object, new(22));
         s.Dispose();
 
-        _ = Should.Throw<ObjectDisposedException>(() => s.AssertAlive());
+        _ = Should.Throw<ObjectDisposedException>(s.AssertAlive);
     }
 
     [TestMethod]
@@ -541,7 +541,7 @@ public class SurfaceTests
     {
         var s = new Surface(_cursesMock.Object, new(22));
         s.Dispose();
-        Should.NotThrow(() => s.Dispose());
+        Should.NotThrow(s.Dispose);
     }
 
     [TestMethod]
@@ -1005,7 +1005,7 @@ public class SurfaceTests
                    .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.Throw<CursesOperationException>(() => s.DrawBorder())
+        Should.Throw<CursesOperationException>(s.DrawBorder)
               .Operation.ShouldBe("wborder");
     }
 
@@ -1109,7 +1109,7 @@ public class SurfaceTests
                    .Returns(99);
 
         var s = new Surface(_cursesMock.Object, new(1));
-        Should.NotThrow(() => s.MarkDirty());
+        Should.NotThrow(s.MarkDirty);
 
         _cursesMock.Verify(v => v.wtouchln(s.Handle, 0, 99, 1));
     }
@@ -1798,10 +1798,8 @@ public class SurfaceTests
         _cursesMock.Verify(v => v.delwin(new(1)), Times.Once);
     }
 
-    private sealed class Surface: Sharpie.Surface
+    private sealed class Surface(ICursesBackend curses, IntPtr handle): Sharpie.Surface(curses, handle)
     {
-        public Surface(ICursesBackend curses, IntPtr handle) : base(curses, handle) { }
-
         protected internal override void AssertSynchronized()
         {
         }

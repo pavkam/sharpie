@@ -342,7 +342,7 @@ public class PadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Duplicate_Throws_IfCursesFails()
     {
-        Should.Throw<CursesOperationException>(() => _pad.Duplicate())
+        Should.Throw<CursesOperationException>(_pad.Duplicate)
               .Operation.ShouldBe("dupwin");
     }
 

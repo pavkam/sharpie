@@ -179,7 +179,7 @@ public class FigletFontParserTests
 
         var (rows, width) = await FigletFontParser.ParseStandardCharacterAsync(1, 100, new StringReader(ch));
 
-        rows.ShouldBe(new[] { "123" });
+        rows.ShouldBe(["123"]);
         width.ShouldBe(3);
     }
 
@@ -190,7 +190,7 @@ public class FigletFontParserTests
 
         var (rows, width) = await FigletFontParser.ParseStandardCharacterAsync(3, 100, new StringReader(ch));
 
-        rows.ShouldBe(new[] { "12", "34", "56" });
+        rows.ShouldBe(["12", "34", "56"]);
         width.ShouldBe(2);
     }
 
@@ -237,7 +237,7 @@ public class FigletFontParserTests
 
         var (rows, width, cp) = await FigletFontParser.ParseCodeTaggedCharacterAsync(1, 100, new StringReader(ch));
 
-        rows.ShouldBe(new[] { "123" });
+        rows.ShouldBe(["123"]);
         width.ShouldBe(3);
         cp.ShouldBe(10);
     }
@@ -249,7 +249,7 @@ public class FigletFontParserTests
 
         var (rows, width, cp) = await FigletFontParser.ParseCodeTaggedCharacterAsync(3, 100, new StringReader(ch));
 
-        rows.ShouldBe(new[] { "12", "34", "56" });
+        rows.ShouldBe(["12", "34", "56"]);
         width.ShouldBe(2);
         cp.ShouldBe(-0xffff);
     }
@@ -303,7 +303,7 @@ public class FigletFontParserTests
         chars.Count.ShouldBe(1);
         var (rows, width) = chars[0];
 
-        rows.ShouldBe(new[] { "123", "456" });
+        rows.ShouldBe(["123", "456"]);
         width.ShouldBe(3);
     }
 
@@ -317,7 +317,7 @@ public class FigletFontParserTests
         chars.Count.ShouldBe(1);
         var (rows, width) = chars[200];
 
-        rows.ShouldBe(new[] { "123", "456" });
+        rows.ShouldBe(["123", "456"]);
         width.ShouldBe(3);
     }
 
@@ -330,11 +330,11 @@ public class FigletFontParserTests
 
         chars.Count.ShouldBe(2);
         var (rows, width) = chars[0];
-        rows.ShouldBe(new[] { "123", "456" });
+        rows.ShouldBe(["123", "456"]);
         width.ShouldBe(3);
 
         (rows, width) = chars[200];
-        rows.ShouldBe(new[] { "abc", "def" });
+        rows.ShouldBe(["abc", "def"]);
         width.ShouldBe(3);
     }
 
@@ -360,12 +360,12 @@ public class FigletFontParserTests
         chars.Count.ShouldBe(255);
 
         var (rows, width) = chars['!'];
-        rows.ShouldBe(new[] { "  _ ", " | |", " | |", " | |", " |_|", " (_)", "    ", "    " });
+        rows.ShouldBe(["  _ ", " | |", " | |", " | |", " |_|", " (_)", "    ", "    "]);
         width.ShouldBe(4);
 
         (rows, width) = chars[0x03A9];
-        rows.ShouldBe(new[]
-        {
+        rows.ShouldBe(
+        [
             @"    ____   ",
             @"   / __ \  ",
             @"  | |  | | ",
@@ -374,7 +374,7 @@ public class FigletFontParserTests
             @" (___||___)",
             @"           ",
             @"           "
-        });
+        ]);
 
         width.ShouldBe(11);
     }

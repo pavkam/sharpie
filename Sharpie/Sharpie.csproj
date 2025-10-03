@@ -4,6 +4,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <LangVersion>default</LangVersion>
+        <RootNamespace>Sharpie</RootNamespace>
         <AssemblyName>sharpie</AssemblyName>
         <Title>A Curses-based terminal manipulation library.</Title>
         <Description>A Curses-based terminal manipulation library for modern .NET frameworks. This library wraps the NCurses, PDCurses and PDCursesMod libraries found on most platforms and adds a .NET-style layer on top of it.</Description>
@@ -19,7 +21,6 @@
         <FileVersion>1.7.0</FileVersion>
         <PackageId>Sharpie-Curses</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
-        <LangVersion>10</LangVersion>
         <Authors>Alexandru Ciobanu</Authors>
         <Product>Sharpie</Product>
     </PropertyGroup>

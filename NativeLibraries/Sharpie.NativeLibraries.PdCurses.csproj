@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>default</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>sharpie-libs-pdcurses</AssemblyName>
@@ -19,7 +20,6 @@
         <FileVersion>1.0.4</FileVersion>
         <PackageId>Sharpie-Libs-PdCurses</PackageId>
         <PackageIcon>logo-128.png</PackageIcon>
-        <LangVersion>10</LangVersion>
         <Authors>Alexandru Ciobanu</Authors>
         <Product>Sharpie</Product>
         <RootNamespace>Sharpie.NativeLibraries.PdCurses</RootNamespace>

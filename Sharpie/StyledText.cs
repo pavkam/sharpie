@@ -56,7 +56,7 @@ public readonly struct StyledText
             throw new ArgumentNullException(nameof(text));
         }
 
-        Parts = new[] { (text, style) };
+        Parts = [(text, style)];
     }
 
     /// <summary>

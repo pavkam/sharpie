@@ -96,7 +96,7 @@ public abstract class AsciiFont: IAsciiFont
     public abstract bool HasGlyph(Rune @char);
 
     /// <inheritdoc cref="IAsciiFont.GetGlyph"/>
-    public virtual IDrawable GetGlyph(Rune @char, Style style) => GetGlyphs(new[] { @char }, style);
+    public virtual IDrawable GetGlyph(Rune @char, Style style) => GetGlyphs([@char], style);
 
     /// <inheritdoc cref="IAsciiFont.GetGlyphs(ReadOnlySpan{Rune}, Style)"/>
     public abstract IDrawable GetGlyphs(ReadOnlySpan<Rune> chars, Style style);

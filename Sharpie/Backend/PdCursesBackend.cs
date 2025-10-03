@@ -36,7 +36,7 @@ namespace Sharpie.Backend;
 [PublicAPI]
 internal class PdCursesBackend: BaseCursesBackend
 {
-    private readonly Dictionary<IntPtr, (bool immedOk, bool scrollOk)> _windowStates = new();
+    private readonly Dictionary<IntPtr, (bool immedOk, bool scrollOk)> _windowStates = [];
 
     /// <summary>
     ///     Creates a new instance of this class.

@@ -123,7 +123,7 @@ internal class CursesBackendFlavorSelector
                                                                                    .AnyVirtualTerminal))
                                                                                .Concat(GetLibraryPaths(CursesBackendFlavor
                                                                                    .AnyGui)),
-                var _ => Enumerable.Empty<(string, CursesBackendType)>()
+                var _ => []
             });
     }
 

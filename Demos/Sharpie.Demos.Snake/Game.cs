@@ -34,7 +34,7 @@ using System.Drawing;
 
 using Abstractions;
 
-public sealed class Game
+public sealed class Game(Style snakeHeadStyle, Style snakeBodyStyle, Style foodStyle, Style lostStyle)
 {
     public enum Direction
     {
@@ -59,28 +59,20 @@ public sealed class Game
         Left
     }
 
-    private readonly List<Point> _clear = new();
-    private readonly Style _foodStyle;
+    private readonly List<Point> _clear = [];
+    private readonly Style _foodStyle = foodStyle;
 
     private readonly Canvas _glyph = new(new(1, 1));
-    private readonly Style _lostStyle;
+    private readonly Style _lostStyle = lostStyle;
     private readonly Random _random = new();
-    private readonly List<Point> _snake = new();
-    private readonly Style _snakeBodyStyle;
-    private readonly Style _snakeHeadStyle;
+    private readonly List<Point> _snake = [];
+    private readonly Style _snakeBodyStyle = snakeBodyStyle;
+    private readonly Style _snakeHeadStyle = snakeHeadStyle;
     private Direction _direction = 0;
     private (Point, int) _food;
     private bool _lost;
     private int _pendingGrowth;
     private Rectangle _perimeter;
-
-    public Game(Style snakeHeadStyle, Style snakeBodyStyle, Style foodStyle, Style lostStyle)
-    {
-        _snakeHeadStyle = snakeHeadStyle;
-        _snakeBodyStyle = snakeBodyStyle;
-        _foodStyle = foodStyle;
-        _lostStyle = lostStyle;
-    }
 
     public int Score
     {

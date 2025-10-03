@@ -5,8 +5,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <LangVersion>default</LangVersion>
         <AssemblyName>sharpie-demos-windows</AssemblyName>
-        <LangVersion>10</LangVersion>
         <IsPackable>false</IsPackable>
         <Title>A Curses-based terminal manipulation library.</Title>
         <Description>Demo application for Sharpie library.</Description>

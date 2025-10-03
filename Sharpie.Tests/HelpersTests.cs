@@ -353,7 +353,7 @@ public class HelpersTests
     public void TraceLineInHalves_GeneratesTheExpectedOutput_1()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0, 0), new(0.5F, 0.5F), p => pts.Add(p));
+        Helpers.TraceLineInHalves(new(0, 0), new(0.5F, 0.5F), pts.Add);
 
         pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0.5F, 0.5F) });
     }
@@ -362,7 +362,7 @@ public class HelpersTests
     public void TraceLineInHalves_GeneratesTheExpectedOutput_2()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0, 0), new(2F, 2F), p => pts.Add(p));
+        Helpers.TraceLineInHalves(new(0, 0), new(2F, 2F), pts.Add);
 
         pts.ShouldBe(new[]
         {
@@ -374,7 +374,7 @@ public class HelpersTests
     public void TraceLineInHalves_GeneratesTheExpectedOutput_3()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0, 0), new(0F, 1F), p => pts.Add(p));
+        Helpers.TraceLineInHalves(new(0, 0), new(0F, 1F), pts.Add);
 
         pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0, 0.5F), new PointF(0, 1F) });
     }
@@ -383,7 +383,7 @@ public class HelpersTests
     public void TraceLineInHalves_GeneratesTheExpectedOutput_4()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0, 0), new(1F, 0F), p => pts.Add(p));
+        Helpers.TraceLineInHalves(new(0, 0), new(1F, 0F), pts.Add);
 
         pts.ShouldBe(new[] { new PointF(0, 0), new PointF(0.5F, 0), new PointF(1F, 0) });
     }
@@ -392,7 +392,7 @@ public class HelpersTests
     public void TraceLineInHalves_GeneratesTheExpectedOutput_5()
     {
         var pts = new List<PointF>();
-        Helpers.TraceLineInHalves(new(0, 0), new(-2, -2), p => pts.Add(p));
+        Helpers.TraceLineInHalves(new(0, 0), new(-2, -2), pts.Add);
 
         pts.ShouldBe(new[]
         {
@@ -466,7 +466,7 @@ public class HelpersTests
     public void GetRawValue_Throws_IfCharOfBadType()
     {
         var c = new ComplexChar(12);
-        _ = Should.Throw<ArgumentException>(() => c.GetRawValue<string>());
+        _ = Should.Throw<ArgumentException>(c.GetRawValue<string>);
     }
 
     [TestMethod]

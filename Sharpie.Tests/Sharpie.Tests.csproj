@@ -4,6 +4,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <LangVersion>default</LangVersion>
+        <RootNamespace>Sharpie.Tests</RootNamespace>
         <IsPackable>false</IsPackable>
         <Title>Sharpie testing framework</Title>
         <Description>Unit test framework to test Sharpie.</Description>
@@ -13,7 +15,6 @@
         <RepositoryUrl>https://github.com/pavkam/sharpie.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <AssemblyName>sharpie-tests</AssemblyName>
-        <LangVersion>10</LangVersion>
         <PackageVersion>1.7.0</PackageVersion>
         <AssemblyVersion>1.7.0</AssemblyVersion>
         <FileVersion>1.7.0</FileVersion>

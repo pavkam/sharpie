@@ -36,7 +36,7 @@ namespace Sharpie;
 [PublicAPI, DebuggerDisplay("{ToString(), nq}")]
 public sealed class Window: TerminalSurface, IWindow
 {
-    private readonly IList<SubWindow> _subWindows = new List<SubWindow>();
+    private readonly IList<SubWindow> _subWindows = [];
     private Rectangle _explicitArea;
     private IReadOnlyList<SubWindow> _roSubWindows = Array.Empty<SubWindow>();
     private bool _visible = true;

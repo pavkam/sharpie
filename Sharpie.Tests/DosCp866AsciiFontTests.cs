@@ -68,7 +68,7 @@ public class DosCp866AsciiFontTests
     public void GetGlyphs_Throws_IfSpanIsEmpty()
     {
         _ = Should.Throw<ArgumentException>(() =>
-            _font.GetGlyphs(Array.Empty<Rune>(), _style1));
+            _font.GetGlyphs([], _style1));
     }
 
     [TestMethod]
