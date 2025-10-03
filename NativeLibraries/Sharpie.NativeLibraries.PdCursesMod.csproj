@@ -29,7 +29,9 @@
         <None Include="../lib/pdcursesmod/libpdcursesmod-wingui-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/pdcursesmod-wingui.dll"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-wingui-arm64.dll" Pack="true" PackagePath="runtimes/win-arm64/native/pdcursesmod-wingui.dll"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-sdl1-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libpdcursesmod-sdl1.so"/>
+        <None Include="../lib/pdcursesmod/libpdcursesmod-sdl1-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libpdcursesmod-sdl1.so"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-sdl2-x64.so" Pack="true" PackagePath="runtimes/linux-x64/native/libpdcursesmod-sdl2.so"/>
+        <None Include="../lib/pdcursesmod/libpdcursesmod-sdl2-arm64.so" Pack="true" PackagePath="runtimes/linux-arm64/native/libpdcursesmod-sdl2.so"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-sdl2-x64.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libpdcursesmod-sdl2.dylib"/>
         <None Include="../lib/pdcursesmod/libpdcursesmod-sdl2-arm64.dylib" Pack="true" PackagePath="runtimes/osx-arm64/native/libpdcursesmod-sdl2.dylib"/>
     </ItemGroup>
