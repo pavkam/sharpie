@@ -296,3 +296,6 @@ dotnet_naming_symbols.async.required_modifiers = async
 dotnet_naming_rule.async.severity = error
 dotnet_naming_rule.async.symbols = async
 dotnet_naming_rule.async.style = async
+
+# CA1707: Identifiers should not contain underscores
+dotnet_diagnostic.CA1707.severity = none

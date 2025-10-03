@@ -104,10 +104,13 @@ internal static class TestHelpers
         return m;
     }
 
-    public static Mock<T> MockResolve<T, TResult>(this Mock<INativeSymbolResolver> mock,
-        Expression<Func<T, TResult>> expression, TResult ret) where T : MulticastDelegate
+    public static Mock<T> MockResolve<T, TResult>(
+        this Mock<INativeSymbolResolver> mock,
+        Expression<Func<T, TResult>> expression,
+        TResult ret) where T : MulticastDelegate where TResult : notnull
     {
         var m = new Mock<T>();
+
         _ = m.Setup(expression)
          .Returns(new InvocationFunc(_ => ret));
 

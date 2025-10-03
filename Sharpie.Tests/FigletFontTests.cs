@@ -35,11 +35,11 @@ using Font;
 [TestClass]
 public class FigletFontTests
 {
-    private static readonly (string[] rows, int width) Char0 = (new[] { "abc1", "def2", "ghi3" }, 4);
-    private static readonly (string[] rows, int width) Char1 = (new[] { "123", "456", "789" }, 3);
-    private static readonly (string[] rows, int width) Char2 = (new[] { "1", "$", "3" }, 1);
+    private static readonly (string[] rows, int width) _char0 = (new[] { "abc1", "def2", "ghi3" }, 4);
+    private static readonly (string[] rows, int width) _char1 = (new[] { "123", "456", "789" }, 3);
+    private static readonly (string[] rows, int width) _char2 = (new[] { "1", "$", "3" }, 1);
 
-    private static readonly Style Style1 = new()
+    private static readonly Style _style1 = new()
     {
         Attributes = VideoAttribute.Bold,
         ColorMixture = new()
@@ -48,11 +48,11 @@ public class FigletFontTests
         }
     };
 
-    private static readonly FigletHeader Header = new('$', 3, 2, FigletAttribute.FullWidth,
+    private static readonly FigletHeader _header = new('$', 3, 2, FigletAttribute.FullWidth,
         FigletScriptDirection.LeftToRight);
 
-    private readonly FigletFont _font = new("name", Header,
-        new Dictionary<int, (string[] rows, int width)> { { 1, Char1 }, { 0, Char0 }, { 3, Char2 } });
+    private readonly FigletFont _font = new("name", _header,
+        new Dictionary<int, (string[] rows, int width)> { { 1, _char1 }, { 0, _char0 }, { 3, _char2 } });
 
     [TestMethod]
     public void Name_ReturnsTheSuppliedValue() => _font.Name.ShouldBe("name");
@@ -64,16 +64,16 @@ public class FigletFontTests
     public void Baseline_ReturnsTheSuppliedValue() => _font.Baseline.ShouldBe(2);
 
     [TestMethod, DataRow(FigletAttribute.FullWidth, AsciiFontLayout.FullWidth),
-     DataRow(0x01000000, AsciiFontLayout.FullWidth),
+     DataRow((FigletAttribute) 0x01000000, AsciiFontLayout.FullWidth),
      DataRow(FigletAttribute.HorizontalFitting | FigletAttribute.VerticalSmushing,
          AsciiFontLayout.Fitted),
      DataRow(FigletAttribute.HorizontalSmushing | FigletAttribute.VerticalFitting,
          AsciiFontLayout.Smushed)]
-    public void DefaultLayout_ReturnsTheExpectedCombinations(int attr, AsciiFontLayout exp)
+    public void DefaultLayout_ReturnsTheExpectedCombinations(FigletAttribute attr, AsciiFontLayout exp)
     {
-        var header = Header with
+        var header = _header with
         {
-            Attributes = (FigletAttribute) attr
+            Attributes = attr
         };
         var font = new FigletFont("name", header, new Dictionary<int, (string[] rows, int width)>());
 
@@ -98,7 +98,7 @@ public class FigletFontTests
     public void GetGlyphs_Throws_IfSpanIsEmpty()
     {
         _ = Should.Throw<ArgumentException>(() =>
-            _font.GetGlyphs(Array.Empty<Rune>(), Style1));
+            _font.GetGlyphs(Array.Empty<Rune>(), _style1));
     }
 
     [TestMethod]
@@ -106,21 +106,21 @@ public class FigletFontTests
     {
         var k = new[] { new Rune(1), new Rune(256), new Rune(3) };
 
-        var glyph = _font.GetGlyphs(k, Style1);
+        var glyph = _font.GetGlyphs(k, _style1);
         var contents = glyph.GetContents();
 
         var cols = new[,]
         {
-            { (new Rune('1'), Style1), (new('4'), Style1), (new('7'), Style1) },
-            { (new('2'), Style1), (new('5'), Style1), (new('8'), Style1) },
-            { (new('3'), Style1), (new('6'), Style1), (new('9'), Style1) },
+            { (new Rune('1'), _style1), (new('4'), _style1), (new('7'), _style1) },
+            { (new('2'), _style1), (new('5'), _style1), (new('8'), _style1) },
+            { (new('3'), _style1), (new('6'), _style1), (new('9'), _style1) },
 
-            { (new('a'), Style1), (new('d'), Style1), (new('g'), Style1) },
-            { (new('b'), Style1), (new('e'), Style1), (new('h'), Style1) },
-            { (new('c'), Style1), (new('f'), Style1), (new('i'), Style1) },
-            { (new('1'), Style1), (new('2'), Style1), (new('3'), Style1) },
+            { (new('a'), _style1), (new('d'), _style1), (new('g'), _style1) },
+            { (new('b'), _style1), (new('e'), _style1), (new('h'), _style1) },
+            { (new('c'), _style1), (new('f'), _style1), (new('i'), _style1) },
+            { (new('1'), _style1), (new('2'), _style1), (new('3'), _style1) },
 
-            { (new('1'), Style1), (new(' '), Style1), (new('3'), Style1) }
+            { (new('1'), _style1), (new(' '), _style1), (new('3'), _style1) }
         };
 
         contents.ShouldBe(cols);
@@ -129,28 +129,28 @@ public class FigletFontTests
     [TestMethod]
     public void GetGlyphs_ReturnsTheExpectedGlyphsIncludingReplacement_GreaterWidth()
     {
-        var font = new FigletFont("name", Header, new Dictionary<int, (string[] rows, int width)>()
-            { { 1, Char1 }, { 3, Char0 } });
+        var font = new FigletFont("name", _header, new Dictionary<int, (string[] rows, int width)>()
+            { { 1, _char1 }, { 3, _char0 } });
 
         var k = new[] { new Rune(1), new Rune(256), new Rune(3) };
 
-        var glyphs = font.GetGlyphs(k, Style1);
+        var glyphs = font.GetGlyphs(k, _style1);
         var contents = glyphs.GetContents();
 
         var cols = new[,]
         {
-            { (new Rune('1'), Style1), (new('4'), Style1), (new('7'), Style1) },
-            { (new('2'), Style1), (new('5'), Style1), (new('8'), Style1) },
-            { (new('3'), Style1), (new('6'), Style1), (new('9'), Style1) },
+            { (new Rune('1'), _style1), (new('4'), _style1), (new('7'), _style1) },
+            { (new('2'), _style1), (new('5'), _style1), (new('8'), _style1) },
+            { (new('3'), _style1), (new('6'), _style1), (new('9'), _style1) },
 
-            { (new('┌'), Style1), (new('│'), Style1), (new('└'), Style1) },
-            { (new('─'), Style1), (new(' '), Style1), (new('─'), Style1) },
-            { (new('┐'), Style1), (new('│'), Style1), (new Rune('┘'), Style1) },
+            { (new('┌'), _style1), (new('│'), _style1), (new('└'), _style1) },
+            { (new('─'), _style1), (new(' '), _style1), (new('─'), _style1) },
+            { (new('┐'), _style1), (new('│'), _style1), (new Rune('┘'), _style1) },
 
-            { (new Rune('a'), Style1), (new('d'), Style1), (new('g'), Style1) },
-            { (new('b'), Style1), (new('e'), Style1), (new('h'), Style1) },
-            { (new('c'), Style1), (new('f'), Style1), (new('i'), Style1) },
-            { (new('1'), Style1), (new('2'), Style1), (new('3'), Style1) }
+            { (new Rune('a'), _style1), (new('d'), _style1), (new('g'), _style1) },
+            { (new('b'), _style1), (new('e'), _style1), (new('h'), _style1) },
+            { (new('c'), _style1), (new('f'), _style1), (new('i'), _style1) },
+            { (new('1'), _style1), (new('2'), _style1), (new('3'), _style1) }
         };
 
         contents.ShouldBe(cols);
@@ -159,7 +159,7 @@ public class FigletFontTests
     [TestMethod]
     public void GetGlyphs_ReplacesHardBlanksWithWhitespaces()
     {
-        var header = Header with
+        var header = _header with
         {
             Height = 1,
             BaseLine = 1,
@@ -173,14 +173,14 @@ public class FigletFontTests
 
         var k = new[] { new Rune(1), new Rune(2) };
 
-        var glyphs = font.GetGlyphs(k, Style1);
+        var glyphs = font.GetGlyphs(k, _style1);
         var contents = glyphs.GetContents();
 
         var cols = new[,]
         {
-            { (new Rune('A'), Style1) },
-            { (new('1'), Style1) },
-            { (new('2'), Style1) }
+            { (new Rune('A'), _style1) },
+            { (new('1'), _style1) },
+            { (new('2'), _style1) }
         };
 
         contents.ShouldBe(cols);
@@ -190,12 +190,12 @@ public class FigletFontTests
     [TestMethod]
     public void GetGlyphs_MergesCharactersUsingLayoutRules()
     {
-        var glyph = _font.GetGlyphs(new[] { new Rune(3) }, Style1);
+        var glyph = _font.GetGlyphs(new[] { new Rune(3) }, _style1);
         var contents = glyph.GetContents();
 
         var cols = new[,]
         {
-            { (new Rune('1'), Style1), (new(' '), Style1), (new('3'), Style1) }
+            { (new Rune('1'), _style1), (new(' '), _style1), (new('3'), _style1) }
         };
 
         contents.ShouldBe(cols);
@@ -204,7 +204,7 @@ public class FigletFontTests
     [TestMethod]
     public void GetGlyphs_ReturnsChars_WithWidthOfOne()
     {
-        var header = Header with
+        var header = _header with
         {
             Height = 1,
             BaseLine = 1
@@ -218,30 +218,33 @@ public class FigletFontTests
 
         var k = new[] { new Rune('A'), new Rune(256), new Rune('B') };
 
-        var glyphs = font.GetGlyphs(k, Style1);
+        var glyphs = font.GetGlyphs(k, _style1);
         var contents = glyphs.GetContents();
 
         var cols = new[,]
         {
-            { (new Rune('A'), Style1) },
-            { (new Rune('□'), Style1) },
-            { (new Rune('B'), Style1) },
+            { (new Rune('A'), _style1) },
+            { (new Rune('□'), _style1) },
+            { (new Rune('B'), _style1) },
         };
 
         contents.ShouldBe(cols);
     }
 
     [TestMethod]
-    public async Task LoadAsync1_Throws_IfNameIsNullOrEmpty() => await Should.ThrowAsync<ArgumentException>(() => FigletFont.LoadAsync("", new StringReader(string.Empty)));
+    public async Task LoadAsync1_Throws_IfNameIsNullOrEmptyAsync() =>
+        await Should.ThrowAsync<ArgumentException>(() => FigletFont.LoadAsync("", new StringReader(string.Empty)));
 
     [TestMethod]
-    public async Task LoadAsync1_Throws_IfReaderIsNull() => await Should.ThrowAsync<ArgumentNullException>(() => FigletFont.LoadAsync("name", null!));
+    public async Task LoadAsync1_Throws_IfReaderIsNullAsync() =>
+        await Should.ThrowAsync<ArgumentNullException>(() => FigletFont.LoadAsync("name", null!));
 
     [TestMethod]
-    public async Task LoadAsync1_Throws_IfFailedToLoadFont() => await Should.ThrowAsync<FormatException>(() => FigletFont.LoadAsync("font", new StringReader(string.Empty)));
+    public async Task LoadAsync1_Throws_IfFailedToLoadFontAsync() =>
+        await Should.ThrowAsync<FormatException>(() => FigletFont.LoadAsync("font", new StringReader(string.Empty)));
 
     [TestMethod]
-    public async Task LoadAsync1_LoadsTheFontAsExpected()
+    public async Task LoadAsync1_LoadsTheFontAsExpectedAsync()
     {
         using var reader = File.OpenText("Fixtures/big.flf");
         var font = await FigletFont.LoadAsync("font", reader);
@@ -259,7 +262,7 @@ public class FigletFontTests
     }
 
     [TestMethod]
-    public async Task LoadAsync2_Throws_IfPathIsNullOrEmpty()
+    public async Task LoadAsync2_Throws_IfPathIsNullOrEmptyAsync()
     {
         var dn = new Mock<IDotNetSystemAdapter>();
 
@@ -267,7 +270,7 @@ public class FigletFontTests
     }
 
     [TestMethod]
-    public async Task LoadAsync2_Throws_IfFailedToOpenFile()
+    public async Task LoadAsync2_Throws_IfFailedToOpenFileAsync()
     {
         var dn = new Mock<IDotNetSystemAdapter>();
         _ = dn.Setup(s => s.OpenFileAsText(It.IsAny<string>()))
@@ -280,7 +283,7 @@ public class FigletFontTests
     }
 
     [TestMethod]
-    public async Task LoadAsync2_LoadsTheFontAsExpected()
+    public async Task LoadAsync2_LoadsTheFontAsExpectedAsync()
     {
         const string f = "Fixtures/big.flf";
         var dn = new Mock<IDotNetSystemAdapter>();

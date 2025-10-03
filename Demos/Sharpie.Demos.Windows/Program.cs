@@ -34,13 +34,16 @@ using Sharpie;
 using Sharpie.Backend;
 
 [assembly: ExcludeFromCodeCoverage]
+
+#pragma warning disable CA1416 // Validate platform compatibility -- this is a demo
 using var terminal = new Terminal(CursesBackend.Load(), new(CaretMode: CaretMode.Visible, ManagedWindows: true));
+#pragma warning restore CA1416 // Validate platform compatibility
 
 var rnd = new Random();
 
 short c = 100;
 
-void MakeWindow()
+void makeWindow()
 {
     var x = rnd.Next(0, terminal.Screen.Size.Width);
     var y = rnd.Next(0, terminal.Screen.Size.Height);
@@ -62,7 +65,7 @@ void MakeWindow()
 
 for (var x = 0; x < 10; x++)
 {
-    MakeWindow();
+    makeWindow();
 }
 
 terminal.Screen.Refresh();

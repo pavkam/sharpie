@@ -58,10 +58,12 @@ public class TerminalTests
     }
 
     [TestMethod]
-    public void Ctor_Throws_IfCursesIsNull() => Should.Throw<ArgumentNullException>(() => new Terminal(null!, new()));
+    public void Ctor_Throws_IfCursesIsNull() =>
+        Should.Throw<ArgumentNullException>(() => new Terminal(null!, new()));
 
     [TestMethod]
-    public void Ctor_Throws_IfMouseClickIntervalNegative() => Should.Throw<ArgumentOutOfRangeException>(() => new Terminal(_cursesMock.Object, new(MouseClickInterval: -1)));
+    public void Ctor_Throws_IfMouseClickIntervalNegative() =>
+        Should.Throw<ArgumentOutOfRangeException>(() => new Terminal(_cursesMock.Object, new(MouseClickInterval: -1)));
 
     [TestMethod, DataRow(true), DataRow(false)]
     public void Ctor_NotifiesCurses_AboutUseEnvironmentOverrides(bool enable)
@@ -136,8 +138,9 @@ public class TerminalTests
         _cursesMock.Verify(v => v.noqiflush(), enabled ? Times.Once : Times.Never);
     }
 
-    [TestMethod, DataRow(true), DataRow(false), SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public void Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush(bool enabled)
+    [TestMethod,
+     SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public void Ctor_Throws_IfCursesFails_WhenSettingUpManualFlush()
     {
         _ = _cursesMock.Setup(v => v.intrflush(IntPtr.Zero, It.IsAny<bool>()))
                    .Returns(-1);

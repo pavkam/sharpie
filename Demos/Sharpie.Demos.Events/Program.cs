@@ -36,7 +36,10 @@ using Sharpie.Backend;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the terminal instance without any non-standard settings.
+
+#pragma warning disable CA1416 // Validate platform compatibility -- this is a demo
 using var terminal = new Terminal(CursesBackend.Load(), new(UseStandardKeySequenceResolvers: true));
+#pragma warning restore CA1416 // Validate platform compatibility
 
 // Set the main screen attributes for text and drawings.
 terminal.Screen.ColorMixture = terminal.Colors.MixColors(StandardColor.Green, StandardColor.Blue);

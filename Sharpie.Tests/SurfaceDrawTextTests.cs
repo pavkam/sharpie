@@ -33,7 +33,14 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SurfaceDrawTextTests
 {
-    private readonly Style _style = new() { ColorMixture = new() { Handle = 11 }, Attributes = VideoAttribute.Bold };
+    private readonly Style _style = new()
+    {
+        ColorMixture = new()
+        {
+            Handle = 11
+        },
+        Attributes = VideoAttribute.Bold
+    };
 
     private Mock<ICursesBackend> _cursesMock = null!;
     private Mock<IAsciiFont> _font2X2 = null!;
@@ -82,10 +89,12 @@ public class SurfaceDrawTextTests
     }
 
     [TestMethod]
-    public void DrawText1_Throws_IfFontIsNull() => Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(null!, "text", Style.Default));
+    public void DrawText1_Throws_IfFontIsNull() =>
+        Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(null!, "text", Style.Default));
 
     [TestMethod]
-    public void DrawText1_Throws_IfFontIsStringIsNull() => Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(_font2X2.Object, null!, Style.Default));
+    public void DrawText1_Throws_IfFontIsStringIsNull() =>
+        Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(_font2X2.Object, null!, Style.Default));
 
     [TestMethod]
     public void DrawText1_DoesNothing_IfTextIsEmpty()
@@ -232,10 +241,12 @@ public class SurfaceDrawTextTests
     }
 
     [TestMethod]
-    public void DrawText2_Throws_IfFontIsNull() => Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(null!, "text"));
+    public void DrawText2_Throws_IfFontIsNull() =>
+        Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(null!, "text"));
 
     [TestMethod]
-    public void DrawText2_Throws_IfFontIsStringIsNull() => Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(_font2X2.Object, null!));
+    public void DrawText2_Throws_IfFontIsStringIsNull() =>
+        Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(_font2X2.Object, null!));
 
     [TestMethod]
     public void DrawText2_DoesNothing_IfTextIsEmpty()

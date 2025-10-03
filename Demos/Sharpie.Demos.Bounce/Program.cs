@@ -36,7 +36,9 @@ using Sharpie.Backend;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance.
+#pragma warning disable CA1416 // Validate platform compatibility -- this is a demo
 using var terminal = new Terminal(CursesBackend.Load(), new(CaretMode: CaretMode.Invisible));
+#pragma warning restore CA1416 // Validate platform compatibility
 
 // Prepare styles
 var styles = Enum.GetValues<StandardColor>()

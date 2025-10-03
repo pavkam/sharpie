@@ -33,11 +33,13 @@ namespace Sharpie.Tests;
 [TestClass]
 public class CursesOperationExceptionTests
 {
-    [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
+    [TestMethod,
+     SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
     public void Ctor_ThrowsException_IfMessageIsNull() => Should.Throw<ArgumentNullException>(() => { _ = new CursesOperationException("dummy", null!); });
 
-    [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
+    [TestMethod,
+     SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
     public void Ctor_ThrowsException_IfOperationIsNull() => Should.Throw<ArgumentNullException>(() => { _ = new CursesOperationException(null!, "text"); });
 

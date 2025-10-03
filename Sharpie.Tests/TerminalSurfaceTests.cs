@@ -51,7 +51,8 @@ public class TerminalSurfaceTests
     public void TestCleanup() => _terminal.Dispose();
 
     [TestMethod]
-    public void Ctor_Throws_IfTerminalIsNull() => Should.Throw<ArgumentNullException>(() => new TerminalSurface(null!, new(1)));
+    public void Ctor_Throws_IfTerminalIsNull() =>
+        Should.Throw<ArgumentNullException>(() => new TerminalSurface(null!, new(1)));
 
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()

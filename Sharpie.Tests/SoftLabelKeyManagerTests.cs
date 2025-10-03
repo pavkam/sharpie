@@ -54,9 +54,11 @@ public class SoftLabelKeyManagerTests
     [TestCleanup]
     public void TestCleanup() => _terminal.Dispose();
 
-    [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
+    [TestMethod,
+     SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
-    public void Ctor_Throws_IfCursesIsNull() => Should.Throw<ArgumentNullException>(() => { _ = new SoftLabelKeyManager(null!, SoftLabelKeyMode.FourFour); });
+    public void Ctor_Throws_IfCursesIsNull() =>
+        Should.Throw<ArgumentNullException>(() => { _ = new SoftLabelKeyManager(null!, SoftLabelKeyMode.FourFour); });
 
     [TestMethod]
     public void Terminal_IsInitialized()
@@ -223,7 +225,8 @@ public class SoftLabelKeyManagerTests
     }
 
     [TestMethod]
-    public void SetLabel_Throws_IfTitleIsNull() => Should.Throw<ArgumentNullException>(() => { _mgr1.SetLabel(0, null!, SoftLabelKeyAlignment.Center); });
+    public void SetLabel_Throws_IfTitleIsNull() =>
+        Should.Throw<ArgumentNullException>(() => { _mgr1.SetLabel(0, null!, SoftLabelKeyAlignment.Center); });
 
     [TestMethod]
     public void SetLabel_Throws_IfIndexIsInvalid()
@@ -240,7 +243,8 @@ public class SoftLabelKeyManagerTests
     }
 
     [TestMethod]
-    public void SetLabel_Throws_IfNotEnabled() => Should.Throw<NotSupportedException>(() => { _mgr2.SetLabel(0, "anything", SoftLabelKeyAlignment.Center); });
+    public void SetLabel_Throws_IfNotEnabled() =>
+        Should.Throw<NotSupportedException>(() => { _mgr2.SetLabel(0, "anything", SoftLabelKeyAlignment.Center); });
 
     [TestMethod]
     public void SetLabel_Throws_IfCursesFails()
@@ -288,7 +292,8 @@ public class SoftLabelKeyManagerTests
     }
 
     [TestMethod]
-    public void DisableAttributes_Throws_IfNotEnabled() => Should.Throw<NotSupportedException>(() => { _mgr2.DisableAttributes(VideoAttribute.Italic); });
+    public void DisableAttributes_Throws_IfNotEnabled() =>
+        Should.Throw<NotSupportedException>(() => { _mgr2.DisableAttributes(VideoAttribute.Italic); });
 
     [TestMethod]
     public void DisableAttributes_Throws_IfCursesFails()
@@ -381,7 +386,8 @@ public class SoftLabelKeyManagerTests
     }
 
     [TestMethod]
-    public void Refresh_Throws_IfNotEnabled() => Should.Throw<NotSupportedException>(() => { _mgr2.Refresh(); });
+    public void Refresh_Throws_IfNotEnabled() =>
+        Should.Throw<NotSupportedException>(() => { _mgr2.Refresh(); });
 
     [TestMethod]
     public void Refresh_Throws_IfCursesFails_NoQueue()

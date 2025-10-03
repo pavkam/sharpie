@@ -47,7 +47,9 @@ public class EventTests
                .ShouldBe("MouseAction");
     }
 
-    [TestMethod, DataRow(null), DataRow("")]
+    [TestMethod,
+     DataRow(null),
+     DataRow("")]
     public void Equals_ReturnsFalse_IfNotEvent(object? b)
     {
         _event1.Equals(b)

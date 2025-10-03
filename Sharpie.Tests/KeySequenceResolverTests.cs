@@ -34,16 +34,20 @@ namespace Sharpie.Tests;
 public class KeySequenceResolverTests
 {
     [TestMethod]
-    public void SpecialCharacterResolver_ThrowsIfSequenceIsNull() => Should.Throw<ArgumentNullException>(() => KeySequenceResolver.SpecialCharacterResolver(null!));
+    public void SpecialCharacterResolver_ThrowsIfSequenceIsNull() =>
+        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.SpecialCharacterResolver(null!));
 
     [TestMethod]
-    public void ControlKeyResolver_ThrowsIfSequenceIsNull() => Should.Throw<ArgumentNullException>(() => KeySequenceResolver.ControlKeyResolver(null!));
+    public void ControlKeyResolver_ThrowsIfSequenceIsNull() =>
+        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.ControlKeyResolver(null!));
 
     [TestMethod]
-    public void AltKeyResolver_ThrowsIfSequenceIsNull() => Should.Throw<ArgumentNullException>(() => KeySequenceResolver.AltKeyResolver(null!));
+    public void AltKeyResolver_ThrowsIfSequenceIsNull() =>
+        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.AltKeyResolver(null!));
 
     [TestMethod]
-    public void KeyPadModifiersResolver_ThrowsIfSequenceIsNull() => Should.Throw<ArgumentNullException>(() => KeySequenceResolver.KeyPadModifiersResolver(null!));
+    public void KeyPadModifiersResolver_ThrowsIfSequenceIsNull() =>
+        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.KeyPadModifiersResolver(null!));
 
     [TestMethod, DataRow(Key.Character, 0x01b, ModifierKey.Shift, Key.Escape, ControlCharacter.Null,
          ModifierKey.Shift), DataRow(Key.Character, ControlCharacter.Tab, ModifierKey.Shift, Key.Tab,
@@ -66,8 +70,11 @@ public class KeySequenceResolverTests
         key.Name.ShouldBe(null);
     }
 
-    [TestMethod, DataRow(Key.Character, 'a'), DataRow(Key.Unknown, ControlCharacter.Null),
-     DataRow(Key.Backspace, ControlCharacter.Null), DataRow(Key.F1, ControlCharacter.Null)]
+    [TestMethod,
+     DataRow(Key.Character, 'a'),
+     DataRow(Key.Unknown, ControlCharacter.Null),
+     DataRow(Key.Backspace, ControlCharacter.Null),
+     DataRow(Key.F1, ControlCharacter.Null)]
     public void SpecialCharacterResolver_ReturnsTheExpectedResult_ForUnknown(Key inKey, int inCode)
     {
         var (key, count) = KeySequenceResolver.SpecialCharacterResolver(
@@ -77,10 +84,10 @@ public class KeySequenceResolverTests
         key.ShouldBeNull();
     }
 
-    [TestMethod, DataRow(Key.Character, 0, ModifierKey.Shift, Key.Character, ' ',
-         ModifierKey.Shift | ModifierKey.Ctrl), DataRow(Key.Character, 1, ModifierKey.Shift, Key.Character, 'A',
-         ModifierKey.Shift | ModifierKey.Ctrl), DataRow(Key.Character, 26, ModifierKey.Shift, Key.Character, 'Z',
-         ModifierKey.Shift | ModifierKey.Ctrl)]
+    [TestMethod,
+     DataRow(Key.Character, 0, ModifierKey.Shift, Key.Character, ' ', ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(Key.Character, 1, ModifierKey.Shift, Key.Character, 'A', ModifierKey.Shift | ModifierKey.Ctrl),
+     DataRow(Key.Character, 26, ModifierKey.Shift, Key.Character, 'Z', ModifierKey.Shift | ModifierKey.Ctrl)]
     public void ControlKeyResolver_ReturnsTheExpectedResult_ForKnown(Key inKey, int inCode, ModifierKey inMod,
         Key expKey, int expCode, ModifierKey expMod)
     {
@@ -95,8 +102,11 @@ public class KeySequenceResolverTests
         key.Name.ShouldBe(null);
     }
 
-    [TestMethod, DataRow(Key.Character, 'a'), DataRow(Key.Unknown, ControlCharacter.Null),
-     DataRow(Key.Backspace, ControlCharacter.Null), DataRow(Key.F1, ControlCharacter.Null)]
+    [TestMethod,
+     DataRow(Key.Character, 'a'),
+     DataRow(Key.Unknown, ControlCharacter.Null),
+     DataRow(Key.Backspace, ControlCharacter.Null),
+     DataRow(Key.F1, ControlCharacter.Null)]
     public void ControlKeyResolver_ReturnsTheExpectedResult_ForUnknown(Key inKey, int inCode)
     {
         var (key, count) = KeySequenceResolver.ControlKeyResolver(
@@ -106,8 +116,9 @@ public class KeySequenceResolverTests
         key.ShouldBeNull();
     }
 
-    [TestMethod, DataRow(Key.Character, 'f', ModifierKey.Shift, Key.KeypadRight, ControlCharacter.Null,
-         ModifierKey.Shift | ModifierKey.Alt, true),
+    [TestMethod,
+     DataRow(Key.Character, 'f', ModifierKey.Shift, Key.KeypadRight, ControlCharacter.Null,
+        ModifierKey.Shift | ModifierKey.Alt, true),
      DataRow(Key.Character, 'b', ModifierKey.Shift, Key.KeypadLeft, ControlCharacter.Null,
          ModifierKey.Shift | ModifierKey.Alt, true),
      DataRow(Key.F1, ControlCharacter.Null, ModifierKey.Shift, Key.F1, ControlCharacter.Null,

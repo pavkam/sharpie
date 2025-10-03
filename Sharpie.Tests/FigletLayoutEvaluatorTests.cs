@@ -53,7 +53,9 @@ public class FigletLayoutEvaluatorTests
                              .ShouldBe('B');
     }
 
-    [TestMethod, DataRow('A', 'A', 'A'), DataRow('$', '$', ControlCharacter.Null)]
+    [TestMethod,
+     DataRow('A', 'A', 'A'),
+     DataRow('$', '$', ControlCharacter.Null)]
     public void HorizontalJoin_IfSmushingRule1_ReturnsExpectedResult(char l, char r, char exp)
     {
         FigletLayoutEvaluator.HorizontalJoin('$',
@@ -61,7 +63,10 @@ public class FigletLayoutEvaluatorTests
                              .ShouldBe(exp);
     }
 
-    [TestMethod, DataRow('_', '|', '|'), DataRow('|', '_', '|'), DataRow('a', 'b', ControlCharacter.Null)]
+    [TestMethod,
+     DataRow('_', '|', '|'),
+     DataRow('|', '_', '|'),
+     DataRow('a', 'b', ControlCharacter.Null)]
     public void HorizontalJoin_IfSmushingRule2_ReturnsExpectedResult(char l, char r, char exp)
     {
         FigletLayoutEvaluator.HorizontalJoin('$',
@@ -78,7 +83,10 @@ public class FigletLayoutEvaluatorTests
                              .ShouldBe(exp);
     }
 
-    [TestMethod, DataRow('[', ']', '|'), DataRow(')', '(', '|'), DataRow('(', '{', ControlCharacter.Null)]
+    [TestMethod,
+     DataRow('[', ']', '|'),
+     DataRow(')', '(', '|'),
+     DataRow('(', '{', ControlCharacter.Null)]
     public void HorizontalJoin_IfSmushingRule4_ReturnsExpectedResult(char l, char r, char exp)
     {
         FigletLayoutEvaluator.HorizontalJoin('$',
@@ -86,7 +94,10 @@ public class FigletLayoutEvaluatorTests
                              .ShouldBe(exp);
     }
 
-    [TestMethod, DataRow('/', '\\', 'Y'), DataRow('\\', '/', 'Y'), DataRow('>', '<', 'X'),
+    [TestMethod,
+     DataRow('/', '\\', 'Y'),
+     DataRow('\\', '/', 'Y'),
+     DataRow('>', '<', 'X'),
      DataRow('>', '/', ControlCharacter.Null)]
     public void HorizontalJoin_IfSmushingRule5_ReturnsExpectedResult(char l, char r, char exp)
     {
@@ -95,7 +106,9 @@ public class FigletLayoutEvaluatorTests
                              .ShouldBe(exp);
     }
 
-    [TestMethod, DataRow('$', '$', '$'), DataRow('$', '/', ControlCharacter.Null)]
+    [TestMethod,
+     DataRow('$', '$', '$'),
+     DataRow('$', '/', ControlCharacter.Null)]
     public void HorizontalJoin_IfSmushingRule6_ReturnsExpectedResult(char l, char r, char exp)
     {
         FigletLayoutEvaluator.HorizontalJoin('$',
@@ -103,7 +116,11 @@ public class FigletLayoutEvaluatorTests
                              .ShouldBe(exp);
     }
 
-    [TestMethod, DataRow(" ", " ", " "), DataRow("  ", " ", "  "), DataRow(" ", "  ", " "), DataRow("  ", "  ", "  ")]
+    [TestMethod,
+     DataRow(" ", " ", " "),
+     DataRow("  ", " ", "  "),
+     DataRow(" ", "  ", " "),
+     DataRow("  ", "  ", "  ")]
     public void Join_RemovesAllWhiteSpacesFromRight(string ls, string rs, string exp)
     {
         var left = new StringBuilder(ls);
@@ -112,7 +129,9 @@ public class FigletLayoutEvaluatorTests
         left.ToString().ShouldBe(new(exp));
     }
 
-    [TestMethod, DataRow("a  ", "   ", "a  "), DataRow("a  ", "  bc", "ac")]
+    [TestMethod,
+     DataRow("a  ", "   ", "a  "),
+     DataRow("a  ", "  bc", "ac")]
     public void Join_RemovesAllWhiteSpacesFromRightUntilMerge(string ls, string rs, string exp)
     {
         var left = new StringBuilder(ls);
@@ -121,7 +140,9 @@ public class FigletLayoutEvaluatorTests
         left.ToString().ShouldBe(new(exp));
     }
 
-    [TestMethod, DataRow("a  b", "   k   z", "a  bk   z"), DataRow("  start", "ed", "  started")]
+    [TestMethod,
+     DataRow("a  b", "   k   z", "a  bk   z"),
+     DataRow("  start", "ed", "  started")]
     public void Join_RemovesAllWhiteSpacesFromRightUntilStop(string ls, string rs, string exp)
     {
         var left = new StringBuilder(ls);

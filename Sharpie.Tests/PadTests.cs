@@ -55,7 +55,8 @@ public class PadTests
     public void TestCleanup() => _terminal.Dispose();
 
     [TestMethod]
-    public void Ctor_Throws_IfScreenIsNull() => Should.Throw<ArgumentException>(() => new Pad(null!, IntPtr.MaxValue));
+    public void Ctor_Throws_IfScreenIsNull() =>
+        Should.Throw<ArgumentException>(() => new Pad(null!, IntPtr.MaxValue));
 
     [TestMethod]
     public void ToString_ReturnsFormattedRepresentation()

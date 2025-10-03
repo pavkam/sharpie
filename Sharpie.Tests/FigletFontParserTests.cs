@@ -146,7 +146,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_Throws_IfCharacterIncomplete()
+    public async Task ParseStandardCharacterAsync_Throws_IfCharacterIncompleteAsync()
     {
         const string ch = "1234567@";
 
@@ -155,7 +155,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_Throws_IfCharacterHasDiffLineSizes()
+    public async Task ParseStandardCharacterAsync_Throws_IfCharacterHasDiffLineSizesAsync()
     {
         const string ch = "1234567@\n123456@";
 
@@ -164,7 +164,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_Throws_IfCharacterLineTooLong()
+    public async Task ParseStandardCharacterAsync_Throws_IfCharacterLineTooLongAsync()
     {
         const string ch = "1@\n12@";
 
@@ -173,7 +173,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_ReturnsCharacterAndLines_1()
+    public async Task ParseStandardCharacterAsync_ReturnsCharacterAndLines_1Async()
     {
         const string ch = "123@@";
 
@@ -184,7 +184,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_ReturnsCharacterAndLines_2()
+    public async Task ParseStandardCharacterAsync_ReturnsCharacterAndLines_2Async()
     {
         const string ch = "12@\n34@\n56@@";
 
@@ -195,7 +195,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCodePointInvalid()
+    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCodePointInvalidAsync()
     {
         const string ch = "ab\n123@";
 
@@ -204,7 +204,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterIncomplete()
+    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterIncompleteAsync()
     {
         const string ch = "10\n1234567@";
 
@@ -213,7 +213,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterHasDiffLineSizes()
+    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterHasDiffLineSizesAsync()
     {
         const string ch = "10\n1234567@\n123456@";
 
@@ -222,7 +222,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterLineTooLong()
+    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterLineTooLongAsync()
     {
         const string ch = "10\n1@\n12@";
 
@@ -231,7 +231,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_ReturnsCharacterAndLines_1()
+    public async Task ParseCodeTaggedCharacterAsync_ReturnsCharacterAndLines_1Async()
     {
         const string ch = "10\n123@@";
 
@@ -243,7 +243,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_ReturnsCharacterAndLines_2()
+    public async Task ParseCodeTaggedCharacterAsync_ReturnsCharacterAndLines_2Async()
     {
         const string ch = "  -0xffff hello world  \n12@\n34@\n56@@";
 
@@ -255,7 +255,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_Throws_IfNoCharsAndExpectedComments()
+    public async Task ParseFontFileAsync1_Throws_IfNoCharsAndExpectedCommentsAsync()
     {
         const string fnt = "flf2a 3 2 4 15 1";
 
@@ -264,7 +264,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_ReturnsNoCharacters_IfNoneExpected()
+    public async Task ParseFontFileAsync1_ReturnsNoCharacters_IfNoneExpectedAsync()
     {
         const string fnt = "flf2a 3 2 4 -1 1\nthis is a comment line";
 
@@ -276,7 +276,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_Throws_IfExpectedOneChar()
+    public async Task ParseFontFileAsync1_Throws_IfExpectedOneCharAsync()
     {
         const string fnt = "flf2a 3 2 4 15 1\ncomment";
 
@@ -285,7 +285,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_Throws_IfCharHAsLongedWidthThanExpected()
+    public async Task ParseFontFileAsync1_Throws_IfCharHAsLongedWidthThanExpectedAsync()
     {
         const string fnt = "flf2a 2 1 2 -1 1\nthis is a comment line\n123@\n456@@";
 
@@ -294,7 +294,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_ReturnsHeaderAndOneChar()
+    public async Task ParseFontFileAsync1_ReturnsHeaderAndOneCharAsync()
     {
         const string fnt = "flf2a 2 1 5 -1 1\nthis is a comment line\n123@\n456@@";
 
@@ -308,7 +308,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_ReturnsHeaderAndOneTaggedChar()
+    public async Task ParseFontFileAsync1_ReturnsHeaderAndOneTaggedCharAsync()
     {
         const string fnt = "flf2a 2 1 5 -1 1\nthis is a comment line\n200\n123@\n456@@";
 
@@ -322,7 +322,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_ReturnsHeaderAndTwoChars()
+    public async Task ParseFontFileAsync1_ReturnsHeaderAndTwoCharsAsync()
     {
         const string fnt = "flf2a 2 1 5 -1 1\nthis is a comment line\n123@\n456@@\n200\nabc@\ndef@@";
 
@@ -339,7 +339,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync2_ParsesTheFileAsExpected()
+    public async Task ParseFontFileAsync2_ParsesTheFileAsExpectedAsync()
     {
         using var reader = new StreamReader("Fixtures/big.flf");
         var (header, chars) = await FigletFontParser.ParseFontFileAsync(reader);

@@ -48,7 +48,10 @@ public class PdCursesMod32BackendTests
         _backend = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object, null);
     }
 
-    [TestMethod, DataRow(true), DataRow(false)]
+#pragma warning disable IDE1006 // Naming Styles -- these are native names
+    [TestMethod,
+     DataRow(true),
+     DataRow(false)]
     public void is_scrollok_IsRelayedToLibrary(bool ret)
     {
         var h = new IntPtr(999);
@@ -372,18 +375,101 @@ public class PdCursesMod32BackendTests
         ((int) pair).ShouldBe(2);
     }
 
+
+    [TestMethod]
+    public void wadd_wch_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.wadd_wch(new(1), null!));
+
+    [TestMethod]
+    public void wadd_wch_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.wadd_wch(new(1), new("bad")));
+
+    [TestMethod]
+    public void wbkgrnd_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.wbkgrnd(new(1), null!));
+
+    [TestMethod]
+    public void wbkgrnd_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.wbkgrnd(new(1), new("bad")));
+
+    [TestMethod]
+    public void wvline_set_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.wvline_set(new(1), null!, 4));
+
+    [TestMethod]
+    public void wvline_set_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.wvline_set(new(1), new("bad"), 4));
+
+    [TestMethod]
+    public void whline_set_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
+
+    [TestMethod]
+    public void whline_set_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
+
+    [TestMethod]
+    public void wgetbkgrnd_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
+
+    [TestMethod]
+    public void wgetbkgrnd_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
+
+    [TestMethod]
+    public void getcchar_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.getcchar(null!, new(), out var _, out var _, new(2)));
+
+    [TestMethod]
+    public void getcchar_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.getcchar(new("bad"), new(), out var _, out var _, new(2)));
+
+    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5), DataRow(6), DataRow(7)]
+    public void wborder_set_Throws_IfCharIsNull(int bad)
+    {
+        var chs = new ComplexChar[8];
+        for (var x = 0; x < chs.Length; x++)
+        {
+            if (x != bad)
+            {
+                (chs[x], _) = MakeTestComplexChar();
+            }
+        }
+
+        _ = Should.Throw<ArgumentNullException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
+            chs[4], chs[5], chs[6], chs[7]));
+    }
+
+    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5), DataRow(6), DataRow(7)]
+    public void wborder_set_Throws_IfCharIsIncompatible(int bad)
+    {
+        var chs = new ComplexChar[8];
+        for (var x = 0; x < chs.Length; x++)
+        {
+            if (x != bad)
+            {
+                (chs[x], _) = MakeTestComplexChar();
+            }
+            else
+            {
+                chs[x] = new("bad");
+            }
+        }
+
+        _ = Should.Throw<ArgumentException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
+            chs[4], chs[5], chs[6], chs[7]));
+    }
+#pragma warning restore IDE1006 // Naming Styles
+
     [TestMethod]
     public void CursesMouseEventParser_ReturnsMouseParserPdCursesAbi() => _backend.CursesMouseEventParser.ShouldBe(CursesMouseEventParser.Get(CursesAbiVersion.PdCurses));
 
-    [TestMethod, DataRow(VideoAttribute.None, 0), DataRow(VideoAttribute.StandOut, 0x00A00000),
-     DataRow(VideoAttribute.Underline, 0x00100000), DataRow(VideoAttribute.Reverse, 0x00200000),
-     DataRow(VideoAttribute.Blink, 0x00400000), DataRow(VideoAttribute.Dim, 0),
-     DataRow(VideoAttribute.Bold, 0x00800000), DataRow(VideoAttribute.AltCharset, 0x00010000),
-     DataRow(VideoAttribute.Invisible, 0), DataRow(VideoAttribute.Protect, 0),
-     DataRow(VideoAttribute.HorizontalHighlight, 0), DataRow(VideoAttribute.LeftHighlight, 0x00040000),
-     DataRow(VideoAttribute.LowHighlight, 0), DataRow(VideoAttribute.LowHighlight, 0),
-     DataRow(VideoAttribute.RightHighlight, 0x00020000), DataRow(VideoAttribute.TopHighlight, 0),
-     DataRow(VideoAttribute.VerticalHighlight, 0), DataRow(VideoAttribute.Italic, 0x00080000),
+    [TestMethod,
+     DataRow(VideoAttribute.None, 0),
+     DataRow(VideoAttribute.StandOut, 0x00A00000),
+     DataRow(VideoAttribute.Underline, 0x00100000),
+     DataRow(VideoAttribute.Reverse, 0x00200000),
+     DataRow(VideoAttribute.Blink, 0x00400000),
+     DataRow(VideoAttribute.Dim, 0),
+     DataRow(VideoAttribute.Bold, 0x00800000),
+     DataRow(VideoAttribute.AltCharset, 0x00010000),
+     DataRow(VideoAttribute.Invisible, 0),
+     DataRow(VideoAttribute.Protect, 0),
+     DataRow(VideoAttribute.HorizontalHighlight, 0),
+     DataRow(VideoAttribute.LeftHighlight, 0x00040000),
+     DataRow(VideoAttribute.LowHighlight, 0),
+     DataRow(VideoAttribute.RightHighlight, 0x00020000),
+     DataRow(VideoAttribute.TopHighlight, 0),
+     DataRow(VideoAttribute.VerticalHighlight, 0),
+     DataRow(VideoAttribute.Italic, 0x00080000),
      DataRow(VideoAttribute.AltCharset | VideoAttribute.Bold, 0x00810000)]
     public void EncodeCursesAttribute_WorksAsExpected(VideoAttribute attr, int exp)
     {
@@ -391,11 +477,16 @@ public class PdCursesMod32BackendTests
                 .ShouldBe((uint) exp | (15 << 24));
     }
 
-    [TestMethod, DataRow(VideoAttribute.None, 0), DataRow(VideoAttribute.StandOut, 0x00A00000),
-     DataRow(VideoAttribute.Underline, 0x00100000), DataRow(VideoAttribute.Reverse, 0x00200000),
-     DataRow(VideoAttribute.Blink, 0x00400000), DataRow(VideoAttribute.Bold, 0x00800000),
-     DataRow(VideoAttribute.AltCharset, 0x00010000), DataRow(VideoAttribute.LeftHighlight, 0x00040000),
-     DataRow(VideoAttribute.RightHighlight, 0x00020000), DataRow(VideoAttribute.Italic, 0x00080000),
+    [TestMethod, DataRow(VideoAttribute.None, 0),
+    DataRow(VideoAttribute.StandOut, 0x00A00000),
+     DataRow(VideoAttribute.Underline, 0x00100000),
+     DataRow(VideoAttribute.Reverse, 0x00200000),
+     DataRow(VideoAttribute.Blink, 0x00400000),
+     DataRow(VideoAttribute.Bold, 0x00800000),
+     DataRow(VideoAttribute.AltCharset, 0x00010000),
+     DataRow(VideoAttribute.LeftHighlight, 0x00040000),
+     DataRow(VideoAttribute.RightHighlight, 0x00020000),
+     DataRow(VideoAttribute.Italic, 0x00080000),
      DataRow(VideoAttribute.AltCharset | VideoAttribute.Bold, 0x00810000)]
     public void DecodeCursesAttributes_WorksAsExpected(VideoAttribute exp, int attr)
     {
@@ -403,7 +494,9 @@ public class PdCursesMod32BackendTests
                 .ShouldBe((exp, (short) 15));
     }
 
-    [TestMethod, DataRow(-1, 10u, (int) CursesKeyCodeType.Unknown), DataRow(0, 32u, (int) CursesKeyCodeType.Character),
+    [TestMethod,
+     DataRow(-1, 10u, (int) CursesKeyCodeType.Unknown),
+     DataRow(0, 32u, (int) CursesKeyCodeType.Character),
      DataRow(100, 32u, (int) CursesKeyCodeType.Character),
      DataRow((int) PdCursesKeyCode.Yes + 0xeb00, (uint) PdCursesKeyCode.F3 + 0xeb00, (int) CursesKeyCodeType.Key),
      DataRow((int) PdCursesKeyCode.Yes + 0xeb00, (uint) PdCursesKeyCode.Resize + 0xeb00,
@@ -415,7 +508,8 @@ public class PdCursesMod32BackendTests
                 .ShouldBe((CursesKeyCodeType) exp);
     }
 
-    [TestMethod, DataRow(PdCursesKeyCode.F1, ControlCharacter.Null, Key.F1, ModifierKey.None),
+    [TestMethod,
+     DataRow(PdCursesKeyCode.F1, ControlCharacter.Null, Key.F1, ModifierKey.None),
      DataRow(PdCursesKeyCode.F2, ControlCharacter.Null, Key.F2, ModifierKey.None),
      DataRow(PdCursesKeyCode.F3, ControlCharacter.Null, Key.F3, ModifierKey.None),
      DataRow(PdCursesKeyCode.F4, ControlCharacter.Null, Key.F4, ModifierKey.None),
@@ -624,82 +718,10 @@ public class PdCursesMod32BackendTests
      DataRow(PdCursesKeyCode.RightCtrl, ControlCharacter.Null, Key.Character, ModifierKey.Ctrl),
      DataRow(PdCursesKeyCode.LeftAlt, ControlCharacter.Null, Key.Character, ModifierKey.Alt),
      DataRow(PdCursesKeyCode.RightAlt, ControlCharacter.Null, Key.Character, ModifierKey.Alt),
-     DataRow((uint) 9999, ControlCharacter.Null, Key.Unknown, ModifierKey.None)]
-    public void DecodeRawKey_DecodesProperly(uint rawKey, char chr, Key expKey, ModifierKey expMod)
+     DataRow((PdCursesKeyCode) 9999, ControlCharacter.Null, Key.Unknown, ModifierKey.None)]
+    public void DecodeRawKey_DecodesProperly(PdCursesKeyCode rawKey, char chr, Key expKey, ModifierKey expMod)
     {
-        _backend.DecodeRawKey(rawKey + 0xeb00)
+        _backend.DecodeRawKey((uint) (rawKey + 0xeb00))
                 .ShouldBe((expKey, chr, expMod));
-    }
-
-    [TestMethod]
-    public void wadd_wch_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.wadd_wch(new(1), null!));
-
-    [TestMethod]
-    public void wadd_wch_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.wadd_wch(new(1), new("bad")));
-
-    [TestMethod]
-    public void wbkgrnd_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.wbkgrnd(new(1), null!));
-
-    [TestMethod]
-    public void wbkgrnd_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.wbkgrnd(new(1), new("bad")));
-
-    [TestMethod]
-    public void wvline_set_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.wvline_set(new(1), null!, 4));
-
-    [TestMethod]
-    public void wvline_set_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.wvline_set(new(1), new("bad"), 4));
-
-    [TestMethod]
-    public void whline_set_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
-
-    [TestMethod]
-    public void whline_set_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
-
-    [TestMethod]
-    public void wgetbkgrnd_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
-
-    [TestMethod]
-    public void wgetbkgrnd_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
-
-    [TestMethod]
-    public void getcchar_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.getcchar(null!, new(), out var _, out var _, new(2)));
-
-    [TestMethod]
-    public void getcchar_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.getcchar(new("bad"), new(), out var _, out var _, new(2)));
-
-    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5), DataRow(6), DataRow(7)]
-    public void wborder_set_Throws_IfCharIsNull(int bad)
-    {
-        var chs = new ComplexChar[8];
-        for (var x = 0; x < chs.Length; x++)
-        {
-            if (x != bad)
-            {
-                (chs[x], _) = MakeTestComplexChar();
-            }
-        }
-
-        _ = Should.Throw<ArgumentNullException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
-            chs[4], chs[5], chs[6], chs[7]));
-    }
-
-    [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5), DataRow(6), DataRow(7)]
-    public void wborder_set_Throws_IfCharIsIncompatible(int bad)
-    {
-        var chs = new ComplexChar[8];
-        for (var x = 0; x < chs.Length; x++)
-        {
-            if (x != bad)
-            {
-                (chs[x], _) = MakeTestComplexChar();
-            }
-            else
-            {
-                chs[x] = new("bad");
-            }
-        }
-
-        _ = Should.Throw<ArgumentException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
-            chs[4], chs[5], chs[6], chs[7]));
     }
 }

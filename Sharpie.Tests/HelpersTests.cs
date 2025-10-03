@@ -259,10 +259,12 @@ public class HelpersTests
     }
 
     [TestMethod]
-    public void IntersectSegments_Throws_IfLength1IsLessThanZero() => Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, -1, 0, 1));
+    public void IntersectSegments_Throws_IfLength1IsLessThanZero() =>
+        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, -1, 0, 1));
 
     [TestMethod]
-    public void IntersectSegments_Throws_IfLength2IsLessThanZero() => Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, 1, 0, -1));
+    public void IntersectSegments_Throws_IfLength2IsLessThanZero() =>
+        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, 1, 0, -1));
 
     [TestMethod, DataRow(0, 0, 0, 5, -1,
          0), DataRow(0, 5, 0, 0, -1,
@@ -457,7 +459,8 @@ public class HelpersTests
     }
 
     [TestMethod]
-    public void GetRawValue_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => ((ComplexChar) null!).GetRawValue<string>());
+    public void GetRawValue_Throws_IfCharIsNull() =>
+        Should.Throw<ArgumentNullException>(() => ((ComplexChar) null!).GetRawValue<string>());
 
     [TestMethod]
     public void GetRawValue_Throws_IfCharOfBadType()

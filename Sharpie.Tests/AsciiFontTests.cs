@@ -35,7 +35,7 @@ using Font;
 [TestClass]
 public class AsciiFontTests
 {
-    private static readonly Style Style1 = new()
+    private static readonly Style _style1 = new()
     {
         Attributes = VideoAttribute.Bold,
         ColorMixture = new()
@@ -97,19 +97,19 @@ public class AsciiFontTests
         var arr = str.EnumerateRunes()
                      .ToArray();
 
-        f.GetGlyphs(str, Style1).ShouldBe(f.Drawable);
+        f.GetGlyphs(str, _style1).ShouldBe(f.Drawable);
 
         f.GetGlyphsChars.ShouldBe(arr);
-        f.GetGlyphsStyle.ShouldBe(Style1);
+        f.GetGlyphsStyle.ShouldBe(_style1);
     }
 
     [TestMethod]
     public void GetGlyph_CallsGetGlyphs1()
     {
         var f = new TestAsciiFont("name", 8, 6, AsciiFontLayout.Fitted);
-        f.GetGlyph(new('A'), Style1).ShouldBe(f.Drawable);
+        f.GetGlyph(new('A'), _style1).ShouldBe(f.Drawable);
 
         f.GetGlyphsChars.ShouldBe(new[] { new Rune('A') });
-        f.GetGlyphsStyle.ShouldBe(Style1);
+        f.GetGlyphsStyle.ShouldBe(_style1);
     }
 }

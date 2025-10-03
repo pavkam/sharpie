@@ -33,7 +33,14 @@ namespace Sharpie.Tests;
 [TestClass]
 public class StyleTests
 {
-    private readonly Style _style = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 1 } };
+    private readonly Style _style = new()
+    {
+        Attributes = VideoAttribute.Bold,
+        ColorMixture = new()
+        {
+            Handle = 1
+        }
+    };
 
     [TestMethod]
     public void Default_HasValues()
@@ -92,7 +99,11 @@ public class StyleTests
     [TestMethod]
     public void Equals_ReturnsTrue_IfAllPropertiesAreSame()
     {
-        _style.Equals(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture })
+        _style.Equals(new Style
+        {
+            Attributes = _style.Attributes,
+            ColorMixture = _style.ColorMixture
+        })
               .ShouldBeTrue();
     }
 
@@ -123,7 +134,11 @@ public class StyleTests
     public void GetHashCode_IsTheSame_IfAllPropertiesAreSame()
     {
         _style.GetHashCode()
-              .ShouldBe(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture }.GetHashCode());
+              .ShouldBe(new Style
+              {
+                  Attributes = _style.Attributes,
+                  ColorMixture = _style.ColorMixture
+              }.GetHashCode());
     }
 
     [TestMethod]
@@ -136,7 +151,8 @@ public class StyleTests
     }
 
     [TestMethod]
-    public void EqualOperator_ReturnsTrue_IfEqual() => Assert.IsTrue(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture } == _style);
+    public void EqualOperator_ReturnsTrue_IfEqual() =>
+        Assert.IsTrue(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture } == _style);
 
     [TestMethod]
     public void NotEqualOperator_ReturnsTrue_IfDifferent()
@@ -148,5 +164,6 @@ public class StyleTests
     }
 
     [TestMethod]
-    public void NotEqualOperator_ReturnsFalse_IfEqual() => Assert.IsFalse(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture } != _style);
+    public void NotEqualOperator_ReturnsFalse_IfEqual() =>
+        Assert.IsFalse(new Style { Attributes = _style.Attributes, ColorMixture = _style.ColorMixture } != _style);
 }

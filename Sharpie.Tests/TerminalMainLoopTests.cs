@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class TerminalMainLoopTests
 {
-    private const int Timeout = 10000;
+    private const int _timeout = 10000;
 
     private Mock<ICursesBackend> _cursesMock = null!;
     private Terminal _terminal = null!;
@@ -134,8 +134,8 @@ public class TerminalMainLoopTests
         _ = Should.Throw<ObjectDisposedException>(() => _terminal.Run((_, _) => Task.CompletedTask, false));
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Run_Throws_IfAnotherRunsAlready()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Run_Throws_IfAnotherRunsAlreadyAsync()
     {
         var ra1 = RunAsync();
 
@@ -145,7 +145,7 @@ public class TerminalMainLoopTests
         await ra1;
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
     public void Run_Throws_IfInternalError()
     {
         _ = _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
@@ -154,8 +154,8 @@ public class TerminalMainLoopTests
         _ = Should.Throw<CursesOperationException>(() => _terminal.Run((_, _) => Task.CompletedTask));
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Run_Resumes_IfStopped()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Run_Resumes_IfStoppedAsync()
     {
         var ra1 = RunAsync();
         _terminal.Stop();
@@ -167,8 +167,8 @@ public class TerminalMainLoopTests
         await ra2;
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Delegate_DoesNotEnqueueAction_IfNotRunning()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Delegate_DoesNotEnqueueAction_IfNotRunningAsync()
     {
         var executed = false;
         _terminal.Delegate(() =>
@@ -186,8 +186,8 @@ public class TerminalMainLoopTests
         executed.ShouldBeFalse();
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Stop_DoesNotEnqueueAction_IfNotRunning()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Stop_DoesNotEnqueueAction_IfNotRunningAsync()
     {
         _terminal.Stop();
 
@@ -207,8 +207,8 @@ public class TerminalMainLoopTests
         executed.ShouldBeTrue();
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Delegate_EnqueuesAction()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Delegate_EnqueuesActionAsync()
     {
         var ra = RunAsync();
 
@@ -225,8 +225,8 @@ public class TerminalMainLoopTests
         finished.ShouldBeTrue();
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Run_ExecutesDelegatedActionsInSequence()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Run_ExecutesDelegatedActionsInSequenceAsync()
     {
         var ra = RunAsync();
 
@@ -249,8 +249,8 @@ public class TerminalMainLoopTests
         seq.ShouldBe("12");
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public void Run_ReadsEventsFromPump()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public void Run_ReadsEventsFromPumpAsync()
     {
         _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent kc) =>
@@ -278,8 +278,8 @@ public class TerminalMainLoopTests
         (events[2] is StopEvent).ShouldBeTrue();
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public void Stop_EnqueuesStoppingTheRun()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public void Stop_EnqueuesStoppingTheRunAsync()
     {
         var ch = 'a';
         _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
@@ -302,8 +302,8 @@ public class TerminalMainLoopTests
         ch.ShouldNotBe('a');
     }
 
-    [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "AccessToModifiedClosure")]
-    public async Task Stop_WaitsForThingsToFinish()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true), SuppressMessage("ReSharper", "AccessToModifiedClosure")]
+    public async Task Stop_WaitsForThingsToFinishAsync()
     {
         var ra = RunAsync();
         _terminal.Stop(true);
@@ -311,8 +311,8 @@ public class TerminalMainLoopTests
         await Should.NotThrowAsync(ra);
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public void Run_StopsOnCtrlC()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public void Run_StopsOnCtrlCAsync()
     {
         _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent kc) =>
@@ -331,8 +331,8 @@ public class TerminalMainLoopTests
         reached.ShouldBeFalse();
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Delay1_EnqueuesAndExecutesTimerOnce()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Delay1_EnqueuesAndExecutesTimerOnceAsync()
     {
         var finished = false;
         var d = _terminal.Delay((t, s) =>
@@ -352,8 +352,8 @@ public class TerminalMainLoopTests
         finished.ShouldBeTrue();
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Delay1_CanBeCancelledThroughReturnedInterval()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Delay1_CanBeCancelledThroughReturnedIntervalAsync()
     {
         var executed = false;
         var d = _terminal.Delay(_ =>
@@ -376,8 +376,8 @@ public class TerminalMainLoopTests
         executed.ShouldBeFalse();
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Delay2_EnqueuesAndExecutesTimerOnce()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Delay2_EnqueuesAndExecutesTimerOnceAsync()
     {
         var ra = RunAsync();
 
@@ -394,8 +394,8 @@ public class TerminalMainLoopTests
         finished.ShouldBeTrue();
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Repeat1_EnqueuesAndExecutesTimerMultipleTimes()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Repeat1_EnqueuesAndExecutesTimerMultipleTimesAsync()
     {
         var cycles = 0;
         var d = _terminal.Repeat((t, s) =>
@@ -420,8 +420,8 @@ public class TerminalMainLoopTests
         cycles.ShouldBe(10);
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Repeat1_CanBeCancelledThroughReturnedInterval()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Repeat1_CanBeCancelledThroughReturnedIntervalAsync()
     {
         var executed = 0;
         var d = _terminal.Repeat(_ =>
@@ -444,13 +444,13 @@ public class TerminalMainLoopTests
         executed.ShouldBeInRange(1, 3);
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public async Task Dispose_CancelsTheRunning_AndKillsTimers()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public async Task Dispose_CancelsTheRunning_AndKillsTimersAsync()
     {
         var ra = RunAsync();
         var count = Timer.ActiveCount;
         var tickedEvent = new ManualResetEvent(false);
-        _ = _terminal.Repeat(_ =>
+        _ = _terminal.Repeat(t =>
         {
             _ = tickedEvent.Set();
             return Task.CompletedTask;
@@ -460,16 +460,16 @@ public class TerminalMainLoopTests
         _terminal.Dispose();
         await ra;
 
-        await Task.Delay(500);
+        await Task.Delay(500, TestContext.CancellationToken);
         Timer.ActiveCount.ShouldBeLessThanOrEqualTo(count);
     }
 
-    [TestMethod, Timeout(Timeout)]
-    public void Run_ResumesTimersAcrossRuns()
+    [TestMethod, Timeout(_timeout, CooperativeCancellation = true)]
+    public void Run_ResumesTimersAcrossRunsAsync()
     {
         var m = new ManualResetEvent(false);
 
-        _ = _terminal.Repeat(_ =>
+        _ = _terminal.Repeat(t =>
         {
             _ = m.Set();
             return Task.CompletedTask;
@@ -483,5 +483,11 @@ public class TerminalMainLoopTests
         _ = RunAsync();
         _ = m.WaitOne();
         _terminal.Stop(true);
+    }
+
+    public TestContext TestContext
+    {
+        get;
+        set;
     }
 }

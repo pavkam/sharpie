@@ -46,7 +46,9 @@ public class CursesMouseEventParserTests
     [TestMethod]
     public void Get_ReturnsObject_ForAbi1_OldApi()
     {
+#pragma warning disable CS0618 // Type or member is obsolete -- needs to be tested
         var r = CursesMouseEventParser.Get(1);
+#pragma warning restore CS0618 // Type or member is obsolete
         _ = r.ShouldNotBeNull();
 
         r.ReportPosition.ShouldBe(8u << 24);
@@ -66,7 +68,9 @@ public class CursesMouseEventParserTests
     [TestMethod]
     public void Get_ReturnsObject_ForAbi2_OldApi()
     {
+#pragma warning disable CS0618 // Type or member is obsolete -- needs to be tested
         var r = CursesMouseEventParser.Get(2);
+#pragma warning restore CS0618 // Type or member is obsolete
         _ = r.ShouldNotBeNull();
 
         r.ReportPosition.ShouldBe(8u << 25);
@@ -86,7 +90,9 @@ public class CursesMouseEventParserTests
     [TestMethod]
     public void Get_ReturnsObject_ForPdCursesAbi_OldApi()
     {
+#pragma warning disable CS0618 // Type or member is obsolete -- needs to be tested
         var r = CursesMouseEventParser.Get(3);
+#pragma warning restore CS0618 // Type or member is obsolete
         _ = r.ShouldNotBeNull();
 
         r.ReportPosition.ShouldBe(1u << 29);
@@ -100,7 +106,8 @@ public class CursesMouseEventParserTests
                               .ShouldBe(CursesMouseEventParser.Get(CursesAbiVersion.Unknown));
     }
 
-    [TestMethod, DataRow(1u << ((1 - 1) * 6), MouseButton.Button1, MouseButtonState.Released),
+    [TestMethod,
+     DataRow(1u << ((1 - 1) * 6), MouseButton.Button1, MouseButtonState.Released),
      DataRow(2u << ((1 - 1) * 6), MouseButton.Button1, MouseButtonState.Pressed),
      DataRow(4u << ((1 - 1) * 6), MouseButton.Button1, MouseButtonState.Clicked),
      DataRow(8u << ((1 - 1) * 6), MouseButton.Button1, MouseButtonState.DoubleClicked),
@@ -128,7 +135,8 @@ public class CursesMouseEventParserTests
         p.ShouldBe((expButton, expState, ModifierKey.None));
     }
 
-    [TestMethod, DataRow(1u << ((1 - 1) * 5), MouseButton.Button1, MouseButtonState.Released),
+    [TestMethod,
+     DataRow(1u << ((1 - 1) * 5), MouseButton.Button1, MouseButtonState.Released),
      DataRow(2u << ((1 - 1) * 5), MouseButton.Button1, MouseButtonState.Pressed),
      DataRow(4u << ((1 - 1) * 5), MouseButton.Button1, MouseButtonState.Clicked),
      DataRow(8u << ((1 - 1) * 5), MouseButton.Button1, MouseButtonState.DoubleClicked),
@@ -161,10 +169,12 @@ public class CursesMouseEventParserTests
         p.ShouldBe((expButton, expState, ModifierKey.None));
     }
 
-    [TestMethod, DataRow(0u, ModifierKey.None), DataRow(1u << 24, ModifierKey.Ctrl),
-     DataRow(2u << 24, ModifierKey.Shift), DataRow(4u << 24, ModifierKey.Alt),
+    [TestMethod,
+     DataRow(0u, ModifierKey.None),
+     DataRow(1u << 24, ModifierKey.Ctrl),
+     DataRow(2u << 24, ModifierKey.Shift),
+     DataRow(4u << 24, ModifierKey.Alt),
      DataRow((4u << 24) | (1u << 24), ModifierKey.Alt | ModifierKey.Ctrl),
-     DataRow((2u << 24) | (1u << 24), ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow((4u << 24) | (2u << 24), ModifierKey.Alt | ModifierKey.Shift),
      DataRow((1u << 24) | (2u << 24), ModifierKey.Ctrl | ModifierKey.Shift),
      DataRow((4u << 24) | (1u << 24) | (2u << 24), ModifierKey.Alt | ModifierKey.Shift | ModifierKey.Ctrl)]
@@ -176,10 +186,12 @@ public class CursesMouseEventParserTests
         p.ShouldBe((MouseButton.Button1, MouseButtonState.Released, expMod));
     }
 
-    [TestMethod, DataRow(0u, ModifierKey.None), DataRow(1u << 25, ModifierKey.Ctrl),
-     DataRow(2u << 25, ModifierKey.Shift), DataRow(4u << 25, ModifierKey.Alt),
+    [TestMethod,
+     DataRow(0u, ModifierKey.None),
+     DataRow(1u << 25, ModifierKey.Ctrl),
+     DataRow(2u << 25, ModifierKey.Shift),
+     DataRow(4u << 25, ModifierKey.Alt),
      DataRow((4u << 25) | (1u << 25), ModifierKey.Alt | ModifierKey.Ctrl),
-     DataRow((2u << 25) | (1u << 25), ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow((4u << 25) | (2u << 25), ModifierKey.Alt | ModifierKey.Shift),
      DataRow((1u << 25) | (2u << 25), ModifierKey.Ctrl | ModifierKey.Shift),
      DataRow((4u << 25) | (1u << 25) | (2u << 25), ModifierKey.Alt | ModifierKey.Shift | ModifierKey.Ctrl)]
@@ -191,10 +203,12 @@ public class CursesMouseEventParserTests
         p.ShouldBe((MouseButton.Button1, MouseButtonState.Released, expMod));
     }
 
-    [TestMethod, DataRow(0u, ModifierKey.None), DataRow(2u << 26, ModifierKey.Ctrl),
-     DataRow(1u << 26, ModifierKey.Shift), DataRow(4u << 26, ModifierKey.Alt),
+    [TestMethod,
+     DataRow(0u, ModifierKey.None),
+     DataRow(2u << 26, ModifierKey.Ctrl),
+     DataRow(1u << 26, ModifierKey.Shift),
+     DataRow(4u << 26, ModifierKey.Alt),
      DataRow((4u << 26) | (2u << 26), ModifierKey.Alt | ModifierKey.Ctrl),
-     DataRow((1u << 26) | (2u << 26), ModifierKey.Shift | ModifierKey.Ctrl),
      DataRow((4u << 26) | (1u << 26), ModifierKey.Alt | ModifierKey.Shift),
      DataRow((2u << 26) | (1u << 26), ModifierKey.Ctrl | ModifierKey.Shift),
      DataRow((4u << 26) | (1u << 26) | (2u << 26), ModifierKey.Alt | ModifierKey.Shift | ModifierKey.Ctrl)]
@@ -206,7 +220,10 @@ public class CursesMouseEventParserTests
         p.ShouldBe((MouseButton.Button1, MouseButtonState.Released, expMod));
     }
 
-    [TestMethod, DataRow(0u), DataRow(8u << 24), DataRow(1u << 24)]
+    [TestMethod,
+     DataRow(0u),
+     DataRow(8u << 24),
+     DataRow(1u << 24)]
     public void Parse_ReturnsNullIfNoButtonPresent_ForAbi1(uint raw)
     {
         var parser = CursesMouseEventParser.Get(CursesAbiVersion.NCurses5);
@@ -215,7 +232,10 @@ public class CursesMouseEventParserTests
         p.ShouldBeNull();
     }
 
-    [TestMethod, DataRow(0u), DataRow(8u << 25), DataRow(1u << 25)]
+    [TestMethod,
+     DataRow(0u),
+     DataRow(8u << 25),
+     DataRow(1u << 25)]
     public void Parse_ReturnsNullIfNoButtonPresent_ForAbi2(uint raw)
     {
         var parser = CursesMouseEventParser.Get(CursesAbiVersion.NCurses6);
@@ -224,7 +244,10 @@ public class CursesMouseEventParserTests
         p.ShouldBeNull();
     }
 
-    [TestMethod, DataRow(0u), DataRow(8u << 26), DataRow(1u << 26)]
+    [TestMethod,
+     DataRow(0u),
+     DataRow(8u << 26),
+     DataRow(1u << 26)]
     public void Parse_ReturnsNullIfNoButtonPresent_ForPdCursesAbi(uint raw)
     {
         var parser = CursesMouseEventParser.Get(CursesAbiVersion.NCurses6);

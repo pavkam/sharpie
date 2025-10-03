@@ -39,7 +39,8 @@ public class MouseEventResolverTests
     public void TestInitialize() => _eventResolver = new();
 
     [TestMethod]
-    public void Process1_Throws_IfEventIsNull() => Should.Throw<ArgumentNullException>(() => _eventResolver.Process((MouseMoveEvent) null!));
+    public void Process1_Throws_IfEventIsNull() =>
+        Should.Throw<ArgumentNullException>(() => _eventResolver.Process((MouseMoveEvent) null!));
 
     [TestMethod]
     public void Process1_ReturnsSameEvent_IfDifferentPosition()
@@ -62,7 +63,8 @@ public class MouseEventResolverTests
     }
 
     [TestMethod]
-    public void Process2_Throws_IfEventIsNull() => Should.Throw<ArgumentNullException>(() => _eventResolver.Process((MouseActionEvent) null!));
+    public void Process2_Throws_IfEventIsNull() =>
+        Should.Throw<ArgumentNullException>(() => _eventResolver.Process((MouseActionEvent) null!));
 
     [TestMethod]
     public void Process2_IssuesMoveFirst_IfDifferentPosition()

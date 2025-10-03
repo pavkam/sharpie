@@ -44,10 +44,12 @@ public class SurfaceTests
     }
 
     [TestMethod]
-    public void Ctor_Throws_WhenCursesIfNull() => Should.Throw<ArgumentNullException>(() => new Surface(null!, IntPtr.MaxValue));
+    public void Ctor_Throws_WhenCursesIfNull() =>
+        Should.Throw<ArgumentNullException>(() => new Surface(null!, IntPtr.MaxValue));
 
     [TestMethod]
-    public void Ctor_Throws_WhenHandleIsZero() => Should.Throw<ArgumentException>(() => new Surface(_cursesMock.Object, IntPtr.Zero));
+    public void Ctor_Throws_WhenHandleIsZero() =>
+        Should.Throw<ArgumentException>(() => new Surface(_cursesMock.Object, IntPtr.Zero));
 
     [TestMethod]
     public void Ctor_ConfiguresSurface_InCurses()
@@ -181,19 +183,21 @@ public class SurfaceTests
     [TestMethod]
     public void Style_Get_Returns_IfCursesSucceeded()
     {
-        _ = _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny,
-                       out It.Ref<short>.IsAny, IntPtr.Zero))
-                   .Returns((IntPtr _, out VideoAttribute a, out short p, IntPtr _) =>
-                   {
-                       a = VideoAttribute.Italic;
-                       p = 22;
+        _ = _cursesMock.Setup(s =>
+            s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero)
+        )
+        .Returns((IntPtr _, out VideoAttribute a, out short p, IntPtr _) =>
+        {
+            a = VideoAttribute.Italic;
+            p = 22;
 
-                       return 0;
-                   });
+            return 0;
+        });
 
 
         var sw = new Surface(_cursesMock.Object, new(1));
         var s = sw.Style;
+
         s.Attributes.ShouldBe(VideoAttribute.Italic);
         s.ColorMixture.ShouldBe(new()
         {
@@ -204,9 +208,10 @@ public class SurfaceTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Style_Get_Throws_IfCursesFails()
     {
-        _ = _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny,
-                       out It.Ref<short>.IsAny, IntPtr.Zero))
-                   .Returns(-1);
+        _ = _cursesMock.Setup(s =>
+            s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero)
+        )
+        .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
 
@@ -235,9 +240,10 @@ public class SurfaceTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Style_Set_Throws_IfCursesFails()
     {
-        _ = _cursesMock.Setup(s => s.wattr_set(It.IsAny<IntPtr>(), It.IsAny<VideoAttribute>(), It.IsAny<short>(),
-                       IntPtr.Zero))
-                   .Returns(-1);
+        _ = _cursesMock.Setup(s =>
+            s.wattr_set(It.IsAny<IntPtr>(), It.IsAny<VideoAttribute>(), It.IsAny<short>(), IntPtr.Zero)
+        )
+        .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
 
@@ -248,16 +254,16 @@ public class SurfaceTests
     [TestMethod]
     public void ColorMixture_Get_Returns_IfCursesSucceeded()
     {
-        _ = _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny,
-                       out It.Ref<short>.IsAny, IntPtr.Zero))
-                   .Returns((IntPtr _, out VideoAttribute a, out short p, IntPtr _) =>
-                   {
-                       a = 0;
-                       p = 22;
+        _ = _cursesMock.Setup(s =>
+            s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero)
+        )
+        .Returns((IntPtr _, out VideoAttribute a, out short p, IntPtr _) =>
+        {
+            a = 0;
+            p = 22;
 
-                       return 0;
-                   });
-
+            return 0;
+        });
 
         var s = new Surface(_cursesMock.Object, new(1));
         s.ColorMixture.ShouldBe(new()
@@ -269,9 +275,10 @@ public class SurfaceTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void ColorMixture_Throws_IfCursesFails()
     {
-        _ = _cursesMock.Setup(s => s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny,
-                       out It.Ref<short>.IsAny, IntPtr.Zero))
-                   .Returns(-1);
+        _ = _cursesMock.Setup(s =>
+            s.wattr_get(It.IsAny<IntPtr>(), out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, IntPtr.Zero)
+        )
+        .Returns(-1);
 
         var s = new Surface(_cursesMock.Object, new(1));
 
@@ -308,16 +315,16 @@ public class SurfaceTests
     [TestMethod]
     public void Background_Get_Returns_IfCursesSucceeded()
     {
-        _ = _cursesMock.Setup(s => s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(),
-                       out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
-                   .Returns((ComplexChar _, StringBuilder sb, out VideoAttribute attrs, out short colorPair,
-                       IntPtr _) =>
-                   {
-                       _ = sb.Append('H');
-                       attrs = VideoAttribute.Dim;
-                       colorPair = 10;
-                       return 0;
-                   });
+        _ = _cursesMock.Setup(s =>
+            s.getcchar(It.IsAny<ComplexChar>(), It.IsAny<StringBuilder>(), out It.Ref<VideoAttribute>.IsAny, out It.Ref<short>.IsAny, It.IsAny<IntPtr>())
+        )
+        .Returns((ComplexChar _, StringBuilder sb, out VideoAttribute attrs, out short colorPair, IntPtr _) =>
+        {
+            _ = sb.Append('H');
+            attrs = VideoAttribute.Dim;
+            colorPair = 10;
+            return 0;
+        });
 
         var s = new Surface(_cursesMock.Object, new(1));
         var (@char, style) = s.Background;

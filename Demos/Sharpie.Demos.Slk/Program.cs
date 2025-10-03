@@ -37,9 +37,11 @@ using Sharpie.Backend;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance and enable 4 * 4 SLK mode,
+#pragma warning disable CA1416 // Validate platform compatibility -- this is a demo
 using var terminal = new Terminal(CursesBackend.Load(),
     new(CaretMode: CaretMode.Invisible, UseMouse: true, SoftLabelKeyMode: SoftLabelKeyMode.FourFour,
         AllocateHeader: true));
+#pragma warning restore CA1416 // Validate platform compatibility
 
 // Configure SLK style.
 terminal.SoftLabelKeys.Style = new()
@@ -58,7 +60,7 @@ foreach (var n in Enum.GetValues<StandardColor>()
     colors.Add(terminal.Colors.MixColors(n, n));
 }
 
-static void DrawHeader(ITerminal t)
+static void drawHeader(ITerminal t)
 {
     t.Header!.CaretLocation = new(0, 0);
     t.Header.WriteText("Press a number from 1 to 8 to change the color.");
@@ -66,7 +68,7 @@ static void DrawHeader(ITerminal t)
     t.Header.Refresh();
 }
 
-DrawHeader(terminal);
+drawHeader(terminal);
 terminal.SoftLabelKeys.Refresh();
 
 // Run the main loop.
@@ -75,7 +77,7 @@ terminal.Run((t, @event) =>
     switch (@event)
     {
         case TerminalResizeEvent:
-            DrawHeader(t);
+            drawHeader(t);
             t.SoftLabelKeys.Refresh();
             break;
         case KeyEvent { Key: Key.Character, Char.Value: var k and >= '1' and <= '8' }:

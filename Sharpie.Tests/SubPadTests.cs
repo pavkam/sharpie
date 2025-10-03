@@ -53,7 +53,8 @@ public class SubPadTests
     public void TestCleanup() => _terminal.Dispose();
 
     [TestMethod]
-    public void Ctor_Throws_IfScreenIsNull() => Should.Throw<ArgumentException>(() => new SubPad(null!, IntPtr.MaxValue));
+    public void Ctor_Throws_IfScreenIsNull() =>
+        Should.Throw<ArgumentException>(() => new SubPad(null!, IntPtr.MaxValue));
 
     [TestMethod]
     public void Pad_IsInitialized()

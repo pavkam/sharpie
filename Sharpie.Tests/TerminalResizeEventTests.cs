@@ -49,7 +49,9 @@ public class TerminalResizeEventTests
                .ShouldBe("Resize @ 1x2");
     }
 
-    [TestMethod, DataRow(null), DataRow("")]
+    [TestMethod,
+     DataRow(null),
+     DataRow("")]
     public void Equals_ReturnsFalse_IfNotTerminalResizeEvent(object? b)
     {
         _event1.Equals(b)

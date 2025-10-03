@@ -38,8 +38,10 @@ using Sharpie.Demos.Snake;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance.
+#pragma warning disable CA1416 // Validate platform compatibility -- this is a demo
 using var terminal = new Terminal(CursesBackend.Load(),
     new(CaretMode: CaretMode.Invisible, UseMouse: false, AllocateHeader: true));
+#pragma warning restore CA1416 // Validate platform compatibility
 
 // Configure the header.
 terminal.Header!.Background = (new(' '),
@@ -72,14 +74,14 @@ var game = new Game(
         ColorMixture = terminal.Colors.MixColors(StandardColor.Default, StandardColor.Red)
     });
 
-void RedrawHeader(ITerminalSurface header)
+void redrawHeader(ITerminalSurface header)
 {
     header.Clear();
     header.WriteText($"Score: {game.Score}");
     header.Refresh();
 }
 
-void RedrawScreen(IScreen screen)
+void redrawScreen(IScreen screen)
 {
     screen.Clear();
     screen.DrawBorder();
@@ -97,7 +99,7 @@ terminal.Repeat(t =>
 
         if (game.Score != score)
         {
-            RedrawHeader(t.Header!);
+            redrawHeader(t.Header!);
         }
     }
 
@@ -113,8 +115,8 @@ terminal.Run((t, e) =>
             {
                 using (t.AtomicRefresh())
                 {
-                    RedrawHeader(t.Header!);
-                    RedrawScreen(t.Screen);
+                    redrawHeader(t.Header!);
+                    redrawScreen(t.Screen);
                 }
 
                 game.ResetSize(new(1, 1, t.Screen.Size.Width - 2, t.Screen.Size.Height - 2));

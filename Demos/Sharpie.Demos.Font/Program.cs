@@ -38,7 +38,9 @@ using Sharpie.Font;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create a new terminal instance with an invisible cursor.
+#pragma warning disable CA1416 // Validate platform compatibility -- this is a demo
 using var terminal = new Terminal(CursesBackend.Load(), new(CaretMode: CaretMode.Invisible, AllocateHeader: true));
+#pragma warning restore CA1416 // Validate platform compatibility
 
 // Setup the message and a number of rotating styles that will be applied for each letter of the message.
 var message = "\x001 Let the ASCII fun begin! \x003";
@@ -71,7 +73,7 @@ terminal.Header.WriteText("Press TAB to cycle through fonts.");
 terminal.Header.Refresh();
 
 // This method draws the given string and applies color starting with a specific shift.
-void DrawFunAsciiMessage(ITerminal t, string str, int cs)
+void drawFunAsciiMessage(ITerminal t, string str, int cs)
 {
     var d = fonts[fontIndex]
         .GetGlyphs(str, styles[cs % styles.Length]);
@@ -83,7 +85,7 @@ void DrawFunAsciiMessage(ITerminal t, string str, int cs)
 var colorShift = 0;
 terminal.Repeat(t =>
 {
-    DrawFunAsciiMessage(t, message, colorShift++);
+    drawFunAsciiMessage(t, message, colorShift++);
     t.Screen.Refresh();
 
     return Task.CompletedTask;

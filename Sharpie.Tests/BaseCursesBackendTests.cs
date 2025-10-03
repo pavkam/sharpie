@@ -69,8 +69,10 @@ public class BaseCursesBackendTests
         _ = _dotNetSystemAdapterMock.Setup(s => s.IsWindows)
                                 .Returns(isWindows);
 
-        _backendMock = new(_dotNetSystemAdapterMock.Object, _nativeSymbolResolverMock.Object,
-            isWindows ? null : _nativeSymbolResolverMock.Object);
+        _backendMock = new(
+            _dotNetSystemAdapterMock.Object,
+            _nativeSymbolResolverMock.Object,
+            isWindows ? null! : _nativeSymbolResolverMock.Object);
 
         _ = _backendMock.Setup(s => s.EncodeCursesAttribute(It.IsAny<VideoAttribute>(), It.IsAny<short>()))
                     .Returns((VideoAttribute attributes, short colorPair) =>
@@ -115,6 +117,7 @@ public class BaseCursesBackendTests
         _backendMock.Verify(v => v.CursesMouseEventParser, Times.Once);
     }
 
+#pragma warning disable IDE1006 // Naming Styles -- these are native names
     [TestMethod]
     public void set_title_CallsTheDotNetSystemAdapter()
     {
@@ -1468,4 +1471,5 @@ public class BaseCursesBackendTests
 
         e.ShouldBeNull();
     }
+#pragma warning restore IDE1006 // Naming Styles
 }

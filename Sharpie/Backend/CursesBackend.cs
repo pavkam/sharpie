@@ -68,14 +68,14 @@ public static class CursesBackend
         INativeSymbolResolver? cSym = dotNetSystemAdapter.IsUnixLike
             ? NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, _libraryNameOrPaths)
             : null;
-
+#pragma warning disable IDE0072 // Add missing cases -- this is intentional
         return type switch
         {
             CursesBackendType.PdCurses => new PdCursesBackend(dotNetSystemAdapter, sym, cSym),
             CursesBackendType.PdCursesMod => new PdCursesMod32Backend(dotNetSystemAdapter, sym, cSym),
-            CursesBackendType.NCurses => throw new NotImplementedException(),
             var _ => new NCursesBackend(dotNetSystemAdapter, sym, cSym)
         };
+#pragma warning restore IDE0072 // Add missing cases
     }
 
     /// <summary>

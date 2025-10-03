@@ -53,7 +53,8 @@ public class SubWindowTests
     public void TestCleanup() => _terminal.Dispose();
 
     [TestMethod]
-    public void Ctor_Throws_IfScreenIsNull() => Should.Throw<ArgumentException>(() => new SubWindow(null!, IntPtr.MaxValue));
+    public void Ctor_Throws_IfScreenIsNull() =>
+        Should.Throw<ArgumentException>(() => new SubWindow(null!, IntPtr.MaxValue));
 
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()

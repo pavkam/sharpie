@@ -99,37 +99,48 @@ public class SynchronizationTests
     }
 
     [TestMethod]
-    public void ColorManager_MixColors1() => Check(() => _terminal.Colors.MixColors(1, 1));
+    public void ColorManager_MixColors1() =>
+        Check(() => _terminal.Colors.MixColors(1, 1));
 
     [TestMethod]
-    public void ColorManager_MixColors2() => Check(() => _terminal.Colors.MixColors(StandardColor.Black, StandardColor.Green));
+    public void ColorManager_MixColors2() =>
+        Check(() => _terminal.Colors.MixColors(StandardColor.Black, StandardColor.Green));
 
     [TestMethod]
-    public void ColorManager_RemixColors1() => Check(() => _terminal.Colors.RemixColors(new() { Handle = 100 }, 1, 1));
+    public void ColorManager_RemixColors1() =>
+        Check(() => _terminal.Colors.RemixColors(new() { Handle = 100 }, 1, 1));
 
     [TestMethod]
-    public void ColorManager_RemixColors2() => Check(() => _terminal.Colors.RemixColors(new() { Handle = 100 }, StandardColor.Black, StandardColor.Black));
+    public void ColorManager_RemixColors2() =>
+        Check(() => _terminal.Colors.RemixColors(new() { Handle = 100 }, StandardColor.Black, StandardColor.Black));
 
     [TestMethod]
-    public void ColorManager_RemixDefaultColors1() => Check(() => _terminal.Colors.RemixDefaultColors(1, 1));
+    public void ColorManager_RemixDefaultColors1() =>
+        Check(() => _terminal.Colors.RemixDefaultColors(1, 1));
 
     [TestMethod]
-    public void ColorManager_RemixDefaultColors2() => Check(() => _terminal.Colors.RemixDefaultColors(StandardColor.Black, StandardColor.Black));
+    public void ColorManager_RemixDefaultColors2() =>
+        Check(() => _terminal.Colors.RemixDefaultColors(StandardColor.Black, StandardColor.Black));
 
     [TestMethod]
-    public void ColorManager_UnMixColors1() => Check(() => _terminal.Colors.UnMixColors(new() { Handle = 100 }));
+    public void ColorManager_UnMixColors1() =>
+        Check(() => _terminal.Colors.UnMixColors(new() { Handle = 100 }));
 
     [TestMethod]
-    public void ColorManager_RedefineColor1() => Check(() => _terminal.Colors.RedefineColor(1, 2, 3, 4));
+    public void ColorManager_RedefineColor1() =>
+        Check(() => _terminal.Colors.RedefineColor(1, 2, 3, 4));
 
     [TestMethod]
-    public void ColorManager_RedefineColor2() => Check(() => _terminal.Colors.RedefineColor(StandardColor.Blue, 2, 3, 4));
+    public void ColorManager_RedefineColor2() =>
+        Check(() => _terminal.Colors.RedefineColor(StandardColor.Blue, 2, 3, 4));
 
     [TestMethod]
-    public void ColorManager_BreakdownColor1() => Check(() => _terminal.Colors.BreakdownColor(1));
+    public void ColorManager_BreakdownColor1() =>
+        Check(() => _terminal.Colors.BreakdownColor(1));
 
     [TestMethod]
-    public void ColorManager_BreakdownColor2() => Check(() => _terminal.Colors.BreakdownColor(StandardColor.Black));
+    public void ColorManager_BreakdownColor2() =>
+        Check(() => _terminal.Colors.BreakdownColor(StandardColor.Black));
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Events_Listen1()
@@ -205,37 +216,48 @@ public class SynchronizationTests
     public void Screen_Destroy() => Check(() => _terminal.Screen.Destroy());
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void SoftLabelKeyManager_Style_Get() => Check(() => _terminal.SoftLabelKeys.Style.ToString());
+    public void SoftLabelKeyManager_Style_Get() =>
+        Check(() => _terminal.SoftLabelKeys.Style.ToString());
 
     [TestMethod]
-    public void SoftLabelKeyManager_Style_Set() => Check(() => _terminal.SoftLabelKeys.Style = Style.Default);
+    public void SoftLabelKeyManager_Style_Set() =>
+        Check(() => _terminal.SoftLabelKeys.Style = Style.Default);
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void SoftLabelKeyManager_ColorMixture_Get() => Check(() => _terminal.SoftLabelKeys.ColorMixture.ToString());
+    public void SoftLabelKeyManager_ColorMixture_Get() =>
+        Check(() => _terminal.SoftLabelKeys.ColorMixture.ToString());
 
     [TestMethod]
-    public void SoftLabelKeyManager_ColorMixture_Set() => Check(() => _terminal.SoftLabelKeys.ColorMixture = ColorMixture.Default);
+    public void SoftLabelKeyManager_ColorMixture_Set() =>
+        Check(() => _terminal.SoftLabelKeys.ColorMixture = ColorMixture.Default);
 
     [TestMethod]
-    public void SoftLabelKeyManager_SetLabel() => Check(() => _terminal.SoftLabelKeys.SetLabel(0, "title", SoftLabelKeyAlignment.Left));
+    public void SoftLabelKeyManager_SetLabel() =>
+        Check(() => _terminal.SoftLabelKeys.SetLabel(0, "title", SoftLabelKeyAlignment.Left));
 
     [TestMethod]
-    public void SoftLabelKeyManager_EnableAttributes() => Check(() => _terminal.SoftLabelKeys.EnableAttributes(VideoAttribute.Blink));
+    public void SoftLabelKeyManager_EnableAttributes() =>
+         Check(() => _terminal.SoftLabelKeys.EnableAttributes(VideoAttribute.Blink));
 
     [TestMethod]
-    public void SoftLabelKeyManager_DisableAttributes() => Check(() => _terminal.SoftLabelKeys.DisableAttributes(VideoAttribute.Blink));
+    public void SoftLabelKeyManager_DisableAttributes() =>
+        Check(() => _terminal.SoftLabelKeys.DisableAttributes(VideoAttribute.Blink));
 
     [TestMethod]
-    public void SoftLabelKeyManager_Clear() => Check(() => _terminal.SoftLabelKeys.Clear());
+    public void SoftLabelKeyManager_Clear() =>
+        Check(() => _terminal.SoftLabelKeys.Clear());
 
     [TestMethod]
-    public void SoftLabelKeyManager_Restore() => Check(() => _terminal.SoftLabelKeys.Restore());
+    public void SoftLabelKeyManager_Restore() =>
+        Check(() => _terminal.SoftLabelKeys.Restore());
 
     [TestMethod]
-    public void SoftLabelKeyManager_MarkDirty() => Check(() => _terminal.SoftLabelKeys.MarkDirty());
+    public void SoftLabelKeyManager_MarkDirty() =>
+        Check(() => _terminal.SoftLabelKeys.MarkDirty());
 
     [TestMethod]
-    public void SoftLabelKeyManager_Refresh() => Check(() => _terminal.SoftLabelKeys.Refresh());
+    public void SoftLabelKeyManager_Refresh() =>
+        Check(() => _terminal.SoftLabelKeys.Refresh());
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void SubPad_Location_Get() => Check(() => _subPad.Location.ToString());
@@ -313,22 +335,28 @@ public class SynchronizationTests
     public void Window_Destroy() => Check(() => _window.Destroy());
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    public void TerminalSurface_ImmediateRefresh_Get() => Check(() => _terminalSurface.ImmediateRefresh.ToString());
+    public void TerminalSurface_ImmediateRefresh_Get() =>
+        Check(() => _terminalSurface.ImmediateRefresh.ToString());
 
     [TestMethod]
-    public void TerminalSurface_ImmediateRefresh_Set() => Check(() => _terminalSurface.ImmediateRefresh = true);
+    public void TerminalSurface_ImmediateRefresh_Set() =>
+        Check(() => _terminalSurface.ImmediateRefresh = true);
 
     [TestMethod]
-    public void TerminalSurface_Refresh1() => Check(() => _terminalSurface.Refresh());
+    public void TerminalSurface_Refresh1() =>
+        Check(() => _terminalSurface.Refresh());
 
     [TestMethod]
-    public void TerminalSurface_Refresh2() => Check(() => _terminalSurface.Refresh(0, 1));
+    public void TerminalSurface_Refresh2() =>
+        Check(() => _terminalSurface.Refresh(0, 1));
 
     [TestMethod]
-    public void TerminalSurface_Destroy() => Check(() => _terminalSurface.Destroy());
+    public void TerminalSurface_Destroy() =>
+        Check(() => _terminalSurface.Destroy());
 
     [TestMethod]
-    public void Surface_DrawCell() => Check(() => ((IDrawSurface) _surface).DrawCell(new(0, 0), new('A'), Style.Default));
+    public void Surface_DrawCell() =>
+        Check(() => ((IDrawSurface) _surface).DrawCell(new(0, 0), new('A'), Style.Default));
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Surface_Scrollable_Get() => Check(() => _surface.Scrollable.ToString());
@@ -373,10 +401,12 @@ public class SynchronizationTests
     public void Surface_ManagedCaret_Set() => Check(() => _surface.ManagedCaret = true);
 
     [TestMethod]
-    public void Surface_EnableAttributes() => Check(() => _surface.EnableAttributes(VideoAttribute.Blink));
+    public void Surface_EnableAttributes() =>
+        Check(() => _surface.EnableAttributes(VideoAttribute.Blink));
 
     [TestMethod]
-    public void Surface_DisableAttributes() => Check(() => _surface.DisableAttributes(VideoAttribute.Blink));
+    public void Surface_DisableAttributes() =>
+        Check(() => _surface.DisableAttributes(VideoAttribute.Blink));
 
     [TestMethod]
     public void Surface_ScrollUp() => Check(() => _surface.ScrollUp(1));
@@ -400,16 +430,20 @@ public class SynchronizationTests
     public void Surface_WriteText2() => Check(() => _surface.WriteText("text"));
 
     [TestMethod]
-    public void Surface_WriteText3() => Check(() => _surface.WriteText(new StyledText("hello", Style.Default)));
+    public void Surface_WriteText3() =>
+        Check(() => _surface.WriteText(new StyledText("hello", Style.Default)));
 
     [TestMethod]
-    public void Surface_DrawVerticalLine1() => Check(() => _surface.DrawVerticalLine(1, new('A'), Style.Default));
+    public void Surface_DrawVerticalLine1() =>
+        Check(() => _surface.DrawVerticalLine(1, new('A'), Style.Default));
 
     [TestMethod]
-    public void Surface_DrawVerticalLine2() => Check(() => _surface.DrawVerticalLine(1));
+    public void Surface_DrawVerticalLine2() =>
+        Check(() => _surface.DrawVerticalLine(1));
 
     [TestMethod]
-    public void Surface_DrawHorizontalLine1() => Check(() => _surface.DrawHorizontalLine(1, new('A'), Style.Default));
+    public void Surface_DrawHorizontalLine1() =>
+        Check(() => _surface.DrawHorizontalLine(1, new('A'), Style.Default));
 
     [TestMethod]
     public void Surface_DrawHorizontalLine2() => Check(() => _surface.DrawHorizontalLine(1));
@@ -434,28 +468,36 @@ public class SynchronizationTests
     public void Surface_Clear() => Check(() => _surface.Clear());
 
     [TestMethod]
-    public void Surface_Replace1() => Check(() => _surface.Replace(_terminalSurface, ReplaceStrategy.Overlay));
+    public void Surface_Replace1() =>
+        Check(() => _surface.Replace(_terminalSurface, ReplaceStrategy.Overlay));
 
     [TestMethod]
-    public void Surface_Replace2() => Check(() => _surface.Replace(_terminalSurface, new(0, 0, 1, 1), Point.Empty, ReplaceStrategy.Overlay));
+    public void Surface_Replace2() =>
+        Check(() => _surface.Replace(_terminalSurface, new(0, 0, 1, 1), Point.Empty, ReplaceStrategy.Overlay));
 
     [TestMethod]
-    public void Surface_MarkDirty1() => Check(() => _surface.MarkDirty(0, 1));
+    public void Surface_MarkDirty1() =>
+        Check(() => _surface.MarkDirty(0, 1));
 
     [TestMethod]
-    public void Surface_MarkDirty2() => Check(() => _surface.MarkDirty());
+    public void Surface_MarkDirty2() =>
+        Check(() => _surface.MarkDirty());
 
     [TestMethod]
-    public void Surface_IsPointWithin() => Check(() => _surface.IsPointWithin(Point.Empty));
+    public void Surface_IsPointWithin() =>
+        Check(() => _surface.IsPointWithin(Point.Empty));
 
     [TestMethod]
-    public void Surface_IsRectangleWithin() => Check(() => _surface.IsRectangleWithin(new(0, 0, 1, 1)));
+    public void Surface_IsRectangleWithin() =>
+        Check(() => _surface.IsRectangleWithin(new(0, 0, 1, 1)));
 
     [TestMethod]
-    public void Surface_Draw1() => Check(() => _surface.Draw(Point.Empty, new(0, 0, 1, 1), new Canvas(new(10, 10))));
+    public void Surface_Draw1() =>
+        Check(() => _surface.Draw(Point.Empty, new(0, 0, 1, 1), new Canvas(new(10, 10))));
 
     [TestMethod]
-    public void Surface_Draw2() => Check(() => _surface.Draw(Point.Empty, new Canvas(new(10, 10))));
+    public void Surface_Draw2() =>
+        Check(() => _surface.Draw(Point.Empty, new Canvas(new(10, 10))));
 
     [TestMethod]
     public void Surface_LineDirty() => Check(() => _surface.LineDirty(0));

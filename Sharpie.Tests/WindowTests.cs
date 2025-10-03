@@ -652,7 +652,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void SendToBack_WhenManaged_DoesNotTouchWindowsThatDontIntersect()
+    public void SendToBack_WhenManaged_DoesNotTouchWindowsThatDoNotIntersect()
     {
         var w1 = new Window(_screen, new(1));
         _cursesMock.MockArea(w1, new Rectangle(0, 0, 10, 10));
