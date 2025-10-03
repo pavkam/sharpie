@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <!-- Version properties -->
-        <PdCursesModVersion>1.0.4</PdCursesModVersion>
+        <PdCursesModVersion>2025.10.03</PdCursesModVersion>
 
         <!-- Common properties -->
         <AssemblyName>sharpie-libs-pdcursesmod</AssemblyName>
