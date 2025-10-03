@@ -6,7 +6,7 @@ on:
     - cron: "0 9 1 1-12 *"
 
 jobs:
-  raspios_lite-arm:
+  raspios-lite-arm:
     runs-on: ubuntu-latest
     name: 🐧 Raspberry Pi OS Lite ARM
     steps:
@@ -17,6 +17,14 @@ jobs:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
 
+      - name: 🛠️ Patch "curses.h"
+        id: patch-curses
+        run: |
+          echo -e "#define PDC_DLL_BUILD 1\n#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
+          cat curses.h >> curses.h.new && \
+          rm curses.h && \
+          mv curses.h.new curses.h
+
       - name: 🛠️ Build library
         id: build-library
         uses: pguyot/arm-runner-action@v2
@@ -25,10 +33,10 @@ jobs:
           bind_mount_repository: yes
           commands: |
             cd vt
-            make WIDE=Y DLL=Y CHTYPE_32=Y
+            make
             mv libpdcurses.so libpdcursesmod-vt-arm.so
             cd ../fb
-            make WIDE=Y DLL=Y CHTYPE_32=Y
+            make
             mv libpdcurses.so libpdcursesmod-fb-arm.so
 
       - name: ⬆️ Upload artifacts (VT)
@@ -47,123 +55,16 @@ jobs:
           path: "fb/*.so"
           if-no-files-found: error
 
-  raspios_lite-arm64:
-    runs-on: ubuntu-latest
-    name: 🐧 Raspberry Pi OS Lite ARM
-    steps:
-      - name: ☁️ Clone repository
-        id: checkout-repository
-        uses: actions/checkout@master
-        with:
-          repository: Bill-Gray/PDCursesMod
-          ref: refs/heads/master
-      - name: 🛠️ Build library
-        id: build-library
-        uses: pguyot/arm-runner-action@v2
-        with:
-          base_image: raspios_lite_arm64:latest
-          bind_mount_repository: yes
-          commands: |
-            cd vt
-            make WIDE=Y DLL=Y CHTYPE_32=Y
-            mv libpdcurses.so libpdcursesmod-vt-arm64.so
-            cd ../fb
-            make WIDE=Y DLL=Y CHTYPE_32=Y
-            mv libpdcurses.so libpdcursesmod-fb-arm64.so
-
-      - name: ⬆️ Upload artifacts (VT)
-        id: upload-artifacts-vt
-        uses: actions/upload-artifact@v4
-        with:
-          name: libraries-raspios_lite-arm64-vt
-          path: "vt/*.so"
-          if-no-files-found: error
-
-      - name: ⬆️ Upload artifacts (FB)
-        id: upload-artifacts-fb
-        uses: actions/upload-artifact@v4
-        with:
-          name: libraries-raspios_lite-arm64-fb
-          path: "fb/*.so"
-          if-no-files-found: error
-
-  ubuntu-x64:
-    runs-on: ubuntu-latest
-    name: 🐧 Ubuntu x64
-    steps:
-      - name: ☁️ Clone repository
-        id: checkout-repository
-        uses: actions/checkout@master
-        with:
-          repository: Bill-Gray/PDCursesMod
-          ref: refs/heads/master
-      - name: Install SDL1 and SDL2
-        run: |
-          sudo apt update
-          sudo apt install libsdl1.2-dev libsdl-ttf2.0-dev libsdl2-dev libsdl2-ttf-dev
-
-      - name: 🛠️ Build library (VT)
-        id: build-library-vt
-        run: |
-          cd vt
-          make WIDE=Y DLL=Y CHTYPE_32=Y
-          mv libpdcurses.so libpdcursesmod-vt-x64.so
-
-      - name: 🛠️ Build library (FB)
-        id: build-library-fb
-        run: |
-          cd fb
-          make WIDE=Y DLL=Y CHTYPE_32=Y
-          mv libpdcurses.so libpdcursesmod-fb-x64.so
-
-      - name: 🛠️ Build library (SDL1)
-        id: build-library-sdl1
-        run: |
-          cd sdl1
-          make WIDE=Y DLL=Y CHTYPE_32=Y
-          mv libpdcurses.so libpdcursesmod-sdl1-x64.so
-      - name: 🛠️ Build library (SDL2)
-        id: build-library-sdl2
-        run: |
-          cd sdl2
-          make WIDE=Y DLL=Y CHTYPE_32=Y
-          mv libpdcurses.so libpdcursesmod-sdl2-x64.so
-
-      - name: ⬆️ Upload artifacts (VT)
-        id: upload-artifacts-vt
-        uses: actions/upload-artifact@v4
-        with:
-          name: libraries-ubuntu-x64-vt
-          path: "vt/*.so"
-          if-no-files-found: error
-
-      - name: ⬆️ Upload artifacts (FB)
-        id: upload-artifacts-fb
-        uses: actions/upload-artifact@v4
-        with:
-          name: libraries-ubuntu-x64-fb
-          path: "fb/*.so"
-          if-no-files-found: error
-
-      - name: ⬆️ Upload artifacts (SDL1)
-        id: upload-artifacts-sdl1
-        uses: actions/upload-artifact@v4
-        with:
-          name: libraries-ubuntu-x64-sdl1
-          path: "sdl1/*.so"
-          if-no-files-found: error
-
-      - name: ⬆️ Upload artifacts (SDL2)
-        id: upload-artifacts-sdl2
-        uses: actions/upload-artifact@v4
-        with:
-          name: libraries-ubuntu-x64-sdl2
-          path: "sdl2/*.so"
-          if-no-files-found: error
-
-  macos-x64:
-    runs-on: macOS-latest
-    name: 🍎 macOS x64
+  ubuntu:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch: x64
+          - os: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.os }}
+    name: 🐧 Ubuntu (${{ matrix.arch }})
     steps:
       - name: ☁️ Clone repository
         id: checkout-repository
@@ -173,28 +74,128 @@ jobs:
           ref: refs/heads/master
 
       - name: ⚙️ Setup environment
+        id: setup-environment
         run: |
-          brew install sdl2 sdl2_ttf
+          sudo apt update
+          sudo apt install libsdl1.2-dev libsdl-ttf2.0-dev libsdl2-dev libsdl2-ttf-dev
+
+      - name: 🛠️ Patch "curses.h"
+        id: patch-curses
+        run: |
+          echo -e "#define PDC_DLL_BUILD 1\n#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
+          cat curses.h >> curses.h.new && \
+          rm curses.h && \
+          mv curses.h.new curses.h
 
       - name: 🛠️ Build library (VT)
         id: build-library-vt
         run: |
           cd vt
-          make WIDE=Y DLL=Y CHTYPE_32=Y
-          mv libpdcurses.dylib libpdcursesmod-vt-x64.dylib
+          make
+          mv libpdcurses.so libpdcursesmod-vt-${{ matrix.arch }}.so
 
+      - name: 🛠️ Build library (FB)
+        id: build-library-fb
+        run: |
+          cd fb
+          make
+          mv libpdcurses.so libpdcursesmod-fb-${{ matrix.arch }}.so
+
+      - name: 🛠️ Build library (SDL1)
+        id: build-library-sdl1
+        run: |
+          cd sdl1
+          make
+          mv libpdcurses.so libpdcursesmod-sdl1-${{ matrix.arch }}.so
       - name: 🛠️ Build library (SDL2)
         id: build-library-sdl2
         run: |
           cd sdl2
-          make WIDE=Y DLL=Y CHTYPE_32=Y
-          mv libpdcurses.dylib libpdcursesmod-sdl2-x64.dylib
+          make
+          mv libpdcurses.so libpdcursesmod-sdl2-${{ matrix.arch }}.so
 
       - name: ⬆️ Upload artifacts (VT)
         id: upload-artifacts-vt
         uses: actions/upload-artifact@v4
         with:
-          name: libraries-macos-x64-vt
+          name: libraries-ubuntu-${{ matrix.arch }}-vt
+          path: "vt/*.so"
+          if-no-files-found: error
+
+      - name: ⬆️ Upload artifacts (FB)
+        id: upload-artifacts-fb
+        uses: actions/upload-artifact@v4
+        with:
+          name: libraries-ubuntu-${{ matrix.arch }}-fb
+          path: "fb/*.so"
+          if-no-files-found: error
+
+      - name: ⬆️ Upload artifacts (SDL1)
+        id: upload-artifacts-sdl1
+        uses: actions/upload-artifact@v4
+        with:
+          name: libraries-ubuntu-${{ matrix.arch }}-sdl1
+          path: "sdl1/*.so"
+          if-no-files-found: error
+
+      - name: ⬆️ Upload artifacts (SDL2)
+        id: upload-artifacts-sdl2
+        uses: actions/upload-artifact@v4
+        with:
+          name: libraries-ubuntu-${{ matrix.arch }}-sdl2
+          path: "sdl2/*.so"
+          if-no-files-found: error
+
+  macos:
+    strategy:
+      matrix:
+        include:
+          - os: macos-15-intel
+            arch: x64
+          - os: macos-15
+            arch: arm64
+    runs-on: ${{ matrix.os }}
+    name: 🍎 macOS (${{ matrix.arch }})
+    steps:
+      - name: ☁️ Clone repository
+        id: checkout-repository
+        uses: actions/checkout@master
+        with:
+          repository: Bill-Gray/PDCursesMod
+          ref: refs/heads/master
+
+      - name: ⚙️ Setup environment
+        id: setup-environment
+        run: |
+          brew install sdl2 sdl2_ttf
+
+      - name: 🛠️ Patch "curses.h"
+        id: patch-curses
+        run: |
+          echo -e "#define PDC_DLL_BUILD 1\n#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
+          cat curses.h >> curses.h.new && \
+          rm curses.h && \
+          mv curses.h.new curses.h
+
+      - name: 🛠️ Build library (VT)
+        id: build-library-vt
+        run: |
+          cd vt
+          make
+          mv libpdcurses.dylib libpdcursesmod-vt-${{ matrix.arch }}.dylib
+
+      - name: 🛠️ Build library (SDL2)
+        id: build-library-sdl2
+        run: |
+          cd sdl2
+          make
+          mv libpdcurses.dylib libpdcursesmod-sdl2-${{ matrix.arch }}.dylib
+
+      - name: ⬆️ Upload artifacts (VT)
+        id: upload-artifacts-vt
+        uses: actions/upload-artifact@v4
+        with:
+          name: libraries-macos-${{ matrix.arch }}-vt
           path: "vt/*.dylib"
           if-no-files-found: error
 
@@ -202,12 +203,21 @@ jobs:
         id: upload-artifacts-sdl2
         uses: actions/upload-artifact@v4
         with:
-          name: libraries-macos-x64-sdl2
+          name: libraries-macos-${{ matrix.arch }}-sdl2
           path: "sdl2/*.dylib"
           if-no-files-found: error
 
-  windows-x64:
-    name: 🪟 Windows x64
+  windows:
+    strategy:
+      matrix:
+        include:
+          - cross: amd64
+            arch: x64
+          - cross: amd64_arm
+            arch: arm
+          - cross: amd64_arm64
+            arch: arm64
+    name: 🪟 Windows (${{ matrix.arch }})
     runs-on: windows-2022
     steps:
       - name: ☁️ Clone repository
@@ -220,33 +230,50 @@ jobs:
       - name: ⚙️ Setup environment
         id: setup-environment
         uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.cross }}
+
+      - name: 🛠️ Patch "curses.h"
+        id: patch-curses
+        shell: pwsh
+        run: |
+          $defines = @"
+          #define PDC_DLL_BUILD 1
+          #define PDC_WIDE 1
+          #define CHTYPE_32 1
+          #define PDC_RGB 1
+          "@
+
+          $content = Get-Content -Path "curses.h" -Raw
+          $newContent = $defines + $content
+          Set-Content -Path "curses.h" -Value $newContent
 
       - name: 🛠️ Build library (WinGUI)
         id: build-library-wingui
         run: |
           cd wingui
-          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
-          ren pdcurses.dll libpdcursesmod-wingui-x64.dll
+          nmake -f Makefile.vc
+          ren pdcurses.dll libpdcursesmod-wingui-${{ matrix.arch }}.dll
 
       - name: 🛠️ Build library (WinCon)
         id: build-library-wincon
         run: |
           cd wincon
-          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
-          ren pdcurses.dll libpdcursesmod-wincon-x64.dll
+          nmake -f Makefile.vc
+          ren pdcurses.dll libpdcursesmod-wincon-${{ matrix.arch }}.dll
 
       - name: 🛠️ Build library (VT)
         id: build-library-vt
         run: |
           cd vt
-          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
-          ren pdcurses.dll libpdcursesmod-vt-x64.dll
+          nmake -f Makefile.vc
+          ren pdcurses.dll libpdcursesmod-vt-${{ matrix.arch }}.dll
 
       - name: ⬆️ Upload artifacts (WinGUI)
         id: upload-artifacts-wingui
         uses: actions/upload-artifact@v4
         with:
-          name: libraries-windows-x64-wingui
+          name: libraries-windows-${{ matrix.arch }}-wingui
           path: "wingui/*.dll"
           if-no-files-found: error
 
@@ -254,7 +281,7 @@ jobs:
         id: upload-artifacts-wincon
         uses: actions/upload-artifact@v4
         with:
-          name: libraries-windows-x64-wincon
+          name: libraries-windows-${{ matrix.arch }}-wincon
           path: "wincon/*.dll"
           if-no-files-found: error
 
@@ -262,7 +289,7 @@ jobs:
         id: upload-artifacts-vt
         uses: actions/upload-artifact@v4
         with:
-          name: libraries-windows-x64-vt
+          name: libraries-windows-${{ matrix.arch }}-vt
           path: "vt/*.dll"
           if-no-files-found: error
 
@@ -270,7 +297,7 @@ jobs:
     name: 📝 Create pull request
     runs-on: ubuntu-latest
     needs:
-      [ubuntu-x64, macos-x64, windows-x64, raspios_lite-arm, raspios_lite-arm64]
+      [ubuntu, macos, windows, raspios-lite-arm]
     outputs:
       pr_created: ${{ steps.create-pull-request.outputs.pull-request-number != '' }}
       pr_number: ${{ steps.create-pull-request.outputs.pull-request-number }}
@@ -297,12 +324,6 @@ jobs:
             echo "files_changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: 🔼 Bump version
-        id: bump-version
-        if: steps.check-changes.outputs.files_changed == 'true'
-        run: |
-          sed -i "s|<PdCursesModVersion>.*</PdCursesModVersion>|<PdCursesModVersion>$(shell date +%Y.%m.%d)</PdCursesModVersion>|" NativeLibraries/Sharpie.NativeLibraries.PdCursesMod.csproj
-
       - name: 📝 Create pull request
         id: create-pull-request
         uses: peter-evans/create-pull-request@v6
@@ -320,7 +341,7 @@ jobs:
   summary:
     name: ✔︎ Generate summary
     runs-on: ubuntu-latest
-    needs: [ubuntu-x64, macos-x64, windows-x64, raspios_lite-arm, raspios_lite-arm64, create-pr]
+    needs: [ubuntu, macos, windows, raspios-lite-arm, create-pr]
     if: always()
     steps:
       - name: 📝 Create summary
@@ -333,34 +354,28 @@ jobs:
           echo "|----------|--------|----------------|" >> $GITHUB_STEP_SUMMARY
 
           # Check each build job status
-          if [ "${{ needs.ubuntu-x64.result }}" = "success" ]; then
-            echo "| Ubuntu x64 | ✅ Success |" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.ubuntu.result }}" = "success" ]; then
+            echo "| Ubuntu | ✅ Success |" >> $GITHUB_STEP_SUMMARY
           else
-            echo "| Ubuntu x64 | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+            echo "| Ubuntu | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
           fi
 
-          if [ "${{ needs.macos-x64.result }}" = "success" ]; then
-            echo "| macOS x64 | ✅ Success |" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.macos.result }}" = "success" ]; then
+            echo "| macOS | ✅ Success |" >> $GITHUB_STEP_SUMMARY
           else
-            echo "| macOS x64 | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+            echo "| macOS | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
           fi
 
-          if [ "${{ needs.windows-x64.result }}" = "success" ]; then
-            echo "| Windows x64 | ✅ Success |" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.windows.result }}" = "success" ]; then
+            echo "| Windows | ✅ Success |" >> $GITHUB_STEP_SUMMARY
           else
-            echo "| Windows x64 | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+            echo "| Windows | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
           fi
 
-          if [ "${{ needs.raspios_lite-arm.result }}" = "success" ]; then
-            echo "| Raspberry Pi OS ARM | ✅ Success |" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.raspios-lite-arm.result }}" = "success" ]; then
+            echo "| Raspberry Pi ARM | ✅ Success |" >> $GITHUB_STEP_SUMMARY
           else
-            echo "| Raspberry Pi OS ARM | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
-          fi
-
-          if [ "${{ needs.raspios_lite-arm64.result }}" = "success" ]; then
-            echo "| Raspberry Pi OS ARM64 | ✅ Success |" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "| Raspberry Pi OS ARM64 | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+            echo "| Raspberry Pi ARM | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
           fi
 
           echo "" >> $GITHUB_STEP_SUMMARY
