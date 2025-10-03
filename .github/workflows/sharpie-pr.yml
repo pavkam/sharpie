@@ -11,8 +11,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  build_and_test:
-    name: 📦 Build and Test on ${{ matrix.os }}
+  test:
+    name: 💝 Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -23,12 +23,13 @@ jobs:
       - name: ☁️ Checkout repository
         uses: actions/checkout@v4
 
-      - name: 🔀 Build and Test
+      - name: ⏯️ Build and Test
         uses: ./.github/actions/build-and-test
+        
 
   summary:
     name: ✔︎ Generate summary
-    needs: build_and_test
+    needs: test
     runs-on: ubuntu-latest
     if: always()
 

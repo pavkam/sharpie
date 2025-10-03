@@ -20,22 +20,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: ⚙️ Set up .NET
-      id: setup_dotnet
-      uses: actions/setup-dotnet@v4
+    - name: ⚙️ Setup environment
+      id: setup_environment
+      uses: ./.github/actions/setup
       with:
         dotnet-version: ${{ inputs.dotnet-version }}
-
-    - name: ♻️ Cache NuGet packages and dotnet tools
-      id: cache_nuget_packages
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.nuget/packages
-          ~/.nuget/toolcache
-        key: ${{ runner.os }}-dotnet-${{ hashFiles('**/packages.lock.json', '**/packages.config', '**/*.csproj', '**/.config/dotnet-tools.json') }}
-        restore-keys: |
-          ${{ runner.os }}-dotnet-
 
     - name: 🔍 Check formatting & code style
       id: check_formatting_and_code_style
@@ -71,16 +60,15 @@ runs:
     - name: 📝 Publish test results (Linux)
       id: publish_test_results_linux
       uses: EnricoMi/publish-unit-test-result-action@v2
-      if: ${{ always() && inputs.os == 'Linux' }}
+      if: ${{ always() && runner.os == 'Linux' }}
       with:
         files: "**/TestResults/**/test-results.trx"
 
-    - name: 📝 Publish test results (macOS)
+    - name: 📝 Publish test result summary (macOS & Linux)
       id: publish_test_results_macos
-      if: always() && inputs.os == 'macOS'
+      if: always() && (runner.os == 'macOS' || runner.os == 'Linux')
       shell: bash
       run: |
-        make report
         cat ${{ inputs.coverage-report-path }}/Summary.md >> $GITHUB_STEP_SUMMARY
 
     - name: 📝 Publish test results (Windows)
@@ -88,5 +76,4 @@ runs:
       if: always() && runner.os == 'Windows'
       shell: pwsh
       run: |
-        make report
         Get-Content ${{ inputs.coverage-report-path }}\Summary.md | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY

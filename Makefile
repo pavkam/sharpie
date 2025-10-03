@@ -18,7 +18,7 @@ SUMMARY_FILE = $(REPORT_DIR)/Summary.md
 # Targets
 # =============================================================================
 
-.PHONY: check-tools build run lint format test test-and-report
+.PHONY: check-tools build run lint format test test-and-report generate-docs
 
 # Ensure all tools are installed locally
 check-tools:
@@ -49,3 +49,10 @@ test-and-report: check-tools test
 	dotnet reportgenerator -reports:"**/TestResults/**/*.cobertura.xml" -targetdir:"$(REPORT_DIR)" -reporttypes:"HtmlInline;Cobertura;Badges;MarkdownSummary"
 	@echo "✅ Test report generated in '$(REPORT_DIR)' directory"
 	@[ -f $(SUMMARY_FILE) ] && cat $(SUMMARY_FILE) || echo " 🚨 Summary not found"
+
+# Generate documentation
+generate-docs: check-tools
+    mv ./README.md ./index.md
+    mv ./LICENSE ./LICENSE.md
+    sed -i 's/LICENSE/LICENSE.md/g' index.md
+    dotnet docfx ./docfx.json
