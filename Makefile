@@ -46,6 +46,6 @@ test: build
 
 # Test with code coverage and generate report
 test-and-report: check-tools test
-	reportgenerator -reports:"**/TestResults/**/*.cobertura.xml" -targetdir:"$(REPORT_DIR)" -reporttypes:"HtmlInline;Cobertura;Badges;MarkdownSummary"
+	dotnet reportgenerator -reports:"**/TestResults/**/*.cobertura.xml" -targetdir:"$(REPORT_DIR)" -reporttypes:"HtmlInline;Cobertura;Badges;MarkdownSummary"
 	@echo "✅ Test report generated in '$(REPORT_DIR)' directory"
 	@[ -f $(SUMMARY_FILE) ] && cat $(SUMMARY_FILE) || echo " 🚨 Summary not found"
