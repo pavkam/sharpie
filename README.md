@@ -1,10 +1,13 @@
 # Sharpie
 
-[![Build, Test and Release](https://github.com/pavkam/sharpie/actions/workflows/sharpie-build-test-and-deploy.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/sharpie-build-test-and-deploy.yml)
-[![codecov](https://codecov.io/gh/pavkam/sharpie/branch/main/graph/badge.svg?token=QI3EVFGHUZ)](https://codecov.io/gh/pavkam/sharpie)
+[![Status](https://github.com/pavkam/sharpie/actions/workflows/sharpie-publish.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/sharpie-publish.yml)
+![Coverage](https://github.com/pavkam/sharpie/actions/workflows/sharpie-publish.yml/badge.svg?label=coverage)
+[![NCurses](https://github.com/pavkam/sharpie/actions/workflows/build-ncurses.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/build-ncurses.yml)
+[![PDCurses](https://github.com/pavkam/sharpie/actions/workflows/build-pd-curses.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/build-pd-curses.yml)
+[![PDCursesMod](https://github.com/pavkam/sharpie/actions/workflows/build-pd-curses-mod.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/build-pd-curses-mod.yml)
 [![Issues](https://img.shields.io/github/issues/pavkam/sharpie)](https://github.com/pavkam/sharpie/issues)
 [![License](https://img.shields.io/github/license/pavkam/sharpie)](https://raw.githubusercontent.com/pavkam/sharpie/main/LICENSE)
-![.NET 6](https://img.shields.io/badge/.NET-6.0-orange)
+![.NET 9](https://img.shields.io/badge/.NET-9.0-orange)
 [![NuGet](https://img.shields.io/nuget/v/Sharpie-Curses)](https://www.nuget.org/packages/Sharpie-Curses)
 ![Downloads](https://img.shields.io/nuget/dt/Sharpie-Curses)
 
@@ -128,4 +131,5 @@ As you can imagine, there are numerous other uses built into the library. Start 
 
 ## License
 
+[Contributors] [./CONTRIBUTORS.md]
 [BSD 3-Clause License](./LICENSE)
