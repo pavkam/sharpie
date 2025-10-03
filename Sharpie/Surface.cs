@@ -651,8 +651,7 @@ public abstract class Surface: ISurface, IDisposable
 
         CaretLocation = caretAt;
 
-        return chars.Select(Curses.FromComplexChar)
-                    .ToArray();
+        return [.. chars.Select(Curses.FromComplexChar)];
     }
 
     /// <inheritdoc cref="ISurface.Clear" />

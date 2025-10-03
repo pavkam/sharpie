@@ -110,7 +110,7 @@ public sealed class FigletFont: AsciiFont
 
             if (rep == null)
             {
-                rep = rows.Select(r => new StringBuilder(r)).ToArray();
+                rep = [.. rows.Select(r => new StringBuilder(r))];
                 continue;
             }
 
@@ -229,16 +229,13 @@ public sealed class FigletFont: AsciiFont
             var drawable = GetReplacementCharacter(size);
             Size = drawable.Size;
 
-            _rows = Enumerable.Range(0, Size.Height)
-                              .Select(_ => new char[Size.Width])
-                              .ToArray();
+            _rows = [.. Enumerable.Range(0, Size.Height).Select(_ => new char[Size.Width])];
 
             drawable.DrawOnto(this, new(new(0, 0), drawable.Size), new(0, 0));
         }
 
         public string[] Rows =>
-            _rows.Select(r => new string(r))
-                 .ToArray();
+            [.. _rows.Select(r => new string(r))];
 
         public Size Size
         {

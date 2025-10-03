@@ -235,20 +235,11 @@ public sealed class Canvas: IDrawable, IDrawSurface
         }
     };
 
-    private static readonly Rune[] _checkCharacters = "●◯◆◇■□".Select(c => new Rune(c))
-                                                             .ToArray();
-
-    private static readonly Rune[] _triangleCharacters = "▲△▴▵▼▽▾▿◀◁◂◃▶▷▸▹".Select(c => new Rune(c))
-                                                                          .ToArray();
-
-    private static readonly Rune[] _shadeCharacters = " ░▒▓".Select(c => new Rune(c))
-                                                           .ToArray();
-
-    private static readonly Rune[] _horizontalGradientCharacters = " ▁▂▃▄▅▆▇█".Select(c => new Rune(c))
-                                                                             .ToArray();
-
-    private static readonly Rune[] _verticalGradientCharacters = " ▏▎▍▌▋▊▉█".Select(c => new Rune(c))
-                                                                       .ToArray();
+    private static readonly Rune[] _checkCharacters = [.. "●◯◆◇■□".Select(c => new Rune(c))];
+    private static readonly Rune[] _triangleCharacters = [.. "▲△▴▵▼▽▾▿◀◁◂◃▶▷▸▹".Select(c => new Rune(c))];
+    private static readonly Rune[] _shadeCharacters = [.. " ░▒▓".Select(c => new Rune(c))];
+    private static readonly Rune[] _horizontalGradientCharacters = [.. " ▁▂▃▄▅▆▇█".Select(c => new Rune(c))];
+    private static readonly Rune[] _verticalGradientCharacters = [.. " ▏▎▍▌▋▊▉█".Select(c => new Rune(c))];
 
     private static readonly Dictionary<LineSideAndStyle, Rune> _boxCharacters = new()
     {
