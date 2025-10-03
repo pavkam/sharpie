@@ -36,6 +36,9 @@ namespace Sharpie.Backend;
 [SuppressMessage("ReSharper", "IdentifierTypo"), SuppressMessage("ReSharper", "InconsistentNaming")]
 internal abstract class PdCursesMod32FunctionMap: BaseCursesFunctionMap
 {
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int endwin_w32_4400();
 
@@ -114,4 +117,7 @@ internal abstract class PdCursesMod32FunctionMap: BaseCursesFunctionMap
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int wvline_set(IntPtr window, ref uint @char, int count);
+
+#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+#pragma warning restore IDE1006 // Naming Styles
 }

@@ -213,7 +213,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
         Right
     }
 
-    private static readonly Dictionary<BlockQuadrant, Rune> BlockCharacters = new()
+    private static readonly Dictionary<BlockQuadrant, Rune> _blockCharacters = new()
     {
         { BlockQuadrant.TopLeft, new('▘') },
         { BlockQuadrant.TopRight, new('▝') },
@@ -235,22 +235,22 @@ public sealed class Canvas: IDrawable, IDrawSurface
         }
     };
 
-    private static readonly Rune[] CheckCharacters = "●◯◆◇■□".Select(c => new Rune(c))
+    private static readonly Rune[] _checkCharacters = "●◯◆◇■□".Select(c => new Rune(c))
                                                              .ToArray();
 
-    private static readonly Rune[] TriangleCharacters = "▲△▴▵▼▽▾▿◀◁◂◃▶▷▸▹".Select(c => new Rune(c))
+    private static readonly Rune[] _triangleCharacters = "▲△▴▵▼▽▾▿◀◁◂◃▶▷▸▹".Select(c => new Rune(c))
                                                                           .ToArray();
 
-    private static readonly Rune[] ShadeCharacters = " ░▒▓".Select(c => new Rune(c))
+    private static readonly Rune[] _shadeCharacters = " ░▒▓".Select(c => new Rune(c))
                                                            .ToArray();
 
-    private static readonly Rune[] HorizontalGradientCharacters = " ▁▂▃▄▅▆▇█".Select(c => new Rune(c))
+    private static readonly Rune[] _horizontalGradientCharacters = " ▁▂▃▄▅▆▇█".Select(c => new Rune(c))
                                                                              .ToArray();
 
-    private static readonly Rune[] VerticalGradientCharacters = " ▏▎▍▌▋▊▉█".Select(c => new Rune(c))
-                                                                           .ToArray();
+    private static readonly Rune[] _verticalGradientCharacters = " ▏▎▍▌▋▊▉█".Select(c => new Rune(c))
+                                                                       .ToArray();
 
-    private static readonly Dictionary<LineSideAndStyle, Rune> BoxCharacters = new()
+    private static readonly Dictionary<LineSideAndStyle, Rune> _boxCharacters = new()
     {
         // LIGHT
         { LineSideAndStyle.RightLight, new('╶') },
@@ -671,7 +671,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
         {
             Special = (int) b,
             Style = style,
-            Rune = BlockCharacters[b]
+            Rune = _blockCharacters[b]
         };
     }
 
@@ -687,29 +687,29 @@ public sealed class Canvas: IDrawable, IDrawSurface
                 0) |
             stl;
 
-        bool TryGet(LineSideAndStyle replaceWhat, LineSideAndStyle replaceWith, out Rune r)
+        bool tryGet(LineSideAndStyle replaceWhat, LineSideAndStyle replaceWith, out Rune r)
         {
             if (replaceWhat != 0 && b.HasFlag(replaceWhat))
             {
                 b = (b & ~replaceWhat) | replaceWith;
             }
 
-            return BoxCharacters.TryGetValue(b, out r);
+            return _boxCharacters.TryGetValue(b, out r);
         }
 
-        if (!TryGet(0, 0, out var rune) &&
-            !TryGet(LineSideAndStyle.RightLightDashed, LineSideAndStyle.RightLight, out rune) &&
-            !TryGet(LineSideAndStyle.LeftLightDashed, LineSideAndStyle.LeftLight, out rune) &&
-            !TryGet(LineSideAndStyle.TopLightDashed, LineSideAndStyle.TopLight, out rune) &&
-            !TryGet(LineSideAndStyle.BottomLightDashed, LineSideAndStyle.BottomLight, out rune) &&
-            !TryGet(LineSideAndStyle.RightHeavyDashed, LineSideAndStyle.RightHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.LeftHeavyDashed, LineSideAndStyle.LeftHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.TopHeavyDashed, LineSideAndStyle.TopHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.BottomHeavyDashed, LineSideAndStyle.BottomHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.RightDouble, LineSideAndStyle.RightHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.LeftDouble, LineSideAndStyle.LeftHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.TopDouble, LineSideAndStyle.TopHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.BottomDouble, LineSideAndStyle.BottomHeavy, out rune))
+        if (!tryGet(0, 0, out var rune) &&
+            !tryGet(LineSideAndStyle.RightLightDashed, LineSideAndStyle.RightLight, out rune) &&
+            !tryGet(LineSideAndStyle.LeftLightDashed, LineSideAndStyle.LeftLight, out rune) &&
+            !tryGet(LineSideAndStyle.TopLightDashed, LineSideAndStyle.TopLight, out rune) &&
+            !tryGet(LineSideAndStyle.BottomLightDashed, LineSideAndStyle.BottomLight, out rune) &&
+            !tryGet(LineSideAndStyle.RightHeavyDashed, LineSideAndStyle.RightHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.LeftHeavyDashed, LineSideAndStyle.LeftHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.TopHeavyDashed, LineSideAndStyle.TopHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.BottomHeavyDashed, LineSideAndStyle.BottomHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.RightDouble, LineSideAndStyle.RightHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.LeftDouble, LineSideAndStyle.LeftHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.TopDouble, LineSideAndStyle.TopHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.BottomDouble, LineSideAndStyle.BottomHeavy, out rune))
         {
             rune = new(0);
         }
@@ -758,12 +758,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
     /// <param name="style">The cell style.</param>
     public void Fill(Rectangle area, ShadeGlyphStyle shadeGlyph, Style style)
     {
-        if (shadeGlyph < 0 || (int) shadeGlyph > ShadeCharacters.Length)
+        if (shadeGlyph < 0 || (int) shadeGlyph > _shadeCharacters.Length)
         {
             throw new ArgumentException("Invalid shade style value.", nameof(shadeGlyph));
         }
 
-        var shadeChar = ShadeCharacters[(int) shadeGlyph];
+        var shadeChar = _shadeCharacters[(int) shadeGlyph];
         Fill(area, shadeChar, style);
     }
 
@@ -833,12 +833,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
     public void Glyph(Point location, CheckGlyphStyle checkGlyphStyle, FillStyle fillStyle, Style style)
     {
         var index = (int) checkGlyphStyle * 2 + (int) fillStyle;
-        if (index < 0 || index >= CheckCharacters.Length)
+        if (index < 0 || index >= _checkCharacters.Length)
         {
             throw new ArgumentException("Invalid style and fill combination.");
         }
 
-        Glyph(location, CheckCharacters[index], style);
+        Glyph(location, _checkCharacters[index], style);
     }
 
     /// <summary>
@@ -857,12 +857,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
         Style style)
     {
         var index = (int) triangleGlyphStyle * 4 + (int) glyphSize * 2 + (int) fillStyle;
-        if (index < 0 || index >= TriangleCharacters.Length)
+        if (index < 0 || index >= _triangleCharacters.Length)
         {
             throw new ArgumentException("Invalid parameter combination");
         }
 
-        var rune = TriangleCharacters[(int) triangleGlyphStyle * 4 + (int) glyphSize * 2 + (int) fillStyle];
+        var rune = _triangleCharacters[(int) triangleGlyphStyle * 4 + (int) glyphSize * 2 + (int) fillStyle];
         Glyph(location, rune, style);
     }
 
@@ -877,8 +877,8 @@ public sealed class Canvas: IDrawable, IDrawSurface
     public void Glyph(Point location, GradientGlyphStyle gradientGlyphStyle, int fill, Style style)
     {
         var runes = gradientGlyphStyle == GradientGlyphStyle.BottomToTop
-            ? HorizontalGradientCharacters
-            : VerticalGradientCharacters;
+            ? _horizontalGradientCharacters
+            : _verticalGradientCharacters;
 
         if (fill < 0 || fill >= runes.Length)
         {
@@ -1025,15 +1025,15 @@ public sealed class Canvas: IDrawable, IDrawSurface
         {
             foreach (var (y, top) in Helpers.EnumerateInHalves(area.Y, area.Height))
             {
+#pragma warning disable IDE0072 // Add missing cases -- all cases are covered
                 var quad = (left, top) switch
                 {
                     (true, true) => BlockQuadrant.TopLeft,
                     (true, false) => BlockQuadrant.BottomLeft,
                     (false, true) => BlockQuadrant.TopRight,
                     (false, false) => BlockQuadrant.BottomRight,
-                    _ => throw new NotImplementedException()
                 };
-
+#pragma warning restore IDE0072 // Add missing cases
                 SetCell(x, y, quad, style);
             }
         }
@@ -1048,16 +1048,15 @@ public sealed class Canvas: IDrawable, IDrawSurface
     {
         var x = (int) Math.Floor(location.X * 2);
         var y = (int) Math.Floor(location.Y * 2);
-
+#pragma warning disable IDE0072 // Add missing cases -- all cases are covered
         var quad = (x % 2 == 0, y % 2 == 0) switch
         {
             (true, true) => BlockQuadrant.TopLeft,
             (true, false) => BlockQuadrant.BottomLeft,
             (false, true) => BlockQuadrant.TopRight,
             (false, false) => BlockQuadrant.BottomRight,
-            _ => throw new NotImplementedException()
         };
-
+#pragma warning restore IDE0072 // Add missing cases
         SetCell(x / 2, y / 2, quad, style);
     }
 

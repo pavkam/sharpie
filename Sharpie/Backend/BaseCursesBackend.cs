@@ -70,7 +70,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
     }
 
     /// <summary>
-    ///     The Libc symbol resolver.
+    ///     The libc symbol resolver.
     /// </summary>
     protected internal INativeSymbolResolver? LibCSymbolResolver
     {
@@ -528,7 +528,9 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public void set_title(string title) => DotNetSystemAdapter.SetConsoleTitle(title);
 
+#pragma warning disable IDE1006 // Naming Styles
     public virtual void set_unicode_locale()
+#pragma warning restore IDE1006 // Naming Styles
     {
     }
 

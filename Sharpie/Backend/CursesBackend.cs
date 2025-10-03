@@ -36,6 +36,8 @@ namespace Sharpie.Backend;
 [PublicAPI]
 public static class CursesBackend
 {
+    private static readonly string[] _libraryNameOrPaths = new[] { "libc" };
+
     /// <summary>
     ///     Internal method that tries to load Curses backend, and, optionally libc.
     /// </summary>
@@ -64,7 +66,7 @@ public static class CursesBackend
         }
 
         INativeSymbolResolver? cSym = dotNetSystemAdapter.IsUnixLike
-            ? NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, new[] { "libc" })
+            ? NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, _libraryNameOrPaths)
             : null;
 
         return type switch

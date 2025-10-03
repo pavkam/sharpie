@@ -31,11 +31,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Backend;
 
 /// <summary>
-///     Function map for LibC library.
+///     Function map for libc library.
 /// </summary>
 [SuppressMessage("ReSharper", "IdentifierTypo"), SuppressMessage("ReSharper", "InconsistentNaming")]
 internal abstract class LibCFunctionMap
 {
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public delegate int setlocale(int cate, [MarshalAs(UnmanagedType.LPStr)] string locale);
+
+#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+#pragma warning restore IDE1006 // Naming Styles
 }

@@ -41,7 +41,7 @@ public class TerminalSurface: Surface, ITerminalSurface
     /// </summary>
     /// <param name="parent">The parent terminal.</param>
     /// <param name="handle">The surface handle.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
@@ -73,7 +73,7 @@ public class TerminalSurface: Surface, ITerminalSurface
     }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh()" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public virtual void Refresh()
     {
         AssertSynchronized();
@@ -81,7 +81,7 @@ public class TerminalSurface: Surface, ITerminalSurface
     }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh(int, int)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public virtual void Refresh(int y, int count)
     {
         if (count < 0)

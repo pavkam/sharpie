@@ -81,15 +81,15 @@ public sealed class EventPump: IEventPump
     ITerminal IEventPump.Terminal => Terminal;
 
     /// <inheritdoc cref="IEventPump.Listen(ISurface,CancellationToken)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken) => surface == null ? throw new ArgumentNullException(nameof(surface)) : Listen(surface.Handle, cancellationToken);
 
     /// <inheritdoc cref="IEventPump.Listen(ISurface)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public IEnumerable<Event> Listen(ISurface surface) => Listen(surface, CancellationToken.None);
 
     /// <inheritdoc cref="IEventPump.Listen(CancellationToken)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public IEnumerable<Event> Listen(CancellationToken cancellationToken)
     {
         var padHandle = Terminal.Curses.newpad(1, 1)
@@ -113,7 +113,7 @@ public sealed class EventPump: IEventPump
     }
 
     /// <inheritdoc cref="IEventPump.Listen()" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public IEnumerable<Event> Listen() => Listen(CancellationToken.None);
 
     /// <inheritdoc cref="IEventPump.Use" />

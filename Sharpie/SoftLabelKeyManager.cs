@@ -43,7 +43,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     /// </summary>
     /// <param name="terminal">The parent terminal.</param>
     /// <param name="mode">The mode of the manager.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="terminal" /> is <c>null</c>.</exception>
     internal SoftLabelKeyManager(Terminal terminal, SoftLabelKeyMode mode)
     {
@@ -80,7 +80,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Style" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public Style Style
     {
         get
@@ -111,7 +111,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.ColorMixture" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ColorMixture ColorMixture
     {
         get => Style.ColorMixture;
@@ -126,7 +126,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.SetLabel" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void SetLabel(int index, string title, SoftLabelKeyAlignment align)
     {
         if (title == null)
@@ -147,7 +147,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.EnableAttributes" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
         AssertEnabled();
@@ -158,7 +158,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.DisableAttributes" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
         AssertEnabled();
@@ -169,7 +169,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Clear" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Clear()
     {
         AssertEnabled();
@@ -180,7 +180,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Restore" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Restore()
     {
         AssertEnabled();
@@ -191,7 +191,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.MarkDirty" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void MarkDirty()
     {
         AssertEnabled();
@@ -202,7 +202,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Refresh" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Refresh()
     {
         AssertEnabled();

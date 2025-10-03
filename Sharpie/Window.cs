@@ -46,7 +46,7 @@ public sealed class Window: TerminalSurface, IWindow
     /// </summary>
     /// <param name="parent">The parent screen.</param>
     /// <param name="handle">The Curses handle.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
@@ -73,7 +73,7 @@ public sealed class Window: TerminalSurface, IWindow
     /// <summary>
     ///     Returns the value of <see cref="Location" />.
     /// </summary>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     protected internal override Point Origin => Location;
 
     /// <inheritdoc cref="IWindow.Screen" />
@@ -92,7 +92,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.Location" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public Point Location
     {
         get
@@ -119,7 +119,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.Size" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public new Size Size
     {
         get => base.Size;
@@ -139,7 +139,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="TerminalSurface.Refresh()" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public override void Refresh()
     {
         AssertSynchronized();
@@ -162,7 +162,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="TerminalSurface.Refresh(int, int)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public override void Refresh(int y, int count)
     {
         AssertSynchronized();
@@ -186,7 +186,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.SendToBack" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void SendToBack()
     {
         AssertManagedWindows();
@@ -199,7 +199,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.BringToFront" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void BringToFront()
     {
         AssertManagedWindows();
@@ -212,7 +212,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.Visible" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public bool Visible
     {
         get
@@ -239,7 +239,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.SubWindow" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ISubWindow SubWindow(Rectangle area)
     {
         if (!Area.AdjustToActualArea(ref area))
@@ -254,7 +254,7 @@ public sealed class Window: TerminalSurface, IWindow
     }
 
     /// <inheritdoc cref="IWindow.Duplicate" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public IWindow Duplicate()
     {
         AssertSynchronized();

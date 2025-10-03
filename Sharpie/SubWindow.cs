@@ -41,7 +41,7 @@ public sealed class SubWindow: Surface, ISubWindow
     /// </summary>
     /// <param name="parent">The parent window (if any).</param>
     /// <param name="handle">The Curses handle.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
@@ -60,14 +60,14 @@ public sealed class SubWindow: Surface, ISubWindow
     /// <summary>
     ///     Returns the value of <see cref="Location" />.
     /// </summary>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     protected internal override Point Origin => Location;
 
     /// <inheritdoc cref="ISubWindow.Window" />
     IWindow ISubWindow.Window => Window;
 
     /// <inheritdoc cref="ISubWindow.Location" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public Point Location
     {
         get
@@ -92,7 +92,7 @@ public sealed class SubWindow: Surface, ISubWindow
     }
 
     /// <inheritdoc cref="ISubWindow.Size" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public new Size Size
     {
         get => base.Size;
@@ -110,7 +110,7 @@ public sealed class SubWindow: Surface, ISubWindow
     }
 
     /// <inheritdoc cref="ISubWindow.Duplicate" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ISubWindow Duplicate()
     {
         AssertSynchronized();

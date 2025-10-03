@@ -161,7 +161,7 @@ public sealed class Screen: TerminalSurface, IScreen
     }
 
     /// <inheritdoc cref="IScreen.Window" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public IWindow Window(Rectangle area)
     {
         if (!Area.AdjustToActualArea(ref area))
@@ -176,7 +176,7 @@ public sealed class Screen: TerminalSurface, IScreen
     }
 
     /// <inheritdoc cref="IScreen.Pad" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public IPad Pad(Size size)
     {
         if (size.Width < 1 || size.Height < 1)

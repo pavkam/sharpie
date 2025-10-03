@@ -41,7 +41,7 @@ public sealed class SubPad: Surface, ISubPad
     /// </summary>
     /// <param name="parent">The parent pad.</param>
     /// <param name="handle">The Curses handle.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     internal SubPad(Pad parent, IntPtr handle) : base(parent != null! ? parent.Curses : null!, handle)
@@ -59,14 +59,14 @@ public sealed class SubPad: Surface, ISubPad
     /// <summary>
     ///     Returns the value of <see cref="Location" />.
     /// </summary>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     protected internal override Point Origin => Location;
 
     /// <inheritdoc cref="ISubPad.Pad" />
     IPad ISubPad.Pad => Pad;
 
     /// <inheritdoc cref="ISubPad.Location" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public Point Location
     {
         get
@@ -91,7 +91,7 @@ public sealed class SubPad: Surface, ISubPad
     }
 
     /// <inheritdoc cref="ISubPad.Size" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public new Size Size
     {
         get => base.Size;
@@ -109,7 +109,7 @@ public sealed class SubPad: Surface, ISubPad
     }
 
     /// <inheritdoc cref="ISubPad.Duplicate" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ISubPad Duplicate()
     {
         AssertSynchronized();

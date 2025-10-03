@@ -36,7 +36,7 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class ColorManager: IColorManager
 {
-    private const short StandardColorCount = (short) StandardColor.White + 1;
+    private const short _standardColorCount = (short) StandardColor.White + 1;
     private readonly bool _ignorant;
     private short _nextPairHandle = 1;
 
@@ -45,7 +45,7 @@ public sealed class ColorManager: IColorManager
     /// </summary>
     /// <param name="parent">The parent terminal.</param>
     /// <param name="enabled">Specifies whether colors are enabled.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="parent" /> is <c>null</c>.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
     internal ColorManager(Terminal parent, bool enabled)
@@ -64,7 +64,7 @@ public sealed class ColorManager: IColorManager
                 _ignorant = Terminal.Curses.use_default_colors()
                                     .Failed();
 
-                var extended = !Terminal.Curses.init_pair(1, StandardColorCount, StandardColorCount)
+                var extended = !Terminal.Curses.init_pair(1, _standardColorCount, _standardColorCount)
                                         .Failed();
 
                 var standard = !Terminal.Curses.init_pair(1, (short) StandardColor.White, (short) StandardColor.White)
@@ -98,7 +98,7 @@ public sealed class ColorManager: IColorManager
     public bool CanRedefineColors => Terminal.Curses.can_change_color();
 
     /// <inheritdoc cref="IColorManager.MixColors(short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ColorMixture MixColors(short fgColor, short bgColor)
     {
         AssertHasColors();
@@ -113,12 +113,12 @@ public sealed class ColorManager: IColorManager
     }
 
     /// <inheritdoc cref="IColorManager.MixColors(StandardColor, StandardColor)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor) =>
         MixColors((short) fgColor, (short) bgColor);
 
     /// <inheritdoc cref="IColorManager.RemixColors(ColorMixture, short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RemixColors(ColorMixture mixture, short fgColor, short bgColor)
     {
         AssertHasColors();
@@ -130,12 +130,12 @@ public sealed class ColorManager: IColorManager
     }
 
     /// <inheritdoc cref="IColorManager.RemixColors(ColorMixture, StandardColor, StandardColor)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RemixColors(ColorMixture mixture, StandardColor fgColor, StandardColor bgColor) =>
         RemixColors(mixture, (short) fgColor, (short) bgColor);
 
     /// <inheritdoc cref="IColorManager.RemixDefaultColors(short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RemixDefaultColors(short fgColor, short bgColor)
     {
         AssertHasColors();
@@ -147,12 +147,12 @@ public sealed class ColorManager: IColorManager
     }
 
     /// <inheritdoc cref="IColorManager.RemixDefaultColors(StandardColor, StandardColor)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RemixDefaultColors(StandardColor fgColor, StandardColor bgColor) =>
         RemixDefaultColors((short) fgColor, (short) bgColor);
 
     /// <inheritdoc cref="IColorManager.UnMixColors" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public (short fgColor, short bgColor) UnMixColors(ColorMixture mixture)
     {
         AssertHasColors();
@@ -165,7 +165,7 @@ public sealed class ColorManager: IColorManager
     }
 
     /// <inheritdoc cref="IColorManager.RedefineColor(short, short, short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RedefineColor(short color, short red, short green, short blue)
     {
         AssertCanRedefineColors();
@@ -177,12 +177,12 @@ public sealed class ColorManager: IColorManager
     }
 
     /// <inheritdoc cref="IColorManager.RedefineColor(StandardColor, short, short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RedefineColor(StandardColor color, short red, short green, short blue) =>
         RedefineColor((short) color, red, green, blue);
 
     /// <inheritdoc cref="IColorManager.BreakdownColor(short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public (short red, short green, short blue) BreakdownColor(short color)
     {
         AssertCanRedefineColors();
@@ -196,14 +196,14 @@ public sealed class ColorManager: IColorManager
     }
 
     /// <inheritdoc cref="IColorManager.BreakdownColor(StandardColor)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public (short red, short green, short blue) BreakdownColor(StandardColor color) => BreakdownColor((short) color);
 
     private short MassageColor(short color, StandardColor replacement)
     {
         return color == -1
             ? _ignorant ? (short) replacement : color
-            : Mode == ColorMode.Standard ? (short) (color % StandardColorCount) : color;
+            : Mode == ColorMode.Standard ? (short) (color % _standardColorCount) : color;
     }
 
     private void AssertHasColors()

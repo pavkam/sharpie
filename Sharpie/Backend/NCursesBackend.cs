@@ -96,6 +96,7 @@ internal class NCursesBackend: BaseCursesBackend
     /// <inheritdoc cref="BaseCursesBackend.DecodeKeyCodeType" />
     protected internal override CursesKeyCodeType DecodeKeyCodeType(int result, uint keyCode)
     {
+#pragma warning disable IDE0072 // Add missing cases -- all cases are covered
         return (result, keyCode) switch
         {
             ( < 0, var _) => CursesKeyCodeType.Unknown,
@@ -103,8 +104,8 @@ internal class NCursesBackend: BaseCursesBackend
             ((int) NCursesKeyCode.Yes, (uint) NCursesKeyCode.Mouse) => CursesKeyCodeType.Mouse,
             ((int) NCursesKeyCode.Yes, var _) => CursesKeyCodeType.Key,
             ( >= 0, var _) => CursesKeyCodeType.Character,
-            _ => throw new NotImplementedException()
         };
+#pragma warning restore IDE0072 // Add missing cases
     }
 
     /// <inheritdoc cref="BaseCursesBackend.DecodeRawKey" />

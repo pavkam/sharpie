@@ -110,6 +110,7 @@ public readonly struct StyledText
 
         var op = ((StyledText) obj).Parts;
 
+#pragma warning disable IDE0072 // Add missing cases -- all cases are covered
         return (op, Parts) switch
         {
             (null, null) => true,
@@ -118,8 +119,8 @@ public readonly struct StyledText
             (var l and not null, var r and not null) when l.Length != r.Length => false,
             (var l and not null, var r and not null) => !r.Where((t, i) => l[i] != t)
                                                           .Any(),
-            _ => throw new NotImplementedException()
         };
+#pragma warning restore IDE0072 // Add missing cases
     }
 
     /// <inheritdoc cref="object.GetHashCode" />

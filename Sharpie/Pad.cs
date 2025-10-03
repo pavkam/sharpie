@@ -44,7 +44,7 @@ public sealed class Pad: Surface, IPad
     /// </summary>
     /// <param name="parent">The parent screen.</param>
     /// <param name="handle">The Curses handle.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
@@ -77,7 +77,7 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Size" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public new Size Size
     {
         get => base.Size;
@@ -96,7 +96,7 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Refresh(Rectangle,Point)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Refresh(Rectangle srcArea, Point destLocation)
     {
         if (!Size.AdjustToActualArea(ref srcArea))
@@ -125,11 +125,11 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Refresh(Point)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Refresh(Point destLocation) => Refresh(new(Origin, Size), destLocation);
 
     /// <inheritdoc cref="IPad.SubPad" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ISubPad SubPad(Rectangle area)
     {
         if (!Area.AdjustToActualArea(ref area))
@@ -146,7 +146,7 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Duplicate" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public IPad Duplicate()
     {
         var handle = Curses.dupwin(Handle)
