@@ -35,10 +35,7 @@ public class CursesExceptionTests
 {
     [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
-    public void Ctor_ThrowsException_IfMessageIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => { new CursesException(null!); });
-    }
+    public void Ctor_ThrowsException_IfMessageIsNull() => Should.Throw<ArgumentNullException>(() => { _ = new CursesException(null!); });
 
     [TestMethod]
     public void Ctor_StoresTheMessage()

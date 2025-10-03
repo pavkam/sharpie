@@ -45,14 +45,17 @@ public sealed class SubWindow: Surface, ISubWindow
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
-    internal SubWindow(Window parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
+    internal SubWindow(Window parent, IntPtr handle) : base(parent != null! ? parent.Curses : null!, handle)
     {
         Window = parent!;
         parent!.AddChild(this);
     }
 
     /// <inheritdoc cref="ISubWindow.Window" />
-    public Window Window { get; }
+    public Window Window
+    {
+        get;
+    }
 
     /// <summary>
     ///     Returns the value of <see cref="Location" />.
@@ -83,7 +86,7 @@ public sealed class SubWindow: Surface, ISubWindow
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
-            Curses.mvderwin(Handle, value.Y, value.X)
+            _ = Curses.mvderwin(Handle, value.Y, value.X)
                   .Check(nameof(Curses.mvderwin), "Failed to move window to new coordinates.");
         }
     }
@@ -101,7 +104,7 @@ public sealed class SubWindow: Surface, ISubWindow
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
-            Curses.wresize(Handle, area.Height, area.Width)
+            _ = Curses.wresize(Handle, area.Height, area.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the window.");
         }
     }

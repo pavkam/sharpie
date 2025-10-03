@@ -90,7 +90,7 @@ internal static class FigletLayoutEvaluator
         var limits = left.Select((v, i) =>
                          {
                              var l = v.Length;
-                             v.Append(right[i]);
+                             _ = v.Append(right[i]);
                              return l - 1;
                          })
                          .ToArray();
@@ -139,16 +139,18 @@ internal static class FigletLayoutEvaluator
 
                 if (r == ControlCharacter.Whitespace)
                 {
-                    current.Remove(touch + 1, 1);
-                } else if (l == ControlCharacter.Whitespace)
+                    _ = current.Remove(touch + 1, 1);
+                }
+                else if (l == ControlCharacter.Whitespace)
                 {
-                    current.Remove(touch, 1);
+                    _ = current.Remove(touch, 1);
                     touch--;
-                } else
+                }
+                else
                 {
                     var m = mergeFunc(l, r);
                     Debug.Assert(m != ControlCharacter.Null);
-                    current.Remove(touch, 2)
+                    _ = current.Remove(touch, 2)
                            .Insert(touch, m);
 
                     finished = true;
@@ -230,6 +232,8 @@ internal static class FigletLayoutEvaluator
                 case ('(', ')'):
                 case (')', '('):
                     return '|';
+                default:
+                    break;
             }
         }
 
@@ -242,6 +246,8 @@ internal static class FigletLayoutEvaluator
                     return 'Y';
                 case ('>', '<'):
                     return 'X';
+                default:
+                    break;
             }
         }
 

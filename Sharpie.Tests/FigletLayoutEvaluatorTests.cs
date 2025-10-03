@@ -108,7 +108,7 @@ public class FigletLayoutEvaluatorTests
     {
         var left = new StringBuilder(ls);
         FigletLayoutEvaluator.Join(Left, new[] { left }, new[] { rs });
-        
+
         left.ToString().ShouldBe(new(exp));
     }
 
@@ -117,7 +117,7 @@ public class FigletLayoutEvaluatorTests
     {
         var left = new StringBuilder(ls);
         FigletLayoutEvaluator.Join(Left, new[] { left }, new[] { rs });
-        
+
         left.ToString().ShouldBe(new(exp));
     }
 
@@ -126,8 +126,8 @@ public class FigletLayoutEvaluatorTests
     {
         var left = new StringBuilder(ls);
 
-        FigletLayoutEvaluator.Join(None, new [] { left }, new[] { rs });
-        
+        FigletLayoutEvaluator.Join(None, new[] { left }, new[] { rs });
+
         left.ToString().ShouldBe(new(exp));
     }
 
@@ -150,7 +150,7 @@ public class FigletLayoutEvaluatorTests
         var right = new[] { "   |", "5678" };
         var expected = new[] { "1234|", "|5678" };
         FigletLayoutEvaluator.Join(None, left, right);
-                       
+
         left.Select(s => s.ToString()).ShouldBe(expected);
     }
 
@@ -161,7 +161,7 @@ public class FigletLayoutEvaluatorTests
         var right = new[] { "    ", "1234", "    " };
         var expected = new[] { "____   ", "| $1234", "|___   " };
         FigletLayoutEvaluator.Join(None, left, right);
-        
+
         left.Select(s => s.ToString()).ShouldBe(expected);
     }
 

@@ -39,7 +39,7 @@ public sealed class StartEvent: Event
     /// <summary>
     ///     Creates a new instance of the class.
     /// </summary>
-    internal StartEvent(): base(EventType.Start) { }
+    internal StartEvent() : base(EventType.Start) { }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => "Started";

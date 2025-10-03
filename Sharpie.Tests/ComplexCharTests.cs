@@ -33,7 +33,8 @@ namespace Sharpie.Tests;
 [TestClass]
 public class ComplexCharTests
 {
-    [TestMethod] public void Ctor_StoresTheRawValue() { new ComplexChar("hello").Raw.ShouldBe("hello"); }
+    [TestMethod]
+    public void Ctor_StoresTheRawValue() => new ComplexChar("hello").Raw.ShouldBe("hello");
 
     [TestMethod]
     public void ToString_ProperlyFormats_UsingPayload()

@@ -42,13 +42,13 @@ public class TerminalMainLoopTests
     public void TestInitialize()
     {
         _cursesMock = new();
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(1));
 
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
 
-        _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
+        _ = _cursesMock.Setup(s => s.wget_wch(It.IsAny<IntPtr>(), out It.Ref<uint>.IsAny))
                    .Returns((IntPtr _, out uint kc) =>
                    {
                        kc = 0;
@@ -58,97 +58,80 @@ public class TerminalMainLoopTests
         _terminal = new(_cursesMock.Object, new());
     }
 
-    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
+    [TestCleanup]
+    public void TestCleanup() => _terminal.Dispose();
 
     private Task RunAsync()
     {
         var startedEvent = new ManualResetEvent(false);
         var ra = Task.Run(() => _terminal.Run((_, _) =>
         {
-            startedEvent.Set();
+            _ = startedEvent.Set();
             return Task.CompletedTask;
         }));
 
-        startedEvent.WaitOne();
+        _ = startedEvent.WaitOne();
 
         return ra;
     }
 
     [TestMethod]
-    public void Delegate_Throws_IfActionIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _terminal.Delegate(null!));
-    }
+    public void Delegate_Throws_IfActionIsNull() => Should.Throw<ArgumentNullException>(() => _terminal.Delegate(null!));
 
     [TestMethod]
     public void Delegate_Throws_IfTerminalDisposed()
     {
         _terminal.Dispose();
-        Should.Throw<ObjectDisposedException>(() => _terminal.Delegate(() => Task.CompletedTask));
+        _ = Should.Throw<ObjectDisposedException>(() => _terminal.Delegate(() => Task.CompletedTask));
     }
 
     [TestMethod]
     public void Stop_Throws_IfTerminalDisposed()
     {
         _terminal.Dispose();
-        Should.Throw<ObjectDisposedException>(() => _terminal.Stop());
+        _ = Should.Throw<ObjectDisposedException>(() => _terminal.Stop());
     }
 
     [TestMethod]
-    public void Delay1_Throws_IfActionIsNull() { Should.Throw<ArgumentNullException>(() => _terminal.Delay(null!, 1)); }
+    public void Delay1_Throws_IfActionIsNull() => Should.Throw<ArgumentNullException>(() => _terminal.Delay(null!, 1));
 
     [TestMethod]
-    public void Delay1_Throws_IfDelayIsNegative()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => _terminal.Delay((_, _) => Task.CompletedTask, -1, "state"));
-    }
+    public void Delay1_Throws_IfDelayIsNegative() => Should.Throw<ArgumentOutOfRangeException>(() => _terminal.Delay((_, _) => Task.CompletedTask, -1, "state"));
 
     [TestMethod]
-    public void Delay2_Throws_IfActionIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _terminal.Delay(null!, 1, "state"));
-    }
+    public void Delay2_Throws_IfActionIsNull() => Should.Throw<ArgumentNullException>(() => _terminal.Delay(null!, 1, "state"));
 
     [TestMethod]
-    public void Delay2_Throws_IfDelayIsNegative()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => _terminal.Delay((_, _) => Task.CompletedTask, -1, false));
-    }
+    public void Delay2_Throws_IfDelayIsNegative() => Should.Throw<ArgumentOutOfRangeException>(() => _terminal.Delay((_, _) => Task.CompletedTask, -1, false));
 
     [TestMethod]
-    public void Repeat1_Throws_IfActionIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _terminal.Repeat(null!, 1));
-    }
+    public void Repeat1_Throws_IfActionIsNull() => Should.Throw<ArgumentNullException>(() => _terminal.Repeat(null!, 1));
 
     [TestMethod]
     public void Repeat1_Throws_IfDelayIsNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() =>
+        _ = Should.Throw<ArgumentOutOfRangeException>(() =>
             _terminal.Repeat((_, _) => Task.CompletedTask, -1, false, "state"));
     }
 
     [TestMethod]
-    public void Repeat2_Throws_IfActionIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _terminal.Repeat(null!, 1));
-    }
+    public void Repeat2_Throws_IfActionIsNull() => Should.Throw<ArgumentNullException>(() => _terminal.Repeat(null!, 1));
 
     [TestMethod]
     public void Repeat2_Throws_IfDelayIsNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() =>
+        _ = Should.Throw<ArgumentOutOfRangeException>(() =>
             _terminal.Repeat((_, _) => Task.CompletedTask, -1, false, "state"));
     }
 
     [TestMethod]
-    public void Run_Throws_IfActionIsNull() { Should.Throw<ArgumentNullException>(() => _terminal.Run(null!, false)); }
+    public void Run_Throws_IfActionIsNull() => Should.Throw<ArgumentNullException>(() => _terminal.Run(null!, false));
 
     [TestMethod]
     public void Run_Throws_IfTerminalDisposed()
     {
         _terminal.Dispose();
-        Should.Throw<ObjectDisposedException>(() => _terminal.Run((_, _) => Task.CompletedTask, false));
+        _ = Should.Throw<ObjectDisposedException>(() => _terminal.Run((_, _) => Task.CompletedTask, false));
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -156,7 +139,7 @@ public class TerminalMainLoopTests
     {
         var ra1 = RunAsync();
 
-        Should.Throw<InvalidOperationException>(() => _terminal.Run((_, _) => Task.CompletedTask));
+        _ = Should.Throw<InvalidOperationException>(() => _terminal.Run((_, _) => Task.CompletedTask));
 
         _terminal.Stop();
         await ra1;
@@ -165,10 +148,10 @@ public class TerminalMainLoopTests
     [TestMethod, Timeout(Timeout)]
     public void Run_Throws_IfInternalError()
     {
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesOperationException>(() => _terminal.Run((_, _) => Task.CompletedTask));
+        _ = Should.Throw<CursesOperationException>(() => _terminal.Run((_, _) => Task.CompletedTask));
     }
 
     [TestMethod, Timeout(Timeout)]
@@ -269,7 +252,7 @@ public class TerminalMainLoopTests
     [TestMethod, Timeout(Timeout)]
     public void Run_ReadsEventsFromPump()
     {
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent kc) =>
                    {
                        kc = new CursesCharEvent(null, 'A', ModifierKey.None);
@@ -299,7 +282,7 @@ public class TerminalMainLoopTests
     public void Stop_EnqueuesStoppingTheRun()
     {
         var ch = 'a';
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent kc) =>
                    {
                        kc = new CursesCharEvent(null, ch++, ModifierKey.None);
@@ -331,7 +314,7 @@ public class TerminalMainLoopTests
     [TestMethod, Timeout(Timeout)]
     public void Run_StopsOnCtrlC()
     {
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent kc) =>
                    {
                        kc = new CursesCharEvent(null, (char) 3, ModifierKey.None);
@@ -362,7 +345,7 @@ public class TerminalMainLoopTests
             return Task.CompletedTask;
         }, 100, "state");
 
-        d.ShouldNotBeNull();
+        _ = d.ShouldNotBeNull();
 
         await RunAsync();
 
@@ -399,7 +382,7 @@ public class TerminalMainLoopTests
         var ra = RunAsync();
 
         var finished = false;
-        _terminal.Delay(t =>
+        _ = _terminal.Delay(t =>
         {
             finished = true;
             t.Stop();
@@ -430,7 +413,7 @@ public class TerminalMainLoopTests
             return Task.CompletedTask;
         }, 10, false, "state");
 
-        d.ShouldNotBeNull();
+        _ = d.ShouldNotBeNull();
 
         await RunAsync();
 
@@ -467,13 +450,13 @@ public class TerminalMainLoopTests
         var ra = RunAsync();
         var count = Timer.ActiveCount;
         var tickedEvent = new ManualResetEvent(false);
-        _terminal.Repeat(_ =>
+        _ = _terminal.Repeat(_ =>
         {
-            tickedEvent.Set();
+            _ = tickedEvent.Set();
             return Task.CompletedTask;
         }, 10);
 
-        tickedEvent.WaitOne();
+        _ = tickedEvent.WaitOne();
         _terminal.Dispose();
         await ra;
 
@@ -486,19 +469,19 @@ public class TerminalMainLoopTests
     {
         var m = new ManualResetEvent(false);
 
-        _terminal.Repeat(_ =>
+        _ = _terminal.Repeat(_ =>
         {
-            m.Set();
+            _ = m.Set();
             return Task.CompletedTask;
         }, 10);
 
-        RunAsync();
-        m.WaitOne();
+        _ = RunAsync();
+        _ = m.WaitOne();
         _terminal.Stop(true);
 
-        m.Reset();
-        RunAsync();
-        m.WaitOne();
+        _ = m.Reset();
+        _ = RunAsync();
+        _ = m.WaitOne();
         _terminal.Stop(true);
     }
 }

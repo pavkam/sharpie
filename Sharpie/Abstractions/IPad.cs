@@ -39,7 +39,10 @@ public interface IPad: ISurface
     /// <summary>
     ///     The parent screen of this pad.
     /// </summary>
-    IScreen Screen { get; }
+    IScreen Screen
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets the sub-pads of this pad.
@@ -49,7 +52,10 @@ public interface IPad: ISurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    IEnumerable<ISubPad> SubPads { get; }
+    IEnumerable<ISubPad> SubPads
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets or sets the size of the window.
@@ -61,7 +67,10 @@ public interface IPad: ISurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    new Size Size { get; set; }
+    new Size Size
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Redraws an area of the screen with the contents of the pad.

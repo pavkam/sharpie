@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2022-2023, Alexandru Ciobanu
 All rights reserved.
 
@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System.Diagnostics.CodeAnalysis;
+
 using Sharpie;
 using Sharpie.Abstractions;
 using Sharpie.Backend;
@@ -57,7 +58,7 @@ foreach (var n in Enum.GetValues<StandardColor>()
     colors.Add(terminal.Colors.MixColors(n, n));
 }
 
-void DrawHeader(ITerminal t)
+static void DrawHeader(ITerminal t)
 {
     t.Header!.CaretLocation = new(0, 0);
     t.Header.WriteText("Press a number from 1 to 8 to change the color.");
@@ -78,15 +79,22 @@ terminal.Run((t, @event) =>
             t.SoftLabelKeys.Refresh();
             break;
         case KeyEvent { Key: Key.Character, Char.Value: var k and >= '1' and <= '8' }:
-        {
-            var color = k - '1';
+            {
+                var color = k - '1';
 
-            t.Screen.Background = (new(' '), new() { Attributes = VideoAttribute.None, ColorMixture = colors[color] });
+                t.Screen.Background = (new(' '), new()
+                {
+                    Attributes = VideoAttribute.None,
+                    ColorMixture = colors[color]
+                });
 
-            t.Screen.Refresh();
-            t.SoftLabelKeys.Refresh();
+                t.Screen.Refresh();
+                t.SoftLabelKeys.Refresh();
+                break;
+            }
+
+        default:
             break;
-        }
     }
 
     return Task.CompletedTask;

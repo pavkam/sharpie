@@ -40,83 +40,128 @@ public interface ITerminal
     /// <summary>
     ///     The Curses backend.
     /// </summary>
-    ICursesBackend Curses { get; }
+    ICursesBackend Curses
+    {
+        get;
+    }
 
     /// <summary>
     ///     Checks whether the terminal has been disposed of and is no longer usable.
     /// </summary>
-    bool Disposed { get; }
+    bool Disposed
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets the terminal's baud rate.
     /// </summary>
-    int BaudRate { get; }
+    int BaudRate
+    {
+        get;
+    }
 
     /// <summary>
     ///     Provides access to the terminal's color management.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    IColorManager Colors { get; }
+    IColorManager Colors
+    {
+        get;
+    }
 
     /// <summary>
     ///     Provides access to the terminal's color management.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    ISoftLabelKeyManager SoftLabelKeys { get; }
+    ISoftLabelKeyManager SoftLabelKeys
+    {
+        get;
+    }
 
     /// <summary>
     ///     Returns the name of the terminal.
     /// </summary>
-    string? Name { get; }
+    string? Name
+    {
+        get;
+    }
 
     /// <summary>
     ///     Returns the long description of the terminal.
     /// </summary>
-    string? Description { get; }
+    string? Description
+    {
+        get;
+    }
 
     /// <summary>
     ///     Returns the version of the Curses library in use.
     /// </summary>
-    string? CursesVersion { get; }
+    string? CursesVersion
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets the combination of supported terminal attributes.
     /// </summary>
-    VideoAttribute SupportedAttributes { get; }
+    VideoAttribute SupportedAttributes
+    {
+        get;
+    }
 
     /// <summary>
     ///     The screen instance. Use this property to access the entire screen functionality.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    IScreen Screen { get; }
+    IScreen Screen
+    {
+        get;
+    }
 
     /// <summary>
     ///     The header surface. Only initialized if <see cref="TerminalOptions.AllocateHeader" /> was set.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    ITerminalSurface? Header { get; }
+    ITerminalSurface? Header
+    {
+        get;
+    }
 
     /// <summary>
     ///     The footer surface. Only initialized if <see cref="TerminalOptions.AllocateFooter" /> was set.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    ITerminalSurface? Footer { get; }
+    ITerminalSurface? Footer
+    {
+        get;
+    }
 
     /// <summary>
     ///     The event pump instance that can be used to read events from the terminal.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The terminal has been disposed.</exception>
-    IEventPump Events { get; }
+    IEventPump Events
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets the currently defined kill character. <c>null</c> is returned if none is defined.
     /// </summary>
-    Rune? CurrentKillChar { get; }
+    Rune? CurrentKillChar
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets the currently defined erase character. <c>null</c> is returned if none is defined.
     /// </summary>
-    Rune? CurrentEraseChar { get; }
+    Rune? CurrentEraseChar
+    {
+        get;
+    }
 
     /// <summary>
     ///     Sets the terminal title.

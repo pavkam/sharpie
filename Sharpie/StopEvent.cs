@@ -39,7 +39,7 @@ public sealed class StopEvent: Event
     /// <summary>
     ///     Creates a new instance of the class.
     /// </summary>
-    internal StopEvent(): base(EventType.Stop) { }
+    internal StopEvent() : base(EventType.Stop) { }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => "Stopped";

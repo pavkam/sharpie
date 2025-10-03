@@ -43,5 +43,5 @@ public struct CursesMouseState
     [MarshalAs(UnmanagedType.U4)] internal uint buttonState;
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"{x}x{y}:{buttonState:X8}";
+    public override readonly string ToString() => $"{x}x{y}:{buttonState:X8}";
 }

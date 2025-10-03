@@ -80,36 +80,126 @@ internal abstract class CursesMouseEventParser
         All = ReportPosition - 1;
     }
 
-    private uint Button1Released { get; }
-    private uint Button1Pressed { get; }
-    private uint Button1Clicked { get; }
-    private uint Button1DoubleClicked { get; }
-    private uint Button1TripleClicked { get; }
-    private uint Button2Released { get; }
-    private uint Button2Pressed { get; }
-    private uint Button2Clicked { get; }
-    private uint Button2DoubleClicked { get; }
-    private uint Button2TripleClicked { get; }
-    private uint Button3Released { get; }
-    private uint Button3Pressed { get; }
-    private uint Button3Clicked { get; }
-    private uint Button3DoubleClicked { get; }
-    private uint Button3TripleClicked { get; }
-    private uint Button4Released { get; }
-    private uint Button4Pressed { get; }
-    private uint Button4Clicked { get; }
-    private uint Button4DoubleClicked { get; }
-    private uint Button4TripleClicked { get; }
-    private uint Button5Released { get; }
-    private uint Button5Pressed { get; }
-    private uint Button5Clicked { get; }
-    private uint Button5DoubleClicked { get; }
-    private uint Button5TripleClicked { get; }
-    private uint Ctrl { get; }
-    private uint Shift { get; }
-    private uint Alt { get; }
-    public uint ReportPosition { get; }
-    public uint All { get; }
+    private uint Button1Released
+    {
+        get;
+    }
+    private uint Button1Pressed
+    {
+        get;
+    }
+    private uint Button1Clicked
+    {
+        get;
+    }
+    private uint Button1DoubleClicked
+    {
+        get;
+    }
+    private uint Button1TripleClicked
+    {
+        get;
+    }
+    private uint Button2Released
+    {
+        get;
+    }
+    private uint Button2Pressed
+    {
+        get;
+    }
+    private uint Button2Clicked
+    {
+        get;
+    }
+    private uint Button2DoubleClicked
+    {
+        get;
+    }
+    private uint Button2TripleClicked
+    {
+        get;
+    }
+    private uint Button3Released
+    {
+        get;
+    }
+    private uint Button3Pressed
+    {
+        get;
+    }
+    private uint Button3Clicked
+    {
+        get;
+    }
+    private uint Button3DoubleClicked
+    {
+        get;
+    }
+    private uint Button3TripleClicked
+    {
+        get;
+    }
+    private uint Button4Released
+    {
+        get;
+    }
+    private uint Button4Pressed
+    {
+        get;
+    }
+    private uint Button4Clicked
+    {
+        get;
+    }
+    private uint Button4DoubleClicked
+    {
+        get;
+    }
+    private uint Button4TripleClicked
+    {
+        get;
+    }
+    private uint Button5Released
+    {
+        get;
+    }
+    private uint Button5Pressed
+    {
+        get;
+    }
+    private uint Button5Clicked
+    {
+        get;
+    }
+    private uint Button5DoubleClicked
+    {
+        get;
+    }
+    private uint Button5TripleClicked
+    {
+        get;
+    }
+    private uint Ctrl
+    {
+        get;
+    }
+    private uint Shift
+    {
+        get;
+    }
+    private uint Alt
+    {
+        get;
+    }
+    public uint ReportPosition
+    {
+        get;
+    }
+    public uint All
+    {
+        get;
+    }
 
     protected abstract uint CalculateButtonState(Action action, Button button);
     protected abstract uint CalculateModifierState(Modifier modifier);
@@ -151,7 +241,7 @@ internal abstract class CursesMouseEventParser
         MapMod(Ctrl, ModifierKey.Ctrl);
         MapMod(Shift, ModifierKey.Shift);
 
-        if (MapButton(Button1Released, MouseButton.Button1, MouseButtonState.Released) ||
+        return MapButton(Button1Released, MouseButton.Button1, MouseButtonState.Released) ||
             MapButton(Button1Pressed, MouseButton.Button1, MouseButtonState.Pressed) ||
             MapButton(Button1Clicked, MouseButton.Button1, MouseButtonState.Clicked) ||
             MapButton(Button1DoubleClicked, MouseButton.Button1, MouseButtonState.DoubleClicked) ||
@@ -175,12 +265,9 @@ internal abstract class CursesMouseEventParser
             MapButton(Button5Pressed, MouseButton.Button5, MouseButtonState.Pressed) ||
             MapButton(Button5Clicked, MouseButton.Button5, MouseButtonState.Clicked) ||
             MapButton(Button5DoubleClicked, MouseButton.Button5, MouseButtonState.DoubleClicked) ||
-            MapButton(Button5TripleClicked, MouseButton.Button5, MouseButtonState.TripleClicked))
-        {
-            return (button, state, modifierKey);
-        }
-
-        return null;
+            MapButton(Button5TripleClicked, MouseButton.Button5, MouseButtonState.TripleClicked)
+            ? (button, state, modifierKey)
+            : null;
     }
 
     /// <summary>
@@ -207,6 +294,8 @@ internal abstract class CursesMouseEventParser
         {
             CursesAbiVersion.PdCurses => PdCurses,
             CursesAbiVersion.NCurses6 => NCurses6,
+            CursesAbiVersion.Unknown => throw new NotImplementedException(),
+            CursesAbiVersion.NCurses5 => throw new NotImplementedException(),
             var _ => NCurses5
         };
 
@@ -216,6 +305,10 @@ internal abstract class CursesMouseEventParser
             button switch
             {
                 Button.Button5 => 1u << 31,
+                Button.Button1 => throw new NotImplementedException(),
+                Button.Button2 => throw new NotImplementedException(),
+                Button.Button3 => throw new NotImplementedException(),
+                Button.Button4 => throw new NotImplementedException(),
                 var _ => (uint) action << (((int) button - 1) * 6)
             };
 

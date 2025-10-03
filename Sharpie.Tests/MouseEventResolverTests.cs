@@ -35,13 +35,11 @@ public class MouseEventResolverTests
 {
     private MouseEventResolver _eventResolver = null!;
 
-    [TestInitialize] public void TestInitialize() { _eventResolver = new(); }
+    [TestInitialize]
+    public void TestInitialize() => _eventResolver = new();
 
     [TestMethod]
-    public void Process1_Throws_IfEventIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _eventResolver.Process((MouseMoveEvent) null!));
-    }
+    public void Process1_Throws_IfEventIsNull() => Should.Throw<ArgumentNullException>(() => _eventResolver.Process((MouseMoveEvent) null!));
 
     [TestMethod]
     public void Process1_ReturnsSameEvent_IfDifferentPosition()
@@ -58,16 +56,13 @@ public class MouseEventResolverTests
         var e1 = new MouseMoveEvent(new(1, 1));
         var e2 = new MouseMoveEvent(new(1, 1));
 
-        _eventResolver.Process(e1);
+        _ = _eventResolver.Process(e1);
         _eventResolver.Process(e2)
                       .ShouldBeEmpty();
     }
 
     [TestMethod]
-    public void Process2_Throws_IfEventIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _eventResolver.Process((MouseActionEvent) null!));
-    }
+    public void Process2_Throws_IfEventIsNull() => Should.Throw<ArgumentNullException>(() => _eventResolver.Process((MouseActionEvent) null!));
 
     [TestMethod]
     public void Process2_IssuesMoveFirst_IfDifferentPosition()
@@ -83,7 +78,7 @@ public class MouseEventResolverTests
     {
         var e = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.None);
 
-        _eventResolver.Process(new MouseMoveEvent(new(1, 1)));
+        _ = _eventResolver.Process(new MouseMoveEvent(new(1, 1)));
         _eventResolver.Process(e)
                       .First()
                       .Type.ShouldNotBe(EventType.MouseMove);
@@ -103,7 +98,7 @@ public class MouseEventResolverTests
     {
         var e = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.None);
 
-        _eventResolver.Process(new MouseMoveEvent(new(1, 1)));
+        _ = _eventResolver.Process(new MouseMoveEvent(new(1, 1)));
         _eventResolver.Process(e)
                       .Single()
                       .ShouldBe(e);
@@ -115,7 +110,7 @@ public class MouseEventResolverTests
         var e1 = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.None);
         var e2 = new MouseActionEvent(new(1, 2), MouseButton.Button2, MouseButtonState.Pressed, ModifierKey.None);
 
-        _eventResolver.Process(e1);
+        _ = _eventResolver.Process(e1);
         _eventResolver.Process(e2)
                       .Single()
                       .Type.ShouldBe(EventType.MouseMove);
@@ -127,7 +122,7 @@ public class MouseEventResolverTests
         var e1 = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.None);
         var e2 = new MouseActionEvent(new(1, 1), MouseButton.Button2, MouseButtonState.Pressed, ModifierKey.None);
 
-        _eventResolver.Process(e1);
+        _ = _eventResolver.Process(e1);
         _eventResolver.Process(e2)
                       .Single()
                       .ShouldBe(e2);
@@ -139,7 +134,7 @@ public class MouseEventResolverTests
         var e1 = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Pressed, ModifierKey.None);
         var e2 = new MouseActionEvent(new(1, 1), MouseButton.Button2, MouseButtonState.Released, ModifierKey.None);
 
-        _eventResolver.Process(e1);
+        _ = _eventResolver.Process(e1);
         _eventResolver.Process(e2)
                       .Single()
                       .ShouldBe(new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Released,
@@ -160,7 +155,7 @@ public class MouseEventResolverTests
     public void Process2_ConvertsClicksIntoPressAndReleaseEvents()
     {
         var e1 = new MouseActionEvent(new(1, 1), MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Ctrl);
-        _eventResolver.Process(new MouseMoveEvent(new(1, 1)));
+        _ = _eventResolver.Process(new MouseMoveEvent(new(1, 1)));
         var two = _eventResolver.Process(e1)
                                 .ToArray();
 

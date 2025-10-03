@@ -39,7 +39,10 @@ public interface ITerminalSurface: ISurface
     /// <summary>
     ///     The terminal this surface belongs to.
     /// </summary>
-    ITerminal Terminal { get; }
+    ITerminal Terminal
+    {
+        get;
+    }
 
     /// <summary>
     ///     Set or get the immediate refresh capability of the surface.
@@ -54,7 +57,10 @@ public interface ITerminalSurface: ISurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    bool ImmediateRefresh { get; set; }
+    bool ImmediateRefresh
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Redraws all the dirty lines of the surface to the terminal. If <see cref="ITerminal.AtomicRefresh" /> is active,

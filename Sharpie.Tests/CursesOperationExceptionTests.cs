@@ -35,17 +35,11 @@ public class CursesOperationExceptionTests
 {
     [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
-    public void Ctor_ThrowsException_IfMessageIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => { new CursesOperationException("dummy", null!); });
-    }
+    public void Ctor_ThrowsException_IfMessageIsNull() => Should.Throw<ArgumentNullException>(() => { _ = new CursesOperationException("dummy", null!); });
 
     [TestMethod, SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
-    public void Ctor_ThrowsException_IfOperationIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => { new CursesOperationException(null!, "text"); });
-    }
+    public void Ctor_ThrowsException_IfOperationIsNull() => Should.Throw<ArgumentNullException>(() => { _ = new CursesOperationException(null!, "text"); });
 
     [TestMethod]
     public void Ctor_StoresTheOperation()

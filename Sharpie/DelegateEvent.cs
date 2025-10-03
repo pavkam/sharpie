@@ -41,13 +41,16 @@ public sealed class DelegateEvent: Event
     /// </summary>
     /// <param name="object">The delegated object.</param>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="object" /> is <c>null</c>.</exception>
-    internal DelegateEvent(object @object): base(EventType.Delegate) =>
+    internal DelegateEvent(object @object) : base(EventType.Delegate) =>
         Object = @object ?? throw new ArgumentNullException(nameof(@object));
 
     /// <summary>
     ///     The object that is being delegated.
     /// </summary>
-    public object Object { get; }
+    public object Object
+    {
+        get;
+    }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => $"Delegate [{Object}]";

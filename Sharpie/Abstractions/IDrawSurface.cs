@@ -38,7 +38,10 @@ public interface IDrawSurface
     /// <summary>
     ///     The total size of the draw surface.
     /// </summary>
-    public Size Size { get; }
+    public Size Size
+    {
+        get;
+    }
 
     /// <summary>
     ///     Draws a <paramref name="rune" /> at a <paramref name="location" /> using the given style.

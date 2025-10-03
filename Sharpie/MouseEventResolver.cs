@@ -103,6 +103,8 @@ internal sealed class MouseEventResolver
                 output.Add(@event);
 
                 break;
+            default:
+                break;
         }
 
         return output;

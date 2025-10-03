@@ -41,7 +41,7 @@ public class CursesException: Exception
     /// </summary>
     /// <param name="message">The error message.</param>
     /// <exception cref="ArgumentNullException">The <paramref name="message" /> is <c>null</c>.</exception>
-    internal CursesException(string message): base(message)
+    internal CursesException(string message) : base(message)
     {
         if (message == null)
         {

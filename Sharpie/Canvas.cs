@@ -32,7 +32,7 @@ namespace Sharpie;
 
 /// <summary>
 ///     A general-purpose drawing surface that can be latter draw onto any object that implements
-///     <see cref="Sharpie.Abstractions.IDrawSurface" />.
+///     <see cref="IDrawSurface" />.
 ///     Supports multiple types of drawing operations most commonly used in terminal apps.
 /// </summary>
 [PublicAPI]
@@ -589,7 +589,10 @@ public sealed class Canvas: IDrawable, IDrawSurface
     }
 
     /// <inheritdoc cref="IDrawable.Size" />
-    public Size Size { get; }
+    public Size Size
+    {
+        get;
+    }
 
     /// <inheritdoc cref="IDrawable.DrawOnto" />
     public void DrawOnto(IDrawSurface destination, Rectangle srcArea, Point destLocation)
@@ -604,7 +607,11 @@ public sealed class Canvas: IDrawable, IDrawSurface
             return;
         }
 
-        var destArea = srcArea with { X = destLocation.X, Y = destLocation.Y };
+        var destArea = srcArea with
+        {
+            X = destLocation.X,
+            Y = destLocation.Y
+        };
         if (!destination.Size.AdjustToActualArea(ref destArea))
         {
             return;
@@ -624,7 +631,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
     }
 
     /// <inheritdoc cref="IDrawSurface.DrawCell" />
-    void IDrawSurface.DrawCell(Point location, Rune rune, Style style) { SetCell(location.X, location.Y, rune, style); }
+    void IDrawSurface.DrawCell(Point location, Rune rune, Style style) => SetCell(location.X, location.Y, rune, style);
 
     private bool InArea(int x, int y) => x >= 0 && x < Size.Width && y >= 0 && y < Size.Height;
 
@@ -640,7 +647,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
             rune = new(ControlCharacter.Whitespace);
         }
 
-        _cells[x, y] = new() { Rune = rune, Style = style, Special = 0 };
+        _cells[x, y] = new()
+        {
+            Rune = rune,
+            Style = style,
+            Special = 0
+        };
     }
 
     private void SetCell(int x, int y, BlockQuadrant quads, Style style)
@@ -655,7 +667,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
                 0) |
             quads;
 
-        _cells[x, y] = new() { Special = (int) b, Style = style, Rune = BlockCharacters[b] };
+        _cells[x, y] = new()
+        {
+            Special = (int) b,
+            Style = style,
+            Rune = BlockCharacters[b]
+        };
     }
 
     private void SetCell(int x, int y, LineSideAndStyle stl, Style style)
@@ -702,7 +719,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
             throw new ArgumentOutOfRangeException(nameof(stl));
         }
 
-        _cells[x, y] = new() { Special = -(int) b, Style = style, Rune = rune };
+        _cells[x, y] = new()
+        {
+            Special = -(int) b,
+            Style = style,
+            Rune = rune
+        };
     }
 
     /// <summary>
@@ -781,7 +803,8 @@ public sealed class Canvas: IDrawable, IDrawSurface
             if (orientation == Orientation.Horizontal)
             {
                 x++;
-            } else
+            }
+            else
             {
                 y++;
             }
@@ -794,7 +817,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
     /// <param name="location">The cell location.</param>
     /// <param name="rune">The rune to draw.</param>
     /// <param name="style">The text style.</param>
-    public void Glyph(Point location, Rune rune, Style style) { SetCell(location.X, location.Y, rune, style); }
+    public void Glyph(Point location, Rune rune, Style style) => SetCell(location.X, location.Y, rune, style);
 
     /// <summary>
     ///     Draws a glyph at a given <paramref name="location" /> using the provide styles.
@@ -915,7 +938,8 @@ public sealed class Canvas: IDrawable, IDrawSurface
 
                 SetCell(i, y, stl, style);
             }
-        } else
+        }
+        else
         {
             if (location.Y + length < 0)
             {
@@ -957,10 +981,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
     /// <param name="startLocation">The starting cell.</param>
     /// <param name="endLocation">The ending cell.</param>
     /// <param name="style">The cell style.</param>
-    public void Line(PointF startLocation, PointF endLocation, Style style)
-    {
-        Helpers.TraceLineInHalves(startLocation, endLocation, p => Point(p, style));
-    }
+    public void Line(PointF startLocation, PointF endLocation, Style style) => Helpers.TraceLineInHalves(startLocation, endLocation, p => Point(p, style));
 
     /// <summary>
     ///     Draws a rectangle starting in a given <paramref name="perimeter" />.
@@ -1009,7 +1030,8 @@ public sealed class Canvas: IDrawable, IDrawSurface
                     (true, true) => BlockQuadrant.TopLeft,
                     (true, false) => BlockQuadrant.BottomLeft,
                     (false, true) => BlockQuadrant.TopRight,
-                    (false, false) => BlockQuadrant.BottomRight
+                    (false, false) => BlockQuadrant.BottomRight,
+                    _ => throw new NotImplementedException()
                 };
 
                 SetCell(x, y, quad, style);
@@ -1032,7 +1054,8 @@ public sealed class Canvas: IDrawable, IDrawSurface
             (true, true) => BlockQuadrant.TopLeft,
             (true, false) => BlockQuadrant.BottomLeft,
             (false, true) => BlockQuadrant.TopRight,
-            (false, false) => BlockQuadrant.BottomRight
+            (false, false) => BlockQuadrant.BottomRight,
+            _ => throw new NotImplementedException()
         };
 
         SetCell(x / 2, y / 2, quad, style);
@@ -1074,9 +1097,18 @@ public sealed class Canvas: IDrawable, IDrawSurface
 
     private readonly struct Cell
     {
-        public int Special { get; init; }
-        public Rune Rune { get; init; }
-        public Style Style { get; init; }
+        public int Special
+        {
+            get; init;
+        }
+        public Rune Rune
+        {
+            get; init;
+        }
+        public Style Style
+        {
+            get; init;
+        }
 
         public BlockQuadrant? Block => Special > 0 ? (BlockQuadrant) Special : null;
         public LineSideAndStyle? Line => Special < 0 ? (LineSideAndStyle) (-Special) : null;

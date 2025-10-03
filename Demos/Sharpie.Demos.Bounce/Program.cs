@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2022-2023, Alexandru Ciobanu
 All rights reserved.
 
@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System.Diagnostics.CodeAnalysis;
+
 using Sharpie;
 using Sharpie.Backend;
 
@@ -39,7 +40,7 @@ using var terminal = new Terminal(CursesBackend.Load(), new(CaretMode: CaretMode
 
 // Prepare styles
 var styles = Enum.GetValues<StandardColor>()
-                 .Where(sc => sc != StandardColor.Default && sc != StandardColor.Black)
+                 .Where(sc => sc is not StandardColor.Default and not StandardColor.Black)
                  .Select(sc => new Style
                  {
                      ColorMixture = terminal.Colors.MixColors(sc, StandardColor.Default),

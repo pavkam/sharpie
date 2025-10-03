@@ -45,11 +45,14 @@ public class TerminalSurface: Surface, ITerminalSurface
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
-    internal TerminalSurface(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle) =>
+    internal TerminalSurface(Terminal parent, IntPtr handle) : base(parent != null! ? parent.Curses : null!, handle) =>
         Terminal = parent!;
 
     /// <inheritdoc cref="ITerminalSurface.Terminal" />
-    public Terminal Terminal { get; }
+    public Terminal Terminal
+    {
+        get;
+    }
 
     /// <inheritdoc cref="ITerminalSurface.Terminal" />
     ITerminal ITerminalSurface.Terminal => Terminal;
@@ -95,7 +98,7 @@ public class TerminalSurface: Surface, ITerminalSurface
 
         if (actY > -1 && actCount > 0)
         {
-            Curses.wredrawln(Handle, actY, actCount)
+            _ = Curses.wredrawln(Handle, actY, actCount)
                   .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
         }
     }

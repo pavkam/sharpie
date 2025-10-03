@@ -56,7 +56,7 @@ public abstract class AsciiFont: IAsciiFont
         {
             throw new ArgumentOutOfRangeException(nameof(height));
         }
-        
+
         if (baseline <= 0 || baseline > height)
         {
             throw new ArgumentOutOfRangeException(nameof(baseline));
@@ -67,18 +67,30 @@ public abstract class AsciiFont: IAsciiFont
         Name = name;
         Layout = layout;
     }
-    
+
     /// <inheritdoc cref="IAsciiFont.Baseline"/>
-    public int Baseline { get; }
-    
+    public int Baseline
+    {
+        get;
+    }
+
     /// <inheritdoc cref="IAsciiFont.Height"/>
-    public int Height { get; }
+    public int Height
+    {
+        get;
+    }
 
     /// <inheritdoc cref="IAsciiFont.Name"/>
-    public string Name { get; }
+    public string Name
+    {
+        get;
+    }
 
     /// <inheritdoc cref="IAsciiFont.Name"/>
-    public AsciiFontLayout Layout { get; }
+    public AsciiFontLayout Layout
+    {
+        get;
+    }
 
     /// <inheritdoc cref="IAsciiFont.HasGlyph"/>
     public abstract bool HasGlyph(Rune @char);

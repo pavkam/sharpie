@@ -45,7 +45,10 @@ public class Event
     /// <summary>
     ///     The type of the event.
     /// </summary>
-    public EventType Type { get; }
+    public EventType Type
+    {
+        get;
+    }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => $"{Type}";

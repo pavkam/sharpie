@@ -59,7 +59,7 @@ public class NCursesBackendTests
     public void is_scrollok_IsRelayedToLibrary(bool ret)
     {
         var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_scrollok, bool>(s => s(h), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_scrollok, bool>(s => s(h), ret);
 
         _backend.is_scrollok(h)
                 .ShouldBe(ret);
@@ -69,7 +69,7 @@ public class NCursesBackendTests
     public void is_immedok_IsRelayedToLibrary(bool ret)
     {
         var h = new IntPtr(999);
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_immedok, bool>(s => s(h), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.is_immedok, bool>(s => s(h), ret);
 
         _backend.is_immedok(h)
                 .ShouldBe(ret);
@@ -78,7 +78,7 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void endwin_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.endwin, int>(s => s(), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.endwin, int>(s => s(), ret);
 
         _backend.endwin()
                 .ShouldBe(ret);
@@ -88,7 +88,7 @@ public class NCursesBackendTests
     public void getmouse_IsRelayedToLibrary(int ret)
     {
         var exp = new CursesMouseState { id = 199 };
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getmouse>()
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getmouse>()
                                  .Setup(s => s(out It.Ref<CursesMouseState>.IsAny))
                                  .Returns((out CursesMouseState o) =>
                                  {
@@ -106,7 +106,7 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_clear_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_clear, int>(s => s(), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_clear, int>(s => s(), ret);
 
         _backend.slk_clear()
                 .ShouldBe(ret);
@@ -115,7 +115,7 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_noutrefresh_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_noutrefresh, int>(s => s(), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_noutrefresh, int>(s => s(), ret);
 
         _backend.slk_noutrefresh()
                 .ShouldBe(ret);
@@ -124,7 +124,7 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_refresh_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_refresh, int>(s => s(), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_refresh, int>(s => s(), ret);
 
         _backend.slk_refresh()
                 .ShouldBe(ret);
@@ -133,7 +133,7 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_restore_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_restore, int>(s => s(), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_restore, int>(s => s(), ret);
 
         _backend.slk_restore()
                 .ShouldBe(ret);
@@ -142,7 +142,7 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_touch_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_touch, int>(s => s(), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_touch, int>(s => s(), ret);
 
         _backend.slk_touch()
                 .ShouldBe(ret);
@@ -153,7 +153,7 @@ public class NCursesBackendTests
     {
         const int i = 999;
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_init, int>(s => s(i), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_init, int>(s => s(i), ret);
 
         _backend.slk_init(i)
                 .ShouldBe(ret);
@@ -164,7 +164,7 @@ public class NCursesBackendTests
     {
         const short i = 999;
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_color, int>(s => s(i), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_color, int>(s => s(i), ret);
 
         _backend.slk_color(i)
                 .ShouldBe(ret);
@@ -173,7 +173,7 @@ public class NCursesBackendTests
     [TestMethod]
     public void slk_attr_IsRelayedToLibrary_1()
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(),
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(),
             ((int) VideoAttribute.Blink << 16) + (99 << 8));
 
         _backend.slk_attr(out var a, out var cp)
@@ -186,16 +186,16 @@ public class NCursesBackendTests
     [TestMethod]
     public void slk_attr_IsRelayedToLibrary_2()
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(), -1);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr, int>(s => s(), -1);
 
-        _backend.slk_attr(out var _, out var _)
+        _backend.slk_attr(out _, out _)
                 .ShouldBe(-1);
     }
 
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_set_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_set, int>(
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_set, int>(
             s => s((uint) VideoAttribute.Blink << 16, 2, new(2)), ret);
 
         _backend.slk_attr_set(VideoAttribute.Blink, 2, new(2))
@@ -205,7 +205,7 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_set_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_set, int>(s => s(3, "title", 90), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_set, int>(s => s(3, "title", 90), ret);
 
         _backend.slk_set(3, "title", 90)
                 .ShouldBe(ret);
@@ -214,7 +214,7 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_on_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_on, int>(
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_on, int>(
             s => s((uint) VideoAttribute.Blink << 16, new(2)), ret);
 
         _backend.slk_attr_on(VideoAttribute.Blink, new(2))
@@ -224,7 +224,7 @@ public class NCursesBackendTests
     [TestMethod, DataRow(0), DataRow(-1)]
     public void slk_attr_off_IsRelayedToLibrary(int ret)
     {
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_off, int>(
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.slk_attr_off, int>(
             s => s((uint) VideoAttribute.Blink << 16, new(2)), ret);
 
         _backend.slk_attr_off(VideoAttribute.Blink, new(2))
@@ -236,7 +236,7 @@ public class NCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wadd_wch, int>(s => s(new(1), ref nc), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wadd_wch, int>(s => s(new(1), ref nc), ret);
 
         _backend.wadd_wch(new(1), ch)
                 .ShouldBe(ret);
@@ -247,7 +247,7 @@ public class NCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wbkgrnd, int>(s => s(new(1), ref nc), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wbkgrnd, int>(s => s(new(1), ref nc), ret);
 
         _backend.wbkgrnd(new(1), ch)
                 .ShouldBe(ret);
@@ -258,7 +258,7 @@ public class NCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wvline_set, int>(s => s(new(1), ref nc, 4), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wvline_set, int>(s => s(new(1), ref nc, 4), ret);
 
         _backend.wvline_set(new(1), ch, 4)
                 .ShouldBe(ret);
@@ -269,7 +269,7 @@ public class NCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.whline_set, int>(s => s(new(1), ref nc, 4), ret);
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.whline_set, int>(s => s(new(1), ref nc, 4), ret);
 
         _backend.whline_set(new(1), ch, 4)
                 .ShouldBe(ret);
@@ -287,7 +287,7 @@ public class NCursesBackendTests
         var (ch7, nc7) = MakeTestComplexChar(7);
         var (ch8, nc8) = MakeTestComplexChar(8);
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wborder_set, int>(
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wborder_set, int>(
             s => s(new(1), ref nc1, ref nc2, ref nc3, ref nc4,
                 ref nc5, ref nc6, ref nc7, ref nc8), ret);
 
@@ -301,7 +301,7 @@ public class NCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetbkgrnd>()
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.wgetbkgrnd>()
                                  .Setup(s => s(new(1), out It.Ref<NCursesComplexChar>.IsAny))
                                  .Returns((IntPtr _, out NCursesComplexChar o) =>
                                  {
@@ -321,7 +321,7 @@ public class NCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.win_wch>()
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.win_wch>()
                                  .Setup(s => s(new(1), out It.Ref<NCursesComplexChar>.IsAny))
                                  .Returns((IntPtr _, out NCursesComplexChar o) =>
                                  {
@@ -341,7 +341,7 @@ public class NCursesBackendTests
     {
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.setcchar>()
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.setcchar>()
                                  .Setup(s => s(out It.Ref<NCursesComplexChar>.IsAny, "text",
                                      (uint) VideoAttribute.Blink << 16, 20, new(2)))
                                  .Returns((out NCursesComplexChar o, string _, uint _, short _,
@@ -364,7 +364,7 @@ public class NCursesBackendTests
 
         var (ch, nc) = MakeTestComplexChar();
 
-        _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getcchar>()
+        _ = _nativeSymbolResolverMock.MockResolve<NCursesFunctionMap.getcchar>()
                                  .Setup(s => s(ref nc, sb, out It.Ref<uint>.IsAny, out It.Ref<short>.IsAny, new(2)))
                                  .Returns((ref NCursesComplexChar _, StringBuilder _, out uint a, out short cp,
                                      IntPtr _) =>
@@ -386,10 +386,10 @@ public class NCursesBackendTests
     public void CursesMouseEventParser_ReturnsMouseParserBasedOnAbi(string ver, int m)
     {
         var h = Marshal.StringToHGlobalAnsi(ver);
-        _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.NativeLibraryAnsiStrPtrToString(It.IsAny<IntPtr>()))
                                 .CallBase();
 
-        _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.curses_version>()
+        _ = _nativeSymbolResolverMock.MockResolve<BaseCursesFunctionMap.curses_version>()
                                  .Setup(s => s())
                                  .Returns(h);
 
@@ -553,76 +553,40 @@ public class NCursesBackendTests
     }
 
     [TestMethod]
-    public void wadd_wch_Throws_IfCharIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _backend.wadd_wch(new(1), null!));
-    }
+    public void wadd_wch_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.wadd_wch(new(1), null!));
 
     [TestMethod]
-    public void wadd_wch_Throws_IfCharIsIncompatible()
-    {
-        Should.Throw<ArgumentException>(() => _backend.wadd_wch(new(1), new("bad")));
-    }
+    public void wadd_wch_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.wadd_wch(new(1), new("bad")));
 
     [TestMethod]
-    public void wbkgrnd_Throws_IfCharIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _backend.wbkgrnd(new(1), null!));
-    }
+    public void wbkgrnd_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.wbkgrnd(new(1), null!));
 
     [TestMethod]
-    public void wbkgrnd_Throws_IfCharIsIncompatible()
-    {
-        Should.Throw<ArgumentException>(() => _backend.wbkgrnd(new(1), new("bad")));
-    }
+    public void wbkgrnd_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.wbkgrnd(new(1), new("bad")));
 
     [TestMethod]
-    public void wvline_set_Throws_IfCharIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _backend.wvline_set(new(1), null!, 4));
-    }
+    public void wvline_set_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.wvline_set(new(1), null!, 4));
 
     [TestMethod]
-    public void wvline_set_Throws_IfCharIsIncompatible()
-    {
-        Should.Throw<ArgumentException>(() => _backend.wvline_set(new(1), new("bad"), 4));
-    }
+    public void wvline_set_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.wvline_set(new(1), new("bad"), 4));
 
     [TestMethod]
-    public void whline_set_Throws_IfCharIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
-    }
+    public void whline_set_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
 
     [TestMethod]
-    public void whline_set_Throws_IfCharIsIncompatible()
-    {
-        Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
-    }
+    public void whline_set_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
 
     [TestMethod]
-    public void wgetbkgrnd_Throws_IfCharIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
-    }
+    public void wgetbkgrnd_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.whline_set(new(1), null!, 4));
 
     [TestMethod]
-    public void wgetbkgrnd_Throws_IfCharIsIncompatible()
-    {
-        Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
-    }
+    public void wgetbkgrnd_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.whline_set(new(1), new("bad"), 4));
 
     [TestMethod]
-    public void getcchar_Throws_IfCharIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => _backend.getcchar(null!, new(), out var _, out var _, new(2)));
-    }
+    public void getcchar_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => _backend.getcchar(null!, new(), out var _, out var _, new(2)));
 
     [TestMethod]
-    public void getcchar_Throws_IfCharIsIncompatible()
-    {
-        Should.Throw<ArgumentException>(() => _backend.getcchar(new("bad"), new(), out var _, out var _, new(2)));
-    }
+    public void getcchar_Throws_IfCharIsIncompatible() => Should.Throw<ArgumentException>(() => _backend.getcchar(new("bad"), new(), out var _, out var _, new(2)));
 
     [TestMethod, DataRow(0), DataRow(1), DataRow(2), DataRow(3), DataRow(4), DataRow(5), DataRow(6), DataRow(7)]
     public void wborder_set_Throws_IfCharIsNull(int bad)
@@ -636,7 +600,7 @@ public class NCursesBackendTests
             }
         }
 
-        Should.Throw<ArgumentNullException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
+        _ = Should.Throw<ArgumentNullException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
             chs[4], chs[5], chs[6], chs[7]));
     }
 
@@ -649,13 +613,14 @@ public class NCursesBackendTests
             if (x != bad)
             {
                 (chs[x], _) = MakeTestComplexChar();
-            } else
+            }
+            else
             {
                 chs[x] = new("bad");
             }
         }
 
-        Should.Throw<ArgumentException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
+        _ = Should.Throw<ArgumentException>(() => _backend.wborder_set(new(1), chs[0], chs[1], chs[2], chs[3],
             chs[4], chs[5], chs[6], chs[7]));
     }
 }

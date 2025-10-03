@@ -37,7 +37,8 @@ public class EventTests
     private readonly Event _event2 = new(EventType.KeyPress);
     private readonly Event _event3 = new(EventType.MouseAction);
 
-    [TestMethod] public void Ctor_StoresTheType() { _event1.Type.ShouldBe(EventType.MouseAction); }
+    [TestMethod]
+    public void Ctor_StoresTheType() => _event1.Type.ShouldBe(EventType.MouseAction);
 
     [TestMethod]
     public void ToString_ProperlyFormats()

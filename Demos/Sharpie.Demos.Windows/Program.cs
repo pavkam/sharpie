@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2022-2023, Alexandru Ciobanu
 All rights reserved.
 
@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System.Diagnostics.CodeAnalysis;
+
 using Sharpie;
 using Sharpie.Backend;
 
@@ -84,6 +85,8 @@ terminal.Repeat(t =>
             break;
         case 3:
             win.Visible = false;
+            break;
+        default:
             break;
     }
 

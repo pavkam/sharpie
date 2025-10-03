@@ -39,18 +39,27 @@ public interface ISoftLabelKeyManager
     /// <summary>
     ///     The terminal this manager belongs to.
     /// </summary>
-    ITerminal Terminal { get; }
+    ITerminal Terminal
+    {
+        get;
+    }
 
     /// <summary>
     ///     Specifies if the manager is enabled.
     /// </summary>
-    bool Enabled { get; }
+    bool Enabled
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets the number of labels within the soft key label panel.
     /// </summary>
     /// <exception cref="NotSupportedException">The soft key labels are disabled.</exception>
-    int LabelCount { get; }
+    int LabelCount
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets or sets the style of the window.
@@ -62,7 +71,10 @@ public interface ISoftLabelKeyManager
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    Style Style { get; set; }
+    Style Style
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Gets or sets the color mixture of the window.
@@ -74,7 +86,10 @@ public interface ISoftLabelKeyManager
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    ColorMixture ColorMixture { get; set; }
+    ColorMixture ColorMixture
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Sets a given label within the soft key label panel.

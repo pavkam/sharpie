@@ -50,15 +50,15 @@ public sealed class Screen: TerminalSurface, IScreen
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
-    internal Screen(Terminal parent, IntPtr handle): base(parent, handle)
+    internal Screen(Terminal parent, IntPtr handle) : base(parent, handle)
     {
-        Curses.notimeout(Handle, false)
+        _ = Curses.notimeout(Handle, false)
               .Check(nameof(Curses.notimeout), "Failed to disable no-read-timeout mode.");
 
-        Curses.keypad(Handle, true)
+        _ = Curses.keypad(Handle, true)
               .Check(nameof(Curses.keypad), "Failed to enable the keypad resolution mode.");
 
-        Curses.syncok(Handle, true)
+        _ = Curses.syncok(Handle, true)
               .Check(nameof(Curses.syncok), "Failed to enable auto-sync mode.");
     }
 
@@ -152,7 +152,7 @@ public sealed class Screen: TerminalSurface, IScreen
 
                     if (iy > -1 && ic > 0)
                     {
-                        Curses.wredrawln(child.Handle, iy - ly, ic)
+                        _ = Curses.wredrawln(child.Handle, iy - ly, ic)
                               .Check(nameof(Curses.wredrawln), "Failed to perform line refresh of child.");
                     }
                 }
@@ -221,7 +221,7 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(window.Screen == this);
         Debug.Assert(_windows.Contains(window));
 
-        _windows.Remove(window);
+        _ = _windows.Remove(window);
         _roWindows = _windows.ToArray();
     }
 
@@ -253,7 +253,7 @@ public sealed class Screen: TerminalSurface, IScreen
         Debug.Assert(pad.Screen == this);
         Debug.Assert(_pads.Contains(pad));
 
-        _pads.Remove(pad);
+        _ = _pads.Remove(pad);
         _roPads = _pads.ToArray();
     }
 
@@ -314,7 +314,8 @@ public sealed class Screen: TerminalSurface, IScreen
             Terminal.Refresh(window);
 
             RefreshUp(window);
-        } else
+        }
+        else
         {
             MarkDirty();
             Refresh();
@@ -341,7 +342,8 @@ public sealed class Screen: TerminalSurface, IScreen
             _windows.Add(window);
 
             _roWindows = _windows.ToArray();
-        } else
+        }
+        else
         {
             return;
         }
@@ -373,7 +375,8 @@ public sealed class Screen: TerminalSurface, IScreen
             _windows.Insert(0, window);
 
             _roWindows = _windows.ToArray();
-        } else
+        }
+        else
         {
             return;
         }
@@ -415,6 +418,6 @@ public sealed class Screen: TerminalSurface, IScreen
         }
 
         base.Delete();
-        Curses.endwin();
+        _ = Curses.endwin();
     }
 }

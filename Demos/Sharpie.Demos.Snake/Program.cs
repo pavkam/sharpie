@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2022-2023, Alexandru Ciobanu
 All rights reserved.
 
@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System.Diagnostics.CodeAnalysis;
+
 using Sharpie;
 using Sharpie.Abstractions;
 using Sharpie.Backend;
@@ -109,16 +110,16 @@ terminal.Run((t, e) =>
     switch (e)
     {
         case TerminalResizeEvent or StartEvent:
-        {
-            using (t.AtomicRefresh())
             {
-                RedrawHeader(t.Header!);
-                RedrawScreen(t.Screen);
-            }
+                using (t.AtomicRefresh())
+                {
+                    RedrawHeader(t.Header!);
+                    RedrawScreen(t.Screen);
+                }
 
-            game.ResetSize(new(1, 1, t.Screen.Size.Width - 2, t.Screen.Size.Height - 2));
-            break;
-        }
+                game.ResetSize(new(1, 1, t.Screen.Size.Width - 2, t.Screen.Size.Height - 2));
+                break;
+            }
         case KeyEvent { Key: Key.KeypadUp }:
             game.Turn(Game.Direction.Up);
             break;
@@ -130,6 +131,8 @@ terminal.Run((t, e) =>
             break;
         case KeyEvent { Key: Key.KeypadRight }:
             game.Turn(Game.Direction.Right);
+            break;
+        default:
             break;
     }
 

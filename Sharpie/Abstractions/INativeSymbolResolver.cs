@@ -43,5 +43,5 @@ internal interface INativeSymbolResolver
     /// <typeparam name="TDelegate">The type of the function.</typeparam>
     /// <returns>The resolved function.</returns>
     /// <exception cref="MissingMethodException">Thrown if the given function could not be resolved.</exception>
-    TDelegate Resolve<TDelegate>() where TDelegate: MulticastDelegate;
+    TDelegate Resolve<TDelegate>() where TDelegate : MulticastDelegate;
 }

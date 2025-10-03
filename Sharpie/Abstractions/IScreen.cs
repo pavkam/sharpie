@@ -45,7 +45,10 @@ public interface IScreen: ITerminalSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    IEnumerable<IWindow> Windows { get; }
+    IEnumerable<IWindow> Windows
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets all child pads on this screen.
@@ -56,7 +59,10 @@ public interface IScreen: ITerminalSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    IEnumerable<IPad> Pads { get; }
+    IEnumerable<IPad> Pads
+    {
+        get;
+    }
 
     /// <summary>
     ///     Creates a new sub-window in the parent window.

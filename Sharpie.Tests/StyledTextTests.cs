@@ -36,13 +36,10 @@ public class StyledTextTests
     private readonly Style _style = new() { Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 1 } };
 
     [TestMethod]
-    public void Ctor_StoresTheTextAndStyle()
-    {
-        new StyledText("text", _style).Parts.ShouldBe(new[] { ("text", _style) });
-    }
+    public void Ctor_StoresTheTextAndStyle() => new StyledText("text", _style).Parts.ShouldBe(new[] { ("text", _style) });
 
     [TestMethod]
-    public void Ctor_Throws_IfTextIsNull() { Should.Throw<ArgumentNullException>(() => new StyledText(null!, _style)); }
+    public void Ctor_Throws_IfTextIsNull() => Should.Throw<ArgumentNullException>(() => new StyledText(null!, _style));
 
     [TestMethod]
     public void ToString_ReturnsNullIfUninitialized()
@@ -57,7 +54,11 @@ public class StyledTextTests
         new StyledText("text", _style).Plus("cool",
                                           new()
                                           {
-                                              Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 2 }
+                                              Attributes = VideoAttribute.Blink,
+                                              ColorMixture = new()
+                                              {
+                                                  Handle = 2
+                                              }
                                           })
                                       .ToString()
                                       .ShouldBe("\"text\" @ Bold, #0001, \"cool\" @ Blink, #0002");
@@ -126,7 +127,14 @@ public class StyledTextTests
     {
         var v1 = new StyledText("text", _style);
         var v2 = new StyledText("text",
-            new() { Attributes = VideoAttribute.Blink, ColorMixture = new() { Handle = 1 } });
+            new()
+            {
+                Attributes = VideoAttribute.Blink,
+                ColorMixture = new()
+                {
+                    Handle = 1
+                }
+            });
 
         v1.GetHashCode()
           .ShouldNotBe(v2.GetHashCode());
@@ -205,10 +213,7 @@ public class StyledTextTests
     }
 
     [TestMethod]
-    public void Plus1_Throws_IfTextIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => new StyledText("text", _style).Plus(null!, _style));
-    }
+    public void Plus1_Throws_IfTextIsNull() => Should.Throw<ArgumentNullException>(() => new StyledText("text", _style).Plus(null!, _style));
 
     [TestMethod]
     public void Plus1_UsesOtherText_IfThisIsUninitialized()

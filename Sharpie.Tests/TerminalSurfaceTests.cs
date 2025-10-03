@@ -41,19 +41,17 @@ public class TerminalSurfaceTests
     {
         _cursesMock = new();
 
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
     }
 
-    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
+    [TestCleanup]
+    public void TestCleanup() => _terminal.Dispose();
 
     [TestMethod]
-    public void Ctor_Throws_IfTerminalIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => new TerminalSurface(null!, new(1)));
-    }
+    public void Ctor_Throws_IfTerminalIsNull() => Should.Throw<ArgumentNullException>(() => new TerminalSurface(null!, new(1)));
 
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
@@ -91,7 +89,7 @@ public class TerminalSurfaceTests
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
-        _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => sa.Refresh())
@@ -103,7 +101,7 @@ public class TerminalSurfaceTests
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
-        _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         using (_terminal.AtomicRefresh())
@@ -157,7 +155,7 @@ public class TerminalSurfaceTests
     public void Refresh2_AdjustsYAndCountToMatchActualHeight()
     {
         var sw = new TerminalSurface(_terminal, new(1));
-        _cursesMock.Setup(s => s.getmaxy(sw.Handle))
+        _ = _cursesMock.Setup(s => s.getmaxy(sw.Handle))
                    .Returns(10);
 
         sw.Refresh(4, 10);
@@ -169,7 +167,7 @@ public class TerminalSurfaceTests
     public void Refresh2_DoesNotDoAnythingIfNotInBounds()
     {
         var sw = new TerminalSurface(_terminal, new(1));
-        _cursesMock.Setup(s => s.getmaxy(sw.Handle))
+        _ = _cursesMock.Setup(s => s.getmaxy(sw.Handle))
                    .Returns(10);
 
         sw.Refresh(14, 5);
@@ -181,10 +179,10 @@ public class TerminalSurfaceTests
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
-        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+        _ = _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
 
-        _cursesMock.Setup(s => s.wredrawln(sa.Handle, It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.wredrawln(sa.Handle, It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => sa.Refresh(1, 1))
@@ -196,12 +194,12 @@ public class TerminalSurfaceTests
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
-        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+        _ = _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
 
         using (_terminal.AtomicRefresh())
         {
-            Should.Throw<InvalidOperationException>(() => sa.Refresh(1, 1));
+            _ = Should.Throw<InvalidOperationException>(() => sa.Refresh(1, 1));
         }
     }
 
@@ -210,7 +208,7 @@ public class TerminalSurfaceTests
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
-        _cursesMock.Setup(s => s.getmaxy(sa.Handle))
+        _ = _cursesMock.Setup(s => s.getmaxy(sa.Handle))
                    .Returns(10);
 
         Should.NotThrow(() => sa.Refresh(1, 9));
@@ -221,7 +219,7 @@ public class TerminalSurfaceTests
     {
         var sa = new TerminalSurface(_terminal, new(1));
 
-        _cursesMock.Setup(s => s.is_immedok(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.is_immedok(It.IsAny<IntPtr>()))
                    .Returns(true);
 
         sa.ImmediateRefresh.ShouldBeTrue();
@@ -230,8 +228,10 @@ public class TerminalSurfaceTests
     [TestMethod]
     public void ImmediateRefresh_Sets_IfCursesSucceeded()
     {
-        var sa = new TerminalSurface(_terminal, new(1));
-        sa.ImmediateRefresh = true;
+        var sa = new TerminalSurface(_terminal, new(1))
+        {
+            ImmediateRefresh = true
+        };
 
         _cursesMock.Verify(v => v.immedok(sa.Handle, true), Times.Once);
     }

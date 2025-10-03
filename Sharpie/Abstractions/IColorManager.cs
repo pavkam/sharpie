@@ -39,17 +39,26 @@ public interface IColorManager
     /// <summary>
     ///     The terminal this manager belongs to.
     /// </summary>
-    ITerminal Terminal { get; }
+    ITerminal Terminal
+    {
+        get;
+    }
 
     /// <summary>
     ///     Specifies the color mode if this terminal.
     /// </summary>
-    ColorMode Mode { get; }
+    ColorMode Mode
+    {
+        get;
+    }
 
     /// <summary>
     ///     Specifies whether the terminal supports redefining colors.
     /// </summary>
-    bool CanRedefineColors { get; }
+    bool CanRedefineColors
+    {
+        get;
+    }
 
     /// <summary>
     ///     Creates a new color mixture from the given colors.

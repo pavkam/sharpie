@@ -34,28 +34,16 @@ namespace Sharpie.Tests;
 public class KeySequenceResolverTests
 {
     [TestMethod]
-    public void SpecialCharacterResolver_ThrowsIfSequenceIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.SpecialCharacterResolver(null!));
-    }
+    public void SpecialCharacterResolver_ThrowsIfSequenceIsNull() => Should.Throw<ArgumentNullException>(() => KeySequenceResolver.SpecialCharacterResolver(null!));
 
     [TestMethod]
-    public void ControlKeyResolver_ThrowsIfSequenceIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.ControlKeyResolver(null!));
-    }
+    public void ControlKeyResolver_ThrowsIfSequenceIsNull() => Should.Throw<ArgumentNullException>(() => KeySequenceResolver.ControlKeyResolver(null!));
 
     [TestMethod]
-    public void AltKeyResolver_ThrowsIfSequenceIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.AltKeyResolver(null!));
-    }
+    public void AltKeyResolver_ThrowsIfSequenceIsNull() => Should.Throw<ArgumentNullException>(() => KeySequenceResolver.AltKeyResolver(null!));
 
     [TestMethod]
-    public void KeyPadModifiersResolver_ThrowsIfSequenceIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => KeySequenceResolver.KeyPadModifiersResolver(null!));
-    }
+    public void KeyPadModifiersResolver_ThrowsIfSequenceIsNull() => Should.Throw<ArgumentNullException>(() => KeySequenceResolver.KeyPadModifiersResolver(null!));
 
     [TestMethod, DataRow(Key.Character, 0x01b, ModifierKey.Shift, Key.Escape, ControlCharacter.Null,
          ModifierKey.Shift), DataRow(Key.Character, ControlCharacter.Tab, ModifierKey.Shift, Key.Tab,
@@ -71,7 +59,7 @@ public class KeySequenceResolverTests
             new[] { new KeyEvent(inKey, new(inCode), "dummy", inMod) });
 
         count.ShouldBe(1);
-        key.ShouldNotBeNull();
+        _ = key.ShouldNotBeNull();
         key.Key.ShouldBe(expKey);
         key.Char.ShouldBe(new(expCode));
         key.Modifiers.ShouldBe(expMod);
@@ -100,7 +88,7 @@ public class KeySequenceResolverTests
             new[] { new KeyEvent(inKey, new(inCode), "dummy", inMod) });
 
         count.ShouldBe(1);
-        key.ShouldNotBeNull();
+        _ = key.ShouldNotBeNull();
         key.Key.ShouldBe(expKey);
         key.Char.ShouldBe(new(expCode));
         key.Modifiers.ShouldBe(expMod);
@@ -136,7 +124,7 @@ public class KeySequenceResolverTests
         });
 
         count.ShouldBe(2);
-        key.ShouldNotBeNull();
+        _ = key.ShouldNotBeNull();
         key.Key.ShouldBe(expKey);
         key.Char.ShouldBe(new(expCode));
         key.Modifiers.ShouldBe(expMod);
@@ -183,7 +171,7 @@ public class KeySequenceResolverTests
         });
 
         count.ShouldBe(4);
-        key.ShouldNotBeNull();
+        _ = key.ShouldNotBeNull();
         key.Key.ShouldBe(expKey);
         key.Modifiers.ShouldBe(ModifierKey.Shift | ModifierKey.Ctrl | ModifierKey.Alt);
         key.Name.ShouldBe(null);

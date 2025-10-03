@@ -37,7 +37,11 @@ public class AsciiFontTests
 {
     private static readonly Style Style1 = new()
     {
-        Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 99 }
+        Attributes = VideoAttribute.Bold,
+        ColorMixture = new()
+        {
+            Handle = 99
+        }
     };
 
     private class TestAsciiFont: AsciiFont
@@ -46,7 +50,7 @@ public class AsciiFontTests
         public Style? GetGlyphsStyle;
         public readonly IDrawable Drawable = new Mock<IDrawable>().Object;
 
-        public TestAsciiFont(string name, int height, int baseline, AsciiFontLayout layout): base(name, height,
+        public TestAsciiFont(string name, int height, int baseline, AsciiFontLayout layout) : base(name, height,
             baseline, layout)
         {
         }
@@ -63,28 +67,16 @@ public class AsciiFontTests
     }
 
     [TestMethod]
-    public void Ctor_Throws_IfNameIsNullOrEmpty()
-    {
-        Should.Throw<ArgumentException>(() => new TestAsciiFont("", 8, 6, AsciiFontLayout.FullWidth));
-    }
+    public void Ctor_Throws_IfNameIsNullOrEmpty() => Should.Throw<ArgumentException>(() => new TestAsciiFont("", 8, 6, AsciiFontLayout.FullWidth));
 
     [TestMethod]
-    public void Ctor_Throws_IfHeightLessThanOne()
-    {
-        Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 0, 6, AsciiFontLayout.FullWidth));
-    }
+    public void Ctor_Throws_IfHeightLessThanOne() => Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 0, 6, AsciiFontLayout.FullWidth));
 
     [TestMethod]
-    public void Ctor_Throws_IfBaselineLessThanOne()
-    {
-        Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 8, 0, AsciiFontLayout.FullWidth));
-    }
+    public void Ctor_Throws_IfBaselineLessThanOne() => Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 8, 0, AsciiFontLayout.FullWidth));
 
     [TestMethod]
-    public void Ctor_Throws_IfBaselineLessGreaterThanHeight()
-    {
-        Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 8, 9, AsciiFontLayout.FullWidth));
-    }
+    public void Ctor_Throws_IfBaselineLessGreaterThanHeight() => Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 8, 9, AsciiFontLayout.FullWidth));
 
     [TestMethod]
     public void Ctor_SetsTheExpectedProperties()

@@ -45,7 +45,10 @@ public sealed class ComplexChar
     /// <summary>
     ///     The backend-specific payload.
     /// </summary>
-    internal object? Raw { get; }
+    internal object? Raw
+    {
+        get;
+    }
 
     /// <inheritdoc cref="object.Equals(object?)" />
     public override bool Equals(object? obj) => obj is ComplexChar cc && Equals(cc.Raw, Raw);

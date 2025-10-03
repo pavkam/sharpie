@@ -36,7 +36,10 @@ namespace Sharpie;
 [PublicAPI]
 public readonly struct StyledText
 {
-    internal (string text, Style style)[]? Parts { get; }
+    internal (string text, Style style)[]? Parts
+    {
+        get;
+    }
 
     private StyledText((string text, Style style)[] parts) => Parts = parts;
 
@@ -63,15 +66,7 @@ public readonly struct StyledText
     /// <param name="style">The style of the text to combine with.</param>
     /// <returns>The combined styled text.</returns>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="text" /> is <c>null</c>.</exception>
-    public StyledText Plus(string text, Style style)
-    {
-        if (text == null)
-        {
-            throw new ArgumentNullException(nameof(text));
-        }
-
-        return Plus(new(text, style));
-    }
+    public StyledText Plus(string text, Style style) => text == null ? throw new ArgumentNullException(nameof(text)) : Plus(new(text, style));
 
     /// <summary>
     ///     Combines this styled text with another styled text.
@@ -122,7 +117,8 @@ public readonly struct StyledText
             (not null, null) => false,
             (var l and not null, var r and not null) when l.Length != r.Length => false,
             (var l and not null, var r and not null) => !r.Where((t, i) => l[i] != t)
-                                                          .Any()
+                                                          .Any(),
+            _ => throw new NotImplementedException()
         };
     }
 
@@ -142,10 +138,7 @@ public readonly struct StyledText
     }
 
     /// <inheritdoc cref="object.ToString" />
-    public override string? ToString()
-    {
-        return Parts == null ? null : string.Join(", ", Parts.Select(p => $"\"{p.text}\" @ {p.style}"));
-    }
+    public override string? ToString() => Parts == null ? null : string.Join(", ", Parts.Select(p => $"\"{p.text}\" @ {p.style}"));
 
     /// <summary>
     ///     Checks if two styled texts are equal.

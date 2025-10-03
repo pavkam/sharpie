@@ -43,7 +43,7 @@ public class DelegateEventTests
     }
 
     [TestMethod]
-    public void Ctor_Throws_IfObjectIsNull() { Should.Throw<ArgumentNullException>(() => new DelegateEvent(null!)); }
+    public void Ctor_Throws_IfObjectIsNull() => Should.Throw<ArgumentNullException>(() => new DelegateEvent(null!));
 
     [TestMethod]
     public void ToString_ProperlyFormats()

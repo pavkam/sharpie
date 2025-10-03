@@ -41,22 +41,34 @@ public interface IAsciiFont
     /// <summary>
     ///     The font height.
     /// </summary>
-    int Height { get; }
+    int Height
+    {
+        get;
+    }
 
     /// <summary>
     ///     The font baseline.
     /// </summary>
-    int Baseline { get; }
-    
+    int Baseline
+    {
+        get;
+    }
+
     /// <summary>
     ///     The font's name.
     /// </summary>
-    string Name { get; }
+    string Name
+    {
+        get;
+    }
 
     /// <summary>
     ///     The font's layout.
     /// </summary>
-    AsciiFontLayout Layout { get; }
+    AsciiFontLayout Layout
+    {
+        get;
+    }
 
     /// <summary>
     ///     Checks if the font contains a given glyph.

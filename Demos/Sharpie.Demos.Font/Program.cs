@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2022-2023, Alexandru Ciobanu
 All rights reserved.
 
@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System.Diagnostics.CodeAnalysis;
+
 using Sharpie;
 using Sharpie.Abstractions;
 using Sharpie.Backend;
@@ -99,6 +100,8 @@ terminal.Run((t, e) =>
         case KeyEvent { Key: Key.Tab }:
             t.Screen.Clear();
             fontIndex = (fontIndex + 1) % fonts.Count;
+            break;
+        default:
             break;
     }
 

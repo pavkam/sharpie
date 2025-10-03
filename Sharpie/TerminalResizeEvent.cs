@@ -40,12 +40,15 @@ public sealed class TerminalResizeEvent: Event
     ///     Creates a new instance of the class.
     /// </summary>
     /// <param name="size">The new size.</param>
-    internal TerminalResizeEvent(Size size): base(EventType.TerminalResize) => Size = size;
+    internal TerminalResizeEvent(Size size) : base(EventType.TerminalResize) => Size = size;
 
     /// <summary>
     ///     The new size of the terminal.
     /// </summary>
-    public Size Size { get; }
+    public Size Size
+    {
+        get;
+    }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => $"Resize @ {Size.Width}x{Size.Height}";

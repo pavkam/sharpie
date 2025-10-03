@@ -1,0 +1,46 @@
+name: 🚃 Build and Test on Pull Request
+
+on:
+  pull_request:
+
+permissions:
+  statuses: write
+  checks: write
+  contents: read
+  issues: read
+  pull-requests: write
+
+jobs:
+  build_and_test:
+    name: 📦 Build and Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+      fail-fast: false # Don't fail all jobs if one fails
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔀 Build and Test
+        uses: ./.github/actions/build-and-test
+
+  summary:
+    name: ✔︎ Generate summary
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 📥 Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: 📝 Create summary
+        run: |
+          echo "## CI Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Build and tests completed on all platforms." >> $GITHUB_STEP_SUMMARY
+          echo "📊 Check coverage reports in the artifacts section." >> $GITHUB_STEP_SUMMARY

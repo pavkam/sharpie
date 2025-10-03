@@ -43,7 +43,7 @@ public class PadTests
     {
         _cursesMock = new();
 
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
@@ -51,10 +51,11 @@ public class PadTests
         _pad = new(_screen, new(2));
     }
 
-    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
+    [TestCleanup]
+    public void TestCleanup() => _terminal.Dispose();
 
     [TestMethod]
-    public void Ctor_Throws_IfScreenIsNull() { Should.Throw<ArgumentException>(() => new Pad(null!, IntPtr.MaxValue)); }
+    public void Ctor_Throws_IfScreenIsNull() => Should.Throw<ArgumentException>(() => new Pad(null!, IntPtr.MaxValue));
 
     [TestMethod]
     public void ToString_ReturnsFormattedRepresentation()
@@ -88,7 +89,7 @@ public class PadTests
         var p = new Pad(_screen, new(22));
         p.Destroy();
 
-        Should.Throw<ObjectDisposedException>(() => p.SubPads.ToArray());
+        _ = Should.Throw<ObjectDisposedException>(() => p.SubPads.ToArray());
     }
 
     [TestMethod]
@@ -114,8 +115,10 @@ public class PadTests
     {
         _cursesMock.MockArea(_screen, new Size(100, 100));
 
-        var p = new Pad(_screen, new(1));
-        p.Size = new(11, 22);
+        var p = new Pad(_screen, new(1))
+        {
+            Size = new(11, 22)
+        };
 
         _cursesMock.Verify(v => v.wresize(new(1), 22, 11), Times.Once);
     }
@@ -127,7 +130,7 @@ public class PadTests
 
         var p = new Pad(_screen, new(1));
 
-        _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => p.Size = new(1, 1))
@@ -141,7 +144,7 @@ public class PadTests
 
         var p = new Pad(_screen, new(1));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => p.Size = new(6, 6));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => p.Size = new(6, 6));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -149,9 +152,10 @@ public class PadTests
     {
         _cursesMock.MockArea(_screen, new Size(100, 100));
 
-        var p = new Pad(_screen, new(1));
-
-        p.Size = new(5, 5);
+        var p = new Pad(_screen, new(1))
+        {
+            Size = new(5, 5)
+        };
 
         _cursesMock.Verify(v => v.wresize(p.Handle, 5, 5), Times.Once);
     }
@@ -241,7 +245,7 @@ public class PadTests
         _cursesMock.MockArea(_pad, new Size(100, 100));
         _cursesMock.MockArea(_screen, new Size(100, 100));
 
-        _cursesMock.Setup(s => s.pnoutrefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.pnoutrefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
@@ -258,7 +262,7 @@ public class PadTests
         _cursesMock.MockArea(_pad, new Size(100, 100));
         _cursesMock.MockArea(_screen, new Size(100, 100));
 
-        _cursesMock.Setup(s => s.prefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.prefresh(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
@@ -272,7 +276,7 @@ public class PadTests
         var p = new Pad(_screen, new(2));
         _cursesMock.MockArea(p, new Size(18, 24));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => p.SubPad(new(19, 25, 2, 2)));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => p.SubPad(new(19, 25, 2, 2)));
     }
 
     [TestMethod]
@@ -281,11 +285,11 @@ public class PadTests
         var p = new Pad(_screen, new(2));
         _cursesMock.MockArea(p, new Size(18, 24));
 
-        _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
-        p.SubPad(new(16, 20, 15, 18));
+        _ = p.SubPad(new(16, 20, 15, 18));
 
         _cursesMock.Verify(v => v.subpad(p.Handle, 4, 2, 20, 18), Times.Once);
     }
@@ -295,7 +299,7 @@ public class PadTests
     {
         _cursesMock.MockArea(_pad, new Size(100, 100));
 
-        _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
@@ -308,7 +312,7 @@ public class PadTests
     {
         _cursesMock.MockArea(_pad, new Size(100, 100));
 
-        _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
@@ -322,11 +326,11 @@ public class PadTests
     public void SubPad_PreservesManagedCaret(bool mc)
     {
         _cursesMock.MockArea(_pad, new Size(100, 100));
-        _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.subpad(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
-        _cursesMock.Setup(s => s.is_leaveok(_pad.Handle))
+        _ = _cursesMock.Setup(s => s.is_leaveok(_pad.Handle))
                    .Returns(mc);
 
         var sw = _pad.SubPad(new(0, 0, 1, 1));
@@ -344,7 +348,7 @@ public class PadTests
     [TestMethod]
     public void Duplicate_ReturnsNewPad_IfCursesSucceeds()
     {
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(3));
 
         var p = _pad.Duplicate();
@@ -359,10 +363,10 @@ public class PadTests
     {
         var p = new Pad(_screen, new(3)) { ManagedCaret = mc };
 
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
 
-        _cursesMock.Setup(s => s.is_leaveok(p.Handle))
+        _ = _cursesMock.Setup(s => s.is_leaveok(p.Handle))
                    .Returns(mc);
 
         var sw = p.Duplicate();

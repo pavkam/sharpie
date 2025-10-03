@@ -35,7 +35,8 @@ public class HelpersTests
 {
     private Mock<ICursesBackend> _cursesMock = null!;
 
-    [TestInitialize] public void TestInitialize() { _cursesMock = new(); }
+    [TestInitialize]
+    public void TestInitialize() => _cursesMock = new();
 
     [TestMethod]
     public void Failed_ReturnsTrue_IfCodeIsMinus1()
@@ -61,7 +62,7 @@ public class HelpersTests
     [TestMethod]
     public void Check_Throws_IfCodeIsMinus1()
     {
-        var exception = Should.Throw<CursesOperationException>(() => { (-1).Check("operation", "message"); });
+        var exception = Should.Throw<CursesOperationException>(() => { _ = (-1).Check("operation", "message"); });
         exception.Operation.ShouldBe("operation");
         exception.Message.ShouldBe("The call to operation failed: message");
     }
@@ -76,7 +77,7 @@ public class HelpersTests
     [TestMethod]
     public void Check_Throws_IfZeroPointer()
     {
-        var exception = Should.Throw<CursesOperationException>(() => { IntPtr.Zero.Check("operation", "message"); });
+        var exception = Should.Throw<CursesOperationException>(() => { _ = IntPtr.Zero.Check("operation", "message"); });
         exception.Operation.ShouldBe("operation");
         exception.Message.ShouldBe("The call to operation failed: message");
     }
@@ -84,11 +85,11 @@ public class HelpersTests
     [TestMethod, DataRow(0x1F, "\x241F"), DataRow(0x7F, "\x247F"), DataRow(0x9F, "\x249F")]
     public void ToComplexChar_ConvertsSpecialAsciiToUnicode(int ch, string expected)
     {
-        _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
+        _ = _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                        It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
-        _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
+        _ = _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
         _cursesMock.Verify(
             v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<VideoAttribute>(), It.IsAny<short>(),
                 It.IsAny<IntPtr>()), Times.Once);
@@ -99,11 +100,11 @@ public class HelpersTests
      DataRow((int) ControlCharacter.Tab, "\t")]
     public void ToComplexChar_DoesNotConvertOtherAsciiToUnicode(int ch, string expected)
     {
-        _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
+        _ = _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                        It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(0);
 
-        _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
+        _ = _cursesMock.Object.ToComplexChar(new(ch), Style.Default);
         _cursesMock.Verify(
             v => v.setcchar(out It.Ref<ComplexChar>.IsAny, expected, It.IsAny<VideoAttribute>(), It.IsAny<short>(),
                 It.IsAny<IntPtr>()), Times.Once);
@@ -112,11 +113,11 @@ public class HelpersTests
     [TestMethod]
     public void ToComplexChar_Throws_IfCursesFails()
     {
-        _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
+        _ = _cursesMock.Setup(s => s.setcchar(out It.Ref<ComplexChar>.IsAny, It.IsAny<string>(), It.IsAny<VideoAttribute>(),
                        It.IsAny<short>(), It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => _cursesMock.Object.ToComplexChar(new('a'), Style.Default));
+        _ = Should.Throw<CursesOperationException>(() => _cursesMock.Object.ToComplexChar(new('a'), Style.Default));
     }
 
     [TestMethod]
@@ -124,23 +125,23 @@ public class HelpersTests
     {
         var ch = new ComplexChar("test");
 
-        _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(), out It.Ref<VideoAttribute>.IsAny,
+        _ = _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(), out It.Ref<VideoAttribute>.IsAny,
                        out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => _cursesMock.Object.FromComplexChar(ch));
+        _ = Should.Throw<CursesOperationException>(() => _cursesMock.Object.FromComplexChar(ch));
     }
 
     [TestMethod]
     public void FromComplexChar_ReturnsCursesChar()
     {
         var ch = new ComplexChar("test");
-        _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(), out It.Ref<VideoAttribute>.IsAny,
+        _ = _cursesMock.Setup(s => s.getcchar(ch, It.IsAny<StringBuilder>(), out It.Ref<VideoAttribute>.IsAny,
                        out It.Ref<short>.IsAny, It.IsAny<IntPtr>()))
                    .Returns((ComplexChar _, StringBuilder sb, out VideoAttribute attrs, out short colorPair,
                        IntPtr _) =>
                    {
-                       sb.Append('H');
+                       _ = sb.Append('H');
                        attrs = VideoAttribute.Dim;
                        colorPair = 10;
                        return 0;
@@ -149,13 +150,16 @@ public class HelpersTests
         var (rune, style) = _cursesMock.Object.FromComplexChar(ch);
         rune.ShouldBe(new('H'));
         style.Attributes.ShouldBe(VideoAttribute.Dim);
-        style.ColorMixture.ShouldBe(new() { Handle = 10 });
+        style.ColorMixture.ShouldBe(new()
+        {
+            Handle = 10
+        });
     }
 
     [TestMethod]
     public void EnumerateInHalves_Throws_IfCountIsNegative()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.EnumerateInHalves(0, -1)
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => Helpers.EnumerateInHalves(0, -1)
                                                                .ToArray());
     }
 
@@ -255,16 +259,10 @@ public class HelpersTests
     }
 
     [TestMethod]
-    public void IntersectSegments_Throws_IfLength1IsLessThanZero()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, -1, 0, 1));
-    }
+    public void IntersectSegments_Throws_IfLength1IsLessThanZero() => Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, -1, 0, 1));
 
     [TestMethod]
-    public void IntersectSegments_Throws_IfLength2IsLessThanZero()
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, 1, 0, -1));
-    }
+    public void IntersectSegments_Throws_IfLength2IsLessThanZero() => Should.Throw<ArgumentOutOfRangeException>(() => Helpers.IntersectSegments(0, 1, 0, -1));
 
     [TestMethod, DataRow(0, 0, 0, 5, -1,
          0), DataRow(0, 5, 0, 0, -1,
@@ -287,13 +285,13 @@ public class HelpersTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails_NoBatch()
     {
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         using var terminal = new Terminal(_cursesMock.Object, new());
         using var sa = new TerminalSurface(terminal, new(1));
 
-        _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => terminal.Refresh(sa))
@@ -303,13 +301,13 @@ public class HelpersTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Refresh_Fails_IfCursesFails_InBatch()
     {
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         using var terminal = new Terminal(_cursesMock.Object, new());
         using var sa = new TerminalSurface(terminal, new(1));
 
-        _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.wnoutrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         using (terminal.AtomicRefresh())
@@ -322,7 +320,7 @@ public class HelpersTests
     [TestMethod]
     public void Refresh_Succeeds_IfCursesSucceeds_NoBatch()
     {
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         using var terminal = new Terminal(_cursesMock.Object, new());
@@ -335,7 +333,7 @@ public class HelpersTests
     [TestMethod]
     public void Refresh_Succeeds_IfCursesSucceeds_InBatch()
     {
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         using var terminal = new Terminal(_cursesMock.Object, new());
@@ -459,16 +457,13 @@ public class HelpersTests
     }
 
     [TestMethod]
-    public void GetRawValue_Throws_IfCharIsNull()
-    {
-        Should.Throw<ArgumentNullException>(() => ((ComplexChar) null!).GetRawValue<string>());
-    }
+    public void GetRawValue_Throws_IfCharIsNull() => Should.Throw<ArgumentNullException>(() => ((ComplexChar) null!).GetRawValue<string>());
 
     [TestMethod]
     public void GetRawValue_Throws_IfCharOfBadType()
     {
         var c = new ComplexChar(12);
-        Should.Throw<ArgumentException>(() => c.GetRawValue<string>());
+        _ = Should.Throw<ArgumentException>(() => c.GetRawValue<string>());
     }
 
     [TestMethod]

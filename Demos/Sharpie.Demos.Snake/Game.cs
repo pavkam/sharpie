@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Sharpie.Demos.Snake;
 
 using System.Drawing;
+
 using Abstractions;
 
 public sealed class Game
@@ -81,7 +82,10 @@ public sealed class Game
         _lostStyle = lostStyle;
     }
 
-    public int Score { get; private set; }
+    public int Score
+    {
+        get; private set;
+    }
 
     public void ResetSize(Rectangle perimeter)
     {
@@ -149,7 +153,8 @@ public sealed class Game
         {
             _clear.Add(_snake.Last());
             _snake.RemoveAt(_snake.Count - 1);
-        } else
+        }
+        else
         {
             _pendingGrowth--;
         }

@@ -43,7 +43,7 @@ public sealed class KeyEvent: Event
     /// <param name="char">The char that was pressed if it was not a key.</param>
     /// <param name="keyName">The name of the key.</param>
     /// <param name="modifiers">The modifiers at the time of the press.</param>
-    internal KeyEvent(Key key, Rune @char, string? keyName, ModifierKey modifiers): base(EventType.KeyPress)
+    internal KeyEvent(Key key, Rune @char, string? keyName, ModifierKey modifiers) : base(EventType.KeyPress)
     {
         Key = key;
         Char = @char;
@@ -52,25 +52,37 @@ public sealed class KeyEvent: Event
     }
 
     /// <summary>
-    ///     The key that was pressed. If the value is <see cref="Sharpie.Key.Character" /> then <see cref="Char" /> contains
+    ///     The key that was pressed. If the value is <see cref="Key.Character" /> then <see cref="Char" /> contains
     ///     the actual code of the key.
     /// </summary>
-    public Key Key { get; }
+    public Key Key
+    {
+        get;
+    }
 
     /// <summary>
-    ///     The character that was pressed. Only valid if <see cref="Key" /> is <see cref="Sharpie.Key.Character" />.
+    ///     The character that was pressed. Only valid if <see cref="Key" /> is <see cref="Key.Character" />.
     /// </summary>
-    public Rune Char { get; }
+    public Rune Char
+    {
+        get;
+    }
 
     /// <summary>
     ///     The printable name of the key.
     /// </summary>
-    public string? Name { get; }
+    public string? Name
+    {
+        get;
+    }
 
     /// <summary>
     ///     The modifier keys that were present at the time.
     /// </summary>
-    public ModifierKey Modifiers { get; }
+    public ModifierKey Modifiers
+    {
+        get;
+    }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString()
@@ -78,23 +90,23 @@ public sealed class KeyEvent: Event
         var modifiers = new StringBuilder();
         if (Modifiers.HasFlag(ModifierKey.Ctrl))
         {
-            modifiers.Append("CTRL-");
+            _ = modifiers.Append("CTRL-");
         }
 
         if (Modifiers.HasFlag(ModifierKey.Shift))
         {
-            modifiers.Append("SHIFT-");
+            _ = modifiers.Append("SHIFT-");
         }
 
         if (Modifiers.HasFlag(ModifierKey.Alt))
         {
-            modifiers.Append("ALT-");
+            _ = modifiers.Append("ALT-");
         }
 
         var fmtName = string.IsNullOrEmpty(Name) ? Name : $" ({Name})";
         return Key == Key.Character
-            ? $"{modifiers}'{Char.ToString()}'{fmtName}"
-            : $"{modifiers}{Key.ToString()}{fmtName}";
+            ? $"{modifiers}'{Char}'{fmtName}"
+            : $"{modifiers}{Key}{fmtName}";
     }
 
     /// <inheritdoc cref="object.Equals(object)" />

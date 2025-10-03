@@ -42,20 +42,18 @@ public class SubPadTests
     {
         _cursesMock = new();
 
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new());
         _parent = new(_terminal.Screen, new(1));
     }
 
-    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
+    [TestCleanup]
+    public void TestCleanup() => _terminal.Dispose();
 
     [TestMethod]
-    public void Ctor_Throws_IfScreenIsNull()
-    {
-        Should.Throw<ArgumentException>(() => new SubPad(null!, IntPtr.MaxValue));
-    }
+    public void Ctor_Throws_IfScreenIsNull() => Should.Throw<ArgumentException>(() => new SubPad(null!, IntPtr.MaxValue));
 
     [TestMethod]
     public void Pad_IsInitialized()
@@ -79,10 +77,10 @@ public class SubPadTests
     [TestMethod]
     public void Location_Get_Returns_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(11);
 
-        _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(22);
 
         var sp = new SubPad(_parent, new(1));
@@ -92,7 +90,7 @@ public class SubPadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_Throws_IfCursesFails_1()
     {
-        _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.getparx(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         var sp = new SubPad(_parent, new(2));
@@ -104,7 +102,7 @@ public class SubPadTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Location_Get_Throws_IfCursesFails_2()
     {
-        _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.getpary(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
         var sp = new SubPad(_parent, new(2));
@@ -134,7 +132,7 @@ public class SubPadTests
         var sp = new SubPad(_parent, new(2));
         _cursesMock.MockArea(sp, new Size(1, 1));
 
-        _cursesMock.Setup(s => s.mvderwin(sp.Handle, It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.mvderwin(sp.Handle, It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
 
@@ -150,7 +148,7 @@ public class SubPadTests
         var sp = new SubPad(_parent, new(1));
         _cursesMock.MockArea(sp, new Size(1, 1));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => sp.Location = new(6, 6));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => sp.Location = new(6, 6));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -171,8 +169,10 @@ public class SubPadTests
     {
         _cursesMock.MockArea(_parent, new Size(100, 100));
 
-        var w = new SubPad(_parent, new(1));
-        w.Size = new(11, 22);
+        var w = new SubPad(_parent, new(1))
+        {
+            Size = new(11, 22)
+        };
 
         _cursesMock.Verify(v => v.wresize(w.Handle, 22, 11), Times.Once);
     }
@@ -184,7 +184,7 @@ public class SubPadTests
 
         var w = new SubPad(_parent, new(1));
 
-        _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => w.Size = new(1, 1))
@@ -197,13 +197,13 @@ public class SubPadTests
         _cursesMock.MockArea(_parent, new Size(10, 10));
 
         var sp = new SubPad(_parent, new(10));
-        _cursesMock.Setup(s => s.getparx(sp.Handle))
+        _ = _cursesMock.Setup(s => s.getparx(sp.Handle))
                    .Returns(15);
 
-        _cursesMock.Setup(s => s.getpary(sp.Handle))
+        _ = _cursesMock.Setup(s => s.getpary(sp.Handle))
                    .Returns(15);
 
-        Should.Throw<ArgumentOutOfRangeException>(() => sp.Size = new(5, 5));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => sp.Size = new(5, 5));
     }
 
     [TestMethod]
@@ -212,10 +212,10 @@ public class SubPadTests
         _cursesMock.MockArea(_parent, new Size(8, 18));
 
         var sp = new SubPad(_parent, new(10));
-        _cursesMock.Setup(s => s.getparx(sp.Handle))
+        _ = _cursesMock.Setup(s => s.getparx(sp.Handle))
                    .Returns(5);
 
-        _cursesMock.Setup(s => s.getpary(sp.Handle))
+        _ = _cursesMock.Setup(s => s.getpary(sp.Handle))
                    .Returns(6);
 
         sp.Size = new(10, 10);
@@ -228,9 +228,10 @@ public class SubPadTests
     {
         _cursesMock.MockArea(_parent, new Size(100, 100));
 
-        var w = new SubPad(_parent, new(1));
-
-        w.Size = new(5, 5);
+        var w = new SubPad(_parent, new(1))
+        {
+            Size = new(5, 5)
+        };
 
         _cursesMock.Verify(v => v.wresize(w.Handle, 5, 5), Times.Once);
     }
@@ -240,10 +241,10 @@ public class SubPadTests
     {
         var sp = new SubPad(_parent, new(1));
 
-        _cursesMock.Setup(s => s.getparx(sp.Handle))
+        _ = _cursesMock.Setup(s => s.getparx(sp.Handle))
                    .Returns(11);
 
-        _cursesMock.Setup(s => s.getpary(sp.Handle))
+        _ = _cursesMock.Setup(s => s.getpary(sp.Handle))
                    .Returns(22);
 
         sp.Origin.ShouldBe(new(11, 22));
@@ -263,7 +264,7 @@ public class SubPadTests
     {
         var sp = new SubPad(_parent, new(2));
 
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(3));
 
         var sp1 = sp.Duplicate();
@@ -278,10 +279,10 @@ public class SubPadTests
     {
         var sp = new SubPad(_parent, new(3)) { ManagedCaret = mc };
 
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
 
-        _cursesMock.Setup(s => s.is_leaveok(sp.Handle))
+        _ = _cursesMock.Setup(s => s.is_leaveok(sp.Handle))
                    .Returns(mc);
 
         var sp1 = sp.Duplicate();

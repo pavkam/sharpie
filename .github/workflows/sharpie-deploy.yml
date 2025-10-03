@@ -1,0 +1,86 @@
+name: 🚃 Build, Test and Deploy
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  build_and_test_and_deploy:
+    name: 📦 Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: ☁️ Checkout repository
+        id: checkout-repository
+        uses: actions/checkout@v4
+
+      - name: 🔀 Build and Test
+        id: build-and-test
+        uses: ./.github/actions/build-and-test
+
+      - name: 📖 Check published versions
+        id: published-versions
+        run: |
+          PROJECTS=(
+            "Sharpie/Sharpie.csproj;Sharpie-Curses;sharpie"
+            "NativeLibraries/Sharpie.NativeLibraries.NCurses.csproj;Sharpie-Libs-NCurses;ncurses"
+            "NativeLibraries/Sharpie.NativeLibraries.PdCurses.csproj;Sharpie-Libs-PdCurses;pdcurses"
+            "NativeLibraries/Sharpie.NativeLibraries.PdCursesMod.csproj;Sharpie-Libs-PdCursesMod;pdcursesmod"
+          )
+
+          for LIB in "${PROJECTS[@]}"
+          do
+            SPLIT=(${LIB//;/ })
+            LIB_PATH=${SPLIT[0]}
+            LIB_PKG=${SPLIT[1]}
+            LIB_MONIKER=${SPLIT[2]}
+
+            V1=`cat $LIB_PATH | sed -n "s/\s*<FileVersion>\(.*\)<\/FileVersion>$/\1/p"`
+            V2=`cat $LIB_PATH | sed -n "s/\s*<AssemblyVersion>\(.*\)<\/AssemblyVersion>$/\1/p"`
+            V3=`cat $LIB_PATH | sed -n "s/\s*<PackageVersion>\(.*\)<\/PackageVersion>$/\1/p"`
+            if [ "$V1" != "$V2" ] || [ "$V2" != "$V3" ]; then
+              exit 1
+            fi
+
+            echo "version=$V3" >> $GITHUB_OUTPUT
+            DEP=`wget -q https://www.nuget.org/api/v2/package/$LIB_PKG/$V3 -O /dev/null || echo NO`
+
+            if [ "$DEP" = "NO" ]; then
+              echo "${LIB_MONIKER}_deployed=no" >> $GITHUB_OUTPUT
+            else
+              echo "${LIB_MONIKER}_deployed=yes" >> $GITHUB_OUTPUT
+            fi
+          done
+
+      - name: Publish Sharpie package
+        id: publish-sharpie
+        if: steps.published-versions.outputs.sharpie_deployed == 'no'
+        shell: bash
+        run: |
+          dotnet pack ./Sharpie/Sharpie.csproj
+          dotnet nuget push **/sharpie-curses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
+
+      - name: Publish NCurses package
+        id: publish-ncurses
+        if: steps.published-versions.outputs.ncurses-deployed == 'no'
+        shell: bash
+        run: |
+          dotnet pack NativeLibraries/Sharpie.NativeLibraries.NCurses.csproj
+          dotnet nuget push **/sharpie-libs-ncurses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
+
+      - name: Publish PDCurses package
+        id: publish-pdcurses
+        if: steps.published-versions.outputs.pdcurses-deployed == 'no'
+        shell: bash
+        run: |
+          dotnet pack NativeLibraries/Sharpie.NativeLibraries.PdCurses.csproj
+          dotnet nuget push **/sharpie-libs-pdcurses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
+
+      - name: Publish PDCursesMod package
+        id: publish-pdcursesmod
+        if: steps.published-versions.outputs.pdcursesmod-deployed == 'no'
+        shell: bash
+        run: |
+          dotnet pack NativeLibraries/Sharpie.NativeLibraries.PdCursesMod.csproj
+          dotnet nuget push **/sharpie-libs-pdcursesmod.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json

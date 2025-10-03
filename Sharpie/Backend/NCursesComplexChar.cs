@@ -55,6 +55,6 @@ internal struct NCursesComplexChar
     internal uint _char4;
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() =>
+    public override readonly string ToString() =>
         $"{_attrAndColorPair:X8}-{_char0:X8}:{_char1:X8}:{_char2:X8}:{_char3:X8}:{_char4:X8}";
 }

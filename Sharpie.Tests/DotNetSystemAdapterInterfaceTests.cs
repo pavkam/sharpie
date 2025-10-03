@@ -33,5 +33,6 @@ namespace Sharpie.Tests;
 [TestClass]
 public class DotNetSystemAdapterInterfaceTests
 {
-    [TestMethod] public void Instance_IsNotNull() { IDotNetSystemAdapter.Instance.ShouldNotBeNull(); }
+    [TestMethod]
+    public void Instance_IsNotNull() => IDotNetSystemAdapter.Instance.ShouldNotBeNull();
 }

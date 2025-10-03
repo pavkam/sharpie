@@ -45,7 +45,7 @@ internal class PdCursesMod32Backend: PdCursesBackend
     /// <param name="pdCursesSymbolResolver">The PDCursesMod library symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
     internal PdCursesMod32Backend(IDotNetSystemAdapter dotNetSystemAdapter,
-        INativeSymbolResolver pdCursesSymbolResolver, INativeSymbolResolver? libCSymbolResolver): base(
+        INativeSymbolResolver pdCursesSymbolResolver, INativeSymbolResolver? libCSymbolResolver) : base(
         dotNetSystemAdapter, pdCursesSymbolResolver, libCSymbolResolver)
     {
     }
@@ -55,13 +55,14 @@ internal class PdCursesMod32Backend: PdCursesBackend
     {
         return (result, keyCode) switch
         {
-            (< 0, var _) => CursesKeyCodeType.Unknown,
+            ( < 0, var _) => CursesKeyCodeType.Unknown,
             ((int) PdCursesKeyCode.Yes + KeyOffset, (uint) PdCursesKeyCode.Resize + KeyOffset) => CursesKeyCodeType
                 .Resize,
             ((int) PdCursesKeyCode.Yes + KeyOffset, (uint) PdCursesKeyCode.Mouse + KeyOffset) =>
                 CursesKeyCodeType.Mouse,
             ((int) PdCursesKeyCode.Yes + KeyOffset, var _) => CursesKeyCodeType.Key,
-            (>= 0, var _) => CursesKeyCodeType.Character
+            ( >= 0, var _) => CursesKeyCodeType.Character,
+            _ => throw new NotImplementedException()
         };
     }
 

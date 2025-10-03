@@ -43,7 +43,7 @@ public sealed class MouseActionEvent: Event
     /// <param name="button">The actioned button.</param>
     /// <param name="state">The button state.</param>
     /// <param name="modifiers">The key modifiers.</param>
-    internal MouseActionEvent(Point point, MouseButton button, MouseButtonState state, ModifierKey modifiers): base(
+    internal MouseActionEvent(Point point, MouseButton button, MouseButtonState state, ModifierKey modifiers) : base(
         EventType.MouseAction)
     {
         Position = point;
@@ -55,22 +55,34 @@ public sealed class MouseActionEvent: Event
     /// <summary>
     ///     The button that was actioned.
     /// </summary>
-    public MouseButton Button { get; }
+    public MouseButton Button
+    {
+        get;
+    }
 
     /// <summary>
     ///     The state of the action.
     /// </summary>
-    public MouseButtonState State { get; }
+    public MouseButtonState State
+    {
+        get;
+    }
 
     /// <summary>
     ///     Modifier keys that were present at the time of the action.
     /// </summary>
-    public ModifierKey Modifiers { get; }
+    public ModifierKey Modifiers
+    {
+        get;
+    }
 
     /// <summary>
     ///     The mouse position at the time of the action.
     /// </summary>
-    public Point Position { get; }
+    public Point Position
+    {
+        get;
+    }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString()
@@ -78,17 +90,17 @@ public sealed class MouseActionEvent: Event
         var modifiers = new StringBuilder();
         if (Modifiers.HasFlag(ModifierKey.Ctrl))
         {
-            modifiers.Append("CTRL-");
+            _ = modifiers.Append("CTRL-");
         }
 
         if (Modifiers.HasFlag(ModifierKey.Shift))
         {
-            modifiers.Append("SHIFT-");
+            _ = modifiers.Append("SHIFT-");
         }
 
         if (Modifiers.HasFlag(ModifierKey.Alt))
         {
-            modifiers.Append("ALT-");
+            _ = modifiers.Append("ALT-");
         }
 
         return $"Mouse {modifiers}{Button}-{State} @ {Position.X}x{Position.Y}";

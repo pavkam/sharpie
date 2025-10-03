@@ -114,10 +114,12 @@ internal static class FigletFontParser
         if (fullLayout != 0)
         {
             layout = (FigletAttribute) fullLayout;
-        } else if (oldLayout == 0)
+        }
+        else if (oldLayout == 0)
         {
             layout = FigletAttribute.HorizontalFitting;
-        } else if (oldLayout != -1)
+        }
+        else if (oldLayout != -1)
         {
             layout = (FigletAttribute) oldLayout;
         }
@@ -154,7 +156,8 @@ internal static class FigletFontParser
         {
             index += 2;
             @base = 16;
-        } else if (n.IndexOf('0', index) == index)
+        }
+        else if (n.IndexOf('0', index) == index)
         {
             if (index == n.Length - 1)
             {
@@ -168,7 +171,8 @@ internal static class FigletFontParser
         try
         {
             return sign * Convert.ToInt32(n[index..], @base);
-        } catch (FormatException)
+        }
+        catch (FormatException)
         {
             throw new FormatException($"Character: Invalid code point {n}.");
         }
@@ -230,12 +234,7 @@ internal static class FigletFontParser
         Debug.Assert(reader != null);
 
         var line = await reader.ReadLineAsync();
-        if (line == null)
-        {
-            throw new FormatException("File: Unexpected end of font file.");
-        }
-
-        return line;
+        return line ?? throw new FormatException("File: Unexpected end of font file.");
     }
 
     /// <summary>
@@ -262,12 +261,9 @@ internal static class FigletFontParser
         var width = rows[0]
             .Length;
 
-        if (rows.Any(row => row.Length != width))
-        {
-            throw new FormatException("Character: Not all rows are of the same length in character.");
-        }
-
-        return (rows, width);
+        return rows.Any(row => row.Length != width)
+            ? throw new FormatException("Character: Not all rows are of the same length in character.")
+            : (rows, width);
     }
 
     /// <summary>
@@ -309,7 +305,7 @@ internal static class FigletFontParser
 
         for (var cl = 0; cl < commentCount; cl++)
         {
-            await GetLineAsync(reader);
+            _ = await GetLineAsync(reader);
         }
 
         var characters = new Dictionary<int, (string[] rows, int width)>();

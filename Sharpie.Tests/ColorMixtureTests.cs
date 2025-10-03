@@ -33,9 +33,11 @@ namespace Sharpie.Tests;
 [TestClass]
 public class ColorMixtureTests
 {
-    [TestMethod] public void Default_HasCorrectHandle() { ColorMixture.Default.Handle.ShouldBe((short) 0); }
+    [TestMethod]
+    public void Default_HasCorrectHandle() => ColorMixture.Default.Handle.ShouldBe((short) 0);
 
-    [TestMethod] public void Ctor_StoresTheHandle() { new ColorMixture { Handle = 100 }.Handle.ShouldBe((short) 100); }
+    [TestMethod]
+    public void Ctor_StoresTheHandle() => new ColorMixture { Handle = 100 }.Handle.ShouldBe((short) 100);
 
     [TestMethod]
     public void ToString_ProperlyFormats()
@@ -86,26 +88,14 @@ public class ColorMixtureTests
     }
 
     [TestMethod]
-    public void EqualOperator_ReturnsFalse_IfDifferentHandle()
-    {
-        Assert.IsFalse(new ColorMixture { Handle = 1 } == ColorMixture.Default);
-    }
+    public void EqualOperator_ReturnsFalse_IfDifferentHandle() => Assert.IsFalse(new ColorMixture { Handle = 1 } == ColorMixture.Default);
 
     [TestMethod]
-    public void EqualOperator_ReturnsTrue_IfSameHandle()
-    {
-        Assert.IsTrue(new ColorMixture { Handle = 0 } == ColorMixture.Default);
-    }
+    public void EqualOperator_ReturnsTrue_IfSameHandle() => Assert.IsTrue(new ColorMixture { Handle = 0 } == ColorMixture.Default);
 
     [TestMethod]
-    public void NotEqualOperator_ReturnsTrue_IfDifferentHandle()
-    {
-        Assert.IsTrue(new ColorMixture { Handle = 1 } != ColorMixture.Default);
-    }
+    public void NotEqualOperator_ReturnsTrue_IfDifferentHandle() => Assert.IsTrue(new ColorMixture { Handle = 1 } != ColorMixture.Default);
 
     [TestMethod]
-    public void NotEqualOperator_ReturnsFalse_IfSameHandle()
-    {
-        Assert.IsFalse(new ColorMixture { Handle = 0 } != ColorMixture.Default);
-    }
+    public void NotEqualOperator_ReturnsFalse_IfSameHandle() => Assert.IsFalse(new ColorMixture { Handle = 0 } != ColorMixture.Default);
 }

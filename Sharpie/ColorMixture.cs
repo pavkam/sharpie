@@ -34,7 +34,7 @@ namespace Sharpie;
 ///     Defines a color pair (foreground and background colors).
 /// </summary>
 [PublicAPI, DebuggerDisplay("{ToString(), nq}")]
-public struct ColorMixture
+public readonly struct ColorMixture
 {
     /// <summary>
     ///     The default color mixture of the terminal. Use it to reset to default colors.
@@ -44,16 +44,19 @@ public struct ColorMixture
     /// <summary>
     ///     The handle of the color pair.
     /// </summary>
-    internal short Handle { get; init; }
+    internal short Handle
+    {
+        get; init;
+    }
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"#{Handle:X4}";
+    public override readonly string ToString() => $"#{Handle:X4}";
 
     /// <inheritdoc cref="object.Equals(object)" />
-    public override bool Equals(object? obj) => obj is ColorMixture cm && cm.Handle == Handle;
+    public override readonly bool Equals(object? obj) => obj is ColorMixture cm && cm.Handle == Handle;
 
     /// <inheritdoc cref="object.GetHashCode" />
-    public override int GetHashCode() => Handle.GetHashCode();
+    public override readonly int GetHashCode() => Handle.GetHashCode();
 
     /// <summary>
     ///     The equality operator.

@@ -47,17 +47,9 @@ internal static class Helpers
     /// <exception cref="ArgumentException">Thrown if <paramref name="char" /> is not valid in the backend.</exception>
     public static T GetRawValue<T>(this ComplexChar @char)
     {
-        if (@char == null)
-        {
-            throw new ArgumentNullException(nameof(@char));
-        }
-
-        if (@char.Raw is T raw)
-        {
-            return raw;
-        }
-
-        throw new ArgumentException("Incompatible complex character", nameof(@char));
+        return @char == null
+            ? throw new ArgumentNullException(nameof(@char))
+            : @char.Raw is T raw ? raw : throw new ArgumentException("Incompatible complex character", nameof(@char));
     }
 
     /// <summary>
@@ -75,15 +67,7 @@ internal static class Helpers
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="code" /> value.</returns>
     /// <exception cref="CursesOperationException">Thrown if <paramref name="code" /> indicates an error.</exception>
-    public static int Check(this int code, string operation, string message)
-    {
-        if (code == CursesErrorResult)
-        {
-            throw new CursesOperationException(operation, message);
-        }
-
-        return code;
-    }
+    public static int Check(this int code, string operation, string message) => code == CursesErrorResult ? throw new CursesOperationException(operation, message) : code;
 
     /// <summary>
     ///     Checks if a Curses operation succeeded.
@@ -93,15 +77,7 @@ internal static class Helpers
     /// <param name="message">The message.</param>
     /// <returns>The <paramref name="ptr" /> value.</returns>
     /// <exception cref="CursesOperationException">Thrown if <paramref name="ptr" /> is zero.</exception>
-    public static IntPtr Check(this IntPtr ptr, string operation, string message)
-    {
-        if (ptr == IntPtr.Zero)
-        {
-            throw new CursesOperationException(operation, message);
-        }
-
-        return ptr;
-    }
+    public static IntPtr Check(this IntPtr ptr, string operation, string message) => ptr == IntPtr.Zero ? throw new CursesOperationException(operation, message) : ptr;
 
     /// <summary>
     ///     Converts a given rune to a complex character.
@@ -125,7 +101,7 @@ internal static class Helpers
         }
 
         // Use Curses to encode the characters.
-        curses.setcchar(out var @char, rune.ToString(), style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
+        _ = curses.setcchar(out var @char, rune.ToString(), style.Attributes, style.ColorMixture.Handle, IntPtr.Zero)
               .Check(nameof(curses.setcchar), "Failed to convert string to complex character.");
 
         return @char;
@@ -142,11 +118,18 @@ internal static class Helpers
         // Use Curses to decode the characters. Assume 10 characters is enough in the string.
 
         var builder = new StringBuilder(10);
-        curses.getcchar(@char, builder, out var attrs, out var colorPair, IntPtr.Zero)
+        _ = curses.getcchar(@char, builder, out var attrs, out var colorPair, IntPtr.Zero)
               .Check(nameof(curses.getcchar), "Failed to deconstruct the complex character.");
 
         return (Rune.GetRuneAt(builder.ToString(), 0),
-            new() { Attributes = attrs, ColorMixture = new() { Handle = colorPair } });
+            new()
+            {
+                Attributes = attrs,
+                ColorMixture = new()
+                {
+                    Handle = colorPair
+                }
+            });
     }
 
     /// <summary>
@@ -259,7 +242,8 @@ internal static class Helpers
                 numerator -= longest;
                 x1 += dx1;
                 y1 += dy1;
-            } else
+            }
+            else
             {
                 x1 += dx2;
                 y1 += dy2;
@@ -277,15 +261,11 @@ internal static class Helpers
         Debug.Assert(t != null);
         Debug.Assert(s != null);
 
-        if (t.AtomicRefreshOpen)
-        {
-            t.Curses.wnoutrefresh(s.Handle)
-             .Check(nameof(t.Curses.wnoutrefresh), "Failed to queue window refresh.");
-        } else
-        {
-            t.Curses.wrefresh(s.Handle)
+        _ = t.AtomicRefreshOpen
+            ? t.Curses.wnoutrefresh(s.Handle)
+             .Check(nameof(t.Curses.wnoutrefresh), "Failed to queue window refresh.")
+            : t.Curses.wrefresh(s.Handle)
              .Check(nameof(t.Curses.wrefresh), "Failed to perform window refresh.");
-        }
     }
 
     /// <summary>

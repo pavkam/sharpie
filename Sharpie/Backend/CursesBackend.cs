@@ -71,6 +71,7 @@ public static class CursesBackend
         {
             CursesBackendType.PdCurses => new PdCursesBackend(dotNetSystemAdapter, sym, cSym),
             CursesBackendType.PdCursesMod => new PdCursesMod32Backend(dotNetSystemAdapter, sym, cSym),
+            CursesBackendType.NCurses => throw new NotImplementedException(),
             var _ => new NCursesBackend(dotNetSystemAdapter, sym, cSym)
         };
     }
@@ -123,12 +124,9 @@ public static class CursesBackend
     public static ICursesBackend Load(CursesBackendFlavor flavor = CursesBackendFlavor.Any,
         params CursesBackendFlavor[] otherFlavors)
     {
-        if (otherFlavors == null)
-        {
-            throw new ArgumentNullException(nameof(otherFlavors));
-        }
-
-        return Load(IDotNetSystemAdapter.Instance, new[] { flavor }.Concat(otherFlavors));
+        return otherFlavors == null
+            ? throw new ArgumentNullException(nameof(otherFlavors))
+            : Load(IDotNetSystemAdapter.Instance, new[] { flavor }.Concat(otherFlavors));
     }
 
     /// <summary>
@@ -143,12 +141,7 @@ public static class CursesBackend
         IEnumerable<string> paths)
     {
         var res = TryLoad(dotNetSystemAdapter, type, paths);
-        if (res == null)
-        {
-            throw new CursesInitializationException();
-        }
-
-        return res;
+        return res == null ? throw new CursesInitializationException() : (ICursesBackend) res;
     }
 
     /// <summary>
@@ -162,16 +155,10 @@ public static class CursesBackend
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested.")]
     public static ICursesBackend Load(CursesBackendType type, string path, params string[] otherPaths)
     {
-        if (path == null)
-        {
-            throw new ArgumentNullException(nameof(path));
-        }
-
-        if (otherPaths == null)
-        {
-            throw new ArgumentNullException(nameof(otherPaths));
-        }
-
-        return Load(IDotNetSystemAdapter.Instance, type, new[] { path }.Concat(otherPaths));
+        return path == null
+            ? throw new ArgumentNullException(nameof(path))
+            : otherPaths == null
+            ? throw new ArgumentNullException(nameof(otherPaths))
+            : Load(IDotNetSystemAdapter.Instance, type, new[] { path }.Concat(otherPaths));
     }
 }

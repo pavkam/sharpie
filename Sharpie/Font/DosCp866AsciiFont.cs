@@ -37,7 +37,7 @@ namespace Sharpie.Font;
 [PublicAPI]
 public sealed class DosCp866AsciiFont: AsciiFont
 {
-    private static DosCp866AsciiFont _fullWidth = new();
+    private static readonly DosCp866AsciiFont _fullWidth = new();
 
     private const int BitsPerLine = 8;
     private const int Lines = 8;
@@ -51,8 +51,10 @@ public sealed class DosCp866AsciiFont: AsciiFont
     /// <summary>
     ///     Creates an instance of this font.
     /// </summary>
-    internal DosCp866AsciiFont(): base("CP866 Block Characters", 
-        Lines / 2, Lines / 2, AsciiFontLayout.FullWidth) { }
+    internal DosCp866AsciiFont() : base("CP866 Block Characters",
+        Lines / 2, Lines / 2, AsciiFontLayout.FullWidth)
+    {
+    }
 
     static DosCp866AsciiFont()
     {
@@ -103,7 +105,8 @@ public sealed class DosCp866AsciiFont: AsciiFont
         if (!HasGlyph(@char))
         {
             canvas.Box(canvasRect, Canvas.LineStyle.Light, style);
-        } else
+        }
+        else
         {
             var shape = Shapes[@char.Value];
             for (var x = 0; x < BitsPerLine; x++)
@@ -136,7 +139,7 @@ public sealed class DosCp866AsciiFont: AsciiFont
 
         return shape;
     }
-    
+
     /// <summary>
     ///     Gets the DOS CodePage 866 font.
     /// </summary>

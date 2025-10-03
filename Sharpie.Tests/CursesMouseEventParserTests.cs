@@ -37,7 +37,7 @@ public class CursesMouseEventParserTests
     public void Get_ReturnsObject_ForAbi1()
     {
         var r = CursesMouseEventParser.Get(CursesAbiVersion.NCurses5);
-        r.ShouldNotBeNull();
+        _ = r.ShouldNotBeNull();
 
         r.ReportPosition.ShouldBe(8u << 24);
         r.All.ShouldBe((8u << 24) - 1);
@@ -47,7 +47,7 @@ public class CursesMouseEventParserTests
     public void Get_ReturnsObject_ForAbi1_OldApi()
     {
         var r = CursesMouseEventParser.Get(1);
-        r.ShouldNotBeNull();
+        _ = r.ShouldNotBeNull();
 
         r.ReportPosition.ShouldBe(8u << 24);
         r.All.ShouldBe((8u << 24) - 1);
@@ -57,7 +57,7 @@ public class CursesMouseEventParserTests
     public void Get_ReturnsObject_ForAbi2()
     {
         var r = CursesMouseEventParser.Get(CursesAbiVersion.NCurses6);
-        r.ShouldNotBeNull();
+        _ = r.ShouldNotBeNull();
 
         r.ReportPosition.ShouldBe(8u << 25);
         r.All.ShouldBe((8u << 25) - 1);
@@ -67,7 +67,7 @@ public class CursesMouseEventParserTests
     public void Get_ReturnsObject_ForAbi2_OldApi()
     {
         var r = CursesMouseEventParser.Get(2);
-        r.ShouldNotBeNull();
+        _ = r.ShouldNotBeNull();
 
         r.ReportPosition.ShouldBe(8u << 25);
         r.All.ShouldBe((8u << 25) - 1);
@@ -77,7 +77,7 @@ public class CursesMouseEventParserTests
     public void Get_ReturnsObject_ForPdCursesAbi()
     {
         var r = CursesMouseEventParser.Get(CursesAbiVersion.PdCurses);
-        r.ShouldNotBeNull();
+        _ = r.ShouldNotBeNull();
 
         r.ReportPosition.ShouldBe(1u << 29);
         r.All.ShouldBe((1u << 29) - 1);
@@ -87,7 +87,7 @@ public class CursesMouseEventParserTests
     public void Get_ReturnsObject_ForPdCursesAbi_OldApi()
     {
         var r = CursesMouseEventParser.Get(3);
-        r.ShouldNotBeNull();
+        _ = r.ShouldNotBeNull();
 
         r.ReportPosition.ShouldBe(1u << 29);
         r.All.ShouldBe((1u << 29) - 1);

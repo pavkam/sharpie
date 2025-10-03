@@ -40,7 +40,7 @@ using System.Collections.Concurrent;
 public sealed class EventPump: IEventPump
 {
     private readonly IList<ResolveEscapeSequenceFunc> _keySequenceResolvers = new List<ResolveEscapeSequenceFunc>();
-    private ConcurrentQueue<object> _delegatedObjects = new();
+    private readonly ConcurrentQueue<object> _delegatedObjects = new();
     private MouseEventResolver? _mouseEventResolver;
 
     /// <summary>
@@ -54,7 +54,10 @@ public sealed class EventPump: IEventPump
     internal EventPump(Terminal parent) => Terminal = parent ?? throw new ArgumentNullException(nameof(parent));
 
     /// <inheritdoc cref="IColorManager.Terminal" />
-    public Terminal Terminal { get; }
+    public Terminal Terminal
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets or sets the flag indicating whether the internal mouse resolver should be used.
@@ -77,30 +80,22 @@ public sealed class EventPump: IEventPump
     /// <inheritdoc cref="IColorManager.Terminal" />
     ITerminal IEventPump.Terminal => Terminal;
 
-    /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface,System.Threading.CancellationToken)" />
+    /// <inheritdoc cref="IEventPump.Listen(ISurface,CancellationToken)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
-    public IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken)
-    {
-        if (surface == null)
-        {
-            throw new ArgumentNullException(nameof(surface));
-        }
+    public IEnumerable<Event> Listen(ISurface surface, CancellationToken cancellationToken) => surface == null ? throw new ArgumentNullException(nameof(surface)) : Listen(surface.Handle, cancellationToken);
 
-        return Listen(surface.Handle, cancellationToken);
-    }
-
-    /// <inheritdoc cref="IEventPump.Listen(Sharpie.Abstractions.ISurface)" />
+    /// <inheritdoc cref="IEventPump.Listen(ISurface)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen(ISurface surface) => Listen(surface, CancellationToken.None);
 
-    /// <inheritdoc cref="IEventPump.Listen(System.Threading.CancellationToken)" />
+    /// <inheritdoc cref="IEventPump.Listen(CancellationToken)" />
     /// <exception cref="CursesOperationException">A Curses error occured.</exception>
     public IEnumerable<Event> Listen(CancellationToken cancellationToken)
     {
         var padHandle = Terminal.Curses.newpad(1, 1)
                                 .Check(nameof(Terminal.Curses.newpad), "Failed to create dummy listen pad.");
 
-        Terminal.Curses.keypad(padHandle, true)
+        _ = Terminal.Curses.keypad(padHandle, true)
                 .Check(nameof(Terminal.Curses.keypad), "Failed to configure dummy listen pad.");
 
         try
@@ -109,9 +104,10 @@ public sealed class EventPump: IEventPump
             {
                 yield return e;
             }
-        } finally
+        }
+        finally
         {
-            Terminal.Curses.delwin(padHandle)
+            _ = Terminal.Curses.delwin(padHandle)
                     .Check(nameof(Terminal.Curses.delwin), "Failed to remove the dummy listen pad.");
         }
     }
@@ -149,7 +145,7 @@ public sealed class EventPump: IEventPump
         return _keySequenceResolvers.Contains(resolver);
     }
 
-    private void AssertSynchronized() { Terminal.AssertSynchronized(); }
+    private void AssertSynchronized() => Terminal.AssertSynchronized();
 
     private IEnumerable<Event> Listen(IntPtr handle, CancellationToken cancellationToken)
     {
@@ -166,68 +162,71 @@ public sealed class EventPump: IEventPump
             switch (@event)
             {
                 case null:
-                    Terminal.TryUpdate();
+                    _ = Terminal.TryUpdate();
                     break;
                 case KeyEvent ke:
-                {
-                    escapeSequence.Add(ke);
-                    var count = TryResolveKeySequence(escapeSequence, false, out var resolved);
-                    if (resolved != null)
                     {
-                        escapeSequence.RemoveRange(0, count);
-                    }
-
-                    @event = resolved;
-                    break;
-                }
-                default:
-                {
-                    if (@event.Type != EventType.Delegate)
-                    {
-                        while (escapeSequence.Count > 0)
+                        escapeSequence.Add(ke);
+                        var count = TryResolveKeySequence(escapeSequence, false, out var resolved);
+                        if (resolved != null)
                         {
-                            var count = TryResolveKeySequence(escapeSequence, true, out var resolved);
-                            Debug.Assert(count > 0);
-                            Debug.Assert(resolved != null);
-
                             escapeSequence.RemoveRange(0, count);
-                            yield return resolved;
                         }
 
-                        // Process/resolve mouse events.
-                        switch (@event)
-                        {
-                            case MouseMoveEvent mme:
-                            {
-                                if (TryResolveMouseEvent(mme, out var l))
-                                {
-                                    @event = null;
-                                    foreach (var oe in l)
-                                    {
-                                        yield return oe;
-                                    }
-                                }
-
-                                break;
-                            }
-                            case MouseActionEvent mae:
-                            {
-                                if (TryResolveMouseEvent(mae, out var l))
-                                {
-                                    @event = null;
-                                    foreach (var oe in l)
-                                    {
-                                        yield return oe;
-                                    }
-                                }
-
-                                break;
-                            }
-                        }
+                        @event = resolved;
+                        break;
                     }
+                default:
+                    {
+                        if (@event.Type != EventType.Delegate)
+                        {
+                            while (escapeSequence.Count > 0)
+                            {
+                                var count = TryResolveKeySequence(escapeSequence, true, out var resolved);
+                                Debug.Assert(count > 0);
+                                Debug.Assert(resolved != null);
 
-                    break;
-                }
+                                escapeSequence.RemoveRange(0, count);
+                                yield return resolved;
+                            }
+
+                            // Process/resolve mouse events.
+                            switch (@event)
+                            {
+                                case MouseMoveEvent mme:
+                                    {
+                                        if (TryResolveMouseEvent(mme, out var l))
+                                        {
+                                            @event = null;
+                                            foreach (var oe in l)
+                                            {
+                                                yield return oe;
+                                            }
+                                        }
+
+                                        break;
+                                    }
+                                case MouseActionEvent mae:
+                                    {
+                                        if (TryResolveMouseEvent(mae, out var l))
+                                        {
+                                            @event = null;
+                                            foreach (var oe in l)
+                                            {
+                                                yield return oe;
+                                            }
+                                        }
+
+                                        break;
+                                    }
+
+                                default:
+                                    break;
+                            }
+                        }
+
+                        break;
+                    }
             }
 
             if (@event is not null)
@@ -262,7 +261,7 @@ public sealed class EventPump: IEventPump
             return new DelegateEvent(@object);
         }
 
-        Terminal.Curses.wget_event(windowHandle, quickWait ? 10 : 50, out var raw);
+        _ = Terminal.Curses.wget_event(windowHandle, quickWait ? 10 : 50, out var raw);
         return raw switch
         {
             CursesResizeEvent => new TerminalResizeEvent(Terminal.Screen.Size),
@@ -307,11 +306,13 @@ public sealed class EventPump: IEventPump
             {
                 max = resCount;
                 resolved = resKey;
-            } else if (resCount > max && resKey != null)
+            }
+            else if (resCount > max && resKey != null)
             {
                 max = resCount;
                 resolved = resKey;
-            } else if (resCount >= max && resKey == null && !best)
+            }
+            else if (resCount >= max && resKey == null && !best)
             {
                 max = resCount;
                 resolved = resKey;

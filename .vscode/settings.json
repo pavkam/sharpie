@@ -4,6 +4,7 @@
         "baudrate",
         "cbreak",
         "Ciobanu",
+        "docfx",
         "doupdate",
         "erasewchar",
         "initscr",
@@ -19,6 +20,8 @@
         "nonl",
         "noqiflush",
         "noraw",
+        "pdcurses",
+        "pdcursesmod",
         "qiflush",
         "ripoffline",
         "termname"

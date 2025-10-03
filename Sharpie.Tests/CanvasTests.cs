@@ -50,10 +50,7 @@ public class CanvasTests
 
     [TestMethod, DataRow(0, 1), DataRow(1, 0), SuppressMessage("ReSharper", "ObjectCreationAsStatement"),
      SuppressMessage("Performance", "CA1806:Do not ignore method results")]
-    public void Ctor_Throws_IfSizeIsInvalid(int width, int height)
-    {
-        Should.Throw<ArgumentOutOfRangeException>(() => { new Canvas(new(width, height)); });
-    }
+    public void Ctor_Throws_IfSizeIsInvalid(int width, int height) => Should.Throw<ArgumentOutOfRangeException>(() => { _ = new Canvas(new(width, height)); });
 
     [TestMethod]
     public void Ctor_InitializesTheSize()
@@ -64,10 +61,7 @@ public class CanvasTests
     }
 
     [TestMethod]
-    public void DrawOnto_Throws_IfTheDestinationINull()
-    {
-        Should.Throw<ArgumentNullException>(() => { _canvas1X1.DrawOnto(null!, Rectangle.Empty, Point.Empty); });
-    }
+    public void DrawOnto_Throws_IfTheDestinationINull() => Should.Throw<ArgumentNullException>(() => { _canvas1X1.DrawOnto(null!, Rectangle.Empty, Point.Empty); });
 
     [TestMethod]
     public void DrawOnto_DoesNothing_IfAreaOutside()
@@ -81,7 +75,7 @@ public class CanvasTests
     [TestMethod]
     public void DrawOnto_DoesNothing_IfAreaOutsideDestination()
     {
-        _drawSurfaceMock.Setup(s => s.Size)
+        _ = _drawSurfaceMock.Setup(s => s.Size)
                         .Returns(new Size(10, 10));
 
         _canvas1X1.DrawOnto(_drawSurfaceMock.Object, new(0, 0, 2, 3), new(10, 10));
@@ -93,7 +87,7 @@ public class CanvasTests
     [TestMethod]
     public void DrawOnto_DrawsTheAdjustedArea()
     {
-        _drawSurfaceMock.Setup(s => s.Size)
+        _ = _drawSurfaceMock.Setup(s => s.Size)
                         .Returns(new Size(10, 10));
 
         _canvas2X2.Glyph(new(0, 0), new('A'), _style1);
@@ -112,7 +106,7 @@ public class CanvasTests
     [TestMethod]
     public void DrawOnto_SkipsEmptyCells()
     {
-        _drawSurfaceMock.Setup(s => s.Size)
+        _ = _drawSurfaceMock.Setup(s => s.Size)
                         .Returns(new Size(10, 10));
 
         _canvas2X2.Glyph(new(1, 1), new('A'), _style1);
@@ -168,7 +162,7 @@ public class CanvasTests
     [TestMethod]
     public void Glyph2_Throws_IfStyleIsInvalid()
     {
-        Should.Throw<ArgumentException>(() =>
+        _ = Should.Throw<ArgumentException>(() =>
         {
             _canvas1X1.Glyph(new(1, 1), (Canvas.CheckGlyphStyle) 100, Canvas.FillStyle.Black, _style1);
         });
@@ -185,7 +179,7 @@ public class CanvasTests
     [TestMethod]
     public void Glyph3_Throws_IfStyleIsInvalid()
     {
-        Should.Throw<ArgumentException>(() =>
+        _ = Should.Throw<ArgumentException>(() =>
         {
             _canvas1X1.Glyph(new(1, 1), (Canvas.TriangleGlyphStyle) 100, Canvas.GlyphSize.Normal,
                 Canvas.FillStyle.Black, _style1);
@@ -205,7 +199,7 @@ public class CanvasTests
     [TestMethod, DataRow(-1), DataRow(9)]
     public void Glyph4_Throws_IfFillIsInvalid(int fill)
     {
-        Should.Throw<ArgumentOutOfRangeException>(() =>
+        _ = Should.Throw<ArgumentOutOfRangeException>(() =>
         {
             _canvas1X1.Glyph(new(1, 1), Canvas.GradientGlyphStyle.LeftToRight, fill, _style1);
         });
@@ -258,7 +252,7 @@ public class CanvasTests
     [TestMethod]
     public void Fill2_Throws_IfShadeIsInvalid()
     {
-        Should.Throw<ArgumentException>(() =>
+        _ = Should.Throw<ArgumentException>(() =>
         {
             _canvas2X2.Fill(new(0, 0, 2, 3), (Canvas.ShadeGlyphStyle) 100, _style1);
         });
@@ -285,7 +279,7 @@ public class CanvasTests
     [TestMethod]
     public void Text_Throws_IfTextIsNull()
     {
-        Should.Throw<ArgumentNullException>(() =>
+        _ = Should.Throw<ArgumentNullException>(() =>
         {
             _canvas2X2.Text(new(0, 0), null!, Canvas.Orientation.Horizontal, _style1);
         });
@@ -303,7 +297,7 @@ public class CanvasTests
     public void Text_DrawsEmoji()
     {
         const string emoji = "❤️";
-        Rune.TryGetRuneAt(emoji, 0, out var rune);
+        _ = Rune.TryGetRuneAt(emoji, 0, out var rune);
 
         _canvas1X1.Text(new(0, 0), emoji, Canvas.Orientation.Horizontal, _style1);
         _canvas1X1.GetContents()[0, 0]
@@ -658,7 +652,7 @@ public class CanvasTests
     [TestMethod, DataRow(Canvas.Orientation.Horizontal), DataRow(Canvas.Orientation.Vertical)]
     public void Line1_Throws_IfStyleIsInvalid(Canvas.Orientation orientation)
     {
-        Should.Throw<ArgumentOutOfRangeException>(() =>
+        _ = Should.Throw<ArgumentOutOfRangeException>(() =>
         {
             _canvas1X1.Line(new(0, 0), 1, orientation, (Canvas.LineStyle) 100, _style1);
         });

@@ -39,7 +39,10 @@ public interface IDrawable
     /// <summary>
     ///     The size of the drawable.
     /// </summary>
-    public Size Size { get; }
+    public Size Size
+    {
+        get;
+    }
 
     /// <summary>
     ///     Draws the drawable onto a given surface.

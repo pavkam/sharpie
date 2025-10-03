@@ -47,7 +47,7 @@ internal class NCursesBackend: BaseCursesBackend
     /// <param name="nCursesSymbolResolver">The NCurses library symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
     internal NCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver nCursesSymbolResolver,
-        INativeSymbolResolver? libCSymbolResolver): base(dotNetSystemAdapter, nCursesSymbolResolver, libCSymbolResolver)
+        INativeSymbolResolver? libCSymbolResolver) : base(dotNetSystemAdapter, nCursesSymbolResolver, libCSymbolResolver)
     {
     }
 
@@ -98,11 +98,12 @@ internal class NCursesBackend: BaseCursesBackend
     {
         return (result, keyCode) switch
         {
-            (< 0, var _) => CursesKeyCodeType.Unknown,
+            ( < 0, var _) => CursesKeyCodeType.Unknown,
             ((int) NCursesKeyCode.Yes, (uint) NCursesKeyCode.Resize) => CursesKeyCodeType.Resize,
             ((int) NCursesKeyCode.Yes, (uint) NCursesKeyCode.Mouse) => CursesKeyCodeType.Mouse,
             ((int) NCursesKeyCode.Yes, var _) => CursesKeyCodeType.Key,
-            (>= 0, var _) => CursesKeyCodeType.Character
+            ( >= 0, var _) => CursesKeyCodeType.Character,
+            _ => throw new NotImplementedException()
         };
     }
 
@@ -238,6 +239,9 @@ internal class NCursesBackend: BaseCursesBackend
                 ModifierKey.Alt | ModifierKey.Ctrl),
             NCursesKeyCode.AltCtrlHome => (Key.KeypadHome, ControlCharacter.Null, ModifierKey.Alt | ModifierKey.Ctrl),
             NCursesKeyCode.AltCtrlEnd => (Key.KeypadEnd, ControlCharacter.Null, ModifierKey.Alt | ModifierKey.Ctrl),
+            NCursesKeyCode.Yes => throw new NotImplementedException(),
+            NCursesKeyCode.Mouse => throw new NotImplementedException(),
+            NCursesKeyCode.Resize => throw new NotImplementedException(),
             var _ => (Key.Unknown, ControlCharacter.Null, ModifierKey.None)
         };
     }
