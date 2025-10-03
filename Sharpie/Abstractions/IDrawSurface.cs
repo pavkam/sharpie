@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,10 @@ public interface IDrawSurface
     /// <summary>
     ///     The total size of the draw surface.
     /// </summary>
-    public Size Size { get; }
+    public Size Size
+    {
+        get;
+    }
 
     /// <summary>
     ///     Draws a <paramref name="rune" /> at a <paramref name="location" /> using the given style.

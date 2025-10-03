@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -38,11 +38,11 @@ internal static class TestHelpers
     public static (Rune, Style)[,] GetContents(this IDrawable drawing)
     {
         var mock = new Mock<IDrawSurface>();
-        mock.Setup(s => s.Size)
+        _ = mock.Setup(s => s.Size)
             .Returns(drawing.Size);
 
         var collector = new (Rune, Style)[drawing.Size.Width, drawing.Size.Height];
-        mock.Setup(s => s.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()))
+        _ = mock.Setup(s => s.DrawCell(It.IsAny<Point>(), It.IsAny<Rune>(), It.IsAny<Style>()))
             .Callback<Point, Rune, Style>((location, rune, textStyle) =>
             {
                 collector[location.X, location.Y] = (rune, textStyle);
@@ -57,10 +57,10 @@ internal static class TestHelpers
         Debug.Assert(cursesMock != null);
         Debug.Assert(surface != null);
 
-        cursesMock.Setup(s => s.getmaxx(surface.Handle))
+        _ = cursesMock.Setup(s => s.getmaxx(surface.Handle))
                   .Returns(size.Width);
 
-        cursesMock.Setup(s => s.getmaxy(surface.Handle))
+        _ = cursesMock.Setup(s => s.getmaxy(surface.Handle))
                   .Returns(size.Height);
     }
 
@@ -68,22 +68,22 @@ internal static class TestHelpers
     {
         Debug.Assert(cursesMock != null);
 
-        cursesMock.Setup(s => s.getbegy(handle))
+        _ = cursesMock.Setup(s => s.getbegy(handle))
                   .Returns(area.Top);
 
-        cursesMock.Setup(s => s.getbegx(handle))
+        _ = cursesMock.Setup(s => s.getbegx(handle))
                   .Returns(area.Left);
 
-        cursesMock.Setup(s => s.getparx(handle))
+        _ = cursesMock.Setup(s => s.getparx(handle))
                   .Returns(area.Left);
 
-        cursesMock.Setup(s => s.getpary(handle))
+        _ = cursesMock.Setup(s => s.getpary(handle))
                   .Returns(area.Top);
 
-        cursesMock.Setup(s => s.getmaxx(handle))
+        _ = cursesMock.Setup(s => s.getmaxx(handle))
                   .Returns(area.Width);
 
-        cursesMock.Setup(s => s.getmaxy(handle))
+        _ = cursesMock.Setup(s => s.getmaxy(handle))
                   .Returns(area.Height);
     }
 
@@ -95,23 +95,26 @@ internal static class TestHelpers
         MockArea(cursesMock, surface.Handle, area);
     }
 
-    public static Mock<T> MockResolve<T>(this Mock<INativeSymbolResolver> mock) where T: MulticastDelegate
+    public static Mock<T> MockResolve<T>(this Mock<INativeSymbolResolver> mock) where T : MulticastDelegate
     {
         var m = new Mock<T>();
-        mock.Setup(s => s.Resolve<T>())
+        _ = mock.Setup(s => s.Resolve<T>())
             .Returns(m.Object);
 
         return m;
     }
 
-    public static Mock<T> MockResolve<T, TResult>(this Mock<INativeSymbolResolver> mock,
-        Expression<Func<T, TResult>> expression, TResult ret) where T: MulticastDelegate
+    public static Mock<T> MockResolve<T, TResult>(
+        this Mock<INativeSymbolResolver> mock,
+        Expression<Func<T, TResult>> expression,
+        TResult ret) where T : MulticastDelegate where TResult : notnull
     {
         var m = new Mock<T>();
-        m.Setup(expression)
+
+        _ = m.Setup(expression)
          .Returns(new InvocationFunc(_ => ret));
 
-        mock.Setup(s => s.Resolve<T>())
+        _ = mock.Setup(s => s.Resolve<T>())
             .Returns(m.Object);
 
         return m;

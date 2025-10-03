@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@ public delegate (KeyEvent? key, int count) ResolveEscapeSequenceFunc(IReadOnlyLi
 /// </summary>
 public static class KeySequenceResolver
 {
-    private static readonly Dictionary<int, Key> KeyMap = new()
+    private static readonly Dictionary<int, Key> _keyMap = new()
     {
         { 'A', Key.KeypadUp },
         { 'B', Key.KeypadDown },
@@ -213,6 +213,6 @@ public static class KeySequenceResolver
         }
 
         var mods = (ModifierKey) (csiModifier - '1');
-        return (new(KeyMap[arrow], new(ControlCharacter.Null), null, mods), 4);
+        return (new(_keyMap[arrow], new(ControlCharacter.Null), null, mods), 4);
     }
 }

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,10 @@ public sealed class ComplexChar
     /// <summary>
     ///     The backend-specific payload.
     /// </summary>
-    internal object? Raw { get; }
+    internal object? Raw
+    {
+        get;
+    }
 
     /// <inheritdoc cref="object.Equals(object?)" />
     public override bool Equals(object? obj) => obj is ComplexChar cc && Equals(cc.Raw, Raw);

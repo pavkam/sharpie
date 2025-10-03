@@ -34,7 +34,7 @@ namespace Sharpie.Font;
 ///     Defines the possible font layouts.
 /// </summary>
 [Flags]
-internal enum FigletAttribute
+public enum FigletAttribute
 {
     /// <summary>
     ///     Full-width characters.

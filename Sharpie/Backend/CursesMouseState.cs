@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,12 +36,12 @@ namespace Sharpie.Backend;
 [PublicAPI, StructLayout(LayoutKind.Sequential), DebuggerDisplay("{ToString(), nq}")]
 public struct CursesMouseState
 {
-    [MarshalAs(UnmanagedType.I2)] internal short id;
-    [MarshalAs(UnmanagedType.I4)] internal int x;
-    [MarshalAs(UnmanagedType.I4)] internal int y;
-    [MarshalAs(UnmanagedType.I4)] internal int z;
-    [MarshalAs(UnmanagedType.U4)] internal uint buttonState;
+    [MarshalAs(UnmanagedType.I2)] internal short Id;
+    [MarshalAs(UnmanagedType.I4)] internal int X;
+    [MarshalAs(UnmanagedType.I4)] internal int Y;
+    [MarshalAs(UnmanagedType.I4)] internal int Z;
+    [MarshalAs(UnmanagedType.U4)] internal uint ButtonState;
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"{x}x{y}:{buttonState:X8}";
+    public override readonly string ToString() => $"{X}x{Y}:{ButtonState:X8}";
 }

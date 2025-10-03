@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -44,20 +44,18 @@ public class WindowTests
     {
         _cursesMock = new();
 
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object, new(ManagedWindows: TestContext.TestName!.Contains("_WhenManaged_")));
         _screen = _terminal.Screen;
     }
 
-    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
+    [TestCleanup]
+    public void TestCleanup() => _terminal.Dispose();
 
     [TestMethod]
-    public void Ctor_Throws_IfScreenIsNull()
-    {
-        Should.Throw<ArgumentException>(() => new Window(null!, IntPtr.MaxValue));
-    }
+    public void Ctor_Throws_IfScreenIsNull() => Should.Throw<ArgumentException>(() => new Window(null!, IntPtr.MaxValue));
 
     [TestMethod]
     public void Ctor_ConfiguresWindow_InCurses()
@@ -74,7 +72,7 @@ public class WindowTests
     [TestMethod]
     public void Ctor_Throws_IfConfigureWindow_FailsInCurses_1()
     {
-        _cursesMock.Setup(s => s.keypad(It.IsAny<IntPtr>(), It.IsAny<bool>()))
+        _ = _cursesMock.Setup(s => s.keypad(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => new Window(_screen, new(1)))
@@ -84,7 +82,7 @@ public class WindowTests
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Ctor_Throws_IfConfigureWindow_FailsInCurses_2()
     {
-        _cursesMock.Setup(s => s.syncok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
+        _ = _cursesMock.Setup(s => s.syncok(It.IsAny<IntPtr>(), It.IsAny<bool>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => new Window(_screen, new(1)))
@@ -138,7 +136,7 @@ public class WindowTests
         var w = new Window(_screen, new(22));
         w.Destroy();
 
-        Should.Throw<ObjectDisposedException>(() => w.SubWindows.ToArray());
+        _ = Should.Throw<ObjectDisposedException>(() => w.SubWindows.ToArray());
     }
 
     [TestMethod]
@@ -172,10 +170,10 @@ public class WindowTests
     [TestMethod]
     public void Location_Get_Returns_IfCursesSucceeded()
     {
-        _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.getbegx(It.IsAny<IntPtr>()))
                    .Returns(11);
 
-        _cursesMock.Setup(s => s.getbegy(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.getbegy(It.IsAny<IntPtr>()))
                    .Returns(22);
 
         var w = new Window(_screen, new(1));
@@ -187,7 +185,7 @@ public class WindowTests
     {
         var w = new Window(_screen, new(1));
 
-        _cursesMock.Setup(s => s.getbegx(w.Handle))
+        _ = _cursesMock.Setup(s => s.getbegx(w.Handle))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => w.Location)
@@ -199,7 +197,7 @@ public class WindowTests
     {
         var w = new Window(_screen, new(1));
 
-        _cursesMock.Setup(s => s.getbegy(w.Handle))
+        _ = _cursesMock.Setup(s => s.getbegy(w.Handle))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => w.Location)
@@ -211,8 +209,10 @@ public class WindowTests
     {
         _cursesMock.MockArea(_screen, new Size(100, 100));
 
-        var w = new Window(_screen, new(1));
-        w.Location = new(11, 22);
+        var w = new Window(_screen, new(1))
+        {
+            Location = new(11, 22)
+        };
 
         _cursesMock.Verify(v => v.mvwin(new(1), 22, 11), Times.Once);
     }
@@ -223,7 +223,7 @@ public class WindowTests
         _cursesMock.MockArea(_screen, new Size(100, 100));
         var w = new Window(_screen, new(1));
 
-        _cursesMock.Setup(s => s.mvwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.mvwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => w.Location = new(1, 1))
@@ -238,7 +238,7 @@ public class WindowTests
         var w = new Window(_screen, new(1));
         _cursesMock.MockArea(w, new Size(1, 1));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => w.Location = new(6, 6));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => w.Location = new(6, 6));
     }
 
     [TestMethod, SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -246,7 +246,7 @@ public class WindowTests
     {
         _cursesMock.MockArea(_screen, new Size(100, 100));
 
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         var w = new Window(_screen, new(2));
@@ -262,8 +262,10 @@ public class WindowTests
     {
         _cursesMock.MockArea(_screen, new Size(100, 100));
 
-        var w = new Window(_screen, new(1));
-        w.Size = new(11, 22);
+        var w = new Window(_screen, new(1))
+        {
+            Size = new(11, 22)
+        };
 
         _cursesMock.Verify(v => v.wresize(new(1), 22, 11), Times.Once);
     }
@@ -275,7 +277,7 @@ public class WindowTests
 
         var w = new Window(_screen, new(1));
 
-        _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.wresize(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
         Should.Throw<CursesOperationException>(() => w.Size = new(1, 1))
@@ -303,7 +305,7 @@ public class WindowTests
         var w = new Window(_screen, new(1));
         _cursesMock.MockArea(w, new Rectangle(101, 101, 1, 1));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => w.Size = new(6, 6));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => w.Size = new(6, 6));
     }
 
     [TestMethod]
@@ -311,10 +313,10 @@ public class WindowTests
     {
         var w = new Window(_screen, new(1));
 
-        _cursesMock.Setup(s => s.getbegx(w.Handle))
+        _ = _cursesMock.Setup(s => s.getbegx(w.Handle))
                    .Returns(11);
 
-        _cursesMock.Setup(s => s.getbegy(w.Handle))
+        _ = _cursesMock.Setup(s => s.getbegy(w.Handle))
                    .Returns(22);
 
         w.Origin.ShouldBe(new(11, 22));
@@ -326,7 +328,7 @@ public class WindowTests
         var w = new Window(_screen, new(2));
         _cursesMock.MockArea(w, new Rectangle(5, 6, 18, 24));
 
-        Should.Throw<ArgumentOutOfRangeException>(() => w.SubWindow(new(30, 30, 2, 2)));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => w.SubWindow(new(30, 30, 2, 2)));
     }
 
     [TestMethod]
@@ -335,11 +337,11 @@ public class WindowTests
         var w = new Window(_screen, new(2));
         _cursesMock.MockArea(w, new Rectangle(5, 6, 18, 24));
 
-        _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
-        w.SubWindow(new(20, 28, 15, 18));
+        _ = w.SubWindow(new(20, 28, 15, 18));
 
         _cursesMock.Verify(v => v.derwin(w.Handle, 2, 3, 28, 20), Times.Once);
     }
@@ -350,7 +352,7 @@ public class WindowTests
         var w = new Window(_screen, new(2));
         _cursesMock.MockArea(w, new Size(1, 1));
 
-        _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(IntPtr.Zero);
 
@@ -364,7 +366,7 @@ public class WindowTests
         var w = new Window(_screen, new(2));
         _cursesMock.MockArea(w, new Size(100, 100));
 
-        _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
@@ -380,11 +382,11 @@ public class WindowTests
         var w = new Window(_screen, new(2));
         _cursesMock.MockArea(w, new Size(100, 100));
 
-        _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
+        _ = _cursesMock.Setup(s => s.derwin(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(),
                        It.IsAny<int>()))
                    .Returns(new IntPtr(3));
 
-        _cursesMock.Setup(s => s.is_leaveok(w.Handle))
+        _ = _cursesMock.Setup(s => s.is_leaveok(w.Handle))
                    .Returns(mc);
 
         var sw = w.SubWindow(new(0, 0, 1, 1));
@@ -396,7 +398,7 @@ public class WindowTests
     {
         var w = new Window(_screen, new(3));
 
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(IntPtr.Zero);
 
         Should.Throw<CursesOperationException>(() => w.Duplicate())
@@ -408,7 +410,7 @@ public class WindowTests
     {
         var w = new Window(_screen, new(3));
 
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
 
         var sw = w.Duplicate();
@@ -423,10 +425,10 @@ public class WindowTests
     {
         var w = new Window(_screen, new(3)) { ManagedCaret = mc };
 
-        _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
+        _ = _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(new IntPtr(4));
 
-        _cursesMock.Setup(s => s.is_leaveok(w.Handle))
+        _ = _cursesMock.Setup(s => s.is_leaveok(w.Handle))
                    .Returns(mc);
 
         var sw = w.Duplicate();
@@ -484,7 +486,8 @@ public class WindowTests
         if (call)
         {
             _cursesMock.Verify(v => v.wresize(w.Handle, expHeight, expWidth), Times.Once);
-        } else
+        }
+        else
         {
             _cursesMock.Verify(v => v.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         }
@@ -499,7 +502,7 @@ public class WindowTests
 
         _cursesMock.MockArea(_screen, new Size(5, 5));
 
-        _cursesMock.Setup(s => s.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
         Should.NotThrow(() => w.AdjustToExplicitArea());
@@ -520,7 +523,8 @@ public class WindowTests
         if (call)
         {
             _cursesMock.Verify(v => v.mvwin(w.Handle, x, y), Times.Once);
-        } else
+        }
+        else
         {
             _cursesMock.Verify(v => v.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         }
@@ -537,7 +541,7 @@ public class WindowTests
 
         w.AdjustToExplicitArea();
 
-        _cursesMock.Setup(s => s.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
         Should.NotThrow(() => w.AdjustToExplicitArea());
@@ -564,7 +568,7 @@ public class WindowTests
     {
         var w = new Window(_screen, new(1));
 
-        Should.Throw<InvalidOperationException>(() => w.BringToFront());
+        _ = Should.Throw<InvalidOperationException>(() => w.BringToFront());
     }
 
     [TestMethod]
@@ -603,8 +607,10 @@ public class WindowTests
     [TestMethod]
     public void BringToFront_WhenManaged_DoesNotUpdate_IfInvisible()
     {
-        var w1 = new Window(_screen, new(1));
-        w1.Visible = false;
+        var w1 = new Window(_screen, new(1))
+        {
+            Visible = false
+        };
 
         w1.BringToFront();
 
@@ -618,7 +624,7 @@ public class WindowTests
     {
         var w = new Window(_screen, new(1));
 
-        Should.Throw<InvalidOperationException>(() => w.SendToBack());
+        _ = Should.Throw<InvalidOperationException>(() => w.SendToBack());
     }
 
     [TestMethod]
@@ -646,7 +652,7 @@ public class WindowTests
     }
 
     [TestMethod]
-    public void SendToBack_WhenManaged_DoesNotTouchWindowsThatDontIntersect()
+    public void SendToBack_WhenManaged_DoesNotTouchWindowsThatDoNotIntersect()
     {
         var w1 = new Window(_screen, new(1));
         _cursesMock.MockArea(w1, new Rectangle(0, 0, 10, 10));
@@ -774,8 +780,10 @@ public class WindowTests
     [TestMethod]
     public void Refresh1_WhenManaged_DoesNothing_IfNotVisible()
     {
-        var w1 = new Window(_screen, new(1));
-        w1.Visible = false;
+        var w1 = new Window(_screen, new(1))
+        {
+            Visible = false
+        };
 
         w1.Refresh();
 
@@ -827,8 +835,10 @@ public class WindowTests
     [TestMethod]
     public void Refresh2_WhenManaged_DoesNothing_IfNotVisible()
     {
-        var w1 = new Window(_screen, new(1));
-        w1.Visible = false;
+        var w1 = new Window(_screen, new(1))
+        {
+            Visible = false
+        };
 
         w1.Refresh(1, 1);
 
@@ -840,7 +850,7 @@ public class WindowTests
     public void Visible_Set_WhenUnmanaged_Throws()
     {
         var w = new Window(_screen, new(1));
-        Should.Throw<InvalidOperationException>(() => w.Visible = false);
+        _ = Should.Throw<InvalidOperationException>(() => w.Visible = false);
     }
 
     [TestMethod]
@@ -848,14 +858,16 @@ public class WindowTests
     {
         var w = new Window(_screen, IntPtr.MaxValue);
 
-        Should.Throw<InvalidOperationException>(() => w.Visible.ToString());
+        _ = Should.Throw<InvalidOperationException>(() => w.Visible.ToString());
     }
 
     [TestMethod]
     public void Visible_WhenManaged_SetToTrue_DoesNothingIfAlreadyTrue()
     {
-        var w = new Window(_screen, IntPtr.MaxValue);
-        w.Visible = true;
+        var w = new Window(_screen, IntPtr.MaxValue)
+        {
+            Visible = true
+        };
 
         _cursesMock.Verify(v => v.wnoutrefresh(It.IsAny<IntPtr>()), Times.Never);
         _cursesMock.Verify(v => v.wrefresh(It.IsAny<IntPtr>()), Times.Never);
@@ -897,8 +909,10 @@ public class WindowTests
     [TestMethod]
     public void Visible_WhenManaged_SetToFalse_DoesNothingIfAlreadyFalse()
     {
-        var w = new Window(_screen, IntPtr.MaxValue);
-        w.Visible = false;
+        var w = new Window(_screen, IntPtr.MaxValue)
+        {
+            Visible = false
+        };
 
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
 

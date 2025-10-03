@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,6 +36,8 @@ namespace Sharpie.Backend;
 [PublicAPI]
 public static class CursesBackend
 {
+    private static readonly string[] _libraryNameOrPaths = new[] { "libc" };
+
     /// <summary>
     ///     Internal method that tries to load Curses backend, and, optionally libc.
     /// </summary>
@@ -64,15 +66,16 @@ public static class CursesBackend
         }
 
         INativeSymbolResolver? cSym = dotNetSystemAdapter.IsUnixLike
-            ? NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, new[] { "libc" })
+            ? NativeLibraryWrapper<LibCFunctionMap>.TryLoad(dotNetSystemAdapter, _libraryNameOrPaths)
             : null;
-
+#pragma warning disable IDE0072 // Add missing cases -- this is intentional
         return type switch
         {
             CursesBackendType.PdCurses => new PdCursesBackend(dotNetSystemAdapter, sym, cSym),
             CursesBackendType.PdCursesMod => new PdCursesMod32Backend(dotNetSystemAdapter, sym, cSym),
             var _ => new NCursesBackend(dotNetSystemAdapter, sym, cSym)
         };
+#pragma warning restore IDE0072 // Add missing cases
     }
 
     /// <summary>
@@ -123,12 +126,9 @@ public static class CursesBackend
     public static ICursesBackend Load(CursesBackendFlavor flavor = CursesBackendFlavor.Any,
         params CursesBackendFlavor[] otherFlavors)
     {
-        if (otherFlavors == null)
-        {
-            throw new ArgumentNullException(nameof(otherFlavors));
-        }
-
-        return Load(IDotNetSystemAdapter.Instance, new[] { flavor }.Concat(otherFlavors));
+        return otherFlavors == null
+            ? throw new ArgumentNullException(nameof(otherFlavors))
+            : Load(IDotNetSystemAdapter.Instance, new[] { flavor }.Concat(otherFlavors));
     }
 
     /// <summary>
@@ -143,12 +143,7 @@ public static class CursesBackend
         IEnumerable<string> paths)
     {
         var res = TryLoad(dotNetSystemAdapter, type, paths);
-        if (res == null)
-        {
-            throw new CursesInitializationException();
-        }
-
-        return res;
+        return res == null ? throw new CursesInitializationException() : (ICursesBackend) res;
     }
 
     /// <summary>
@@ -162,16 +157,10 @@ public static class CursesBackend
     [ExcludeFromCodeCoverage(Justification = "References a singleton .NET object and cannot be tested.")]
     public static ICursesBackend Load(CursesBackendType type, string path, params string[] otherPaths)
     {
-        if (path == null)
-        {
-            throw new ArgumentNullException(nameof(path));
-        }
-
-        if (otherPaths == null)
-        {
-            throw new ArgumentNullException(nameof(otherPaths));
-        }
-
-        return Load(IDotNetSystemAdapter.Instance, type, new[] { path }.Concat(otherPaths));
+        return path == null
+            ? throw new ArgumentNullException(nameof(path))
+            : otherPaths == null
+            ? throw new ArgumentNullException(nameof(otherPaths))
+            : Load(IDotNetSystemAdapter.Instance, type, new[] { path }.Concat(otherPaths));
     }
 }

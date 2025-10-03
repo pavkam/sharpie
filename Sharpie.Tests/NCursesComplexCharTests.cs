@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -38,12 +38,12 @@ public class NCursesComplexCharTests
     {
         var nc = new NCursesComplexChar
         {
-            _attrAndColorPair = 1,
-            _char0 = 2,
-            _char1 = 3,
-            _char2 = 4,
-            _char3 = 5,
-            _char4 = 6
+            AttrAndColorPair = 1,
+            Char0 = 2,
+            Char1 = 3,
+            Char2 = 4,
+            Char3 = 5,
+            Char4 = 6
         };
 
         nc.ToString()

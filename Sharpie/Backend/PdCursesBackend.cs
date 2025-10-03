@@ -45,12 +45,15 @@ internal class PdCursesBackend: BaseCursesBackend
     /// <param name="pdCursesSymbolResolver">The PDCurses library symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
     internal PdCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver pdCursesSymbolResolver,
-        INativeSymbolResolver? libCSymbolResolver): base(dotNetSystemAdapter, pdCursesSymbolResolver,
+        INativeSymbolResolver? libCSymbolResolver) : base(dotNetSystemAdapter, pdCursesSymbolResolver,
         libCSymbolResolver) =>
         CursesMouseEventParser = CursesMouseEventParser.Get(CursesAbiVersion.PdCurses);
 
     /// <inheritdoc cref="BaseCursesBackend.CursesMouseEventParser" />
-    protected internal override CursesMouseEventParser CursesMouseEventParser { get; }
+    protected internal override CursesMouseEventParser CursesMouseEventParser
+    {
+        get;
+    }
 
     /// <inheritdoc cref="BaseCursesBackend.EncodeCursesAttribute" />
     protected internal override uint EncodeCursesAttribute(VideoAttribute attributes, short colorPair)
@@ -161,14 +164,16 @@ internal class PdCursesBackend: BaseCursesBackend
     /// <inheritdoc cref="BaseCursesBackend.DecodeKeyCodeType" />
     protected internal override CursesKeyCodeType DecodeKeyCodeType(int result, uint keyCode)
     {
+#pragma warning disable IDE0072 // Add missing cases -- all cases are covered
         return (result, keyCode) switch
         {
-            (< 0, var _) => CursesKeyCodeType.Unknown,
+            ( < 0, var _) => CursesKeyCodeType.Unknown,
             ((int) PdCursesKeyCode.Yes, (uint) PdCursesKeyCode.Resize) => CursesKeyCodeType.Resize,
             ((int) PdCursesKeyCode.Yes, (uint) PdCursesKeyCode.Mouse) => CursesKeyCodeType.Mouse,
             ((int) PdCursesKeyCode.Yes, var _) => CursesKeyCodeType.Key,
-            (>= 0, var _) => CursesKeyCodeType.Character
+            ( >= 0, var _) => CursesKeyCodeType.Character,
         };
+#pragma warning restore IDE0072 // Add missing cases
     }
 
     /// <inheritdoc cref="BaseCursesBackend.DecodeRawKey" />
@@ -385,7 +390,9 @@ internal class PdCursesBackend: BaseCursesBackend
             PdCursesKeyCode.RightCtrl => (Key.Character, ControlCharacter.Null, ModifierKey.Ctrl),
             PdCursesKeyCode.LeftAlt => (Key.Character, ControlCharacter.Null, ModifierKey.Alt),
             PdCursesKeyCode.RightAlt => (Key.Character, ControlCharacter.Null, ModifierKey.Alt),
-
+            PdCursesKeyCode.Yes => throw new NotImplementedException(),
+            PdCursesKeyCode.Mouse => throw new NotImplementedException(),
+            PdCursesKeyCode.Resize => throw new NotImplementedException(),
             var _ => (Key.Unknown, ControlCharacter.Null, ModifierKey.None)
         };
     }
@@ -418,13 +425,7 @@ internal class PdCursesBackend: BaseCursesBackend
         var res = base.scrollok(window, set);
         if (!res.Failed())
         {
-            if (_windowStates.TryGetValue(window, out var state))
-            {
-                _windowStates[window] = (state.immedOk, set);
-            } else
-            {
-                _windowStates[window] = (false, set);
-            }
+            _windowStates[window] = _windowStates.TryGetValue(window, out var state) ? ((bool immedOk, bool scrollOk)) (state.immedOk, set) : ((bool immedOk, bool scrollOk)) (false, set);
         }
 
         return res;
@@ -433,13 +434,7 @@ internal class PdCursesBackend: BaseCursesBackend
     public override void immedok(IntPtr window, bool set)
     {
         base.immedok(window, set);
-        if (_windowStates.TryGetValue(window, out var state))
-        {
-            _windowStates[window] = (set, state.scrollOk);
-        } else
-        {
-            _windowStates[window] = (set, false);
-        }
+        _windowStates[window] = _windowStates.TryGetValue(window, out var state) ? ((bool immedOk, bool scrollOk)) (set, state.scrollOk) : ((bool immedOk, bool scrollOk)) (set, false);
     }
 
     public override int endwin() => CursesSymbolResolver.Resolve<PdCursesFunctionMap.endwin>()();

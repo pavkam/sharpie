@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,10 @@ public class Event
     /// <summary>
     ///     The type of the event.
     /// </summary>
-    public EventType Type { get; }
+    public EventType Type
+    {
+        get;
+    }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => $"{Type}";

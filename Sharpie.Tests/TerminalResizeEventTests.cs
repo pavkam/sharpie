@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -49,7 +49,9 @@ public class TerminalResizeEventTests
                .ShouldBe("Resize @ 1x2");
     }
 
-    [TestMethod, DataRow(null), DataRow("")]
+    [TestMethod,
+     DataRow(null),
+     DataRow("")]
     public void Equals_ReturnsFalse_IfNotTerminalResizeEvent(object? b)
     {
         _event1.Equals(b)

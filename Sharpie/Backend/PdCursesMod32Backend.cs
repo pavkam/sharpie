@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ namespace Sharpie.Backend;
 [PublicAPI]
 internal class PdCursesMod32Backend: PdCursesBackend
 {
-    private const int KeyOffset = 0xeb00;
+    private const int _keyOffset = 0xeb00;
 
     /// <summary>
     ///     Creates a new instance of this class.
@@ -45,7 +45,7 @@ internal class PdCursesMod32Backend: PdCursesBackend
     /// <param name="pdCursesSymbolResolver">The PDCursesMod library symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
     internal PdCursesMod32Backend(IDotNetSystemAdapter dotNetSystemAdapter,
-        INativeSymbolResolver pdCursesSymbolResolver, INativeSymbolResolver? libCSymbolResolver): base(
+        INativeSymbolResolver pdCursesSymbolResolver, INativeSymbolResolver? libCSymbolResolver) : base(
         dotNetSystemAdapter, pdCursesSymbolResolver, libCSymbolResolver)
     {
     }
@@ -53,21 +53,23 @@ internal class PdCursesMod32Backend: PdCursesBackend
     /// <inheritdoc cref="BaseCursesBackend.DecodeKeyCodeType" />
     protected internal override CursesKeyCodeType DecodeKeyCodeType(int result, uint keyCode)
     {
+#pragma warning disable IDE0072 // Add missing cases -- all cases are covered
         return (result, keyCode) switch
         {
-            (< 0, var _) => CursesKeyCodeType.Unknown,
-            ((int) PdCursesKeyCode.Yes + KeyOffset, (uint) PdCursesKeyCode.Resize + KeyOffset) => CursesKeyCodeType
+            ( < 0, var _) => CursesKeyCodeType.Unknown,
+            ((int) PdCursesKeyCode.Yes + _keyOffset, (uint) PdCursesKeyCode.Resize + _keyOffset) => CursesKeyCodeType
                 .Resize,
-            ((int) PdCursesKeyCode.Yes + KeyOffset, (uint) PdCursesKeyCode.Mouse + KeyOffset) =>
+            ((int) PdCursesKeyCode.Yes + _keyOffset, (uint) PdCursesKeyCode.Mouse + _keyOffset) =>
                 CursesKeyCodeType.Mouse,
-            ((int) PdCursesKeyCode.Yes + KeyOffset, var _) => CursesKeyCodeType.Key,
-            (>= 0, var _) => CursesKeyCodeType.Character
+            ((int) PdCursesKeyCode.Yes + _keyOffset, var _) => CursesKeyCodeType.Key,
+            ( >= 0, var _) => CursesKeyCodeType.Character,
         };
+#pragma warning restore IDE0072 // Add missing cases
     }
 
     /// <inheritdoc cref="BaseCursesBackend.DecodeRawKey" />
     protected internal override (Key key, char @char, ModifierKey modifierKey) DecodeRawKey(uint keyCode) =>
-        base.DecodeRawKey(keyCode - KeyOffset);
+        base.DecodeRawKey(keyCode - _keyOffset);
 
     // ReSharper disable IdentifierTypo
     // ReSharper disable InconsistentNaming

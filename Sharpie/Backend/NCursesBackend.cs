@@ -47,7 +47,7 @@ internal class NCursesBackend: BaseCursesBackend
     /// <param name="nCursesSymbolResolver">The NCurses library symbol resolver.</param>
     /// <param name="libCSymbolResolver">The LibC symbol resolver.</param>
     internal NCursesBackend(IDotNetSystemAdapter dotNetSystemAdapter, INativeSymbolResolver nCursesSymbolResolver,
-        INativeSymbolResolver? libCSymbolResolver): base(dotNetSystemAdapter, nCursesSymbolResolver, libCSymbolResolver)
+        INativeSymbolResolver? libCSymbolResolver) : base(dotNetSystemAdapter, nCursesSymbolResolver, libCSymbolResolver)
     {
     }
 
@@ -96,14 +96,16 @@ internal class NCursesBackend: BaseCursesBackend
     /// <inheritdoc cref="BaseCursesBackend.DecodeKeyCodeType" />
     protected internal override CursesKeyCodeType DecodeKeyCodeType(int result, uint keyCode)
     {
+#pragma warning disable IDE0072 // Add missing cases -- all cases are covered
         return (result, keyCode) switch
         {
-            (< 0, var _) => CursesKeyCodeType.Unknown,
+            ( < 0, var _) => CursesKeyCodeType.Unknown,
             ((int) NCursesKeyCode.Yes, (uint) NCursesKeyCode.Resize) => CursesKeyCodeType.Resize,
             ((int) NCursesKeyCode.Yes, (uint) NCursesKeyCode.Mouse) => CursesKeyCodeType.Mouse,
             ((int) NCursesKeyCode.Yes, var _) => CursesKeyCodeType.Key,
-            (>= 0, var _) => CursesKeyCodeType.Character
+            ( >= 0, var _) => CursesKeyCodeType.Character,
         };
+#pragma warning restore IDE0072 // Add missing cases
     }
 
     /// <inheritdoc cref="BaseCursesBackend.DecodeRawKey" />
@@ -238,6 +240,9 @@ internal class NCursesBackend: BaseCursesBackend
                 ModifierKey.Alt | ModifierKey.Ctrl),
             NCursesKeyCode.AltCtrlHome => (Key.KeypadHome, ControlCharacter.Null, ModifierKey.Alt | ModifierKey.Ctrl),
             NCursesKeyCode.AltCtrlEnd => (Key.KeypadEnd, ControlCharacter.Null, ModifierKey.Alt | ModifierKey.Ctrl),
+            NCursesKeyCode.Yes => throw new NotImplementedException(),
+            NCursesKeyCode.Mouse => throw new NotImplementedException(),
+            NCursesKeyCode.Resize => throw new NotImplementedException(),
             var _ => (Key.Unknown, ControlCharacter.Null, ModifierKey.None)
         };
     }

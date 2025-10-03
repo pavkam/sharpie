@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,10 @@ public interface IDrawable
     /// <summary>
     ///     The size of the drawable.
     /// </summary>
-    public Size Size { get; }
+    public Size Size
+    {
+        get;
+    }
 
     /// <summary>
     ///     Draws the drawable onto a given surface.

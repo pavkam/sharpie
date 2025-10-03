@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,10 @@ public interface ISubWindow: ISurface
     /// <summary>
     ///     The parent window of this sub-window.
     /// </summary>
-    IWindow Window { get; }
+    IWindow Window
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets or sets the location of the sub-window within its parent window.
@@ -51,7 +54,10 @@ public interface ISubWindow: ISurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    Point Location { get; set; }
+    Point Location
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Gets or sets the size of the sub-window.
@@ -63,7 +69,10 @@ public interface ISubWindow: ISurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    new Size Size { get; set; }
+    new Size Size
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Duplicates this sub-window, including its attributes.

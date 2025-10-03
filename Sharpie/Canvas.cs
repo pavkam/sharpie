@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@ namespace Sharpie;
 
 /// <summary>
 ///     A general-purpose drawing surface that can be latter draw onto any object that implements
-///     <see cref="Sharpie.Abstractions.IDrawSurface" />.
+///     <see cref="IDrawSurface" />.
 ///     Supports multiple types of drawing operations most commonly used in terminal apps.
 /// </summary>
 [PublicAPI]
@@ -213,7 +213,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
         Right
     }
 
-    private static readonly Dictionary<BlockQuadrant, Rune> BlockCharacters = new()
+    private static readonly Dictionary<BlockQuadrant, Rune> _blockCharacters = new()
     {
         { BlockQuadrant.TopLeft, new('▘') },
         { BlockQuadrant.TopRight, new('▝') },
@@ -235,22 +235,22 @@ public sealed class Canvas: IDrawable, IDrawSurface
         }
     };
 
-    private static readonly Rune[] CheckCharacters = "●◯◆◇■□".Select(c => new Rune(c))
+    private static readonly Rune[] _checkCharacters = "●◯◆◇■□".Select(c => new Rune(c))
                                                              .ToArray();
 
-    private static readonly Rune[] TriangleCharacters = "▲△▴▵▼▽▾▿◀◁◂◃▶▷▸▹".Select(c => new Rune(c))
+    private static readonly Rune[] _triangleCharacters = "▲△▴▵▼▽▾▿◀◁◂◃▶▷▸▹".Select(c => new Rune(c))
                                                                           .ToArray();
 
-    private static readonly Rune[] ShadeCharacters = " ░▒▓".Select(c => new Rune(c))
+    private static readonly Rune[] _shadeCharacters = " ░▒▓".Select(c => new Rune(c))
                                                            .ToArray();
 
-    private static readonly Rune[] HorizontalGradientCharacters = " ▁▂▃▄▅▆▇█".Select(c => new Rune(c))
+    private static readonly Rune[] _horizontalGradientCharacters = " ▁▂▃▄▅▆▇█".Select(c => new Rune(c))
                                                                              .ToArray();
 
-    private static readonly Rune[] VerticalGradientCharacters = " ▏▎▍▌▋▊▉█".Select(c => new Rune(c))
-                                                                           .ToArray();
+    private static readonly Rune[] _verticalGradientCharacters = " ▏▎▍▌▋▊▉█".Select(c => new Rune(c))
+                                                                       .ToArray();
 
-    private static readonly Dictionary<LineSideAndStyle, Rune> BoxCharacters = new()
+    private static readonly Dictionary<LineSideAndStyle, Rune> _boxCharacters = new()
     {
         // LIGHT
         { LineSideAndStyle.RightLight, new('╶') },
@@ -589,7 +589,10 @@ public sealed class Canvas: IDrawable, IDrawSurface
     }
 
     /// <inheritdoc cref="IDrawable.Size" />
-    public Size Size { get; }
+    public Size Size
+    {
+        get;
+    }
 
     /// <inheritdoc cref="IDrawable.DrawOnto" />
     public void DrawOnto(IDrawSurface destination, Rectangle srcArea, Point destLocation)
@@ -604,7 +607,11 @@ public sealed class Canvas: IDrawable, IDrawSurface
             return;
         }
 
-        var destArea = srcArea with { X = destLocation.X, Y = destLocation.Y };
+        var destArea = srcArea with
+        {
+            X = destLocation.X,
+            Y = destLocation.Y
+        };
         if (!destination.Size.AdjustToActualArea(ref destArea))
         {
             return;
@@ -624,7 +631,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
     }
 
     /// <inheritdoc cref="IDrawSurface.DrawCell" />
-    void IDrawSurface.DrawCell(Point location, Rune rune, Style style) { SetCell(location.X, location.Y, rune, style); }
+    void IDrawSurface.DrawCell(Point location, Rune rune, Style style) => SetCell(location.X, location.Y, rune, style);
 
     private bool InArea(int x, int y) => x >= 0 && x < Size.Width && y >= 0 && y < Size.Height;
 
@@ -640,7 +647,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
             rune = new(ControlCharacter.Whitespace);
         }
 
-        _cells[x, y] = new() { Rune = rune, Style = style, Special = 0 };
+        _cells[x, y] = new()
+        {
+            Rune = rune,
+            Style = style,
+            Special = 0
+        };
     }
 
     private void SetCell(int x, int y, BlockQuadrant quads, Style style)
@@ -655,7 +667,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
                 0) |
             quads;
 
-        _cells[x, y] = new() { Special = (int) b, Style = style, Rune = BlockCharacters[b] };
+        _cells[x, y] = new()
+        {
+            Special = (int) b,
+            Style = style,
+            Rune = _blockCharacters[b]
+        };
     }
 
     private void SetCell(int x, int y, LineSideAndStyle stl, Style style)
@@ -670,29 +687,29 @@ public sealed class Canvas: IDrawable, IDrawSurface
                 0) |
             stl;
 
-        bool TryGet(LineSideAndStyle replaceWhat, LineSideAndStyle replaceWith, out Rune r)
+        bool tryGet(LineSideAndStyle replaceWhat, LineSideAndStyle replaceWith, out Rune r)
         {
             if (replaceWhat != 0 && b.HasFlag(replaceWhat))
             {
                 b = (b & ~replaceWhat) | replaceWith;
             }
 
-            return BoxCharacters.TryGetValue(b, out r);
+            return _boxCharacters.TryGetValue(b, out r);
         }
 
-        if (!TryGet(0, 0, out var rune) &&
-            !TryGet(LineSideAndStyle.RightLightDashed, LineSideAndStyle.RightLight, out rune) &&
-            !TryGet(LineSideAndStyle.LeftLightDashed, LineSideAndStyle.LeftLight, out rune) &&
-            !TryGet(LineSideAndStyle.TopLightDashed, LineSideAndStyle.TopLight, out rune) &&
-            !TryGet(LineSideAndStyle.BottomLightDashed, LineSideAndStyle.BottomLight, out rune) &&
-            !TryGet(LineSideAndStyle.RightHeavyDashed, LineSideAndStyle.RightHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.LeftHeavyDashed, LineSideAndStyle.LeftHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.TopHeavyDashed, LineSideAndStyle.TopHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.BottomHeavyDashed, LineSideAndStyle.BottomHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.RightDouble, LineSideAndStyle.RightHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.LeftDouble, LineSideAndStyle.LeftHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.TopDouble, LineSideAndStyle.TopHeavy, out rune) &&
-            !TryGet(LineSideAndStyle.BottomDouble, LineSideAndStyle.BottomHeavy, out rune))
+        if (!tryGet(0, 0, out var rune) &&
+            !tryGet(LineSideAndStyle.RightLightDashed, LineSideAndStyle.RightLight, out rune) &&
+            !tryGet(LineSideAndStyle.LeftLightDashed, LineSideAndStyle.LeftLight, out rune) &&
+            !tryGet(LineSideAndStyle.TopLightDashed, LineSideAndStyle.TopLight, out rune) &&
+            !tryGet(LineSideAndStyle.BottomLightDashed, LineSideAndStyle.BottomLight, out rune) &&
+            !tryGet(LineSideAndStyle.RightHeavyDashed, LineSideAndStyle.RightHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.LeftHeavyDashed, LineSideAndStyle.LeftHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.TopHeavyDashed, LineSideAndStyle.TopHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.BottomHeavyDashed, LineSideAndStyle.BottomHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.RightDouble, LineSideAndStyle.RightHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.LeftDouble, LineSideAndStyle.LeftHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.TopDouble, LineSideAndStyle.TopHeavy, out rune) &&
+            !tryGet(LineSideAndStyle.BottomDouble, LineSideAndStyle.BottomHeavy, out rune))
         {
             rune = new(0);
         }
@@ -702,7 +719,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
             throw new ArgumentOutOfRangeException(nameof(stl));
         }
 
-        _cells[x, y] = new() { Special = -(int) b, Style = style, Rune = rune };
+        _cells[x, y] = new()
+        {
+            Special = -(int) b,
+            Style = style,
+            Rune = rune
+        };
     }
 
     /// <summary>
@@ -736,12 +758,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
     /// <param name="style">The cell style.</param>
     public void Fill(Rectangle area, ShadeGlyphStyle shadeGlyph, Style style)
     {
-        if (shadeGlyph < 0 || (int) shadeGlyph > ShadeCharacters.Length)
+        if (shadeGlyph < 0 || (int) shadeGlyph > _shadeCharacters.Length)
         {
             throw new ArgumentException("Invalid shade style value.", nameof(shadeGlyph));
         }
 
-        var shadeChar = ShadeCharacters[(int) shadeGlyph];
+        var shadeChar = _shadeCharacters[(int) shadeGlyph];
         Fill(area, shadeChar, style);
     }
 
@@ -781,7 +803,8 @@ public sealed class Canvas: IDrawable, IDrawSurface
             if (orientation == Orientation.Horizontal)
             {
                 x++;
-            } else
+            }
+            else
             {
                 y++;
             }
@@ -794,7 +817,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
     /// <param name="location">The cell location.</param>
     /// <param name="rune">The rune to draw.</param>
     /// <param name="style">The text style.</param>
-    public void Glyph(Point location, Rune rune, Style style) { SetCell(location.X, location.Y, rune, style); }
+    public void Glyph(Point location, Rune rune, Style style) => SetCell(location.X, location.Y, rune, style);
 
     /// <summary>
     ///     Draws a glyph at a given <paramref name="location" /> using the provide styles.
@@ -810,12 +833,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
     public void Glyph(Point location, CheckGlyphStyle checkGlyphStyle, FillStyle fillStyle, Style style)
     {
         var index = (int) checkGlyphStyle * 2 + (int) fillStyle;
-        if (index < 0 || index >= CheckCharacters.Length)
+        if (index < 0 || index >= _checkCharacters.Length)
         {
             throw new ArgumentException("Invalid style and fill combination.");
         }
 
-        Glyph(location, CheckCharacters[index], style);
+        Glyph(location, _checkCharacters[index], style);
     }
 
     /// <summary>
@@ -834,12 +857,12 @@ public sealed class Canvas: IDrawable, IDrawSurface
         Style style)
     {
         var index = (int) triangleGlyphStyle * 4 + (int) glyphSize * 2 + (int) fillStyle;
-        if (index < 0 || index >= TriangleCharacters.Length)
+        if (index < 0 || index >= _triangleCharacters.Length)
         {
             throw new ArgumentException("Invalid parameter combination");
         }
 
-        var rune = TriangleCharacters[(int) triangleGlyphStyle * 4 + (int) glyphSize * 2 + (int) fillStyle];
+        var rune = _triangleCharacters[(int) triangleGlyphStyle * 4 + (int) glyphSize * 2 + (int) fillStyle];
         Glyph(location, rune, style);
     }
 
@@ -854,8 +877,8 @@ public sealed class Canvas: IDrawable, IDrawSurface
     public void Glyph(Point location, GradientGlyphStyle gradientGlyphStyle, int fill, Style style)
     {
         var runes = gradientGlyphStyle == GradientGlyphStyle.BottomToTop
-            ? HorizontalGradientCharacters
-            : VerticalGradientCharacters;
+            ? _horizontalGradientCharacters
+            : _verticalGradientCharacters;
 
         if (fill < 0 || fill >= runes.Length)
         {
@@ -915,7 +938,8 @@ public sealed class Canvas: IDrawable, IDrawSurface
 
                 SetCell(i, y, stl, style);
             }
-        } else
+        }
+        else
         {
             if (location.Y + length < 0)
             {
@@ -957,10 +981,7 @@ public sealed class Canvas: IDrawable, IDrawSurface
     /// <param name="startLocation">The starting cell.</param>
     /// <param name="endLocation">The ending cell.</param>
     /// <param name="style">The cell style.</param>
-    public void Line(PointF startLocation, PointF endLocation, Style style)
-    {
-        Helpers.TraceLineInHalves(startLocation, endLocation, p => Point(p, style));
-    }
+    public void Line(PointF startLocation, PointF endLocation, Style style) => Helpers.TraceLineInHalves(startLocation, endLocation, p => Point(p, style));
 
     /// <summary>
     ///     Draws a rectangle starting in a given <paramref name="perimeter" />.
@@ -1004,14 +1025,15 @@ public sealed class Canvas: IDrawable, IDrawSurface
         {
             foreach (var (y, top) in Helpers.EnumerateInHalves(area.Y, area.Height))
             {
+#pragma warning disable IDE0072 // Add missing cases -- all cases are covered
                 var quad = (left, top) switch
                 {
                     (true, true) => BlockQuadrant.TopLeft,
                     (true, false) => BlockQuadrant.BottomLeft,
                     (false, true) => BlockQuadrant.TopRight,
-                    (false, false) => BlockQuadrant.BottomRight
+                    (false, false) => BlockQuadrant.BottomRight,
                 };
-
+#pragma warning restore IDE0072 // Add missing cases
                 SetCell(x, y, quad, style);
             }
         }
@@ -1026,15 +1048,15 @@ public sealed class Canvas: IDrawable, IDrawSurface
     {
         var x = (int) Math.Floor(location.X * 2);
         var y = (int) Math.Floor(location.Y * 2);
-
+#pragma warning disable IDE0072 // Add missing cases -- all cases are covered
         var quad = (x % 2 == 0, y % 2 == 0) switch
         {
             (true, true) => BlockQuadrant.TopLeft,
             (true, false) => BlockQuadrant.BottomLeft,
             (false, true) => BlockQuadrant.TopRight,
-            (false, false) => BlockQuadrant.BottomRight
+            (false, false) => BlockQuadrant.BottomRight,
         };
-
+#pragma warning restore IDE0072 // Add missing cases
         SetCell(x / 2, y / 2, quad, style);
     }
 
@@ -1074,9 +1096,18 @@ public sealed class Canvas: IDrawable, IDrawSurface
 
     private readonly struct Cell
     {
-        public int Special { get; init; }
-        public Rune Rune { get; init; }
-        public Style Style { get; init; }
+        public int Special
+        {
+            get; init;
+        }
+        public Rune Rune
+        {
+            get; init;
+        }
+        public Style Style
+        {
+            get; init;
+        }
 
         public BlockQuadrant? Block => Special > 0 ? (BlockQuadrant) Special : null;
         public LineSideAndStyle? Line => Special < 0 ? (LineSideAndStyle) (-Special) : null;

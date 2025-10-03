@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -42,13 +42,13 @@ namespace Sharpie;
 ///     clicks.
 /// </param>
 /// <param name="SuppressControlKeys">Toggles the suppression of control keys such as CTRL+C. Default is <c>true</c>.</param>
-/// <param name="CaretMode">Specifies the caret mode. Default is <see cref="Sharpie.CaretMode.Visible" />.</param>
+/// <param name="CaretMode">Specifies the caret mode. Default is <see cref="CaretMode.Visible" />.</param>
 /// <param name="ManualFlush">Toggle the ability to manually flush the terminal. Default is <c>false</c>.</param>
 /// <param name="ManagedWindows">
 ///     Specifies whether the <see cref="Screen" /> manages overlapping windows. Default is
 ///     <c>false</c>.
 /// </param>
-/// <param name="SoftLabelKeyMode">Specifies the SLK mode. Default is <see cref="Sharpie.SoftLabelKeyMode.Disabled" />.</param>
+/// <param name="SoftLabelKeyMode">Specifies the SLK mode. Default is <see cref="SoftLabelKeyMode.Disabled" />.</param>
 /// <param name="AllocateHeader">If <c>true</c>, allocates one line at the top as a header.</param>
 /// <param name="AllocateFooter">If <c>true</c>, allocates one line at the bottom as a footer.</param>
 /// <param name="UseEnvironmentOverrides">Toggles the use of environment LINE/COL overrides. Default is <c>true</c>.</param>

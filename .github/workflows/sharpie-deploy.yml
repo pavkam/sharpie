@@ -1,0 +1,142 @@
+name: 🚃 Deploy packages
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  publish-all:
+    name: 🌍 Publish all packages
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.published-versions.outputs.version }}
+      sharpie_deployed: ${{ steps.published-versions.outputs.sharpie_deployed }}
+      ncurses_deployed: ${{ steps.published-versions.outputs.ncurses_deployed }}
+      pdcurses_deployed: ${{ steps.published-versions.outputs.pdcurses_deployed }}
+      pdcursesmod_deployed: ${{ steps.published-versions.outputs.pdcursesmod_deployed }}
+
+    steps:
+      - name: ☁️ Checkout repository
+        id: checkout-repository
+        uses: actions/checkout@v4
+
+      - name: ⏯️ Build and Test
+        id: build-and-test
+        uses: ./.github/actions/build-and-test
+
+      - name: 🍭 Check published versions
+        id: published-versions
+        run: |
+          PROJECTS=(
+            "Sharpie/Sharpie.csproj;Sharpie-Curses;sharpie"
+            "NativeLibraries/Sharpie.NativeLibraries.NCurses.csproj;Sharpie-Libs-NCurses;ncurses"
+            "NativeLibraries/Sharpie.NativeLibraries.PdCurses.csproj;Sharpie-Libs-PdCurses;pdcurses"
+            "NativeLibraries/Sharpie.NativeLibraries.PdCursesMod.csproj;Sharpie-Libs-PdCursesMod;pdcursesmod"
+          )
+
+          for LIB in "${PROJECTS[@]}"
+          do
+            SPLIT=(${LIB//;/ })
+            LIB_PATH=${SPLIT[0]}
+            LIB_PKG=${SPLIT[1]}
+            LIB_MONIKER=${SPLIT[2]}
+
+            V1=`cat $LIB_PATH | sed -n "s/\s*<FileVersion>\(.*\)<\/FileVersion>$/\1/p"`
+            V2=`cat $LIB_PATH | sed -n "s/\s*<AssemblyVersion>\(.*\)<\/AssemblyVersion>$/\1/p"`
+            V3=`cat $LIB_PATH | sed -n "s/\s*<PackageVersion>\(.*\)<\/PackageVersion>$/\1/p"`
+            if [ "$V1" != "$V2" ] || [ "$V2" != "$V3" ]; then
+              exit 1
+            fi
+
+            echo "version=$V3" >> $GITHUB_OUTPUT
+            DEP=`wget -q https://www.nuget.org/api/v2/package/$LIB_PKG/$V3 -O /dev/null || echo NO`
+
+            if [ "$DEP" = "NO" ]; then
+              echo "${LIB_MONIKER}_deployed=no" >> $GITHUB_OUTPUT
+            else
+              echo "${LIB_MONIKER}_deployed=yes" >> $GITHUB_OUTPUT
+            fi
+          done
+
+      - name: 📦 Publish Sharpie package
+        id: publish-sharpie
+        if: steps.published-versions.outputs.sharpie_deployed == 'no'
+        shell: bash
+        run: |
+          dotnet pack ./Sharpie/Sharpie.csproj
+          dotnet nuget push **/sharpie-curses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
+
+      - name: 📦 Publish NCurses package
+        id: publish-ncurses
+        if: steps.published-versions.outputs.ncurses-deployed == 'no'
+        shell: bash
+        run: |
+          dotnet pack NativeLibraries/Sharpie.NativeLibraries.NCurses.csproj
+          dotnet nuget push **/sharpie-libs-ncurses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
+
+      - name: 📦 Publish PDCurses package
+        id: publish-pdcurses
+        if: steps.published-versions.outputs.pdcurses-deployed == 'no'
+        shell: bash
+        run: |
+          dotnet pack NativeLibraries/Sharpie.NativeLibraries.PdCurses.csproj
+          dotnet nuget push **/sharpie-libs-pdcurses.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
+
+      - name: 📦 Publish PDCursesMod package
+        id: publish-pdcursesmod
+        if: steps.published-versions.outputs.pdcursesmod-deployed == 'no'
+        shell: bash
+        run: |
+          dotnet pack NativeLibraries/Sharpie.NativeLibraries.PdCursesMod.csproj
+          dotnet nuget push **/sharpie-libs-pdcursesmod.*.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} -s https://api.nuget.org/v3/index.json
+
+  summary:
+    name: ✔︎ Generate summary
+    runs-on: ubuntu-latest
+    needs: publish-all
+    if: always()
+    steps:
+      - name: 📝 Create summary
+        id: create-summary
+        shell: bash
+        run: |
+          echo "## 📦 Package Upload Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Package | Status | Version |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|--------|---------|" >> $GITHUB_STEP_SUMMARY
+
+          # Get version from the publish-all job outputs
+          VERSION="${{ needs.publish-all.outputs.version }}"
+
+          # Sharpie package
+          if [ "${{ needs.publish-all.outputs.sharpie_deployed }}" = "no" ]; then
+            echo "| Sharpie | ✅ Uploaded | $VERSION |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| Sharpie | ⏭️ Already published | $VERSION |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # NCurses package
+          if [ "${{ needs.publish-all.outputs.ncurses_deployed }}" = "no" ]; then
+            echo "| NCurses | ✅ Uploaded | $VERSION |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| NCurses | ⏭️ Already published | $VERSION |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # PDCurses package
+          if [ "${{ needs.publish-all.outputs.pdcurses_deployed }}" = "no" ]; then
+            echo "| PDCurses | ✅ Uploaded | $VERSION |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| PDCurses | ⏭️ Already published | $VERSION |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # PDCursesMod package
+          if [ "${{ needs.publish-all.outputs.pdcursesmod_deployed }}" = "no" ]; then
+            echo "| PDCursesMod | ✅ Uploaded | $VERSION |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| PDCursesMod | ⏭️ Already published | $VERSION |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Legend:** ✅ Uploaded, ⏭️ Already published" >> $GITHUB_STEP_SUMMARY

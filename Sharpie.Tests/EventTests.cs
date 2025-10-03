@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,8 @@ public class EventTests
     private readonly Event _event2 = new(EventType.KeyPress);
     private readonly Event _event3 = new(EventType.MouseAction);
 
-    [TestMethod] public void Ctor_StoresTheType() { _event1.Type.ShouldBe(EventType.MouseAction); }
+    [TestMethod]
+    public void Ctor_StoresTheType() => _event1.Type.ShouldBe(EventType.MouseAction);
 
     [TestMethod]
     public void ToString_ProperlyFormats()
@@ -46,7 +47,9 @@ public class EventTests
                .ShouldBe("MouseAction");
     }
 
-    [TestMethod, DataRow(null), DataRow("")]
+    [TestMethod,
+     DataRow(null),
+     DataRow("")]
     public void Equals_ReturnsFalse_IfNotEvent(object? b)
     {
         _event1.Equals(b)

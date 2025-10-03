@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,5 +33,6 @@ namespace Sharpie.Tests;
 [TestClass]
 public class DotNetSystemAdapterInterfaceTests
 {
-    [TestMethod] public void Instance_IsNotNull() { IDotNetSystemAdapter.Instance.ShouldNotBeNull(); }
+    [TestMethod]
+    public void Instance_IsNotNull() => IDotNetSystemAdapter.Instance.ShouldNotBeNull();
 }

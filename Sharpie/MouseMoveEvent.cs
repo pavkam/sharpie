@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -40,12 +40,15 @@ public sealed class MouseMoveEvent: Event
     ///     Creates a new instance of the class.
     /// </summary>
     /// <param name="point">The location of the mouse.</param>
-    public MouseMoveEvent(Point point): base(EventType.MouseMove) => Position = point;
+    public MouseMoveEvent(Point point) : base(EventType.MouseMove) => Position = point;
 
     /// <summary>
     ///     The mouse position.
     /// </summary>
-    public Point Position { get; }
+    public Point Position
+    {
+        get;
+    }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => $"Mouse @ {Position.X}x{Position.Y}";

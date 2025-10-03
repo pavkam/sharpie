@@ -1,5 +1,5 @@
-﻿/*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+/*
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,17 +29,20 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System.Diagnostics.CodeAnalysis;
+
 using Sharpie;
 using Sharpie.Backend;
 
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance.
+#pragma warning disable CA1416 // Validate platform compatibility -- this is a demo
 using var terminal = new Terminal(CursesBackend.Load(), new(CaretMode: CaretMode.Invisible));
+#pragma warning restore CA1416 // Validate platform compatibility
 
 // Prepare styles
 var styles = Enum.GetValues<StandardColor>()
-                 .Where(sc => sc != StandardColor.Default && sc != StandardColor.Black)
+                 .Where(sc => sc is not StandardColor.Default and not StandardColor.Black)
                  .Select(sc => new Style
                  {
                      ColorMixture = terminal.Colors.MixColors(sc, StandardColor.Default),

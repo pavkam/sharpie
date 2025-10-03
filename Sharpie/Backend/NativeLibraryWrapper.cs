@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -82,14 +82,11 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
     /// <typeparam name="TDelegate">The type of the function to resolve.</typeparam>
     /// <returns></returns>
     /// <exception cref="MissingMethodException">Thrown if the requested function is not loaded from the library.</exception>
-    public TDelegate Resolve<TDelegate>() where TDelegate: MulticastDelegate
+    public TDelegate Resolve<TDelegate>() where TDelegate : MulticastDelegate
     {
-        if (!_methodTable.TryGetValue(typeof(TDelegate), out var r))
-        {
-            throw new MissingMethodException($"The function of type {typeof(TDelegate).Name} has not been loaded.");
-        }
-
-        return (TDelegate) r;
+        return !_methodTable.TryGetValue(typeof(TDelegate), out var r)
+            ? throw new MissingMethodException($"The function of type {typeof(TDelegate).Name} has not been loaded.")
+            : (TDelegate) r;
     }
 
     private static NativeLibraryWrapper<TFunctions>? TryLoad(IDotNetSystemAdapter dotNetSystemAdapter,
@@ -97,15 +94,12 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
     {
         Debug.Assert(dotNetSystemAdapter != null);
 
-        if (string.IsNullOrEmpty(dotNetSystemAdapter.GetDirectoryName(libraryNameOrPath)) &&
+        return string.IsNullOrEmpty(dotNetSystemAdapter.GetDirectoryName(libraryNameOrPath)) &&
             dotNetSystemAdapter.TryLoadNativeLibrary(libraryNameOrPath, Assembly.GetExecutingAssembly(), null,
                 out var libHandle) ||
-            dotNetSystemAdapter.TryLoadNativeLibrary(libraryNameOrPath, out libHandle))
-        {
-            return new(dotNetSystemAdapter, libHandle);
-        }
-
-        return null;
+            dotNetSystemAdapter.TryLoadNativeLibrary(libraryNameOrPath, out libHandle)
+            ? new(dotNetSystemAdapter, libHandle)
+            : null;
     }
 
     /// <summary>
@@ -128,12 +122,9 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
     {
         Debug.Assert(_libraryHandle != IntPtr.Zero);
 
-        if (_dotNetSystemAdapter.TryGetNativeLibraryExport(_libraryHandle, name, out var handle))
-        {
-            return _dotNetSystemAdapter.NativeLibraryFunctionToDelegate(handle, delegateType);
-        }
-
-        throw new MissingMethodException($"Could not find {name} within the library.");
+        return _dotNetSystemAdapter.TryGetNativeLibraryExport(_libraryHandle, name, out var handle)
+            ? _dotNetSystemAdapter.NativeLibraryFunctionToDelegate(handle, delegateType)
+            : throw new MissingMethodException($"Could not find {name} within the library.");
     }
 
     private static IEnumerable<TypeInfo> GetRequiredDelegates(TypeInfo ti)
@@ -166,5 +157,8 @@ internal sealed class NativeLibraryWrapper<TFunctions>: INativeSymbolResolver, I
     /// <summary>
     ///     Calls the <see cref="Dispose" /> method.
     /// </summary>
-    ~NativeLibraryWrapper() { Dispose(); }
+    ~NativeLibraryWrapper()
+    {
+        Dispose();
+    }
 }

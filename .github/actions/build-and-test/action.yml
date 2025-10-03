@@ -1,0 +1,85 @@
+name: Build and Test .NET Application
+description: Common action to build and test the SeatFair .NET API
+
+inputs:
+  dotnet-version:
+    description: ".NET version to use"
+    required: false
+    default: "9.0.x"
+
+  configuration:
+    description: "Build configuration"
+    required: false
+    default: "Release"
+
+  coverage-report-path:
+    description: "Path to the coverage report"
+    required: false
+    default: "coverage_report"
+
+runs:
+  using: composite
+  steps:
+    - name: ⚙️ Setup environment
+      id: setup-environment
+      uses: ./.github/actions/setup
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+
+    - name: 🔍 Check formatting & code style
+      id: check-formatting
+      shell: bash
+      run: make lint
+
+    - name: 🛠️ Build
+      id: build
+      shell: bash
+      run: make build CONFIGURATION=${{ inputs.configuration }}
+
+    - name: 🧪 Test with coverage
+      id: test
+      shell: bash
+      run: |
+        make test CONFIGURATION=${{ inputs.configuration }}
+
+    - name: 📝 Generate code coverage report
+      id: coverage-report
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.3
+      with:
+        reports: "**/TestResults/**/*.cobertura.xml"
+        targetdir: ${{ inputs.coverage-report-path }}
+        reporttypes: "HtmlInline;Cobertura;Badges"
+
+    - name: ⬆️ Upload coverage report artifact
+      id: upload-coverage-report
+      uses: actions/upload-artifact@v4
+      with:
+        name: CoverageReport-${{ matrix.os }}
+        path: ${{ inputs.coverage-report-path }}
+
+    - name: ⬆️ Publish test results
+      id: publish-test-results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: ${{ always() && runner.os == 'Linux' }}
+      with:
+        files: "**/TestResults/**/test-results.trx"
+
+    - name: 📝 Summarize test results
+      id: summarize-test-results
+      shell: bash
+      run: |
+        make test-report COVERAGE_REPORT_PATH=${{ inputs.coverage-report-path }}
+
+    - name: ⬆️ Publish test result summary (macOS & Linux)
+      id: publish-test-summary-macos-and-linux
+      if: always() && (runner.os == 'macOS' || runner.os == 'Linux')
+      shell: bash
+      run: |
+        cat ${{ inputs.coverage-report-path }}/Summary.md >> $GITHUB_STEP_SUMMARY
+
+    - name: ⬆️ Publish test results (Windows)
+      id: publish-test-results-windows
+      if: always() && runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        Get-Content ${{ inputs.coverage-report-path }}\Summary.md | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY

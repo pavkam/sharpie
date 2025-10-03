@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,10 @@ public interface ISubPad: ISurface
     /// <summary>
     ///     The parent pad of this sub-pad.
     /// </summary>
-    IPad Pad { get; }
+    IPad Pad
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets or sets the location of the sub-pad within its parent pad.
@@ -51,7 +54,10 @@ public interface ISubPad: ISurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    Point Location { get; set; }
+    Point Location
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Gets or sets the size of the sub-pad.
@@ -63,7 +69,10 @@ public interface ISubPad: ISurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    new Size Size { get; set; }
+    new Size Size
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Duplicates and existing sub-pad, including its attributes.

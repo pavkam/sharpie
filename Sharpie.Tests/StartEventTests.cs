@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,8 @@ public class StartEventTests
 {
     private readonly StartEvent _event1 = new();
 
-    [TestMethod] public void Ctor_InitializesPropertiesCorrectly() { _event1.Type.ShouldBe(EventType.Start); }
+    [TestMethod]
+    public void Ctor_InitializesPropertiesCorrectly() => _event1.Type.ShouldBe(EventType.Start);
 
     [TestMethod]
     public void ToString_ProperlyFormats()

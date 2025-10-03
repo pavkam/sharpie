@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -41,15 +41,18 @@ public class TerminalSurface: Surface, ITerminalSurface
     /// </summary>
     /// <param name="parent">The parent terminal.</param>
     /// <param name="handle">The surface handle.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
-    internal TerminalSurface(Terminal parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle) =>
+    internal TerminalSurface(Terminal parent, IntPtr handle) : base(parent != null! ? parent.Curses : null!, handle) =>
         Terminal = parent!;
 
     /// <inheritdoc cref="ITerminalSurface.Terminal" />
-    public Terminal Terminal { get; }
+    public Terminal Terminal
+    {
+        get;
+    }
 
     /// <inheritdoc cref="ITerminalSurface.Terminal" />
     ITerminal ITerminalSurface.Terminal => Terminal;
@@ -70,7 +73,7 @@ public class TerminalSurface: Surface, ITerminalSurface
     }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh()" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public virtual void Refresh()
     {
         AssertSynchronized();
@@ -78,7 +81,7 @@ public class TerminalSurface: Surface, ITerminalSurface
     }
 
     /// <inheritdoc cref="ITerminalSurface.Refresh(int, int)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public virtual void Refresh(int y, int count)
     {
         if (count < 0)
@@ -95,7 +98,7 @@ public class TerminalSurface: Surface, ITerminalSurface
 
         if (actY > -1 && actCount > 0)
         {
-            Curses.wredrawln(Handle, actY, actCount)
+            _ = Curses.wredrawln(Handle, actY, actCount)
                   .Check(nameof(Curses.wredrawln), "Failed to perform line refresh.");
         }
     }

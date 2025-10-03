@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,8 +36,8 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class ColorManager: IColorManager
 {
-    private const short StandardColorCount = (short) StandardColor.White + 1;
-    private bool _ignorant;
+    private const short _standardColorCount = (short) StandardColor.White + 1;
+    private readonly bool _ignorant;
     private short _nextPairHandle = 1;
 
     /// <summary>
@@ -45,7 +45,7 @@ public sealed class ColorManager: IColorManager
     /// </summary>
     /// <param name="parent">The parent terminal.</param>
     /// <param name="enabled">Specifies whether colors are enabled.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="parent" /> is <c>null</c>.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
     internal ColorManager(Terminal parent, bool enabled)
@@ -58,48 +58,47 @@ public sealed class ColorManager: IColorManager
                         .Failed())
             {
                 Mode = ColorMode.Disabled;
-            } else
+            }
+            else
             {
                 _ignorant = Terminal.Curses.use_default_colors()
                                     .Failed();
 
-                var extended = !Terminal.Curses.init_pair(1, StandardColorCount, StandardColorCount)
+                var extended = !Terminal.Curses.init_pair(1, _standardColorCount, _standardColorCount)
                                         .Failed();
 
                 var standard = !Terminal.Curses.init_pair(1, (short) StandardColor.White, (short) StandardColor.White)
                                         .Failed();
 
-                if (extended)
-                {
-                    Mode = ColorMode.Extended;
-                } else if (standard)
-                {
-                    Mode = ColorMode.Standard;
-                } else
-                {
-                    Mode = ColorMode.Disabled;
-                }
+                Mode = extended ? ColorMode.Extended : standard ? ColorMode.Standard : ColorMode.Disabled;
             }
-        } else
+        }
+        else
         {
             Mode = ColorMode.Disabled;
         }
     }
 
     /// <inheritdoc cref="IColorManager.Terminal" />
-    public Terminal Terminal { get; }
+    public Terminal Terminal
+    {
+        get;
+    }
 
     /// <inheritdoc cref="IColorManager.Terminal" />
     ITerminal IColorManager.Terminal => Terminal;
 
     /// <inheritdoc cref="IColorManager.Mode" />
-    public ColorMode Mode { get; }
+    public ColorMode Mode
+    {
+        get;
+    }
 
     /// <inheritdoc cref="IColorManager.CanRedefineColors" />
     public bool CanRedefineColors => Terminal.Curses.can_change_color();
 
     /// <inheritdoc cref="IColorManager.MixColors(short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ColorMixture MixColors(short fgColor, short bgColor)
     {
         AssertHasColors();
@@ -114,82 +113,82 @@ public sealed class ColorManager: IColorManager
     }
 
     /// <inheritdoc cref="IColorManager.MixColors(StandardColor, StandardColor)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ColorMixture MixColors(StandardColor fgColor, StandardColor bgColor) =>
         MixColors((short) fgColor, (short) bgColor);
 
-    /// <inheritdoc cref="IColorManager.RemixColors(Sharpie.ColorMixture, short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <inheritdoc cref="IColorManager.RemixColors(ColorMixture, short, short)" />
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RemixColors(ColorMixture mixture, short fgColor, short bgColor)
     {
         AssertHasColors();
         AssertSynchronized();
 
-        Terminal.Curses.init_pair(mixture.Handle, MassageColor(fgColor, StandardColor.White),
+        _ = Terminal.Curses.init_pair(mixture.Handle, MassageColor(fgColor, StandardColor.White),
                     MassageColor(bgColor, StandardColor.Black))
                 .Check(nameof(Terminal.Curses.init_pair), "Failed to redefine an existing color mixture.");
     }
 
-    /// <inheritdoc cref="IColorManager.RemixColors(Sharpie.ColorMixture, StandardColor, StandardColor)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <inheritdoc cref="IColorManager.RemixColors(ColorMixture, StandardColor, StandardColor)" />
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RemixColors(ColorMixture mixture, StandardColor fgColor, StandardColor bgColor) =>
         RemixColors(mixture, (short) fgColor, (short) bgColor);
 
     /// <inheritdoc cref="IColorManager.RemixDefaultColors(short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RemixDefaultColors(short fgColor, short bgColor)
     {
         AssertHasColors();
         AssertSynchronized();
 
-        Terminal.Curses.assume_default_colors(MassageColor(fgColor, StandardColor.White),
+        _ = Terminal.Curses.assume_default_colors(MassageColor(fgColor, StandardColor.White),
                     MassageColor(bgColor, StandardColor.Black))
                 .Check(nameof(Terminal.Curses.assume_default_colors), "Failed to redefine the default color mixture.");
     }
 
     /// <inheritdoc cref="IColorManager.RemixDefaultColors(StandardColor, StandardColor)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RemixDefaultColors(StandardColor fgColor, StandardColor bgColor) =>
         RemixDefaultColors((short) fgColor, (short) bgColor);
 
     /// <inheritdoc cref="IColorManager.UnMixColors" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public (short fgColor, short bgColor) UnMixColors(ColorMixture mixture)
     {
         AssertHasColors();
         AssertSynchronized();
 
-        Terminal.Curses.pair_content(mixture.Handle, out var fgColor, out var bgColor)
+        _ = Terminal.Curses.pair_content(mixture.Handle, out var fgColor, out var bgColor)
                 .Check(nameof(Terminal.Curses.pair_content), "Failed to extract colors from the color mixture.");
 
         return (fgColor, bgColor);
     }
 
     /// <inheritdoc cref="IColorManager.RedefineColor(short, short, short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RedefineColor(short color, short red, short green, short blue)
     {
         AssertCanRedefineColors();
         AssertSynchronized();
 
         const short maxColor = 1000;
-        Terminal.Curses.init_color(color, Math.Min(red, maxColor), Math.Min(green, maxColor), Math.Min(blue, maxColor))
+        _ = Terminal.Curses.init_color(color, Math.Min(red, maxColor), Math.Min(green, maxColor), Math.Min(blue, maxColor))
                 .Check(nameof(Terminal.Curses.init_color), "Failed to redefine a terminal color.");
     }
 
     /// <inheritdoc cref="IColorManager.RedefineColor(StandardColor, short, short, short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void RedefineColor(StandardColor color, short red, short green, short blue) =>
         RedefineColor((short) color, red, green, blue);
 
     /// <inheritdoc cref="IColorManager.BreakdownColor(short)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public (short red, short green, short blue) BreakdownColor(short color)
     {
         AssertCanRedefineColors();
         AssertSynchronized();
 
-        Terminal.Curses.color_content(color, out var red, out var green, out var blue)
+        _ = Terminal.Curses.color_content(color, out var red, out var green, out var blue)
                 .Check(nameof(Terminal.Curses.color_content),
                     "Failed to extract RGB information from a terminal color.");
 
@@ -197,27 +196,14 @@ public sealed class ColorManager: IColorManager
     }
 
     /// <inheritdoc cref="IColorManager.BreakdownColor(StandardColor)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public (short red, short green, short blue) BreakdownColor(StandardColor color) => BreakdownColor((short) color);
 
     private short MassageColor(short color, StandardColor replacement)
     {
-        if (color == -1)
-        {
-            if (_ignorant)
-            {
-                return (short) replacement;
-            }
-
-            return color;
-        }
-
-        if (Mode == ColorMode.Standard)
-        {
-            return (short) (color % StandardColorCount);
-        }
-
-        return color;
+        return color == -1
+            ? _ignorant ? (short) replacement : color
+            : Mode == ColorMode.Standard ? (short) (color % _standardColorCount) : color;
     }
 
     private void AssertHasColors()
@@ -236,5 +222,5 @@ public sealed class ColorManager: IColorManager
         }
     }
 
-    private void AssertSynchronized() { Terminal.AssertSynchronized(); }
+    private void AssertSynchronized() => Terminal.AssertSynchronized();
 }

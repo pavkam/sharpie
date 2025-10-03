@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,9 +35,13 @@ using Font;
 [TestClass]
 public class AsciiFontTests
 {
-    private static readonly Style Style1 = new()
+    private static readonly Style _style1 = new()
     {
-        Attributes = VideoAttribute.Bold, ColorMixture = new() { Handle = 99 }
+        Attributes = VideoAttribute.Bold,
+        ColorMixture = new()
+        {
+            Handle = 99
+        }
     };
 
     private class TestAsciiFont: AsciiFont
@@ -46,7 +50,7 @@ public class AsciiFontTests
         public Style? GetGlyphsStyle;
         public readonly IDrawable Drawable = new Mock<IDrawable>().Object;
 
-        public TestAsciiFont(string name, int height, int baseline, AsciiFontLayout layout): base(name, height,
+        public TestAsciiFont(string name, int height, int baseline, AsciiFontLayout layout) : base(name, height,
             baseline, layout)
         {
         }
@@ -63,28 +67,16 @@ public class AsciiFontTests
     }
 
     [TestMethod]
-    public void Ctor_Throws_IfNameIsNullOrEmpty()
-    {
-        Should.Throw<ArgumentException>(() => new TestAsciiFont("", 8, 6, AsciiFontLayout.FullWidth));
-    }
+    public void Ctor_Throws_IfNameIsNullOrEmpty() => Should.Throw<ArgumentException>(() => new TestAsciiFont("", 8, 6, AsciiFontLayout.FullWidth));
 
     [TestMethod]
-    public void Ctor_Throws_IfHeightLessThanOne()
-    {
-        Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 0, 6, AsciiFontLayout.FullWidth));
-    }
+    public void Ctor_Throws_IfHeightLessThanOne() => Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 0, 6, AsciiFontLayout.FullWidth));
 
     [TestMethod]
-    public void Ctor_Throws_IfBaselineLessThanOne()
-    {
-        Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 8, 0, AsciiFontLayout.FullWidth));
-    }
+    public void Ctor_Throws_IfBaselineLessThanOne() => Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 8, 0, AsciiFontLayout.FullWidth));
 
     [TestMethod]
-    public void Ctor_Throws_IfBaselineLessGreaterThanHeight()
-    {
-        Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 8, 9, AsciiFontLayout.FullWidth));
-    }
+    public void Ctor_Throws_IfBaselineLessGreaterThanHeight() => Should.Throw<ArgumentException>(() => new TestAsciiFont("name", 8, 9, AsciiFontLayout.FullWidth));
 
     [TestMethod]
     public void Ctor_SetsTheExpectedProperties()
@@ -105,19 +97,19 @@ public class AsciiFontTests
         var arr = str.EnumerateRunes()
                      .ToArray();
 
-        f.GetGlyphs(str, Style1).ShouldBe(f.Drawable);
+        f.GetGlyphs(str, _style1).ShouldBe(f.Drawable);
 
         f.GetGlyphsChars.ShouldBe(arr);
-        f.GetGlyphsStyle.ShouldBe(Style1);
+        f.GetGlyphsStyle.ShouldBe(_style1);
     }
 
     [TestMethod]
     public void GetGlyph_CallsGetGlyphs1()
     {
         var f = new TestAsciiFont("name", 8, 6, AsciiFontLayout.Fitted);
-        f.GetGlyph(new('A'), Style1).ShouldBe(f.Drawable);
+        f.GetGlyph(new('A'), _style1).ShouldBe(f.Drawable);
 
         f.GetGlyphsChars.ShouldBe(new[] { new Rune('A') });
-        f.GetGlyphsStyle.ShouldBe(Style1);
+        f.GetGlyphsStyle.ShouldBe(_style1);
     }
 }

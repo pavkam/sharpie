@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,14 @@ namespace Sharpie.Tests;
 [TestClass]
 public class SurfaceDrawTextTests
 {
-    private readonly Style _style = new() { ColorMixture = new() { Handle = 11 }, Attributes = VideoAttribute.Bold };
+    private readonly Style _style = new()
+    {
+        ColorMixture = new()
+        {
+            Handle = 11
+        },
+        Attributes = VideoAttribute.Bold
+    };
 
     private Mock<ICursesBackend> _cursesMock = null!;
     private Mock<IAsciiFont> _font2X2 = null!;
@@ -44,10 +51,10 @@ public class SurfaceDrawTextTests
 
     private void MockCaretAt(ISurface sf, int x, int y)
     {
-        _cursesMock.Setup(s => s.getcurx(sf.Handle))
+        _ = _cursesMock.Setup(s => s.getcurx(sf.Handle))
                    .Returns(x);
 
-        _cursesMock.Setup(s => s.getcury(sf.Handle))
+        _ = _cursesMock.Setup(s => s.getcury(sf.Handle))
                    .Returns(y);
     }
 
@@ -59,39 +66,35 @@ public class SurfaceDrawTextTests
         _cursesMock.MockArea(_sf10X5, new Size(10, 5));
 
         _glyph2X2 = new();
-        _glyph2X2.Setup(s => s.Size)
+        _ = _glyph2X2.Setup(s => s.Size)
                  .Returns(new Size(2, 2));
 
         _font2X2 = new();
-        _font2X2.Setup(s => s.Height)
+        _ = _font2X2.Setup(s => s.Height)
                 .Returns(2);
 
-        _font2X2.Setup(s => s.GetGlyph(It.IsAny<Rune>(), It.IsAny<Style>()))
+        _ = _font2X2.Setup(s => s.GetGlyph(It.IsAny<Rune>(), It.IsAny<Style>()))
                 .Returns(_glyph2X2.Object);
 
         _glyph6X6 = new();
-        _glyph6X6.Setup(s => s.Size)
+        _ = _glyph6X6.Setup(s => s.Size)
                  .Returns(new Size(6, 6));
 
         _font6X6 = new();
-        _font6X6.Setup(s => s.Height)
+        _ = _font6X6.Setup(s => s.Height)
                 .Returns(6);
 
-        _font6X6.Setup(s => s.GetGlyph(It.IsAny<Rune>(), It.IsAny<Style>()))
+        _ = _font6X6.Setup(s => s.GetGlyph(It.IsAny<Rune>(), It.IsAny<Style>()))
                 .Returns(_glyph6X6.Object);
     }
 
     [TestMethod]
-    public void DrawText1_Throws_IfFontIsNull()
-    {
+    public void DrawText1_Throws_IfFontIsNull() =>
         Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(null!, "text", Style.Default));
-    }
 
     [TestMethod]
-    public void DrawText1_Throws_IfFontIsStringIsNull()
-    {
+    public void DrawText1_Throws_IfFontIsStringIsNull() =>
         Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(_font2X2.Object, null!, Style.Default));
-    }
 
     [TestMethod]
     public void DrawText1_DoesNothing_IfTextIsEmpty()
@@ -196,7 +199,7 @@ public class SurfaceDrawTextTests
     [TestMethod]
     public void DrawText1_Ltr_ScrollsUp_IfWrappingAndScrollable()
     {
-        _cursesMock.Setup(s => s.is_scrollok(_sf10X5.Handle))
+        _ = _cursesMock.Setup(s => s.is_scrollok(_sf10X5.Handle))
                    .Returns(true);
 
         MockCaretAt(_sf10X5, 8, 2);
@@ -210,7 +213,7 @@ public class SurfaceDrawTextTests
     [TestMethod]
     public void DrawText1_Ltr_ScrollsUpToZero_IfScrollableAndNotEnoughSpaceForHeight()
     {
-        _cursesMock.Setup(s => s.is_scrollok(_sf10X5.Handle))
+        _ = _cursesMock.Setup(s => s.is_scrollok(_sf10X5.Handle))
                    .Returns(true);
 
         MockCaretAt(_sf10X5, 0, 2);
@@ -225,7 +228,7 @@ public class SurfaceDrawTextTests
     [TestMethod]
     public void DrawText1_Ltr_DrawsFromTopSmallerArea_IfNotScrollableAndNotEnoughSpaceForHeight()
     {
-        _cursesMock.Setup(s => s.is_scrollok(_sf10X5.Handle))
+        _ = _cursesMock.Setup(s => s.is_scrollok(_sf10X5.Handle))
                    .Returns(false);
 
         MockCaretAt(_sf10X5, 0, 2);
@@ -238,16 +241,12 @@ public class SurfaceDrawTextTests
     }
 
     [TestMethod]
-    public void DrawText2_Throws_IfFontIsNull()
-    {
+    public void DrawText2_Throws_IfFontIsNull() =>
         Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(null!, "text"));
-    }
 
     [TestMethod]
-    public void DrawText2_Throws_IfFontIsStringIsNull()
-    {
+    public void DrawText2_Throws_IfFontIsStringIsNull() =>
         Should.Throw<ArgumentNullException>(() => _sf10X5.DrawText(_font2X2.Object, null!));
-    }
 
     [TestMethod]
     public void DrawText2_DoesNothing_IfTextIsEmpty()
@@ -271,8 +270,10 @@ public class SurfaceDrawTextTests
 
     private sealed class Surface: Sharpie.Surface
     {
-        public Surface(ICursesBackend curses, IntPtr handle): base(curses, handle) { }
+        public Surface(ICursesBackend curses, IntPtr handle) : base(curses, handle) { }
 
-        protected internal override void AssertSynchronized() { }
+        protected internal override void AssertSynchronized()
+        {
+        }
     }
 }

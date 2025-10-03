@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -49,29 +49,26 @@ public class CursesBackendFlavorSelectorTests
         var isWindows = TestContext.TestName!.Contains("_WhenWindows_");
         var isUnix = TestContext.TestName!.Contains("_WhenUnix_") || isLinux || isFreeBsd || isMacOs;
 
-        _dotNetSystemAdapterMock.Setup(s => s.IsUnixLike)
+        _ = _dotNetSystemAdapterMock.Setup(s => s.IsUnixLike)
                                 .Returns(isUnix);
 
-        _dotNetSystemAdapterMock.Setup(s => s.IsLinux)
+        _ = _dotNetSystemAdapterMock.Setup(s => s.IsLinux)
                                 .Returns(isLinux);
 
-        _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)
+        _ = _dotNetSystemAdapterMock.Setup(s => s.IsFreeBsd)
                                 .Returns(isFreeBsd);
 
-        _dotNetSystemAdapterMock.Setup(s => s.IsMacOs)
+        _ = _dotNetSystemAdapterMock.Setup(s => s.IsMacOs)
                                 .Returns(isMacOs);
 
-        _dotNetSystemAdapterMock.Setup(s => s.IsWindows)
+        _ = _dotNetSystemAdapterMock.Setup(s => s.IsWindows)
                                 .Returns(isWindows);
 
         _provider = new(_dotNetSystemAdapterMock.Object);
     }
 
     [TestMethod]
-    public void GetLibraryPaths_WhenUnknownOs_Throws()
-    {
-        Should.Throw<PlatformNotSupportedException>(() => _provider.GetLibraryPaths(CursesBackendFlavor.NCurses));
-    }
+    public void GetLibraryPaths_WhenUnknownOs_Throws() => Should.Throw<PlatformNotSupportedException>(() => _provider.GetLibraryPaths(CursesBackendFlavor.NCurses));
 
     [TestMethod]
     public void GetLibraryPaths_WhenLinux_ReturnsExpectedPaths()
@@ -318,16 +315,16 @@ public class CursesBackendFlavorSelectorTests
     [TestMethod]
     public void GetLibraryPaths_WhenMacOs_ForNCurses_ScansTheLibraryDirectory_IfNoHomeBrewFound()
     {
-        _dotNetSystemAdapterMock.Setup(s => s.CombinePaths(It.IsAny<string[]>()))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.CombinePaths(It.IsAny<string[]>()))
                                 .Returns((string[] ps) => string.Join("+", ps));
 
-        _dotNetSystemAdapterMock.Setup(s => s.GetEnvironmentVariable("HOMEBREW_PREFIX"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.GetEnvironmentVariable("HOMEBREW_PREFIX"))
                                 .Returns("/h");
 
-        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+lib"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+lib"))
                                 .Returns(true);
 
-        _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+lib"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+lib"))
                                 .Returns(new[]
                                 {
                                     "dummy.txt",
@@ -350,25 +347,25 @@ public class CursesBackendFlavorSelectorTests
     [TestMethod]
     public void GetLibraryPaths_WhenMacOs_ForNCurses_ScansTheCellarDirectories_IfNoHomeBrewFound()
     {
-        _dotNetSystemAdapterMock.Setup(s => s.CombinePaths(It.IsAny<string[]>()))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.CombinePaths(It.IsAny<string[]>()))
                                 .Returns((string[] ps) => string.Join("+", ps));
 
-        _dotNetSystemAdapterMock.Setup(s => s.GetEnvironmentVariable("HOMEBREW_CELLAR"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.GetEnvironmentVariable("HOMEBREW_CELLAR"))
                                 .Returns("/h");
 
-        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses"))
                                 .Returns(true);
 
-        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses-one+lib"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses-one+lib"))
                                 .Returns(true);
 
-        _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses-2+lib"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.DirectoryExists("/h+ncurses-2+lib"))
                                 .Returns(true);
 
-        _dotNetSystemAdapterMock.Setup(s => s.EnumerateDirectories("/h+ncurses"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.EnumerateDirectories("/h+ncurses"))
                                 .Returns(new[] { "/h+ncurses-one", "/h+ncurses-2" });
 
-        _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+ncurses-one+lib"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+ncurses-one+lib"))
                                 .Returns(new[]
                                 {
                                     "dummy.txt",
@@ -379,7 +376,7 @@ public class CursesBackendFlavorSelectorTests
                                     "libncurses.10.dylib"
                                 });
 
-        _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+ncurses-2+lib"))
+        _ = _dotNetSystemAdapterMock.Setup(s => s.EnumerateFiles("/h+ncurses-2+lib"))
                                 .Returns(new[] { "dummy.txt", "libncurses.2.dylib", "libncurses.12.dylib" });
 
         var actual = _provider.GetLibraryPaths(CursesBackendFlavor.NCurses);

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@ public sealed class StartEvent: Event
     /// <summary>
     ///     Creates a new instance of the class.
     /// </summary>
-    internal StartEvent(): base(EventType.Start) { }
+    internal StartEvent() : base(EventType.Start) { }
 
     /// <inheritdoc cref="object.ToString" />
     public override string ToString() => "Started";

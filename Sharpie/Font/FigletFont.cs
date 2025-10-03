@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -64,7 +64,7 @@ public sealed class FigletFont: AsciiFont
     /// <param name="header">The header.</param>
     /// <param name="characters">The characters from the font.</param>
     internal FigletFont(string name, FigletHeader header,
-        IReadOnlyDictionary<int, (string[] rows, int width)> characters): base(name, 
+        IReadOnlyDictionary<int, (string[] rows, int width)> characters) : base(name,
         header.Height, header.BaseLine, InterpretLayout(header.Attributes))
     {
         Debug.Assert(!string.IsNullOrEmpty(name));
@@ -78,7 +78,7 @@ public sealed class FigletFont: AsciiFont
     /// <inheritdoc cref="AsciiFont.HasGlyph" />
     public override bool HasGlyph(Rune @char) => _figletCharacters.ContainsKey(@char.Value);
 
-    /// <inheritdoc cref="AsciiFont.GetGlyphs(ReadOnlySpan{Rune}, Sharpie.Style)" />
+    /// <inheritdoc cref="AsciiFont.GetGlyphs(ReadOnlySpan{Rune}, Style)" />
     public override IDrawable GetGlyphs(ReadOnlySpan<Rune> chars, Style style)
     {
         if (chars.Length == 0)
@@ -86,7 +86,7 @@ public sealed class FigletFont: AsciiFont
             throw new ArgumentException("Chars cannot be empty.", nameof(chars));
         }
 
-        char MergeFunc(char l, char r) =>
+        char mergeFunc(char l, char r) =>
             FigletLayoutEvaluator.HorizontalJoin(_header.HardBlankChar, _header.Attributes, l, r);
 
         StringBuilder[]? rep = null;
@@ -96,7 +96,8 @@ public sealed class FigletFont: AsciiFont
             if (_figletCharacters.TryGetValue(@char.Value, out var fc) || _figletCharacters.TryGetValue(0, out fc))
             {
                 (rows, _) = fc;
-            } else
+            }
+            else
             {
                 _defaultCharacterHelper ??= new(Height);
                 rows = _defaultCharacterHelper.Rows;
@@ -117,12 +118,13 @@ public sealed class FigletFont: AsciiFont
             {
                 for (var i = 0; i < rows.Length; i++)
                 {
-                    rep[i]
+                    _ = rep[i]
                         .Append(rows[i]);
                 }
-            } else
+            }
+            else
             {
-                FigletLayoutEvaluator.Join(MergeFunc, rep, rows);
+                FigletLayoutEvaluator.Join(mergeFunc, rep, rows);
             }
         }
 
@@ -238,12 +240,12 @@ public sealed class FigletFont: AsciiFont
             _rows.Select(r => new string(r))
                  .ToArray();
 
-        public Size Size { get; }
-
-        public void DrawCell(Point location, Rune rune, Style style)
+        public Size Size
         {
-            _rows[location.Y][location.X] = (char) rune.Value;
+            get;
         }
+
+        public void DrawCell(Point location, Rune rune, Style style) => _rows[location.Y][location.X] = (char) rune.Value;
 
         private static IDrawable GetReplacementCharacter(int size)
         {
@@ -255,7 +257,8 @@ public sealed class FigletFont: AsciiFont
 
                 canvas.Fill(rect, new Rune(ControlCharacter.Whitespace), Style.Default);
                 canvas.Box(rect, Canvas.LineStyle.Light, Style.Default);
-            } else
+            }
+            else
             {
                 canvas.Glyph(new(0, 0), new('□'), Style.Default);
             }

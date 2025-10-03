@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -44,11 +44,11 @@ public sealed class Pad: Surface, IPad
     /// </summary>
     /// <param name="parent">The parent screen.</param>
     /// <param name="handle">The Curses handle.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="parent" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="handle" /> is invalid.</exception>
     /// <remarks>This method is not thread-safe.</remarks>
-    internal Pad(Screen parent, IntPtr handle): base(parent != null! ? parent.Curses : null!, handle)
+    internal Pad(Screen parent, IntPtr handle) : base(parent != null! ? parent.Curses : null!, handle)
     {
         Screen = parent!;
 
@@ -56,7 +56,10 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Screen" />
-    public Screen Screen { get; }
+    public Screen Screen
+    {
+        get;
+    }
 
     /// <inheritdoc cref="IPad.Screen" />
     IScreen IPad.Screen => Screen;
@@ -74,7 +77,7 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Size" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public new Size Size
     {
         get => base.Size;
@@ -87,13 +90,13 @@ public sealed class Pad: Surface, IPad
 
             AssertSynchronized();
 
-            Curses.wresize(Handle, value.Height, value.Width)
+            _ = Curses.wresize(Handle, value.Height, value.Width)
                   .Check(nameof(Curses.wresize), "Failed to resize the sub-pad.");
         }
     }
 
-    /// <inheritdoc cref="IPad.Refresh(System.Drawing.Rectangle,System.Drawing.Point)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <inheritdoc cref="IPad.Refresh(Rectangle,Point)" />
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Refresh(Rectangle srcArea, Point destLocation)
     {
         if (!Size.AdjustToActualArea(ref srcArea))
@@ -101,7 +104,10 @@ public sealed class Pad: Surface, IPad
             return;
         }
 
-        var destRect = srcArea with { Location = destLocation };
+        var destRect = srcArea with
+        {
+            Location = destLocation
+        };
         if (!Screen.Size.AdjustToActualArea(ref destRect))
         {
             return;
@@ -109,25 +115,21 @@ public sealed class Pad: Surface, IPad
 
         AssertSynchronized();
 
-        if (Screen.Terminal.AtomicRefreshOpen)
-        {
-            Curses.pnoutrefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
+        _ = Screen.Terminal.AtomicRefreshOpen
+            ? Curses.pnoutrefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
                       destRect.Bottom, destRect.Right)
-                  .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.");
-        } else
-        {
-            Curses.prefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
+                  .Check(nameof(Terminal.Curses.pnoutrefresh), "Failed to queue pad refresh.")
+            : Curses.prefresh(Handle, srcArea.Top, srcArea.Left, destRect.Top, destRect.Left,
                       destRect.Bottom, destRect.Right)
                   .Check(nameof(Terminal.Curses.prefresh), "Failed to perform pad refresh.");
-        }
     }
 
-    /// <inheritdoc cref="IPad.Refresh(System.Drawing.Point)" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <inheritdoc cref="IPad.Refresh(Point)" />
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Refresh(Point destLocation) => Refresh(new(Origin, Size), destLocation);
 
     /// <inheritdoc cref="IPad.SubPad" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ISubPad SubPad(Rectangle area)
     {
         if (!Area.AdjustToActualArea(ref area))
@@ -144,7 +146,7 @@ public sealed class Pad: Surface, IPad
     }
 
     /// <inheritdoc cref="IPad.Duplicate" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public IPad Duplicate()
     {
         var handle = Curses.dupwin(Handle)
@@ -192,7 +194,7 @@ public sealed class Pad: Surface, IPad
         Debug.Assert(subPad.Pad == this);
         Debug.Assert(_roSubPads.Contains(subPad));
 
-        _subPads.Remove(subPad);
+        _ = _subPads.Remove(subPad);
         _roSubPads = _subPads.ToArray();
     }
 

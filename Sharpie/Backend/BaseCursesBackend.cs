@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -56,22 +56,34 @@ internal abstract class BaseCursesBackend: ICursesBackend
     /// <summary>
     ///     The mouse event parser used by the backend.
     /// </summary>
-    protected internal abstract CursesMouseEventParser CursesMouseEventParser { get; }
+    protected internal abstract CursesMouseEventParser CursesMouseEventParser
+    {
+        get;
+    }
 
     /// <summary>
     ///     The Curses symbol resolver.
     /// </summary>
-    protected internal INativeSymbolResolver CursesSymbolResolver { get; }
+    protected internal INativeSymbolResolver CursesSymbolResolver
+    {
+        get;
+    }
 
     /// <summary>
-    ///     The Libc symbol resolver.
+    ///     The libc symbol resolver.
     /// </summary>
-    protected internal INativeSymbolResolver? LibCSymbolResolver { get; }
+    protected internal INativeSymbolResolver? LibCSymbolResolver
+    {
+        get;
+    }
 
     /// <summary>
     ///     The .NET system interop adapter.
     /// </summary>
-    protected internal IDotNetSystemAdapter DotNetSystemAdapter { get; }
+    protected internal IDotNetSystemAdapter DotNetSystemAdapter
+    {
+        get;
+    }
 
     /// <summary>
     ///     Encodes the given video attributes and the color pair into a Curses-specific value.
@@ -188,7 +200,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
         if (DotNetSystemAdapter.IsUnixLike && LibCSymbolResolver != null)
         {
             var category = DotNetSystemAdapter.IsMacOs ? 0 : 6;
-            LibCSymbolResolver.Resolve<LibCFunctionMap.setlocale>()(category, "");
+            _ = LibCSymbolResolver.Resolve<LibCFunctionMap.setlocale>()(category, "");
         }
 
         return CursesSymbolResolver.Resolve<BaseCursesFunctionMap.initscr>()();
@@ -244,7 +256,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public int nonl() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.nonl>()();
 
-    public void noqiflush() { CursesSymbolResolver.Resolve<BaseCursesFunctionMap.noqiflush>()(); }
+    public void noqiflush() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.noqiflush>()();
 
     public int noraw() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.noraw>()();
 
@@ -270,7 +282,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
         CursesSymbolResolver.Resolve<BaseCursesFunctionMap.prefresh>()(pad, padMinLine, padMinCol, scrMinLine,
             scrMinCol, scrMaxLine, scrMaxCol);
 
-    public void qiflush() { CursesSymbolResolver.Resolve<BaseCursesFunctionMap.qiflush>()(); }
+    public void qiflush() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.qiflush>()();
 
     public int raw() => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.raw>()();
 
@@ -317,7 +329,7 @@ internal abstract class BaseCursesBackend: ICursesBackend
         DotNetSystemAdapter.NativeLibraryAnsiStrPtrToString(
             CursesSymbolResolver.Resolve<BaseCursesFunctionMap.termname>()());
 
-    public void use_env(bool set) { CursesSymbolResolver.Resolve<BaseCursesFunctionMap.use_env>()(set); }
+    public void use_env(bool set) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.use_env>()(set);
 
     public int wattr_get(IntPtr window, out VideoAttribute attributes, out short colorPair, IntPtr reserved)
     {
@@ -458,23 +470,21 @@ internal abstract class BaseCursesBackend: ICursesBackend
                     return result;
                 }
 
-                var (mb, mst, mm) = DecodeRawMouseButtonState(ms.buttonState);
-                @event = new CursesMouseEvent(ms.x, ms.y, mb, mst, mm);
+                var (mb, mst, mm) = DecodeRawMouseButtonState(ms.ButtonState);
+                @event = new CursesMouseEvent(ms.X, ms.Y, mb, mst, mm);
                 break;
             case CursesKeyCodeType.Key:
                 var (k, c, m) = DecodeRawKey(keyCode);
                 var keyName = key_name(keyCode);
-                if (k == Key.Character)
-                {
-                    @event = new CursesCharEvent(keyName, c, m);
-                } else
-                {
-                    @event = new CursesKeyEvent(keyName, k, m);
-                }
+                @event = k == Key.Character ? new CursesCharEvent(keyName, c, m) : new CursesKeyEvent(keyName, k, m);
 
                 break;
             case CursesKeyCodeType.Character:
                 @event = new CursesCharEvent(key_name(keyCode), (char) keyCode, ModifierKey.None);
+                break;
+            case CursesKeyCodeType.Unknown:
+                break;
+            default:
                 break;
         }
 
@@ -501,7 +511,8 @@ internal abstract class BaseCursesBackend: ICursesBackend
             if ((newMask & CursesMouseEventParser.ReportPosition) != 0)
             {
                 csi = "\x1b[?1003h";
-            } else if ((newMask & CursesMouseEventParser.All) != 0)
+            }
+            else if ((newMask & CursesMouseEventParser.All) != 0)
             {
                 csi = "\x1b[?1000h";
             }
@@ -515,9 +526,13 @@ internal abstract class BaseCursesBackend: ICursesBackend
 
     public int mouseinterval(int millis) => CursesSymbolResolver.Resolve<BaseCursesFunctionMap.mouseinterval>()(millis);
 
-    public void set_title(string title) { DotNetSystemAdapter.SetConsoleTitle(title); }
+    public void set_title(string title) => DotNetSystemAdapter.SetConsoleTitle(title);
 
-    public virtual void set_unicode_locale() { }
+#pragma warning disable IDE1006 // Naming Styles
+    public virtual void set_unicode_locale()
+#pragma warning restore IDE1006 // Naming Styles
+    {
+    }
 
     // ReSharper restore InconsistentNaming
     // ReSharper restore IdentifierTypo

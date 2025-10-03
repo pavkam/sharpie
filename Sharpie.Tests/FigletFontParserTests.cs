@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,42 +36,24 @@ using Font;
 public class FigletFontParserTests
 {
     [TestMethod, DataRow(""), DataRow("hello"), DataRow("1 2 3 4 5")]
-    public void ParseHeader_Throws_IfNotEnoughComponents(string str)
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseHeader(str));
-    }
+    public void ParseHeader_Throws_IfNotEnoughComponents(string str) => Should.Throw<FormatException>(() => FigletFontParser.ParseHeader(str));
 
     [TestMethod]
-    public void ParseHeader_Throws_IfInvalidSignature()
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseHeader("wrong 63 63 127 0 2"));
-    }
+    public void ParseHeader_Throws_IfInvalidSignature() => Should.Throw<FormatException>(() => FigletFontParser.ParseHeader("wrong 63 63 127 0 2"));
 
     [TestMethod]
-    public void ParseHeader_Throws_IfHardBlankIsInvalid()
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseHeader("flf2a$$ 8 6 59 15 10 0 24463"));
-    }
+    public void ParseHeader_Throws_IfHardBlankIsInvalid() => Should.Throw<FormatException>(() => FigletFontParser.ParseHeader("flf2a$$ 8 6 59 15 10 0 24463"));
 
     [TestMethod, DataRow("flf2a$ -1 1 3 1 1 1 1 1 1"), DataRow("flf2a$ 1 -1 3 1 1 1 1 1 1"),
      DataRow("flf2a$ 2 1 -1 1 1 1 1 1 1"), DataRow("flf2a$ 2 1 3 -2 1 1 1 1 1"), DataRow("flf2a$ 2 1 3 1 -1 1 1 1 1"),
      DataRow("flf2a$ 2 1 3 1 1 -1 1 1 1"), DataRow("flf2a$ 2 1 3 1 1 1 -1 1 1")]
-    public void ParseHeader_Throws_IfComponentsAreInvalid(string str)
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseHeader(str));
-    }
+    public void ParseHeader_Throws_IfComponentsAreInvalid(string str) => Should.Throw<FormatException>(() => FigletFontParser.ParseHeader(str));
 
     [TestMethod]
-    public void ParseHeader_Throws_IfBaselineIsInvalid_1()
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseHeader("flf2a$ 8 0 59 15 10 0 24463"));
-    }
+    public void ParseHeader_Throws_IfBaselineIsInvalid_1() => Should.Throw<FormatException>(() => FigletFontParser.ParseHeader("flf2a$ 8 0 59 15 10 0 24463"));
 
     [TestMethod]
-    public void ParseHeader_Throws_IfBaselineIsInvalid_2()
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseHeader("flf2a$ 8 9 59 15 10 0 24463"));
-    }
+    public void ParseHeader_Throws_IfBaselineIsInvalid_2() => Should.Throw<FormatException>(() => FigletFontParser.ParseHeader("flf2a$ 8 9 59 15 10 0 24463"));
 
     [TestMethod]
     public void ParseHeader_ParsesTheHeaderAsExpected_1()
@@ -126,22 +108,13 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public void ParseCodeTag_Throws_WhenLineIsEmpty()
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseCodeTag(string.Empty));
-    }
+    public void ParseCodeTag_Throws_WhenLineIsEmpty() => Should.Throw<FormatException>(() => FigletFontParser.ParseCodeTag(string.Empty));
 
     [TestMethod]
-    public void ParseCodeTag_Throws_WhenInvalid_1()
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseCodeTag("bad"));
-    }
+    public void ParseCodeTag_Throws_WhenInvalid_1() => Should.Throw<FormatException>(() => FigletFontParser.ParseCodeTag("bad"));
 
     [TestMethod]
-    public void ParseCodeTag_Throws_WhenInvalid_2()
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseCodeTag("bad something"));
-    }
+    public void ParseCodeTag_Throws_WhenInvalid_2() => Should.Throw<FormatException>(() => FigletFontParser.ParseCodeTag("bad something"));
 
     [TestMethod, DataRow("0", 0, ""), DataRow(" 0   hello", 0, "hello"), DataRow("-1", -1, ""), DataRow("010", 8, ""),
      DataRow("-010", -8, ""), DataRow("0xFF j", 255, "j"), DataRow("-0x00FF j", -255, "j"),
@@ -153,16 +126,10 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public void ParseCharacterRow_Throws_WhenLineIsEmpty()
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseCharacterRow(2, string.Empty));
-    }
+    public void ParseCharacterRow_Throws_WhenLineIsEmpty() => Should.Throw<FormatException>(() => FigletFontParser.ParseCharacterRow(2, string.Empty));
 
     [TestMethod]
-    public void ParseCharacterRow_Throws_WhenLengthIsGreaterThanMax()
-    {
-        Should.Throw<FormatException>(() => FigletFontParser.ParseCharacterRow(2, "123"));
-    }
+    public void ParseCharacterRow_Throws_WhenLengthIsGreaterThanMax() => Should.Throw<FormatException>(() => FigletFontParser.ParseCharacterRow(2, "123"));
 
     [TestMethod]
     public void ParseCharacterRow_CutsWithoutLastChar()
@@ -179,34 +146,34 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_Throws_IfCharacterIncomplete()
+    public async Task ParseStandardCharacterAsync_Throws_IfCharacterIncompleteAsync()
     {
         const string ch = "1234567@";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseStandardCharacterAsync(2, 100, new StringReader(ch)));
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_Throws_IfCharacterHasDiffLineSizes()
+    public async Task ParseStandardCharacterAsync_Throws_IfCharacterHasDiffLineSizesAsync()
     {
         const string ch = "1234567@\n123456@";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseStandardCharacterAsync(2, 100, new StringReader(ch)));
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_Throws_IfCharacterLineTooLong()
+    public async Task ParseStandardCharacterAsync_Throws_IfCharacterLineTooLongAsync()
     {
         const string ch = "1@\n12@";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseStandardCharacterAsync(2, 2, new StringReader(ch)));
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_ReturnsCharacterAndLines_1()
+    public async Task ParseStandardCharacterAsync_ReturnsCharacterAndLines_1Async()
     {
         const string ch = "123@@";
 
@@ -217,7 +184,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseStandardCharacterAsync_ReturnsCharacterAndLines_2()
+    public async Task ParseStandardCharacterAsync_ReturnsCharacterAndLines_2Async()
     {
         const string ch = "12@\n34@\n56@@";
 
@@ -228,43 +195,43 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCodePointInvalid()
+    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCodePointInvalidAsync()
     {
         const string ch = "ab\n123@";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseCodeTaggedCharacterAsync(1, 100, new StringReader(ch)));
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterIncomplete()
+    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterIncompleteAsync()
     {
         const string ch = "10\n1234567@";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseCodeTaggedCharacterAsync(2, 100, new StringReader(ch)));
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterHasDiffLineSizes()
+    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterHasDiffLineSizesAsync()
     {
         const string ch = "10\n1234567@\n123456@";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseCodeTaggedCharacterAsync(2, 100, new StringReader(ch)));
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterLineTooLong()
+    public async Task ParseCodeTaggedCharacterAsync_Throws_IfCharacterLineTooLongAsync()
     {
         const string ch = "10\n1@\n12@";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseCodeTaggedCharacterAsync(2, 2, new StringReader(ch)));
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_ReturnsCharacterAndLines_1()
+    public async Task ParseCodeTaggedCharacterAsync_ReturnsCharacterAndLines_1Async()
     {
         const string ch = "10\n123@@";
 
@@ -276,7 +243,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseCodeTaggedCharacterAsync_ReturnsCharacterAndLines_2()
+    public async Task ParseCodeTaggedCharacterAsync_ReturnsCharacterAndLines_2Async()
     {
         const string ch = "  -0xffff hello world  \n12@\n34@\n56@@";
 
@@ -288,16 +255,16 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_Throws_IfNoCharsAndExpectedComments()
+    public async Task ParseFontFileAsync1_Throws_IfNoCharsAndExpectedCommentsAsync()
     {
         const string fnt = "flf2a 3 2 4 15 1";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseFontFileAsync(0, 0, new StringReader(fnt)));
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_ReturnsNoCharacters_IfNoneExpected()
+    public async Task ParseFontFileAsync1_ReturnsNoCharacters_IfNoneExpectedAsync()
     {
         const string fnt = "flf2a 3 2 4 -1 1\nthis is a comment line";
 
@@ -309,25 +276,25 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_Throws_IfExpectedOneChar()
+    public async Task ParseFontFileAsync1_Throws_IfExpectedOneCharAsync()
     {
         const string fnt = "flf2a 3 2 4 15 1\ncomment";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseFontFileAsync(0, 1, new StringReader(fnt)));
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_Throws_IfCharHAsLongedWidthThanExpected()
+    public async Task ParseFontFileAsync1_Throws_IfCharHAsLongedWidthThanExpectedAsync()
     {
         const string fnt = "flf2a 2 1 2 -1 1\nthis is a comment line\n123@\n456@@";
 
-        await Should.ThrowAsync<FormatException>(() =>
+        _ = await Should.ThrowAsync<FormatException>(() =>
             FigletFontParser.ParseFontFileAsync(0, 1, new StringReader(fnt)));
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_ReturnsHeaderAndOneChar()
+    public async Task ParseFontFileAsync1_ReturnsHeaderAndOneCharAsync()
     {
         const string fnt = "flf2a 2 1 5 -1 1\nthis is a comment line\n123@\n456@@";
 
@@ -341,7 +308,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_ReturnsHeaderAndOneTaggedChar()
+    public async Task ParseFontFileAsync1_ReturnsHeaderAndOneTaggedCharAsync()
     {
         const string fnt = "flf2a 2 1 5 -1 1\nthis is a comment line\n200\n123@\n456@@";
 
@@ -355,7 +322,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync1_ReturnsHeaderAndTwoChars()
+    public async Task ParseFontFileAsync1_ReturnsHeaderAndTwoCharsAsync()
     {
         const string fnt = "flf2a 2 1 5 -1 1\nthis is a comment line\n123@\n456@@\n200\nabc@\ndef@@";
 
@@ -372,7 +339,7 @@ public class FigletFontParserTests
     }
 
     [TestMethod]
-    public async Task ParseFontFileAsync2_ParsesTheFileAsExpected()
+    public async Task ParseFontFileAsync2_ParsesTheFileAsExpectedAsync()
     {
         using var reader = new StreamReader("Fixtures/big.flf");
         var (header, chars) = await FigletFontParser.ParseFontFileAsync(reader);

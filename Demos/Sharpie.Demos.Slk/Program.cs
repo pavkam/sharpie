@@ -1,5 +1,5 @@
-﻿/*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+/*
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System.Diagnostics.CodeAnalysis;
+
 using Sharpie;
 using Sharpie.Abstractions;
 using Sharpie.Backend;
@@ -36,9 +37,11 @@ using Sharpie.Backend;
 [assembly: ExcludeFromCodeCoverage]
 
 // Create the main terminal instance and enable 4 * 4 SLK mode,
+#pragma warning disable CA1416 // Validate platform compatibility -- this is a demo
 using var terminal = new Terminal(CursesBackend.Load(),
     new(CaretMode: CaretMode.Invisible, UseMouse: true, SoftLabelKeyMode: SoftLabelKeyMode.FourFour,
         AllocateHeader: true));
+#pragma warning restore CA1416 // Validate platform compatibility
 
 // Configure SLK style.
 terminal.SoftLabelKeys.Style = new()
@@ -57,7 +60,7 @@ foreach (var n in Enum.GetValues<StandardColor>()
     colors.Add(terminal.Colors.MixColors(n, n));
 }
 
-void DrawHeader(ITerminal t)
+static void drawHeader(ITerminal t)
 {
     t.Header!.CaretLocation = new(0, 0);
     t.Header.WriteText("Press a number from 1 to 8 to change the color.");
@@ -65,7 +68,7 @@ void DrawHeader(ITerminal t)
     t.Header.Refresh();
 }
 
-DrawHeader(terminal);
+drawHeader(terminal);
 terminal.SoftLabelKeys.Refresh();
 
 // Run the main loop.
@@ -74,19 +77,26 @@ terminal.Run((t, @event) =>
     switch (@event)
     {
         case TerminalResizeEvent:
-            DrawHeader(t);
+            drawHeader(t);
             t.SoftLabelKeys.Refresh();
             break;
         case KeyEvent { Key: Key.Character, Char.Value: var k and >= '1' and <= '8' }:
-        {
-            var color = k - '1';
+            {
+                var color = k - '1';
 
-            t.Screen.Background = (new(' '), new() { Attributes = VideoAttribute.None, ColorMixture = colors[color] });
+                t.Screen.Background = (new(' '), new()
+                {
+                    Attributes = VideoAttribute.None,
+                    ColorMixture = colors[color]
+                });
 
-            t.Screen.Refresh();
-            t.SoftLabelKeys.Refresh();
+                t.Screen.Refresh();
+                t.SoftLabelKeys.Refresh();
+                break;
+            }
+
+        default:
             break;
-        }
     }
 
     return Task.CompletedTask;

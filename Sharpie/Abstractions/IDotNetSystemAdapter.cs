@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -77,34 +77,34 @@ internal interface IDotNetSystemAdapter
     bool IsUnixLike => IsLinux || IsFreeBsd || IsMacOs;
 
     /// <inheritdoc
-    ///     cref="System.Runtime.InteropServices.NativeLibrary.TryLoad(string,Assembly,DllImportSearchPath?,out System.IntPtr)" />
+    ///     cref="NativeLibrary.TryLoad(string,Assembly,DllImportSearchPath?,out IntPtr)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     bool TryLoadNativeLibrary(string libraryName, Assembly assembly, DllImportSearchPath? searchPath,
         out IntPtr handle) =>
         NativeLibrary.TryLoad(libraryName, assembly, searchPath, out handle);
 
-    /// <inheritdoc cref="System.Runtime.InteropServices.NativeLibrary.TryLoad(string,out System.IntPtr)" />
+    /// <inheritdoc cref="NativeLibrary.TryLoad(string,out IntPtr)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     bool TryLoadNativeLibrary(string libraryPath, out IntPtr handle) => NativeLibrary.TryLoad(libraryPath, out handle);
 
-    /// <inheritdoc cref="System.Runtime.InteropServices.NativeLibrary.TryGetExport(IntPtr,string,out System.IntPtr)" />
+    /// <inheritdoc cref="NativeLibrary.TryGetExport(IntPtr,string,out IntPtr)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     bool TryGetNativeLibraryExport(IntPtr handle, string name, out IntPtr address) =>
         NativeLibrary.TryGetExport(handle, name, out address);
 
-    /// <inheritdoc cref="System.Runtime.InteropServices.NativeLibrary.Free(IntPtr)" />
+    /// <inheritdoc cref="NativeLibrary.Free(IntPtr)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     void FreeNativeLibrary(IntPtr handle) => NativeLibrary.Free(handle);
 
-    /// <inheritdoc cref="System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer(IntPtr, Type)" />
+    /// <inheritdoc cref="Marshal.GetDelegateForFunctionPointer(IntPtr, Type)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     Delegate NativeLibraryFunctionToDelegate(IntPtr ptr, Type t) => Marshal.GetDelegateForFunctionPointer(ptr, t);
 
-    /// <inheritdoc cref="System.Runtime.InteropServices.Marshal.PtrToStringUni(IntPtr)" />
+    /// <inheritdoc cref="Marshal.PtrToStringUni(IntPtr)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     string? NativeLibraryUnicodeStrPtrToString(IntPtr ptr) => Marshal.PtrToStringUni(ptr);
 
-    /// <inheritdoc cref="System.Runtime.InteropServices.Marshal.PtrToStringAnsi(IntPtr)" />
+    /// <inheritdoc cref="Marshal.PtrToStringAnsi(IntPtr)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     string? NativeLibraryAnsiStrPtrToString(IntPtr ptr) => Marshal.PtrToStringAnsi(ptr);
 
@@ -126,35 +126,35 @@ internal interface IDotNetSystemAdapter
         Console.Out.Flush();
     }
 
-    /// <inheritdoc cref="System.Environment.GetEnvironmentVariable(string)" />
+    /// <inheritdoc cref="Environment.GetEnvironmentVariable(string)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     string? GetEnvironmentVariable(string name) => Environment.GetEnvironmentVariable(name);
 
-    /// <inheritdoc cref=" System.IO.Directory.Exists(string)" />
+    /// <inheritdoc cref=" Directory.Exists(string)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     bool DirectoryExists(string name) => Directory.Exists(name);
 
-    /// <inheritdoc cref=" System.IO.Path.GetDirectoryName(string)" />
+    /// <inheritdoc cref=" Path.GetDirectoryName(string)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     string? GetDirectoryName(string path) => Path.GetDirectoryName(path);
 
-    /// <inheritdoc cref=" System.IO.Path.GetFileName(string)" />
+    /// <inheritdoc cref=" Path.GetFileName(string)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     string? GetFileName(string path) => Path.GetFileName(path);
 
-    /// <inheritdoc cref=" System.IO.Path.Combine(string[])" />
+    /// <inheritdoc cref=" Path.Combine(string[])" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     string CombinePaths(params string[] paths) => Path.Combine(paths);
 
-    /// <inheritdoc cref=" System.IO.Directory.EnumerateDirectories(string)" />
+    /// <inheritdoc cref=" Directory.EnumerateDirectories(string)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     IEnumerable<string> EnumerateDirectories(string directory) => Directory.EnumerateDirectories(directory);
 
-    /// <inheritdoc cref=" System.IO.Directory.EnumerateFiles(string)" />
+    /// <inheritdoc cref=" Directory.EnumerateFiles(string)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     IEnumerable<string> EnumerateFiles(string directory) => Directory.EnumerateFiles(directory);
 
-    /// <inheritdoc cref=" System.IO.File.OpenText(string)" />
+    /// <inheritdoc cref=" File.OpenText(string)" />
     [ExcludeFromCodeCoverage(Justification = ".NET runtime interop method.")]
     TextReader OpenFileAsText(string path) => File.OpenText(path);
 

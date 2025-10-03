@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -68,66 +68,63 @@ internal class CursesBackendFlavorSelector
 
     public IEnumerable<(string path, CursesBackendType type)> GetLibraryPaths(CursesBackendFlavor flavor)
     {
-        if (_dotNetSystemAdapter is { IsLinux: false, IsFreeBsd: false, IsMacOs: false, IsWindows: false })
-        {
-            throw new PlatformNotSupportedException("Current platform is not supported.");
-        }
-
-        return flavor switch
-        {
-            CursesBackendFlavor.PdCursesModVirtualTerminal => new[]
+        return _dotNetSystemAdapter is { IsLinux: false, IsFreeBsd: false, IsMacOs: false, IsWindows: false }
+            ? throw new PlatformNotSupportedException("Current platform is not supported.")
+            : (IEnumerable<(string path, CursesBackendType type)>) (flavor switch
             {
+                CursesBackendFlavor.PdCursesModVirtualTerminal => new[]
+                {
                 PlatformDllName("pdcursesmod-vt"), PlatformDllName("pdcursesmod")
             }.Select(p => (p, CursesBackendType.PdCursesMod)),
-            CursesBackendFlavor.PdCursesModGui when _dotNetSystemAdapter.IsWindows => new[]
-            {
+                CursesBackendFlavor.PdCursesModGui when _dotNetSystemAdapter.IsWindows => new[]
+                {
                 PlatformDllName("pdcursesmod-wingui")
             }.Select(p => (p, CursesBackendType.PdCursesMod)),
-            CursesBackendFlavor.PdCursesModGui => new[]
-            {
+                CursesBackendFlavor.PdCursesModGui => new[]
+                {
                 PlatformDllName("pdcursesmod-sdl1"), PlatformDllName("pdcursesmod-sdl2")
             }.Select(p => (p, CursesBackendType.PdCursesMod)),
-            CursesBackendFlavor.PdCursesModWindowsConsole when _dotNetSystemAdapter.IsWindows => new[]
-            {
+                CursesBackendFlavor.PdCursesModWindowsConsole when _dotNetSystemAdapter.IsWindows => new[]
+                {
                 PlatformDllName("pdcursesmod-wincon")
             }.Select(p => (p, CursesBackendType.PdCursesMod)),
-            CursesBackendFlavor.PdCursesMod => GetLibraryPaths(CursesBackendFlavor.PdCursesModWindowsConsole)
-                                               .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesModVirtualTerminal))
-                                               .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesModGui)),
-            CursesBackendFlavor.PdCursesWindowsConsole when _dotNetSystemAdapter.IsWindows => new[]
-            {
+                CursesBackendFlavor.PdCursesMod => GetLibraryPaths(CursesBackendFlavor.PdCursesModWindowsConsole)
+                                                   .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesModVirtualTerminal))
+                                                   .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesModGui)),
+                CursesBackendFlavor.PdCursesWindowsConsole when _dotNetSystemAdapter.IsWindows => new[]
+                {
                 PlatformDllName("pdcurses-wincon"), PlatformDllName("pdcurses")
             }.Select(p => (p, CursesBackendType.PdCurses)),
-            CursesBackendFlavor.PdCurses => GetLibraryPaths(CursesBackendFlavor.PdCursesWindowsConsole),
-            CursesBackendFlavor.NCurses when _dotNetSystemAdapter.IsMacOs => FindMacOsNCursesCandidates()
-                                                                             .Concat(new[]
-                                                                             {
+                CursesBackendFlavor.PdCurses => GetLibraryPaths(CursesBackendFlavor.PdCursesWindowsConsole),
+                CursesBackendFlavor.NCurses when _dotNetSystemAdapter.IsMacOs => FindMacOsNCursesCandidates()
+                                                                                 .Concat(new[]
+                                                                                 {
                                                                                  PlatformDllName("ncurses")
-                                                                             })
-                                                                             .Select(p =>
-                                                                                 (p, CursesBackendType.NCurses)),
-            CursesBackendFlavor.NCurses => new[]
-            {
+                                                                                 })
+                                                                                 .Select(p =>
+                                                                                     (p, CursesBackendType.NCurses)),
+                CursesBackendFlavor.NCurses => new[]
+                {
                 PlatformDllName("ncursesw", 6), PlatformDllName("ncursesw"), PlatformDllName("ncursesw", 5)
             }.Select(p => (p, CursesBackendType.NCurses)),
-            CursesBackendFlavor.AnyWindowsConsole when _dotNetSystemAdapter.IsWindows => GetLibraryPaths(
-                    CursesBackendFlavor.PdCursesModWindowsConsole)
-                .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesWindowsConsole)),
-            CursesBackendFlavor.AnyVirtualTerminal => GetLibraryPaths(CursesBackendFlavor.NCurses)
-                .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesModVirtualTerminal)),
-            CursesBackendFlavor.AnyGui => GetLibraryPaths(CursesBackendFlavor.PdCursesModGui),
-            CursesBackendFlavor.Any when _dotNetSystemAdapter.IsLinux ||
-                _dotNetSystemAdapter.IsFreeBsd ||
-                _dotNetSystemAdapter.IsMacOs => GetLibraryPaths(CursesBackendFlavor.AnyVirtualTerminal)
-                    .Concat(GetLibraryPaths(CursesBackendFlavor.AnyGui)),
-            CursesBackendFlavor.Any when _dotNetSystemAdapter.IsWindows => GetLibraryPaths(CursesBackendFlavor
-                                                                               .AnyWindowsConsole)
-                                                                           .Concat(GetLibraryPaths(CursesBackendFlavor
-                                                                               .AnyVirtualTerminal))
-                                                                           .Concat(GetLibraryPaths(CursesBackendFlavor
-                                                                               .AnyGui)),
-            var _ => Enumerable.Empty<(string, CursesBackendType)>()
-        };
+                CursesBackendFlavor.AnyWindowsConsole when _dotNetSystemAdapter.IsWindows => GetLibraryPaths(
+                        CursesBackendFlavor.PdCursesModWindowsConsole)
+                    .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesWindowsConsole)),
+                CursesBackendFlavor.AnyVirtualTerminal => GetLibraryPaths(CursesBackendFlavor.NCurses)
+                    .Concat(GetLibraryPaths(CursesBackendFlavor.PdCursesModVirtualTerminal)),
+                CursesBackendFlavor.AnyGui => GetLibraryPaths(CursesBackendFlavor.PdCursesModGui),
+                CursesBackendFlavor.Any when _dotNetSystemAdapter.IsLinux ||
+                    _dotNetSystemAdapter.IsFreeBsd ||
+                    _dotNetSystemAdapter.IsMacOs => GetLibraryPaths(CursesBackendFlavor.AnyVirtualTerminal)
+                        .Concat(GetLibraryPaths(CursesBackendFlavor.AnyGui)),
+                CursesBackendFlavor.Any when _dotNetSystemAdapter.IsWindows => GetLibraryPaths(CursesBackendFlavor
+                                                                                   .AnyWindowsConsole)
+                                                                               .Concat(GetLibraryPaths(CursesBackendFlavor
+                                                                                   .AnyVirtualTerminal))
+                                                                               .Concat(GetLibraryPaths(CursesBackendFlavor
+                                                                                   .AnyGui)),
+                var _ => Enumerable.Empty<(string, CursesBackendType)>()
+            });
     }
 
     private IEnumerable<(string name, int version)> GetCandidatesInDirectory(string directory, Regex pattern)

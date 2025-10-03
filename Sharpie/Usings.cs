@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -28,14 +28,16 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-global using System.Drawing;
-global using System.Text;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
-global using System.Runtime.InteropServices;
+global using System.Drawing;
 global using System.Globalization;
-global using System.Runtime.Versioning;
 global using System.Reflection;
+global using System.Runtime.InteropServices;
+global using System.Runtime.Versioning;
+global using System.Text;
+
 global using JetBrains.Annotations;
+
 global using Sharpie.Abstractions;
 global using Sharpie.Backend;

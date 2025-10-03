@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,6 +36,8 @@ namespace Sharpie.Backend;
 [SuppressMessage("ReSharper", "IdentifierTypo"), SuppressMessage("ReSharper", "InconsistentNaming")]
 internal abstract class BaseCursesFunctionMap
 {
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int assume_default_colors(int fgColor, int bgColor);
 
@@ -320,4 +322,6 @@ internal abstract class BaseCursesFunctionMap
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate int wvline(IntPtr window, uint @char, int count);
+#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+#pragma warning restore IDE1006 // Naming Styles
 }

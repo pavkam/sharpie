@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@ public class DelegateEventTests
     }
 
     [TestMethod]
-    public void Ctor_Throws_IfObjectIsNull() { Should.Throw<ArgumentNullException>(() => new DelegateEvent(null!)); }
+    public void Ctor_Throws_IfObjectIsNull() => Should.Throw<ArgumentNullException>(() => new DelegateEvent(null!));
 
     [TestMethod]
     public void ToString_ProperlyFormats()

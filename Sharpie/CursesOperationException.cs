@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@ public sealed class CursesOperationException: CursesException
     /// <inheritdoc cref="CursesException" />
     /// <param name="operation">The failed operation.</param>
     /// <param name="message">The message.</param>
-    internal CursesOperationException(string operation, string message): base(
+    internal CursesOperationException(string operation, string message) : base(
         $"The call to {operation} failed: {message}")
     {
         if (message == null)
@@ -53,5 +53,8 @@ public sealed class CursesOperationException: CursesException
     /// <summary>
     ///     The operation that failed.
     /// </summary>
-    public string Operation { get; }
+    public string Operation
+    {
+        get;
+    }
 }

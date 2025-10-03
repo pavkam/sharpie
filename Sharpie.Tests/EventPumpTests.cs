@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ namespace Sharpie.Tests;
 [TestClass]
 public class EventPumpTests
 {
-    private const int Timeout = 10000;
+    private const int _timeout = 10000;
 
     private Mock<ICursesBackend> _cursesMock = null!;
     private EventPump _pump = null!;
@@ -46,7 +46,7 @@ public class EventPumpTests
     private Event[] SimulateActualEvents(ISurface sf, int expectedCount, params CursesEvent?[] cursesEvents)
     {
         var q = new Queue<CursesEvent?>(cursesEvents);
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent? ce) =>
                    {
                        ce = q.Dequeue();
@@ -86,7 +86,7 @@ public class EventPumpTests
     {
         _cursesMock = new();
 
-        _cursesMock.Setup(s => s.initscr())
+        _ = _cursesMock.Setup(s => s.initscr())
                    .Returns(new IntPtr(100));
 
         _terminal = new(_cursesMock.Object,
@@ -98,10 +98,11 @@ public class EventPumpTests
         _source = new();
     }
 
-    [TestCleanup] public void TestCleanup() { _terminal.Dispose(); }
+    [TestCleanup]
+    public void TestCleanup() => _terminal.Dispose();
 
     [TestMethod]
-    public void Ctor_Throws_IfTerminalIsNull() { Should.Throw<ArgumentNullException>(() => new EventPump(null!)); }
+    public void Ctor_Throws_IfTerminalIsNull() => Should.Throw<ArgumentNullException>(() => new EventPump(null!));
 
     [TestMethod]
     public void Terminal_IsInitialized()
@@ -113,7 +114,7 @@ public class EventPumpTests
     [TestMethod]
     public void Use_RegistersResolver()
     {
-        _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
+        _ = _cursesMock.Setup(s => s.key_name(It.IsAny<uint>()))
                    .Returns("alex");
 
         _pump.Use(_ => (new(Key.F1, new(ControlCharacter.Null), "none", ModifierKey.None), 1));
@@ -125,7 +126,7 @@ public class EventPumpTests
             }, false, out var resolved);
 
         done.ShouldBe(1);
-        resolved.ShouldNotBeNull();
+        _ = resolved.ShouldNotBeNull();
         resolved.Key.ShouldBe(Key.F1);
         resolved.Char.ShouldBe(new(ControlCharacter.Null));
         resolved.Modifiers.ShouldBe(ModifierKey.None);
@@ -133,10 +134,10 @@ public class EventPumpTests
     }
 
     [TestMethod]
-    public void Use_Throws_IfResolverIsNull() { Should.Throw<ArgumentNullException>(() => _pump.Use(null!)); }
+    public void Use_Throws_IfResolverIsNull() => Should.Throw<ArgumentNullException>(() => _pump.Use(null!));
 
     [TestMethod]
-    public void Uses_Throws_IfResolverIsNull() { Should.Throw<ArgumentNullException>(() => _pump.Uses(null!)); }
+    public void Uses_Throws_IfResolverIsNull() => Should.Throw<ArgumentNullException>(() => _pump.Uses(null!));
 
     [TestMethod]
     public void Uses_ReturnsTrue_IfResolverRegistered()
@@ -154,10 +155,8 @@ public class EventPumpTests
     }
 
     [TestMethod]
-    public void TryResolveKeySequence_Throws_IfSequenceIsNull()
-    {
+    public void TryResolveKeySequence_Throws_IfSequenceIsNull() =>
         Should.Throw<ArgumentNullException>(() => _pump.TryResolveKeySequence(null!, false, out var _));
-    }
 
     [TestMethod]
     public void TryResolveKeySequence_IgnoresEmptySequences()
@@ -187,7 +186,8 @@ public class EventPumpTests
         {
             _pump.Use(KeySequenceResolver.AltKeyResolver);
             _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
-        } else
+        }
+        else
         {
             _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
             _pump.Use(KeySequenceResolver.AltKeyResolver);
@@ -211,7 +211,8 @@ public class EventPumpTests
         {
             _pump.Use(KeySequenceResolver.AltKeyResolver);
             _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
-        } else
+        }
+        else
         {
             _pump.Use(KeySequenceResolver.KeyPadModifiersResolver);
             _pump.Use(KeySequenceResolver.AltKeyResolver);
@@ -225,7 +226,7 @@ public class EventPumpTests
             }, true, out var resolved);
 
         count.ShouldBe(2);
-        resolved.ShouldNotBeNull();
+        _ = resolved.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -238,7 +239,7 @@ public class EventPumpTests
              .ShouldBeTrue();
 
         // ReSharper disable once PossibleMultipleEnumeration
-        l.ShouldNotBeNull();
+        _ = l.ShouldNotBeNull();
 
         // ReSharper disable once PossibleMultipleEnumeration
         var ll = l.ToArray();
@@ -269,10 +270,8 @@ public class EventPumpTests
     }
 
     [TestMethod]
-    public void TryResolveMouseEvent1_Throws_IfEventIsNull()
-    {
+    public void TryResolveMouseEvent1_Throws_IfEventIsNull() =>
         Should.Throw<ArgumentNullException>(() => _pump.TryResolveMouseEvent((MouseMoveEvent) null!, out var _));
-    }
 
     [TestMethod]
     public void TryResolveMouseEvent2_CallsTheInternalMouseResolver()
@@ -285,29 +284,27 @@ public class EventPumpTests
     }
 
     [TestMethod]
-    public void TryResolveMouseEvent2_Throws_IfEventIsNull()
-    {
+    public void TryResolveMouseEvent2_Throws_IfEventIsNull() =>
         Should.Throw<ArgumentNullException>(() => _pump.TryResolveMouseEvent((MouseActionEvent) null!, out var _));
-    }
 
     [TestMethod]
     public void Listen1_ThrowsIfWindowIsNull()
     {
-        Should.Throw<ArgumentNullException>(() => _pump.Listen(null!, CancellationToken.None)
+        _ = Should.Throw<ArgumentNullException>(() => _pump.Listen(null!, CancellationToken.None)
                                                        .ToArray());
     }
 
-    [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    [TestMethod, Timeout(_timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen1_AsksCursesForEvent_AfterEmittingStart()
     {
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent ce) =>
                    {
                        ce = new CursesCharEvent(null, 'a', ModifierKey.None);
                        return 0;
                    });
 
-        _pump.Listen(_window, CancellationToken.None)
+        _ = _pump.Listen(_window, CancellationToken.None)
              .First(f => f.Type != EventType.Start)
              .ToString();
 
@@ -315,7 +312,7 @@ public class EventPumpTests
             Times.Once);
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_EmitsStartEvent()
     {
         _pump.Listen(_window, CancellationToken.None)
@@ -323,7 +320,7 @@ public class EventPumpTests
              .ShouldBe(new StartEvent());
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_EmitsStopEvent()
     {
         var f = true;
@@ -333,7 +330,8 @@ public class EventPumpTests
             {
                 e.ShouldBe(new StartEvent());
                 f = false;
-            } else
+            }
+            else
             {
                 e.ShouldBe(new StopEvent());
             }
@@ -342,10 +340,10 @@ public class EventPumpTests
         }
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_KeepsReadingUntilCancelled()
     {
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent ce) =>
                    {
                        ce = new CursesCharEvent(null, 'a', ModifierKey.None);
@@ -371,7 +369,7 @@ public class EventPumpTests
             Times.Exactly(5));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_KeepsAskingCurses_IfNoEventsReceivedOnRead()
     {
         var a = new CursesCharEvent(null, 'a', ModifierKey.None);
@@ -380,7 +378,7 @@ public class EventPumpTests
         var d = new CursesCharEvent(null, 'd', ModifierKey.None);
         var e = new CursesCharEvent(null, 'e', ModifierKey.None);
 
-        SimulateActualEvents(_window, 5, null, a, null,
+        _ = SimulateActualEvents(_window, 5, null, a, null,
             b, null, c, null, d,
             null, e);
 
@@ -388,24 +386,24 @@ public class EventPumpTests
             Times.Exactly(10));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_AsksCursesToUpdateTerminal_WhenNoEventReceived()
     {
-        SimulateActualEvents(_window, 1, null, new CursesResizeEvent());
+        _ = SimulateActualEvents(_window, 1, null, new CursesResizeEvent());
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_DoesNotAsksCursesToUpdateTerminal_WhenNoEventReceived_AndAtomic()
     {
         using (_terminal.AtomicRefresh())
         {
-            SimulateActualEvents(_window, 1, null, new CursesCharEvent(null, 'A', ModifierKey.None));
+            _ = SimulateActualEvents(_window, 1, null, new CursesCharEvent(null, 'A', ModifierKey.None));
             _cursesMock.Verify(v => v.doupdate(), Times.Never);
         }
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_AsksScreenToAdjustWindowsToExplicitArea()
     {
         var h1 = new IntPtr(1);
@@ -418,18 +416,18 @@ public class EventPumpTests
 
         _cursesMock.MockArea(_terminal.Screen, new Size(2, 2));
 
-        SimulateActualEvents(_terminal.Screen, 1, new CursesResizeEvent());
+        _ = SimulateActualEvents(_terminal.Screen, 1, new CursesResizeEvent());
 
         _cursesMock.Verify(v => v.wresize(w1.Handle, 2, 2), Times.Once);
         _cursesMock.Verify(v => v.wresize(w2.Handle, 1, 1), Times.Once);
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_WhenUnmanaged_OnResize_DoesNotUpdateTheScreen()
     {
         _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
 
-        SimulateActualEvents(_terminal.Screen, 1, new CursesResizeEvent());
+        _ = SimulateActualEvents(_terminal.Screen, 1, new CursesResizeEvent());
 
         _cursesMock.Verify(v => v.wtouchln(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()),
             Times.Never);
@@ -438,13 +436,13 @@ public class EventPumpTests
         _cursesMock.Verify(v => v.wnoutrefresh(It.IsAny<IntPtr>()), Times.Never);
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_WhenManaged_OnResize_UpdatesTheScreenAndWindow()
     {
         _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
         _cursesMock.MockArea(_window, new Rectangle(0, 0, 5, 5));
 
-        SimulateActualEvents(_terminal.Screen, 2, new CursesResizeEvent(),
+        _ = SimulateActualEvents(_terminal.Screen, 2, new CursesResizeEvent(),
             new CursesCharEvent(null, 'A', ModifierKey.None));
 
         _cursesMock.Verify(v => v.wtouchln(_terminal.Screen.Handle, It.IsAny<int>(), It.IsAny<int>(), 1), Times.Once);
@@ -454,7 +452,7 @@ public class EventPumpTests
         _cursesMock.Verify(v => v.doupdate(), Times.Once);
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesTerminalResizeEvents()
     {
         _cursesMock.MockArea(_terminal.Screen, new Size(20, 10));
@@ -463,7 +461,7 @@ public class EventPumpTests
         events.ShouldBe(new Event[] { new TerminalResizeEvent(new(20, 10)) });
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesMouseMoveEvents()
     {
         var e = SimulateActualEvent(_terminal.Screen,
@@ -472,7 +470,7 @@ public class EventPumpTests
         e.ShouldBe(new MouseMoveEvent(new(5, 6)));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesMouseMoveEvents_AndUsesInternalMouseResolver()
     {
         _pump.UseInternalMouseEventResolver = true;
@@ -483,7 +481,7 @@ public class EventPumpTests
         e.ShouldBe(new MouseMoveEvent(new(5, 6)));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesMouseActionEvents()
     {
         var ce = new CursesMouseEvent(5, 6, MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Alt);
@@ -492,7 +490,7 @@ public class EventPumpTests
         e.ShouldBe(new MouseActionEvent(new(5, 6), MouseButton.Button1, MouseButtonState.Clicked, ModifierKey.Alt));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesMouseActionEvents_AndUsesInternalMouseResolver()
     {
         _pump.UseInternalMouseEventResolver = true;
@@ -508,21 +506,21 @@ public class EventPumpTests
         });
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesKeypadEvents()
     {
         var e = SimulateActualEvent(_terminal.Screen, new CursesKeyEvent("yup", Key.KeypadUp, ModifierKey.Alt));
         e.ShouldBe(new KeyEvent(Key.KeypadUp, new(ControlCharacter.Null), "yup", ModifierKey.Alt));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesCharacterEvents()
     {
         var e = SimulateActualEvent(_terminal.Screen, new CursesCharEvent("yup", 'A', ModifierKey.Ctrl));
         e.ShouldBe(new KeyEvent(Key.Character, new('A'), "yup", ModifierKey.Ctrl));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesTranslatedCharacters_IfResolverInstalled()
     {
         _pump.Use(KeySequenceResolver.SpecialCharacterResolver);
@@ -532,7 +530,7 @@ public class EventPumpTests
         e.ShouldBe(new KeyEvent(Key.Tab, new(ControlCharacter.Null), null, ModifierKey.None));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_DoesNotProcessesTranslatedCharacters_IfNoMiddlewareInstalled()
     {
         var e = SimulateActualEvent(_terminal.Screen,
@@ -541,7 +539,7 @@ public class EventPumpTests
         e.ShouldBe(new KeyEvent(Key.Character, new(ControlCharacter.Tab), "yup", ModifierKey.None));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesTranslatedSeq2Events_IfResolverInstalled()
     {
         _pump.Use(KeySequenceResolver.AltKeyResolver);
@@ -553,7 +551,7 @@ public class EventPumpTests
         e.ShouldBe(new KeyEvent(Key.Character, new('a'), null, ModifierKey.Alt));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_DoesNotProcessTranslatedSeq2Events_IfResolverNotInstalled()
     {
         var e = SimulateActualEvents(_terminal.Screen, 2,
@@ -567,7 +565,7 @@ public class EventPumpTests
         });
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesTranslatedSeq4Events_IfResolverInstalled()
     {
         _pump.Use(KeySequenceResolver.AltKeyResolver);
@@ -582,7 +580,7 @@ public class EventPumpTests
             ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift));
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ConsidersEscapeBreaks()
     {
         _pump.Use(KeySequenceResolver.SpecialCharacterResolver);
@@ -598,7 +596,7 @@ public class EventPumpTests
         });
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ConsidersBreaksInSequences()
     {
         _pump.Use(KeySequenceResolver.AltKeyResolver);
@@ -616,7 +614,7 @@ public class EventPumpTests
         });
     }
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Listen1_ProcessesDelegatesFirst()
     {
         _pump.Delegate("hello");
@@ -632,13 +630,13 @@ public class EventPumpTests
         });
     }
 
-    [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    [TestMethod, Timeout(_timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen2_CreatesDummyPad()
     {
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
 
-        _pump.Listen(CancellationToken.None)
+        _ = _pump.Listen(CancellationToken.None)
              .First()
              .ToString();
 
@@ -646,7 +644,7 @@ public class EventPumpTests
         _cursesMock.Verify(v => v.keypad(new(10), true), Times.Once);
     }
 
-    [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestMethod, Timeout(_timeout), SuppressMessage("ReSharper", "StringLiteralTypo")]
     public void Listen2_Throws_IfFailedToCreateDummyPad()
     {
         Should.Throw<CursesOperationException>(() => _pump.Listen(CancellationToken.None)
@@ -654,52 +652,52 @@ public class EventPumpTests
               .Operation.ShouldBe("newpad");
     }
 
-    [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    [TestMethod, Timeout(_timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen2_DestroysDummyPad_EvenIfExceptionThrown()
     {
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
 
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Throws<InvalidProgramException>();
 
-        Should.Throw<InvalidProgramException>(() => _pump.Listen(CancellationToken.None)
+        _ = Should.Throw<InvalidProgramException>(() => _pump.Listen(CancellationToken.None)
                                                          .First(f => f.Type != EventType.Start));
 
         _cursesMock.Verify(v => v.delwin(new(10)), Times.Once);
     }
 
-    [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    [TestMethod, Timeout(_timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen2_CallsCurses_ForDummyPad()
     {
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent ce) =>
                    {
                        ce = new CursesCharEvent(null, 'a', ModifierKey.None);
                        return 0;
                    });
 
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
 
-        _pump.Listen(CancellationToken.None)
+        _ = _pump.Listen(CancellationToken.None)
              .First(f => f.Type != EventType.Start)
              .ToString();
 
         _cursesMock.Verify(s => s.wget_event(new(10), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!), Times.Once);
     }
 
-    [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    [TestMethod, Timeout(_timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen3_Calls_Listen1()
     {
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent ce) =>
                    {
                        ce = new CursesCharEvent(null, 'a', ModifierKey.None);
                        return 0;
                    });
 
-        _pump.Listen(_window)
+        _ = _pump.Listen(_window)
              .First(f => f.Type != EventType.Start)
              .ToString();
 
@@ -707,20 +705,20 @@ public class EventPumpTests
             Times.Once);
     }
 
-    [TestMethod, Timeout(Timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
+    [TestMethod, Timeout(_timeout), SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Listen4_Calls_Listen2()
     {
-        _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
+        _ = _cursesMock.Setup(s => s.wget_event(It.IsAny<IntPtr>(), It.IsAny<int>(), out It.Ref<CursesEvent>.IsAny!))
                    .Returns((IntPtr _, int _, out CursesEvent ce) =>
                    {
                        ce = new CursesCharEvent(null, 'a', ModifierKey.None);
                        return 0;
                    });
 
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(10));
 
-        _pump.Listen()
+        _ = _pump.Listen()
              .First(f => f.Type != EventType.Start)
              .ToString();
 
@@ -728,18 +726,18 @@ public class EventPumpTests
     }
 
     [TestMethod]
-    public void Delegate_Throws_IfObjectIsNull() { Should.Throw<ArgumentNullException>(() => _pump.Delegate(null!)); }
+    public void Delegate_Throws_IfObjectIsNull() => Should.Throw<ArgumentNullException>(() => _pump.Delegate(null!));
 
-    [TestMethod, Timeout(Timeout)]
+    [TestMethod, Timeout(_timeout)]
     public void Delegate_EnqueuesObjectForProcessing()
     {
         _pump.Delegate("hello");
 
-        _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
+        _ = _cursesMock.Setup(s => s.newpad(It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(new IntPtr(1));
 
         foreach (var e in _pump.Listen(_source.Token)
-                               .Where(e => e.Type != EventType.Start && e.Type != EventType.Stop))
+                               .Where(e => e.Type is not EventType.Start and not EventType.Stop))
         {
             _source.Cancel();
 

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     /// </summary>
     /// <param name="terminal">The parent terminal.</param>
     /// <param name="mode">The mode of the manager.</param>
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     /// <exception cref="ArgumentNullException">The <paramref name="terminal" /> is <c>null</c>.</exception>
     internal SoftLabelKeyManager(Terminal terminal, SoftLabelKeyMode mode)
     {
@@ -52,13 +52,16 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
 
         if (mode != SoftLabelKeyMode.Disabled)
         {
-            terminal.Curses.slk_init((int) mode)
+            _ = terminal.Curses.slk_init((int) mode)
                     .Check(nameof(terminal.Curses.slk_init), "Failed to initialize soft label keys.");
         }
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Terminal" />
-    public Terminal Terminal { get; }
+    public Terminal Terminal
+    {
+        get;
+    }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Terminal" />
     ITerminal ISoftLabelKeyManager.Terminal => Terminal;
@@ -77,7 +80,7 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Style" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public Style Style
     {
         get
@@ -85,23 +88,30 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
             AssertEnabled();
             AssertSynchronized();
 
-            Terminal.Curses.slk_attr(out var attributes, out var colorPair)
+            _ = Terminal.Curses.slk_attr(out var attributes, out var colorPair)
                     .Check(nameof(Terminal.Curses.slk_attr), "Failed to get the soft label key attributes.");
 
-            return new() { Attributes = attributes, ColorMixture = new() { Handle = colorPair } };
+            return new()
+            {
+                Attributes = attributes,
+                ColorMixture = new()
+                {
+                    Handle = colorPair
+                }
+            };
         }
         set
         {
             AssertEnabled();
             AssertSynchronized();
 
-            Terminal.Curses.slk_attr_set(value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
+            _ = Terminal.Curses.slk_attr_set(value.Attributes, value.ColorMixture.Handle, IntPtr.Zero)
                     .Check(nameof(Terminal.Curses.slk_attr_set), "Failed to configure the soft label key attributes.");
         }
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.ColorMixture" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public ColorMixture ColorMixture
     {
         get => Style.ColorMixture;
@@ -110,13 +120,13 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
             AssertEnabled();
             AssertSynchronized();
 
-            Terminal.Curses.slk_color(value.Handle)
+            _ = Terminal.Curses.slk_color(value.Handle)
                     .Check(nameof(Terminal.Curses.slk_color), "Failed to configure the soft label key colors.");
         }
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.SetLabel" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void SetLabel(int index, string title, SoftLabelKeyAlignment align)
     {
         if (title == null)
@@ -132,84 +142,80 @@ public sealed class SoftLabelKeyManager: ISoftLabelKeyManager
         AssertEnabled();
         AssertSynchronized();
 
-        Terminal.Curses.slk_set(index + 1, title, (int) align)
+        _ = Terminal.Curses.slk_set(index + 1, title, (int) align)
                 .Check(nameof(Terminal.Curses.slk_set), "Failed to set the soft label.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.EnableAttributes" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void EnableAttributes(VideoAttribute attributes)
     {
         AssertEnabled();
         AssertSynchronized();
 
-        Terminal.Curses.slk_attr_on(attributes, IntPtr.Zero)
+        _ = Terminal.Curses.slk_attr_on(attributes, IntPtr.Zero)
                 .Check(nameof(Terminal.Curses.slk_attr_on), "Failed to configure the soft label key attributes.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.DisableAttributes" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void DisableAttributes(VideoAttribute attributes)
     {
         AssertEnabled();
         AssertSynchronized();
 
-        Terminal.Curses.slk_attr_off(attributes, IntPtr.Zero)
+        _ = Terminal.Curses.slk_attr_off(attributes, IntPtr.Zero)
                 .Check(nameof(Terminal.Curses.slk_attr_off), "Failed to configure the soft label key attributes.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Clear" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Clear()
     {
         AssertEnabled();
         AssertSynchronized();
 
-        Terminal.Curses.slk_clear()
+        _ = Terminal.Curses.slk_clear()
                 .Check(nameof(Terminal.Curses.slk_clear), "Failed to clear the soft label keys.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Restore" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Restore()
     {
         AssertEnabled();
         AssertSynchronized();
 
-        Terminal.Curses.slk_restore()
+        _ = Terminal.Curses.slk_restore()
                 .Check(nameof(Terminal.Curses.slk_restore), "Failed to restore the soft label keys.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.MarkDirty" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void MarkDirty()
     {
         AssertEnabled();
         AssertSynchronized();
 
-        Terminal.Curses.slk_touch()
+        _ = Terminal.Curses.slk_touch()
                 .Check(nameof(Terminal.Curses.slk_touch), "Failed to mark soft label keys as dirty.");
     }
 
     /// <inheritdoc cref="ISoftLabelKeyManager.Refresh" />
-    /// <exception cref="CursesOperationException">A Curses error occured.</exception>
+    /// <exception cref="CursesOperationException">A Curses error occurred.</exception>
     public void Refresh()
     {
         AssertEnabled();
         AssertSynchronized();
 
-        if (Terminal.AtomicRefreshOpen)
-        {
-            Terminal.Curses.slk_noutrefresh()
-                    .Check(nameof(Terminal.Curses.slk_noutrefresh), "Failed to queue soft label key refresh.");
-        } else
-        {
-            Terminal.Curses.slk_refresh()
+        _ = Terminal.AtomicRefreshOpen
+            ? Terminal.Curses.slk_noutrefresh()
+                    .Check(nameof(Terminal.Curses.slk_noutrefresh), "Failed to queue soft label key refresh.")
+            : Terminal.Curses.slk_refresh()
                     .Check(nameof(Terminal.Curses.slk_refresh), "Failed to perform soft label key refresh.");
-        }
     }
 
-    private void AssertSynchronized() { Terminal.AssertSynchronized(); }
+    private void AssertSynchronized() => Terminal.AssertSynchronized();
 
     private void AssertEnabled()
     {

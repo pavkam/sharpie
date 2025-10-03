@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -40,12 +40,18 @@ public interface ISurface: IDrawSurface
     ///     The Curses handle for the surface.
     /// </summary>
     /// <exception cref="ObjectDisposedException">Surface is no longer usable.</exception>
-    public IntPtr Handle { get; }
+    public IntPtr Handle
+    {
+        get;
+    }
 
     /// <summary>
     ///     Checks if the surface has been disposed and is no longer usable.
     /// </summary>
-    public bool Disposed { get; }
+    public bool Disposed
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets or sets the ability of the surface to scroll its contents when writing
@@ -57,7 +63,10 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    bool Scrollable { get; set; }
+    bool Scrollable
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Gets or sets the style of the surface.
@@ -68,7 +77,10 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    Style Style { get; set; }
+    Style Style
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Gets or sets the color mixture of the surface.
@@ -79,7 +91,10 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    ColorMixture ColorMixture { get; set; }
+    ColorMixture ColorMixture
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Gets or sets the surface background.
@@ -90,7 +105,10 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    (Rune @char, Style style) Background { get; set; }
+    (Rune @char, Style style) Background
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Gets the size of the surface.
@@ -101,7 +119,10 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    new Size Size { get; }
+    new Size Size
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets or sets the current position of the caret within the surface.
@@ -113,7 +134,10 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    Point CaretLocation { get; set; }
+    Point CaretLocation
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Specifies whether the surface has some "dirty" parts that need to be synchronized
@@ -125,7 +149,10 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    bool Dirty { get; }
+    bool Dirty
+    {
+        get;
+    }
 
     /// <summary>
     ///     Controls whether the caret is managed by the application and should not be managed by the hardware.
@@ -136,7 +163,10 @@ public interface ISurface: IDrawSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    bool ManagedCaret { get; set; }
+    bool ManagedCaret
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Enables specified attributes and keep the others untouched.

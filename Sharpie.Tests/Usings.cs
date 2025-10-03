@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -28,14 +28,19 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using Moq;
-global using Shouldly;
 global using System.Diagnostics.CodeAnalysis;
-global using System.Text;
 global using System.Drawing;
+global using System.Text;
+
+global using JetBrains.Annotations;
+
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+global using Moq;
+
 global using Sharpie.Abstractions;
 global using Sharpie.Backend;
-global using JetBrains.Annotations;
+
+global using Shouldly;
 
 [assembly: ExcludeFromCodeCoverage(Justification = "Not part of the library.")]

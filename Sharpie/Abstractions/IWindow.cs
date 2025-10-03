@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,10 @@ public interface IWindow: ITerminalSurface
     /// <summary>
     ///     The parent screen of this window.
     /// </summary>
-    IScreen Screen { get; }
+    IScreen Screen
+    {
+        get;
+    }
 
     /// <summary>
     ///     Lists of children of this object.
@@ -50,7 +53,10 @@ public interface IWindow: ITerminalSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    IEnumerable<ISubWindow> SubWindows { get; }
+    IEnumerable<ISubWindow> SubWindows
+    {
+        get;
+    }
 
     /// <summary>
     ///     Gets or sets the value indicating if the window is visible.
@@ -61,7 +67,10 @@ public interface IWindow: ITerminalSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    bool Visible { get; set; }
+    bool Visible
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Gets or sets the location of the window within its parent.
@@ -73,7 +82,10 @@ public interface IWindow: ITerminalSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe.</remarks>
-    Point Location { get; set; }
+    Point Location
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Gets or sets the size of the window.
@@ -85,7 +97,10 @@ public interface IWindow: ITerminalSurface
     ///     thread/context but wasn't.
     /// </exception>
     /// <remarks>This operation is not thread safe. The new size will be adjusted to match the parent's available space.</remarks>
-    new Size Size { get; set; }
+    new Size Size
+    {
+        get; set;
+    }
 
     /// <summary>
     ///     Send the window to the back of the Z-order.

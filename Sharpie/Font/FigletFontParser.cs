@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,9 +35,9 @@ namespace Sharpie.Font;
 /// </summary>
 internal static class FigletFontParser
 {
-    private const string Signature = "flf2a";
-    private const int StandardCharacterCount = 102;
-    private const int StartCharacterCodePoint = 32;
+    private const string _signature = "flf2a";
+    private const int _standardCharacterCount = 102;
+    private const int _startCharacterCodePoint = 32;
 
     /// <summary>
     ///     Parses the header of the font file.
@@ -56,15 +56,15 @@ internal static class FigletFontParser
         }
 
         var signatureAndHardBlank = components[0];
-        if (!signatureAndHardBlank.StartsWith(Signature))
+        if (!signatureAndHardBlank.StartsWith(_signature))
         {
             throw new FormatException($"Header: Invalid signature `{signatureAndHardBlank}`");
         }
 
         var hardBlank = '\0';
-        if (signatureAndHardBlank.Length > Signature.Length)
+        if (signatureAndHardBlank.Length > _signature.Length)
         {
-            var hardBlankStr = signatureAndHardBlank[Signature.Length..];
+            var hardBlankStr = signatureAndHardBlank[_signature.Length..];
             if (hardBlankStr.Length > 1)
             {
                 throw new FormatException($"Header: Invalid hard blank value `{hardBlankStr}`");
@@ -114,10 +114,12 @@ internal static class FigletFontParser
         if (fullLayout != 0)
         {
             layout = (FigletAttribute) fullLayout;
-        } else if (oldLayout == 0)
+        }
+        else if (oldLayout == 0)
         {
             layout = FigletAttribute.HorizontalFitting;
-        } else if (oldLayout != -1)
+        }
+        else if (oldLayout != -1)
         {
             layout = (FigletAttribute) oldLayout;
         }
@@ -154,7 +156,8 @@ internal static class FigletFontParser
         {
             index += 2;
             @base = 16;
-        } else if (n.IndexOf('0', index) == index)
+        }
+        else if (n.IndexOf('0', index) == index)
         {
             if (index == n.Length - 1)
             {
@@ -168,7 +171,8 @@ internal static class FigletFontParser
         try
         {
             return sign * Convert.ToInt32(n[index..], @base);
-        } catch (FormatException)
+        }
+        catch (FormatException)
         {
             throw new FormatException($"Character: Invalid code point {n}.");
         }
@@ -230,12 +234,7 @@ internal static class FigletFontParser
         Debug.Assert(reader != null);
 
         var line = await reader.ReadLineAsync();
-        if (line == null)
-        {
-            throw new FormatException("File: Unexpected end of font file.");
-        }
-
-        return line;
+        return line ?? throw new FormatException("File: Unexpected end of font file.");
     }
 
     /// <summary>
@@ -262,12 +261,9 @@ internal static class FigletFontParser
         var width = rows[0]
             .Length;
 
-        if (rows.Any(row => row.Length != width))
-        {
-            throw new FormatException("Character: Not all rows are of the same length in character.");
-        }
-
-        return (rows, width);
+        return rows.Any(row => row.Length != width)
+            ? throw new FormatException("Character: Not all rows are of the same length in character.")
+            : (rows, width);
     }
 
     /// <summary>
@@ -309,7 +305,7 @@ internal static class FigletFontParser
 
         for (var cl = 0; cl < commentCount; cl++)
         {
-            await GetLineAsync(reader);
+            _ = await GetLineAsync(reader);
         }
 
         var characters = new Dictionary<int, (string[] rows, int width)>();
@@ -336,5 +332,5 @@ internal static class FigletFontParser
     /// <returns>The header and collection of characters of the font.</returns>
     public static Task<(FigletHeader, IReadOnlyDictionary<int, (string[] rows, int width)>)>
         ParseFontFileAsync(TextReader reader) =>
-        ParseFontFileAsync(StartCharacterCodePoint, StandardCharacterCount, reader);
+        ParseFontFileAsync(_startCharacterCodePoint, _standardCharacterCount, reader);
 }

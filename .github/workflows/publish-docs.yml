@@ -1,0 +1,80 @@
+name: 📖 Publish documentation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "Sharpie/**"
+      - "README.md"
+      - "LICENSE"
+      - "docfx.json"
+
+permissions:
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  publish-docs:
+    name: 📖 Generate documentation
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy-to-github-pages.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: ☁️ Checkout repository
+        id: checkout-repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup environment
+        id: setup-environment
+        uses: ./.github/actions/setup
+
+      - name: 📚 Gather documentation
+        id: generate-documentation
+        shell: bash
+        run: make generate-docs
+
+      - name: ⬆️ Upload artifact
+        id: upload-artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./artifacts/_site
+
+      - name: 🚀 Deploy to GitHub Pages
+        id: deploy-to-github-pages
+        uses: actions/deploy-pages@v4
+
+  summary:
+    name: ✔︎ Generate summary
+    runs-on: ubuntu-latest
+    needs: publish-docs
+    if: always()
+    steps:
+      - name: 📝 Create summary
+        id: create-summary
+        shell: bash
+        run: |
+          echo "## 📖 Documentation Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Step | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
+
+          # Check if the main job succeeded
+          if [ "${{ needs.publish-docs.result }}" = "success" ]; then
+            echo "| Documentation Generation | ✅ Success |" >> $GITHUB_STEP_SUMMARY
+            echo "| GitHub Pages Deployment | ✅ Success |" >> $GITHUB_STEP_SUMMARY
+            echo "| Site URL | 🔗 [${{ needs.publish-docs.outputs.page_url }}](${{ needs.publish-docs.outputs.page_url }}) |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| Documentation Generation | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+            echo "| GitHub Pages Deployment | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Legend:** ✅ Success, ❌ Failed" >> $GITHUB_STEP_SUMMARY

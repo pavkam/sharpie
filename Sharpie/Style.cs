@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,26 +34,39 @@ namespace Sharpie;
 ///     Represents the style of the text (attributes and colors).
 /// </summary>
 [PublicAPI, DebuggerDisplay("{ToString(), nq}")]
-public struct Style
+public readonly struct Style
 {
     /// <summary>
     ///     The default terminal style.
     /// </summary>
-    public static Style Default { get; } =
-        new() { Attributes = VideoAttribute.None, ColorMixture = ColorMixture.Default };
+    public static Style Default
+    {
+        get;
+    } =
+        new()
+        {
+            Attributes = VideoAttribute.None,
+            ColorMixture = ColorMixture.Default
+        };
 
     /// <summary>
     ///     The attributes of the text.
     /// </summary>
-    public VideoAttribute Attributes { get; init; }
+    public VideoAttribute Attributes
+    {
+        get; init;
+    }
 
     /// <summary>
     ///     The color mixture.
     /// </summary>
-    public ColorMixture ColorMixture { get; init; }
+    public ColorMixture ColorMixture
+    {
+        get; init;
+    }
 
     /// <inheritdoc cref="object.ToString" />
-    public override string ToString() => $"{Attributes}, {ColorMixture}";
+    public override readonly string ToString() => $"{Attributes}, {ColorMixture}";
 
     /// <summary>
     ///     The equality operator.
@@ -72,9 +85,9 @@ public struct Style
     public static bool operator !=(Style left, Style right) => !(left == right);
 
     /// <inheritdoc cref="object.Equals(object)" />
-    public override bool Equals(object? obj) =>
+    public override readonly bool Equals(object? obj) =>
         obj is Style s && s.Attributes == Attributes && s.ColorMixture == ColorMixture;
 
     /// <inheritdoc cref="object.GetHashCode" />
-    public override int GetHashCode() => HashCode.Combine(Attributes, ColorMixture);
+    public override readonly int GetHashCode() => HashCode.Combine(Attributes, ColorMixture);
 }
