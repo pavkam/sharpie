@@ -52,7 +52,7 @@ test-and-report: check-tools test
 
 # Generate documentation
 generate-docs: check-tools
-    mv ./README.md ./index.md
-    mv ./LICENSE ./LICENSE.md
-    sed -i 's/LICENSE/LICENSE.md/g' index.md
-    dotnet docfx ./docfx.json
+	mv "./README.md" "./index.md"
+	@mv ./LICENSE ./LICENSE.md
+	@sed -i 's/LICENSE/LICENSE.md/g' index.md
+	@dotnet docfx ./docfx.json
