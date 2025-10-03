@@ -85,7 +85,8 @@ jobs:
         id: bump-version
         if: steps.check-changes.outputs.files_changed == 'true'
         run: |
-          sed -i "s|<PdCursesVersion>.*</PdCursesVersion>|<PdCursesVersion>$(shell date +%Y.%m.%d)</PdCursesVersion>|" NativeLibraries/Sharpie.NativeLibraries.PdCurses.csproj
+          VERSION=$(date +%Y.%m.%d)
+          sed -i "s|<PdCursesVersion>.*</PdCursesVersion>|<PdCursesVersion>$VERSION</PdCursesVersion>|" NativeLibraries/Sharpie.NativeLibraries.PdCurses.csproj
 
       - name: 📝 Create pull request
         id: create-pull-request
