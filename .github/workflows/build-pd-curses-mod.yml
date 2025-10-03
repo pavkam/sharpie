@@ -33,10 +33,10 @@ jobs:
           bind_mount_repository: yes
           commands: |
             cd vt
-            make
+            make WIDE=Y DLL=Y CHTYPE_32=Y
             mv libpdcurses.so libpdcursesmod-vt-arm.so
             cd ../fb
-            make
+            make WIDE=Y DLL=Y CHTYPE_32=Y
             mv libpdcurses.so libpdcursesmod-fb-arm.so
 
       - name: ⬆️ Upload artifacts (VT)
@@ -91,27 +91,27 @@ jobs:
         id: build-library-vt
         run: |
           cd vt
-          make
+          make WIDE=Y DLL=Y CHTYPE_32=Y
           mv libpdcurses.so libpdcursesmod-vt-${{ matrix.arch }}.so
 
       - name: 🛠️ Build library (FB)
         id: build-library-fb
         run: |
           cd fb
-          make
+          make WIDE=Y DLL=Y CHTYPE_32=Y
           mv libpdcurses.so libpdcursesmod-fb-${{ matrix.arch }}.so
 
       - name: 🛠️ Build library (SDL1)
         id: build-library-sdl1
         run: |
           cd sdl1
-          make
+          make WIDE=Y DLL=Y CHTYPE_32=Y
           mv libpdcurses.so libpdcursesmod-sdl1-${{ matrix.arch }}.so
       - name: 🛠️ Build library (SDL2)
         id: build-library-sdl2
         run: |
           cd sdl2
-          make
+          make WIDE=Y DLL=Y CHTYPE_32=Y
           mv libpdcurses.so libpdcursesmod-sdl2-${{ matrix.arch }}.so
 
       - name: ⬆️ Upload artifacts (VT)
@@ -181,14 +181,14 @@ jobs:
         id: build-library-vt
         run: |
           cd vt
-          make
+          make WIDE=Y DLL=Y CHTYPE_32=Y
           mv libpdcurses.dylib libpdcursesmod-vt-${{ matrix.arch }}.dylib
 
       - name: 🛠️ Build library (SDL2)
         id: build-library-sdl2
         run: |
           cd sdl2
-          make
+          make WIDE=Y DLL=Y CHTYPE_32=Y
           mv libpdcurses.dylib libpdcursesmod-sdl2-${{ matrix.arch }}.dylib
 
       - name: ⬆️ Upload artifacts (VT)
@@ -252,21 +252,21 @@ jobs:
         id: build-library-wingui
         run: |
           cd wingui
-          nmake -f Makefile.vc
+          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wingui-${{ matrix.arch }}.dll
 
       - name: 🛠️ Build library (WinCon)
         id: build-library-wincon
         run: |
           cd wincon
-          nmake -f Makefile.vc
+          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wincon-${{ matrix.arch }}.dll
 
       - name: 🛠️ Build library (VT)
         id: build-library-vt
         run: |
           cd vt
-          nmake -f Makefile.vc
+          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-vt-${{ matrix.arch }}.dll
 
       - name: ⬆️ Upload artifacts (WinGUI)

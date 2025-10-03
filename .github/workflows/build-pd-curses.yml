@@ -40,7 +40,7 @@ jobs:
         id: build-library
         run: |
           cd wincon
-          nmake -f Makefile.vc
+          nmake WIDE=Y DLL=Y -f Makefile.vc
           ren pdcurses.dll libpdcurses-wincon-x64.dll
 
       - name: ⬆️ Upload artifacts
