@@ -36,7 +36,7 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class Pad: Surface, IPad
 {
-    private readonly IList<SubPad> _subPads = new List<SubPad>();
+    private readonly IList<SubPad> _subPads = [];
     private IReadOnlyList<SubPad> _roSubPads = Array.Empty<SubPad>();
 
     /// <summary>

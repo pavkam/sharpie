@@ -1,30 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <AssemblyName>sharpie-demos-slk</AssemblyName>
-        <LangVersion>10</LangVersion>
-        <IsPackable>false</IsPackable>
-        <Title>A Curses-based terminal manipulation library.</Title>
-        <Description>Demo application for Sharpie library.</Description>
-        <Copyright>Alexandru Ciobanu</Copyright>
-        <PackageProjectUrl>https://github.com/pavkam/sharpie/</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/pavkam/sharpie/blob/main/LICENSE</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/pavkam/sharpie.git</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageVersion>1.0.0</PackageVersion>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.0</FileVersion>
-        <Authors>Alexandru Ciobanu</Authors>
-        <Product>Sharpie</Product>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\..\Sharpie\Sharpie.csproj"/>
-    </ItemGroup>
+  <PropertyGroup>
+    <AssemblyName>sharpie-demos-slk</AssemblyName>
+  </PropertyGroup>
 
 </Project>

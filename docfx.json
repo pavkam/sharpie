@@ -43,23 +43,16 @@
       },
       {
         "files": [
+          "**/*.md",
           "*.md",
           "toc.yml"
         ],
         "exclude": [
+          "artifacts/**",
           "lib/**",
           "README.md",
-          "LICENSE"
-        ]
-      },
-      {
-        "files": [
-          "**/*.md"
-        ],
-        "exclude": [
-          "artifacts/**",
-          "README.md",
-          "LICENSE"
+          "LICENSE",
+          "AGENTS.md"
         ]
       }
     ],

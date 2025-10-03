@@ -401,7 +401,7 @@ public class WindowTests
         _ = _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesOperationException>(() => w.Duplicate())
+        Should.Throw<CursesOperationException>(w.Duplicate)
               .Operation.ShouldBe("dupwin");
     }
 
@@ -505,7 +505,7 @@ public class WindowTests
         _ = _cursesMock.Setup(s => s.wresize(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.NotThrow(() => w.AdjustToExplicitArea());
+        Should.NotThrow(w.AdjustToExplicitArea);
     }
 
     [TestMethod, DataRow(0, 0, 8, 8, true), DataRow(5, 5, 15, 15, true), DataRow(5, 5, 5, 5, false)]
@@ -544,7 +544,7 @@ public class WindowTests
         _ = _cursesMock.Setup(s => s.mvwin(w.Handle, It.IsAny<int>(), It.IsAny<int>()))
                    .Returns(-1);
 
-        Should.NotThrow(() => w.AdjustToExplicitArea());
+        Should.NotThrow(w.AdjustToExplicitArea);
     }
 
     [TestMethod]
@@ -568,7 +568,7 @@ public class WindowTests
     {
         var w = new Window(_screen, new(1));
 
-        _ = Should.Throw<InvalidOperationException>(() => w.BringToFront());
+        _ = Should.Throw<InvalidOperationException>(w.BringToFront);
     }
 
     [TestMethod]
@@ -624,7 +624,7 @@ public class WindowTests
     {
         var w = new Window(_screen, new(1));
 
-        _ = Should.Throw<InvalidOperationException>(() => w.SendToBack());
+        _ = Should.Throw<InvalidOperationException>(w.SendToBack);
     }
 
     [TestMethod]
@@ -858,7 +858,7 @@ public class WindowTests
     {
         var w = new Window(_screen, IntPtr.MaxValue);
 
-        _ = Should.Throw<InvalidOperationException>(() => w.Visible.ToString());
+        _ = Should.Throw<InvalidOperationException>(() => _ = w.Visible.ToString());
     }
 
     [TestMethod]

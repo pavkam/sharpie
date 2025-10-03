@@ -1,45 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <!-- Version properties -->
+        <PdCursesVersion>1.0.4</PdCursesVersion>
+
+        <!-- Common properties -->
         <AssemblyName>sharpie-libs-pdcurses</AssemblyName>
         <Title>Package containing native versions of PDCurses libraries for Sharpie.</Title>
         <Description>A collection of Windows, Linux, MacOS (x64 and arm64) libraries that can be used in conjunction with Sharpie.</Description>
-        <Copyright>Alexandru Ciobanu</Copyright>
-        <PackageProjectUrl>https://github.com/pavkam/sharpie/</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/pavkam/sharpie/blob/main/lib/README.md</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/pavkam/sharpie.git</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
         <PackageTags>pdcurses curses terminal console</PackageTags>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageVersion>1.0.4</PackageVersion>
-        <AssemblyVersion>1.0.4</AssemblyVersion>
-        <FileVersion>1.0.4</FileVersion>
+        <PackageVersion>$(PdCursesVersion)</PackageVersion>
+        <AssemblyVersion>$(PdCursesVersion)</AssemblyVersion>
+        <FileVersion>$(PdCursesVersion)</FileVersion>
         <PackageId>Sharpie-Libs-PdCurses</PackageId>
-        <PackageIcon>logo-128.png</PackageIcon>
-        <LangVersion>10</LangVersion>
-        <Authors>Alexandru Ciobanu</Authors>
-        <Product>Sharpie</Product>
-        <RootNamespace>Sharpie.NativeLibraries.PdCurses</RootNamespace>
-        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
-
-    <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="[2022.3.1,]"/>
-        <PackageReference Include="Nito.AsyncEx.Context" Version="[5.1.2,6)"/>
-        <PackageReference Include="System.Diagnostics.Debug" Version="[4.3.0,5)"/>
-        <PackageReference Include="Sharpie-Curses" Version="[1.6.0,]"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Include="..\media\logo-128.png">
-            <Pack>True</Pack>
-            <PackagePath></PackagePath>
-            <Link>logo-128.png</Link>
-        </None>
-    </ItemGroup>
 
     <ItemGroup>
         <None Include="../lib/pdcurses/libpdcurses-wincon-x64.dll" Pack="true" PackagePath="runtimes/win-x64/native/pdcurses.dll"/>

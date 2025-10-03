@@ -256,7 +256,7 @@ public class SubPadTests
     {
         var sp = new SubPad(_parent, new(2));
 
-        Should.Throw<CursesOperationException>(() => sp.Duplicate())
+        Should.Throw<CursesOperationException>(sp.Duplicate)
               .Operation.ShouldBe("dupwin");
     }
 

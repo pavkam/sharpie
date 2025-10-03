@@ -376,7 +376,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         AssertSynchronized();
 
-        foreach (var (str, style) in text.Parts ?? Array.Empty<(string, Style)>())
+        foreach (var (str, style) in text.Parts ?? [])
         {
             var runes = str.EnumerateRunes()
                            .ToArray();
@@ -616,7 +616,7 @@ public abstract class Surface: ISurface, IDisposable
     {
         if (count <= 0)
         {
-            return Array.Empty<(Rune, Style)>();
+            return [];
         }
 
         AssertSynchronized();
@@ -651,8 +651,7 @@ public abstract class Surface: ISurface, IDisposable
 
         CaretLocation = caretAt;
 
-        return chars.Select(ch => Curses.FromComplexChar(ch))
-                    .ToArray();
+        return [.. chars.Select(Curses.FromComplexChar)];
     }
 
     /// <inheritdoc cref="ISurface.Clear" />

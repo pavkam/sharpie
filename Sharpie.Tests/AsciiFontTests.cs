@@ -44,16 +44,12 @@ public class AsciiFontTests
         }
     };
 
-    private class TestAsciiFont: AsciiFont
+    private class TestAsciiFont(string name, int height, int baseline, AsciiFontLayout layout): AsciiFont(name, height,
+        baseline, layout)
     {
         public Rune[]? GetGlyphsChars;
         public Style? GetGlyphsStyle;
         public readonly IDrawable Drawable = new Mock<IDrawable>().Object;
-
-        public TestAsciiFont(string name, int height, int baseline, AsciiFontLayout layout) : base(name, height,
-            baseline, layout)
-        {
-        }
 
         public override bool HasGlyph(Rune @char) => false;
 
@@ -109,7 +105,7 @@ public class AsciiFontTests
         var f = new TestAsciiFont("name", 8, 6, AsciiFontLayout.Fitted);
         f.GetGlyph(new('A'), _style1).ShouldBe(f.Drawable);
 
-        f.GetGlyphsChars.ShouldBe(new[] { new Rune('A') });
+        f.GetGlyphsChars.ShouldBe([new Rune('A')]);
         f.GetGlyphsStyle.ShouldBe(_style1);
     }
 }

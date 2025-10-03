@@ -279,7 +279,7 @@ public class SubWindowTests
         _ = _cursesMock.Setup(s => s.dupwin(It.IsAny<IntPtr>()))
                    .Returns(IntPtr.Zero);
 
-        Should.Throw<CursesOperationException>(() => sw.Duplicate())
+        Should.Throw<CursesOperationException>(sw.Duplicate)
               .Operation.ShouldBe("dupwin");
     }
 

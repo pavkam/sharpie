@@ -36,7 +36,7 @@ namespace Sharpie.Backend;
 [PublicAPI]
 public static class CursesBackend
 {
-    private static readonly string[] _libraryNameOrPaths = new[] { "libc" };
+    private static readonly string[] _libraryNameOrPaths = ["libc"];
 
     /// <summary>
     ///     Internal method that tries to load Curses backend, and, optionally libc.

@@ -98,7 +98,7 @@ public class FigletFontTests
     public void GetGlyphs_Throws_IfSpanIsEmpty()
     {
         _ = Should.Throw<ArgumentException>(() =>
-            _font.GetGlyphs(Array.Empty<Rune>(), _style1));
+            _font.GetGlyphs([], _style1));
     }
 
     [TestMethod]
@@ -190,7 +190,7 @@ public class FigletFontTests
     [TestMethod]
     public void GetGlyphs_MergesCharactersUsingLayoutRules()
     {
-        var glyph = _font.GetGlyphs(new[] { new Rune(3) }, _style1);
+        var glyph = _font.GetGlyphs([new Rune(3)], _style1);
         var contents = glyph.GetContents();
 
         var cols = new[,]

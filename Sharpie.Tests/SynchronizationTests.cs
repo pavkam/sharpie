@@ -198,7 +198,7 @@ public class SynchronizationTests
     public void Pad_Duplicate() => Check(() => _pad.Duplicate());
 
     [TestMethod]
-    public void Pad_Destroy() => Check(() => _pad.Destroy());
+    public void Pad_Destroy() => Check(_pad.Destroy);
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Screen_Windows() => Check(() => _terminal.Screen.Windows.ToArray());
@@ -213,7 +213,7 @@ public class SynchronizationTests
     public void Screen_Pad() => Check(() => _terminal.Screen.Pad(new(1, 1)));
 
     [TestMethod]
-    public void Screen_Destroy() => Check(() => _terminal.Screen.Destroy());
+    public void Screen_Destroy() => Check(_terminal.Screen.Destroy);
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void SoftLabelKeyManager_Style_Get() =>
@@ -245,19 +245,19 @@ public class SynchronizationTests
 
     [TestMethod]
     public void SoftLabelKeyManager_Clear() =>
-        Check(() => _terminal.SoftLabelKeys.Clear());
+        Check(_terminal.SoftLabelKeys.Clear);
 
     [TestMethod]
     public void SoftLabelKeyManager_Restore() =>
-        Check(() => _terminal.SoftLabelKeys.Restore());
+        Check(_terminal.SoftLabelKeys.Restore);
 
     [TestMethod]
     public void SoftLabelKeyManager_MarkDirty() =>
-        Check(() => _terminal.SoftLabelKeys.MarkDirty());
+        Check(_terminal.SoftLabelKeys.MarkDirty);
 
     [TestMethod]
     public void SoftLabelKeyManager_Refresh() =>
-        Check(() => _terminal.SoftLabelKeys.Refresh());
+        Check(_terminal.SoftLabelKeys.Refresh);
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void SubPad_Location_Get() => Check(() => _subPad.Location.ToString());
@@ -275,7 +275,7 @@ public class SynchronizationTests
     public void SubPad_Duplicate() => Check(() => _subPad.Duplicate());
 
     [TestMethod]
-    public void SubPad_Destroy() => Check(() => _subPad.Destroy());
+    public void SubPad_Destroy() => Check(_subPad.Destroy);
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void SubWindow_Location_Get() => Check(() => _subWindow.Location.ToString());
@@ -293,7 +293,7 @@ public class SynchronizationTests
     public void SubWindow_Duplicate() => Check(() => _subWindow.Duplicate());
 
     [TestMethod]
-    public void SubWindow_Destroy() => Check(() => _subWindow.Destroy());
+    public void SubWindow_Destroy() => Check(_subWindow.Destroy);
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void Window_SubWindows() => Check(() => _window.SubWindows.ToArray());
@@ -317,13 +317,13 @@ public class SynchronizationTests
     public void Window_WhenManaged_Visible_Set() => Check(() => _window.Visible = true);
 
     [TestMethod]
-    public void Window_WhenManaged_SendToBack() => Check(() => _window.SendToBack());
+    public void Window_WhenManaged_SendToBack() => Check(_window.SendToBack);
 
     [TestMethod]
-    public void Window_WhenManaged_BringToFront() => Check(() => _window.BringToFront());
+    public void Window_WhenManaged_BringToFront() => Check(_window.BringToFront);
 
     [TestMethod]
-    public void Window_AdjustToExplicitArea() => Check(() => _window.AdjustToExplicitArea());
+    public void Window_AdjustToExplicitArea() => Check(_window.AdjustToExplicitArea);
 
     [TestMethod]
     public void Window_SubWindow() => Check(() => _window.SubWindow(new(0, 0, 1, 1)));
@@ -332,7 +332,7 @@ public class SynchronizationTests
     public void Window_Duplicate() => Check(() => _window.Duplicate());
 
     [TestMethod]
-    public void Window_Destroy() => Check(() => _window.Destroy());
+    public void Window_Destroy() => Check(_window.Destroy);
 
     [TestMethod, SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public void TerminalSurface_ImmediateRefresh_Get() =>
@@ -344,7 +344,7 @@ public class SynchronizationTests
 
     [TestMethod]
     public void TerminalSurface_Refresh1() =>
-        Check(() => _terminalSurface.Refresh());
+        Check(_terminalSurface.Refresh);
 
     [TestMethod]
     public void TerminalSurface_Refresh2() =>
@@ -352,7 +352,7 @@ public class SynchronizationTests
 
     [TestMethod]
     public void TerminalSurface_Destroy() =>
-        Check(() => _terminalSurface.Destroy());
+        Check(_terminalSurface.Destroy);
 
     [TestMethod]
     public void Surface_DrawCell() =>
@@ -456,7 +456,7 @@ public class SynchronizationTests
     }
 
     [TestMethod]
-    public void Surface_DrawBorder2() => Check(() => _surface.DrawBorder());
+    public void Surface_DrawBorder2() => Check(_surface.DrawBorder);
 
     [TestMethod]
     public void Surface_RemoveText() => Check(() => _surface.RemoveText(1));
@@ -481,7 +481,7 @@ public class SynchronizationTests
 
     [TestMethod]
     public void Surface_MarkDirty2() =>
-        Check(() => _surface.MarkDirty());
+        Check(_surface.MarkDirty);
 
     [TestMethod]
     public void Surface_IsPointWithin() =>
@@ -503,7 +503,7 @@ public class SynchronizationTests
     public void Surface_LineDirty() => Check(() => _surface.LineDirty(0));
 
     [TestMethod]
-    public void Surface_Destroy() => Check(() => _surface.Destroy());
+    public void Surface_Destroy() => Check(_surface.Destroy);
 
     [TestMethod]
     public void Terminal_SetTitle() => Check(() => _terminal.SetTitle("test"));
@@ -517,11 +517,9 @@ public class SynchronizationTests
     [TestMethod]
     public void Terminal_TryUpdate() => Check(() => _terminal.TryUpdate());
 
-    private sealed class Surface: Sharpie.Surface
+    private sealed class Surface(Terminal terminal, IntPtr handle): Sharpie.Surface(terminal.Curses, handle)
     {
-        private readonly Terminal _terminal;
-
-        public Surface(Terminal terminal, IntPtr handle) : base(terminal.Curses, handle) => _terminal = terminal;
+        private readonly Terminal _terminal = terminal;
 
         protected internal override void AssertSynchronized() => _terminal.AssertSynchronized();
     }

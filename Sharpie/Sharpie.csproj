@@ -1,27 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <AssemblyName>sharpie</AssemblyName>
         <Title>A Curses-based terminal manipulation library.</Title>
         <Description>A Curses-based terminal manipulation library for modern .NET frameworks. This library wraps the NCurses, PDCurses and PDCursesMod libraries found on most platforms and adds a .NET-style layer on top of it.</Description>
-        <Copyright>Alexandru Ciobanu</Copyright>
-        <PackageProjectUrl>https://github.com/pavkam/sharpie/</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/pavkam/sharpie/blob/main/LICENSE</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/pavkam/sharpie.git</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>ncurses pdcurses pdcursesmod curses terminal console</PackageTags>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageVersion>1.7.0</PackageVersion>
-        <AssemblyVersion>1.7.0</AssemblyVersion>
-        <FileVersion>1.7.0</FileVersion>
         <PackageId>Sharpie-Curses</PackageId>
-        <PackageIcon>logo-128.png</PackageIcon>
-        <LangVersion>10</LangVersion>
-        <Authors>Alexandru Ciobanu</Authors>
-        <Product>Sharpie</Product>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,17 +13,4 @@
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="[2025.2.2,]" />
-        <PackageReference Include="Nito.AsyncEx.Context" Version="[5.1.2,6)" />
-        <PackageReference Include="System.Diagnostics.Debug" Version="[4.3.0,5)" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Include="..\media\logo-128.png">
-            <Pack>True</Pack>
-            <PackagePath></PackagePath>
-            <Link>logo-128.png</Link>
-        </None>
-    </ItemGroup>
 </Project>

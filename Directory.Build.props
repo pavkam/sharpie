@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- Central version properties for Sharpie -->
+    <SharpieVersion>1.7.0</SharpieVersion>
+
+    <!-- Common technical properties -->
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>default</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Sharpie</RootNamespace>
+
+    <!-- Common package properties -->
+    <Authors>Alexandru Ciobanu</Authors>
+    <Product>Sharpie</Product>
+    <Copyright>Alexandru Ciobanu</Copyright>
+    <PackageProjectUrl>https://github.com/pavkam/sharpie/</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/pavkam/sharpie.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>ncurses pdcurses pdcursesmod curses terminal console</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageIcon>logo-128.png</PackageIcon>
+
+    <PackageVersion>$(SharpieVersion)</PackageVersion>
+    <AssemblyVersion>$(SharpieVersion)</AssemblyVersion>
+    <FileVersion>$(SharpieVersion)</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2025.*" />
+    <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.*" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildProjectDirectory)/../media/logo-128.png" Pack="true" PackagePath="/" />
+    <None Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath="/" />
+    <None Include="$(MSBuildProjectDirectory)/../LICENSE" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>

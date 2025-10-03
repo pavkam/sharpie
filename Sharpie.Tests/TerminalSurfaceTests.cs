@@ -93,7 +93,7 @@ public class TerminalSurfaceTests
         _ = _cursesMock.Setup(s => s.wrefresh(It.IsAny<IntPtr>()))
                    .Returns(-1);
 
-        Should.Throw<CursesOperationException>(() => sa.Refresh())
+        Should.Throw<CursesOperationException>(sa.Refresh)
               .Operation.ShouldBe("wrefresh");
     }
 
@@ -107,7 +107,7 @@ public class TerminalSurfaceTests
 
         using (_terminal.AtomicRefresh())
         {
-            Should.Throw<CursesOperationException>(() => sa.Refresh())
+            Should.Throw<CursesOperationException>(sa.Refresh)
                   .Operation.ShouldBe("wnoutrefresh");
         }
     }

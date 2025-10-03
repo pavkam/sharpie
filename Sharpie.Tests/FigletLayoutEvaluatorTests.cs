@@ -124,7 +124,7 @@ public class FigletLayoutEvaluatorTests
     public void Join_RemovesAllWhiteSpacesFromRight(string ls, string rs, string exp)
     {
         var left = new StringBuilder(ls);
-        FigletLayoutEvaluator.Join(Left, new[] { left }, new[] { rs });
+        FigletLayoutEvaluator.Join(Left, [left], [rs]);
 
         left.ToString().ShouldBe(new(exp));
     }
@@ -135,7 +135,7 @@ public class FigletLayoutEvaluatorTests
     public void Join_RemovesAllWhiteSpacesFromRightUntilMerge(string ls, string rs, string exp)
     {
         var left = new StringBuilder(ls);
-        FigletLayoutEvaluator.Join(Left, new[] { left }, new[] { rs });
+        FigletLayoutEvaluator.Join(Left, [left], [rs]);
 
         left.ToString().ShouldBe(new(exp));
     }
@@ -147,7 +147,7 @@ public class FigletLayoutEvaluatorTests
     {
         var left = new StringBuilder(ls);
 
-        FigletLayoutEvaluator.Join(None, new[] { left }, new[] { rs });
+        FigletLayoutEvaluator.Join(None, [left], [rs]);
 
         left.ToString().ShouldBe(new(exp));
     }

@@ -37,8 +37,8 @@ namespace Sharpie;
 [PublicAPI]
 public sealed class Screen: TerminalSurface, IScreen
 {
-    private readonly IList<Pad> _pads = new List<Pad>();
-    private readonly IList<Window> _windows = new List<Window>();
+    private readonly IList<Pad> _pads = [];
+    private readonly IList<Window> _windows = [];
     private IReadOnlyList<Pad> _roPads = new List<Pad>();
     private IReadOnlyList<Window> _roWindows = new List<Window>();
 

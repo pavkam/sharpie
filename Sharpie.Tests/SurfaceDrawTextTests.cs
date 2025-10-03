@@ -268,10 +268,8 @@ public class SurfaceDrawTextTests
         _glyph2X2.Verify(v => v.DrawOnto(_sf10X5, new(0, 0, 2, 2), new(4, 0)), Times.Once);
     }
 
-    private sealed class Surface: Sharpie.Surface
+    private sealed class Surface(ICursesBackend curses, IntPtr handle): Sharpie.Surface(curses, handle)
     {
-        public Surface(ICursesBackend curses, IntPtr handle) : base(curses, handle) { }
-
         protected internal override void AssertSynchronized()
         {
         }
