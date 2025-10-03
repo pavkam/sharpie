@@ -1,20 +1,24 @@
-name: Build PDCursesMod
+name: 🚃 Build PDCursesMod
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 9 1 1-12 *'
+    - cron: "0 9 1 1-12 *"
 
 jobs:
   raspios_lite-arm:
     runs-on: ubuntu-latest
+    name: 🐧 Raspberry Pi OS Lite ARM
     steps:
-      - name: Clone PDCursesMod Master
+      - name: ☁️ Clone repository
+        id: checkout-repository
         uses: actions/checkout@master
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
-      - name: Make
+
+      - name: 🛠️ Build library
+        id: build-library
         uses: pguyot/arm-runner-action@v2
         with:
           base_image: raspios_lite:latest
@@ -26,28 +30,35 @@ jobs:
             cd ../fb
             make WIDE=Y DLL=Y CHTYPE_32=Y
             mv libpdcurses.so libpdcursesmod-fb-arm.so
-      - name: Upload Artifacts (1)
+
+      - name: ⬆️ Upload artifacts (VT)
+        id: upload-artifacts-vt
         uses: actions/upload-artifact@v4
         with:
           name: libraries-raspios_lite-arm-vt
-          path: 'vt/*.so'
+          path: "vt/*.so"
           if-no-files-found: error
-      - name: Upload Artifacts (2)
+
+      - name: ⬆️ Upload artifacts (FB)
+        id: upload-artifacts-fb
         uses: actions/upload-artifact@v4
         with:
           name: libraries-raspios_lite-arm-fb
-          path: 'fb/*.so'
+          path: "fb/*.so"
           if-no-files-found: error
 
   raspios_lite-arm64:
     runs-on: ubuntu-latest
+    name: 🐧 Raspberry Pi OS Lite ARM
     steps:
-      - name: Clone PDCursesMod Master
+      - name: ☁️ Clone repository
+        id: checkout-repository
         uses: actions/checkout@master
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
-      - name: Make
+      - name: 🛠️ Build library
+        id: build-library
         uses: pguyot/arm-runner-action@v2
         with:
           base_image: raspios_lite_arm64:latest
@@ -59,167 +70,221 @@ jobs:
             cd ../fb
             make WIDE=Y DLL=Y CHTYPE_32=Y
             mv libpdcurses.so libpdcursesmod-fb-arm64.so
-      - name: Upload Artifacts (1)
+
+      - name: ⬆️ Upload artifacts (VT)
+        id: upload-artifacts-vt
         uses: actions/upload-artifact@v4
         with:
           name: libraries-raspios_lite-arm64-vt
-          path: 'vt/*.so'
+          path: "vt/*.so"
           if-no-files-found: error
-      - name: Upload Artifacts (2)
+
+      - name: ⬆️ Upload artifacts (FB)
+        id: upload-artifacts-fb
         uses: actions/upload-artifact@v4
         with:
           name: libraries-raspios_lite-arm64-fb
-          path: 'fb/*.so'
+          path: "fb/*.so"
           if-no-files-found: error
 
   ubuntu-x64:
     runs-on: ubuntu-latest
+    name: 🐧 Ubuntu x64
     steps:
-      - name: Clone PDCursesMod Master
+      - name: ☁️ Clone repository
+        id: checkout-repository
         uses: actions/checkout@master
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
       - name: Install SDL1 and SDL2
         run: |
-         sudo apt update
-         sudo apt install libsdl1.2-dev libsdl-ttf2.0-dev libsdl2-dev libsdl2-ttf-dev
-      - name: Make VT
+          sudo apt update
+          sudo apt install libsdl1.2-dev libsdl-ttf2.0-dev libsdl2-dev libsdl2-ttf-dev
+
+      - name: 🛠️ Build library (VT)
+        id: build-library-vt
         run: |
-         cd vt
-         make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.so libpdcursesmod-vt-x64.so
-      - name: Make FB
+          cd vt
+          make WIDE=Y DLL=Y CHTYPE_32=Y
+          mv libpdcurses.so libpdcursesmod-vt-x64.so
+
+      - name: 🛠️ Build library (FB)
+        id: build-library-fb
         run: |
-         cd fb
-         make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.so libpdcursesmod-fb-x64.so
-      - name: Make SDL1
+          cd fb
+          make WIDE=Y DLL=Y CHTYPE_32=Y
+          mv libpdcurses.so libpdcursesmod-fb-x64.so
+
+      - name: 🛠️ Build library (SDL1)
+        id: build-library-sdl1
         run: |
-         cd sdl1
-         make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.so libpdcursesmod-sdl1-x64.so
-      - name: Make SDL2
+          cd sdl1
+          make WIDE=Y DLL=Y CHTYPE_32=Y
+          mv libpdcurses.so libpdcursesmod-sdl1-x64.so
+      - name: 🛠️ Build library (SDL2)
+        id: build-library-sdl2
         run: |
-         cd sdl2
-         make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.so libpdcursesmod-sdl2-x64.so
-      - name: Upload Artifacts (1)
+          cd sdl2
+          make WIDE=Y DLL=Y CHTYPE_32=Y
+          mv libpdcurses.so libpdcursesmod-sdl2-x64.so
+
+      - name: ⬆️ Upload artifacts (VT)
+        id: upload-artifacts-vt
         uses: actions/upload-artifact@v4
         with:
           name: libraries-ubuntu-x64-vt
-          path: 'vt/*.so'
+          path: "vt/*.so"
           if-no-files-found: error
-      - name: Upload Artifacts (2)
+
+      - name: ⬆️ Upload artifacts (FB)
+        id: upload-artifacts-fb
         uses: actions/upload-artifact@v4
         with:
           name: libraries-ubuntu-x64-fb
-          path: 'fb/*.so'
+          path: "fb/*.so"
           if-no-files-found: error
-      - name: Upload Artifacts (3)
+
+      - name: ⬆️ Upload artifacts (SDL1)
+        id: upload-artifacts-sdl1
         uses: actions/upload-artifact@v4
         with:
           name: libraries-ubuntu-x64-sdl1
-          path: 'sdl1/*.so'
+          path: "sdl1/*.so"
           if-no-files-found: error
-      - name: Upload Artifacts (4)
+
+      - name: ⬆️ Upload artifacts (SDL2)
+        id: upload-artifacts-sdl2
         uses: actions/upload-artifact@v4
         with:
           name: libraries-ubuntu-x64-sdl2
-          path: 'sdl2/*.so'
+          path: "sdl2/*.so"
           if-no-files-found: error
 
   macos-x64:
     runs-on: macOS-latest
+    name: 🍎 macOS x64
     steps:
-      - name: Clone PDCursesMod Master
+      - name: ☁️ Clone repository
+        id: checkout-repository
         uses: actions/checkout@master
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
-      - name: Install SDL2
+
+      - name: ⚙️ Setup environment
         run: |
-         brew install sdl2 sdl2_ttf
-      - name: Make VT
+          brew install sdl2 sdl2_ttf
+
+      - name: 🛠️ Build library (VT)
+        id: build-library-vt
         run: |
-         cd vt
-         make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.dylib libpdcursesmod-vt-x64.dylib
-      - name: Make SDL2
+          cd vt
+          make WIDE=Y DLL=Y CHTYPE_32=Y
+          mv libpdcurses.dylib libpdcursesmod-vt-x64.dylib
+
+      - name: 🛠️ Build library (SDL2)
+        id: build-library-sdl2
         run: |
-         cd sdl2
-         make WIDE=Y DLL=Y CHTYPE_32=Y
-         mv libpdcurses.dylib libpdcursesmod-sdl2-x64.dylib
-      - name: Upload Artifacts (1)
+          cd sdl2
+          make WIDE=Y DLL=Y CHTYPE_32=Y
+          mv libpdcurses.dylib libpdcursesmod-sdl2-x64.dylib
+
+      - name: ⬆️ Upload artifacts (VT)
+        id: upload-artifacts-vt
         uses: actions/upload-artifact@v4
         with:
           name: libraries-macos-x64-vt
-          path: 'vt/*.dylib'
+          path: "vt/*.dylib"
           if-no-files-found: error
-      - name: Upload Artifacts (2)
+
+      - name: ⬆️ Upload artifacts (SDL2)
+        id: upload-artifacts-sdl2
         uses: actions/upload-artifact@v4
         with:
           name: libraries-macos-x64-sdl2
-          path: 'sdl2/*.dylib'
+          path: "sdl2/*.dylib"
           if-no-files-found: error
 
   windows-x64:
+    name: 🪟 Windows x64
     runs-on: windows-2022
     steps:
-      - name: Clone PDCursesMod Master
+      - name: ☁️ Clone repository
+        id: checkout-repository
         uses: actions/checkout@master
         with:
           repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
-      - name: Setup Environment
+
+      - name: ⚙️ Setup environment
+        id: setup-environment
         uses: ilammy/msvc-dev-cmd@v1
-      - name: Make WinGUI
+
+      - name: 🛠️ Build library (WinGUI)
+        id: build-library-wingui
         run: |
           cd wingui
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wingui-x64.dll
-      - name: Make WinCon
+
+      - name: 🛠️ Build library (WinCon)
+        id: build-library-wincon
         run: |
           cd wincon
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wincon-x64.dll
-      - name: Make VT
+
+      - name: 🛠️ Build library (VT)
+        id: build-library-vt
         run: |
           cd vt
           nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-vt-x64.dll
-      - name: Upload Artifacts (1)
+
+      - name: ⬆️ Upload artifacts (WinGUI)
+        id: upload-artifacts-wingui
         uses: actions/upload-artifact@v4
         with:
           name: libraries-windows-x64-wingui
-          path: 'wingui/*.dll'
+          path: "wingui/*.dll"
           if-no-files-found: error
-      - name: Upload Artifacts (2)
+
+      - name: ⬆️ Upload artifacts (WinCon)
+        id: upload-artifacts-wincon
         uses: actions/upload-artifact@v4
         with:
           name: libraries-windows-x64-wincon
-          path: 'wincon/*.dll'
+          path: "wincon/*.dll"
           if-no-files-found: error
-      - name: Upload Artifacts (3)
+
+      - name: ⬆️ Upload artifacts (VT)
+        id: upload-artifacts-vt
         uses: actions/upload-artifact@v4
         with:
           name: libraries-windows-x64-vt
-          path: 'vt/*.dll'
+          path: "vt/*.dll"
           if-no-files-found: error
 
   create-pr:
     runs-on: ubuntu-latest
-    needs: [ubuntu-x64, macos-x64, windows-x64, raspios_lite-arm, raspios_lite-arm64]
+    needs:
+      [ubuntu-x64, macos-x64, windows-x64, raspios_lite-arm, raspios_lite-arm64]
     steps:
-      - name: Clone Repo
-        uses: actions/checkout@v3
-      - name: Download Artifacts
+      - name: ☁️ Clone repository
+        id: checkout-repository
+        uses: actions/checkout@v4
+
+      - name: 📥 Download artifacts
+        id: download-artifact
         uses: actions/download-artifact@v4.1.7
         with:
           pattern: libraries*
           merge-multiple: true
           path: lib/pdcursesmod
-      - name: Create Pull Request
+
+      - name: 📝 Create pull request
+        id: create-pull-request
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: (chore) Update PDCursesMod native libraries.
