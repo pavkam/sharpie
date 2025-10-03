@@ -20,7 +20,7 @@ jobs:
       - name: 🛠️ Patch "curses.h"
         id: patch-curses
         run: |
-          echo -e "#define PDC_DLL_BUILD 1\n#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
+          echo -e "#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
           cat curses.h >> curses.h.new && \
           rm curses.h && \
           mv curses.h.new curses.h
@@ -82,7 +82,7 @@ jobs:
       - name: 🛠️ Patch "curses.h"
         id: patch-curses
         run: |
-          echo -e "#define PDC_DLL_BUILD 1\n#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
+          echo -e "#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
           cat curses.h >> curses.h.new && \
           rm curses.h && \
           mv curses.h.new curses.h
@@ -172,7 +172,7 @@ jobs:
       - name: 🛠️ Patch "curses.h"
         id: patch-curses
         run: |
-          echo -e "#define PDC_DLL_BUILD 1\n#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
+          echo -e "#define PDC_WIDE 1\n#define CHTYPE_32 1\n#define PDC_RGB 1\n" > curses.h.new && \
           cat curses.h >> curses.h.new && \
           rm curses.h && \
           mv curses.h.new curses.h

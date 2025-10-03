@@ -22,11 +22,25 @@ jobs:
         id: setup-environment
         uses: ilammy/msvc-dev-cmd@v1
 
+      - name: 🛠️ Patch "curses.h"
+        id: patch-curses
+        shell: pwsh
+        run: |
+          $defines = @"
+          #define PDC_DLL_BUILD 1
+          #define PDC_WIDE 1
+          #define PDC_RGB 1
+          "@
+
+          $content = Get-Content -Path "curses.h" -Raw
+          $newContent = $defines + $content
+          Set-Content -Path "curses.h" -Value $newContent
+
       - name: 🛠️ Build library
         id: build-library
         run: |
           cd wincon
-          nmake WIDE=Y DLL=Y -f Makefile.vc
+          nmake -f Makefile.vc
           ren pdcurses.dll libpdcurses-wincon-x64.dll
 
       - name: ⬆️ Upload artifacts
