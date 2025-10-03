@@ -52,7 +52,9 @@ The original source repository is located [on GitHub](https://github.com/wmcbrin
 
 ## PDCursesMod
 
-PDCursesMod libraries are built for Linux, MacOs and Windows using [this workflow](https://github.com/pavkam/sharpie/blob/main/.github/workflows/pd-curses-mod-build-and-pack.yml).
+PDCursesMod libraries are built for Linux, MacOs and Windows using [this workflow](https://github.com/pavkam/sharpie/blob/main/.github/workflows/build-pd-curses-mod.yml).
+You can check it out to see the used compilation settings.
+All builds are compiled with `PDC_RGB` defined to ensure consistent RGB color ordering across platforms.
 
 > The `libpdcursesmod-vt-arm64.dylib` library has been built on a Mac M1 locally.
 > The `pdcursesmod-vt-arm64.dll`, `pdcursesmod-wincon-arm64.dll` and `pdcursesmod-wingui-arm64.dll` libraries have been built on a Windows 11 ARM locally.
