@@ -1,4 +1,4 @@
-name: 🚃 Build and Test on Pull Request
+name: 🧨 Verify pull request
 
 on:
   pull_request:
@@ -25,7 +25,7 @@ jobs:
 
       - name: ⏯️ Build and Test
         uses: ./.github/actions/build-and-test
-        
+
 
   summary:
     name: ✔︎ Generate summary

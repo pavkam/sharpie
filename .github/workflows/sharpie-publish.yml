@@ -1,4 +1,4 @@
-name: 🚃 Deploy packages
+name: 📦 Publish
 
 on:
   push:

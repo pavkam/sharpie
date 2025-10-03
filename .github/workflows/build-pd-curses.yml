@@ -1,4 +1,4 @@
-name: 🚃 Build PDCurses
+name: 🐍 Refresh PDCurses
 
 on:
   workflow_dispatch:

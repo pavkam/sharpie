@@ -1,4 +1,4 @@
-name: 🚃 Build NCurses
+name: 🐍 Refresh NCurses
 
 on:
   workflow_dispatch:

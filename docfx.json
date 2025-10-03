@@ -1,78 +1,78 @@
 {
-    "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
-    "metadata": [
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
         {
-            "src": [
-                {
-                    "src": ".",
-                    "exclude": [
-                        "**/bin/**",
-                        "**/obj/**"
-                    ],
-                    "files": [
-                        "Sharpie/*.csproj"
-                    ]
-                }
-            ],
-            "properties": {
-                "TargetFramework": "net6.0"
-            },
-            "dest": "artifacts/sdk"
+          "src": ".",
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**"
+          ],
+          "files": [
+            "Sharpie/*.csproj"
+          ]
         }
-    ],
-    "build": {
-        "content": [
-            {
-                "files": [
-                    "**/*.yml"
-                ],
-                "src": "artifacts/sdk",
-                "dest": "api"
-            },
-            {
-                "files": [
-                    "*.md",
-                    "toc.yml"
-                ],
-                "exclude": [
-                    "lib/**"
-                ]
-            },
-            {
-                "files": [
-                    "**/*.md"
-                ],
-                "exclude": [
-                    "artifacts/**"
-                ]
-            }
-        ],
-        "resource": [
-            {
-                "files": [
-                    "media/**"
-                ]
-            }
-        ],
-        "dest": "artifacts/_site",
-        "template": [
-            "default",
-            "modern",
-            "statictoc"
-        ],
-        "markdownEngineName": "markdig",
-        "xrefService": [
-            "https://xref.docs.microsoft.com/query?uid={uid}"
-        ],
-        "globalMetadata": {
-            "_appName": "Sharpie",
-            "_appTitle": "Sharpie",
-            "_enableSearch": true,
-            "_appLogoPath": "media/logo-48.png",
-            "_appFaviconPath": "media/logo-48.png",
-            "_disableContribution": true,
-            "_googleAnalyticsTagId": "UA-143067975-1",
-            "pdf": false
-        }
+      ],
+      "properties": {
+        "TargetFramework": "net9.0"
+      },
+      "dest": "artifacts/sdk"
     }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.yml"
+        ],
+        "src": "artifacts/sdk",
+        "dest": "api"
+      },
+      {
+        "files": [
+          "*.md",
+          "toc.yml"
+        ],
+        "exclude": [
+          "lib/**"
+        ]
+      },
+      {
+        "files": [
+          "**/*.md"
+        ],
+        "exclude": [
+          "artifacts/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "media/**"
+        ]
+      }
+    ],
+    "dest": "artifacts/_site",
+    "template": [
+      "default",
+      "modern",
+      "statictoc"
+    ],
+    "markdownEngineName": "markdig",
+    "xrefService": [
+      "https://xref.docs.microsoft.com/query?uid={uid}"
+    ],
+    "globalMetadata": {
+      "_appName": "Sharpie",
+      "_appTitle": "Sharpie",
+      "_enableSearch": true,
+      "_appLogoPath": "media/logo-48.png",
+      "_appFaviconPath": "media/logo-48.png",
+      "_disableContribution": true,
+      "_googleAnalyticsTagId": "UA-143067975-1",
+      "pdf": false
+    }
+  }
 }

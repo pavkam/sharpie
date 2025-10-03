@@ -51,7 +51,7 @@ test-report: check-tools
 	@[ -f $(SUMMARY_FILE) ] && cat $(SUMMARY_FILE) || echo " 🚨 Summary not found"
 
 # Generate documentation
-generate-docs: check-tools
+generate-docs: check-tools build
 	mv "./README.md" "./index.md"
 	@mv ./LICENSE ./LICENSE.md
 	@sed -i 's/LICENSE/LICENSE.md/g' index.md
