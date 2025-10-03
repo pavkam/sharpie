@@ -297,6 +297,12 @@ jobs:
             echo "files_changed=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: 🔼 Bump version
+        id: bump-version
+        if: steps.check-changes.outputs.files_changed == 'true'
+        run: |
+          sed -i "s|<PdCursesModVersion>.*</PdCursesModVersion>|<PdCursesModVersion>$(shell date +%Y.%m.%d)</PdCursesModVersion>|" NativeLibraries/Sharpie.NativeLibraries.PdCursesMod.csproj
+
       - name: 📝 Create pull request
         id: create-pull-request
         uses: peter-evans/create-pull-request@v6
