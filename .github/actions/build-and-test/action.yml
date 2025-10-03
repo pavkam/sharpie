@@ -60,7 +60,7 @@ runs:
     - name: ⬆️ Publish test results
       id: publish-test-results
       uses: EnricoMi/publish-unit-test-result-action@v2
-      if: ${{ always() }}
+      if: ${{ always() && runner.os == 'Linux' }}
       with:
         check_name: "🧪 Test results on ${{ runner.os }}"
         files: "**/TestResults/**/test-results.trx"
