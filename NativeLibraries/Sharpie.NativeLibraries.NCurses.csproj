@@ -2,16 +2,16 @@
 
     <PropertyGroup>
         <!-- Version properties -->
-        <NCursesVersion>2025.10.03</NCursesVersion>
+        <OverallVersion>2025.10.03</OverallVersion>
 
         <!-- Common properties -->
         <AssemblyName>sharpie-libs-ncurses</AssemblyName>
         <Title>Package containing native versions of NCurses libraries for Sharpie.</Title>
         <Description>A collection of Windows, Linux, MacOS (x64 and arm64) libraries that can be used in conjunction with Sharpie.</Description>
         <PackageTags>ncurses curses terminal console</PackageTags>
-        <PackageVersion>$(NCursesVersion)</PackageVersion>
-        <AssemblyVersion>$(NCursesVersion)</AssemblyVersion>
-        <FileVersion>$(NCursesVersion)</FileVersion>
+        <PackageVersion>$(OverallVersion)</PackageVersion>
+        <AssemblyVersion>$(OverallVersion)</AssemblyVersion>
+        <FileVersion>$(OverallVersion)</FileVersion>
         <PackageId>Sharpie-Libs-NCurses</PackageId>
     </PropertyGroup>
 

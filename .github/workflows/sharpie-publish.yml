@@ -43,15 +43,10 @@ jobs:
             LIB_PKG=${SPLIT[1]}
             LIB_MONIKER=${SPLIT[2]}
 
-            V1=`cat $LIB_PATH | sed -n "s/\s*<FileVersion>\(.*\)<\/FileVersion>$/\1/p"`
-            V2=`cat $LIB_PATH | sed -n "s/\s*<AssemblyVersion>\(.*\)<\/AssemblyVersion>$/\1/p"`
-            V3=`cat $LIB_PATH | sed -n "s/\s*<PackageVersion>\(.*\)<\/PackageVersion>$/\1/p"`
-            if [ "$V1" != "$V2" ] || [ "$V2" != "$V3" ]; then
-              exit 1
-            fi
+            VERSION=`cat $LIB_PATH | sed -n "s/\s*<OverallVersion>\(.*\)<\/OverallVersion>$/\1/p"`
 
-            echo "version=$V3" >> $GITHUB_OUTPUT
-            DEP=`wget -q https://www.nuget.org/api/v2/package/$LIB_PKG/$V3 -O /dev/null || echo NO`
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            DEP=`wget -q https://www.nuget.org/api/v2/package/$LIB_PKG/$VERSION -O /dev/null || echo NO`
 
             if [ "$DEP" = "NO" ]; then
               echo "${LIB_MONIKER}_deployed=no" >> $GITHUB_OUTPUT

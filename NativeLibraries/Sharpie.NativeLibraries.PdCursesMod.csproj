@@ -2,16 +2,16 @@
 
     <PropertyGroup>
         <!-- Version properties -->
-        <PdCursesModVersion>2025.10.03</PdCursesModVersion>
+        <OverallVersion>2025.10.03</OverallVersion>
 
         <!-- Common properties -->
         <AssemblyName>sharpie-libs-pdcursesmod</AssemblyName>
         <Title>Package containing native versions of PDCursesMod libraries for Sharpie.</Title>
         <Description>A collection of Windows, Linux, MacOS (x64 and arm64) libraries that can be used in conjunction with Sharpie.</Description>
         <PackageTags>pdcursesmod curses terminal console</PackageTags>
-        <PackageVersion>$(PdCursesModVersion)</PackageVersion>
-        <AssemblyVersion>$(PdCursesModVersion)</AssemblyVersion>
-        <FileVersion>$(PdCursesModVersion)</FileVersion>
+        <PackageVersion>$(OverallVersion)</PackageVersion>
+        <AssemblyVersion>$(OverallVersion)</AssemblyVersion>
+        <FileVersion>$(OverallVersion)</FileVersion>
         <PackageId>Sharpie-Libs-PdCursesMod</PackageId>
     </PropertyGroup>
 

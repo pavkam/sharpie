@@ -200,7 +200,7 @@ jobs:
         if: steps.check-changes.outputs.files_changed == 'true'
         run: |
           VERSION=$(date +%Y.%m.%d)
-          sed -i "s|<NCursesVersion>.*</NCursesVersion>|<NCursesVersion>$VERSION</NCursesVersion>|" NativeLibraries/Sharpie.NativeLibraries.NCurses.csproj
+          sed -i "s|<OverallVersion>.*</OverallVersion>|<OverallVersion>$VERSION</OverallVersion>|" NativeLibraries/Sharpie.NativeLibraries.NCurses.csproj
 
       - name: 📝 Create pull request
         id: create-pull-request
