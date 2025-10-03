@@ -11,14 +11,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  test:
-    name: 💝 Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-      fail-fast: false # Don't fail all jobs if one fails
-
+  test-ubuntu:
+    name: 💝 Test on Ubuntu
+    runs-on: ubuntu-latest
     steps:
       - name: ☁️ Checkout repository
         uses: actions/checkout@v4
@@ -26,12 +21,31 @@ jobs:
       - name: ⏯️ Build and Test
         uses: ./.github/actions/build-and-test
 
+  test-windows:
+    name: 💝 Test on Windows
+    runs-on: windows-latest
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⏯️ Build and Test
+        uses: ./.github/actions/build-and-test
+
+  test-macos:
+    name: 💝 Test on macOS
+    runs-on: macos-latest
+    steps:
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⏯️ Build and Test
+        uses: ./.github/actions/build-and-test
 
   summary:
     name: ✔︎ Generate summary
-    needs: test
+    needs: [test-ubuntu, test-windows, test-macos]
     runs-on: ubuntu-latest
-    if: always()
+    if: ${{ always() }}
 
     steps:
       - name: ☁️ Checkout repository
@@ -42,6 +56,60 @@ jobs:
 
       - name: 📝 Create summary
         run: |
-          echo "## CI Build Summary" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Build and tests completed on all platforms." >> $GITHUB_STEP_SUMMARY
-          echo "📊 Check coverage reports in the artifacts section." >> $GITHUB_STEP_SUMMARY
+          # Evaluate individual platform statuses
+          if [[ "${{ needs.test-ubuntu.result }}" == "success" ]]; then
+            UBUNTU_ICON="✅"
+            UBUNTU_TEXT="Success"
+          else
+            UBUNTU_ICON="❌"
+            UBUNTU_TEXT="Failed"
+          fi
+
+          if [[ "${{ needs.test-windows.result }}" == "success" ]]; then
+            WINDOWS_ICON="✅"
+            WINDOWS_TEXT="Success"
+          else
+            WINDOWS_ICON="❌"
+            WINDOWS_TEXT="Failed"
+          fi
+
+          if [[ "${{ needs.test-macos.result }}" == "success" ]]; then
+            MACOS_ICON="✅"
+            MACOS_TEXT="Success"
+          else
+            MACOS_ICON="❌"
+            MACOS_TEXT="Failed"
+          fi
+
+          # Count successful platforms
+          SUCCESS_COUNT=0
+          if [[ "${{ needs.test-ubuntu.result }}" == "success" ]]; then SUCCESS_COUNT=$((SUCCESS_COUNT + 1)); fi
+          if [[ "${{ needs.test-windows.result }}" == "success" ]]; then SUCCESS_COUNT=$((SUCCESS_COUNT + 1)); fi
+          if [[ "${{ needs.test-macos.result }}" == "success" ]]; then SUCCESS_COUNT=$((SUCCESS_COUNT + 1)); fi
+
+          # Determine overall status
+          if [[ $SUCCESS_COUNT -eq 3 ]]; then
+            OVERALL_ICON="✅"
+            OVERALL_TEXT="All platforms passed"
+            DETAILS_TEXT="📊 Check coverage reports in the artifacts section"
+          elif [[ $SUCCESS_COUNT -gt 0 ]]; then
+            OVERALL_ICON="⚠️"
+            OVERALL_TEXT="$SUCCESS_COUNT of 3 platforms passed"
+            DETAILS_TEXT="🔍 Check the job logs for failed platforms"
+          else
+            OVERALL_ICON="❌"
+            OVERALL_TEXT="All platforms failed"
+            DETAILS_TEXT="🔍 Check the job logs for detailed error information"
+          fi
+
+          echo "## 🧨 CI Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Platform | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Ubuntu | $UBUNTU_ICON $UBUNTU_TEXT |" >> $GITHUB_STEP_SUMMARY
+          echo "| Windows | $WINDOWS_ICON $WINDOWS_TEXT |" >> $GITHUB_STEP_SUMMARY
+          echo "| macOS | $MACOS_ICON $MACOS_TEXT |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "$OVERALL_ICON $OVERALL_TEXT" >> $GITHUB_STEP_SUMMARY
+          echo "$DETAILS_TEXT" >> $GITHUB_STEP_SUMMARY

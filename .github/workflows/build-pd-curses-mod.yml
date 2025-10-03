@@ -372,6 +372,3 @@ jobs:
           else
             echo "| Status | ❌ PR Creation Failed |" >> $GITHUB_STEP_SUMMARY
           fi
-
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Legend:** ✅ Success, ❌ Failed, 🔄 Changes Detected, ⏭️ No Changes" >> $GITHUB_STEP_SUMMARY

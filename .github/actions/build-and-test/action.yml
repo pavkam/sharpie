@@ -54,32 +54,48 @@ runs:
       id: upload-coverage-report
       uses: actions/upload-artifact@v4
       with:
-        name: CoverageReport-${{ matrix.os }}
+        name: CoverageReport-${{ runner.os }}
         path: ${{ inputs.coverage-report-path }}
 
     - name: ⬆️ Publish test results
       id: publish-test-results
       uses: EnricoMi/publish-unit-test-result-action@v2
-      if: ${{ always() && runner.os == 'Linux' }}
+      if: ${{ always() }}
       with:
+        check_name: "🧪 Test results on ${{ runner.os }}"
         files: "**/TestResults/**/test-results.trx"
 
     - name: 📝 Summarize test results
       id: summarize-test-results
+      if: ${{ always() }}
       shell: bash
       run: |
         make test-report COVERAGE_REPORT_PATH=${{ inputs.coverage-report-path }}
 
+    - name: 📊 Extract coverage percentage
+      id: coverage
+      if: ${{ always() && runner.os == 'Linux' }}
+      shell: bash
+      run: |
+        # Extract coverage percentage from the generated report
+        if [ -f "${{ inputs.coverage-report-path }}/Summary.md" ]; then
+          COVERAGE=$(grep -o 'Line coverage: [0-9.]*%' ${{ inputs.coverage-report-path }}/Summary.md | grep -o '[0-9.]*' || echo "0")
+        else
+          COVERAGE="0"
+        fi
+        echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+        echo "Coverage: $COVERAGE%"
+
     - name: ⬆️ Publish test result summary (macOS & Linux)
       id: publish-test-summary-macos-and-linux
-      if: always() && (runner.os == 'macOS' || runner.os == 'Linux')
+      if: ${{ always() && (runner.os == 'macOS' || runner.os == 'Linux') }}
       shell: bash
       run: |
         cat ${{ inputs.coverage-report-path }}/Summary.md >> $GITHUB_STEP_SUMMARY
 
     - name: ⬆️ Publish test results (Windows)
       id: publish-test-results-windows
-      if: always() && runner.os == 'Windows'
+      if: ${{ always() && runner.os == 'Windows' }}
       shell: pwsh
       run: |
         Get-Content ${{ inputs.coverage-report-path }}\Summary.md | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
