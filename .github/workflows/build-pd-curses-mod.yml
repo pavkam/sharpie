@@ -252,21 +252,21 @@ jobs:
         id: build-library-wingui
         run: |
           cd wingui
-          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
+          nmake PLATFORM=${{ matrix.arch }} WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wingui-${{ matrix.arch }}.dll
 
       - name: 🛠️ Build library (WinCon)
         id: build-library-wincon
         run: |
           cd wincon
-          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
+          nmake PLATFORM=${{ matrix.arch }} WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-wincon-${{ matrix.arch }}.dll
 
       - name: 🛠️ Build library (VT)
         id: build-library-vt
         run: |
           cd vt
-          nmake WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
+          nmake PLATFORM=${{ matrix.arch }} WIDE=Y DLL=Y CHTYPE_32=Y -f Makefile.vc
           ren pdcurses.dll libpdcursesmod-vt-${{ matrix.arch }}.dll
 
       - name: ⬆️ Upload artifacts (WinGUI)
