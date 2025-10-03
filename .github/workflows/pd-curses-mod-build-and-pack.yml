@@ -169,7 +169,7 @@ jobs:
       - name: Clone PDCursesMod Master
         uses: actions/checkout@master
         with:
-          repository: pavkam/PDCursesMod-fix
+          repository: Bill-Gray/PDCursesMod
           ref: refs/heads/master
       - name: Setup Environment
         uses: ilammy/msvc-dev-cmd@v1
