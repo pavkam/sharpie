@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@ namespace Sharpie.Font;
 /// </summary>
 internal static class FigletLayoutEvaluator
 {
-    private static readonly IReadOnlySet<char> UnderscoreReplaceChars = new HashSet<char>
+    private static readonly IReadOnlySet<char> _underscoreReplaceChars = new HashSet<char>
     {
         '|',
         '/',
@@ -50,7 +50,7 @@ internal static class FigletLayoutEvaluator
         '>'
     };
 
-    private static readonly IReadOnlyDictionary<char, int> ClassReplaceChars = new Dictionary<char, int>
+    private static readonly IReadOnlyDictionary<char, int> _classReplaceChars = new Dictionary<char, int>
     {
         { '|', 0 },
         { '/', 1 },
@@ -200,12 +200,12 @@ internal static class FigletLayoutEvaluator
 
         if (attributes.HasFlag(FigletAttribute.HorizontalSmushingRule2))
         {
-            if (left == '_' && UnderscoreReplaceChars.Contains(right))
+            if (left == '_' && _underscoreReplaceChars.Contains(right))
             {
                 return right;
             }
 
-            if (right == '_' && UnderscoreReplaceChars.Contains(left))
+            if (right == '_' && _underscoreReplaceChars.Contains(left))
             {
                 return left;
             }
@@ -213,8 +213,8 @@ internal static class FigletLayoutEvaluator
 
         if (attributes.HasFlag(FigletAttribute.HorizontalSmushingRule3))
         {
-            if (ClassReplaceChars.TryGetValue(left, out var lp) &&
-                ClassReplaceChars.TryGetValue(right, out var rp) &&
+            if (_classReplaceChars.TryGetValue(left, out var lp) &&
+                _classReplaceChars.TryGetValue(right, out var rp) &&
                 rp != lp)
             {
                 return lp > rp ? left : right;

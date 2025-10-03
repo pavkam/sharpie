@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -470,8 +470,8 @@ internal abstract class BaseCursesBackend: ICursesBackend
                     return result;
                 }
 
-                var (mb, mst, mm) = DecodeRawMouseButtonState(ms.buttonState);
-                @event = new CursesMouseEvent(ms.x, ms.y, mb, mst, mm);
+                var (mb, mst, mm) = DecodeRawMouseButtonState(ms.ButtonState);
+                @event = new CursesMouseEvent(ms.X, ms.Y, mb, mst, mm);
                 break;
             case CursesKeyCodeType.Key:
                 var (k, c, m) = DecodeRawKey(keyCode);

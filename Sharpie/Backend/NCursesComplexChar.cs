@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,24 +37,24 @@ namespace Sharpie.Backend;
 internal struct NCursesComplexChar
 {
     [MarshalAs(UnmanagedType.U4), UsedImplicitly]
-    internal uint _attrAndColorPair;
+    internal uint AttrAndColorPair;
 
     [MarshalAs(UnmanagedType.U4), UsedImplicitly]
-    internal uint _char0;
+    internal uint Char0;
 
     [MarshalAs(UnmanagedType.U4), UsedImplicitly]
-    internal uint _char1;
+    internal uint Char1;
 
     [MarshalAs(UnmanagedType.U4), UsedImplicitly]
-    internal uint _char2;
+    internal uint Char2;
 
     [MarshalAs(UnmanagedType.U4), UsedImplicitly]
-    internal uint _char3;
+    internal uint Char3;
 
     [MarshalAs(UnmanagedType.U4), UsedImplicitly]
-    internal uint _char4;
+    internal uint Char4;
 
     /// <inheritdoc cref="object.ToString" />
     public override readonly string ToString() =>
-        $"{_attrAndColorPair:X8}-{_char0:X8}:{_char1:X8}:{_char2:X8}:{_char3:X8}:{_char4:X8}";
+        $"{AttrAndColorPair:X8}-{Char0:X8}:{Char1:X8}:{Char2:X8}:{Char3:X8}:{Char4:X8}";
 }

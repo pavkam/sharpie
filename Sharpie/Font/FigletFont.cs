@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -86,7 +86,7 @@ public sealed class FigletFont: AsciiFont
             throw new ArgumentException("Chars cannot be empty.", nameof(chars));
         }
 
-        char MergeFunc(char l, char r) =>
+        char mergeFunc(char l, char r) =>
             FigletLayoutEvaluator.HorizontalJoin(_header.HardBlankChar, _header.Attributes, l, r);
 
         StringBuilder[]? rep = null;
@@ -124,7 +124,7 @@ public sealed class FigletFont: AsciiFont
             }
             else
             {
-                FigletLayoutEvaluator.Join(MergeFunc, rep, rows);
+                FigletLayoutEvaluator.Join(mergeFunc, rep, rows);
             }
         }
 

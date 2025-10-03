@@ -1414,9 +1414,9 @@ public class BaseCursesBackendTests
                     {
                         ms = new()
                         {
-                            x = 10,
-                            y = 20,
-                            buttonState = 999
+                            X = 10,
+                            Y = 20,
+                            ButtonState = 999
                         };
                         return 0;
                     });
@@ -1450,9 +1450,9 @@ public class BaseCursesBackendTests
                     {
                         ms = new()
                         {
-                            x = 10,
-                            y = 20,
-                            buttonState = 999
+                            X = 10,
+                            Y = 20,
+                            ButtonState = 999
                         };
                         return -1;
                     });

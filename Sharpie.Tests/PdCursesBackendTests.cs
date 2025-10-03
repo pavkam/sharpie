@@ -65,7 +65,7 @@ public class PdCursesBackendTests
      DataRow(-1)]
     public void getmouse_IsRelayedToLibrary(int ret)
     {
-        var exp = new CursesMouseState { id = 199 };
+        var exp = new CursesMouseState { Id = 199 };
         _ = _nativeSymbolResolverMock.MockResolve<PdCursesFunctionMap.getmouse>()
                                  .Setup(s => s(out It.Ref<CursesMouseState>.IsAny))
                                  .Returns((out CursesMouseState o) =>

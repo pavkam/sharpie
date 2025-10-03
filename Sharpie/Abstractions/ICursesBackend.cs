@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,6 +39,7 @@ namespace Sharpie.Abstractions;
 [PublicAPI, SuppressMessage("ReSharper", "InconsistentNaming"), SuppressMessage("ReSharper", "IdentifierTypo")]
 public interface ICursesBackend
 {
+#pragma warning disable IDE1006 // Naming Styles -- these are native names
     public delegate int ripoffline_callback(IntPtr window, int columns);
 
     int baudrate();
@@ -291,4 +292,5 @@ public interface ICursesBackend
     int mouseinterval(int millis);
 
     void set_title(string title);
+#pragma warning restore IDE1006 // Naming Styles
 }

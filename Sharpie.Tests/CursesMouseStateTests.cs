@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022-2023, Alexandru Ciobanu
+Copyright (c) 2022-2025, Alexandru Ciobanu
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -38,11 +38,11 @@ public class CursesMouseStateTests
     {
         var nc = new CursesMouseState
         {
-            id = 11,
-            x = 33,
-            y = 44,
-            z = 22,
-            buttonState = 456
+            Id = 11,
+            X = 33,
+            Y = 44,
+            Z = 22,
+            ButtonState = 456
         };
 
         nc.ToString()
