@@ -1,3 +1,10 @@
+> [!CAUTION]
+> ## Sharpie is deprecated
+>
+> All development has moved to **[SharpVision](https://github.com/pavkam/sharp-vision)**.
+>
+> While ncurses-based libraries are fun, they are limited, and I decided to go fully raw mode. Please use SharpVision for all new development.
+
 # Sharpie
 
 [![Status](https://github.com/pavkam/sharpie/actions/workflows/sharpie-publish.yml/badge.svg)](https://github.com/pavkam/sharpie/actions/workflows/sharpie-publish.yml)
