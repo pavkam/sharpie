@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <!-- Version properties -->
-        <OverallVersion>2025.10.03</OverallVersion>
+        <OverallVersion>2026.09.01</OverallVersion>
 
         <!-- Common properties -->
         <AssemblyName>sharpie-libs-ncurses</AssemblyName>
