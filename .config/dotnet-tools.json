@@ -9,17 +9,17 @@
       ]
     },
     "dotnet-format": {
-        "version": "5.1.250801",
-        "commands": [
-            "dotnet-format"
-        ],
-        "rollForward": false
+      "version": "5.1.250801",
+      "commands": [
+        "dotnet-format"
+      ],
+      "rollForward": false
     },
     "dotnet-reportgenerator-globaltool": {
-        "version": "5.4.16",
-        "commands": [
-            "reportgenerator"
-        ]
+      "version": "5.5.9",
+      "commands": [
+        "reportgenerator"
+      ]
     }
   }
 }
